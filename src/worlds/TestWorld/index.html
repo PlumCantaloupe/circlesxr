@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- circles_HEADER_SCRIPTS -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+  </head>
+  <body>
+
+    <a-scene circles_properties>
+      <a-assets>
+        <!-- add your assets here -->
+        <!-- 
+        <img id='moonMap'           src='/worlds/hub/assets/textures/moonmap.jpg' crossorigin="anonymous">
+        <a-asset-item id="moon-gltf"      src="/worlds/hub/assets/models/moon.glb"></a-asset-item>
+        <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3"></audio>
+        -->
+
+        <!-- templates, mixins etc. -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- avatar -->
+      <circles-avatar/>
+
+      <!-- checkpoints -->
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="3.305904940681001 0.05 4.682832166759203"></a-entity>
+
+
+      <!-- sky and lights -->
+      <a-entity light="type: hemisphere; color:#0E192B; groundColor:#1D0A57; intensity: 1.2"></a-entity>
+      <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160" 
+        light="type:directional; color:#0E192B; intensity:15.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;"></a-entity>
+      
+      <a-entity geometry="primitive:plane; width:16; height:16;" rotation="-90 0 0" material="color:blue;"></a-entity>
+    </a-scene>
+
+    <!-- circles_END_SCRIPTS -->
+    <circles-end-scripts/>
+  </body>
+</html>

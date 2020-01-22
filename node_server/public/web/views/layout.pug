@@ -1,0 +1,14 @@
+html
+  head
+    title CIRCLES - #{title}
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    block stylesheets
+      link(rel="stylesheet" el="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous")
+      link(rel="stylesheet" type="text/css" href="/web/css/app.css")
+    block scripts
+      script(type="text/javascript" src="/web/js/color-picker.js")
+      script(type="text/javascript" src="/web/js/app.js")
+  body
+    include includes/topbar
+    .content
+      block content

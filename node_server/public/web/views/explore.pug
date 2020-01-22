@@ -1,0 +1,21 @@
+extends layout.pug
+
+block append stylesheets
+  link(rel="stylesheet" type="text/css" href="/web/css/vendor/color-picker.css")
+
+block content
+  h2 Test Worlds
+  div(class="pure-menu pure-menu-horizontal gutter-bottom-doubled")
+    ul
+      li
+        a(href='/rooms/explore/world/TestWorld' class="pure-menu-link") Test World
+      li
+        a(href='/rooms/explore/world/hub' class="pure-menu-link") Hub: The Fire
+      li
+        a(href='/rooms/explore/world/VD_1_Salon' class="pure-menu-link") Viola Desmond: The Salon
+      li
+        a(href='/rooms/explore/world/VD_2_Theatre' class="pure-menu-link") Viola Desmond: The Roseland Theatre
+      li
+        a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-menu-link") Viola Desmond: The Province House
+      li
+        a(href='/rooms/explore/world/WIT_1_ElectricLab' class="pure-menu-link") Women in Trades: Electrical Lab

@@ -1,0 +1,107 @@
+extends layout.pug
+
+block append stylesheets
+  link(rel="stylesheet" type="text/css" href="/web/css/vendor/color-picker.css")
+
+block content
+  h2 Profile
+  table.pure-table.profile-table.gutter-bottom-doubled
+    thead
+      tr
+        th Property
+        th Value
+    tbody
+      tr
+        td name
+        td= userInfo.name
+      tr
+        td firstName
+        td= userInfo.firstName
+      tr
+        td lastName
+        td= userInfo.lastName
+      tr
+        td email
+        td= userInfo.email
+      tr
+        td headUrl
+        td= userInfo.headUrl
+      tr
+        td hairUrl
+        td= userInfo.hairUrl
+      tr
+        td bodyUrl
+        td= userInfo.bodyUrl
+      tr
+        td handLeftUrl
+        td= userInfo.handLeftUrl
+      tr
+        td handRightUrl
+        td= userInfo.handRightUrl
+      tr
+        td headColor
+        td= userInfo.headColor
+      tr
+        td hairColor
+        td= userInfo.hairColor
+      tr
+        td bodyColor
+        td= userInfo.bodyColor
+      tr
+        td handLeftColor
+        td= userInfo.handLeftColor
+      tr
+        td handRightColor
+        td= userInfo.handRightColor
+
+  h2 Update
+  form(action='/update-user/' method='post' class='pure-form pure-form-aligned')
+    fieldset
+      .pure-control-group
+        label
+          | UserName (can't update currently)
+          span.required *
+        input.field-long(type='text', name='username', placeholder='SuperFriend99', value=userInfo.name, disabled='')
+      .pure-control-group
+        label
+          | Full Name
+          span.required *
+        input.field-divided(type='text', name='firstname', placeholder='First', value=userInfo.firstName)
+        input.field-divided(type='text', name='lastname', placeholder='Last', value=userInfo.lastName)
+      .pure-control-group
+        label
+          | Email
+          span.required *
+        input.field-long(type='email', name='email', placeholder='hello@world.ca', value=userInfo.email)
+      .pure-control-group
+        label
+          | Update Password
+          span.required *
+        input.field-long(type='password', name='password')
+      .pure-control-group
+        label
+          | Password Confirm
+          span.required *
+        input.field-long(type='password', name='passwordConf')
+      .pure-control-group
+        label Head Model
+        select.field-select(name='headModel')!= userOptions.headOptions
+        input.colorPicker.field-long(name='color_head', type='text', value=userInfo.headColor)
+      .pure-control-group
+        label Hair Model
+        select.field-select(name='hairModel')!= userOptions.hairOptions
+        input.colorPicker.field-long(name='color_hair', type='text', value=userInfo.hairColor)
+      .pure-control-group
+        label Body Model
+        select.field-select(name='bodyModel')!= userOptions.bodyOptions
+        input.colorPicker.field-long(name='color_body', type='text', value=userInfo.bodyColor)
+      .pure-control-group
+        label Hand Left Model
+        select.field-select(name='handLeftModel')!= userOptions.handLeftOptions
+        input.colorPicker.field-long(name='color_hand_left', type='text', value=userInfo.handLeftColor)
+      .pure-control-group
+        label Hand Right Model
+        select.field-select(name='handRightModel')!= userOptions.handRightOptions
+        input.colorPicker.field-long(name='color_hand_right', type='text', value=userInfo.handRightColor)
+      .pure-controls
+        input(type="submit" value="Update Profile" class="pure-button pure-button-primary")

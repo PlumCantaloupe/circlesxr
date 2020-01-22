@@ -1,0 +1,39 @@
+#needed for server setup
+- create dirs at root lvl '/PROJECTS/circles_framework'
+- [in '/PROJECTS'] git clone https://github.com/mozilla/naf-janus-adapter.git
+- [in '/PROJECTS'] git clone https://github.com/PlumCantaloupe/circles_framework.git (well this was probably already done :)
+- add sudo newuser 'ascavarelli' ( https://www.digitalocean.com/community/tutorials/how-to-create-a-sudo-user-on-ubuntu-quickstart )
+- UFW ( https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands ) allow SSH, HTTP, HTTPS, 27017 (mongo), 8080
+- mongo ( https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/ )
+- mkdir readable dirs /data/db
+- install node/npm ( https://tecadmin.net/install-latest-nodejs-npm-on-ubuntu/ )
+- npm install -g browserify
+- install certbot ( https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates )
+- add models shortcut (/add-models-to-db)
+
+# run in server root (public folder)
+certbot certonly --webroot -w ./ -d circlesxr.com -d www.circlesxr.com
+
+# start database
+mongod --bind_ip circlesxr.com
+
+# bind mongo shell to 'localhost' database
+mongo
+
+# mount local-remote
+sudo sshfs -o allow_other,defer_permissions root@circlesxr.com:/ /RemoteMounts/circlesxr.com 
+
+# unmount local-remote
+sudo umount /RemoteMounts/circlesxr.com
+
+# this may change as I figure out how to host this on AWS with Hubs back-end ... 
+
+##create symlinks from defaults janus certs to certbot ones 
+- [in '/opt/janus/share/janus/certs'] sudo ln -s /etc/letsencrypt/live/circlesxr.com/privkey.pem mycert.key
+- [in '/opt/janus/share/janus/certs'] sudo ln -s /etc/letsencrypt/live/circlesxr.com/fullchain.pem mycert.pem
+
+- ingress ports
+  - TCP, 80 (HTTP), 443 (HTTPS), 22 (SSH), 8089 (janus server - might not need), 8188 (janus ws), 8989 (janus wss)
+  - UDP, 0-65535 (all)
+
+- egress ports [all]

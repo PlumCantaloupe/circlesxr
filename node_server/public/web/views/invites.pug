@@ -1,0 +1,28 @@
+extends layout.pug
+
+block append stylesheets
+  link(rel="stylesheet" type="text/css" href="/web/css/vendor/color-picker.css")
+
+block content
+  div(id='pending-invites' class="gutter-bottom-doubled")
+    h2 Your Pending Invites
+      each pendingInvite in pendingInvites
+        h3= pendingInvite.room.name
+        form.pure-form(action='/rooms/' + pendingInvite.room._id + '/invite/accept' method='post')
+          input(type='submit' value='Accept Invite' class='pure-button pure-button-primary')
+        form.pure-form(action='/rooms/' + pendingInvite.room._id + '/invite/reject' method='post')
+          input(type='submit' value='Decline Invite' class='pure-button button-secondary')
+
+  div(id='accepted-invites' class="gutter-bottom-doubled")
+    h2 Rooms You have Joined
+      each acceptedInvite in acceptedInvites
+        h3= acceptedInvite.room.name
+        form.pure-form(action='/rooms/' + acceptedInvite.room._id + '/invite/reject' method='post')
+          input(type='submit' value='Leave Room' class='pure-button button-warning')
+
+  div(id='rejected-invites' class="gutter-bottom-doubled")
+    h2 Rooms you have left
+      each rejectedInvite in rejectedInvites
+        h3= rejectedInvite.room.name
+        form.pure-form(action='/rooms/' + rejectedInvite.room._id + '/invite/accept' method='post')
+          input(type='submit' value='Rejoin' class='pure-button pure-button-primary')

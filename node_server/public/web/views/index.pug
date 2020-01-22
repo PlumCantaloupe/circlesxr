@@ -1,0 +1,21 @@
+html
+  head
+    title Circles - #{title}
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    block stylesheets
+      link(rel="stylesheet" el="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous")
+      link(rel="stylesheet" type="text/css" href="/web/css/app.css")
+    block scripts
+  body
+    .homepage
+      .homepage__left
+      .homepage__right
+        .homepage__logo-wrapper.gutter-bottom
+          .homepage__logo
+            include includes/circles_logo.svg
+        .homepage__login
+          p Circles is a WebVR learning framework and research project that explores multi-learner and multi-platform (Desktop, Mobile, and HMD) learning affordances. [Work-In-Progress].
+          include includes/login-form.pug
+          p.text--centered Don't have an account? 
+            a(href="/register") Register here
+          <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='https://player.vimeo.com/video/326387226' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>

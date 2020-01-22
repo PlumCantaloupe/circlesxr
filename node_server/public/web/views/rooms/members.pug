@@ -1,0 +1,60 @@
+extends ../layout.pug
+
+block content
+  h1= 'Manage members for "' + room.name + '"'
+
+  div(id='roomInviteForm')
+    h2 Send invites
+    form(action='/rooms/' + room._id + '/invite' method='post' class='pure-form pure-form-stacked')
+      fieldset
+        .pure-control-group
+          label Emails of those you'd like to invite
+            span.required *
+          textarea.pure-input-1(name='emails', required, placeholder='member1@example.com, member2@example.com, ...')
+          p.pure-form-message.pure-u-1
+            | A list of emails can be provided separated by
+            | commas or new lines, or both, to invite multiple people at once.
+        .pure-control-group
+          label Message
+          textarea.pure-input-1(name='message')
+          p.pure-form-message.pure-u-1
+            | You can include a message which will be sent out to #[em all emails]
+            | in the list above. Do not include person specific
+            | information if you are inviting multiple people at once.
+        .pure-controls
+          input(type='submit' value='Send Invites' class='pure-button pure-button-primary pure-input-1')
+
+  div(id='invitedMembers')
+    h2#invited Invited Members
+    each member in room.members
+      if member.invite === 'invited'
+        h3= member.email
+        ul
+          li= 'Invited: ' + member.created
+          if member.dateEmailSent
+            li= 'Date Invite Sent: ' + member.dateEmailSent
+        form.pure-form(method='post')
+          input(type='hidden', name='action', value='delete-invite', required)
+          input(type='hidden', name='member_id', value=member._id, required)
+          input(type='submit' value='Delete Invite' class='pure-button button-danger')
+
+  div(id='activeMembers')
+    h2#accepted Members Who Accepted
+    each member in room.members
+      if member.invite === 'accepted'
+        h3= member.email
+        ul
+          li= 'Accepted: ' + member.inviteUpdated
+        form.pure-form(method='post')
+          input(type='hidden', name='action', value='delete-invite', required)
+          input(type='hidden', name='member_id', value=member._id, required)
+          input(type='submit' value='Delete Invite' class='pure-button button-danger')
+
+  div(id='rejectedMembers')
+    h2#declined Members Who Declined
+    each member in room.members
+      if member.invite === 'rejected'
+        ul
+          li= member.email
+            ul
+              li= 'Declined: ' + member.inviteUpdated

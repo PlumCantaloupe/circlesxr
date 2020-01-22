@@ -1,0 +1,110 @@
+<script>
+  //naf schemas
+  NAF.schemas.add({
+    template: '#user-template',
+    components: [
+      'position',
+      'rotation',
+      {
+        selector: '.user_cam_rig',
+        component: 'position',
+      },
+      {
+        selector: '.user_cam_rig',
+        component: 'rotation',
+      },
+      {
+        selector: '.avatar',
+        component: 'position',
+      },
+      {
+        selector: '.avatar',
+        component: 'rotation',
+      },
+      {
+        selector: '.nametag_front',
+        component: 'position',
+      },
+      {
+        selector: '.nametag_front',
+        component: 'scale',
+      },
+      {
+        selector: '.deviceicon_front',
+        component: 'material',
+      },
+      {
+        selector: '.deviceicon_back',
+        component: 'material',
+      },
+      {
+        selector: '.deviceicon_front',
+        component: 'position',
+      },
+      {
+        selector: '.deviceicon_back',
+        component: 'position',
+      },
+      {
+        selector: '.avatar',
+        component: 'circles-user-networked',
+      },
+      {
+        selector: '.nametag_back',
+        component: 'position',
+      },
+      {
+        selector: '.nametag_back',
+        component: 'scale',
+      },
+      {
+        selector: '.nametag_back',
+        component: 'rotation',
+      },
+      {
+        selector: '.user_head',
+        component: 'position',
+      },
+      {
+        selector: '.user_head',
+        component: 'rotation',
+      },
+      {
+        selector: '.user_body',
+        component: 'position',
+      },
+      // {
+      //   selector: '.user_body',
+      //   component: 'rotation',
+      // },
+      {
+        selector: '.user_face_express',
+        component: 'position',
+      },
+    ]
+  });
+
+  NAF.schemas.add({
+    template: '#interactive-object-template',
+    components: [
+      'position',
+      'rotation',
+      'scale',
+      'gltf-model',
+      'circles-object-world',
+      'circles-interactive-object',
+      'circles-inspect-object',
+      'shadow',
+      'class'
+      // {
+      //   selector: '.interactive',
+      //   component: 'gltf-model',
+      // },
+    ]
+  });
+
+  // Called by Networked-Aframe when connected to server
+  function onConnect () {
+    console.log("onConnect", new Date());
+  }
+</script>

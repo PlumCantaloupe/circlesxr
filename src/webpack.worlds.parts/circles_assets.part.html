@@ -1,0 +1,56 @@
+<template id="user-template">
+  <a-entity>
+    <!-- user_cam_rig => movement-controls="speed:0.1;" -->
+    <!-- avatar => camera look-controls="pointerLockEnabled:false;"  spawn-in-circle="radius:3" -->
+    <!-- ="gltf_head:__MODEL_HEAD__; gltf_hair:__MODEL_HAIR__; gltf_body:__MODEL_BODY__; color_head:__COLOR_HEAD__; color_hair:__COLOR_HAIR__; color_body:__COLOR_BODY__;" -->
+    <a-entity class="user_cam_rig" circles-avatar-rig-construction>
+      <a-entity   class="avatar" 
+                  position="0 __USER_HEIGHT__ 0"
+                  circles-user-networked
+                  circles-avatar-construction>
+        <a-entity class="nametag_front avatar_node" text="align:center;" position="0 0.7 0" rotation="0 0 0" scale="3 3 3">
+          <a-entity class="deviceicon_front" position="0 -0.06 0" geometry="primitive:plane; width:0.07; height:0.07;" material="shader:flat; transparent:true;"></a-entity>
+        </a-entity>
+        <a-entity class="nametag_back avatar_node" text="align:center;" position="0 0.7 0" rotation="0 180 0" scale="3 3 3">
+            <a-entity class="deviceicon_back" position="0 -0.06 0" geometry="primitive:plane; width:0.07; height:0.07;" material="shader:flat; transparent:true;"></a-entity>
+        </a-entity>
+        <a-entity   class="user_head avatar_node"
+                    networked-audio-source
+                    gltf-model
+                    circles-color
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;">
+          <a-entity   class="user_face_express"
+                      geometry="primitive:plane; width:0.3; height:0.3;"
+                      material="shader:flat; src:__FACE_MAP__; transparent:true; side:back; color:#000;"
+                      position="0.0 0.0 -0.1">
+          </a-entity>
+          <a-entity   class="user_hair avatar_node"
+                      gltf-model
+                      circles-color
+                      circles-shadow="cast:true; receive:true; applyToChildren:false;">
+          </a-entity>
+        </a-entity>
+        <a-entity   class="user_body avatar_node"
+                    gltf-model
+                    circles-color
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;"
+                    position="0.0 -0.5 0.0">
+          <!-- <a-entity   class="user_boundaries avatar_node"
+                      circles-boundaries="color:rgb(255,255,255); alpha:1.0;"
+                      circles-shadow="cast:false; receive:false; applyToChildren:false;"
+                      scale="2.0 4.0 2.0">
+          </a-entity> -->
+        </a-entity>
+      </a-entity>
+    </a-entity>
+  </a-entity>
+</template>
+
+<template id="interactive-object-template">
+    <a-entity>
+        <a-entity class="interactive" scale="0.013 0.013 0.013" position="-1.77 1.72 -12.6" rotation="-90.0 -172.0 0.0" shadow="receive:true; cast:true;"></a-entity>
+    </a-entity>
+  </template>
+
+<!-- mixins -->
+<a-mixin id="checkpoint" material="transparent:false; color:rgb(57, 187, 130); emissive:rgb(7, 137, 80)" geometry="primitive:cylinder; radius:0.5; height:0.04" ></a-mixin>

@@ -1,0 +1,12 @@
+# SystemD service file for controlling Janus SFU
+
+[Unit]
+Description=Janus SFU Service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/janus/bin/janus
+
+[Install]
+WantedBy=multi-user.target
