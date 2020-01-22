@@ -70,7 +70,7 @@
 
 ----------------
 
-![Screenshot of 3D avatars around teh campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.png?raw=true\)
+![Screenshot of 3D avatars around teh campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.png?raw=true)
 
 ## Overview
 
