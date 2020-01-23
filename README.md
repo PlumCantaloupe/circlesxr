@@ -1,5 +1,48 @@
 # CIRCLES Framework
 
+
+![Screenshot of 3D avatars around the campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.png?raw=true)
+
+## Overview
+
+This **CIRCLES** framework is meant to easily allow
+developers to create multi-user and multi-platform
+[WebVR/WebXR](https://webvr.info) content on top of another WebXR framework
+[A-Frame](https://aframe.io), with networking provided by [Networked-Aframe](https://github.com/networked-aframe/networked-aframe).
+
+CIRCLES development is part of a research project into multi-user VR/AR that will
+constantly evolve as the research dictates how users will interact with each
+other in variable VR space. Our current focus is within both the formal (classroom) and
+informal (museums) educational contexts; but we  aim to keep the framework flexible where possible to allow for greater creativity.
+
+[More information on Circles](http://portfolio.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)
+
+### The (3) main goals for **CIRCLES** are as follows:
+
+#### Device Scalability
+
+To create a framework that allows itself to be displayed across a range of VR/AR
+capable platforms. The current focus is on supporting desktop, mobile, and standalone HMD (e.g. Oculus Quest). Interaction techniques will be kept simple and straightforward so that they are easily understandable and accessible between platforms.
+
+#### Social Scalability
+
+To create a framework that allows variable forms of one-many users across both
+co-located and remote perspectives. This framework should encourage the use of
+experiences that allow one to interact; but that also the experience should
+scale naturally and with collaboration and/or competition in mind to provide a
+more visceral experience as the number of users increases.
+
+#### Reality Scalability [future]
+
+To create a framework that allows encourages developers to create experiences
+that allow both VR and AR experiences, across a variable numbver of users using
+either technology. *Note that the inclusion AR into WebVR (to become WebXR) soon
+should help with this goal.
+
+___TODO: will add more to this later___
+
+----------------
+
 ## Running Locally
 
 1. Clone repo
@@ -67,46 +110,4 @@
 
   <circles-end-scripts/>
   ```
-
-----------------
-
-![Screenshot of 3D avatars around teh campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.png?raw=true)
-
-## Overview
-
-This **CIRCLES** framework is meant to easily allow
-developers to create multi-user and multi-platform
-[WebVR/WebXR](https://webvr.info) content on top of another WebXR framework
-[A-Frame](https://aframe.io), with networking provided by [Networked-Aframe](https://github.com/networked-aframe/networked-aframe).
-
-CIRCLES development is part of a research project into multi-user VR/AR that will
-constantly evolve as the research dictates how users will interact with each
-other in variable VR space. Our current focus is within both the formal and
-informal educational contexts; but we  aim to keep the framework more general,
-where possible, so that it can be applied elsewhere also (e.g. a closely coupled
-multi-user game or VR chat room).
-
-### The (3) main goals for **CIRCLES** are as follows:
-
-#### Device Scalability
-
-To create a framework that allows itself to be displayed across a range of VR/AR
-capable platforms. The current focus is on supporting desktop, mobile, and standalone HMD (e.g. Oculus Quest). Interaction techniques will be kept simple and straightforward so that they are easily understandable and accessible between platforms.
-
-#### Social Scalability
-
-To create a framework that allows variable forms of one-many users across both
-co-located and remote perspectives. This framework should encourage the use of
-experiences that allow one to interact; but that also the experience should
-scale naturally and with collaboration and/or competition in mind to provide a
-more visceral experience as the number of users increases.
-
-#### Reality Scalability [future]
-
-To create a framework that allows encourages developers to create experiences
-that allow both VR and AR experiences, across a variable numbver of users using
-either technology. *Note that the inclusion AR into WebVR (to become WebXR) soon
-should help with this goal.
-
-___TODO: will add more to this later___
 
