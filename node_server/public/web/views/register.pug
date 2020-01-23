@@ -1,0 +1,67 @@
+html
+  head
+    title Circles - #{title}
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    block stylesheets
+      link(rel="stylesheet" el="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous")
+      link(rel="stylesheet" type="text/css" href="/web/css/app.css")
+      link(rel="stylesheet" type="text/css" href="/web/css/vendor/color-picker.css")
+
+  body
+    .homepage
+        .homepage__left
+        .homepage__right
+          .homepage__register
+            h1(class="text--centered") #{title} : Sorry, this feature is DISABLED for public prototype
+            form(action="register" method="post" class="pure-form pure-form-aligned")
+              fieldset
+                .pure-control-group
+                  label UserName
+                    span.required *
+                  input(type='text' name='username' placeholder='SuperFriend99' required)
+                .pure-control-group
+                  label Full name
+                    span.required *
+                  input.field-divided(type='text' name='firstname' placeholder='First' required)
+                  input.field-divided(type='text' name='lastname' placeholder='Last' required)
+                .pure-control-group
+                  label Email
+                    span.required *
+                  input.field-long(type='email' name='email' placeholder='hello@world.ca' required)
+                .pure-control-group
+                  label Password
+                    span.required *
+                  input.field-long(type='password' name='password' required)
+                .pure-control-group
+                  label Confirm password
+                    span.required *
+                  input.field-long(type='password' name='passwordConf' required)
+                .pure-control-group
+                  //- select.field-select(name='model_head')
+                  label Head Model & Color
+                  select.field-select(name='headModel')!= userOptions.headOptions
+                  input.colorPicker.field-long(name='color_head' type='text' value='rgb(255, 255, 255)')
+                .pure-control-group
+                  //- select.field-select(name='model_hair')
+                  label Hair Model & Color
+                  select.field-select(name='hairModel')!= userOptions.hairOptions
+                  input.colorPicker.field-long(name='color_hair' type='text' value='rgb(255, 255, 255)')
+                .pure-control-group
+                  //- select.field-select(name='model_body')
+                  label Body Model & Color
+                  select.field-select(name='bodyModel')!= userOptions.bodyOptions
+                  input.colorPicker.field-long(name='color_body' type='text' value='rgb(255, 255, 255)')
+                .pure-control-group
+                  //- select.field-select(name='model_hand_left')
+                  label Hand Left Model & Color
+                  select.field-select(name='handLeftModel')!= userOptions.handLeftOptions
+                  input.colorPicker.field-long(name='color_hand_left' type='text' value='rgb(255, 255, 255)')
+                .pure-control-group
+                  //- select.field-select(name='model_hand_right')
+                  label Hand Right Model & Color
+                  select.field-select(name='handRightModel')!= userOptions.handRightOptions
+                  input.colorPicker.field-long(name='color_hand_right' type='text' value='rgb(255, 255, 255)')
+                .pure-controls
+                  input(type='submit' value='Register' class="pure-button pure-input-1-2 pure-button-primary")
+            p.text--centered
+              a(href="/") Return to home page

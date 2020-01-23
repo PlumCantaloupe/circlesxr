@@ -1,0 +1,20 @@
+extends ../layout.pug
+
+block content
+  div(id='deleteConfirmation')
+    if room.members.length == 0
+      p You are about to delete the room #[strong "#{room.name}"].
+    else
+      p
+        | You are about to delete the room #[strong "#{room.name}"]. This will
+        | also remove the room from
+        if room.members.length == 1
+          |  #[strong #{room.members.length}] member's profile.
+        else
+          |  #[strong #{room.members.length}] members' profiles.
+
+    h3 Are you sure?
+
+    form(method='post' class='pure-form')
+      input.pure-button.button-danger(type='submit', value='Delete')
+      a.form-cancel(href='/rooms') Cancel

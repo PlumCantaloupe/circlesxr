@@ -1,0 +1,21 @@
+header.profile-header
+  h1.profile-heading
+    a(href="/rooms" class="profile-logo")
+      include ./circles_logo.svg
+  ul.topbar-links
+    li
+      a(href="/rooms") Rooms
+    li
+      a(href="/explore") Explore
+    li
+      a(href="/invites") Invites
+  .topbar-header__popover-wrapper
+    button.topbar-header__popover-activator
+      img(src=`https://www.gravatar.com/avatar/${currentUser.emailHash}` class="topbar-header__image")
+      span= currentUser.firstname 
+    .topbar-popover
+      ul
+        li
+          a(href="/profile") Profile
+        li 
+          a(href="/logout") Log out

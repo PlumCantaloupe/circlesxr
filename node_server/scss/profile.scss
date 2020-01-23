@@ -1,0 +1,47 @@
+.worlds-links {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.profile-header {
+  background: #fff;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 ($gutter * 2);
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  color: #777;
+}
+
+.profile-heading {
+  margin: 0;
+}
+
+.profile-logo {
+  display: inline-block;
+  width: 180px;
+
+  .circles-logo,
+  .circles-logo-lettering {
+    &:hover {
+      fill: #777;
+    }
+  }
+}
+
+.profile-header__info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-table {
+  width: 100%;
+}
+
+.profile-header__image {
+  display: inline-block;
+  width: 40px;
+  border-radius: 20px;
+  margin-right: $gutter / 2;
+}

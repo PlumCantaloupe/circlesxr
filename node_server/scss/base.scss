@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #F9F8F7;
+}
+
+p {
+  line-height: 1.8rem;
+}
+
+// Set vertical rhythm.
+h1, h2, h3, h4, h5, p, table {
+  margin: 0 0 $gutter 0;
+}
+
+textarea {
+  min-height: 100px;
+  height: 200px;
+  max-height: 500px;
+  resize: vertical;
+}
+
+.form-cancel {
+  padding: 0 1em;
+}
+
+.text--centered {
+  text-align: center;
+}

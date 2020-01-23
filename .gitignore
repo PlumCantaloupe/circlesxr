@@ -1,0 +1,57 @@
+### start global ignore
+
+# Ignore generated Browserify bundles from the repo
+*_bundle.js
+
+# Ignore main environment file
+.env
+
+# Ignore compiled worlds
+node_server/public/worlds
+
+#Ignore compiles SASS
+node_server/public/web/css/app.css
+node_server/public/web/css/color-picker.css
+
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# ignore node modules
+node_modules/
+
+# ignore the testing area
+testingArea/
+
+# don't include certs
+*.pem
+*.csr
+
+#ignore js .map files (we don't want them in production)
+*.map
+
+### end global ignore

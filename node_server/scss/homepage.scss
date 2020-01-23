@@ -1,0 +1,77 @@
+$homepage-bg: rgba(255, 255, 255, 0.85);
+
+.homepage {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/web/images/campfire.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.homepage__left {
+  display: none;
+
+  @include tablet-and-up {
+    display: block;
+    width: 50vw;
+    height: 100vh;
+  }
+}
+
+.homepage__right {
+  padding: $gutter * 2;
+  width: 100vw;
+  height: 100vh;
+  background-color: $homepage-bg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include tablet-and-up {
+    width: 50vw;
+  }
+}
+
+.homepage__logo {
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.homepage__login {
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.homepage__register {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-danger,
+.button-secondary {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error,
+.button-danger {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+  background: rgb(66, 184, 221); /* this is a light blue */
+}
