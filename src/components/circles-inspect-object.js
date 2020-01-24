@@ -50,8 +50,26 @@ AFRAME.registerComponent('circles-inspect-object', {
 
     //send click event to manager
     Context_AF.el.addEventListener('click', (e) => {
+        //Context_AF.toggleInspection(evt);
+        // const eventObject = {
+        //                       inspectObject:Context_AF.el,
+        //                       inspectHighlight:Context_AF.highlight_object, 
+        //                       title:data.title, 
+        //                       description:data.description,
+        //                       inspectScale:data.inspectScale,
+        //                       inspectRotation:data.inspectRotation,
+        //                       textRotationY:data.textRotationY,
+        //                       textLookAt:data.textLookAt,
+        //                       origPos:Context_AF.origPos,
+        //                       origRot:Context_AF.origRot,
+        //                       origScale:Context_AF.origScale
+        //                     };
+        const avatar        = e.detail.cursorEl.parentEl
+        if (!avatar.classList.contains("locked"))
+        {
           Context_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
-    });
+        }
+     });
   },
   update : function(oldData) 
   {}

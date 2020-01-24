@@ -1,6 +1,5 @@
 # CIRCLES Framework
 
-
 ![Screenshot of 3D avatars around the campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.png?raw=true)
 
 ## Overview
@@ -110,4 +109,3 @@ ___TODO: will add more to this later___
 
   <circles-end-scripts/>
   ```
-

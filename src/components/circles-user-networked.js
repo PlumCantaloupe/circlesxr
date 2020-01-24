@@ -1,18 +1,30 @@
 'use strict';
 
+import { NativeBuffer } from "mongoose";
+
 AFRAME.registerComponent('circles-user-networked', {
   //dependencies: ['networked'],
   schema: {
     // ... Define schema to pass properties from DOM to this component
-    gltf_head:          {type: 'asset',     default: ''},
-    gltf_hair:          {type: 'asset',     default: ''},
-    gltf_body:          {type: 'asset',     default: ''},
+    gltf_head:                  {type: 'asset',     default: ''},
+    gltf_hair:                  {type: 'asset',     default: ''},
+    gltf_body:                  {type: 'asset',     default: ''},
 
-    color_head:         {type: 'string',    default: ''}, 
-    color_hair:         {type: 'string',    default: ''},
-    color_body:         {type: 'string',    default: ''},
+    original_gltf_head:         {type: 'asset',     default: ''},
+    original_gltf_hair:         {type: 'asset',     default: ''},
+    original_gltf_body:         {type: 'asset',     default: ''},
 
-    username:           {type: 'string',    default: ''}
+    color_head:                 {type: 'string',    default: ''}, 
+    color_hair:                 {type: 'string',    default: ''},
+    color_body:                 {type: 'string',    default: ''},
+    
+    original_color_head:        {type: 'string',    default: ''}, 
+    original_color_hair:        {type: 'string',    default: ''},
+    original_color_body:        {type: 'string',    default: ''},      
+
+    username:                   {type: 'string',    default: ''},
+    networked_data:             {type: 'string',    default: ''},
+    costume:                    {type: 'array',    default: ['', '', '']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -32,13 +44,19 @@ AFRAME.registerComponent('circles-user-networked', {
         if (Context_AF.isPlayer1 === true) {
           //we can assume that node wants to load itself. We are doing this to minimize race-conditions overwriting each by doing so in user-template
           Context_AF.el.setAttribute('circles-user-networked', {
-            gltf_head:  playerOneNode.getAttribute('circles-head-model'),
-            gltf_hair:  playerOneNode.getAttribute('circles-hair-model'),
-            gltf_body:  playerOneNode.getAttribute('circles-body-model'),
-            color_head: playerOneNode.getAttribute('circles-head-color'),
-            color_hair: playerOneNode.getAttribute('circles-hair-color'),
-            color_body: playerOneNode.getAttribute('circles-body-color'),
-            username:   playerOneNode.getAttribute('circles-username')
+            gltf_head:              playerOneNode.getAttribute('circles-head-model'),
+            gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
+            gltf_body:              playerOneNode.getAttribute('circles-body-model'),
+            original_gltf_head:     playerOneNode.getAttribute('circles-head-model'),        
+            original_gltf_hair:     playerOneNode.getAttribute('circles-hair-model'),  
+            original_gltf_body:     playerOneNode.getAttribute('circles-body-model'),    
+            color_head:             playerOneNode.getAttribute('circles-head-color'),
+            color_hair:             playerOneNode.getAttribute('circles-hair-color'),
+            color_body:             playerOneNode.getAttribute('circles-body-color'),
+            original_color_head:    playerOneNode.getAttribute('circles-head-color'),       
+            original_color_hair:    playerOneNode.getAttribute('circles-hair-color'), 
+            original_color_body:    playerOneNode.getAttribute('circles-body-color'),  
+            username:               playerOneNode.getAttribute('circles-username')
           });
 
           //set device icon here too ... I guess :/
@@ -113,6 +131,7 @@ AFRAME.registerComponent('circles-user-networked', {
     if ( oldData.color_body !== Context_AF.data.color_body ) {
       let avatarNode = Context_AF.el.querySelector('.user_body');
       avatarNode.setAttribute('circles-color', {color: Context_AF.data.color_body});
+      avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, Context_AF.el, true);
     }
 
     //username change

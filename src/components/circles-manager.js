@@ -99,6 +99,11 @@ AFRAME.registerComponent('circles-manager', {
       console.log("Event: "  + e.detail.getAttribute('id') + " ownership-changed");
     });
 
+    document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
+        console.log(e);
+        console.log("Event: "  + e.detail.components["circles-user-networked"].data.username + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
+      });
+
     Context_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {
       Context_AF.camera = e.detail.cameraEl; //get reference to camera in scene (assume there is only one)
     });

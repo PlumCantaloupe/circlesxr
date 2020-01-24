@@ -9,6 +9,7 @@
 # Ignore compiled worlds
 node_server/public/worlds
 
+=======
 # ignore vscode
 .vscode
 

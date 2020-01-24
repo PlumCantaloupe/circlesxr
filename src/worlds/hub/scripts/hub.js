@@ -15,6 +15,7 @@ AFRAME.registerComponent('campfire-interactive', {
         Context_AF.salonLink    = scene.querySelector('#salonLink');
         Context_AF.theatreLink  = scene.querySelector('#theatreLink');
         Context_AF.phLink       = scene.querySelector('#provinceHouseLink'); 
+        Context_AF.costumeLink  = scene.querySelector('#costumeObjLink');
 
         // Context_AF.salonLink.addEventListener('animationcomplete', function(event) {
 
@@ -83,12 +84,14 @@ AFRAME.registerComponent('campfire-interactive', {
         Context_AF.salonLink.setAttribute('class', 'interactive');
         Context_AF.theatreLink.setAttribute('class', 'interactive');
         Context_AF.phLink.setAttribute('class', 'interactive');
+        Context_AF.costumeLink.setAttribute('class', 'interactive');
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
 
         //animate
         Context_AF.salonLink.emit('startFireAnim',{}, false);
         Context_AF.theatreLink.emit('startFireAnim',{}, false);
         Context_AF.phLink.emit('startFireAnim',{}, false);
+        Context_AF.costumeLink.emit('startFireAnim',{}, false);
 
         Context_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
     },
@@ -110,12 +113,14 @@ AFRAME.registerComponent('campfire-interactive', {
         Context_AF.salonLink.removeAttribute("class");
         Context_AF.theatreLink.removeAttribute("class");
         Context_AF.phLink.removeAttribute("class");
+        Context_AF.costumeLink.removeAttribute("class");
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
         //animate
         Context_AF.salonLink.emit('stopFireAnim',{}, false);
         Context_AF.theatreLink.emit('stopFireAnim',{}, false);
         Context_AF.phLink.emit('stopFireAnim',{}, false);
+        Context_AF.costumeLink.emit('stopFireAnim',{}, false);
 
         Context_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
     },
