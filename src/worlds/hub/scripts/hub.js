@@ -93,7 +93,6 @@ AFRAME.registerComponent('campfire-interactive', {
         Context_AF.phLink.emit('startFireAnim',{}, false);
         Context_AF.costumeLink.emit('startFireAnim',{}, false);
 
-
         Context_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
     },
     turnFireOff : function () {
@@ -115,7 +114,6 @@ AFRAME.registerComponent('campfire-interactive', {
         Context_AF.theatreLink.removeAttribute("class");
         Context_AF.phLink.removeAttribute("class");
         Context_AF.costumeLink.removeAttribute("class");
-
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
         //animate

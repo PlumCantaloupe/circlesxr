@@ -9,6 +9,10 @@
 # Ignore compiled worlds
 node_server/public/worlds
 
+=======
+# ignore vscode
+.vscode
+
 #Ignore compiles SASS
 node_server/public/web/css/app.css
 node_server/public/web/css/color-picker.css
@@ -19,7 +23,6 @@ node_server/public/web/css/color-picker.css
 
 # Icon must end with two \r
 Icon
-
 
 # Thumbnails
 ._*
