@@ -64,11 +64,11 @@ AFRAME.registerComponent('circles-inspect-object', {
         //                       origRot:Context_AF.origRot,
         //                       origScale:Context_AF.origScale
         //                     };
-        const avatar        = e.detail.cursorEl.parentEl
-        if (!avatar.classList.contains("locked"))
-        {
+        // const avatar = e.detail.cursorEl.parentEl
+        // if (!avatar.classList.contains("locked"))
+        // {
           Context_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
-        }
+        // }
      });
   },
   update : function(oldData) 

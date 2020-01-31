@@ -35,26 +35,26 @@ AFRAME.registerComponent('costume', {
     },
     reset: function(avatar){
         avatar.components["circles-user-networked"].data.color_body = avatar.components["circles-user-networked"].data.original_color_body;
-        if (avatar.classList.contains("locked")){
-            //Do nothing
-        }
-        else{
-            avatar.classList.add("locked");
-        }
+        // if (avatar.classList.contains("locked")){
+        //     //Do nothing
+        // }
+        // else{
+        //     avatar.classList.add("locked");
+        // }
     },
     setPermission: function(avatar){
         // Remove the "locked" permissions class from the avatar
-        avatar.classList.remove("locked");
+        // avatar.classList.remove("locked");
     },
     setLocked: function(avatar){
-        if (avatar.classList.contains("locked"))
-        {
-            console.log("Player does not have permissions");
-        }
-        else{
-            //Pickup Obj
-            console.log("Accepted");
-        }
+        // if (avatar.classList.contains("locked"))
+        // {
+        //     console.log("Player does not have permissions");
+        // }
+        // else{
+        //     //Pickup Obj
+        //     console.log("Accepted");
+        // }
     },
     setBody: function(avatar, id){
         let avatar_networtNode              = avatar.components["circles-user-networked"].data;
