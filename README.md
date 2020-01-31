@@ -50,8 +50,8 @@ ___TODO: will add more to this later___
 1. **Create a `data/db` folder on your PC** that Mongo can write to
     - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 7)
 1. [Install node/npm](https://nodejs.org/en/download/)
-1. In terminal install browserify globally
-    - `npm install -g browserify`
+1. In terminal install webpack globally
+    - `npm install --save-dev webpack`
 1. Go into project folder and install NPM dependencies
     - `npm install`
 1. Set up the Environment file
