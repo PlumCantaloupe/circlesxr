@@ -1,3 +1,5 @@
+#this is just some commands and tips for getting this runing on a remote server (e.g. AWS). Probably not complete but a start :)
+
 #needed for server setup
 - create dirs at root lvl '/PROJECTS/circles_framework'
 - [in '/PROJECTS'] git clone circles project (well this was probably already done :)
