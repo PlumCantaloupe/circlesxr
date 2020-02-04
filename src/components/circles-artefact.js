@@ -16,16 +16,19 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200}
+    updateRate:         {type:'number',     default:200},
+
+    object_world:       {type:'string',     default:''}     //use __WORLDNAME__ unless you want to control synching in some other fashion
   },
   init: function() {
     const Context_AF = this;
     const data = this.data;
 
+    console.log("HAHHAHAHAHAHAH");
+
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    Context_AF.el.classList.add('interactive');
+    //Context_AF.el.classList.add('interactive');
     Context_AF.el.setAttribute('circles-interactive-object', '');
-    Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true})
 
     Context_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
                                                             inspectRotation:data.inspectRotation,   origPos:data.origPos,               origRot:data.origRot,
@@ -35,6 +38,9 @@ AFRAME.registerComponent('circles-artefact', {
     Context_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 
                                                             arrow_position:data.arrow_position,     updateRate:data.updateRate
                                                         });
+    
+    Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
+    Context_AF.el.setAttribute('circles-object-world', {object_world:data.object_world});
   },
 //   update : function(oldData) {
 //     const Context_AF = this;
