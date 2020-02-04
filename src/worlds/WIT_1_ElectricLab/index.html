@@ -17,9 +17,9 @@
             const scene = document.querySelector('a-scene');
 
             let Context_AF = this;
-            Context_AF.toolsNarr      = scene.querySelector('#HeroObject-Drill');
-            Context_AF.safetyNarr     = scene.querySelector('#HeroObject-Gloves');
-            Context_AF.cultureNarr    = scene.querySelector('#HeroObject-Clipboard');
+            Context_AF.toolsNarr      = scene.querySelector('#Artefact-Drill');
+            Context_AF.safetyNarr     = scene.querySelector('#Artefact-Gloves');
+            Context_AF.cultureNarr    = scene.querySelector('#Artefact-Clipboard');
 
             Context_AF.toolsNarrFirstPlay = false;
             Context_AF.safetyNarrFirstPlay = false;
@@ -133,7 +133,7 @@
         <!-- <a-asset-item id="TestWall-gltf" response-type="arraybuffer" src="/worlds/WIT_1_ElectricLab/assets/models/TestWalls.glb"></a-asset-item> -->
         <a-asset-item id="TestWall-gltf" response-type="arraybuffer" src="/worlds/WIT_1_ElectricLab/assets/models/TestWalls/TestWall_ALL.gltf"></a-asset-item>
 
-        <!-- hero objects -->
+        <!-- artefact models -->
         <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Gloves-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Gloves.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Clipboard.glb" response-type="arraybuffer"></a-asset-item>
@@ -191,48 +191,42 @@
       <a-entity id="Table_Model" gltf-model="#Table-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
 
       <!-- removed networked items bit so no duplicates for now -->
-      <a-entity id="HeroObject-Drill"
+      <a-entity id="Artefact-Drill"
                 class="interactive narrative"
                 position="4.0 0.95 0.0" rotation="0.0 30.0 0.0" scale="0.01 0.01 0.01"
                 gltf-model="#Drill-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-object-world="object_world:__WORLDNAME__"
-                circles-interactive-object
-                circles-inspect-object=" inspectScale:0.02 0.02 0.02; textRotationY:0.0; textLookAt:false; inspectRotation:0 90.0 0; 
-                                      title:Group Work; description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning."
-                circles-object-label="label_text:Power Drill; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;"
-                networked="template:#interactive-object-template; attachTemplateToLocal:true;"
+                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0.0; textLookAt:false; inspectRotation:0 90.0 0; 
+                                  title:Group Work; description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                  label_text:Power Drill; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  object_world:__WORLDNAME__"
                 sound="src:#Narr_tools-snd; volume:0.4;">
       </a-entity>
 
-      <a-entity id="HeroObject-Gloves"
+      <a-entity id="Artefact-Gloves"
                 class="interactive narrative"
                 position="-4.2 0.83 4.3" rotation="-90.0 -50.0 0.0" scale="0.015 0.015 0.015"
                 gltf-model="#Gloves-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-object-world="object_world:__WORLDNAME__"
-                circles-interactive-object
-                circles-inspect-object=" inspectScale:0.05 0.05 0.05; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
-                                      title:Equipment; description:To save on costs and space, schools tend to purchase generic sizes for safety and protective wear. Large sizes are common. Women often must compensate by making adjustments or risking safety and fine motor skills by wearing ill-fitting attire."
-                circles-object-label="label_text:Safety Gloves; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;"
-                networked="template:#interactive-object-template; attachTemplateToLocal:true;"
+                circles-artefact="inspectScale:0.05 0.05 0.05; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
+                                  title:Equipment; description:To save on costs and space, schools tend to purchase generic sizes for safety and protective wear. Large sizes are common. Women often must compensate by making adjustments or risking safety and fine motor skills by wearing ill-fitting attire.;
+                                  label_text:Safety Gloves; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  object_world:__WORLDNAME__"
                 sound="src:#Narr_safety-snd; volume:0.4;" >
       </a-entity>
 
-      <a-entity id="HeroObject-Clipboard"
+      <a-entity id="Artefact-Clipboard"
                 class="interactive narrative"
                 position="0.65 0.79 1.61" rotation="-90.0 15.0 0.0" scale="0.015 0.015 0.015"
                 gltf-model="#Clipboard-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-object-world="object_world:__WORLDNAME__"
-                circles-interactive-object
-                circles-inspect-object=" inspectScale:0.03 0.03 0.03; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
-                                      title:Culture; description:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about."
-                circles-object-label="label_text:Clipboard; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;"
-                networked="template:#interactive-object-template; attachTemplateToLocal:true;"
+                circles-artefact="inspectScale:0.03 0.03 0.03; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
+                                  title:Culture; description:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about.;
+                                  label_text:Clipboard; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  object_world:__WORLDNAME__"
                 sound="src:#Narr_culture-snd; volume:0.4;" >
       </a-entity>
 
