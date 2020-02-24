@@ -100,7 +100,6 @@ AFRAME.registerComponent('circles-manager', {
     });
 
     document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
-        console.log(e);
         console.log("Event: "  + e.detail.components["circles-user-networked"].data.username + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
       });
 
@@ -228,11 +227,20 @@ AFRAME.registerComponent('circles-manager', {
     Context_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
     
     //take over networked membership
-    NAF.utils.getNetworkedEntity(Context_AF.selectedObject).then((el) => {
-      if (!NAF.utils.isMine(el)) {
-        NAF.utils.takeOwnership(el);
-      } 
-    });
+    console.log("this");
+    if (Context_AF.selectedObject.hasAttribute('networked') === true) {
+      NAF.utils.getNetworkedEntity(Context_AF.selectedObject).then((el) => {
+        console.log("is this mine?");
+        if (!NAF.utils.isMine(el)) {
+          console.log("No but ... ")
+          NAF.utils.takeOwnership(el);
+          console.log("it is mine now");
+        } 
+        else {
+          console.log("Yes, it is mine already");
+        }
+      });
+    }
 
     //set new transform
     Context_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);

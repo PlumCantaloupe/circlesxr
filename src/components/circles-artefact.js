@@ -24,8 +24,6 @@ AFRAME.registerComponent('circles-artefact', {
     const Context_AF = this;
     const data = this.data;
 
-    console.log("HAHHAHAHAHAHAH");
-
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
     //Context_AF.el.classList.add('interactive');
     Context_AF.el.setAttribute('circles-interactive-object', '');
@@ -39,8 +37,9 @@ AFRAME.registerComponent('circles-artefact', {
                                                             arrow_position:data.arrow_position,     updateRate:data.updateRate
                                                         });
     
-    Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
     Context_AF.el.setAttribute('circles-object-world', {object_world:data.object_world});
+    Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
+    Context_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
   },
 //   update : function(oldData) {
 //     const Context_AF = this;

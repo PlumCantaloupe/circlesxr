@@ -118,7 +118,8 @@ AFRAME.registerComponent('circles-interactive-object', {
                     attrs[i].name !== 'circles-object-label' &&
                     attrs[i].name !== 'networked' &&
                     attrs[i].name !== 'circles-inspect-object' &&
-                    attrs[i].name !== 'circles-object-world') {
+                    attrs[i].name !== 'circles-object-world' && 
+                    attrs[i].name !== 'circles-artefact' ) {
                 Context_AF.highlightElem.setAttribute(attrs[i].name,attrs[i].value);
             }
         }
