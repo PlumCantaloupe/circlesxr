@@ -32,21 +32,68 @@ AFRAME.registerComponent('circles-inspect-object', {
     if (data.origScale.x > 10000) {
       Context_AF.el.setAttribute('circles-inspect-object', {origScale:{x:Context_AF.el.object3D.scale.x, y:Context_AF.el.object3D.scale.y, z:Context_AF.el.object3D.scale.z}}); //save it so network syncs this
     }
+
+    let eventsAttached = false;
+    Context_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, function (event) {
+      // console.log('WHWHWHWHWHWHWHHW');
+      // console.log("this");
+      // console.log(Context_AF.el.components);
+      // console.log(Context_AF.el.components['networked']);
+      // console.log(Context_AF.el.components['circles-inspect-object']);
+      // console.log( 'networked' in Context_AF.el.components );
+      // console.log( Context_AF.el.components.hasOwnProperty('networked') );
+
+      if (eventsAttached === false) {
+        eventsAttached = true;
+        NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
+
+          console.log("adding events");
+  
+          el.addEventListener('ownership-gained', (e) => {
+            console.log("ownership-gained");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
+          });
+  
+          el.addEventListener('ownership-lost', (e) => {
+            //Context_AF.el.removeAttribute('circles-parent-constraint');
+            console.log("ownership-lost");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
+          });
+  
+          el.addEventListener('ownership-changed', (e) => {
+            console.log("ownership-changed");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
+          });
+        });
+      }
+    });
+
+    if (Context_AF.el.hasAttribute('networked') === true) {
+      if (eventsAttached === false) {
+        eventsAttached = true;
+        NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
+
+          //console.log("adding events");
+  
+          el.addEventListener('ownership-gained', (e) => {
+            //console.log("ownership-gained");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
+          });
+  
+          el.addEventListener('ownership-lost', (e) => {
+            //Context_AF.el.removeAttribute('circles-parent-constraint');
+            //console.log("ownership-lost");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
+          });
+  
+          el.addEventListener('ownership-changed', (e) => {
+            //console.log("ownership-changed");
+            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
+          });
+        });
+      }
+    }
     
-    // NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
-      Context_AF.el.addEventListener('ownership-gained', (e) => {
-          Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
-        });
-
-        Context_AF.el.addEventListener('ownership-lost', (e) => {
-          // Context_AF.el.removeAttribute('circles-parent-constraint');
-          Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
-        });
-
-        Context_AF.el.addEventListener('ownership-changed', (e) => {
-          Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
-        });
-    // });
 
     //send click event to manager
     Context_AF.el.addEventListener('click', (e) => {
