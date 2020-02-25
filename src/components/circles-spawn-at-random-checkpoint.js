@@ -21,7 +21,5 @@ AFRAME.registerComponent('circles-spawn-at-random-checkpoint', {
     //Context_AF.el.object3D.lookAt( lookAtPoint );
     //Context_AF.el.object3D.rotation.y +=  Math.PI; //face the right way :) ... need to use setAttribute for NAF to work correctly
     Context_AF.el.setAttribute('rotation',{x:0.0, y:THREE.Math.radToDeg(fromDir.angleTo(toDir) + Math.PI), z:0.0});
-
-    console.log( THREE.Math.radToDeg(fromDir.angleTo(toDir)) );
   }
 });

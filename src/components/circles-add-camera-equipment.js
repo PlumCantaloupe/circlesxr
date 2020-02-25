@@ -20,8 +20,8 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         //detect Oculus GO
         const vrDisplayName = AFRAME.utils.device.getVRDisplay().displayName;
-        console.log('vrDisplayName: ' + vrDisplayName);
-        console.log(AFRAME.utils.device.getVRDisplay());
+        // console.log('vrDisplayName: ' + vrDisplayName);
+        // console.log(AFRAME.utils.device.getVRDisplay());
         if (/^Oculus GO$/.test(vrDisplayName)) {
           console.log('setting oculus GO controller');
           //add 3DOF controller
