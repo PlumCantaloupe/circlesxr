@@ -108,6 +108,7 @@
 
   // Called by Networked-Aframe when connected to server
   function onConnect () {
-    console.log("onConnect", new Date());
+    console.log("custom onConnect: ", new Date());
+    document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
   }
 </script>
