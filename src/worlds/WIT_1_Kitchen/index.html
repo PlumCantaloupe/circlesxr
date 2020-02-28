@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- circles_HEADER_SCRIPTS -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+  </head>
+  <body>
+
+    <a-scene circles_properties>
+      <a-assets>
+        <!-- add your assets here -->
+        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+
+        <!-- physical environment -->
+        <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/room.glb"></a-asset-item>
+
+        <!-- artefact models -->
+        <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
+
+        <!-- audio -->
+
+        <!-- narration -->
+        <!-- <audio id="Narr_tools-snd" src="/worlds/WIT_1_ElectricLab/assets/audio/Narr_Tools.mp3"></audio> -->
+
+        <!-- ambience -->
+        <!-- https://freesound.org/people/Gremsongs/sounds/130745/ -->
+        <!-- <audio id="Amb_fan-snd" src="/worlds/WIT_1_ElectricLab/assets/audio/Amb_Fan.mp3"></audio> -->
+
+        <!-- templates, mixins etc. -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- avatar -->
+      <circles-avatar/>
+
+      <!-- checkpoints -->
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 4.1"></a-entity>
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 0.48"></a-entity>
+      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 -3.15"></a-entity>
+
+      <!-- sky and lights -->
+      <!-- bad place for narrative manager but :) -->
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+
+      <!-- <a-entity position="0 0 0" sound="src:#Amb_fan-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:5.0; distanceModel:inverse;" ></a-entity> -->
+      <!-- <a-entity position="7.5 1.0 -4.7" sound="src:#Amb_voices-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity> -->
+
+      <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
+
+      <!-- removed networked items bit so no duplicates for now -->
+      <!-- <a-entity id="Artefact-Drill"
+                class="interactive narrative"
+                position="4.0 0.95 0.0" rotation="0.0 30.0 0.0" scale="0.01 0.01 0.01"
+                gltf-model="#Drill-gltf" 
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0.0; textLookAt:false; inspectRotation:0 90.0 0; 
+                                  title:Group Work; description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                  label_text:Power Drill; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  object_world:__WORLDNAME__"
+                sound="src:#Narr_tools-snd; volume:0.4;">
+      </a-entity> -->
+
+      <!-- <a-entity obj-model="obj:#Table-obj;"
+                material="src:#Table-color; roughnessMap:#Table-roughness; metalnessMap:#Table-metalness; normalMap:#Table-normal; sphericalEnvMap:#skyMap;" 
+                postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
+
+      <!-- <a-entity obj-model="obj:#TestingStation-obj;"
+                postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
+    </a-scene>
+
+    <!-- circles_END_SCRIPTS -->
+    <circles-end-scripts/>
+  </body>
+</html>
