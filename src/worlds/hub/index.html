@@ -7,6 +7,8 @@
 
     <script src="/worlds/hub/scripts/fire.js"></script>
     <script src="/worlds/hub/scripts/hub.js"></script>
+    <script src="/worlds/hub/scripts/generator.js"></script>
+    <script src="/worlds/hub/scripts/message.js"></script>
   </head>
   <body>
 
@@ -119,6 +121,9 @@
         circles-material-override="src:#silhouettesMap; side:double; alphaTest:0.99; shader:flat; opacity:1.0; transparent:true; flipTextureY:true;"
         shadow="receive:false; cast:true"
         ></a-entity>
+
+        <!-- Message Generator -->
+        <a-entity id="Generator" geometry="primitive:sphere; radius:1;" generator circles-interactive-object position="4.8 0 -2.5"></a-entity>
 
       <!-- spawn point -->
       <a-entity id="spawnPoint" position="4.2 0.05 0.0"></a-entity>
