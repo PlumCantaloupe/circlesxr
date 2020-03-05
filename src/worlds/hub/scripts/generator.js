@@ -5,8 +5,7 @@ AFRAME.registerComponent('generator', {
     },
     init: function() {
         const Context_AF = this;
-        console.log(Context_AF);
-        console.log(Context_AF.el);
+       
         Context_AF.el.addEventListener('click', (e) => {
             console.log("Generator clicked");
 
@@ -17,11 +16,13 @@ AFRAME.registerComponent('generator', {
 
     createNewMessage: function(){
         newMessage = document.createElement('a-entity');
-        newMessage.setAttribute('id', "msg" + String(message_number));
+        newMessage.setAttribute('id', "msg" + String(Context_AF.message_number));
         newMessage.setAttribute('message');
+        newMessage.setAttribute('geometry', {primitive: box});
+        newMessage.setAttribute('position', "4.2 0 1.5");
 
 
-        message_number = message_number += 1;
+        Context_AF.message_number = Context_AF.message_number += 1;
     },
 
 });
