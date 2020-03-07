@@ -14,26 +14,30 @@ AFRAME.registerComponent('message', {
 
     createNewText: function(){
         const Context_AF = this;
-        const container = document.querySelector('a-scene');
-        Context_AF.textInput = document.querySelector('#input');
-        // Context_AF.keyboardEl = document.createElement("a-entity");
-        // Context_AF.keyboardEl.setAttribute("id", 'keyboard');
-        // Context_AF.keyboardEl.setAttribute('position', {x: -1, y:1.17, z:4.0});
-        // Context_AF.keyboardEl.setAttribute("components", 'keyboard');
-        // Context_AF.keyboardEl.setAttribute('scale', '1 1 1');
-        // Context_AF.keyboardEl.setAttribute("rotation", '0 180 0');
-        // container.appendChild(Context_AF.keyboardEl);
-        
-        // Context_AF.textInput = document.createElement("a-text");
-        // Context_AF.textInput.setAttribute("id", 'input');
-        // Context_AF.textInput.setAttribute('position', {x: -1, y:1.25, z:4});
-        // Context_AF.textInput.setAttribute('color', '#fff');
-        // Context_AF.textInput.setAttribute('scale', '0.5 0.5 0.5');
-        // Context_AF.textInput.setAttribute('rotation', '0 180 0');
-        // container.appendChild(Context_AF.textInput);
+        const msg = document.querySelector('#msg');
+        //Context_AF.textInput = document.querySelector('#input');
+        Context_AF.newMessage = document.createElement('a-text');
+        Context_AF.newMessage.setAttribute('value', "Boo");
+        Context_AF.newMessage.setAttribute('id', "msgBoo");
+        Context_AF.newMessage.setAttribute('position', {x: -1, y:0.2, z:0});
 
+        Context_AF.newMessage1 = document.createElement('a-text');
+        Context_AF.newMessage1.setAttribute('value', "Foo");
+        Context_AF.newMessage1.setAttribute('id', "msgFoo");
+        Context_AF.newMessage1.setAttribute('position', {x: 1, y:0.2, z:0});
+
+        Context_AF.newMessage2 = document.createElement('a-text');
+        Context_AF.newMessage2.setAttribute('value', "Baz");
+        Context_AF.newMessage2.setAttribute('id', "msgBaz");
+        Context_AF.newMessage2.setAttribute('position', {x: 0, y:0.2, z:0});
+
+        
+        msg.appendChild(Context_AF.newMessage);
+        msg.appendChild(Context_AF.newMessage1);
+        msg.appendChild(Context_AF.newMessage2);
+        
         Context_AF.textInput.addEventListener('click', (e) => {
-            console.log("text clicked");
+            console.log("text clicked" + e.detail);
             Context_AF.updateText(e);
         });
     },
