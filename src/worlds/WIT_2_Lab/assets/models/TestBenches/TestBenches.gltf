@@ -1,0 +1,180 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 39690,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 21897,
+      "max": [
+        1.09955763816833,
+        0.230868503451347,
+        0.625024795532227
+      ],
+      "min": [
+        -0.900442361831665,
+        -0.230868503451347,
+        -1.12281274795532
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 21897,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 21897,
+      "type": "VEC2"
+    }
+  ],
+  "asset": {
+    "generator": "Substance Painter 2019.2.3",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 158760,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 262764,
+      "byteOffset": 158760,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 262764,
+      "byteOffset": 421524,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 175176,
+      "byteOffset": 684288,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 859464,
+      "uri": "TestBenches.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "green_shader_baseColor.png"
+    },
+    {
+      "uri": "green_shader_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "green_shader_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "name": "green_shader",
+      "normalTexture": {
+        "index": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "TestBench_Main_geo10",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "TestBenches.obj",
+      "scale": [
+        401.777374267578,
+        401.777374267578,
+        401.777374267578
+      ],
+      "translation": [
+        351.305267333984,
+        92.7577438354492,
+        -50.6565856933594
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "g TestBench_Main_geo10"
+    },
+    {
+      "mesh": 0,
+      "name": "TestBench_Main_geo10"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9985,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}
