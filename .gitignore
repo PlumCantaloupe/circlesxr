@@ -54,7 +54,4 @@ testingArea/
 *.pem
 *.csr
 
-#ignore js .map files (we don't want them in production)
-*.map
-
 ### end global ignore

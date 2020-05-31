@@ -18,63 +18,84 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         rigElem.setAttribute('keyboard-controls',{enabled:false});
         console.log('Attached camera controls to rig');
 
-        //detect Oculus GO
-        const vrDisplayName = AFRAME.utils.device.getVRDisplay().displayName;
-        console.log('vrDisplayName: ' + vrDisplayName);
-        console.log(AFRAME.utils.device.getVRDisplay());
-        if (/^Oculus GO$/.test(vrDisplayName)) {
-          console.log('setting oculus GO controller');
-          //add 3DOF controller
-          let entity_Controller_1 = document.createElement('a-entity');
-          entity_Controller_1.setAttribute('id','controller_3DOF');
-          entity_Controller_1.setAttribute('class', 'controller_track');
-          entity_Controller_1.setAttribute('laser-controls',{});
-          entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
-          rigElem.appendChild(entity_Controller_1);
-
-          // let fps_entity = document.createElement('a-entity');
-          // fps_entity.setAttribute('fps-counter',{});
-          // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
-          // entity_Controller_1.appendChild(fps_entity);
-        }
-        else if (/^Oculus Quest$/.test(vrDisplayName)) {
-          //add 6DOF Controller
-          console.log('setting Oculus Quest controller');
+        //assuming there are hand controllers ...
+        if ( AFRAME.utils.checkHeadsetConnected() )  {
+          //get hand colours
+          const avatar      = document.querySelector("#player1").querySelector('.avatar');
+          const bodyColor   = avatar.components["circles-user-networked"].data.color_head;
 
           let entity_Controller_1 = document.createElement('a-entity');
           entity_Controller_1.setAttribute('id','controller_right');
           entity_Controller_1.setAttribute('class', 'controller_thumb');
           entity_Controller_1.setAttribute('laser-controls',{hand:'right', model:false});
-          entity_Controller_1.setAttribute('hand-controls','right');
+          entity_Controller_1.setAttribute('hand-controls', {hand:'right', handModelStyle:'lowPoly', color:bodyColor});
           entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
           rigElem.appendChild(entity_Controller_1);
 
           let entity_Controller_2 = document.createElement('a-entity');
           entity_Controller_2.setAttribute('id','controller_left');
           entity_Controller_1.setAttribute('class', 'controller_thumb');
-          entity_Controller_2.setAttribute('hand-controls','left');
+          entity_Controller_2.setAttribute('hand-controls', {hand:'left', handModelStyle:'lowPoly', color:bodyColor});
           rigElem.appendChild(entity_Controller_2);
-
-          // let fps_entity = document.createElement('a-entity');
-          // fps_entity.setAttribute('fps-counter',{});
-          // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
-          // entity_Controller_1.appendChild(fps_entity);
         }
-        else {
-          console.log('setting "everything else" controller');
 
-          let entity_Controller_1 = document.createElement('a-entity');
-          entity_Controller_1.setAttribute('id','controller_3DOF');
-          entity_Controller_1.setAttribute('class', 'controller');
-          entity_Controller_1.setAttribute('laser-controls',{});
-          entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
-          rigElem.appendChild(entity_Controller_1);
+        //detect Oculus GO
+        // const vrDisplayName = AFRAME.utils.device.getVRDisplay().displayName;
+        // console.log('vrDisplayName: ' + vrDisplayName);
+        // console.log(AFRAME.utils.device.getVRDisplay());
+        // if (/^Oculus GO$/.test(vrDisplayName)) {
+        //   console.log('setting oculus GO controller');
+        //   //add 3DOF controller
+        //   let entity_Controller_1 = document.createElement('a-entity');
+        //   entity_Controller_1.setAttribute('id','controller_3DOF');
+        //   entity_Controller_1.setAttribute('class', 'controller_track');
+        //   entity_Controller_1.setAttribute('laser-controls',{});
+        //   entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
+        //   rigElem.appendChild(entity_Controller_1);
 
-          // let fps_entity = document.createElement('a-entity');
-          // fps_entity.setAttribute('fps-counter',{});
-          // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
-          // entity_Controller_1.appendChild(fps_entity);
-        }
+        //   // let fps_entity = document.createElement('a-entity');
+        //   // fps_entity.setAttribute('fps-counter',{});
+        //   // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
+        //   // entity_Controller_1.appendChild(fps_entity);
+        // }
+        // else if (/^Oculus Quest$/.test(vrDisplayName)) {
+        //   //add 6DOF Controller
+        //   console.log('setting Oculus Quest controller');
+
+        //   let entity_Controller_1 = document.createElement('a-entity');
+        //   entity_Controller_1.setAttribute('id','controller_right');
+        //   entity_Controller_1.setAttribute('class', 'controller_thumb');
+        //   entity_Controller_1.setAttribute('laser-controls',{hand:'right', model:false});
+        //   entity_Controller_1.setAttribute('hand-controls','right');
+        //   entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
+        //   rigElem.appendChild(entity_Controller_1);
+
+        //   let entity_Controller_2 = document.createElement('a-entity');
+        //   entity_Controller_2.setAttribute('id','controller_left');
+        //   entity_Controller_1.setAttribute('class', 'controller_thumb');
+        //   entity_Controller_2.setAttribute('hand-controls','left');
+        //   rigElem.appendChild(entity_Controller_2);
+
+        //   // let fps_entity = document.createElement('a-entity');
+        //   // fps_entity.setAttribute('fps-counter',{});
+        //   // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
+        //   // entity_Controller_1.appendChild(fps_entity);
+        // }
+        // else {
+        //   console.log('setting "everything else" controller');
+
+        //   let entity_Controller_1 = document.createElement('a-entity');
+        //   entity_Controller_1.setAttribute('id','controller_3DOF');
+        //   entity_Controller_1.setAttribute('class', 'controller');
+        //   entity_Controller_1.setAttribute('laser-controls',{});
+        //   entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
+        //   rigElem.appendChild(entity_Controller_1);
+
+        //   // let fps_entity = document.createElement('a-entity');
+        //   // fps_entity.setAttribute('fps-counter',{});
+        //   // fps_entity.setAttribute('position',{x:0.0, y:0.1, z:-0.2});
+        //   // entity_Controller_1.appendChild(fps_entity);
+        // }
 
         
       });
