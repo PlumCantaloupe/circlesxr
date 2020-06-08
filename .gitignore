@@ -54,4 +54,7 @@ testingArea/
 *.pem
 *.csr
 
+//ignore visual studio workspace
+*.code-workspace
+
 ### end global ignore
