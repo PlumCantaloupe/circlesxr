@@ -24,9 +24,15 @@ const MODEL_TYPE = {
 };
 
 const MODEL_FORMAT = {
-  GLTF : 'GLTF',
-  OBJ : 'OBJ',
-  NONE : 'NONE'
+  GLTF  : 'GLTF',
+  OBJ   : 'OBJ',
+  NONE  : 'NONE'
+};
+
+const USER_TYPE = {
+  STUDENT     : 'Student',
+  TEACHER     : 'Teacher',
+  RESEARCHER  : 'Researcher',
 };
 
 const EVENTS = {
@@ -65,6 +71,7 @@ module.exports = {
   USER_COLLISION_STATE,
   MODEL_TYPE,
   MODEL_FORMAT,
+  USER_TYPE,
   EVENTS,
   COLOR_PALETTES
 };

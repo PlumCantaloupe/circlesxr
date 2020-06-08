@@ -54,7 +54,7 @@ const MongoStore    = require('connect-mongo')(session);
 const mongoose      = require('mongoose');
 const User          = require('./models/user');
 const bodyParser    = require('body-parser');
-const dbURL         = 'mongodb://' + env.DATABASE_HOST + ':' +  env.DATABASE_PORT + '/mdmu';
+const dbURL         = 'mongodb://' + env.DATABASE_HOST + ':' +  env.DATABASE_PORT + '/circles';
 
 // Set process name
 process.title = "node-circlesxr";
