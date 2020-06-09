@@ -68,31 +68,31 @@ AFRAME.registerComponent('circles-inspect-object', {
       }
     });
 
-    if (Context_AF.el.hasAttribute('networked') === true) {
-      if (eventsAttached === false) {
-        eventsAttached = true;
-        NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
+    // if (Context_AF.el.hasAttribute('networked') === true) {
+    //   if (eventsAttached === false) {
+    //     eventsAttached = true;
+    //     NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
 
-          //console.log("adding events");
+    //       //console.log("adding events");
   
-          el.addEventListener('ownership-gained', (e) => {
-            //console.log("ownership-gained");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
-          });
+    //       el.addEventListener('ownership-gained', (e) => {
+    //         //console.log("ownership-gained");
+    //         Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
+    //       });
   
-          el.addEventListener('ownership-lost', (e) => {
-            //Context_AF.el.removeAttribute('circles-parent-constraint');
-            //console.log("ownership-lost");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
-          });
+    //       el.addEventListener('ownership-lost', (e) => {
+    //         //Context_AF.el.removeAttribute('circles-parent-constraint');
+    //         //console.log("ownership-lost");
+    //         Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
+    //       });
   
-          el.addEventListener('ownership-changed', (e) => {
-            //console.log("ownership-changed");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
-          });
-        });
-      }
-    }
+    //       el.addEventListener('ownership-changed', (e) => {
+    //         //console.log("ownership-changed");
+    //         Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
+    //       });
+    //     });
+    //   }
+    // }
     
 
     //send click event to manager
