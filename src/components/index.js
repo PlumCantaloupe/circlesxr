@@ -1,5 +1,4 @@
 require('./circles-parent-constraint');
-require('./circles-controls');
 require('./circles-color');
 require('./circles-shadow');
 require('./circles-sphere-env-map.js');
