@@ -13,7 +13,7 @@ AFRAME.registerComponent('circles-boundaries', {
     var Context_AF = this;
 
     Context_AF.el.addEventListener('object3dset', () => {
-      console.log('BOUNDARIES');
+      //console.log('BOUNDARIES');
     });
 
     const properties = {

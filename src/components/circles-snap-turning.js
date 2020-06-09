@@ -161,7 +161,7 @@ AFRAME.registerComponent('circles-snap-turning', {
     */
   },
   handleTouchSwipe: function(swipeDir) {
-    console.log("SWIPE DETECTED!");
-    console.log("DIR: " + swipeDir);
+    // console.log("SWIPE DETECTED!");
+    // console.log("DIR: " + swipeDir);
   }
 });

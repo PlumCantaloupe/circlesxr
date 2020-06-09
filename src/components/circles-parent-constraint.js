@@ -127,8 +127,8 @@ AFRAME.registerComponent('circles-parent-constraint', {
 
           //set new matrix and manually update
           this.invOriginal = new THREE.Matrix4().getInverse(this.el.object3D.matrixWorld);
-          this.el.object3D.applyMatrix( this.invOriginal ); //reset this objects matrices
-          this.el.object3D.applyMatrix( this.worldMat_Constraint );
+          this.el.object3D.applyMatrix4( this.invOriginal ); //reset this objects matrices
+          this.el.object3D.applyMatrix4( this.worldMat_Constraint );
       }
 
       this.prevTime = time;

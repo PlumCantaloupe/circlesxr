@@ -32,13 +32,11 @@ schema: {
         if ( pickedUp ) {
             if ( window.circles_curr_world !== object_world ) {
                 Context_AF.el.setAttribute('visible', true);
-                console.log("!! visible:true");
             }
         }
         else {
             if ( window.circles_curr_world !== object_world ) {
                 Context_AF.el.setAttribute('visible', false);
-                console.log("!! visible:false");
             }
         }
     }

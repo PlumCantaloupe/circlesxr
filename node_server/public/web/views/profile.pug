@@ -12,8 +12,11 @@ block content
         th Value
     tbody
       tr
-        td name
-        td= userInfo.name
+        td username
+        td= userInfo.userName
+      tr
+        td usertype
+        td= userInfo.userType
       tr
         td firstName
         td= userInfo.firstName
@@ -61,7 +64,12 @@ block content
         label
           | UserName (can't update currently)
           span.required *
-        input.field-long(type='text', name='username', placeholder='SuperFriend99', value=userInfo.name, disabled='')
+        input.field-long(type='text', name='username', placeholder='SuperFriend99', value=userInfo.userName, disabled='')
+      .pure-control-group
+        label
+          | UserType (can't update currently)
+          span.required *
+        input.field-long(type='text', name='usertype', placeholder='SuperFriendlyUser', value=userInfo.userType, disabled='')
       .pure-control-group
         label
           | Full Name
