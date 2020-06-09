@@ -1,12 +1,12 @@
-'use strict';
-var path = require('path');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+ 'use strict';
+const fs    = require('fs');
+const path  = require('path');
+const CopyWebpackPlugin   = require('copy-webpack-plugin');
+const {CleanWebpackPlugin}  = require('clean-webpack-plugin');
 
 // Set up and parse Environment based configuation
-const dotenv = require('dotenv');
-const dotenvParseVariables = require('dotenv-parse-variables');
-const fs = require('fs');
+const dotenv                = require('dotenv');
+const dotenvParseVariables  = require('dotenv-parse-variables');
 
 let env = dotenv.config({})
 if (env.error) {
@@ -32,13 +32,13 @@ let circles_end_scripts      =  fs.readFileSync('./src/webpack.worlds.parts/circ
 // const janusServerRegex = new RegExp(/\{\{(\s+)?JANUS_SERVER(\s+)?\}\}/, 'gmi');
 // circles_scene_properties = circles_scene_properties.toString().replace(janusServerRegex,  env.JANUS_SERVER);
 
-const nafAudioRegex   = new RegExp(/\{\{(\s+)?NAF_AUDIO(\s+)?\}\}/, 'gmi');
+const nafAudioRegex   = new RegExp(/\{\{(\s+)?NAF_AUDIO(\s+)?\}\}/,   'gmi');
 const nafAdapterRegex = new RegExp(/\{\{(\s+)?NAF_ADAPTER(\s+)?\}\}/, 'gmi');
-const nafServerRegex  = new RegExp(/\{\{(\s+)?NAF_SERVER(\s+)?\}\}/, 'gmi');
+const nafServerRegex  = new RegExp(/\{\{(\s+)?NAF_SERVER(\s+)?\}\}/,  'gmi');
 
 //insert env vars into parts
-circles_scene_properties = circles_scene_properties.toString().replace(nafAudioRegex,  env.NAF_AUDIO);
-circles_scene_properties = circles_scene_properties.toString().replace(nafAdapterRegex,  env.NAF_ADAPTER);
+circles_scene_properties = circles_scene_properties.toString().replace(nafAudioRegex,   env.NAF_AUDIO);
+circles_scene_properties = circles_scene_properties.toString().replace(nafAdapterRegex, env.NAF_ADAPTER);
 circles_scene_properties = circles_scene_properties.toString().replace(nafServerRegex,  env.NAF_SERVER);
 
 module.exports = {
@@ -52,31 +52,31 @@ module.exports = {
     hints: false
   },
   plugins: [
-    new CleanWebpackPlugin([
-      'node_server/public/worlds'
-    ], {
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['node_server/public/worlds'],
       verbose: true
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/worlds',
-        to: './',
-        transform (content, path) {
-          if (path.endsWith('.html')) {
-            //insert new parts
-            content = content.toString();
-            content = content.replace(/<circles-start-scripts(\s+)?\/>/i, circles_header);
-            content = content.replace(/<a-scene(\s+)?circles_properties(\s+)?>/i, circles_scene_properties);
-            content = content.replace(/<circles-assets(\s+)?\/>/i, circles_assets);
-            content = content.replace(/<circles-avatar(\s+)?\/>/i, circles_avatar);
-            content = content.replace(/<circles-end-scripts(\s+)?\/>/i, circles_end_scripts);
-            //return content.toString().replace(janusServerRegex, env.JANUS_SERVER);
-            return content;
-          } else {
-            return content;
+    new CopyWebpackPlugin({
+        patterns: [{
+          from: 'src/worlds',
+          to: './',
+          transform (content, path) {
+            if (path.endsWith('.html')) {
+              //insert new parts
+              content = content.toString();
+              content = content.replace(/<circles-start-scripts(\s+)?\/>/i, circles_header);
+              content = content.replace(/<a-scene(\s+)?circles_properties(\s+)?>/i, circles_scene_properties);
+              content = content.replace(/<circles-assets(\s+)?\/>/i, circles_assets);
+              content = content.replace(/<circles-avatar(\s+)?\/>/i, circles_avatar);
+              content = content.replace(/<circles-end-scripts(\s+)?\/>/i, circles_end_scripts);
+              //return content.toString().replace(janusServerRegex, env.JANUS_SERVER);
+              return content;
+            } else {
+              return content;
+            }
           }
-        }
+        }]
       }
-    ])
+    )
   ]
 }
