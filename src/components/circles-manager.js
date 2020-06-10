@@ -35,7 +35,7 @@ AFRAME.registerComponent('circles-manager', {
             targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset,
             y: rotationOffsetY,
             easing: 'easeOutQuad',
-            duration: 250,
+            duration: 80,
             // update: function() {
             //   //console.log("running?");
             // }
@@ -61,7 +61,7 @@ AFRAME.registerComponent('circles-manager', {
             targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset,
             z: positionOffsetZ,
             easing: 'easeOutQuad',
-            duration: 250,
+            duration: 80,
             // update: function() {
             //   //console.log("running?");
             // }
