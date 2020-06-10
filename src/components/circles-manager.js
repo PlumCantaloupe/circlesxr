@@ -22,7 +22,7 @@ AFRAME.registerComponent('circles-manager', {
         Context_AF.releaseControl = scene.querySelector('#release_control');
 
         Context_AF.rotateControl.addEventListener('click', (e) => { 
-          let rotationOffset = Context_AF.selectedObject.components['circles-parent-constraint'].rotationOffset;
+          let rotationOffset = Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
           let rotationOffsetY =  rotationOffset.y;
           rotationOffsetY += 90.0;
           //now round to 90 increments so that if a user presses quickly it doesn't end on a strange angle
@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-manager', {
           rotationOffsetY += diff;
 
           AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].rotationOffset,
+            targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset,
             y: rotationOffsetY,
             easing: 'easeOutQuad',
             duration: 250,
@@ -53,12 +53,12 @@ AFRAME.registerComponent('circles-manager', {
 
         Context_AF.zoomControl.addEventListener('click', (e) => { 
           Context_AF.zoomNear = !Context_AF.zoomNear;
-          let positionOffset =  Context_AF.selectedObject.components['circles-parent-constraint'].positionOffset;
+          let positionOffset =  Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
           let positionOffsetZ = (Context_AF.zoomNear) ? -1.0 : -2.0;
           //Context_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
 
           AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].positionOffset,
+            targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset,
             z: positionOffsetZ,
             easing: 'easeOutQuad',
             duration: 250,
