@@ -58,9 +58,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
       Context_AF.originalPos         = Context_AF.el.object3D.position.clone();
       Context_AF.originalRot         = Context_AF.el.object3D.quaternion.clone();
       Context_AF.originalSca         = Context_AF.el.object3D.scale.clone();
-
-      Context_AF.el.object3D.matrixAutoUpdate = false;
-      console.log("auto matrix update:" + Context_AF.el.object3D.matrixAutoUpdate);
   },
   tick: function(time, timeDelta) {
     if ( time - this.prevTime > this.data.updateRate ) {
@@ -92,9 +89,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
           //now lets recreate our new world matrix
           this.worldMat_Constraint.scale( this.originalSca  ); //will maintain offset of pos, rot, but need to remember scale
 
-        //   if (this.data.scaleOn) {
-        //      this.worldMat_Constraint.premultiply( this.scaleMat_Off );
-        //   }
+          //set the offsets first
           if (this.data.rotationOn) { 
               this.worldMat_Constraint.premultiply( this.rotMat_Off );
           }
@@ -113,18 +108,11 @@ AFRAME.registerComponent('circles-parent-constraint', {
               this.worldMat_Constraint.premultiply( this.posMat );
           }
 
-          //set new matrix and manually update
-          this.invOriginal = new THREE.Matrix4().getInverse(this.el.object3D.matrixWorld);
-          this.worldMat_Constraint.multiply( this.invOriginal ); //reset this objects matrices
-
-          //this.worldMat_Constraint.compose( this.position_P, this.rotation_P, this.scale_P );
-
-        //   this.el.object3D.matrix.identity();
-          this.el.object3D.applyMatrix4( this.worldMat_Constraint );
-        //   this.el.object3D.matrix.set(  this.worldMat_Constraint.n11, this.worldMat_Constraint.n12, this.worldMat_Constraint.n13, this.worldMat_Constraint.n14,
-        //                                 this.worldMat_Constraint.n21, this.worldMat_Constraint.n22, this.worldMat_Constraint.n23, this.worldMat_Constraint.n24,
-        //                                 this.worldMat_Constraint.n31, this.worldMat_Constraint.n32, this.worldMat_Constraint.n33, this.worldMat_Constraint.n34,
-        //                                 this.worldMat_Constraint.n41, this.worldMat_Constraint.n42, this.worldMat_Constraint.n43, this.worldMat_Constraint.n44 );
+          //set new matrix and update
+          this.worldMat_Constraint.decompose( this.position_P, this.rotation_P, this.scale_P );
+          this.el.object3D.position.set(this.position_P.x, this.position_P.y, this.position_P.z);
+          this.el.object3D.quaternion.set(this.rotation_P.x, this.rotation_P.y, this.rotation_P.z, this.rotation_P.w);
+          this.el.object3D.scale.set(this.scale_P.x, this.scale_P.y, this.scale_P.z);
       }
 
       this.prevTime = time;
@@ -138,8 +126,5 @@ AFRAME.registerComponent('circles-parent-constraint', {
     thisObject3D.position.set(Context_AF.originalPos.x, Context_AF.originalPos.y, Context_AF.originalPos.z);
     thisObject3D.rotation.set(Context_AF.originalRot);
     thisObject3D.scale.set(Context_AF.originalSca.x, Context_AF.originalSca.y, Context_AF.originalSca.z);
-
-    Context_AF.el.object3D.matrixAutoUpdate = true;
-    console.log("auto matrix update:" + Context_AF.el.object3D.matrixAutoUpdate);
   }
 }); 
