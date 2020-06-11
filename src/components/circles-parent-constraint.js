@@ -70,7 +70,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
       if (this.psuedoParent !== null) {
           this.position_E.set(0,0,0);
           this.rotation_E.set(0,0,0,1);
-          this.scale_E.set(0,0,0);
+          this.scale_E.set(1,1,1);
           this.worldMat_Constraint.identity();
           this.posMat.identity();
           this.posMat_Off.identity();
