@@ -31,16 +31,8 @@ AFRAME.registerComponent('circles-manager', {
           let diff        = ( remainder < 90/2 ) ? -remainder : 90-remainder; //if too small round down to "0" else round up to "90" increment
           rotationOffsetY += diff;
 
-          AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset,
-            y: rotationOffsetY,
-            easing: 'easeOutQuad',
-            duration: 80,
-            // update: function() {
-            //   //console.log("running?");
-            // }
-          });
-
+          console.log("rotate artefact");
+          Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
         });
 
         //release object (can also click on object)
@@ -57,15 +49,8 @@ AFRAME.registerComponent('circles-manager', {
           let positionOffsetZ = (Context_AF.zoomNear) ? -1.0 : -2.0;
           //Context_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
 
-          AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset,
-            z: positionOffsetZ,
-            easing: 'easeOutQuad',
-            duration: 80,
-            // update: function() {
-            //   //console.log("running?");
-            // }
-          });
+          console.log("zoom artefact");
+          Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
     });
   },

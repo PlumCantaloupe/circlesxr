@@ -97,6 +97,8 @@ AFRAME.registerComponent('circles-parent-constraint', {
           }
 
           //set matrices
+          console.log(this.data.positionOffset.z);
+          console.log(this.data.rotationOffset.y);
           this.posMat.makeTranslation(this.position_E.x, this.position_E.y, this.position_E.z );
           this.posMat_Off.makeTranslation(this.data.positionOffset.x, this.data.positionOffset.y, this.data.positionOffset.z);
           this.rotMat.makeRotationFromQuaternion(this.rotation_E);
