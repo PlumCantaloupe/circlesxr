@@ -22,7 +22,7 @@ AFRAME.registerComponent('circles-manager', {
         Context_AF.releaseControl = scene.querySelector('#release_control');
 
         Context_AF.rotateControl.addEventListener('click', (e) => { 
-          let rotationOffset = Context_AF.selectedObject.components['circles-parent-constraint'].rotationOffset;
+          let rotationOffset = Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
           let rotationOffsetY =  rotationOffset.y;
           rotationOffsetY += 90.0;
           //now round to 90 increments so that if a user presses quickly it doesn't end on a strange angle
@@ -31,16 +31,8 @@ AFRAME.registerComponent('circles-manager', {
           let diff        = ( remainder < 90/2 ) ? -remainder : 90-remainder; //if too small round down to "0" else round up to "90" increment
           rotationOffsetY += diff;
 
-          AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].rotationOffset,
-            y: rotationOffsetY,
-            easing: 'easeOutQuad',
-            duration: 250,
-            // update: function() {
-            //   //console.log("running?");
-            // }
-          });
-
+          console.log("rotate artefact");
+          Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
         });
 
         //release object (can also click on object)
@@ -53,19 +45,12 @@ AFRAME.registerComponent('circles-manager', {
 
         Context_AF.zoomControl.addEventListener('click', (e) => { 
           Context_AF.zoomNear = !Context_AF.zoomNear;
-          let positionOffset =  Context_AF.selectedObject.components['circles-parent-constraint'].positionOffset;
+          let positionOffset =  Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
           let positionOffsetZ = (Context_AF.zoomNear) ? -1.0 : -2.0;
           //Context_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
 
-          AFRAME.ANIME({
-            targets: Context_AF.selectedObject.components['circles-parent-constraint'].positionOffset,
-            z: positionOffsetZ,
-            easing: 'easeOutQuad',
-            duration: 250,
-            // update: function() {
-            //   //console.log("running?");
-            // }
-          });
+          console.log("zoom artefact");
+          Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
     });
   },
@@ -242,11 +227,14 @@ AFRAME.registerComponent('circles-manager', {
       });
     }
 
+    // let avatarHead = Context_AF.el.sceneEl.querySelector('#player1');
+    // avatarHead = avatarHead.querySelector('.user_head');
+
     //set new transform
-    Context_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
+    //Context_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
     Context_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
     Context_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    Context_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:Context_AF.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
+    Context_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
 
     if ( showDescription )  {
       //show description text with appropriate values
