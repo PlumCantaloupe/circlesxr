@@ -60,6 +60,10 @@ AFRAME.registerComponent('circles-parent-constraint', {
       Context_AF.originalPos         = Context_AF.el.object3D.position.clone();
       Context_AF.originalRot         = Context_AF.el.object3D.quaternion.clone();
       Context_AF.originalSca         = Context_AF.el.object3D.scale.clone();
+
+      //see camera weirdness below
+      Context_AF.isCamera = ('camera' in this.psuedoParent.components);
+      Context_AF.camRig = this.el.sceneEl.querySelector('#player1CamRig');
   },
   tick: function(time, timeDelta) {
      if ( time - this.prevTime > this.data.updateRate ) {
@@ -74,10 +78,23 @@ AFRAME.registerComponent('circles-parent-constraint', {
           this.rotMat_Off.identity();
           this.scaleMat.identity();
 
-          //break down into individual transforms ... thanks for the handy functions THREEjs!
-          this.psuedoParent.object3D.getWorldPosition( this.position_E );
-          this.psuedoParent.object3D.getWorldQuaternion( this.rotation_E );
-          this.psuedoParent.object3D.getWorldScale( this.scale_E );
+          //if camera need to handle differently as Oculus browser does not report world matrices properly
+          //note this weirdness also appearts to apply to any child of camera
+          if (this.isCamera) {
+            // matrix math doesn't work
+            // this.worldMat_Constraint.multiplyMatrices(this.camRig.object3D.matrix, this.psuedoParent.object3D.matrix);
+            // this.worldMat_Constraint.decompose(this.position_E, this.rotation_E, this.scale_E);
+            // this.worldMat_Constraint.identity();
+
+            //this is so messed up. Matrix math doesn't work but adding independently (w/o matrices) does ...???
+            this.position_E.addVectors(this.camRig.object3D.position, this.psuedoParent.object3D.position);
+            this.rotation_E.multiplyQuaternions(this.camRig.object3D.quaternion, this.psuedoParent.object3D.quaternion);
+            this.scale_E.multiplyVectors(this.camRig.object3D.scale, this.psuedoParent.object3D.scale);
+          }
+          else {
+            this.psuedoParent.object3D.updateMatrixWorld(true);
+		    this.psuedoParent.object3D.matrixWorld.decompose( this.position_E, this.rotation_E, this.scale_E );
+          }
 
           //set matrices
           this.posMat.makeTranslation(this.position_E.x, this.position_E.y, this.position_E.z );

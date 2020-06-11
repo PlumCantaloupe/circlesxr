@@ -242,11 +242,14 @@ AFRAME.registerComponent('circles-manager', {
       });
     }
 
+    // let avatarHead = Context_AF.el.sceneEl.querySelector('#player1');
+    // avatarHead = avatarHead.querySelector('.user_head');
+
     //set new transform
     Context_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
     Context_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
     Context_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    Context_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:Context_AF.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
+    Context_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
 
     if ( showDescription )  {
       //show description text with appropriate values
