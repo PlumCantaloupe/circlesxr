@@ -3,7 +3,7 @@
 AFRAME.registerComponent('circles-object-world', {
 schema: {
     object_world:      {type: 'string',    default:'rgb(255,255,255)'},
-    pickedup:          {type: 'bool',    default:'false'}
+    pickedup:          {type: 'bool',    default:false}
     },
   init: function() {
     const Context_AF    = this;
