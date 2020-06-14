@@ -106,7 +106,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         cameraElem.setAttribute('camera',{});
         cameraElem.setAttribute('look-controls',{pointerLockEnabled:false});
 
-        //add pointer if not a headset (we will use laser controls there instead)
+        //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {
 
           console.log('pointer/cursor controls ADDED');
