@@ -20,7 +20,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         console.log('Attached camera controls to rig');
 
         //assuming there are hand controllers ...
-        if ( AFRAME.utils.checkHeadsetConnected() )  {
+        if ( AFRAME.utils.device.checkHeadsetConnected() )  {
           //get hand colours
           const avatar      = document.querySelector("#player1").querySelector('.avatar');
           const bodyColor   = avatar.components["circles-user-networked"].data.color_head;
