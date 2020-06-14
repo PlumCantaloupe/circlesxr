@@ -20,7 +20,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         console.log('Attached camera controls to rig');
 
         //assuming there are hand controllers ...
-        if ( AFRAME.utils.checkHeadsetConnected() )  {
+        if ( AFRAME.utils.device.checkHeadsetConnected() )  {
           //get hand colours
           const avatar      = document.querySelector("#player1").querySelector('.avatar');
           const bodyColor   = avatar.components["circles-user-networked"].data.color_head;
@@ -35,7 +35,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
           let entity_Controller_2 = document.createElement('a-entity');
           entity_Controller_2.setAttribute('id','controller_left');
-          entity_Controller_1.setAttribute('class', 'controller_thumb');
+          entity_Controller_2.setAttribute('class', 'controller_thumb');
           entity_Controller_2.setAttribute('hand-controls', {hand:'left', handModelStyle:'lowPoly', color:bodyColor});
           rigElem.appendChild(entity_Controller_2);
         }
@@ -107,7 +107,10 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         cameraElem.setAttribute('look-controls',{pointerLockEnabled:false});
 
         //add pointer if not a headset (we will use laser controls there instead)
-        if (!AFRAME.utils.device.checkHeadsetConnected() || AFRAME.utils.device.isMobile()) {
+        if (!AFRAME.utils.device.isMobileVR()) {
+
+          console.log('pointer/cursor controls ADDED');
+
           let entity_Pointer = document.createElement('a-entity');
           entity_Pointer.setAttribute('class', 'pointer');
           entity_Pointer.setAttribute('cursor', 'fuse:false; rayOrigin:mouse;'); //don't want fuse - just clicks as expected :)
@@ -116,6 +119,9 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           cameraElem.appendChild(entity_Pointer);
         }
         else {
+
+          console.log('pointer/cursor controls NOT ADDED');
+
           //modify cursor down and up events that laser-controls is setting 
           //look to laser-controls https://github.com/aframevr/aframe/blob/master/src/components/laser-controls.js
           //cursor: {downEvents: ['trackpaddown', 'triggerdown'], upEvents: ['trackpadup', 'triggerup']},
