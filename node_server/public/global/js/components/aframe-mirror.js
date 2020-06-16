@@ -64,7 +64,7 @@ let Reflector = function(mesh, renderer, scene, data)
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat,
 		stencilBuffer: false,
-		encoding: renderer.outputEncoding
+		//encoding: renderer.outputEncoding
 	};
 
     var renderTarget = new THREE.WebGLRenderTarget(this.data.textureWidth, this.data.textureHeight, parameters );
@@ -94,6 +94,11 @@ let Reflector = function(mesh, renderer, scene, data)
 	material.uniforms.color.value = new THREE.Color(this.data.color);
 	material.uniforms.invertedUV.value = this.data.invertedUV;
 	material.uniforms.textureMatrix.value = textureMatrix;
+
+	//using @westlangley's suggested change here: https://github.com/mrdoob/three.js/pull/19666#issuecomment-644450580
+	material.onBeforeCompile = function ( shader, renderer ) {
+		this.uniforms[ "tDiffuse" ].value.encoding = renderer.outputEncoding;
+	}
 
 	if(this.data.textureOne)
 	{
@@ -199,14 +204,14 @@ let Reflector = function(mesh, renderer, scene, data)
 
 		// Render
 
-		if ( renderer.outputEncoding !== renderTarget.texture.encoding ) {
+		// if ( renderer.outputEncoding !== renderTarget.texture.encoding ) {
 
-			console.warn('THREE.Reflector: renderer outputEncoding(' + renderer.outputEncoding + ') and rendertarget encoding parameter(' + renderTarget.texture.encoding + ') must match.' );
-			scope.onBeforeRender = function () {};
+		// 	console.warn('THREE.Reflector: renderer outputEncoding(' + renderer.outputEncoding + ') and rendertarget encoding parameter(' + renderTarget.texture.encoding + ') must match.' );
+		// 	scope.onBeforeRender = function () {};
 
-			return;
+		// 	return;
 
-		}
+		// }
 
 		//renderTarget.outputEncoding = THREE.LinearEncoding;
 
