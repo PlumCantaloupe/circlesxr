@@ -28,10 +28,46 @@ AFRAME.registerComponent('fitts-explore', {
         const Context_AF = this;
         const scene      = document.querySelector('a-scene');
 
-        
+        Context_AF.createTargets();
     },
     update: function (oldData) {
         //called 
+    },
+    tick: function (time, timeDelta) {
+    },
+    createTargets: function() {
+        const CONTEXT_AF = this;
+
+        //create fitt's law "spheres"
+        const NUM_TARGETS   = 8;
+        const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
+        const ARC_RADIUS    = 4.0;
+        const TARGET_GEO    = {primitive:'sphere', radius:0.5, segmentsWidth:20, segmentsHeight:20};
+        const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)'};
+
+        let pointerVec  = new THREE.Vector3(ARC_RADIUS, 0.0, 0.0);
+        const rotateVec = new THREE.Vector3(0.0, 1.0, 0.0);
+
+        for (let i = 0; i < NUM_TARGETS; i++) {
+            let target = document.createElement('a-entity');
+            target.setAttribute('id', 'target_' + i);
+            target.setAttribute('class', 'interactive fitts_target');
+            target.setAttribute('geometry', TARGET_GEO);
+            target.setAttribute('material', TARGET_MAT);
+            target.setAttribute('position', {x:pointerVec.x, y:pointerVec.y, z:pointerVec.z});
+            target.setAttribute('circles-interactive-object', {});
+            CONTEXT_AF.el.appendChild(target);
+
+            console.log(pointerVec);
+            pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
+        }
+    }
+});
+
+AFRAME.registerSystem('research-manager', {
+    init() {
+        //called on 
+        console.log('Starting research-system!');
     },
     tick: function (time, timeDelta) {
         
