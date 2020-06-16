@@ -1,6 +1,6 @@
 //https://github.com/aalavandhaann/three_reflector
 //modified from Three.js mirror example and three_reflector ( https://github.com/aalavandhaann/three_reflector )
-let Reflector = function(mesh, data)
+let Reflector = function(mesh, renderer, data)
 {
     data = (data) ? data : {};
 	
@@ -29,9 +29,10 @@ let Reflector = function(mesh, data)
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat,
 		stencilBuffer: false,
+		encoding: renderer.outputEncoding
 	};
 
-    var renderTarget = new THREE.WebGLRenderTarget(data.textureWidth, data.textureHeight, parameters );
+	var renderTarget = new THREE.WebGLRenderTarget(data.textureWidth, data.textureHeight, parameters );
 
     if ( ! THREE.Math.isPowerOfTwo( data.textureWidth ) || ! THREE.Math.isPowerOfTwo( data.textureHeight ) ) {
 		renderTarget.texture.generateMipmaps = false;
@@ -54,10 +55,11 @@ let Reflector = function(mesh, data)
 	material.uniforms.invertedUV.value 		= data.invertedUV;
 	material.uniforms.textureMatrix.value 	= textureMatrix;
 
-	//using @westlangley's suggested change here: https://github.com/mrdoob/three.js/pull/19666#issuecomment-644450580
-	material.onBeforeCompile = function ( shader, renderer ) {
-		this.uniforms[ "tDiffuse" ].value.encoding = renderer.outputEncoding;
-	}
+	//commenting out for now as some issues listed in below link
+	//using @westlangley's suggested change here: https://github.com/mrdoob/three.js/pull/19666 
+	// material.onBeforeCompile = function ( shader, renderer ) {
+	// 	this.uniforms[ "tDiffuse" ].value.encoding = renderer.outputEncoding;
+	// }
 
 	if(data.textureOne) {
 		var texture 						= new THREE.TextureLoader().load(data.textureOne);
@@ -154,6 +156,12 @@ let Reflector = function(mesh, data)
 		projectionMatrix.elements[ 10 ] = clipPlane.z + 1.0 - clipBias;
 		projectionMatrix.elements[ 14 ] = clipPlane.w;
 
+		if ( renderer.outputEncoding !== renderTarget.texture.encoding ) {
+			console.warn('THREE.Reflector: renderer outputEncoding (' + renderer.outputEncoding + ') and Reflector (rendertarget) encoding (' + renderTarget.texture.encoding + ') must match.' );
+			scope.onBeforeRender = function () {};
+			return;
+		}
+
 		scope.visible = false;
 
 		var currentRenderTarget = renderer.getRenderTarget();
@@ -194,7 +202,6 @@ Reflector.prototype.constructor = Reflector;
 // 'vec4 reflection = texture2DProj( tDiffuse, vUv2 );',
 Reflector.ReflectorShader = 
 {
-
 	uniforms: THREE.UniformsUtils.merge( [
 	THREE.UniformsLib[ "ambient" ],
 	THREE.UniformsLib['lights'],
@@ -371,8 +378,8 @@ AFRAME.registerComponent('aframe-mirror',
 	    if(!mirrorMesh) {
 			console.warn("no mesh attached to mirror component");
 	    	return;
-	    }
+		}
 
-	    this.reflector = Reflector(mirrorMesh, this.data);
+	    this.reflector = Reflector(mirrorMesh, this.el.sceneEl.renderer, this.data);
 	},
 });
