@@ -366,13 +366,13 @@ AFRAME.registerComponent('aframe-mirror',
 	},
 	init: function () 
 	{
-	    const mirrorObj 	= this.el.getObject3D('mesh');
+	    const mirrorMesh 	= this.el.getObject3D('mesh');
 
-	    if(!mirrorObj) {
+	    if(!mirrorMesh) {
 			console.warn("no mesh attached to mirror component");
 	    	return;
 	    }
 
-	    this.reflector = Reflector(mirrorObj, this.data);
+	    this.reflector = Reflector(mirrorMesh, this.data);
 	},
 });
