@@ -1,86 +1,45 @@
 //https://github.com/aalavandhaann/three_reflector
-
-AFRAME.registerComponent('aframe-mirror', 
-{
-	schema:{
-		textureOne: 	{type:'string',   	default:''},
-	    textureTwo: 	{type:'string',		default:''},
-	    wrapOne: 		{type:'vec2', 		default:{x: 1, y: 1}},
-	    wrapTwo: 		{type:'vec2', 		default:{x: 1, y: 1}},
-	    invertedUV: 	{type:'boolean', 	default:false},
-	    textureWidth: 	{type:'int', 		default:256},
-	    textureHeight: 	{type:'int', 		default:256},
-	    color: 			{type:'color', 		default:'#848485'},
-	    intensity: 		{type:'number', 	default:0.5},
-	    blendIntensity: {type:'number', 	default:1.0}
-	},
-	init: function () 
-	{
-	    const three_scene 	= this.el.sceneEl.object3D;
-	    const mirrorObj 	= this.el.getObject3D('mesh');
-
-	    if(!mirrorObj)
-	    {
-			console.warn("no mesh attached to mirror component");
-	    	return;
-	    }
-
-	    this.reflector = Reflector(mirrorObj, this.el.sceneEl.renderer, three_scene, this.data);
-	},
-});
-
 //modified from Three.js mirror example and three_reflector ( https://github.com/aalavandhaann/three_reflector )
-
-let Reflector = function(mesh, renderer, scene, data)
+let Reflector = function(mesh, data)
 {
-	this.type = 'Reflector';
-
-    this.renderer = renderer;
-    this.data = (data) ? data : {};
+    data = (data) ? data : {};
 	
 	//intensity doesn't work at zero
-	if ( this.data.intensity < Number.EPSILON ) {
-		console.log('too small');
-		this.data.intensity = Number.EPSILON;
+	if ( data.intensity < Number.EPSILON ) {
+		data.intensity = Number.EPSILON;
 	}
 
-    var reflectorPlane = new THREE.Plane();
-	var normal = new THREE.Vector3();
-	var reflectorWorldPosition = new THREE.Vector3();
-	var cameraWorldPosition = new THREE.Vector3();
-	var rotationMatrix = new THREE.Matrix4();
-	var lookAtPosition = new THREE.Vector3( 0, 0, - 1 );
-	var clipPlane = new THREE.Vector4();
+    var reflectorPlane			= new THREE.Plane();
+	var normal 					= new THREE.Vector3();
+	var reflectorWorldPosition 	= new THREE.Vector3();
+	var cameraWorldPosition 	= new THREE.Vector3();
+	var rotationMatrix 			= new THREE.Matrix4();
+	var lookAtPosition 			= new THREE.Vector3( 0, 0, - 1 );
+	var clipPlane 				= new THREE.Vector4();
 
-	var view = new THREE.Vector3();
-	var target = new THREE.Vector3();
-	var q = new THREE.Vector4();
+	var view 					= new THREE.Vector3();
+	var target 					= new THREE.Vector3();
+	var q 						= new THREE.Vector4();
 
-	var textureMatrix = new THREE.Matrix4();
-	var virtualCamera = new THREE.PerspectiveCamera();
+	var textureMatrix 			= new THREE.Matrix4();
+	var virtualCamera 			= new THREE.PerspectiveCamera();
 	
 	var parameters = {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat,
 		stencilBuffer: false,
-		//encoding: renderer.outputEncoding
 	};
 
-    var renderTarget = new THREE.WebGLRenderTarget(this.data.textureWidth, this.data.textureHeight, parameters );
+    var renderTarget = new THREE.WebGLRenderTarget(data.textureWidth, data.textureHeight, parameters );
 
-
-    if ( ! THREE.Math.isPowerOfTwo( this.data.textureWidth ) || ! THREE.Math.isPowerOfTwo( this.data.textureHeight ) ) 
-    {
+    if ( ! THREE.Math.isPowerOfTwo( data.textureWidth ) || ! THREE.Math.isPowerOfTwo( data.textureHeight ) ) {
 		renderTarget.texture.generateMipmaps = false;
 	}
 
-	var scope = mesh;
-	var color = this.data.color;
-	var textureWidth = this.data.textureWidth;
-	var textureHeight = this.data.textureHeight;
-	var clipBias = 0;
-	var shader = Reflector.ReflectorShader;
+	var scope 		= mesh;
+	var clipBias 	= 0;
+	var shader 		= Reflector.ReflectorShader;
 
 	var material = new THREE.ShaderMaterial( {
 		uniforms: THREE.UniformsUtils.clone( shader.uniforms ),
@@ -88,61 +47,55 @@ let Reflector = function(mesh, renderer, scene, data)
 		vertexShader: shader.vertexShader
 	});
 
-	material.uniforms.intensity.value = this.data.intensity;
-	material.uniforms.blendIntensity.value = this.data.blendIntensity;
-	material.uniforms.tDiffuse.value  = renderTarget.texture;
-	material.uniforms.color.value = new THREE.Color(this.data.color);
-	material.uniforms.invertedUV.value = this.data.invertedUV;
-	material.uniforms.textureMatrix.value = textureMatrix;
+	material.uniforms.intensity.value 		= data.intensity;
+	material.uniforms.blendIntensity.value 	= data.blendIntensity;
+	material.uniforms.tDiffuse.value  		= renderTarget.texture;
+	material.uniforms.color.value 			= new THREE.Color(data.color);
+	material.uniforms.invertedUV.value 		= data.invertedUV;
+	material.uniforms.textureMatrix.value 	= textureMatrix;
 
 	//using @westlangley's suggested change here: https://github.com/mrdoob/three.js/pull/19666#issuecomment-644450580
 	material.onBeforeCompile = function ( shader, renderer ) {
 		this.uniforms[ "tDiffuse" ].value.encoding = renderer.outputEncoding;
 	}
 
-	if(this.data.textureOne)
-	{
-		console.log('LOAD TEXTURE ONE ');
-		var texture = new THREE.TextureLoader().load(this.data.textureOne);
-		texture.wrapS = THREE.RepeatWrapping;
-		texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set( this.data.wrapOne.x, this.data.wrapOne.y );
-		material.uniforms.tOneFlag.value = true;
-		material.uniforms.tOne.value = texture;
-		material.uniforms.tOneWrapX.value = texture.repeat.x;
-		material.uniforms.tOneWrapY.value = texture.repeat.y;
+	if(data.textureOne) {
+		var texture 						= new THREE.TextureLoader().load(data.textureOne);
+		texture.wrapS 						= THREE.RepeatWrapping;
+		texture.wrapT 						= THREE.RepeatWrapping;
+		texture.repeat.set( data.wrapOne.x, data.wrapOne.y );
+		material.uniforms.tOneFlag.value 	= true;
+		material.uniforms.tOne.value 		= texture;
+		material.uniforms.tOneWrapX.value 	= texture.repeat.x;
+		material.uniforms.tOneWrapY.value 	= texture.repeat.y;
 	}
 
-	if(this.data.textureTwo)
-	{
-		console.log('LOAD TEXTURE TWO ');
-		var texture = new THREE.TextureLoader().load(this.data.textureTwo);
-		texture.wrapS = THREE.RepeatWrapping;
-		texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set( this.data.wrapTwo.x, this.data.wrapTwo.y );
-		material.uniforms.tTwoFlag.value = true;
-		material.uniforms.tSec.value = texture;
-		material.uniforms.tTwoWrapX.value = texture.repeat.x;
-		material.uniforms.tTwoWrapY.value = texture.repeat.y;
+	if(data.textureTwo) {
+		var texture 						= new THREE.TextureLoader().load(data.textureTwo);
+		texture.wrapS	 					= THREE.RepeatWrapping;
+		texture.wrapT 						= THREE.RepeatWrapping;
+		texture.repeat.set( data.wrapTwo.x, data.wrapTwo.y );
+		material.uniforms.tTwoFlag.value 	= true;
+		material.uniforms.tSec.value 		= texture;
+		material.uniforms.tTwoWrapX.value 	= texture.repeat.x;
+		material.uniforms.tTwoWrapY.value 	= texture.repeat.y;
 	}
 
 	mesh.material = material;
-
 
     mesh.onBeforeRender = function( renderer, scene, camera ) {
 		reflectorWorldPosition.setFromMatrixPosition( scope.matrixWorld );
 		cameraWorldPosition.setFromMatrixPosition( camera.matrixWorld );
 		
 		rotationMatrix.extractRotation( scope.matrixWorld );
-		
 		normal.set( 0, 0, 1 );
 		normal.applyMatrix4( rotationMatrix );
-		
 		view.subVectors( reflectorWorldPosition, cameraWorldPosition );
 		
 		// Avoid rendering when reflector is facing away
-
-		if ( view.dot( normal ) > 0 ) return;
+		if ( view.dot( normal ) > 0 ) {
+			return;
+		}
 		
 		view.reflect( normal ).negate();
 		view.add( reflectorWorldPosition );
@@ -164,7 +117,6 @@ let Reflector = function(mesh, renderer, scene, data)
 		virtualCamera.lookAt( target );
 		
 		virtualCamera.far = camera.far; // Used in WebGLBackground
-		
 		virtualCamera.updateMatrixWorld();
 		virtualCamera.projectionMatrix.copy( camera.projectionMatrix );
 		
@@ -197,28 +149,14 @@ let Reflector = function(mesh, renderer, scene, data)
 		clipPlane.multiplyScalar( 2.0 / clipPlane.dot( q ) );
 		
 		// Replacing the third row of the projection matrix
-		projectionMatrix.elements[ 2 ] = clipPlane.x;
-		projectionMatrix.elements[ 6 ] = clipPlane.y;
+		projectionMatrix.elements[ 2 ]	= clipPlane.x;
+		projectionMatrix.elements[ 6 ] 	= clipPlane.y;
 		projectionMatrix.elements[ 10 ] = clipPlane.z + 1.0 - clipBias;
 		projectionMatrix.elements[ 14 ] = clipPlane.w;
-
-		// Render
-
-		// if ( renderer.outputEncoding !== renderTarget.texture.encoding ) {
-
-		// 	console.warn('THREE.Reflector: renderer outputEncoding(' + renderer.outputEncoding + ') and rendertarget encoding parameter(' + renderTarget.texture.encoding + ') must match.' );
-		// 	scope.onBeforeRender = function () {};
-
-		// 	return;
-
-		// }
-
-		//renderTarget.outputEncoding = THREE.LinearEncoding;
 
 		scope.visible = false;
 
 		var currentRenderTarget = renderer.getRenderTarget();
-
 		var currentXrEnabled = renderer.xr.enabled;
 		var currentShadowAutoUpdate = renderer.shadowMap.autoUpdate;
 
@@ -229,7 +167,9 @@ let Reflector = function(mesh, renderer, scene, data)
 		
 		renderer.state.buffers.depth.setMask( true ); // make sure the depth buffer is writable so it can be properly cleared, see #18897
 
-		if ( renderer.autoClear === false ) renderer.clear();
+		if ( renderer.autoClear === false ) {
+			renderer.clear();
+		}
 		renderer.render( scene, virtualCamera );
 
 		renderer.xr.enabled = currentXrEnabled;
@@ -238,13 +178,9 @@ let Reflector = function(mesh, renderer, scene, data)
 		renderer.setRenderTarget( currentRenderTarget );
 
 		// Restore viewport
-
 		var viewport = camera.viewport;
-
 		if ( viewport !== undefined ) {
-
 			renderer.state.viewport( viewport );
-
 		}
 
 		scope.visible = true;
@@ -263,73 +199,59 @@ Reflector.ReflectorShader =
 	THREE.UniformsLib[ "ambient" ],
 	THREE.UniformsLib['lights'],
     THREE.UniformsLib[ "fog" ],{
-		'color': 
-		{
+		'color': {
 			type: 'c',
 			value: null
 		},
-		'tDiffuse': 
-		{
+		'tDiffuse': {
 			type: 't',
 			value: null
 		},
-		'textureMatrix': 
-		{
+		'textureMatrix': {
 			type: 'm4',
 			value: null
 		},
-		'intensity': 
-		{
+		'intensity': {
 			type: 'f',
 			value: 0.5
 		},
-		'blendIntensity': 
-		{
+		'blendIntensity': {
 			type: 'f',
 			value: 0.5
 		},
-		'tOneWrapX': 
-		{
+		'tOneWrapX': {
 			type: 'f',
 			value: 1.0
 		},
-		'tOneWrapY': 
-		{
+		'tOneWrapY': {
 			type: 'f',
 			value: 1.0
 		},
-		'tTwoWrapX': 
-		{
+		'tTwoWrapX': {
 			type: 'f',
 			value: 1.0
 		},
-		'tTwoWrapY': 
-		{
+		'tTwoWrapY': {
 			type: 'f',
 			value: 1.0
 		},
-		'tOne': 
-		{
+		'tOne': {
 			type: 't',
 			value: null
 		},
-		'tSec':
-		{
+		'tSec':{
 			type: 't',
 			value: null
 		},
-		'tOneFlag':
-		{
+		'tOneFlag':{
 			type: 'b',
 			value: false
 		},
-		'tTwoFlag':
-		{
+		'tTwoFlag':{
 			type: 'b',
 			value: false
 		},
-		'invertedUV':
-		{
+		'invertedUV':{
 			type: 'b',
 			value: false
 		}
@@ -389,7 +311,6 @@ Reflector.ReflectorShader =
       THREE.ShaderChunk[ "common" ],
       THREE.ShaderChunk[ "fog_pars_fragment" ],
 
-
       'void main() ',
       '{',
             'vec3 c;',
@@ -427,3 +348,31 @@ Reflector.ReflectorShader =
       '}',
 	].join( '\n' ),
 };
+
+
+AFRAME.registerComponent('aframe-mirror', 
+{
+	schema:{
+		textureOne: 	{type:'string',   	default:''},
+	    textureTwo: 	{type:'string',		default:''},
+	    wrapOne: 		{type:'vec2', 		default:{x: 1, y: 1}},
+	    wrapTwo: 		{type:'vec2', 		default:{x: 1, y: 1}},
+	    invertedUV: 	{type:'boolean', 	default:false},
+	    textureWidth: 	{type:'int', 		default:256},
+	    textureHeight: 	{type:'int', 		default:256},
+	    color: 			{type:'color', 		default:'#848485'},
+	    intensity: 		{type:'number', 	default:0.5},
+	    blendIntensity: {type:'number', 	default:1.0}
+	},
+	init: function () 
+	{
+	    const mirrorObj 	= this.el.getObject3D('mesh');
+
+	    if(!mirrorObj) {
+			console.warn("no mesh attached to mirror component");
+	    	return;
+	    }
+
+	    this.reflector = Reflector(mirrorObj, this.data);
+	},
+});
