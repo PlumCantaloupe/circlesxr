@@ -112,7 +112,10 @@ AFRAME.registerComponent('circles-interactive-object', {
                     attrs[i].name !== 'material' && 
                     attrs[i].name !== 'position' && 
                     attrs[i].name !== 'rotation' && 
-                    attrs[i].name !== 'scale' && 
+                    attrs[i].name !== 'scale' &&
+                    attrs[i].name !== 'sound' && 
+                    attrs[i].name !== 'circles-sphere-env-map' && 
+                    attrs[i].name !== 'shadow' && 
                     attrs[i].name !== 'visible' && 
                     attrs[i].name !== 'circles-interactive-object' &&
                     attrs[i].name !== 'circles-object-label' &&
