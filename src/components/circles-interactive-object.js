@@ -3,9 +3,6 @@
 AFRAME.registerComponent('circles-interactive-object', {
   schema: {
     highlight_color:    {type:'color',      default:'rgb(255,255,255)'},
-    hovered_opacity:    {type:'number',     default:1.0},
-    clicked_opacity:    {type:'number',     default:0.7},
-    neutral_opacity:    {type:'number',     default:0.0},
     hovered_scale:      {type:'number',     default:1.05},
     clicked_scale:      {type:'number',     default:1.05},
     neutral_scale:      {type:'number',     default:1.05},
@@ -14,8 +11,22 @@ AFRAME.registerComponent('circles-interactive-object', {
     const Context_AF = this;
     const data = this.data;
 
-    Context_AF.highlightElem    = null;
-    Context_AF.createHighlightElement(); 
+    //Context_AF.highlightElem    = null;
+    //this is the visible object model
+    Context_AF.highlightElem = document.createElement('a-entity');
+    Context_AF.highlightElem.addEventListener('loaded', function (evt) {
+        Context_AF.highlightElem.emit(CIRCLES.EVENTS.OBJECT_HIGHLIGHT_LOADED, false);
+    });
+    // Context_AF.createHighlightElement(); 
+
+    if (Context_AF.el.sceneEl.hasLoaded) {
+        Context_AF.createHighlightElement(); 
+        console.log('SCENE LOADED');
+    }
+    else {
+        Context_AF.el.sceneEl.addEventListener('loaded', () => Context_AF.createHighlightElement());
+        console.log('SCENE not LOADED yet');
+    }
 
     // const loadFunc = (e) => {
     //     if (e.detail.type === 'mesh') { 
@@ -44,20 +55,6 @@ AFRAME.registerComponent('circles-interactive-object', {
         Context_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
     }
 
-    //opacity changes
-    if ( (oldData.hovered_opacity !== data.hovered_opacity) && (data.hovered_opacity !== '') ) {
-        Context_AF.highlightElem.hovered_opacity = data.hovered_opacity;
-    }
-
-    if ( (oldData.clicked_opacity !== data.clicked_opacity) && (data.clicked_opacity !== '') ) {
-        Context_AF.highlightElem.clicked_opacity = data.clicked_opacity;
-    }
-
-    if ( (oldData.neutral_opacity !== data.neutral_opacity) && (data.neutral_opacity !== '') ) {
-        Context_AF.highlightElem.neutral_opacity = data.neutral_opacity;
-        Context_AF.highlightElem.setAttribute('material', {opacity:data.neutral_opacity});    
-    }
-
     //size changes
     if ( (oldData.hovered_scale !== data.hovered_scale) && (data.hovered_scale !== '') ) {
         Context_AF.highlightElem.hovered_scale = data.hovered_scale;
@@ -76,21 +73,14 @@ AFRAME.registerComponent('circles-interactive-object', {
     const Context_AF = this;
     const data = this.data;
     let modelElem = Context_AF.el;
-
-    //this is the visible object model
-    Context_AF.highlightElem = document.createElement('a-entity');
-    Context_AF.highlightElem.addEventListener('loaded', function (evt) {
-        Context_AF.highlightElem.emit(CIRCLES.EVENTS.OBJECT_HIGHLIGHT_LOADED, false);
-    });
     
     //need to do this for loaded objects like gltf ...
     Context_AF.highlightElem.addEventListener('model-loaded', function (e) {
-        let model   = Context_AF.highlightElem.getObject3D('mesh');
-        let flatMat = new THREE.MeshBasicMaterial();
-        //flatMat.color           = data.highlight_color;
-        flatMat.transparency    = true;
+        let model               = Context_AF.highlightElem.getObject3D('mesh');
+        let flatMat             = new THREE.MeshBasicMaterial();
+        flatMat.color           = data.highlight_color;
+        flatMat.transparency    = false;
         flatMat.side            = THREE.BackSide;
-        flatMat.opacity         = data.neutral_opacity;
 
         model.traverse(function(node) {
             if (node.isMesh) {
@@ -129,23 +119,16 @@ AFRAME.registerComponent('circles-interactive-object', {
     }
 
     //inverse shell method as post-processing is far too expensive for mobile VR (setting mat also so that primitives also work)
-    Context_AF.highlightElem.setAttribute('material', {color:data.highlight_color, shader:'flat', side:'back', transparent:true, opacity:data.neutral_opacity, src:null});    
+    Context_AF.highlightElem.setAttribute('material', {color:data.highlight_color, shader:'flat', side:'back'});    
     Context_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
     Context_AF.highlightElem.setAttribute('shadow', {cast:false, receive:false});
-    if ( data.neutral_opacity < 0.001 ) {
-        Context_AF.highlightElem.setAttribute('visible', false);
-    }
-    else {
-        Context_AF.highlightElem.setAttribute('visible', true); 
-    }
+    Context_AF.highlightElem.setAttribute('visible', false);
     modelElem.appendChild(Context_AF.highlightElem);
 
     //clicked
     modelElem.addEventListener('click', (e) => {
-        Context_AF.highlightElem.setAttribute('material', {opacity:data.clicked_opacity});
         Context_AF.highlightElem.setAttribute('scale', {x:data.clicked_scale, y:data.clicked_scale, z:data.clicked_scale});
         const timeoutObj = setTimeout(() => {
-            Context_AF.highlightElem.setAttribute('material', {opacity: data.hovered_opacity});
             Context_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
             clearTimeout(timeoutObj);
           }, 200);
@@ -154,18 +137,20 @@ AFRAME.registerComponent('circles-interactive-object', {
     //hovering
     modelElem.addEventListener('mouseenter', (e) => {
         Context_AF.highlightElem.setAttribute('visible', true);
-        Context_AF.highlightElem.setAttribute('material', {opacity: data.hovered_opacity});
         Context_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
     });
 
     //not hovering
     modelElem.addEventListener('mouseleave', (e) => {
-        if ( data.neutral_opacity < 0.0001 ) {
-            Context_AF.highlightElem.setAttribute('visible', false);
-        }
-        Context_AF.highlightElem.setAttribute('material', {opacity: data.neutral_opacity});
+        Context_AF.highlightElem.setAttribute('visible', false);
         Context_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
     });
+  },
+  tick: function (time, timeDelta) {
+    // from discussion here: https://github.com/aframevr/aframe/issues/3556
+    // if (time === 0) {
+    //     this.createHighlightElement();
+    // }
   },
   remove: function () {}
 });
