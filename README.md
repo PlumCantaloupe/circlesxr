@@ -111,3 +111,19 @@ ___TODO: will add more to this later___
 
   <circles-end-scripts/>
   ```
+  
+  ----------------
+
+## Early Contributors
+
+The following are several companions that have helped in both small and large ways to bring this project into existence. Starting as a prototype for [Oculus Launchpad 2018](https://developer.oculus.com/launch-pad/) to showcase [Viola Desmond's story as a pioneer for Canadian civil rights](https://humanrights.ca/story/one-womans-resistance) and, more recently, helping direct content for highlighting the challanges women face in the trades, I wanted to recognize them for their early direction and support. Though this is mainly a research project for my [Ph.D. work at Carleton University](https://carleton.ca/engineering-design/story/giving-new-life-to-a-canadian-legend/) I hope that their contributions in this open-source repository will also help and inspire others as they have myself.
+
+Thank you from an aspiring student of all things XR and learning, [Anthony Scavarelli](http://portfolio.anthony-scavarelli.com/)
+
+- **Tetsuro Takara**, *Web Developer*, [https://www.tetchi.ca/](https://www.tetchi.ca/)
+- **Grant Lucas**, *Web Developer* [https://grantlucas.com/](https://grantlucas.com/)
+- **Heather Hennessey**, *WebXR Developer* [https://www.linkedin.com/in/heather-hennessey-4961a5132/](https://www.linkedin.com/in/heather-hennessey-4961a5132/)
+- **Virginia Mielke**, *3D Artist* [https://www.linkedin.com/in/virginia-mielke-ba1a361/](https://www.linkedin.com/in/virginia-mielke-ba1a361/)
+- **Favour Diokpo**, *3D Artist* [https://www.behance.net/favourdiokpo](https://www.behance.net/favourdiokpo)
+- **Julie McCann**, *Journalist* [http://portfolios.camayak.com/julie-mccann/page/4/](http://portfolios.camayak.com/julie-mccann/page/4/)
+- **Jessica Alberga**, *Journalist* [http://jessicaalberga.ca/](http://jessicaalberga.ca/)
