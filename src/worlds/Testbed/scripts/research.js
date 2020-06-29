@@ -125,10 +125,8 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetsInnerContainer.object3D.position.set(depth, 0.0, 0.0);
         CONTEXT_COMP.targetsOuterContainer.object3D.position.set(depth, 0.0, 0.0);
 
-        //now make sure all targets perpendicular to look vector
-        CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(x_deg), THREE.Math.degToRad(y_deg), 0.0);
-        // CONTEXT_COMP.targetContainer.object3D.lookAt( CAM_POS );
-        // CONTEXT_COMP.targetContainer.object3D.rotation.y += THREE.Math.degToRad(90.0);
+        //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
+        CONTEXT_COMP.targetContainer.object3D.rotation.set(0.0, THREE.Math.degToRad(y_deg), THREE.Math.degToRad(x_deg), 'YXZ');
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -151,7 +149,8 @@ AFRAME.registerComponent('fitts-explore', {
 
                 //TODO: record data
                 //TODO: move to next state
-                CONTEXT_COMP.moveTargets(Math.random() * 180.0, Math.random() * 180.0, 5.0);
+                //angles important here else we get soem strange results. Should probably use quats but only working with two axes ...
+                CONTEXT_COMP.moveTargets(CONTEXT_COMP.getRandomIntInclusive(-60, 60), CONTEXT_COMP.getRandomIntInclusive(-180, 180), 5.0);
 
             }
         }
@@ -159,6 +158,11 @@ AFRAME.registerComponent('fitts-explore', {
             //TODO: move to next state
             //TODO: record data
         }
+    },
+    getRandomIntInclusive: function (min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
     }
 
 
