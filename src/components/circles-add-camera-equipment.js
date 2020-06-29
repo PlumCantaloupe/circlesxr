@@ -103,6 +103,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
   
       Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
         let cameraElem = event.detail.element;
+        cameraElem.setAttribute('id', 'player1Cam');
         cameraElem.setAttribute('camera',{});
         cameraElem.setAttribute('look-controls',{pointerLockEnabled:false});
 
