@@ -7,13 +7,14 @@
 
     <!-- add your custom scripts here -->
     <script src="/worlds/Testbed/scripts/research.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
 
     <a-scene circles_properties>
       <a-assets>
         <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <img id='skyMap' src='/global/assets/textures/equirectangular/PurpleBlue.jpg' crossorigin="anonymous">
 
         <!-- templates, mixins etc. -->
         <circles-assets/>
@@ -28,17 +29,18 @@
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0.0 0.05 0.0"></a-entity>
 
       
-      <!-- the ground -->
-      <a-entity geometry="primitive:circle; radius:1.5; segments:50;" rotation="-90 0 0" material="color:rgb(255, 76, 64); roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity>
+      <!-- the ground, let's remove for now to keep elements present minimal for testing -->
+      <!-- <a-entity geometry="primitive:circle; radius:1.5; segments:50;" rotation="-90 0 0" material="color:rgb(0, 0, 0); roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity> -->
 
       <!-- sky and lights -->
-      <a-entity light="type:spot; intensity:10.0; color:#d5e4f5; angle:80; penumbra:0.1;" circles-platform-shadows rotation="-90 0 0" position='0.0 5.4 -7.0'></a-entity>
+      <!-- <a-entity light="type:spot; intensity:10.0; color:#d5e4f5; angle:80; penumbra:0.1;" circles-platform-shadows rotation="-90 0 0" position='0.0 5.4 -7.0'></a-entity>
       <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
                 geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
+                material='shader:flat; color:#333; side:back;'>
+      </a-entity> -->
+      <a-entity environment="preset:starry"></a-entity>
     </a-scene>
 
     <!-- circles_END_SCRIPTS -->
