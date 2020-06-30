@@ -25,7 +25,9 @@ AFRAME.registerComponent('fitts-explore', {
     schema: {
         participant_height:     {type:'number',     default:1.6},
         include_find_target:    {type:'boolean',    default:true},
-        show_labels:            {type:'boolean',    default:false}
+        show_labels:            {type:'boolean',    default:false},
+        target_size:            {type:'number',     default:0.2},
+        target_depth:           {type:'number',     default:5.0}    
     },
     init() {
         const CONTEXT_COMP = this;
@@ -43,17 +45,29 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.moveTargets(0, 0, 5.0);
+        CONTEXT_COMP.moveTargets(0, 0, CONTEXT_COMP.data.target_depth);
     },
     update: function (oldData) {
-        const Context_COMP  = this;
-        const data          = Context_COMP.data;
+        const CONTEXT_COMP  = this;
+        const data          = CONTEXT_COMP.data;
 
         if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
         //highlight color change
         if (oldData.show_labels !== data.show_labels) {
             //CONTEXT_COMP.targetsLabelContainer.setAttribute('visible', data.show_labels);
+        }
+
+        if (oldData.target_size !== data.target_size) {
+            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_containert');
+            targets.forEach( (target) => {
+                target.object3D.scale.set(data.target_size, data.target_size, data.target_size);
+            });
+        }
+
+        if (oldData.target_depth !== data.target_depth) {
+            //CONTEXT_COMP.targetsLabelContainer.setAttribute('visible', data.show_labels);
+            
         }
     },
     tick: function (time, timeDelta) {
@@ -65,21 +79,26 @@ AFRAME.registerComponent('fitts-explore', {
         const NUM_TARGETS   = 8;
         const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
         const ARC_RADIUS    = 2.0;
-        const TARGET_GEO    = {primitive:'sphere', radius:0.2, segmentsWidth:20, segmentsHeight:20};
+        const TARGET_GEO    = {primitive:'sphere', radius:1.0, segmentsWidth:20, segmentsHeight:20};
         const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat'};
 
         let pointerVec  = new THREE.Vector3(0.0, ARC_RADIUS, 0.0);
         const rotateVec = new THREE.Vector3(0.0, 0.0, 1.0);
         const createTarget_f = (x_pos, y_pos, z_pos, unique_id, parentElem) => {
             //create target
+            let targetConta = document.createElement('a-entity');
+            targetConta.setAttribute('class', 'target_containert');
+            targetConta.setAttribute('position', {x:x_pos, y:y_pos, z:z_pos});
+            parentElem.appendChild(targetConta);
+
             let target = document.createElement('a-entity');
-            target.setAttribute('id', unique_id);
-            target.setAttribute('class', 'interactive fitts_target');
+            target.setAttribute('id',       unique_id);
+            target.setAttribute('class',    'interactive fitts_target');
             target.setAttribute('geometry', TARGET_GEO);
             target.setAttribute('material', TARGET_MAT);
-            target.setAttribute('position', {x:x_pos, y:y_pos, z:z_pos});
+            target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.2, neutral_scale:1.0});
-            parentElem.appendChild(target);
+            targetConta.appendChild(target);
 
             //connect to click listener for selection detection
             target.addEventListener('click', CONTEXT_COMP.fittsTargetSelect.bind(CONTEXT_COMP))
@@ -88,8 +107,8 @@ AFRAME.registerComponent('fitts-explore', {
             let label = document.createElement('a-entity');
             label.setAttribute('class', 'label');
             label.setAttribute('text', {value:unique_id, font:'roboto', width:TARGET_GEO.radius * 20.0, color:'#FFFFFF', align:'center'});
-            label.setAttribute('position', {x:x_pos, y:y_pos + (TARGET_GEO.radius * 2.0), z:z_pos});
-            parentElem.appendChild(label);
+            label.setAttribute('position', {x:0.0, y:0.0 + (TARGET_GEO.radius * 2.0), z:0.0});
+            targetConta.appendChild(label);
         };
 
 
@@ -107,8 +126,8 @@ AFRAME.registerComponent('fitts-explore', {
             pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
         }
     },
-    //x_deg [0, 360], y_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    moveTargets : function(x_deg, y_deg, depth) {
+    //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
+    moveTargets : function(leftRight_deg, upDown_deg, depth) {
         const CONTEXT_COMP = this;
 
         let pointerVec  = new THREE.Vector3(0.0, 0.0, 0.0); //moving off x-axis as default rotation of cam looks down x
@@ -116,8 +135,8 @@ AFRAME.registerComponent('fitts-explore', {
         const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
 
         //rotate around "imaginary sphere"
-        pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(x_deg));
-        pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(y_deg));
+        pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(upDown_deg));
+        pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(leftRight_deg));
 
         //place target container at appropriate coordinates on "sphere surrounding user" relative to head position
         CONTEXT_COMP.targetContainer.object3D.position.set(0.0, CONTEXT_COMP.data.participant_height, 0.0);
@@ -125,7 +144,7 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -depth);
 
         //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
-        CONTEXT_COMP.targetContainer.object3D.rotation.set(0.0, THREE.Math.degToRad(y_deg), THREE.Math.degToRad(x_deg), 'YXZ');
+        CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(upDown_deg), THREE.Math.degToRad(leftRight_deg), 0.0, 'YXZ');
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -149,7 +168,7 @@ AFRAME.registerComponent('fitts-explore', {
                 //TODO: record data
                 //TODO: move to next state
                 //angles important here else we get soem strange results. Should probably use quats but only working with two axes ...
-                CONTEXT_COMP.moveTargets(CONTEXT_COMP.getRandomIntInclusive(-60, 60), CONTEXT_COMP.getRandomIntInclusive(-180, 180), 5.0);
+                CONTEXT_COMP.moveTargets(CONTEXT_COMP.getRandomIntInclusive(-180, 180), CONTEXT_COMP.getRandomIntInclusive(-50, 50), CONTEXT_COMP.data.target_depth);
 
             }
         }
