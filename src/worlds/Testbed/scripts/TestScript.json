@@ -1,0 +1,23 @@
+{
+    "name": "MP_Selection_Tasks",
+    "description": "This is a list of pre-calculated trials for selection tasks across desktop, mobile, and HMD.",
+    "num_trials": 10,
+    "trials": {
+        "comments": "This pteh pre-calculated information required for each trial",
+        "data": [
+            {"position":{"x_deg":0, "y_deg":0, "depth":0, "size":1.0}},
+            {"position":{"x_deg":0, "y_deg":0, "depth":0, "size":1.0}},
+            {"position":{"x_deg":0, "y_deg":0, "depth":0, "size":1.0}},
+            {"position":{"x_deg":0, "y_deg":0, "depth":0, "size":1.0}},
+            {"position":{"x_deg":0, "y_deg":0, "depth":0, "size":1.0}}
+        ]
+    },
+    "order": {
+        "comments": "To reduce learning effects of this experiment we will re-order selection tasks for platform.",
+        "data": {
+            "desktop": [],
+            "mobile": [],
+            "hmd": []
+        }
+    }
+}

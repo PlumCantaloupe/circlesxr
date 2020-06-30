@@ -271,6 +271,16 @@ io.on("connection", socket => {
     }
   });
 
+  /*
+  Events I need:
+  - Start Experiment
+  - Stop Experiment
+  - Start Trial
+  - End Trial
+  - capture position event
+  - capture click event
+  */
+
   //custom socket events
   socket.on("dataTest", data => {
     console.log('I heard you!!');
