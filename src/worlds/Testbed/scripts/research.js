@@ -66,7 +66,7 @@ AFRAME.registerComponent('fitts-explore', {
         const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
         const ARC_RADIUS    = 2.0;
         const TARGET_GEO    = {primitive:'sphere', radius:0.2, segmentsWidth:20, segmentsHeight:20};
-        const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat', depthTest:true};
+        const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat'};
 
         let pointerVec  = new THREE.Vector3(0.0, ARC_RADIUS, 0.0);
         const rotateVec = new THREE.Vector3(1.0, 0.0, 0.0);
