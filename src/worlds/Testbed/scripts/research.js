@@ -27,13 +27,15 @@ AFRAME.registerComponent('fitts-explore', {
         include_find_target:    {type:'boolean',    default:true},
         show_labels:            {type:'boolean',    default:false},
         target_size:            {type:'number',     default:0.2},
-        target_depth:           {type:'number',     default:5.0}    
+        target_depth:           {type:'number',     default:5.0},
+        fitts_radius:           {type:'number',     default:2.5},
     },
     init() {
         const CONTEXT_COMP = this;
 
         CONTEXT_COMP.targetContainer = document.createElement('a-entity');
         CONTEXT_COMP.targetContainer.setAttribute('id', 'target_container');
+        CONTEXT_COMP.targetContainer.object3D.position.set(0.0, CONTEXT_COMP.data.participant_height, 0.0); //want it set at a "eye height"
         CONTEXT_COMP.el.appendChild(CONTEXT_COMP.targetContainer);
 
         CONTEXT_COMP.targetsInnerContainer = document.createElement('a-entity');
@@ -45,7 +47,7 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.moveTargets(0, 0, CONTEXT_COMP.data.target_depth);
+        CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size);
     },
     update: function (oldData) {
         const CONTEXT_COMP  = this;
@@ -59,15 +61,23 @@ AFRAME.registerComponent('fitts-explore', {
         }
 
         if (oldData.target_size !== data.target_size) {
-            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_containert');
+            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_container');
             targets.forEach( (target) => {
                 target.object3D.scale.set(data.target_size, data.target_size, data.target_size);
             });
         }
 
         if (oldData.target_depth !== data.target_depth) {
-            //CONTEXT_COMP.targetsLabelContainer.setAttribute('visible', data.show_labels);
-            
+            CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -data.target_depth);
+            CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -data.target_depth);
+        }
+
+        if (oldData.fitts_radius !== data.fitts_radius) {
+            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_container');
+            targets.forEach( (target) => {
+                const dirVec = target.object3D.userData.dirVec;
+                target.object3D.position.set(dirVec.x * data.fitts_radius, dirVec.y * data.fitts_radius, dirVec.z * data.fitts_radius);
+            });
         }
     },
     tick: function (time, timeDelta) {
@@ -78,17 +88,15 @@ AFRAME.registerComponent('fitts-explore', {
         //create fitt's law "spheres"
         const NUM_TARGETS   = 8;
         const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
-        const ARC_RADIUS    = 2.0;
         const TARGET_GEO    = {primitive:'sphere', radius:1.0, segmentsWidth:20, segmentsHeight:20};
         const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat'};
 
-        let pointerVec  = new THREE.Vector3(0.0, ARC_RADIUS, 0.0);
+        let pointerVec  = new THREE.Vector3(0.0, 1.0, 0.0); //we only want normalized direction here so we can adjust "radius" of each element later
         const rotateVec = new THREE.Vector3(0.0, 0.0, 1.0);
         const createTarget_f = (x_pos, y_pos, z_pos, unique_id, parentElem) => {
             //create target
             let targetConta = document.createElement('a-entity');
-            targetConta.setAttribute('class', 'target_containert');
-            targetConta.setAttribute('position', {x:x_pos, y:y_pos, z:z_pos});
+            targetConta.setAttribute('class', 'target_container');
             parentElem.appendChild(targetConta);
 
             let target = document.createElement('a-entity');
@@ -99,6 +107,11 @@ AFRAME.registerComponent('fitts-explore', {
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.2, neutral_scale:1.0});
             targetConta.appendChild(target);
+
+            //save direction vector so we can adjust later
+            let dirVec = new THREE.Vector3(x_pos, y_pos, z_pos);
+            dirVec.normalize(); //shoudl be length 1 already but just in case :))))
+            targetConta.object3D.userData.dirVec = dirVec; //save it here so we can check it out later
 
             //connect to click listener for selection detection
             target.addEventListener('click', CONTEXT_COMP.fittsTargetSelect.bind(CONTEXT_COMP))
@@ -127,7 +140,14 @@ AFRAME.registerComponent('fitts-explore', {
         }
     },
     //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    moveTargets : function(leftRight_deg, upDown_deg, depth) {
+    transformTargets : function(hori_angle, vert_angle, targetDepth, targetSize, fittsRadius) {
+        console.log('Setting new target transforms');
+        console.log('    horizontal angle:' + hori_angle);
+        console.log('    vertical angle:'   + vert_angle);
+        console.log('    target depth:'     + targetDepth);
+        console.log('    target size:'      + targetSize);
+        console.log('    fitts radius:'     + fittsRadius);
+
         const CONTEXT_COMP = this;
 
         let pointerVec  = new THREE.Vector3(0.0, 0.0, 0.0); //moving off x-axis as default rotation of cam looks down x
@@ -135,16 +155,14 @@ AFRAME.registerComponent('fitts-explore', {
         const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
 
         //rotate around "imaginary sphere"
-        pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(upDown_deg));
-        pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(leftRight_deg));
-
-        //place target container at appropriate coordinates on "sphere surrounding user" relative to head position
-        CONTEXT_COMP.targetContainer.object3D.position.set(0.0, CONTEXT_COMP.data.participant_height, 0.0);
-        CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -depth);
-        CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -depth);
+        pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(vert_angle));
+        pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(hori_angle));
 
         //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
-        CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(upDown_deg), THREE.Math.degToRad(leftRight_deg), 0.0, 'YXZ');
+        CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(vert_angle), THREE.Math.degToRad(hori_angle), 0.0, 'YXZ');
+
+        //set depth and target size
+        CONTEXT_COMP.el.setAttribute('fitts-explore', {target_size:targetSize, target_depth:targetDepth, fitts_radius:fittsRadius});
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -167,9 +185,9 @@ AFRAME.registerComponent('fitts-explore', {
 
                 //TODO: record data
                 //TODO: move to next state
-                //angles important here else we get soem strange results. Should probably use quats but only working with two axes ...
-                CONTEXT_COMP.moveTargets(CONTEXT_COMP.getRandomIntInclusive(-180, 180), CONTEXT_COMP.getRandomIntInclusive(-50, 50), CONTEXT_COMP.data.target_depth);
-
+                //angles important here else we get some strange results. Should probably use quaternions but only working with two axes ...
+                // CONTEXT_COMP.transformTargets(CONTEXT_COMP.getRandomIntInclusive(-180, 180), CONTEXT_COMP.getRandomIntInclusive(-50, 50), CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size);
+                CONTEXT_COMP.randomMove(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
             }
         }
         else {
@@ -177,10 +195,17 @@ AFRAME.registerComponent('fitts-explore', {
             //TODO: record data
         }
     },
-    getRandomIntInclusive: function (min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    randomMove : function (horiAngle_Min, horiAngle_max, vertAngle_min, vertAngle_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
+        const CONTEXT_COMP = this;
+        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(horiAngle_Min, horiAngle_max), 
+                                        CONTEXT_COMP.getRandomNumber(vertAngle_min, vertAngle_max), 
+                                        CONTEXT_COMP.getRandomNumber(depth_min, depth_max), 
+                                        CONTEXT_COMP.getRandomNumber(size_min, size_max),
+                                        CONTEXT_COMP.getRandomNumber(fittsRadius_min, fittsRadius_max)
+                                    );
+    },
+    getRandomNumber: function (min, max) {
+        return Math.random() * (max - min) + min; //The maximum is inclusive and the minimum is inclusive 
     }
 
 
