@@ -69,7 +69,7 @@ AFRAME.registerComponent('fitts-explore', {
         const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat'};
 
         let pointerVec  = new THREE.Vector3(0.0, ARC_RADIUS, 0.0);
-        const rotateVec = new THREE.Vector3(1.0, 0.0, 0.0);
+        const rotateVec = new THREE.Vector3(0.0, 0.0, 1.0);
         const createTarget_f = (x_pos, y_pos, z_pos, unique_id, parentElem) => {
             //create target
             let target = document.createElement('a-entity');
@@ -89,7 +89,6 @@ AFRAME.registerComponent('fitts-explore', {
             label.setAttribute('class', 'label');
             label.setAttribute('text', {value:unique_id, font:'roboto', width:TARGET_GEO.radius * 20.0, color:'#FFFFFF', align:'center'});
             label.setAttribute('position', {x:x_pos, y:y_pos + (TARGET_GEO.radius * 2.0), z:z_pos});
-            label.setAttribute('rotation', {x:0.0, y:-90.0, z:0.0});
             parentElem.appendChild(label);
         };
 
@@ -122,8 +121,8 @@ AFRAME.registerComponent('fitts-explore', {
 
         //place target container at appropriate coordinates on "sphere surrounding user" relative to head position
         CONTEXT_COMP.targetContainer.object3D.position.set(0.0, CONTEXT_COMP.data.participant_height, 0.0);
-        CONTEXT_COMP.targetsInnerContainer.object3D.position.set(depth, 0.0, 0.0);
-        CONTEXT_COMP.targetsOuterContainer.object3D.position.set(depth, 0.0, 0.0);
+        CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -depth);
+        CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -depth);
 
         //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
         CONTEXT_COMP.targetContainer.object3D.rotation.set(0.0, THREE.Math.degToRad(y_deg), THREE.Math.degToRad(x_deg), 'YXZ');
