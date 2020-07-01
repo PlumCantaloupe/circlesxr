@@ -113,6 +113,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           console.log('pointer/cursor controls ADDED');
 
           let entity_Pointer = document.createElement('a-entity');
+          entity_Pointer.setAttribute('id', 'primary_pointer');
           entity_Pointer.setAttribute('class', 'pointer');
           entity_Pointer.setAttribute('cursor', 'fuse:false; rayOrigin:mouse;'); //don't want fuse - just clicks as expected :)
           entity_Pointer.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive'});

@@ -22,6 +22,7 @@ AFRAME.registerComponent('data-collection', {
         3 - when highlighted target is selected, start over to step 1
 */
 AFRAME.registerComponent('fitts-explore', {
+    multiple: false,
     schema: {
         participant_height:     {type:'number',     default:1.6},
         include_find_target:    {type:'boolean',    default:true},
@@ -30,6 +31,7 @@ AFRAME.registerComponent('fitts-explore', {
         target_depth:           {type:'number',     default:5.0},
         fitts_radius:           {type:'number',     default:2.5},
         target_active:          {type:'string',     default:''},
+        pointer_updatetime:     {type:'number',     default:'50'},
     },
     init() {
         const CONTEXT_COMP = this;
@@ -61,7 +63,10 @@ AFRAME.registerComponent('fitts-explore', {
 
         //highlight color change
         if (oldData.show_labels !== data.show_labels) {
-            //CONTEXT_COMP.targetsLabelContainer.setAttribute('visible', data.show_labels);
+            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.label');
+            targets.forEach( (target) => {
+                target.setAttribute('visible', data.show_labels);
+            });
         }
 
         if (oldData.target_size !== data.target_size) {
@@ -99,6 +104,27 @@ AFRAME.registerComponent('fitts-explore', {
                 }
             });
         }
+
+        if (oldData.pointer_updatetime !== data.pointer_updatetime) {
+            const primary_pointer = document.querySelector('#primary_pointer');
+
+            if (primary_pointer) {
+                primary_pointer.setAttribute('raycaster', {interval:data.pointer_updatetime});
+            }
+            else {
+                const scene = document.querySelector('a-scene');
+
+                console.log(primary_pointer);
+                const setFunc = (e) => {
+                    const pointer = document.querySelector('#primary_pointer');
+                    console.log(pointer);
+                    pointer.setAttribute('raycaster', {interval:data.pointer_updatetime});
+                    scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, setFunc );
+                };
+
+                scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, setFunc );
+            }
+        }
     },
     tick: function (time, timeDelta) {
     },
@@ -124,7 +150,7 @@ AFRAME.registerComponent('fitts-explore', {
             target.setAttribute('geometry', TARGET_GEO);
             target.setAttribute('material', (isActive) ? CONTEXT_COMP.activeMatProps : CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
-            target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.2, neutral_scale:1.0});
+            target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.3, neutral_scale:1.0});
             targetConta.appendChild(target);
 
             //save direction vector so we can adjust later
