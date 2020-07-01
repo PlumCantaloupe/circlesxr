@@ -226,7 +226,7 @@ AFRAME.registerComponent('fitts-explore', {
         //set random target to set as active
         const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.fitts_target');
         const numTargets = targets.length;
-        const randTargetStr = 'FT_' + Math.ceil(Math.random() * numTargets);
+        const randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
 
         console.log('***');
         console.log('randTargetStr: ' + randTargetStr);
