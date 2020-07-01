@@ -29,9 +29,13 @@ AFRAME.registerComponent('fitts-explore', {
         target_size:            {type:'number',     default:0.2},
         target_depth:           {type:'number',     default:5.0},
         fitts_radius:           {type:'number',     default:2.5},
+        target_active:          {type:'string',     default:''},
     },
     init() {
         const CONTEXT_COMP = this;
+
+        CONTEXT_COMP.inactiveMatProps   = {transparent:false, color:'rgb(57, 187, 130)', shader:'flat'};
+        CONTEXT_COMP.activeMatProps     = {transparent:false, color:'rgb(224, 148, 25)', shader:'flat'};
 
         CONTEXT_COMP.targetContainer = document.createElement('a-entity');
         CONTEXT_COMP.targetContainer.setAttribute('id', 'target_container');
@@ -47,7 +51,7 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size);
+        CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size, 2.5, 'FT_3'); //let's start somewhere :)
     },
     update: function (oldData) {
         const CONTEXT_COMP  = this;
@@ -73,10 +77,26 @@ AFRAME.registerComponent('fitts-explore', {
         }
 
         if (oldData.fitts_radius !== data.fitts_radius) {
-            const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_container');
+            const targets = CONTEXT_COMP.targetsOuterContainer.querySelectorAll('.target_container');
             targets.forEach( (target) => {
                 const dirVec = target.object3D.userData.dirVec;
                 target.object3D.position.set(dirVec.x * data.fitts_radius, dirVec.y * data.fitts_radius, dirVec.z * data.fitts_radius);
+            });
+        }
+
+        if (oldData.target_active !== data.target_active) {
+            const targets = CONTEXT_COMP.targetsOuterContainer.querySelectorAll('.fitts_target');
+            targets.forEach( (target) => {
+                console.log(data.target_active + ' ' + target.id);
+                target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
+                target.object3D.userData.isActive = false;
+
+                //set active target 
+                if (target.id === data.target_active) {
+                    console.log('setting active target: ' + target.id);
+                    target.setAttribute('material', CONTEXT_COMP.activeMatProps);
+                    target.object3D.userData.isActive = true;
+                }
             });
         }
     },
@@ -89,11 +109,10 @@ AFRAME.registerComponent('fitts-explore', {
         const NUM_TARGETS   = 8;
         const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
         const TARGET_GEO    = {primitive:'sphere', radius:1.0, segmentsWidth:20, segmentsHeight:20};
-        const TARGET_MAT    = {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7, 137, 80)', shader:'flat'};
 
         let pointerVec  = new THREE.Vector3(0.0, 1.0, 0.0); //we only want normalized direction here so we can adjust "radius" of each element later
         const rotateVec = new THREE.Vector3(0.0, 0.0, 1.0);
-        const createTarget_f = (x_pos, y_pos, z_pos, unique_id, parentElem) => {
+        const createTarget_f = (unique_id, x_pos, y_pos, z_pos, isActive, parentElem) => {
             //create target
             let targetConta = document.createElement('a-entity');
             targetConta.setAttribute('class', 'target_container');
@@ -103,7 +122,7 @@ AFRAME.registerComponent('fitts-explore', {
             target.setAttribute('id',       unique_id);
             target.setAttribute('class',    'interactive fitts_target');
             target.setAttribute('geometry', TARGET_GEO);
-            target.setAttribute('material', TARGET_MAT);
+            target.setAttribute('material', (isActive) ? CONTEXT_COMP.activeMatProps : CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.2, neutral_scale:1.0});
             targetConta.appendChild(target);
@@ -111,7 +130,8 @@ AFRAME.registerComponent('fitts-explore', {
             //save direction vector so we can adjust later
             let dirVec = new THREE.Vector3(x_pos, y_pos, z_pos);
             dirVec.normalize(); //shoudl be length 1 already but just in case :))))
-            targetConta.object3D.userData.dirVec = dirVec; //save it here so we can check it out later
+            targetConta.object3D.userData.dirVec    = dirVec; //save it here so we can check it out later
+            target.object3D.userData.isActive       = isActive;
 
             //connect to click listener for selection detection
             target.addEventListener('click', CONTEXT_COMP.fittsTargetSelect.bind(CONTEXT_COMP))
@@ -127,7 +147,7 @@ AFRAME.registerComponent('fitts-explore', {
 
         if (CONTEXT_COMP.data.include_find_target === true) {
             //add middle target (reserving this id_0 for this element as it will present the special case of look-finding/selecting )
-            createTarget_f(0.0, 0.0, 0.0, 'FT_0', CONTEXT_COMP.targetsInnerContainer);
+            createTarget_f('FT_0', 0.0, 0.0, 0.0, true, CONTEXT_COMP.targetsInnerContainer);
 
             //hide other targets until look selected
             CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
@@ -135,18 +155,19 @@ AFRAME.registerComponent('fitts-explore', {
 
         //add exterior targets
         for (let i = 0; i < NUM_TARGETS; i++) {
-            createTarget_f(pointerVec.x, pointerVec.y, pointerVec.z, 'FT_' + (i+1), CONTEXT_COMP.targetsOuterContainer);
+            createTarget_f('FT_' + (i+1), pointerVec.x, pointerVec.y, pointerVec.z, false, CONTEXT_COMP.targetsOuterContainer);
             pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
         }
     },
     //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    transformTargets : function(hori_angle, vert_angle, targetDepth, targetSize, fittsRadius) {
+    transformTargets : function(hori_angle, vert_angle, targetDepth, targetSize, fittsRadius, activeTarget_id) {
         console.log('Setting new target transforms');
-        console.log('    horizontal angle:' + hori_angle);
-        console.log('    vertical angle:'   + vert_angle);
-        console.log('    target depth:'     + targetDepth);
-        console.log('    target size:'      + targetSize);
-        console.log('    fitts radius:'     + fittsRadius);
+        console.log('    horizontal angle: ' + hori_angle);
+        console.log('    vertical angle: '   + vert_angle);
+        console.log('    target depth: '     + targetDepth);
+        console.log('    target size: '      + targetSize);
+        console.log('    fitts radius: '     + fittsRadius);
+        console.log('    active target: '    + activeTarget_id);
 
         const CONTEXT_COMP = this;
 
@@ -162,13 +183,11 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(vert_angle), THREE.Math.degToRad(hori_angle), 0.0, 'YXZ');
 
         //set depth and target size
-        CONTEXT_COMP.el.setAttribute('fitts-explore', {target_size:targetSize, target_depth:targetDepth, fitts_radius:fittsRadius});
+        CONTEXT_COMP.el.setAttribute('fitts-explore', {target_size:targetSize, target_depth:targetDepth, fitts_radius:fittsRadius, target_active:activeTarget_id});
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
         let selectedElem = e.srcElement;
-
-        console.log('target Selected: ' + selectedElem.id);
 
         //if a look target show fitts
         if (CONTEXT_COMP.data.include_find_target === true) {
@@ -180,14 +199,20 @@ AFRAME.registerComponent('fitts-explore', {
                 //TODO: record data
             }
             else {
-                CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
-                CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
+                //check if this is an active target
+                if (selectedElem.object3D.userData.isActive) {
+                    console.log('Target Selected: ' + selectedElem.id + ' is active.');
+                    CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
+                    CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
 
-                //TODO: record data
-                //TODO: move to next state
-                //angles important here else we get some strange results. Should probably use quaternions but only working with two axes ...
-                // CONTEXT_COMP.transformTargets(CONTEXT_COMP.getRandomIntInclusive(-180, 180), CONTEXT_COMP.getRandomIntInclusive(-50, 50), CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size);
-                CONTEXT_COMP.randomMove(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
+                    //TODO: record data
+                    //TODO: move to next state
+                    CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
+                }
+                else {
+                    console.log('Target Selected: ' + selectedElem.id + ' is not active.');
+                    //record data/error
+                }
             }
         }
         else {
@@ -195,13 +220,24 @@ AFRAME.registerComponent('fitts-explore', {
             //TODO: record data
         }
     },
-    randomMove : function (horiAngle_Min, horiAngle_max, vertAngle_min, vertAngle_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
+    randomTransform : function (horiAngle_Min, horiAngle_max, vertAngle_min, vertAngle_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
         const CONTEXT_COMP = this;
+
+        //set random target to set as active
+        const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.fitts_target');
+        const numTargets = targets.length;
+        const randTargetStr = 'FT_' + Math.ceil(Math.random() * numTargets);
+
+        console.log('***');
+        console.log('randTargetStr: ' + randTargetStr);
+        console.log('***');
+
         CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(horiAngle_Min, horiAngle_max), 
                                         CONTEXT_COMP.getRandomNumber(vertAngle_min, vertAngle_max), 
                                         CONTEXT_COMP.getRandomNumber(depth_min, depth_max), 
                                         CONTEXT_COMP.getRandomNumber(size_min, size_max),
-                                        CONTEXT_COMP.getRandomNumber(fittsRadius_min, fittsRadius_max)
+                                        CONTEXT_COMP.getRandomNumber(fittsRadius_min, fittsRadius_max),
+                                        randTargetStr
                                     );
     },
     getRandomNumber: function (min, max) {
