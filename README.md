@@ -120,10 +120,10 @@ The following are several companions that have helped to bring this project into
 
 Thank you from an aspiring student of all things XR and learning, [Anthony Scavarelli](http://portfolio.anthony-scavarelli.com/)
 
-- **Tetsuro Takara**, *Web Developer*, [https://www.tetchi.ca/](https://www.tetchi.ca/)
-- **Grant Lucas**, *Web Developer* [https://grantlucas.com/](https://grantlucas.com/)
-- **Heather Hennessey**, *WebXR Developer* [https://www.linkedin.com/in/heather-hennessey-4961a5132/](https://www.linkedin.com/in/heather-hennessey-4961a5132/)
-- **Virginia Mielke**, *3D Artist* [https://www.linkedin.com/in/virginia-mielke-ba1a361/](https://www.linkedin.com/in/virginia-mielke-ba1a361/)
-- **Favour Diokpo**, *3D Artist* [https://www.behance.net/favourdiokpo](https://www.behance.net/favourdiokpo)
-- **Julie McCann**, *Journalist* [http://portfolios.camayak.com/julie-mccann/page/4/](http://portfolios.camayak.com/julie-mccann/page/4/)
-- **Jessica Alberga**, *Journalist* [http://jessicaalberga.ca/](http://jessicaalberga.ca/)
+- **[Tetsuro Takara](https://www.tetchi.ca/)**, *Web Developer*
+- **[Grant Lucas](https://grantlucas.com/)**, *Web Developer*
+- **[Heather Hennessey](https://www.linkedin.com/in/heather-hennessey-4961a5132/)**, *WebXR Developer*
+- **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
+- **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*
+- **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
+- **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
