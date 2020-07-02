@@ -282,9 +282,8 @@ io.on("connection", socket => {
   */
 
   //custom socket events
-  socket.on("dataTest", data => {
-    console.log('I heard you!!');
-    console.log("data received: " + data.testData) 
+  socket.on(CIRCLES.RESEARCH.EVENTS.CONNECTED, (data) => {
+    console.log("data received: " + data.message);
   });
 });
 //!!easyRTC end

@@ -1,0 +1,23 @@
+'use strict';
+
+const CONSTANTS = {
+    CAPTURE_DATA                  : true,
+    CAPTURE_TRANSFORMS            : false,
+    CAPTURE_TRANSFORM_INTERVAL_MS : 500,
+  };
+
+const EVENTS = {
+  CONNECTED         : 'CONNECTED',
+  EXPERIMENT_START  : 'EXPERIMENT_START',
+  EXPERIMENT_STOP   : 'EXPERIMENT_STOP',
+  TRIAL_START       : 'TRIAL_START',
+  TRIAL_STOP        : 'TRIAL_STOP',
+  SELECTION_START   : 'SELECTION_START',
+  SELECTION_STOP    : 'SELECTION_STOP',
+  TRANSFORM_UPDATE  : 'TRANSFORM_UPDATE'
+};
+
+module.exports = {
+  CONSTANTS,
+  EVENTS,
+};

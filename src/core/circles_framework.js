@@ -1,6 +1,7 @@
 'use strict';
 
 const CONSTANTS = require('./circles_constants');
+const RESEARCH  = require('./circles_research');
 
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
@@ -67,6 +68,7 @@ const COLOR_PALETTES = [
 
 module.exports = {
   CONSTANTS,
+  RESEARCH,
   DISPLAY_MODES,
   USER_COLLISION_STATE,
   MODEL_TYPE,

@@ -1,21 +1,4 @@
 /*
-    This component will be in charge of collecting and sending data to server to be saved to file
-*/
-AFRAME.registerComponent('data-collection', {
-    schema: {},
-    init() {
-        const Context_AF = this;
-        const scene      = document.querySelector('a-scene');
-
-        scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            console.log( "NAF.connection.adapter connected ...." );
-            NAF.connection.adapter.socket.emit('dataTest', {testData:'it works!!'});
-        });
-    },
-    update() {}
-});
-
-/*
     This component will create a variety of selection targets in the following steps:
         1 - create a target around the user
         2 - when target is clicked 13 additional targets will be created around it with one highlighted
@@ -92,7 +75,6 @@ AFRAME.registerComponent('fitts-explore', {
         if (oldData.target_active !== data.target_active) {
             const targets = CONTEXT_COMP.targetsOuterContainer.querySelectorAll('.fitts_target');
             targets.forEach( (target) => {
-                console.log(data.target_active + ' ' + target.id);
                 target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
                 target.object3D.userData.isActive = false;
 
@@ -254,10 +236,6 @@ AFRAME.registerComponent('fitts-explore', {
         const numTargets = targets.length;
         const randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
 
-        console.log('***');
-        console.log('randTargetStr: ' + randTargetStr);
-        console.log('***');
-
         CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(horiAngle_Min, horiAngle_max), 
                                         CONTEXT_COMP.getRandomNumber(vertAngle_min, vertAngle_max), 
                                         CONTEXT_COMP.getRandomNumber(depth_min, depth_max), 
@@ -273,10 +251,33 @@ AFRAME.registerComponent('fitts-explore', {
 
 });
 
+//System: Will control data collection and communication with server
 AFRAME.registerSystem('research-manager', {
     init() {
         //called on 
         console.log('Starting research-system!');
+        const CONTEXT_COMP  = this;
+        const scene         = document.querySelector('a-scene');
+
+        scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
+            console.log("research-manager: socket connected ....");
+            CONTEXT_COMP.socket = NAF.connection.adapter.socket;
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao!'});
+        });
+    },
+    tick: function (time, timeDelta) {}
+});
+
+//Component: will capture events and pass data to system
+AFRAME.registerComponent('research-manager', {
+    multiple: false,
+    schema: {
+        capture_data:   {type:'boolean', default:true},
+    },
+    init() {
+        //called on 
+        console.log('Starting research-component!');
+        const Context_AF = this;
     },
     tick: function (time, timeDelta) {
         
