@@ -18,6 +18,7 @@ AFRAME.registerComponent('fitts-explore', {
     },
     init() {
         const CONTEXT_COMP = this;
+        CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
 
         CONTEXT_COMP.inactiveMatProps   = {transparent:false, color:'rgb(57, 187, 130)', shader:'flat'};
         CONTEXT_COMP.activeMatProps     = {transparent:false, color:'rgb(224, 148, 25)', shader:'flat'};
@@ -37,6 +38,28 @@ AFRAME.registerComponent('fitts-explore', {
 
         CONTEXT_COMP.createTargets();
         CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size, 2.5, 'FT_3'); //let's start somewhere :)
+
+        //simulate click function (we need more control here so we can track non-click of targets or errors)
+        CONTEXT_COMP.mouseDownId = '';
+        const scene = document.querySelector('a-scene');
+        scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e1) => {
+            const primary_pointer = document.querySelector('#primary_pointer');
+
+            primary_pointer.addEventListener('mousedown', (e2) => {
+                CONTEXT_COMP.mouseDownId = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
+            });
+
+            primary_pointer.addEventListener('mouseup', (e2) => {
+                const mouseUpId = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
+                if (CONTEXT_COMP.mouseDownId === mouseUpId && mouseUpId !== '') {
+                    console.log('CORRECT CLICK');
+                }
+                else {
+                    console.log('INCORRECT CLICK');
+                }
+                CONTEXT_COMP.mouseDownId = '';
+            });
+        });
     },
     update: function (oldData) {
         const CONTEXT_COMP  = this;
@@ -192,6 +215,21 @@ AFRAME.registerComponent('fitts-explore', {
 
         //set depth and target size
         CONTEXT_COMP.el.setAttribute('fitts-explore', {target_size:targetSize, target_depth:targetDepth, fitts_radius:fittsRadius, target_active:activeTarget_id});
+
+        //send data to research system
+        const data =    {  
+                            experiment_id:      '',
+                            experiment_date:    '',
+                            type:               CIRCLES.RESEARCH.EVENTS.SELECTION_START,
+                            time:               Date.now(),
+                            target_id:          activeTarget_id,
+                            hori_angle:         hori_angle,
+                            vert_angle:         vert_angle,
+                            targetDepth:        targetDepth,
+                            targetSize:         targetSize,
+                            fittsRadius:        fittsRadius
+                        };
+        CONTEXT_COMP.researchSystem.sendData(data);
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -247,8 +285,6 @@ AFRAME.registerComponent('fitts-explore', {
     getRandomNumber: function (min, max) {
         return Math.random() * (max - min) + min; //The maximum is inclusive and the minimum is inclusive 
     }
-
-
 });
 
 //System: Will control data collection and communication with server
@@ -259,30 +295,72 @@ AFRAME.registerSystem('research-manager', {
         const CONTEXT_COMP  = this;
         const scene         = document.querySelector('a-scene');
 
+        CONTEXT_COMP.connected = false;
+
         scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: socket connected ....");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao!'});
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao! research system connecting.'});
+            CONTEXT_COMP.connected = true;
         });
     },
-    tick: function (time, timeDelta) {}
+    tick: function (time, timeDelta) {}, 
+    sendData: function(data) {
+        switch (data.type) {
+            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRIAL_START: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRIAL_STOP: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_START: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_STOP: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR: {
+                
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE: {
+                
+            }
+            break;
+        }
+
+        //this is where we will send data to server via sockets
+        //CONTEXT_COMP.socket.emit(data.type, data);
+    }
 });
 
 //Component: will capture events and pass data to system
-AFRAME.registerComponent('research-manager', {
-    multiple: false,
-    schema: {
-        capture_data:   {type:'boolean', default:true},
-    },
-    init() {
-        //called on 
-        console.log('Starting research-component!');
-        const Context_AF = this;
-    },
-    tick: function (time, timeDelta) {
+// AFRAME.registerComponent('research-manager', {
+//     multiple: false,
+//     schema: {
+//         capture_data:   {type:'boolean', default:true},
+//     },
+//     init() {
+//         //called on 
+//         console.log('Starting research-component!');
+//         const Context_AF = this;
+//     },
+//     tick: function (time, timeDelta) {
         
-    }
-});
+//     }
+// });
 
 // //component default functions
 // AFRAME.registerComponent('some-name', {

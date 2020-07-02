@@ -281,9 +281,41 @@ io.on("connection", socket => {
   - capture click event
   */
 
-  //custom socket events
+  //custom research socket events
   socket.on(CIRCLES.RESEARCH.EVENTS.CONNECTED, (data) => {
-    console.log("data received: " + data.message);
+    console.log("app: RESEARCH: CONNECTED");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, (data) => {
+    console.log("app: RESEARCH: EXPERIMENT_START");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP, (data) => {
+    console.log("app: RESEARCH: EXPERIMENT_STOP");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.TRIAL_START, (data) => {
+    console.log("app: RESEARCH: TRIAL_START");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.TRIAL_STOP, (data) => {
+    console.log("app: RESEARCH: TRIAL_STOP");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_START, (data) => {
+    console.log("app: RESEARCH: SELECTION_START");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP, (data) => {
+    console.log("app: RESEARCH: SELECTION_STOP");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, (data) => {
+    console.log("app: RESEARCH: SELECTION_ERROR");
+  });
+
+  socket.on(CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE, (data) => {
+    console.log("app: RESEARCH: TRANSFORM_UPDATE");
   });
 });
 //!!easyRTC end
