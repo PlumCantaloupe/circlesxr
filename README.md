@@ -124,8 +124,8 @@ Thank you from an aspiring student of all things XR and learning, [Anthony Scava
 - **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
 - **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
 - **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
-- **[Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
-- **[Robert J. Teather](https://www.csit.carleton.ca/~rteather/)**, *Research Advisor*
+- **[Dr. Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
+- **[Dr. Robert J. Teather](https://www.csit.carleton.ca/~rteather/)**, *Research Advisor*
 - **[Grant Lucas](https://grantlucas.com/)**, *Web Developer*
 - **[Tetsuro Takara](https://www.tetchi.ca/)**, *Web Developer*
 - **[Heather Hennessey](https://www.linkedin.com/in/heather-hennessey-4961a5132/)**, *WebXR Developer*
