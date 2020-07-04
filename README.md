@@ -120,7 +120,8 @@ The following are several companions that have helped to bring this project into
 
 Thank you from an aspiring student of all things XR and learning, [Anthony Scavarelli](http://portfolio.anthony-scavarelli.com/)
 
-- **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*- **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
+- **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*
+- **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
 - **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
 - **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
 - **[Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
