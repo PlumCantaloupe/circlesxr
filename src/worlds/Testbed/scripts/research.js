@@ -7,14 +7,15 @@
 AFRAME.registerComponent('fitts-explore', {
     multiple: false,
     schema: {
-        participant_height:     {type:'number',     default:1.6},
-        include_find_target:    {type:'boolean',    default:true},
-        show_labels:            {type:'boolean',    default:false},
-        target_size:            {type:'number',     default:0.2},
-        target_depth:           {type:'number',     default:5.0},
-        fitts_radius:           {type:'number',     default:2.5},
-        target_active:          {type:'string',     default:''},
-        pointer_updatetime:     {type:'number',     default:'50'},
+        participant_height:         {type:'number',     default:1.6},
+        include_find_target:        {type:'boolean',    default:true},
+        show_labels:                {type:'boolean',    default:false},
+        target_size:                {type:'number',     default:0.2},
+        target_depth:               {type:'number',     default:5.0},
+        fitts_radius:               {type:'number',     default:2.5},
+        target_active:              {type:'string',     default:''},
+        pointer_updatetime:         {type:'number',     default:'50'},
+        click_updown_distance_max:  {type:'number',     default:'0.5'} //this dictates how much the poointer can move between mousedown and mouseup to register a click
     },
     init() {
         const CONTEXT_COMP = this;
@@ -55,33 +56,49 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.mouseDownId = '';
         CONTEXT_COMP.lastPointerPos = new THREE.Vector3();
         const scene = document.querySelector('a-scene');
+
         scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e1) => {
+
             const primary_pointer   = document.querySelector('#primary_pointer');
             const raycaster         = primary_pointer.components['raycaster'];
-            let dirVec              = new THREE.Vector3();
+
+            let getRayEndPos_f = () => {
+                let newVec = new THREE.Vector3();
+                if (AFRAME.utils.device.isMobileVR()) {
+                    newVec = new THREE.Vector3(raycaster.data.direction.x, raycaster.data.direction.y, raycaster.data.direction.z).transformDirection(primary_pointer.object3D.matrixWorld);
+                }
+                else {
+                    newVec = raycaster.data.direction.clone();
+                }
+                newVec.normalize();
+                newVec.multiplyScalar(raycaster.data.far);
+                newVec.add(raycaster.data.origin);
+
+                return newVec;
+            };
 
             primary_pointer.addEventListener('mousedown', (e2) => {
                 console.log(e2);
                 CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
 
-                //set last "click" position
-                CONTEXT_COMP.lastPointerPos.copy(raycaster.data.direction);
-                CONTEXT_COMP.lastPointerPos.normalize();
-                CONTEXT_COMP.lastPointerPos.multiplyScalar(raycaster.data.far);
-                CONTEXT_COMP.lastPointerPos.add(raycaster.data.origin);
+                CONTEXT_COMP.lastPointerPos = getRayEndPos_f();
 
-                console.log(CONTEXT_COMP.lastPointerPos);
-
-                let temp = document.createElement('a-entity');
-                temp.setAttribute('geometry', {primitive:'sphere', radius:0.5});
-                temp.setAttribute('material', {color:'#FF0000'});
-                temp.setAttribute('position', CONTEXT_COMP.lastPointerPos);
-                CONTEXT_COMP.el.sceneEl.appendChild(temp);
+                // //just droping balls down for testing
+                // let temp = document.createElement('a-entity');
+                // temp.setAttribute('geometry', {primitive:'sphere', radius:0.5});
+                // temp.setAttribute('material', {color:'#FF0000'});
+                // temp.setAttribute('position', CONTEXT_COMP.lastPointerPos);
+                // CONTEXT_COMP.el.sceneEl.appendChild(temp);
             });
 
             primary_pointer.addEventListener('mouseup', (e3) => {
                 const mouseUpId = (e3.detail.intersectedEl) ? e3.detail.intersectedEl.id : '';
-                if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '') {
+
+                //check distance between last endPos (on mouseDown) and this one (mouseUp)
+                //want to make sure this isn't a click registered when just dragging to look around
+                CONTEXT_COMP.lastPointerPos.sub( getRayEndPos_f() );
+
+                if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
                     console.log(e3);
                     console.log('SELECTION: No target selected');
                 }

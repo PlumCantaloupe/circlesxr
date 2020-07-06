@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           entity_Pointer.setAttribute('id', 'primary_pointer');
           entity_Pointer.setAttribute('class', 'pointer');
           entity_Pointer.setAttribute('cursor', 'fuse:false; rayOrigin:mouse;'); //don't want fuse - just clicks as expected :)
-          entity_Pointer.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive'});
+          entity_Pointer.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', useWorldCoordinates:true});
           entity_Pointer.setAttribute('position', {x:0.0, y:0.0, z:-1.0});
           cameraElem.appendChild(entity_Pointer);
         }
@@ -48,7 +48,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           entity_Controller_1.setAttribute('class', 'controller_thumb controller_right');
           entity_Controller_1.setAttribute('laser-controls',{hand:'right', model:false});
           entity_Controller_1.setAttribute('hand-controls', {hand:'right', handModelStyle:'lowPoly', color:bodyColor});
-          entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true});
+          entity_Controller_1.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', showLine:true, useWorldCoordinates:true});
           rigElem.appendChild(entity_Controller_1);
 
           let entity_Controller_2 = document.createElement('a-entity');
