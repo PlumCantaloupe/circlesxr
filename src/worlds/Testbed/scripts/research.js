@@ -36,26 +36,54 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetsOuterContainer.setAttribute('id', 'targets_outer_container');
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
+        //create box that we will detect "wrong clicks" on
+        // CONTEXT_COMP.errorBox = document.createElement('a-entity');
+        // CONTEXT_COMP.errorBox.setAttribute('id', 'error_box');
+        // CONTEXT_COMP.errorBox.setAttribute('class', 'interactive');
+        // CONTEXT_COMP.errorBox.setAttribute('geometry', {primitive:'box', width:20, height:20, depth:30});
+        // CONTEXT_COMP.errorBox.setAttribute('material', {shader:'flat', color:'#00FF00', side:'back', transparent:false});
+        // CONTEXT_COMP.el.sceneEl.appendChild(CONTEXT_COMP.errorBox);
+
+        // CONTEXT_COMP.errorBox.addEventListener('click', (e) => {
+        //     console.log('SELECTION: No target selected');
+        // });
+
         CONTEXT_COMP.createTargets();
         CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size, 2.5, 'FT_3'); //let's start somewhere :)
 
         //simulate click function (we need more control here so we can track non-click of targets or errors)
         CONTEXT_COMP.mouseDownId = '';
+        CONTEXT_COMP.lastPointerPos = new THREE.Vector3();
         const scene = document.querySelector('a-scene');
         scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e1) => {
-            const primary_pointer = document.querySelector('#primary_pointer');
+            const primary_pointer   = document.querySelector('#primary_pointer');
+            const raycaster         = primary_pointer.components['raycaster'];
+            let dirVec              = new THREE.Vector3();
 
             primary_pointer.addEventListener('mousedown', (e2) => {
-                CONTEXT_COMP.mouseDownId = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
+                console.log(e2);
+                CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
+
+                //set last "click" position
+                CONTEXT_COMP.lastPointerPos.copy(raycaster.data.direction);
+                CONTEXT_COMP.lastPointerPos.normalize();
+                CONTEXT_COMP.lastPointerPos.multiplyScalar(raycaster.data.far);
+                CONTEXT_COMP.lastPointerPos.add(raycaster.data.origin);
+
+                console.log(CONTEXT_COMP.lastPointerPos);
+
+                let temp = document.createElement('a-entity');
+                temp.setAttribute('geometry', {primitive:'sphere', radius:0.5});
+                temp.setAttribute('material', {color:'#FF0000'});
+                temp.setAttribute('position', CONTEXT_COMP.lastPointerPos);
+                CONTEXT_COMP.el.sceneEl.appendChild(temp);
             });
 
-            primary_pointer.addEventListener('mouseup', (e2) => {
-                const mouseUpId = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
-                if (CONTEXT_COMP.mouseDownId === mouseUpId && mouseUpId !== '') {
-                    console.log('CORRECT CLICK');
-                }
-                else {
-                    console.log('INCORRECT CLICK');
+            primary_pointer.addEventListener('mouseup', (e3) => {
+                const mouseUpId = (e3.detail.intersectedEl) ? e3.detail.intersectedEl.id : '';
+                if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '') {
+                    console.log(e3);
+                    console.log('SELECTION: No target selected');
                 }
                 CONTEXT_COMP.mouseDownId = '';
             });
@@ -239,6 +267,7 @@ AFRAME.registerComponent('fitts-explore', {
         if (CONTEXT_COMP.data.include_find_target === true) {
             if (selectedElem.id === 'FT_0') {
                 //then look selected, show other targets
+                console.log('SELECTION: Look Target Selected: ' + selectedElem.id + ' is active.');
                 CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', true);
                 CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', false);
                 
@@ -247,7 +276,7 @@ AFRAME.registerComponent('fitts-explore', {
             else {
                 //check if this is an active target
                 if (selectedElem.object3D.userData.isActive) {
-                    console.log('Target Selected: ' + selectedElem.id + ' is active.');
+                    console.log('SELECTION: Target Selected: ' + selectedElem.id + ' is active.');
                     CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
                     CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
 
@@ -256,7 +285,7 @@ AFRAME.registerComponent('fitts-explore', {
                     CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
                 }
                 else {
-                    console.log('Target Selected: ' + selectedElem.id + ' is not active.');
+                    console.log('SELCTION: Target Selected: ' + selectedElem.id + ' is not active.');
                     //record data/error
                 }
             }

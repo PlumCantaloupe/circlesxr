@@ -10,7 +10,6 @@ require('./circles-boundaries');
 require('./circles-spawn-at-random-checkpoint');
 require('./circles-add-camera-equipment');
 require('./circles-avatar-construction');
-require('./circles-avatar-rig-construction');
 require('./circles-teleport');
 require('./circles-snap-turning');
 require('./circles-interactive-object');
