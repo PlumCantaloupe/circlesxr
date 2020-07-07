@@ -1,7 +1,7 @@
 /*
     This component will create a variety of selection targets in the following steps:
         1 - create a target around the user
-        2 - when target is clicked 13 additional targets will be created around it with one highlighted
+        2 - when target is clicked 8 additional targets will be created around it with one highlighted
         3 - when highlighted target is selected, start over to step 1
 */
 AFRAME.registerComponent('fitts-explore', {
@@ -10,6 +10,7 @@ AFRAME.registerComponent('fitts-explore', {
         participant_height:         {type:'number',     default:1.6},
         include_find_target:        {type:'boolean',    default:true},
         show_labels:                {type:'boolean',    default:false},
+        num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
         target_size:                {type:'number',     default:0.2},
         target_depth:               {type:'number',     default:5.0},
         fitts_radius:               {type:'number',     default:2.5},
@@ -36,18 +37,6 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetsOuterContainer = document.createElement('a-entity');
         CONTEXT_COMP.targetsOuterContainer.setAttribute('id', 'targets_outer_container');
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
-
-        //create box that we will detect "wrong clicks" on
-        // CONTEXT_COMP.errorBox = document.createElement('a-entity');
-        // CONTEXT_COMP.errorBox.setAttribute('id', 'error_box');
-        // CONTEXT_COMP.errorBox.setAttribute('class', 'interactive');
-        // CONTEXT_COMP.errorBox.setAttribute('geometry', {primitive:'box', width:20, height:20, depth:30});
-        // CONTEXT_COMP.errorBox.setAttribute('material', {shader:'flat', color:'#00FF00', side:'back', transparent:false});
-        // CONTEXT_COMP.el.sceneEl.appendChild(CONTEXT_COMP.errorBox);
-
-        // CONTEXT_COMP.errorBox.addEventListener('click', (e) => {
-        //     console.log('SELECTION: No target selected');
-        // });
 
         CONTEXT_COMP.createTargets();
         CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size, 2.5, 'FT_3'); //let's start somewhere :)
@@ -78,17 +67,9 @@ AFRAME.registerComponent('fitts-explore', {
             };
 
             primary_pointer.addEventListener('mousedown', (e2) => {
-                console.log(e2);
                 CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
 
                 CONTEXT_COMP.lastPointerPos = getRayEndPos_f();
-
-                // //just droping balls down for testing
-                // let temp = document.createElement('a-entity');
-                // temp.setAttribute('geometry', {primitive:'sphere', radius:0.5});
-                // temp.setAttribute('material', {color:'#FF0000'});
-                // temp.setAttribute('position', CONTEXT_COMP.lastPointerPos);
-                // CONTEXT_COMP.el.sceneEl.appendChild(temp);
             });
 
             primary_pointer.addEventListener('mouseup', (e3) => {
@@ -99,7 +80,6 @@ AFRAME.registerComponent('fitts-explore', {
                 CONTEXT_COMP.lastPointerPos.sub( getRayEndPos_f() );
 
                 if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
-                    console.log(e3);
                     console.log('SELECTION: No target selected');
                 }
                 CONTEXT_COMP.mouseDownId = '';
@@ -182,8 +162,7 @@ AFRAME.registerComponent('fitts-explore', {
         const CONTEXT_COMP = this;
 
         //create fitt's law "spheres"
-        const NUM_TARGETS   = 8;
-        const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/NUM_TARGETS);
+        const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/CONTEXT_COMP.data.num_targets);
         const TARGET_GEO    = {primitive:'sphere', radius:1.0, segmentsWidth:20, segmentsHeight:20};
 
         let pointerVec  = new THREE.Vector3(0.0, 1.0, 0.0); //we only want normalized direction here so we can adjust "radius" of each element later
@@ -230,7 +209,7 @@ AFRAME.registerComponent('fitts-explore', {
         }
 
         //add exterior targets
-        for (let i = 0; i < NUM_TARGETS; i++) {
+        for (let i = 0; i < CONTEXT_COMP.data.num_targets; i++) {
             createTarget_f('FT_' + (i+1), pointerVec.x, pointerVec.y, pointerVec.z, false, CONTEXT_COMP.targetsOuterContainer);
             pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
         }
