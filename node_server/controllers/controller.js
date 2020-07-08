@@ -192,14 +192,15 @@ exports.serveWorld = (req, res, next) => {
       }
 
       let result = data.replace(/__WORLDNAME__/g, worldName);
+      result = result.replace(/__USERTYPE__/g, user.usertype);
       result = result.replace(/__USERNAME__/g, user.username + specialStatus);
 
       result = result.replace(/__MODEL_HEAD__/g,  '/' + user.gltf_head_url);
       result = result.replace(/__MODEL_HAIR__/g,  '/' + user.gltf_hair_url);
       result = result.replace(/__MODEL_BODY__/g,  '/' + user.gltf_body_url);
-      result = result.replace(/__COLOR_HEAD__/g,   user.color_head);
-      result = result.replace(/__COLOR_HAIR__/g,   user.color_hair);
-      result = result.replace(/__COLOR_BODY__/g,   user.color_body);
+      result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
+      result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
+      result = result.replace(/__COLOR_BODY__/g,  user.color_body);
       result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
       result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
 
