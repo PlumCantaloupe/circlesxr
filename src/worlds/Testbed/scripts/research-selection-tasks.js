@@ -53,6 +53,9 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.targetsOuterContainer.setAttribute('id', 'targets_outer_container');
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
+        //let's keep a reference to our research manager
+        CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
+
         CONTEXT_COMP.createTargets();
         
 
@@ -68,8 +71,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
         else {
              //then we will load in our own script
-
-             CONTEXT_COMP.loadExperimentScript();
+             CONTEXT_COMP.researchSystem.loadExperimentScript(CONTEXT_COMP.data.experiment_script_url);
         }
 
         //simulate click function (we need more control here so we can track non-click of targets or errors)
@@ -220,44 +222,8 @@ AFRAME.registerComponent('research-selection-tasks', {
     },
     tick: function (time, timeDelta) {
     },
-    loadExperimentScript : function () {
-        const CONTEXT_COMP = this;
-        
-        let xhr = new XMLHttpRequest();
-
-        function handleXHREvent(e) {
-            console.log('Experiment Script Load Status, ' + e.type + ': ' + e.loaded + ' bytes transferred. Status: ' + xhr.status);
-        }
-
-        xhr.addEventListener("loadstart",           handleXHREvent);
-        xhr.addEventListener("progress",            handleXHREvent);
-        xhr.addEventListener("error",               handleXHREvent);
-
-        //want to be explicitely aware of any malformed urls
-        xhr.addEventListener("readystatechange", (e) => { 
-            switch(xhr.status) {
-                case 404: {
-                    console.error('Experiment Script Load Status: ' + xhr.status + ' - url not found.'); 
-                }
-                break;
-            }
-            
-        });
-
-        xhr.addEventListener("loadend", (e) => {
-            handleXHREvent(e);
-
-            const expScript = xhr.response;
-            console.log(expScript);
-        });
-
-        xhr.open('GET', CONTEXT_COMP.data.experiment_script_url);
-        xhr.responseType = 'json';
-        xhr.send();
-    },
     sendData : function (type, data) {
         const CONTEXT_COMP  = this;
-        CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
         CONTEXT_COMP.experimentID   = '';
 
         //make sure system is active
@@ -268,6 +234,8 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         switch (type) {
             case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
+                CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);  //show middle target
+
                 CONTEXT_COMP.experimentID = CIRCLES.getUUID();
                 console.log(CONTEXT_COMP.experimentID);
                 CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, CONTEXT_COMP.experimentID, Date.now(), data);
@@ -338,6 +306,7 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         //add middle target (reserving this id_0 for this element as it will present the special case of look-finding/selecting )
         createTarget_f('FT_0', 0.0, 0.0, 0.0, true, CONTEXT_COMP.targetsInnerContainer);
+        CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', false);  //hide everything until experiment starts
         CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);  //hide other targets until look selected
 
         //add exterior targets

@@ -55,7 +55,42 @@ AFRAME.registerSystem('research-manager', {
 
         //this is where we will send data to server via sockets
         //CONTEXT_COMP.socket.emit(data.type, data);
-    }
+    },
+    loadExperimentScript : function (url) {
+        const CONTEXT_COMP = this;
+        
+        let xhr = new XMLHttpRequest();
+
+        function handleXHREvent(e) {
+            console.log('Experiment Script Load Status, ' + e.type + ': ' + e.loaded + ' bytes transferred. Status: ' + xhr.status);
+        }
+
+        xhr.addEventListener("loadstart",           handleXHREvent);
+        xhr.addEventListener("progress",            handleXHREvent);
+        xhr.addEventListener("error",               handleXHREvent);
+
+        //want to be explicitely aware of any malformed urls
+        xhr.addEventListener("readystatechange", (e) => { 
+            switch(xhr.status) {
+                case 404: {
+                    console.error('Experiment Script Load Status: ' + xhr.status + ' - url not found.'); 
+                }
+                break;
+            }
+            
+        });
+
+        xhr.addEventListener("loadend", (e) => {
+            handleXHREvent(e);
+
+            const expScript = xhr.response;
+            console.log(expScript);
+        });
+
+        xhr.open('GET', url);
+        xhr.responseType = 'json';
+        xhr.send();
+    },
 });
 
 //Component: will capture events and pass data to system
