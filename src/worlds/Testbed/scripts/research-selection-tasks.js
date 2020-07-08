@@ -17,7 +17,8 @@ AFRAME.registerComponent('research-selection-tasks', {
         targets_radius:             {type:'number',     default:2.5},
         target_active:              {type:'string',     default:''},
         pointer_updatetime_ms:      {type:'number',     default:50},
-        click_updown_distance_max:  {type:'number',     default:0.5} //this dictates how much the poointer can move between mousedown and mouseup to register a click
+        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the poointer can move between mousedown and mouseup to register a click
+        visible:                    {type:'boolean',    default:true}
     },
     init() {
         const CONTEXT_COMP = this;
@@ -195,6 +196,10 @@ AFRAME.registerComponent('research-selection-tasks', {
 
             //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
             CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_angle.x), THREE.Math.degToRad(data.targets_XY_angle.y), 0.0, 'YXZ');
+        }
+
+        if (oldData.visible !== data.visible) {
+            CONTEXT_COMP.targetContainer.setAttribute('visible', data.visible);
         }
     },
     tick: function (time, timeDelta) {
