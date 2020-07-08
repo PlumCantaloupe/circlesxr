@@ -23,6 +23,7 @@ AFRAME.registerComponent('circles-user-networked', {
     original_color_body:        {type: 'string',    default: ''},      
 
     username:                   {type: 'string',    default: ''},
+    usertype:                   {type: 'string',    default: ''},
     networked_data:             {type: 'string',    default: ''},
     costume:                    {type: 'array',    default: ['', '', '']},
   },
@@ -56,7 +57,8 @@ AFRAME.registerComponent('circles-user-networked', {
             original_color_head:    playerOneNode.getAttribute('circles-head-color'),       
             original_color_hair:    playerOneNode.getAttribute('circles-hair-color'), 
             original_color_body:    playerOneNode.getAttribute('circles-body-color'),  
-            username:               playerOneNode.getAttribute('circles-username')
+            username:               playerOneNode.getAttribute('circles-username'),
+            usertype:               playerOneNode.getAttribute('circles-usertype')
           });
 
           //set device icon here too ... I guess :/

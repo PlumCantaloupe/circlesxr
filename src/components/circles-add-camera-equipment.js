@@ -11,7 +11,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
       Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
         //set rig
         let rigElem = Context_AF.el;
-        rigElem.setAttribute('id', 'player1CamRig');
+        //rigElem.setAttribute('id', 'player1CamRig');
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
         rigElem.setAttribute('circles-teleport',{});
         rigElem.setAttribute('circles-snap-turning',{});
