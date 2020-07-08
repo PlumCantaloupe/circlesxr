@@ -1,10 +1,15 @@
 'use strict';
 
 const CONSTANTS = {
-    CAPTURE_DATA                  : true,
-    CAPTURE_TRANSFORMS            : false,
-    CAPTURE_TRANSFORM_INTERVAL_MS : 500,
-  };
+  CAPTURE_DATA                  : true,
+  CAPTURE_TRANSFORMS            : false,
+  CAPTURE_TRANSFORM_INTERVAL_MS : 500,
+};
+
+const EXP_TYPE = {
+  FITTS       : 'FITTS',
+  FITTS_LOOK  : 'FITTS_LOOK'
+};
 
 const EVENTS = {
   CONNECTED         : 'CONNECTED',
@@ -20,5 +25,6 @@ const EVENTS = {
 
 module.exports = {
   CONSTANTS,
+  EXP_TYPE,
   EVENTS,
 };

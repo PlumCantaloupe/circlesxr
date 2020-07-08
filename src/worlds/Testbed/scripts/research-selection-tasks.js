@@ -4,23 +4,31 @@
         2 - when target is clicked 8 additional targets will be created around it with one highlighted
         3 - when highlighted target is selected, start over to step 1
 */
-AFRAME.registerComponent('fitts-explore', {
+AFRAME.registerComponent('research-selection-tasks', {
     multiple: false,
     schema: {
         participant_height:         {type:'number',     default:1.6},
         include_find_target:        {type:'boolean',    default:true},
         show_labels:                {type:'boolean',    default:false},
         num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
-        target_size:                {type:'number',     default:0.2},
-        target_depth:               {type:'number',     default:5.0},
-        fitts_radius:               {type:'number',     default:2.5},
+        targets_XY_angle:           {type:'vec2',       default:{x: 0, y: 0}},
+        targets_size:               {type:'number',     default:0.2},
+        targets_depth:              {type:'number',     default:5.0},
+        targets_radius:             {type:'number',     default:2.5},
         target_active:              {type:'string',     default:''},
-        pointer_updatetime:         {type:'number',     default:'50'},
-        click_updown_distance_max:  {type:'number',     default:'0.5'} //this dictates how much the poointer can move between mousedown and mouseup to register a click
+        pointer_updatetime_ms:      {type:'number',     default:50},
+        click_updown_distance_max:  {type:'number',     default:0.5} //this dictates how much the poointer can move between mousedown and mouseup to register a click
     },
     init() {
         const CONTEXT_COMP = this;
-        CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
+
+        //set up some constants
+        CONTEXT_COMP.TARGET_TYPE = {
+            LOOK        : 'LOOK',
+            SELECT      : 'SELECT',
+            INCORRECT   : 'INCORRECT',
+            MISSED      : 'MISSED'
+        };
 
         CONTEXT_COMP.inactiveMatProps   = {transparent:false, color:'rgb(57, 187, 130)', shader:'flat'};
         CONTEXT_COMP.activeMatProps     = {transparent:false, color:'rgb(224, 148, 25)', shader:'flat'};
@@ -39,7 +47,13 @@ AFRAME.registerComponent('fitts-explore', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.transformTargets(0, 0, CONTEXT_COMP.data.target_depth, CONTEXT_COMP.data.target_size, 2.5, 'FT_3'); //let's start somewhere :)
+        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_angle.x, 
+                                        CONTEXT_COMP.data.targets_XY_angle.y, 
+                                        CONTEXT_COMP.data.targets_depth, 
+                                        CONTEXT_COMP.data.targets_size, 
+                                        CONTEXT_COMP.data.targets_radius, 
+                                        'FT_3'  //let's start somewhere :)
+                                    ); 
 
         //simulate click function (we need more control here so we can track non-click of targets or errors)
         CONTEXT_COMP.mouseDownId = '';
@@ -47,7 +61,6 @@ AFRAME.registerComponent('fitts-explore', {
         const scene = document.querySelector('a-scene');
 
         scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e1) => {
-
             const primary_pointer   = document.querySelector('#primary_pointer');
             const raycaster         = primary_pointer.components['raycaster'];
 
@@ -81,10 +94,25 @@ AFRAME.registerComponent('fitts-explore', {
 
                 if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
                     console.log('SELECTION: No target selected');
+
+                    const data =    {  
+                        target_id:          'na',
+                        target_index:       -1,    //no index for no selection :D
+                        target_type:        CONTEXT_COMP.TARGET_TYPE.MISSED,
+                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
+                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
+                        targetDepth:        CONTEXT_COMP.data.targets_depth,
+                        targetSize:         CONTEXT_COMP.data.targets_size,
+                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                    };
+                    CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
                 }
                 CONTEXT_COMP.mouseDownId = '';
             });
         });
+
+        //start experiment (will want a trigger to start this later)
+        CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, {});
     },
     update: function (oldData) {
         const CONTEXT_COMP  = this;
@@ -100,23 +128,23 @@ AFRAME.registerComponent('fitts-explore', {
             });
         }
 
-        if (oldData.target_size !== data.target_size) {
+        if (oldData.targets_size !== data.targets_size) {
             const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.target_container');
             targets.forEach( (target) => {
-                target.object3D.scale.set(data.target_size, data.target_size, data.target_size);
+                target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
             });
         }
 
-        if (oldData.target_depth !== data.target_depth) {
-            CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -data.target_depth);
-            CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -data.target_depth);
+        if (oldData.targets_depth !== data.targets_depth) {
+            CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -data.targets_depth);
+            CONTEXT_COMP.targetsOuterContainer.object3D.position.set(0.0, 0.0, -data.targets_depth);
         }
 
-        if (oldData.fitts_radius !== data.fitts_radius) {
+        if (oldData.targets_radius !== data.targets_radius) {
             const targets = CONTEXT_COMP.targetsOuterContainer.querySelectorAll('.target_container');
             targets.forEach( (target) => {
                 const dirVec = target.object3D.userData.dirVec;
-                target.object3D.position.set(dirVec.x * data.fitts_radius, dirVec.y * data.fitts_radius, dirVec.z * data.fitts_radius);
+                target.object3D.position.set(dirVec.x * data.targets_radius, dirVec.y * data.targets_radius, dirVec.z * data.targets_radius);
             });
         }
 
@@ -155,8 +183,69 @@ AFRAME.registerComponent('fitts-explore', {
                 scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, setFunc );
             }
         }
+
+        if (oldData.targets_XY_angle !== data.targets_XY_angle) {
+            let pointerVec  = new THREE.Vector3(0.0, 0.0, 0.0); //moving off x-axis as default rotation of cam looks down x
+            const X_VEC     = new THREE.Vector3(1.0, 0.0, 0.0);
+            const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
+
+            //rotate around "imaginary sphere"
+            pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(data.targets_XY_angle.x));
+            pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(data.targets_XY_angle.y));
+
+            //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
+            CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_angle.x), THREE.Math.degToRad(data.targets_XY_angle.y), 0.0, 'YXZ');
+        }
     },
     tick: function (time, timeDelta) {
+    },
+    sendData : function (type, data) {
+        const CONTEXT_COMP  = this;
+        CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
+        CONTEXT_COMP.experimentID   = '';
+
+        //make sure system is active
+        if (!CONTEXT_COMP.researchSystem) {
+            console.warn('Research System not connected.');
+            return;
+        }
+
+        switch (type) {
+            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
+                CONTEXT_COMP.experimentID = CIRCLES.getUUID();
+                console.log(CONTEXT_COMP.experimentID);
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRIAL_START: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.TRIAL_START, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRIAL_STOP: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.TRIAL_STOP, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_START: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.SELECTION_START, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_STOP: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE: {
+                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE, CONTEXT_COMP.experimentID, Date.now(), data);
+            }
+            break;
+        }
     },
     createTargets: function() {
         const CONTEXT_COMP = this;
@@ -215,45 +304,17 @@ AFRAME.registerComponent('fitts-explore', {
         }
     },
     //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    transformTargets : function(hori_angle, vert_angle, targetDepth, targetSize, fittsRadius, activeTarget_id) {
+    transformTargets : function(horiAngle, vertAngle, targetDepth, targetSize, fittsRadius, activeTarget_id) {
         console.log('Setting new target transforms');
-        console.log('    horizontal angle: ' + hori_angle);
-        console.log('    vertical angle: '   + vert_angle);
+        console.log('    horizontal angle: ' + horiAngle);
+        console.log('    vertical angle: '   + vertAngle);
         console.log('    target depth: '     + targetDepth);
         console.log('    target size: '      + targetSize);
         console.log('    fitts radius: '     + fittsRadius);
         console.log('    active target: '    + activeTarget_id);
 
-        const CONTEXT_COMP = this;
-
-        let pointerVec  = new THREE.Vector3(0.0, 0.0, 0.0); //moving off x-axis as default rotation of cam looks down x
-        const X_VEC     = new THREE.Vector3(1.0, 0.0, 0.0);
-        const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
-
-        //rotate around "imaginary sphere"
-        pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(vert_angle));
-        pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(hori_angle));
-
-        //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
-        CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(vert_angle), THREE.Math.degToRad(hori_angle), 0.0, 'YXZ');
-
         //set depth and target size
-        CONTEXT_COMP.el.setAttribute('fitts-explore', {target_size:targetSize, target_depth:targetDepth, fitts_radius:fittsRadius, target_active:activeTarget_id});
-
-        //send data to research system
-        const data =    {  
-                            experiment_id:      '',
-                            experiment_date:    '',
-                            type:               CIRCLES.RESEARCH.EVENTS.SELECTION_START,
-                            time:               Date.now(),
-                            target_id:          activeTarget_id,
-                            hori_angle:         hori_angle,
-                            vert_angle:         vert_angle,
-                            targetDepth:        targetDepth,
-                            targetSize:         targetSize,
-                            fittsRadius:        fittsRadius
-                        };
-        CONTEXT_COMP.researchSystem.sendData(data);
+        this.el.setAttribute('research-selection-tasks', {targets_XY_angle:{x:horiAngle, y:vertAngle}, targets_size:targetSize, targets_depth:targetDepth, targets_radius:fittsRadius, target_active:activeTarget_id});
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -267,7 +328,19 @@ AFRAME.registerComponent('fitts-explore', {
                 CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', true);
                 CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', false);
                 
-                //TODO: record data
+                //Look target selected
+                const data =    {  
+                    target_id:          selectedElem.id,
+                    target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                    target_type:        CONTEXT_COMP.TARGET_TYPE.LOOK,
+                    targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
+                    targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
+                    targetDepth:        CONTEXT_COMP.data.targets_depth,
+                    targetSize:         CONTEXT_COMP.data.targets_size,
+                    fittsRadius:        CONTEXT_COMP.data.targets_radius
+                };
+                CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
+                CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
             }
             else {
                 //check if this is an active target
@@ -276,6 +349,20 @@ AFRAME.registerComponent('fitts-explore', {
                     CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
                     CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
 
+                    //Fitts target selected
+                    const data =    {  
+                        target_id:          selectedElem.id,
+                        target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                        target_type:        CONTEXT_COMP.TARGET_TYPE.SELECT,
+                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
+                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
+                        targetDepth:        CONTEXT_COMP.data.targets_depth,
+                        targetSize:         CONTEXT_COMP.data.targets_size,
+                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                    };
+                    CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
+                    CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
+
                     //TODO: record data
                     //TODO: move to next state
                     CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
@@ -283,6 +370,19 @@ AFRAME.registerComponent('fitts-explore', {
                 else {
                     console.log('SELCTION: Target Selected: ' + selectedElem.id + ' is not active.');
                     //record data/error
+
+                    //Incorrect fitts target selected
+                    const data =    {  
+                        target_id:          selectedElem.id,
+                        target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                        target_type:        CONTEXT_COMP.TARGET_TYPE.INCORRECT,
+                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
+                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
+                        targetDepth:        CONTEXT_COMP.data.targets_depth,
+                        targetSize:         CONTEXT_COMP.data.targets_size,
+                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                    };
+                    CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
                 }
             }
         }
@@ -311,107 +411,3 @@ AFRAME.registerComponent('fitts-explore', {
         return Math.random() * (max - min) + min; //The maximum is inclusive and the minimum is inclusive 
     }
 });
-
-//System: Will control data collection and communication with server
-AFRAME.registerSystem('research-manager', {
-    init() {
-        //called on 
-        console.log('Starting research-system!');
-        const CONTEXT_COMP  = this;
-        const scene         = document.querySelector('a-scene');
-
-        CONTEXT_COMP.connected = false;
-
-        scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            console.log("research-manager: socket connected ....");
-            CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao! research system connecting.'});
-            CONTEXT_COMP.connected = true;
-        });
-    },
-    tick: function (time, timeDelta) {}, 
-    sendData: function(data) {
-        switch (data.type) {
-            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_START: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_STOP: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_START: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_STOP: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE: {
-                
-            }
-            break;
-        }
-
-        //this is where we will send data to server via sockets
-        //CONTEXT_COMP.socket.emit(data.type, data);
-    }
-});
-
-//Component: will capture events and pass data to system
-// AFRAME.registerComponent('research-manager', {
-//     multiple: false,
-//     schema: {
-//         capture_data:   {type:'boolean', default:true},
-//     },
-//     init() {
-//         //called on 
-//         console.log('Starting research-component!');
-//         const Context_AF = this;
-//     },
-//     tick: function (time, timeDelta) {
-        
-//     }
-// });
-
-// //component default functions
-// AFRAME.registerComponent('some-name', {
-//     schema: {},
-//     init() {
-//         //called after aframe initialized and this component is setup
-//     },
-//     update: function (oldData) {
-//         //called whenever schema properties are changed
-//     },
-//     updateSchema: function(data) {
-//         //called on evey update (when properties change)
-//     },
-//     tick: function (time, timeDelta) {
-//         //called on every scene render frame
-//     },
-//     tick: function (time, timeDelta, camera) {
-//         //called after every render frame (i.e. after tick)
-//     },
-//     pause: function () {
-//         //called when scene or entity pauses
-//     },
-//     play: function () {
-//         //called when scene or entity plays/resumes
-//     },
-//     remove: function() {
-//         //called when component is removed from entity
-//     }
-// });

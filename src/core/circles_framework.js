@@ -66,6 +66,13 @@ const COLOR_PALETTES = [
   {name: 'mandarin',  r:233,  g:65,   b:46,   beingUsed:false}
 ];
 
+//from here: https://gist.github.com/jed/982883
+const getUUID = function() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}; 
+
 module.exports = {
   CONSTANTS,
   RESEARCH,
@@ -75,5 +82,6 @@ module.exports = {
   MODEL_FORMAT,
   USER_TYPE,
   EVENTS,
-  COLOR_PALETTES
+  COLOR_PALETTES,
+  getUUID
 };
