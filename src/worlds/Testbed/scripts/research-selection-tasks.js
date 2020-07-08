@@ -363,7 +363,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     CONTEXT_COMP.currNumSelectTasks = 0;    //reset num select targets
 
                     //random new state
-                    CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
+                    CONTEXT_COMP.randomTransform(-30, 30, -180, 180, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
                 }
                 else {
                     //show another active target, but keep same state
@@ -371,7 +371,12 @@ AFRAME.registerComponent('research-selection-tasks', {
                     //set random target to set as active
                     const targets       = CONTEXT_COMP.targetContainer.querySelectorAll('.fitts_target');
                     const numTargets    = targets.length;
-                    const randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
+
+                    //don't want same target to keep choosing until different :)
+                    let randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
+                    while (randTargetStr === selectedElem.id ) {
+                        randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
+                    }
 
                     CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
                                                     CONTEXT_COMP.data.targets_XY_rot.y, 
@@ -401,7 +406,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             }
         }
     },
-    randomTransform : function (horiAngle_Min, horiAngle_max, vertAngle_min, vertAngle_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
+    randomTransform : function (xRot_min, xRot_max, yRot_Min, yRot_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
         const CONTEXT_COMP = this;
 
         //set random target to set as active
@@ -409,8 +414,8 @@ AFRAME.registerComponent('research-selection-tasks', {
         const numTargets = targets.length;
         const randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
 
-        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(horiAngle_Min, horiAngle_max), 
-                                        CONTEXT_COMP.getRandomNumber(vertAngle_min, vertAngle_max), 
+        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(xRot_min, xRot_max), 
+                                        CONTEXT_COMP.getRandomNumber(yRot_Min, yRot_max), 
                                         CONTEXT_COMP.getRandomNumber(depth_min, depth_max), 
                                         CONTEXT_COMP.getRandomNumber(size_min, size_max),
                                         CONTEXT_COMP.getRandomNumber(fittsRadius_min, fittsRadius_max),
