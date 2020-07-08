@@ -9,9 +9,11 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
     //only want to attach to 'this' player aka 'player1'
     if ( Context_AF.el.getAttribute('id') === 'player1' ) {
       Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
-        //set rig
+  
         let rigElem = Context_AF.el;
-        //rigElem.setAttribute('id', 'player1CamRig');
+        const avatar = rigElem.querySelector('.avatar');
+
+        //set rig
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
         rigElem.setAttribute('circles-teleport',{});
         rigElem.setAttribute('circles-snap-turning',{});
@@ -40,7 +42,6 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           console.log('Adding VR controls');
 
           //get hand colours
-          const avatar      = rigElem.querySelector('.avatar');
           const bodyColor   = avatar.components["circles-user-networked"].data.color_head;
 
           let entity_Controller_1 = document.createElement('a-entity');
@@ -118,9 +119,66 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         zoomElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
         zoomElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
 
+        //TODO: if a teacher, give extra controls
+        if (avatar.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.TEACHER) {
+          console.log('I am a teacher.');
+        }
+
+        //If a researcher give extra controls
+        if (avatar.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
+          console.log('I am a researcher.');
+
+          /*
+          - Experiment
+            - start experiment
+            - stop experiment
+          - Visual State
+            - invisible
+            - ghost
+            - normaL
+          */
+
+          //create "resaercher panel"
+          let researchControls = document.createElement('a-entity');
+          researchControls.setAttribute('id', 'research_controls');
+          researchControls.setAttribute('visible', true);
+          researchControls.setAttribute('position', {x:1.0, y:1.0, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          researchControls.setAttribute('rotation', {x:0, y:0, z:0});
+          cameraElem.appendChild(researchControls);
+
+          let buttonElem  = null;
+          let textElem    = null;    
+          let bgElem      = null;
+
+          buttonElem = Context_AF.createBasicButton('start_experiment', 'start experiment', 0.5, 0.3);
+          buttonElem.setAttribute('position', {x:CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
+          researchControls.appendChild(buttonElem);
+        }
+
         console.log('Attached camera controls to avatar');
         Context_AF.el.emit(CIRCLES.EVENTS.CAMERA_ATTACHED, {element:Context_AF.el}, true);
       });
     }
+  },
+  createBasicButton : function(id, text, width, height) {
+    let buttonElem = document.createElement('a-entity');
+    buttonElem.setAttribute('id', id);
+    //buttonElem.setAttribute('class', 'interactive');
+
+    let bgElem = document.createElement('a-entity');
+    bgElem.setAttribute('class', 'interactive');
+    bgElem.setAttribute('geometry',  { primitive:'plane', width:width, height:height });
+    bgElem.setAttribute('material',  {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
+    bgElem.addEventListener('mouseenter', function (e) { console.log('mousenter'); e.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
+    bgElem.addEventListener('mouseleave', function (e) { console.log('mouseleave'); e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+    bgElem.addEventListener('click', function (e) { console.log('click'); e.target.setAttribute('scale',{x:1.2, y:1.2, z:1.2}); });
+    buttonElem.appendChild(bgElem);
+
+    let textElem = document.createElement('a-entity');
+    textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});
+    textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 3.0, height:height * 3, value:text });
+    buttonElem.appendChild(textElem);
+
+    return buttonElem;
   }
 });

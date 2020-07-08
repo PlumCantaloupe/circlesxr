@@ -1,5 +1,5 @@
 {
-    "name": "Look and Selection_Tasks",
+    "name": "Look and  Selection_Tasks",
     "description": "This is a list of pre-calculated trials for selection tasks across desktop, mobile, and HMD.",
     "num_trials": 10,
     "trials": {
