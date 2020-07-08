@@ -10,15 +10,20 @@ AFRAME.registerComponent('research-selection-tasks', {
         participant_height:         {type:'number',     default:1.6},
         show_labels:                {type:'boolean',    default:false},
         num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
+        target_active:              {type:'string',     default:''},
+        pointer_updatetime_ms:      {type:'number',     default:50},
+        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the pointer can move between mousedown and mouseup to register a clic
+        visible:                    {type:'boolean',    default:true},
+
+        //are we loading in our own script? See format example in {root}/world/Testbed/scripts/experiment_script.json
+        experiment_script_url:      {type:'string',     default:''},
+
+        //these properties only work if we do load in our own script (used for random placements et al.)
         num_select_tasks_per_look:  {type:'int',        default:3},     //number of select tasks to be presented after 1 look/find task
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
         targets_size:               {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
-        targets_radius:             {type:'number',     default:2.5},
-        target_active:              {type:'string',     default:''},
-        pointer_updatetime_ms:      {type:'number',     default:50},
-        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the poointer can move between mousedown and mouseup to register a clic
-        visible:                    {type:'boolean',    default:true}
+        targets_radius:             {type:'number',     default:2.5}
     },
     init() {
         const CONTEXT_COMP = this;
@@ -49,13 +54,23 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
-                                        CONTEXT_COMP.data.targets_XY_rot.y, 
-                                        CONTEXT_COMP.data.targets_depth, 
-                                        CONTEXT_COMP.data.targets_size, 
-                                        CONTEXT_COMP.data.targets_radius, 
-                                        'FT_3'  //let's start somewhere :)
-                                    ); 
+        
+
+        if (CONTEXT_COMP.data.experiment_script_url === '') {
+            //start somewhere
+            CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
+                CONTEXT_COMP.data.targets_XY_rot.y, 
+                CONTEXT_COMP.data.targets_depth, 
+                CONTEXT_COMP.data.targets_size, 
+                CONTEXT_COMP.data.targets_radius, 
+                'FT_3'  //let's start somewhere :)
+            ); 
+        }
+        else {
+             //then we will load in our own script
+
+             CONTEXT_COMP.loadExperimentScript();
+        }
 
         //simulate click function (we need more control here so we can track non-click of targets or errors)
         CONTEXT_COMP.mouseDownId = '';
@@ -113,7 +128,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             });
         });
 
-        //start experiment (will want a trigger to start this later)
+        //start experiment (TODO: will want a trigger to start this later)
         CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, {});
     },
     update: function (oldData) {
@@ -204,6 +219,41 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
     },
     tick: function (time, timeDelta) {
+    },
+    loadExperimentScript : function () {
+        const CONTEXT_COMP = this;
+        
+        let xhr = new XMLHttpRequest();
+
+        function handleXHREvent(e) {
+            console.log('Experiment Script Load Status, ' + e.type + ': ' + e.loaded + ' bytes transferred. Status: ' + xhr.status);
+        }
+
+        xhr.addEventListener("loadstart",           handleXHREvent);
+        xhr.addEventListener("progress",            handleXHREvent);
+        xhr.addEventListener("error",               handleXHREvent);
+
+        //want to be explicitely aware of any malformed urls
+        xhr.addEventListener("readystatechange", (e) => { 
+            switch(xhr.status) {
+                case 404: {
+                    console.error('Experiment Script Load Status: ' + xhr.status + ' - url not found.'); 
+                }
+                break;
+            }
+            
+        });
+
+        xhr.addEventListener("loadend", (e) => {
+            handleXHREvent(e);
+
+            const expScript = xhr.response;
+            console.log(expScript);
+        });
+
+        xhr.open('GET', CONTEXT_COMP.data.experiment_script_url);
+        xhr.responseType = 'json';
+        xhr.send();
     },
     sendData : function (type, data) {
         const CONTEXT_COMP  = this;
