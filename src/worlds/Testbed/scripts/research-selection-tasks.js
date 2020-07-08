@@ -228,14 +228,6 @@ AFRAME.registerComponent('research-selection-tasks', {
                 CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, Date.now(), data);
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_START: {
-                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.TRIAL_START, CONTEXT_COMP.experimentID, Date.now(), data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_STOP: {
-                CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.TRIAL_STOP, CONTEXT_COMP.experimentID, Date.now(), data);
-            }
-            break;
             case CIRCLES.RESEARCH.EVENTS.SELECTION_START: {
                 CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.SELECTION_START, CONTEXT_COMP.experimentID, Date.now(), data);
             }
@@ -294,7 +286,6 @@ AFRAME.registerComponent('research-selection-tasks', {
             label.setAttribute('position', {x:0.0, y:0.0 + (TARGET_GEO.radius * 2.0), z:0.0});
             targetConta.appendChild(label);
         };
-
 
         if (CONTEXT_COMP.data.include_find_target === true) {
             //add middle target (reserving this id_0 for this element as it will present the special case of look-finding/selecting )

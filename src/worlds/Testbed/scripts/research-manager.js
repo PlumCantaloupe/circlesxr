@@ -22,7 +22,7 @@ AFRAME.registerSystem('research-manager', {
         return CIRCLES.getUUID();
     },
     captureData: function(type, experiment_id, timeStamp, data) {
-        console.warn('RESEARCH DATA CAPTURE:  type[' + type + '], experiment id[' + experiment_id + '], timeStamp[' + new Date(timeStamp).toISOString() + ']');
+        console.warn('RESEARCH DATA CAPTURE:  type[' + type + '], experiment id[' + experiment_id + '], timeStamp[' + new Date(timeStamp).toISOString()  + ']');
 
         // const dateStr   = new Date().today.toISOString().substring(0, 10);
 
@@ -32,14 +32,6 @@ AFRAME.registerSystem('research-manager', {
             }
             break;
             case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_START: {
-                
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENTS.TRIAL_STOP: {
                 
             }
             break;

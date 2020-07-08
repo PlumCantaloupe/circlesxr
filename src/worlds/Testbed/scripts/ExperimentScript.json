@@ -1,0 +1,24 @@
+{
+    "name": "MP_Selection_Tasks",
+    "description": "This is a list of pre-calculated trials for selection tasks across desktop, mobile, and HMD.",
+    "num_trials": 10,
+    "trials": {
+        "comments": "This is the pre-calculated information required for each trial. We are looking down z-axis so x_rot[-180, 180] for up/down, y_rot[-180, 180] for left/right",
+        "data": [
+            {"type":"look", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
+            {"type":"select", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
+            {"type":"select", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
+            {"type":"select", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
+            {"type":"select", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
+            {"type":"select", "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}}
+        ]
+    },
+    "order": {
+        "comments": "To reduce learning effects of this experiment we will re-order selection tasks for platform consistently and make sure the order of platforms is counter-balanced between users.",
+        "data": {
+            "desktop": [],
+            "mobile": [],
+            "hmd": []
+        }
+    }
+}
