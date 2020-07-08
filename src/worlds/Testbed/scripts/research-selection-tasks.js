@@ -1,7 +1,7 @@
 /*
     This component will create a variety of selection targets in the following steps:
         1 - create a target around the user
-        2 - when target is clicked 8 additional targets will be created around it with one highlighted
+        2 - when target is clicked [data.num_targets] additional targets will be created around it with one highlighted
         3 - when highlighted target is selected, start over to step 1
 */
 AFRAME.registerComponent('research-selection-tasks', {
@@ -11,17 +11,19 @@ AFRAME.registerComponent('research-selection-tasks', {
         include_find_target:        {type:'boolean',    default:true},
         show_labels:                {type:'boolean',    default:false},
         num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
-        targets_XY_angle:           {type:'vec2',       default:{x: 0, y: 0}},
+        num_select_tasks_per_look:  {type:'int',        default:3},     //number of select tasks to be presented after 1 look/find task
+        targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
         targets_size:               {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
         targets_radius:             {type:'number',     default:2.5},
         target_active:              {type:'string',     default:''},
         pointer_updatetime_ms:      {type:'number',     default:50},
-        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the poointer can move between mousedown and mouseup to register a click
+        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the poointer can move between mousedown and mouseup to register a clic
         visible:                    {type:'boolean',    default:true}
     },
     init() {
         const CONTEXT_COMP = this;
+        CONTEXT_COMP.currNumSelectTasks = 0;        //will need this to track when a new look task is completed. See data.num_select_tasks_per_look
 
         //set up some constants
         CONTEXT_COMP.TARGET_TYPE = {
@@ -48,8 +50,8 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.targetContainer.appendChild(CONTEXT_COMP.targetsOuterContainer);
 
         CONTEXT_COMP.createTargets();
-        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_angle.x, 
-                                        CONTEXT_COMP.data.targets_XY_angle.y, 
+        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
+                                        CONTEXT_COMP.data.targets_XY_rot.y, 
                                         CONTEXT_COMP.data.targets_depth, 
                                         CONTEXT_COMP.data.targets_size, 
                                         CONTEXT_COMP.data.targets_radius, 
@@ -97,14 +99,14 @@ AFRAME.registerComponent('research-selection-tasks', {
                     console.log('SELECTION: No target selected');
 
                     const data =    {  
-                        target_id:          'na',
-                        target_index:       -1,    //no index for no selection :D
-                        target_type:        CONTEXT_COMP.TARGET_TYPE.MISSED,
-                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
-                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
-                        targetDepth:        CONTEXT_COMP.data.targets_depth,
-                        targetSize:         CONTEXT_COMP.data.targets_size,
-                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                        target_id:      'na',
+                        target_index:   -1,    //no index for no selection :D
+                        target_type:    CONTEXT_COMP.TARGET_TYPE.MISSED,
+                        targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
+                        targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
+                        targetDepth:    CONTEXT_COMP.data.targets_depth,
+                        targetSize:     CONTEXT_COMP.data.targets_size,
+                        fittsRadius:    CONTEXT_COMP.data.targets_radius
                     };
                     CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
                 }
@@ -185,17 +187,17 @@ AFRAME.registerComponent('research-selection-tasks', {
             }
         }
 
-        if (oldData.targets_XY_angle !== data.targets_XY_angle) {
+        if (oldData.targets_XY_rot !== data.targets_XY_rot) {
             let pointerVec  = new THREE.Vector3(0.0, 0.0, 0.0); //moving off x-axis as default rotation of cam looks down x
             const X_VEC     = new THREE.Vector3(1.0, 0.0, 0.0);
             const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
 
             //rotate around "imaginary sphere"
-            pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(data.targets_XY_angle.x));
-            pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(data.targets_XY_angle.y));
+            pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(data.targets_XY_rot.x));
+            pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(data.targets_XY_rot.y));
 
             //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
-            CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_angle.x), THREE.Math.degToRad(data.targets_XY_angle.y), 0.0, 'YXZ');
+            CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_rot.x), THREE.Math.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
         }
 
         if (oldData.visible !== data.visible) {
@@ -309,17 +311,17 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
     },
     //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    transformTargets : function(horiAngle, vertAngle, targetDepth, targetSize, fittsRadius, activeTarget_id) {
+    transformTargets : function(xRot, yRot, targetsDepth, targetsSize, targetsRadius, activeTarget_id) {
         console.log('Setting new target transforms');
-        console.log('    horizontal angle: ' + horiAngle);
-        console.log('    vertical angle: '   + vertAngle);
-        console.log('    target depth: '     + targetDepth);
-        console.log('    target size: '      + targetSize);
-        console.log('    fitts radius: '     + fittsRadius);
+        console.log('    horizontal angle: ' + xRot);
+        console.log('    vertical angle: '   + yRot);
+        console.log('    target depth: '     + targetsDepth);
+        console.log('    target size: '      + targetsSize);
+        console.log('    fitts radius: '     + targetsRadius);
         console.log('    active target: '    + activeTarget_id);
 
         //set depth and target size
-        this.el.setAttribute('research-selection-tasks', {targets_XY_angle:{x:horiAngle, y:vertAngle}, targets_size:targetSize, targets_depth:targetDepth, targets_radius:fittsRadius, target_active:activeTarget_id});
+        this.el.setAttribute('research-selection-tasks', {targets_XY_rot:{x:xRot, y:yRot}, targets_size:targetsSize, targets_depth:targetsDepth, targets_radius:targetsRadius, target_active:activeTarget_id});
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
@@ -330,47 +332,70 @@ AFRAME.registerComponent('research-selection-tasks', {
             if (selectedElem.id === 'FT_0') {
                 //then look selected, show other targets
                 console.log('SELECTION: Look Target Selected: ' + selectedElem.id + ' is active.');
-                CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', true);
-                CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', false);
                 
                 //Look target selected
                 const data =    {  
-                    target_id:          selectedElem.id,
-                    target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
-                    target_type:        CONTEXT_COMP.TARGET_TYPE.LOOK,
-                    targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
-                    targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
-                    targetDepth:        CONTEXT_COMP.data.targets_depth,
-                    targetSize:         CONTEXT_COMP.data.targets_size,
-                    fittsRadius:        CONTEXT_COMP.data.targets_radius
+                    target_id:      selectedElem.id,
+                    target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                    target_type:    CONTEXT_COMP.TARGET_TYPE.LOOK,
+                    targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
+                    targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
+                    targetDepth:    CONTEXT_COMP.data.targets_depth,
+                    targetSize:     CONTEXT_COMP.data.targets_size,
+                    fittsRadius:    CONTEXT_COMP.data.targets_radius
                 };
                 CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
                 CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
+
+                //hide look target and show fitts circle targets
+                CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', true);
+                CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', false);
             }
             else {
                 //check if this is an active target
                 if (selectedElem.object3D.userData.isActive) {
                     console.log('SELECTION: Target Selected: ' + selectedElem.id + ' is active.');
-                    CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
-                    CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
 
                     //Fitts target selected
                     const data =    {  
-                        target_id:          selectedElem.id,
-                        target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
-                        target_type:        CONTEXT_COMP.TARGET_TYPE.SELECT,
-                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
-                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
-                        targetDepth:        CONTEXT_COMP.data.targets_depth,
-                        targetSize:         CONTEXT_COMP.data.targets_size,
-                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                        target_id:      selectedElem.id,
+                        target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                        target_type:    CONTEXT_COMP.TARGET_TYPE.SELECT,
+                        targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
+                        targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
+                        targetDepth:    CONTEXT_COMP.data.targets_depth,
+                        targetSize:     CONTEXT_COMP.data.targets_size,
+                        fittsRadius:    CONTEXT_COMP.data.targets_radius
                     };
                     CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
                     CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
 
-                    //TODO: record data
-                    //TODO: move to next state
-                    CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
+                    //check if we have completed numSelect tasks yet
+                    if (++CONTEXT_COMP.currNumSelectTasks >= CONTEXT_COMP.data.num_select_tasks_per_look) {
+                        //show new look target and hide fitts' targets
+                        CONTEXT_COMP.targetsOuterContainer.setAttribute('visible', false);
+                        CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);
+                        CONTEXT_COMP.currNumSelectTasks = 0;    //reset num select targets
+
+                        //random new state
+                        CONTEXT_COMP.randomTransform(-180, 180, -50, 50, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
+                    }
+                    else {
+                        //show another active target, but keep same state
+
+                        //set random target to set as active
+                        const targets       = CONTEXT_COMP.targetContainer.querySelectorAll('.fitts_target');
+                        const numTargets    = targets.length;
+                        const randTargetStr = 'FT_' + (Math.floor(Math.random() * (numTargets - 1)) + 1);
+
+                        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
+                                                        CONTEXT_COMP.data.targets_XY_rot.y, 
+                                                        CONTEXT_COMP.data.targets_depth, 
+                                                        CONTEXT_COMP.data.targets_size,
+                                                        CONTEXT_COMP.data.targets_radius,
+                                                        randTargetStr
+                                                    );
+                    }
                 }
                 else {
                     console.log('SELCTION: Target Selected: ' + selectedElem.id + ' is not active.');
@@ -378,14 +403,14 @@ AFRAME.registerComponent('research-selection-tasks', {
 
                     //Incorrect fitts target selected
                     const data =    {  
-                        target_id:          selectedElem.id,
-                        target_index:       parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
-                        target_type:        CONTEXT_COMP.TARGET_TYPE.INCORRECT,
-                        targets_X_angle:    CONTEXT_COMP.data.targets_XY_angle.x,
-                        targets_Y_angle:    CONTEXT_COMP.data.targets_XY_angle.y,
-                        targetDepth:        CONTEXT_COMP.data.targets_depth,
-                        targetSize:         CONTEXT_COMP.data.targets_size,
-                        fittsRadius:        CONTEXT_COMP.data.targets_radius
+                        target_id:      selectedElem.id,
+                        target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
+                        target_type:    CONTEXT_COMP.TARGET_TYPE.INCORRECT,
+                        targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
+                        targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
+                        targetDepth:    CONTEXT_COMP.data.targets_depth,
+                        targetSize:     CONTEXT_COMP.data.targets_size,
+                        fittsRadius:    CONTEXT_COMP.data.targets_radius
                     };
                     CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
                 }
