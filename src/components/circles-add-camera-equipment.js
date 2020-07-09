@@ -75,14 +75,13 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         //create object controls will toggle on when pickung up an object
         let objectControls = document.createElement('a-entity');
         objectControls.setAttribute('id', 'object_controls');
-        objectControls.setAttribute('visible', false);
         objectControls.setAttribute('position', {x:0.0, y:CONTROLS_OFFSET_Y, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         objectControls.setAttribute('rotation', {x:0, y:0, z:0});
         cameraElem.appendChild(objectControls);
 
         let rotateElem = document.createElement('a-entity');
         rotateElem.setAttribute('id', 'rotate_control');
-        rotateElem.setAttribute('class', 'interactive');
+        rotateElem.setAttribute('class', 'interactive button');
         rotateElem.setAttribute('position', {x:-CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
         rotateElem.setAttribute('geometry',  {  primitive:'plane', 
                                                 width:CONTROL_BUTTON_SIZE,
@@ -95,7 +94,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         let releaseElem = document.createElement('a-entity');
         releaseElem.setAttribute('id', 'release_control');
-        releaseElem.setAttribute('class', 'interactive');
+        releaseElem.setAttribute('class', 'interactive button');
         releaseElem.setAttribute('position', {x:0.0, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
         releaseElem.setAttribute('geometry',  {  primitive:'plane', 
                                                 width:CONTROL_BUTTON_SIZE,
@@ -108,7 +107,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         let zoomElem = document.createElement('a-entity');
         zoomElem.setAttribute('id', 'zoom_control');
-        zoomElem.setAttribute('class', 'interactive');
+        zoomElem.setAttribute('class', 'interactive button');
         zoomElem.setAttribute('position', {x:CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
         zoomElem.setAttribute('geometry',  {  primitive:'plane', 
                                                 width:CONTROL_BUTTON_SIZE,
@@ -118,6 +117,11 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         objectControls.appendChild(zoomElem);
         zoomElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
         zoomElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+
+        //hide object control buttons
+        objectControls.querySelectorAll('.button').forEach( (button) => {
+          button.setAttribute('circles-interactive-visible', false);
+        });
 
         //TODO: if a teacher, give extra controls
         if (avatar.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.TEACHER) {

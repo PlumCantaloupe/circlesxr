@@ -265,7 +265,10 @@ AFRAME.registerComponent('circles-manager', {
       }
     }
 
-    Context_AF.objectControls.setAttribute('visible', true); //turn on object controls
+    //Context_AF.objectControls.setAttribute('visible', true); //turn on object controls
+    Context_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
+      button.setAttribute('circles-interactive-visible', true);
+    });
   },
   releaseInspectedObject : function ( obj ) {
     const Context_AF = this;
@@ -285,7 +288,10 @@ AFRAME.registerComponent('circles-manager', {
     Context_AF.objectDescriptions.setAttribute('visible', false);
 
     //turn off object controls
-    Context_AF.objectControls.setAttribute('visible', false);
+    //Context_AF.objectControls.setAttribute('visible', false);
+    Context_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
+      button.setAttribute('circles-interactive-visible', false);
+    });
 
     Context_AF.selectedObject  = null;
   }
