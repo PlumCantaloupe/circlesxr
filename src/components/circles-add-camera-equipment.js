@@ -138,21 +138,88 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
             - normaL
           */
 
-          //create "resaercher panel"
+          //create "researcher panel"
           let researchControls = document.createElement('a-entity');
           researchControls.setAttribute('id', 'research_controls');
           researchControls.setAttribute('visible', true);
-          researchControls.setAttribute('position', {x:1.0, y:1.0, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          researchControls.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
           researchControls.setAttribute('rotation', {x:0, y:0, z:0});
           cameraElem.appendChild(researchControls);
 
           let buttonElem  = null;
-          let textElem    = null;    
-          let bgElem      = null;
 
-          buttonElem = Context_AF.createBasicButton('start_experiment', 'start experiment', 0.5, 0.3);
-          buttonElem.setAttribute('position', {x:CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
+          //hide/show research controls button
+          let buttonElem_hide = null;
+          let buttonElem_show = null;
+
+          buttonElem_hide = Context_AF.createBasicButton('research_hide', 'X', 0.1, 0.1, 3);
+          buttonElem_hide.setAttribute('visible', true);
+          buttonElem_hide.setAttribute('position', {x:0.7, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          buttonElem_hide.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+            buttonElem_hide.setAttribute('circles-interactive-visible', false);
+            buttonElem_show.setAttribute('circles-interactive-visible', true);
+            
+            researchControls.querySelectorAll('.button').forEach( (button) => {
+              button.setAttribute('circles-interactive-visible', false);
+            });
+          });
+          cameraElem.appendChild(buttonElem_hide);
+
+          buttonElem_show = Context_AF.createBasicButton('research_show', 'O', 0.1, 0.1, 3);
+          buttonElem_show.setAttribute('visible', false);
+          buttonElem_show.setAttribute('position', {x:0.7, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          buttonElem_show.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+            buttonElem_hide.setAttribute('circles-interactive-visible', true);
+            buttonElem_show.setAttribute('circles-interactive-visible', false);
+
+            researchControls.querySelectorAll('.button').forEach( (button) => {
+              button.setAttribute('circles-interactive-visible', true);
+            });
+          });
+          cameraElem.appendChild(buttonElem_show);
+
+          //start experiment
+          buttonElem = Context_AF.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24);
+          buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
+          buttonElem.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+          });
           researchControls.appendChild(buttonElem);
+
+          //stop experiment
+          buttonElem = Context_AF.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24);
+          buttonElem.setAttribute('position', {x:0.0, y:-0.11, z:0.0});
+          buttonElem.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+          });
+          researchControls.appendChild(buttonElem);
+
+          //visual state - normal
+          buttonElem = Context_AF.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24);
+          buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
+          buttonElem.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+          });
+          researchControls.appendChild(buttonElem);
+
+          //visual state - ghost
+          buttonElem = Context_AF.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24);
+          buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
+          buttonElem.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+          });
+          researchControls.appendChild(buttonElem);
+
+          //visual state - invisible
+          buttonElem = Context_AF.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24);
+          buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
+          buttonElem.addEventListener('click', (e) => { 
+            console.log('click - ' + e.srcElement.id); 
+          });
+          researchControls.appendChild(buttonElem);
+
         }
 
         console.log('Attached camera controls to avatar');
@@ -160,24 +227,17 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
       });
     }
   },
-  createBasicButton : function(id, text, width, height) {
+  createBasicButton : function(id, text, width, height, wrapCount) {
     let buttonElem = document.createElement('a-entity');
+
     buttonElem.setAttribute('id', id);
-    //buttonElem.setAttribute('class', 'interactive');
+    buttonElem.setAttribute('class', 'interactive button  ');
+    buttonElem.setAttribute('geometry',  {primitive:'plane', width:width, height:height});
+    buttonElem.setAttribute('material',  {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
+    buttonElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', wrapCount:wrapCount, value:text });
 
-    let bgElem = document.createElement('a-entity');
-    bgElem.setAttribute('class', 'interactive');
-    bgElem.setAttribute('geometry',  { primitive:'plane', width:width, height:height });
-    bgElem.setAttribute('material',  {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
-    bgElem.addEventListener('mouseenter', function (e) { console.log('mousenter'); e.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
-    bgElem.addEventListener('mouseleave', function (e) { console.log('mouseleave'); e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
-    bgElem.addEventListener('click', function (e) { console.log('click'); e.target.setAttribute('scale',{x:1.2, y:1.2, z:1.2}); });
-    buttonElem.appendChild(bgElem);
-
-    let textElem = document.createElement('a-entity');
-    textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});
-    textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 3.0, height:height * 3, value:text });
-    buttonElem.appendChild(textElem);
+    buttonElem.addEventListener('mouseenter', function (e) { e.target.object3D.scale.set(1.03,1.03, 1.03); });
+    buttonElem.addEventListener('mouseleave', function (e) { e.target.object3D.scale.set(1.00,1.00, 1.00); });
 
     return buttonElem;
   }

@@ -13,6 +13,7 @@ require('./circles-avatar-construction');
 require('./circles-teleport');
 require('./circles-snap-turning');
 require('./circles-interactive-object');
+require('./circles-interactive-visible');
 require('./circles-inspect-object');
 require('./circles-object-label');
 require('./circles-object-world');
