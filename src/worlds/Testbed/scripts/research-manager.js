@@ -77,14 +77,10 @@ AFRAME.registerSystem('research-manager', {
                 }
                 break;
             }
-            
         });
 
         xhr.addEventListener("loadend", (e) => {
             handleXHREvent(e);
-
-            const expScript = xhr.response;
-            console.log(expScript);
         });
 
         xhr.open('GET', url);

@@ -235,14 +235,33 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
     let buttonElem = document.createElement('a-entity');
 
     buttonElem.setAttribute('id', id);
-    buttonElem.setAttribute('class', 'interactive button  ');
-    buttonElem.setAttribute('geometry',  {primitive:'plane', width:width, height:height});
-    buttonElem.setAttribute('material',  {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
-    buttonElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', wrapCount:wrapCount, value:text });
+    buttonElem.setAttribute('class', 'interactive button');
+    buttonElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});
+    buttonElem.setAttribute('material', {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
+    buttonElem.setAttribute('text', {color:'#000000', align:'center', font:'roboto', wrapCount:wrapCount, value:text});
 
     buttonElem.addEventListener('mouseenter', function (e) { e.target.object3D.scale.set(1.03,1.03, 1.03); });
     buttonElem.addEventListener('mouseleave', function (e) { e.target.object3D.scale.set(1.00,1.00, 1.00); });
 
     return buttonElem;
+
+    // let buttonElem = document.createElement('a-entity');		     
+    // buttonElem.setAttribute('id', id);		    
+    // //buttonElem.setAttribute('class', 'interactive');		    
+
+    // let bgElem = document.createElement('a-entity');		     
+    // bgElem.setAttribute('class', 'interactive bg');		    
+    // bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
+    // bgElem.setAttribute('material', {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});		   
+    // bgElem.addEventListener('mouseenter', function (e) { console.log('mousenter'); e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
+    // bgElem.addEventListener('mouseleave', function (e) { console.log('mouseleave'); e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
+    // buttonElem.appendChild(bgElem);		
+
+    // let textElem = document.createElement('a-entity');		
+    // textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
+    // textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 3.0, height:height * 3, value:text });		
+    // buttonElem.appendChild(textElem);		
+
+    // return buttonElem;
   }
 });
