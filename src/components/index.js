@@ -23,3 +23,4 @@ require('./circles-platform-mirror');
 require('./circles-rounded-rectangle');
 require('./circles-manager');
 require('./circles-artefact');
+require('./circles-wasd-movement');

@@ -13,18 +13,18 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         let rigElem = Context_AF.el;
         const avatar = rigElem.querySelector('.avatar');
 
-        //set rig
-        rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
-        rigElem.setAttribute('circles-teleport',{});
-        rigElem.setAttribute('circles-snap-turning',{});
-        rigElem.setAttribute('keyboard-controls',{enabled:false});
-        console.log('Attached camera controls to rig');
-
         //set camera
         let cameraElem = event.detail.element;
         cameraElem.setAttribute('id', 'player1Cam');
         cameraElem.setAttribute('camera',{});
         cameraElem.setAttribute('look-controls',{pointerLockEnabled:false});
+
+        //set rig
+        rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
+        rigElem.setAttribute('circles-teleport',{});
+        rigElem.setAttribute('circles-snap-turning',{});
+        rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
+        console.log('Attached camera controls to rig');
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {
