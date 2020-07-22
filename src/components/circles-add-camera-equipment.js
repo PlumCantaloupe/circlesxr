@@ -156,9 +156,9 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           let buttonElem_hide = null;
           let buttonElem_show = null;
 
-          buttonElem_hide = Context_AF.createBasicButton('research_hide', 'X', 0.1, 0.1, 3);
-          buttonElem_hide.setAttribute('visible', true);
-          buttonElem_hide.setAttribute('position', {x:0.7, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          buttonElem_hide = Context_AF.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8);
+          buttonElem_hide.setAttribute('circles-interactive-visible', true);
+          buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
           buttonElem_hide.addEventListener('click', (e) => { 
             console.log('click - ' + e.srcElement.id); 
             buttonElem_hide.setAttribute('circles-interactive-visible', false);
@@ -170,9 +170,9 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           });
           cameraElem.appendChild(buttonElem_hide);
 
-          buttonElem_show = Context_AF.createBasicButton('research_show', 'O', 0.1, 0.1, 3);
-          buttonElem_show.setAttribute('visible', false);
-          buttonElem_show.setAttribute('position', {x:0.7, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+          buttonElem_show = Context_AF.createBasicButton('research_show', 'show', 0.2, 0.07, 8);
+          buttonElem_show.setAttribute('circles-interactive-visible', false);
+          buttonElem_show.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
           buttonElem_show.addEventListener('click', (e) => { 
             console.log('click - ' + e.srcElement.id); 
             buttonElem_hide.setAttribute('circles-interactive-visible', true);
@@ -220,7 +220,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           buttonElem = Context_AF.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24);
           buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
           buttonElem.addEventListener('click', (e) => { 
-            console.log('click - ' + e.srcElement.id); 
+            console.log('click - ' + e.srcElement.id);
           });
           researchControls.appendChild(buttonElem);
 
@@ -246,20 +246,21 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
     return buttonElem;
 
     // let buttonElem = document.createElement('a-entity');		     
-    // buttonElem.setAttribute('id', id);		    
-    // //buttonElem.setAttribute('class', 'interactive');		    
+    // buttonElem.setAttribute('id', id);    
 
-    // let bgElem = document.createElement('a-entity');		     
+    // let bgElem = document.createElement('a-entity');	
+    // bgElem.setAttribute('id', id + '_bg');   	     
     // bgElem.setAttribute('class', 'interactive bg');		    
     // bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
     // bgElem.setAttribute('material', {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});		   
-    // bgElem.addEventListener('mouseenter', function (e) { console.log('mousenter'); e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
-    // bgElem.addEventListener('mouseleave', function (e) { console.log('mouseleave'); e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
+    // bgElem.addEventListener('mouseenter', function (e) { e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
+    // bgElem.addEventListener('mouseleave', function (e) { e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
     // buttonElem.appendChild(bgElem);		
 
-    // let textElem = document.createElement('a-entity');		
+    // let textElem = document.createElement('a-entity');
+    // textElem.setAttribute('id', id + '_text');  		
     // textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
-    // textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 3.0, height:height * 3, value:text });		
+    // textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 2.0, value:text });		
     // buttonElem.appendChild(textElem);		
 
     // return buttonElem;
