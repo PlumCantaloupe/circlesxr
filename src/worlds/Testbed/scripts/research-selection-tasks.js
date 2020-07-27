@@ -57,7 +57,6 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
 
         CONTEXT_COMP.createTargets();
-        
 
         if (CONTEXT_COMP.data.experiment_script_url === '') {
             //start somewhere
@@ -100,7 +99,6 @@ AFRAME.registerComponent('research-selection-tasks', {
 
             primary_pointer.addEventListener('mousedown', (e2) => {
                 CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
-
                 CONTEXT_COMP.lastPointerPos = getRayEndPos_f();
             });
 
@@ -285,6 +283,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             target.setAttribute('material', (isActive) ? CONTEXT_COMP.activeMatProps : CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.3, neutral_scale:1.0});
+            target.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
             targetConta.appendChild(target);
 
             //save direction vector so we can adjust later
