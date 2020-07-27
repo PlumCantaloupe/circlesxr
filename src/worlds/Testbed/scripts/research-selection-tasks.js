@@ -283,7 +283,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             target.setAttribute('material', (isActive) ? CONTEXT_COMP.activeMatProps : CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.3, neutral_scale:1.0});
-            target.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
+            target.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true, synchWorldTransforms:true});
             targetConta.appendChild(target);
 
             //save direction vector so we can adjust later
