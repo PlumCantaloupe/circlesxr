@@ -90,9 +90,7 @@ AFRAME.registerSystem('research-manager', {
 //Component: will capture events and pass data to system
 AFRAME.registerComponent('research-manager', {
     multiple: false,
-    schema: {
-        // capture_data:   {type:'boolean', default:true},
-    },
+    schema: {},
     init() {
         //called on 
         console.log('research-manager: system starting up.');
@@ -108,9 +106,7 @@ AFRAME.registerComponent('research-manager', {
             CONTEXT_COMP.connected = true;
         });
     },
-    tick: function (time, timeDelta) {
-        
-    }
+    tick: function (time, timeDelta) {}
 });
 
 // //component default functions

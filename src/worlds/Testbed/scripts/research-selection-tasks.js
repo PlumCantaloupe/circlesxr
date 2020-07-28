@@ -12,7 +12,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
         target_active:              {type:'string',     default:'FT_1'},
         pointer_updatetime_ms:      {type:'number',     default:50},
-        click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the pointer can move between mousedown and mouseup to register a clic
+        click_updown_distance_max:  {type:'number',     default:0.5}, //distance allowed between mouseDown and mouseUp for a click
         visible:                    {type:'boolean',    default:true},
 
         //are we loading in our own script? See format example in {root}/world/Testbed/scripts/experiment_script.json
