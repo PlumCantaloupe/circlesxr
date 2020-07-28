@@ -60,55 +60,12 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.lastPointerPos = new THREE.Vector3();
         const scene = document.querySelector('a-scene');
 
-        scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e1) => {
-            const primary_pointer   = document.querySelector('#primary_pointer');
-            const raycaster         = primary_pointer.components['raycaster'];
-
-            let getRayEndPos_f = () => {
-                let newVec = new THREE.Vector3();
-                if (AFRAME.utils.device.isMobileVR()) {
-                    newVec = new THREE.Vector3(raycaster.data.direction.x, raycaster.data.direction.y, raycaster.data.direction.z).transformDirection(primary_pointer.object3D.matrixWorld);
-                }
-                else {
-                    newVec = raycaster.data.direction.clone();
-                }
-                newVec.normalize();
-                newVec.multiplyScalar(raycaster.data.far);
-                newVec.add(raycaster.data.origin);
-
-                return newVec;
-            };
-
-            primary_pointer.addEventListener('mousedown', (e2) => {
-                CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
-                CONTEXT_COMP.lastPointerPos = getRayEndPos_f();
-            });
-
-            primary_pointer.addEventListener('mouseup', (e3) => {
-                const mouseUpId = (e3.detail.intersectedEl) ? e3.detail.intersectedEl.id : '';
-
-                //check distance between last endPos (on mouseDown) and this one (mouseUp)
-                //want to make sure this isn't a click registered when just dragging to look around
-                CONTEXT_COMP.lastPointerPos.sub( getRayEndPos_f() );
-
-                if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
-                    console.log('SELECTION: No target selected');
-
-                    const data =    {  
-                        target_id:      'na',
-                        target_index:   -1,    //no index for no selection :D
-                        target_type:    CONTEXT_COMP.TARGET_TYPE.MISSED,
-                        targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
-                        targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
-                        targetDepth:    CONTEXT_COMP.data.targets_depth,
-                        targetSize:     CONTEXT_COMP.data.targets_size,
-                        fittsRadius:    CONTEXT_COMP.data.targets_radius
-                    };
-                    CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
-                }
-                CONTEXT_COMP.mouseDownId = '';
-            });
-        });
+        if (document.querySelector('#primary_pointer')) {
+            CONTEXT_COMP.createChecksForNullSelection();
+        }
+        else {
+            scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, CONTEXT_COMP.createChecksForNullSelection.bind(CONTEXT_COMP));
+        }
 
         //start experiment (TODO: will want a trigger to start this later)
         CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, {});
@@ -201,6 +158,58 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
     },
     tick: function (time, timeDelta) {},
+    createChecksForNullSelection : function () {
+        const CONTEXT_COMP      = this;
+        const primary_pointer   = document.querySelector('#primary_pointer');
+        const raycaster         = primary_pointer.components['raycaster'];
+
+        let getRayEndPos_f = () => {
+            let newVec = new THREE.Vector3();
+            if (AFRAME.utils.device.isMobileVR()) {
+                newVec = new THREE.Vector3(raycaster.data.direction.x, raycaster.data.direction.y, raycaster.data.direction.z).transformDirection(primary_pointer.object3D.matrixWorld);
+            }
+            else {
+                newVec = raycaster.data.direction.clone();
+            }
+            newVec.normalize();
+            newVec.multiplyScalar(raycaster.data.far);
+            newVec.add(raycaster.data.origin);
+
+            return newVec;
+        };
+
+        primary_pointer.addEventListener('mousedown', (e2) => {
+            CONTEXT_COMP.mouseDownId    = (e2.detail.intersectedEl) ? e2.detail.intersectedEl.id : '';
+            CONTEXT_COMP.lastPointerPos = getRayEndPos_f();
+        });
+
+        primary_pointer.addEventListener('mouseup', (e3) => {
+            const mouseUpId = (e3.detail.intersectedEl) ? e3.detail.intersectedEl.id : '';
+
+            //check distance between last endPos (on mouseDown) and this one (mouseUp)
+            //want to make sure this isn't a click registered when just dragging to look around
+            CONTEXT_COMP.lastPointerPos.sub( getRayEndPos_f() );
+
+            if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
+                console.log('SELECTION: No target selected');
+
+                const data =    {  
+                    target_id:      'na',
+                    target_index:   -1,    //no index for no selection :D
+                    target_type:    CONTEXT_COMP.TARGET_TYPE.MISSED,
+                    targets_X_rot:  CONTEXT_COMP.data.targets_XY_rot.x,
+                    targets_Y_rot:  CONTEXT_COMP.data.targets_XY_rot.y,
+                    targetDepth:    CONTEXT_COMP.data.targets_depth,
+                    targetSize:     CONTEXT_COMP.data.targets_size,
+                    fittsRadius:    CONTEXT_COMP.data.targets_radius
+                };
+                CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
+            }
+            CONTEXT_COMP.mouseDownId = '';
+        });
+
+        CONTEXT_COMP.el.sceneEl.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, CONTEXT_COMP.createChecksForNullSelection.bind(CONTEXT_COMP));
+    },
     sendData : function (type, data) {
         const CONTEXT_COMP  = this;
         CONTEXT_COMP.experimentID   = '';

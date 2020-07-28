@@ -4,7 +4,6 @@ AFRAME.registerSystem('research-manager', {
         //called on 
         console.log('research-manager: system starting up.');
         const CONTEXT_COMP  = this;
-        const scene         = document.querySelector('a-scene');
 
         CONTEXT_COMP.connected              = false;
         CONTEXT_COMP.experimentInProgess    = false;
@@ -15,18 +14,21 @@ AFRAME.registerSystem('research-manager', {
         player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
             CONTEXT_COMP.userType = document.querySelector('.avatar').components["circles-user-networked"].data.usertype;    
 
+            console.log(CIRCLES.USER_TYPE.PARTICIPANT);
+
             if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
                 //do not attach experiment; but we will control it
             }
             else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
                 //attach experiment
+                CONTEXT_COMP.el.setAttribute('research-selection-tasks', '');
             }
             else {
                 console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
             }
         });
 
-        scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
+        CONTEXT_COMP.el.sceneEl.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
             CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao! research system connecting.'});
