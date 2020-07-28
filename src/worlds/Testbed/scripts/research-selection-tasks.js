@@ -13,7 +13,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         target_active:              {type:'string',     default:'FT_1'},
         pointer_updatetime_ms:      {type:'number',     default:50},
         click_updown_distance_max:  {type:'number',     default:0.5}, //this dictates how much the pointer can move between mousedown and mouseup to register a clic
-        visible:                    {type:'boolean',    default:false},
+        visible:                    {type:'boolean',    default:true},
 
         //are we loading in our own script? See format example in {root}/world/Testbed/scripts/experiment_script.json
         experiment_script_url:      {type:'string',     default:''},
@@ -214,16 +214,16 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
 
         if (oldData.visible !== data.visible) {
-            //!!
+            console.log(data.visible);
 
             //first turn off all interactivity so we can't click invisible elements
             const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
             targets.forEach( (target) => {
                 if (data.visible) {
-                    target.element.classList.add("interactive");
+                    target.classList.add("interactive");
                 }
                 else {
-                    target.element.classList.remove("interactive");
+                    target.classList.remove("interactive");
                 }
             });
 
