@@ -17,8 +17,8 @@ AFRAME.registerComponent('research-selection-tasks', {
         targets_size:               {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
         targets_radius:             {type:'number',     default:2.5},
-        visible_look_target:        {type:'boolean',    default:true},
-        visible_select_target:      {type:'boolean',    default:true}
+        visible_look_target:        {type:'boolean',    default:false},
+        visible_select_target:      {type:'boolean',    default:false}
     },
     init() {
         const CONTEXT_COMP = this;
