@@ -75,9 +75,9 @@ ___TODO: will add more to this later___
         - `db.dropDatabase()`
 1. Login with one of the 3 test users
     - `{username}:{password}`
-    - `user1@test.ca:password`
-    - `user2@test.ca:password`
-    - `user3@test.ca:password`
+    - `student1@test.ca:password`
+    - `student2@test.ca:password`
+    - `student3@test.ca:password`
 1. Open another app instance of browser
     - e.g. [https://support.mozilla.org/en-US/questions/1184891](https://support.mozilla.org/en-US/questions/1184891)
 1. Log in with anbother user (or same) and have fun :)
