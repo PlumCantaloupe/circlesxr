@@ -149,7 +149,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
 
         if (oldData.targets_size !== data.targets_size) {
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
+            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
             targets.forEach( (target) => {
                 target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
             });
@@ -320,6 +320,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             label.setAttribute('class', 'label');
             label.setAttribute('text', {value:unique_id, font:'roboto', width:TARGET_GEO.radius * 20.0, color:'#FFFFFF', align:'center'});
             label.setAttribute('position', {x:0.0, y:0.0 + (TARGET_GEO.radius * 2.0), z:0.0});
+            label.setAttribute('networked', {template:'#text-template', attachTemplateToLocal:true, synchWorldTransforms:true});
             targetConta.appendChild(label);
         };
 

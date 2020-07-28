@@ -107,6 +107,17 @@
     ]
   });
 
+  NAF.schemas.add({
+    template: '#text-template',
+    components: [
+      'position',
+      'rotation',
+      'scale',
+      'text',
+      'material'
+    ]
+  });
+
   // Called by Networked-Aframe when connected to server
   function onConnect () {
     console.log("custom onConnect: ", new Date());
