@@ -444,9 +444,43 @@ exports.serveExplore = (req, res, next) => {
 const addTestUsers = () => {
   let usersToAdd = new Array();
 
-  /*
-{ "_id" : ObjectId("5b4027ba3f07c7086c6caac3"), "username" : "FelixCat", "firstname" : "Felix", "lastname" : "cat", "email" : "felix@test.ca", "password" : "$2b$10$2lxGK4FoJMQCd/b8/nQkquUmARnZshYj.acNW7LGVql.V8BlmpQzS", "gltf_head_url" : "global/assets/models/gltf/head/Head_Jaw.glb", "gltf_hair_url" : "global/assets/models/gltf/hair/Hair_Curly.glb", "gltf_body_url" : "global/assets/models/gltf/body/Body_Strong.glb", "gltf_hand_left_url" : "global/assets/models/gltf/hands/left/Hand_Basic_L.glb", "gltf_hand_right_url" : "global/assets/models/gltf/hands/right/Hand_Basic_R.glb", "color_head" : "rgb(255, 255, 255)", "color_hair" : "rgb(255, 255, 255)", "color_body" : "rgb(255, 255, 255)", "color_hand_left" : "rgb(255, 255, 255)", "color_hand_right" : "rgb(255, 255, 255)", "__v" : 0 }
-*/
+  usersToAdd.push({
+    username:               'Teacher1',
+    usertype:               CIRCLES.USER_TYPE.TEACHER,
+    firstname:              'Teacher',
+    lastname:               '1',
+    email:                  'teacher1@test.ca',
+    password:               env.DEFAULT_PASSWORD,
+    gltf_head_url:          'global/assets/models/gltf/head/Head_Oval.glb',
+    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_PonyTail.glb',
+    gltf_body_url:          'global/assets/models/gltf/body/Body_Hourglass.glb',
+    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    color_head:             'rgb(59, 45, 37)',
+    color_hair:             'rgb(10, 7, 5)',
+    color_body:             'rgb(101, 255, 101)',
+    color_hand_right:       'rgb(59, 45, 37)',
+    color_hand_left:        'rgb(59, 45, 37)',
+  });
+
+  usersToAdd.push({
+    username:               'Researcher1',
+    usertype:               CIRCLES.USER_TYPE.RESEARCHER,
+    firstname:              'Researcher',
+    lastname:               '1',
+    email:                  'researcher1@test.ca',
+    password:               env.DEFAULT_PASSWORD,
+    gltf_head_url:          'global/assets/models/gltf/head/Head_Circle.glb',
+    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_Hat.glb',
+    gltf_body_url:          'global/assets/models/gltf/body/Body_Thin.glb',
+    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    color_head:             'rgb(237, 194, 122)',
+    color_hair:             'rgb(23, 22, 21)',
+    color_body:             'rgb(242, 246, 252)',
+    color_hand_right:       'rgb(237, 194, 122)',
+    color_hand_left:        'rgb(237, 194, 122)',
+  });
 
   usersToAdd.push({
     username:               'Student1',
@@ -506,41 +540,60 @@ const addTestUsers = () => {
   });
 
   usersToAdd.push({
-    username:               'Teacher1',
-    usertype:               CIRCLES.USER_TYPE.TEACHER,
-    firstname:              'Teacher',
+    username:               'Participant1',
+    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
+    firstname:              'Participant',
     lastname:               '1',
-    email:                  'teacher1@test.ca',
+    email:                  'participant1@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Oval.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_PonyTail.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Hourglass.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
-    color_head:             'rgb(59, 45, 37)',
-    color_hair:             'rgb(10, 7, 5)',
-    color_body:             'rgb(101, 255, 101)',
-    color_hand_right:       'rgb(59, 45, 37)',
-    color_hand_left:        'rgb(59, 45, 37)',
+    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
+    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
+    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
+    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
+    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
   });
 
   usersToAdd.push({
-    username:               'Researcher1',
-    usertype:               CIRCLES.USER_TYPE.RESEARCHER,
-    firstname:              'Researcher',
-    lastname:               '1',
-    email:                  'researcher1@test.ca',
+    username:               'Participant2',
+    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
+    firstname:              'Participant',
+    lastname:               '2',
+    email:                  'participant2@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Circle.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_Hat.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Thin.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
-    color_head:             'rgb(237, 194, 122)',
-    color_hair:             'rgb(23, 22, 21)',
-    color_body:             'rgb(242, 246, 252)',
-    color_hand_right:       'rgb(237, 194, 122)',
-    color_hand_left:        'rgb(237, 194, 122)',
+    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
+    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
+    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
+    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
+    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
+  });
+
+  usersToAdd.push({
+    username:               'Participant3',
+    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
+    firstname:              'Participant',
+    lastname:               '3',
+    email:                  'participant3@test.ca',
+    password:               env.DEFAULT_PASSWORD,
+    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
+    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
+    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
+    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
+    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
   });
 
   for (let i = 0; i < usersToAdd.length; i++) {

@@ -13,7 +13,7 @@ const USER_COLLISION_FAR_RADIUS_SQ  = USER_COLLISION_FAR_RADIUS * USER_COLLISION
 
 //models
 const DEFAULT_GLTF_HEAD       = '/global/assets/models/gltf/head/Head_Circle.glb';
-const DEFAULT_GLTF_HAIR       = 'no_path';
+const DEFAULT_GLTF_HAIR       = '';
 const DEFAULT_GLTF_BODY       = '/global/assets/models/gltf/body/Body_Rectangle.glb';
 const DEFAULT_GLTF_HAND_LEFT  = '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb';
 const DEFAULT_GLTF_HAND_RIGHT = '/global/assets/models/gltf/hands/right/Hand_Basic_R.glb';
@@ -61,6 +61,8 @@ module.exports = {
   USER_COLLISION_NEAR_RADIUS_SQ,
   USER_COLLISION_FAR_RADIUS_SQ,
   DEFAULT_GLTF_HEAD,
+  DEFAULT_GLTF_HAIR,
+  DEFAULT_GLTF_BODY,
   DEFAULT_GLTF_HAND_LEFT,
   DEFAULT_GLTF_HAND_RIGHT,
   DEFAULT_USER_BOUNDARY,

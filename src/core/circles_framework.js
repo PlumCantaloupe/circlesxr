@@ -34,6 +34,7 @@ const USER_TYPE = {
   STUDENT     : 'Student',
   TEACHER     : 'Teacher',
   RESEARCHER  : 'Researcher',
+  PARTICIPANT : 'Participant',
 };
 
 const EVENTS = {
@@ -55,18 +56,19 @@ const EVENTS = {
 };
 
 //!!DEPRE 8 color
-const COLOR_PALETTES = [
-  {name: 'turquoise', r:2,    g:191,  b:155,  beingUsed:false},
-  {name: 'emerald',   r:33,   g:211,  b:105,  beingUsed:false},
-  {name: 'river',     r:43,   g:146,  b:223,  beingUsed:false},
-  {name: 'amethyst',  r:155,  g:71,   b:186,  beingUsed:false},
-  {name: 'asphalt',   r:51,   g:73,   b:96,   beingUsed:false},
-  {name: 'sunflower', r:243,  g:201,  b:3,    beingUsed:false},
-  {name: 'carrot',    r:233,  g:126,  b:1,    beingUsed:false},
-  {name: 'mandarin',  r:233,  g:65,   b:46,   beingUsed:false}
-];
+const COLOR_PALETTE = {
+  PEARL     : {r:255,  g:252,  b:250},
+  TURQUOISE : {r:2,    g:191,  b:155},
+  EMERALD   : {r:33,   g:211,  b:105},
+  RIVER     : {r:43,   g:146,  b:223},
+  AMETHYST  : {r:155,  g:71,   b:186},
+  ASPHALT   : {r:51,   g:73,   b:96},
+  SUNFLOWER : {r:243,  g:201,  b:3},
+  CARROT    : {r:233,  g:126,  b:1},
+  MANDARIN  : {r:233,  g:65,   b:4}
+};
 
-//from here: https://gist.github.com/jed/982883
+//from here: https://gist.github.com/jed/92883
 const getUUID = function() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -82,6 +84,6 @@ module.exports = {
   MODEL_FORMAT,
   USER_TYPE,
   EVENTS,
-  COLOR_PALETTES,
+  COLOR_PALETTE,
   getUUID
 };

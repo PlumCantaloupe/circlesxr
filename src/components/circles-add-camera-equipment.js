@@ -11,13 +11,13 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
       Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
   
         let rigElem = Context_AF.el;
-        const avatar = rigElem.querySelector('.avatar');
+        const avatarCam = rigElem.querySelector('.avatar');
 
         //set camera
-        let cameraElem = event.detail.element;
-        cameraElem.setAttribute('id', 'player1Cam');
-        cameraElem.setAttribute('camera',{});
-        cameraElem.setAttribute('look-controls',{pointerLockEnabled:false});
+        //let cameraElem = event.detail.element;
+        avatarCam.setAttribute('id', 'player1Cam');
+        avatarCam.setAttribute('camera',{});
+        avatarCam.setAttribute('look-controls',{pointerLockEnabled:false});
 
         //set rig
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
@@ -36,13 +36,13 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           entity_Pointer.setAttribute('cursor', 'fuse:false; rayOrigin:mouse;'); //don't want fuse - just clicks as expected :)
           entity_Pointer.setAttribute('raycaster', {far:20, interval:300, objects:'.interactive', useWorldCoordinates:true});
           entity_Pointer.setAttribute('position', {x:0.0, y:0.0, z:-1.0});
-          cameraElem.appendChild(entity_Pointer);
+          avatarCam.appendChild(entity_Pointer);
         }
         else {
           console.log('Adding VR controls');
 
           //get hand colours
-          const bodyColor   = avatar.components["circles-user-networked"].data.color_head;
+          const bodyColor   = avatarCam.components["circles-user-networked"].data.color_head;
 
           let entity_Controller_1 = document.createElement('a-entity');
           entity_Controller_1.setAttribute('id', 'primary_pointer');
@@ -77,7 +77,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         objectControls.setAttribute('id', 'object_controls');
         objectControls.setAttribute('position', {x:0.0, y:CONTROLS_OFFSET_Y, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         objectControls.setAttribute('rotation', {x:0, y:0, z:0});
-        cameraElem.appendChild(objectControls);
+        avatarCam.appendChild(objectControls);
 
         let rotateElem = document.createElement('a-entity');
         rotateElem.setAttribute('id', 'rotate_control');
@@ -124,12 +124,12 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         });
 
         //TODO: if a teacher, give extra controls
-        if (avatar.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.TEACHER) {
+        if (avatarCam.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.TEACHER) {
           console.log('I am a teacher.');
         }
 
         //If a researcher give extra controls
-        if (avatar.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
+        if (avatarCam.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
           console.log('I am a researcher.');
 
           /*
@@ -148,7 +148,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           researchControls.setAttribute('visible', true);
           researchControls.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
           researchControls.setAttribute('rotation', {x:0, y:0, z:0});
-          cameraElem.appendChild(researchControls);
+          avatarCam.appendChild(researchControls);
 
           let buttonElem  = null;
 
@@ -168,7 +168,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
               button.setAttribute('circles-interactive-visible', false);
             });
           });
-          cameraElem.appendChild(buttonElem_hide);
+          avatarCam.appendChild(buttonElem_hide);
 
           buttonElem_show = Context_AF.createBasicButton('research_show', 'show', 0.2, 0.07, 8);
           buttonElem_show.setAttribute('circles-interactive-visible', false);
@@ -182,7 +182,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
               button.setAttribute('circles-interactive-visible', true);
             });
           });
-          cameraElem.appendChild(buttonElem_show);
+          avatarCam.appendChild(buttonElem_show);
 
           //start experiment
           buttonElem = Context_AF.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24);

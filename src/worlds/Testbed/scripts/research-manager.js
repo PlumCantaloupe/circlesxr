@@ -11,6 +11,21 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.trialInProgess         = false;
         CONTEXT_COMP.trialData              = null;
 
+        const player1 = document.querySelector('#Player1');
+        player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
+            CONTEXT_COMP.userType = document.querySelector('.avatar').components["circles-user-networked"].data.usertype;    
+
+            if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+                //do not attach experiment; but we will control it
+            }
+            else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+                //attach experiment
+            }
+            else {
+                console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
+            }
+        });
+
         scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
