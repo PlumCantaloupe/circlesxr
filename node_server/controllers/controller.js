@@ -195,9 +195,9 @@ exports.serveWorld = (req, res, next) => {
       result = result.replace(/__USERTYPE__/g, user.usertype);
       result = result.replace(/__USERNAME__/g, user.username + specialStatus);
 
-      result = result.replace(/__MODEL_HEAD__/g,  '/' + user.gltf_head_url);
-      result = result.replace(/__MODEL_HAIR__/g,  '/' + user.gltf_hair_url);
-      result = result.replace(/__MODEL_BODY__/g,  '/' + user.gltf_body_url);
+      result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
+      result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
+      result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
       result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
       result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
       result = result.replace(/__COLOR_BODY__/g,  user.color_body);
@@ -451,11 +451,11 @@ const addTestUsers = () => {
     lastname:               '1',
     email:                  'teacher1@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Oval.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_PonyTail.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Hourglass.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
+    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
+    gltf_body_url:          '/global/assets/models/gltf/body/Body_Hourglass.glb',
+    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(59, 45, 37)',
     color_hair:             'rgb(10, 7, 5)',
     color_body:             'rgb(101, 255, 101)',
@@ -470,11 +470,11 @@ const addTestUsers = () => {
     lastname:               '1',
     email:                  'researcher1@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Circle.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_Hat.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Thin.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
+    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
+    gltf_body_url:          '/global/assets/models/gltf/body/Body_Thin.glb',
+    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(237, 194, 122)',
     color_hair:             'rgb(23, 22, 21)',
     color_body:             'rgb(242, 246, 252)',
@@ -489,11 +489,11 @@ const addTestUsers = () => {
     lastname:               '1',
     email:                  'student1@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Circle.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_Hat.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Thin.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
+    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
+    gltf_body_url:          '/global/assets/models/gltf/body/Body_Thin.glb',
+    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(255, 209, 237)',
     color_hair:             'rgb(255, 255, 255)',
     color_body:             'rgb(92, 237, 255)',
@@ -508,11 +508,11 @@ const addTestUsers = () => {
     lastname:               '2',
     email:                  'student2@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Oval.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_PonyTail.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Hourglass.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
+    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
+    gltf_body_url:          '/global/assets/models/gltf/body/Body_Hourglass.glb',
+    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(59, 45, 37)',
     color_hair:             'rgb(10, 7, 5)',
     color_body:             'rgb(101, 255, 101)',
@@ -527,11 +527,11 @@ const addTestUsers = () => {
     lastname:               '3',
     email:                  'student3@test.ca',
     password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          'global/assets/models/gltf/head/Head_Jaw.glb',
-    gltf_hair_url:          'global/assets/models/gltf/hair/Hair_Curly.glb',
-    gltf_body_url:          'global/assets/models/gltf/body/Body_Strong.glb',
-    gltf_hand_left_url:     'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    'global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    gltf_head_url:          '/global/assets/models/gltf/head/Head_Jaw.glb',
+    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Curly.glb',
+    gltf_body_url:          '/global/assets/models/gltf/body/Body_Strong.glb',
+    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(237, 194, 122)',
     color_hair:             'rgb(222, 126, 20)',
     color_body:             'rgb(255, 42, 36)',
@@ -624,35 +624,35 @@ const addAvatarModels = () => {
   //head
   modelsToAdd.push({
     name:           "Head_Circle",
-    url:            'global/assets/models/gltf/head/Head_Circle.glb',
+    url:            '/global/assets/models/gltf/head/Head_Circle.glb',
     type:           CIRCLES.MODEL_TYPE.HEAD,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Head_Jaw",
-    url:            'global/assets/models/gltf/head/Head_Jaw.glb',
+    url:            '/global/assets/models/gltf/head/Head_Jaw.glb',
     type:           CIRCLES.MODEL_TYPE.HEAD,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Head_Oval",
-    url:            'global/assets/models/gltf/head/Head_Oval.glb',
+    url:            '/global/assets/models/gltf/head/Head_Oval.glb',
     type:           CIRCLES.MODEL_TYPE.HEAD,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Head_Square",
-    url:            'global/assets/models/gltf/head/Head_Square.glb',
+    url:            '/global/assets/models/gltf/head/Head_Square.glb',
     type:           CIRCLES.MODEL_TYPE.HEAD,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Head_Thin",
-    url:            'global/assets/models/gltf/head/Head_Thin.glb',
+    url:            '/global/assets/models/gltf/head/Head_Thin.glb',
     type:           CIRCLES.MODEL_TYPE.HEAD,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
@@ -660,28 +660,28 @@ const addAvatarModels = () => {
   //hairs
   modelsToAdd.push({
     name:           "Hair_Curly",
-    url:            'global/assets/models/gltf/hair/Hair_Curly.glb',
+    url:            '/global/assets/models/gltf/hair/Hair_Curly.glb',
     type:           CIRCLES.MODEL_TYPE.HAIR,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Hair_Hat",
-    url:            'global/assets/models/gltf/hair/Hair_Hat.glb',
+    url:            '/global/assets/models/gltf/hair/Hair_Hat.glb',
     type:           CIRCLES.MODEL_TYPE.HAIR,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Hair_Long",
-    url:            'global/assets/models/gltf/hair/Hair_Long.glb',
+    url:            '/global/assets/models/gltf/hair/Hair_Long.glb',
     type:           CIRCLES.MODEL_TYPE.HAIR,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Hair_PonyTail",
-    url:            'global/assets/models/gltf/hair/Hair_PonyTail.glb',
+    url:            '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
     type:           CIRCLES.MODEL_TYPE.HAIR,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
@@ -696,35 +696,35 @@ const addAvatarModels = () => {
   //bodies
   modelsToAdd.push({
     name:           "Body_Belly",
-    url:            'global/assets/models/gltf/body/Body_Belly.glb',
+    url:            '/global/assets/models/gltf/body/Body_Belly.glb',
     type:           CIRCLES.MODEL_TYPE.BODY,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Body_HourGlass",
-    url:            'global/assets/models/gltf/body/Body_Hourglass.glb',
+    url:            '/global/assets/models/gltf/body/Body_Hourglass.glb',
     type:           CIRCLES.MODEL_TYPE.BODY,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Body_Rectangle",
-    url:            'global/assets/models/gltf/body/Body_Rectangle.glb',
+    url:            '/global/assets/models/gltf/body/Body_Rectangle.glb',
     type:           CIRCLES.MODEL_TYPE.BODY,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Body_Strong",
-    url:            'global/assets/models/gltf/body/Body_Strong.glb',
+    url:            '/global/assets/models/gltf/body/Body_Strong.glb',
     type:           CIRCLES.MODEL_TYPE.BODY,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
   modelsToAdd.push({
     name:           "Body_Thin",
-    url:            'global/assets/models/gltf/body/Body_Thin.glb',
+    url:            '/global/assets/models/gltf/body/Body_Thin.glb',
     type:           CIRCLES.MODEL_TYPE.BODY,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
@@ -732,7 +732,7 @@ const addAvatarModels = () => {
   //left hands
   modelsToAdd.push({
     name:           "Hand_L_Basic",
-    url:            'global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    url:            '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
     type:           CIRCLES.MODEL_TYPE.HAND_LEFT,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
@@ -740,7 +740,7 @@ const addAvatarModels = () => {
   //right hands
   modelsToAdd.push({
     name:           "Hand_R_Basic",
-    url:            'global/assets/models/gltf/hands/right/Hand_Basic_R.glb',
+    url:            '/global/assets/models/gltf/hands/right/Hand_Basic_R.glb',
     type:           CIRCLES.MODEL_TYPE.HAND_RIGHT,
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
