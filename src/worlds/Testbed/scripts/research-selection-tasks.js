@@ -16,9 +16,9 @@ AFRAME.registerComponent('research-selection-tasks', {
         visible:                    {type:'boolean',    default:true},
 
         //are we loading in our own script? See format example in {root}/world/Testbed/scripts/experiment_script.json
-        experiment_script_url:      {type:'string',     default:''},
+        experiment_script_url:      {type:'string',     default:'/world/Testbed/scripts/experiment_script.json'},
 
-        //these properties only work if we do load in our own script (used for random placements et al.)
+        //these properties only work if we do NOT load in our own script (used for random placements et al.)
         num_select_tasks_per_look:  {type:'int',        default:3},     //number of select tasks to be presented after 1 look/find task
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
         targets_size:               {type:'number',     default:0.2},

@@ -24,8 +24,6 @@ AFRAME.registerSystem('research-manager', {
     captureData: function(type, experiment_id, timeStamp, data) {
         console.warn('RESEARCH DATA CAPTURE:  type[' + type + '], experiment id[' + experiment_id + '], timeStamp[' + new Date(timeStamp).toISOString()  + ']');
 
-        // const dateStr   = new Date().today.toISOString().substring(0, 10);
-
         switch (type) {
             case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
 
