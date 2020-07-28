@@ -9,6 +9,7 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.connected              = false;
         CONTEXT_COMP.experimentInProgess    = false;
         CONTEXT_COMP.trialInProgess         = false;
+        CONTEXT_COMP.trialData              = null;
 
         scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: system connected ...");
@@ -63,22 +64,26 @@ AFRAME.registerSystem('research-manager', {
             console.log('Experiment Script Load Status, ' + e.type + ': ' + e.loaded + ' bytes transferred. Status: ' + xhr.status);
         }
 
-        xhr.addEventListener("loadstart",           handleXHREvent);
-        xhr.addEventListener("progress",            handleXHREvent);
-        xhr.addEventListener("error",               handleXHREvent);
+        xhr.addEventListener("loadstart",   handleXHREvent);
+        xhr.addEventListener("loadend",     handleXHREvent);
+        xhr.addEventListener("progress",    handleXHREvent);
+        xhr.addEventListener("error",       handleXHREvent);
 
         //want to be explicitely aware of any malformed urls
         xhr.addEventListener("readystatechange", (e) => { 
             switch(xhr.status) {
+                case 200: {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        CONTEXT_COMP.trialData = xhr.response;
+                        console.log(CONTEXT_COMP.trialData);
+                    }
+                }
+                break;
                 case 404: {
                     console.error('Experiment Script Load Status: ' + xhr.status + ' - url not found.'); 
                 }
                 break;
             }
-        });
-
-        xhr.addEventListener("loadend", (e) => {
-            handleXHREvent(e);
         });
 
         xhr.open('GET', url);
@@ -90,7 +95,9 @@ AFRAME.registerSystem('research-manager', {
 //Component: will capture events and pass data to system
 AFRAME.registerComponent('research-manager', {
     multiple: false,
-    schema: {},
+    schema: {
+        exp_script_url:      {type:'string',     default:'/world/Testbed/scripts/experiment_script.json'},
+    },
     init() {
         //called on 
         console.log('research-manager: system starting up.');

@@ -8,26 +8,20 @@ AFRAME.registerComponent('research-selection-tasks', {
     multiple: false,
     schema: {
         participant_height:         {type:'number',     default:1.6},
-        show_labels:                {type:'boolean',    default:false},
         num_targets:                {type:'int',        default:8},     //for now this cannot be modified during run-time
-        target_active:              {type:'string',     default:'FT_1'},
         pointer_updatetime_ms:      {type:'number',     default:50},
         click_updown_distance_max:  {type:'number',     default:0.5}, //distance allowed between mouseDown and mouseUp for a click
-        visible:                    {type:'boolean',    default:true},
-
-        //are we loading in our own script? See format example in {root}/world/Testbed/scripts/experiment_script.json
-        experiment_script_url:      {type:'string',     default:'/world/Testbed/scripts/experiment_script.json'},
-
-        //these properties only work if we do NOT load in our own script (used for random placements et al.)
-        num_select_tasks_per_look:  {type:'int',        default:3},     //number of select tasks to be presented after 1 look/find task
+        show_labels:                {type:'boolean',    default:false},
+        target_active:              {type:'string',     default:''},
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
         targets_size:               {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
-        targets_radius:             {type:'number',     default:2.5}
+        targets_radius:             {type:'number',     default:2.5},
+        visible_look_target:        {type:'boolean',    default:true},
+        visible_select_target:      {type:'boolean',    default:true}
     },
     init() {
         const CONTEXT_COMP = this;
-        CONTEXT_COMP.currNumSelectTasks = 0;        //will need this to track when a new look task is completed. See data.num_select_tasks_per_look
 
         //set up some constants
         CONTEXT_COMP.TARGET_TYPE = {
@@ -60,21 +54,6 @@ AFRAME.registerComponent('research-selection-tasks', {
         CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
 
         CONTEXT_COMP.createTargets();
-
-        if (CONTEXT_COMP.data.experiment_script_url === '') {
-            //start somewhere
-            CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
-                CONTEXT_COMP.data.targets_XY_rot.y, 
-                CONTEXT_COMP.data.targets_depth, 
-                CONTEXT_COMP.data.targets_size, 
-                CONTEXT_COMP.data.targets_radius, 
-                CONTEXT_COMP.TARGET_ID_PREFIX + '3'  //let's start somewhere :)
-            ); 
-        }
-        else {
-             //then we will load in our own script
-             CONTEXT_COMP.researchSystem.loadExperimentScript(CONTEXT_COMP.data.experiment_script_url);
-        }
 
         //simulate click function (we need more control here so we can track non-click of targets or errors)
         CONTEXT_COMP.mouseDownId = '';
@@ -148,25 +127,6 @@ AFRAME.registerComponent('research-selection-tasks', {
             });
         }
 
-        if (oldData.targets_size !== data.targets_size) {
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
-            targets.forEach( (target) => {
-                target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
-            });
-        }
-
-        if (oldData.targets_depth !== data.targets_depth) {
-            CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -data.targets_depth);
-        }
-
-        if (oldData.targets_radius !== data.targets_radius) {
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
-            targets.forEach( (target) => {
-                const dirVec = target.object3D.userData.dirVec;
-                target.object3D.position.set(dirVec.x * data.targets_radius, dirVec.y * data.targets_radius, dirVec.z * data.targets_radius);
-            });
-        }
-
         if (oldData.target_active !== data.target_active) {
             const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.SELECT_TARGET_CLASS);
             targets.forEach( (target) => {
@@ -213,26 +173,34 @@ AFRAME.registerComponent('research-selection-tasks', {
             CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_rot.x), THREE.Math.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
         }
 
-        if (oldData.visible !== data.visible) {
-            console.log(data.visible);
-
-            //first turn off all interactivity so we can't click invisible elements
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
+        if (oldData.targets_size !== data.targets_size) {
+            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
             targets.forEach( (target) => {
-                if (data.visible) {
-                    target.classList.add("interactive");
-                }
-                else {
-                    target.classList.remove("interactive");
-                }
+                target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
             });
+        }
 
-            //then hide all targets
-            CONTEXT_COMP.targetContainer.setAttribute('visible', data.visible);
+        if (oldData.targets_depth !== data.targets_depth) {
+            CONTEXT_COMP.targetsInnerContainer.object3D.position.set(0.0, 0.0, -data.targets_depth);
+        }
+
+        if (oldData.targets_radius !== data.targets_radius) {
+            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
+            targets.forEach( (target) => {
+                const dirVec = target.object3D.userData.dirVec;
+                target.object3D.position.set(dirVec.x * data.targets_radius, dirVec.y * data.targets_radius, dirVec.z * data.targets_radius);
+            });
+        }
+
+        if (oldData.visible_look_target !== data.visible_look_target) {
+            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS, data.visible_look_target);
+        }
+
+        if (oldData.visible_select_target !== data.visible_select_target) {
+            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, data.visible_select_target);
         }
     },
-    tick: function (time, timeDelta) {
-    },
+    tick: function (time, timeDelta) {},
     sendData : function (type, data) {
         const CONTEXT_COMP  = this;
         CONTEXT_COMP.experimentID   = '';
@@ -245,8 +213,6 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         switch (type) {
             case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
-                // CONTEXT_COMP.targetsInnerContainer.setAttribute('visible', true);  //show middle target
-
                 CONTEXT_COMP.experimentID = CIRCLES.getUUID();
                 console.log(CONTEXT_COMP.experimentID);
                 CONTEXT_COMP.researchSystem.captureData(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, CONTEXT_COMP.experimentID, Date.now(), data);
@@ -289,7 +255,7 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         let pointerVec  = new THREE.Vector3(0.0, 1.0, 0.0); //we only want normalized direction here so we can adjust "radius" of each element later
         const rotateVec = new THREE.Vector3(0.0, 0.0, 1.0);
-        const createTarget_f = (unique_id, x_pos, y_pos, z_pos, className, isActive) => {
+        const createTarget_f = (unique_id, x_pos, y_pos, z_pos, className) => {
             //create target container to hold target and label
             let targetConta = document.createElement('a-entity');
             targetConta.setAttribute('class', CONTEXT_COMP.TARGET_CONTAINER_CLASS);
@@ -299,7 +265,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             target.setAttribute('id',       unique_id);
             target.setAttribute('class',    CONTEXT_COMP.FITTS_TARGET_CLASS + ' ' + className);
             target.setAttribute('geometry', TARGET_GEO);
-            target.setAttribute('material', (isActive) ? CONTEXT_COMP.activeMatProps : CONTEXT_COMP.inactiveMatProps);
+            target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {hovered_scale:1.2, clicked_scale:1.3, neutral_scale:1.0});
             target.setAttribute('circles-interactive-visible', true);
@@ -310,7 +276,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             let dirVec = new THREE.Vector3(x_pos, y_pos, z_pos);
             dirVec.normalize(); //shoudl be length 1 already but just in case :))))
             targetConta.object3D.userData.dirVec    = dirVec; //save it here so we can check it out later
-            target.object3D.userData.isActive       = isActive;
+            target.object3D.userData.isActive       = false;
 
             //connect to click listener for selection detection
             target.addEventListener('click', CONTEXT_COMP.fittsTargetSelect.bind(CONTEXT_COMP))
@@ -325,40 +291,23 @@ AFRAME.registerComponent('research-selection-tasks', {
         };
 
         //add middle target (reserving this id_0 for this element as it will present the special case of look-finding/selecting )
-        createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + '0', 0.0, 0.0, 0.0, CONTEXT_COMP.LOOK_TARGET_CLASS, true);
+        createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + '0', 0.0, 0.0, 0.0, CONTEXT_COMP.LOOK_TARGET_CLASS);
 
         //add exterior targets
         for (let i = 0; i < CONTEXT_COMP.data.num_targets; i++) {
-            createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + (i+1), pointerVec.x, pointerVec.y, pointerVec.z, 'select-target', false);
+            createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + (i+1), pointerVec.x, pointerVec.y, pointerVec.z, 'select-target');
             pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
         }
-
-        //set initial conditions
-        CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, false);
-        CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS,   true);
-    },
-    //leftRight_deg [0, 360], leftRight_deg [0, 360], depth [number]. This will always be set relative to eye/camera position
-    transformTargets : function(xRot, yRot, targetsDepth, targetsSize, targetsRadius, activeTarget_id) {
-        console.log('Setting new target transforms');
-        console.log('    horizontal angle: ' + xRot);
-        console.log('    vertical angle: '   + yRot);
-        console.log('    target depth: '     + targetsDepth);
-        console.log('    target size: '      + targetsSize);
-        console.log('    fitts radius: '     + targetsRadius);
-        console.log('    active target: '    + activeTarget_id);
-
-        //set depth and target size
-        this.el.setAttribute('research-selection-tasks', {targets_XY_rot:{x:xRot, y:yRot}, targets_size:targetsSize, targets_depth:targetsDepth, targets_radius:targetsRadius, target_active:activeTarget_id});
+//!!
     },
     fittsTargetSelect : function (e) {
         const CONTEXT_COMP = this;
         let selectedElem = e.srcElement;
 
+        console.log('SELECTION: Target Selected:' + selectedElem.id + ' active:' + selectedElem.object3D.userData.isActive);
+
         //if a look target show fitts
         if (selectedElem.id === CONTEXT_COMP.TARGET_ID_PREFIX + '0') {
-            //then look selected, show other targets
-            console.log('SELECTION: Look Target Selected: ' + selectedElem.id + ' is active.');
-            
             //Look target selected
             const data =    {  
                 target_id:      selectedElem.id,
@@ -372,16 +321,10 @@ AFRAME.registerComponent('research-selection-tasks', {
             };
             CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
             CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
-
-            //hide look target and show fitts circle targets
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, true);
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS,   false);
         }
         else {
             //check if this is an active target
             if (selectedElem.object3D.userData.isActive) {
-                console.log('SELECTION: Target Selected: ' + selectedElem.id + ' is active.');
-
                 //Fitts target selected
                 const data =    {  
                     target_id:      selectedElem.id,
@@ -395,43 +338,8 @@ AFRAME.registerComponent('research-selection-tasks', {
                 };
                 CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP,   data);
                 CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_START,  data);
-
-                //check if we have completed numSelect tasks yet
-                if (++CONTEXT_COMP.currNumSelectTasks >= CONTEXT_COMP.data.num_select_tasks_per_look) {
-                    //show new look target and hide fitts' targets
-                    CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, false);
-                    CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS,   true);
-                    CONTEXT_COMP.currNumSelectTasks = 0;    //reset num select targets
-
-                    //random new state
-                    CONTEXT_COMP.randomTransform(-30, 30, -180, 180, 3.0, 10.0, 0.2, 0.6, 2.5, 5.0);
-                }
-                else {
-                    //show another active target, but keep same state
-
-                    //set random target to set as active
-                    const targets       = CONTEXT_COMP.targetContainer.querySelectorAll('.' + CONTEXT_COMP.SELECT_TARGET_CLASS);
-                    const numTargets    = targets.length;
-
-                    //don't want same target to keep choosing until different :)
-                    let randTargetStr = CONTEXT_COMP.TARGET_ID_PREFIX + (Math.floor(Math.random() * (numTargets - 1)) + 1);
-                    while (randTargetStr === selectedElem.id ) {
-                        randTargetStr = CONTEXT_COMP.TARGET_ID_PREFIX + (Math.floor(Math.random() * (numTargets - 1)) + 1);
-                    }
-
-                    CONTEXT_COMP.transformTargets(  CONTEXT_COMP.data.targets_XY_rot.x, 
-                                                    CONTEXT_COMP.data.targets_XY_rot.y, 
-                                                    CONTEXT_COMP.data.targets_depth, 
-                                                    CONTEXT_COMP.data.targets_size,
-                                                    CONTEXT_COMP.data.targets_radius,
-                                                    randTargetStr
-                                                );
-                }
             }
             else {
-                console.log('SELCTION: Target Selected: ' + selectedElem.id + ' is not active.');
-                //record data/error
-
                 //Incorrect fitts target selected
                 const data =    {  
                     target_id:      selectedElem.id,
@@ -446,24 +354,5 @@ AFRAME.registerComponent('research-selection-tasks', {
                 CONTEXT_COMP.sendData(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, data);
             }
         }
-    },
-    randomTransform : function (xRot_min, xRot_max, yRot_Min, yRot_max, depth_min, depth_max, size_min, size_max, fittsRadius_min, fittsRadius_max) {
-        const CONTEXT_COMP = this;
-
-        //set random target to set as active
-        const targets = CONTEXT_COMP.targetContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
-        const numTargets = targets.length;
-        const randTargetStr = CONTEXT_COMP.TARGET_ID_PREFIX + (Math.floor(Math.random() * (numTargets - 1)) + 1);
-
-        CONTEXT_COMP.transformTargets(  CONTEXT_COMP.getRandomNumber(xRot_min, xRot_max), 
-                                        CONTEXT_COMP.getRandomNumber(yRot_Min, yRot_max), 
-                                        CONTEXT_COMP.getRandomNumber(depth_min, depth_max), 
-                                        CONTEXT_COMP.getRandomNumber(size_min, size_max),
-                                        CONTEXT_COMP.getRandomNumber(fittsRadius_min, fittsRadius_max),
-                                        randTargetStr
-                                    );
-    },
-    getRandomNumber: function (min, max) {
-        return Math.random() * (max - min) + min; //The maximum is inclusive and the minimum is inclusive 
     }
 });
