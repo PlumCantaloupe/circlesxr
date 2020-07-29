@@ -33,39 +33,87 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.el.sceneEl.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao! research system connecting.'});
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.CONNECTED, {and:{message:'ciao! research system connecting.'}});
             CONTEXT_COMP.connected = true;
+
+            CONTEXT_COMP.addResearchEventListeners();
         });
     },
     tick: function (time, timeDelta) {},
     getNewExperimentID : function() {
         return CIRCLES.getUUID();
     },
-    captureData: function(type, experiment_id, timeStamp, data) {
-        console.warn('RESEARCH DATA CAPTURE:  type[' + type + '], experiment id[' + experiment_id + '], timeStamp[' + new Date(timeStamp).toISOString()  + ']');
+    addResearchEventListeners: function() {
+        CONTEXT_COMP = this;
+        //custom research socket events
+        CONTEXT_COMP.socket.on(CIRCLES.RESEARCH.EVENT, (data) => {
+            console.log('CIRCLES RESEARCH EVENT: '+ data.type);
 
-        switch (type) {
-            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START: {
+            switch (data.type) {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.CONNECTED: {
+                console.log(data.and.message);
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.EXPERIMENT_START: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.EXPERIMENT_STOP: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRIAL_START: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRIAL_STOP: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_START: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_STOP: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_ERROR: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRANSFORM_UPDATE: {
+
+            }
+            break;
+            }
+        });
+    },
+    sendData: function(data) {
+        console.warn('RESEARCH DATA CAPTURE:  type[' + data.type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date(data.timestamp).toISOString()  + ']');
+
+        switch (data.type) {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_START: {
+
+            }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_STOP: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_START: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRANSFORM_UPDATE: {
                 
             }
             break;
@@ -228,30 +276,6 @@ AFRAME.registerSystem('research-manager', {
 
     // return buttonElem;
   }
-});
-
-//Component: will capture events and pass data to system
-AFRAME.registerComponent('research-manager', {
-    multiple: false,
-    schema: {
-        exp_script_url:      {type:'string',     default:'/world/Testbed/scripts/experiment_script.json'},
-    },
-    init() {
-        //called on 
-        console.log('research-manager: system starting up.');
-        const CONTEXT_COMP  = this;
-        const scene         = document.querySelector('a-scene');
-
-        CONTEXT_COMP.connected              = false;
-
-        scene.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            console.log("research-manager: component connected ...");
-            CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENTS.CONNECTED, {message:'ciao! research system connecting.'});
-            CONTEXT_COMP.connected = true;
-        });
-    },
-    tick: function (time, timeDelta) {}
 });
 
 // //component default functions

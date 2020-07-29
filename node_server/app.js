@@ -282,40 +282,47 @@ io.on("connection", socket => {
   */
 
   //custom research socket events
-  socket.on(CIRCLES.RESEARCH.EVENTS.CONNECTED, (data) => {
-    console.log("app: RESEARCH: CONNECTED");
-  });
+  socket.on(CIRCLES.RESEARCH.EVENT, (data) => {
+    console.log('CIRCLES RESEARCH EVENT: '+ data.type);
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_START, (data) => {
-    console.log("app: RESEARCH: EXPERIMENT_START");
-  });
+    switch (data.type) {
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.CONNECTED: {
+        console.log(data.and.message);
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_START: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.EXPERIMENT_STOP, (data) => {
-    console.log("app: RESEARCH: EXPERIMENT_STOP");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_STOP: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.TRIAL_START, (data) => {
-    console.log("app: RESEARCH: TRIAL_START");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRIAL_START: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.TRIAL_STOP, (data) => {
-    console.log("app: RESEARCH: TRIAL_STOP");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRIAL_STOP: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_START, (data) => {
-    console.log("app: RESEARCH: SELECTION_START");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_STOP, (data) => {
-    console.log("app: RESEARCH: SELECTION_STOP");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.SELECTION_ERROR, (data) => {
-    console.log("app: RESEARCH: SELECTION_ERROR");
-  });
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR: {
 
-  socket.on(CIRCLES.RESEARCH.EVENTS.TRANSFORM_UPDATE, (data) => {
-    console.log("app: RESEARCH: TRANSFORM_UPDATE");
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRANSFORM_UPDATE: {
+
+      }
+      break;
+    }
   });
 });
 //!!easyRTC end
