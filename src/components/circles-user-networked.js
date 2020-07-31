@@ -103,24 +103,18 @@ AFRAME.registerComponent('circles-user-networked', {
     if ( (oldData.gltf_head !== Context_AF.data.gltf_head) && (Context_AF.data.gltf_head !== '') ) {
       let avatarNode = Context_AF.el.querySelector('.user_head');
       avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_head);
-
-      console.log('gltf_head: ' + Context_AF.data.gltf_head);
     }
 
     //hair model change
     if ( (oldData.gltf_hair !== Context_AF.data.gltf_hair) && (Context_AF.data.gltf_hair !== '') ) {
       let avatarNode = Context_AF.el.querySelector('.user_hair');
       avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_hair);
-
-      console.log('gltf_hair: ' + Context_AF.data.gltf_hair);
     }
 
     //body model change
     if ( (oldData.gltf_body !== Context_AF.data.gltf_body) && (Context_AF.data.gltf_body !== '') ) {
       let avatarNode = Context_AF.el.querySelector('.user_body');
       avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_body);
-
-      console.log('gltf_body: ' + Context_AF.data.gltf_body);
     }
 
     //head color change
