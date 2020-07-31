@@ -70,7 +70,7 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         //start experiment (TODO: will want a trigger to start this later)
         const data =    {  
-            type:           CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_START,
+            type:           CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START,
             exp_id:         CONTEXT_COMP.experimentID,
             timestamp:      Date.now(),
         };
@@ -200,7 +200,9 @@ AFRAME.registerComponent('research-selection-tasks', {
                 console.log('SELECTION: No target selected');
 
                 const data =    {  
-                    type:           CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR,
+                    event_type:     CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR,
+                    user_type:      CONTEXT_COMP.researchSystem.userType,
+                    user_id:        CONTEXT_COMP.researchSystem.socket.id,
                     exp_id:         CONTEXT_COMP.experimentID,
                     timestamp:      Date.now(),
                     target_id:      '',
@@ -290,7 +292,9 @@ AFRAME.registerComponent('research-selection-tasks', {
         if (selectedElem.id === CONTEXT_COMP.TARGET_ID_PREFIX + '0') {
             //Look target selected
             const data =    {
-                type:           CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP,
+                event_type:     CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP,
+                user_type:      CONTEXT_COMP.researchSystem.userType,
+                user_id:        CONTEXT_COMP.researchSystem.socket.id,
                 exp_id:         CONTEXT_COMP.experimentID,
                 timestamp:      Date.now(),
                 target_id:      selectedElem.id,
@@ -305,7 +309,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             };
             CONTEXT_COMP.sendData(data);
 
-            data.type = CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START;
+            data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
             CONTEXT_COMP.sendData(data);
         }
         else {
@@ -313,7 +317,9 @@ AFRAME.registerComponent('research-selection-tasks', {
             if (selectedElem.object3D.userData.isActive) {
                 //Fitts target selected
                 const data =    {  
-                    type:           CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP,
+                    event_type:     CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP,
+                    user_type:      CONTEXT_COMP.researchSystem.userType,
+                    user_id:        CONTEXT_COMP.researchSystem.socket.id,
                     exp_id:         CONTEXT_COMP.experimentID,
                     timestamp:      Date.now(),
                     target_id:      selectedElem.id,
@@ -328,13 +334,15 @@ AFRAME.registerComponent('research-selection-tasks', {
                 };
                 CONTEXT_COMP.sendData(data);
 
-                data.type = CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START;
+                data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
                 CONTEXT_COMP.sendData(data);
             }
             else {
                 //Incorrect fitts target selected
                 const data =    {  
-                    type:           CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR,   
+                    event_type:     CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR,  
+                    user_type:      CONTEXT_COMP.researchSystem.userType,
+                    user_id:        CONTEXT_COMP.researchSystem.socket.id, 
                     exp_id:         CONTEXT_COMP.experimentID,
                     timestamp:      Date.now(),
                     target_id:      selectedElem.id,

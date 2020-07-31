@@ -31,9 +31,9 @@ AFRAME.registerSystem('research-manager', {
         });
 
         CONTEXT_COMP.el.sceneEl.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            console.log("research-manager: system connected ...");
+            console.log("research-manager: messaging system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.CONNECTED, {and:{message:'ciao! research system connecting.'}});
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, user_type:CONTEXT_COMP.userType, user_id:CONTEXT_COMP.socket.id});
             CONTEXT_COMP.connected = true;
 
             CONTEXT_COMP.addResearchEventListeners();
@@ -46,74 +46,79 @@ AFRAME.registerSystem('research-manager', {
     addResearchEventListeners: function() {
         CONTEXT_COMP = this;
         //custom research socket events
-        CONTEXT_COMP.socket.on(CIRCLES.RESEARCH.EVENT, (data) => {
-            console.log('CIRCLES RESEARCH EVENT: '+ data.type);
+        CONTEXT_COMP.socket.on(CIRCLES.RESEARCH.EVENT_FROM_SERVER, (data) => {
+          console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
-            switch (data.type) {
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.CONNECTED: {
-                console.log(data.and.message);
+          if (data.user_id === CONTEXT_COMP.socket.id) {
+            //don't want my own messages sent back to me
+            return;
+          }
+
+          switch (data.event_type) {
+            case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
+                console.log('New research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.EXPERIMENT_START: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.EXPERIMENT_STOP: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRIAL_START: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRIAL_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_START: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.SELECTION_ERROR: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_SERVER.TRANSFORM_UPDATE: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
 
             }
             break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+
             }
+            break;
+            case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
+
+            }
+            break;
+          }
         });
     },
     sendData: function(data) {
-        console.warn('RESEARCH DATA CAPTURE:  type[' + data.type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date(data.timestamp).toISOString()  + ']');
+        console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date(data.timestamp).toISOString()  + ']');
 
-        switch (data.type) {
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_START: {
+        switch (data.event_type) {
+            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
                 
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRANSFORM_UPDATE: {
+            case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
                 
             }
             break;

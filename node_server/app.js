@@ -282,43 +282,44 @@ io.on("connection", socket => {
   */
 
   //custom research socket events
-  socket.on(CIRCLES.RESEARCH.EVENT, (data) => {
-    console.log('CIRCLES RESEARCH EVENT: '+ data.type);
+  socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
+    console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
-    switch (data.type) {
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.CONNECTED: {
-        console.log(data.and.message);
+    switch (data.event_type) {
+      case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
+        console.log('New research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+        io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_START: {
-
-      }
-      break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.EXPERIMENT_STOP: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRIAL_START: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRIAL_STOP: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_START: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_STOP: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.SELECTION_ERROR: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
 
       }
       break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.FROM_CLIENT.TRANSFORM_UPDATE: {
+      case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
 
       }
       break;
