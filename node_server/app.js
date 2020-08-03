@@ -271,26 +271,24 @@ io.on("connection", socket => {
     }
   });
 
-  /*
-  Events I need:
-  - Start Experiment
-  - Stop Experiment
-  - Start Trial
-  - End Trial
-  - capture position event
-  - capture click event
-  */
-
-  //custom research socket events
+  //research socket events
   socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
     console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
     switch (data.event_type) {
       case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
-        console.log('New research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-        io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+        console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+        //io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
+      //better to listen for NAF's default disconnect event 
+      // case CIRCLES.RESEARCH.EVENT_TYPE.DISCONNECTED: {
+      //   console.log('Research user disconnected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+      //   //io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+      //   socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+      // }
+      // break;
       case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
 
       }

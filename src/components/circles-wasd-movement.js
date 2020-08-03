@@ -44,7 +44,7 @@ AFRAME.registerComponent('circles-wasd-movement', {
         this.cameraElem = this.el.components['camera'];
     }
     else {
-        this.cameraElem = this.el.querySelector('#player1Cam');
+        this.cameraElem = this.el.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
     }
 
     // To keep track of the pressed keys.

@@ -72,7 +72,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         const data =    {  
             type:           CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START,
             exp_id:         CONTEXT_COMP.experimentID,
-            timestamp:      Date.now(),
+            timestamp:      NAF.connection.getServerTime(),
         };
         CONTEXT_COMP.researchSystem.sendData(data);
     },
@@ -204,7 +204,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     user_type:      CONTEXT_COMP.researchSystem.userType,
                     user_id:        CONTEXT_COMP.researchSystem.socket.id,
                     exp_id:         CONTEXT_COMP.experimentID,
-                    timestamp:      Date.now(),
+                    timestamp:      NAF.connection.getServerTime(),
                     target_id:      '',
                     target_index:   -1,    //no index for no selection :D
                     target_type:    CONTEXT_COMP.TARGET_TYPE.MISSED,
@@ -296,7 +296,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 user_type:      CONTEXT_COMP.researchSystem.userType,
                 user_id:        CONTEXT_COMP.researchSystem.socket.id,
                 exp_id:         CONTEXT_COMP.experimentID,
-                timestamp:      Date.now(),
+                timestamp:      NAF.connection.getServerTime(),
                 target_id:      selectedElem.id,
                 target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
                 target_type:    CONTEXT_COMP.TARGET_TYPE.LOOK,
@@ -321,7 +321,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     user_type:      CONTEXT_COMP.researchSystem.userType,
                     user_id:        CONTEXT_COMP.researchSystem.socket.id,
                     exp_id:         CONTEXT_COMP.experimentID,
-                    timestamp:      Date.now(),
+                    timestamp:      NAF.connection.getServerTime(),
                     target_id:      selectedElem.id,
                     target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
                     target_type:    CONTEXT_COMP.TARGET_TYPE.SELECT,
@@ -344,7 +344,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     user_type:      CONTEXT_COMP.researchSystem.userType,
                     user_id:        CONTEXT_COMP.researchSystem.socket.id, 
                     exp_id:         CONTEXT_COMP.experimentID,
-                    timestamp:      Date.now(),
+                    timestamp:      NAF.connection.getServerTime(),
                     target_id:      selectedElem.id,
                     target_index:   parseInt(selectedElem.id.split('_')[1]),    //grab index of target from id
                     target_type:    CONTEXT_COMP.TARGET_TYPE.INCORRECT,

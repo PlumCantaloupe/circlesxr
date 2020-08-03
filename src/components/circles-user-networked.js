@@ -33,7 +33,7 @@ AFRAME.registerComponent('circles-user-networked', {
     Context_AF.isPlayer1  = false;
 
     Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
-      const playerOneNode       = document.querySelector('#player1');
+      const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
       const playerOneAvatarNode = playerOneNode.querySelector('.avatar');
       const thisNode            = Context_AF.el;
       const eventNode           = e.detail.element;

@@ -8,14 +8,17 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.connected              = false;
         CONTEXT_COMP.experimentInProgess    = false;
         CONTEXT_COMP.trialInProgess         = false;
+        CONTEXT_COMP.player1AvatarLoaded    = false;
         CONTEXT_COMP.trialData              = null;
+        CONTEXT_COMP.researchUsers          = [];
 
-        const player1 = document.querySelector('#Player1');
+        const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+
+        console.log('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+
         player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
             const avatarCam = document.querySelector('.avatar');
             CONTEXT_COMP.userType = avatarCam.components["circles-user-networked"].data.usertype;    
-
-            console.log(CIRCLES.USER_TYPE.PARTICIPANT);
 
             if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
                 //do not attach experiment; but we will control it
@@ -28,71 +31,122 @@ AFRAME.registerSystem('research-manager', {
             else {
                 console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
             }
+
+            CONTEXT_COMP.player1AvatarLoaded = true;
+
+            //believe in (add) yourself
+            CONTEXT_COMP.addResearchUser(player1.id, avatarCam.components['circles-user-networked'].data.usertype);
+            //CONTEXT_COMP.researchUsers.push({'Player1', user_type:CONTEXT_COMP.userType});
         });
 
         CONTEXT_COMP.el.sceneEl.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: messaging system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, user_type:CONTEXT_COMP.userType, user_id:CONTEXT_COMP.socket.id});
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED});
             CONTEXT_COMP.connected = true;
-
             CONTEXT_COMP.addResearchEventListeners();
         });
-    },
-    tick: function (time, timeDelta) {},
-    getNewExperimentID : function() {
-        return CIRCLES.getUUID();
-    },
-    addResearchEventListeners: function() {
-        CONTEXT_COMP = this;
-        //custom research socket events
-        CONTEXT_COMP.socket.on(CIRCLES.RESEARCH.EVENT_FROM_SERVER, (data) => {
-          console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
-          if (data.user_id === CONTEXT_COMP.socket.id) {
-            //don't want my own messages sent back to me
+        //might want these to track number of entities and whether we have the right one
+        //can do a query on [networked] entities with the avatar child and chack [circles-networked-user] for additional properties i.e. what userType.
+        document.body.addEventListener('entityCreated', function (e) {
+          console.log('research-manager - entityCreated, id:', e.detail.el.id);
+          //if a user component we can safely assume this is a user and not an artefact
+
+          if (e.detail.el.id === 'Player1') {
+            //don't want to add self
             return;
           }
 
-          switch (data.event_type) {
-            case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
-                console.log('New research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+          const addFunc = (e1) => {
+            const avatar = e.detail.el.querySelector('.avatar');
+            if (avatar) {
+              CONTEXT_COMP.addResearchUser(e.detail.el.id, avatar.components['circles-user-networked'].data.usertype);
             }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+            e.detail.el.removeEventListener('loaded', addFunc);
+          };
 
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-
-            }
-            break;
-          }
+          e.detail.el.addEventListener('loaded', addFunc);
         });
+
+        document.body.addEventListener('entityRemoved', function (e) {
+          console.log('research-manager - entityRemoved, id:', e.detail.networkId );
+          CONTEXT_COMP.removeResearchUser('naf-' + e.detail.networkId); //'naf' prefix missing when this event called for some reason ...
+        });
+    },
+    getNewExperimentID : function() {
+        return CIRCLES.getUUID();
+    },
+    addResearchUser: function(id, type) {
+      this.researchUsers.push({user_id:id, user_type:type});
+      console.log(this.researchUsers);
+    },
+    removeResearchUser: function(id) {
+      const CONTEXT_COMP = this;
+      //find index
+      for (let i = 0; i < CONTEXT_COMP.researchUsers.length; i++) {
+        if (CONTEXT_COMP.researchUsers[i].user_id === id) {
+          index = i;
+          CONTEXT_COMP.researchUsers.splice(i, 1);
+
+          console.log(CONTEXT_COMP.researchUsers);
+
+          return;
+        }
+      }
+
+      console.log(CONTEXT_COMP.researchUsers);
+    },
+    addResearchEventListeners: function() {
+      const CONTEXT_COMP = this;
+      CONTEXT_COMP.socket.on(CIRCLES.RESEARCH.EVENT_FROM_SERVER, CONTEXT_COMP.handleResearchEventHandlers.bind(CONTEXT_COMP));
+    },
+    removeResearchEventListeners: function() {
+      const CONTEXT_COMP = this;
+      CONTEXT_COMP.socket.off(CIRCLES.RESEARCH.EVENT_FROM_SERVER, CONTEXT_COMP.handleResearchEventHandlers.bind(CONTEXT_COMP));
+    },
+    handleResearchEventHandlers: function (data) {
+      const CONTEXT_COMP = this;
+      console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
+
+      switch (data.event_type) {
+        case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
+            console.log('Research system connected');
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
+
+        }
+        break;
+      }
     },
     sendData: function(data) {
         console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date(data.timestamp).toISOString()  + ']');
@@ -281,6 +335,11 @@ AFRAME.registerSystem('research-manager', {
 
     // return buttonElem;
   }
+});
+
+AFRAME.registerComponent('research-manager', {
+  init: function () {},
+  remove: function () {}
 });
 
 // //component default functions

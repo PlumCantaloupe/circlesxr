@@ -7,15 +7,17 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
     let Context_AF = this;
 
     //only want to attach to 'this' player aka 'player1'
-    if ( Context_AF.el.getAttribute('id') === 'player1' ) {
+    // if ( Context_AF.el.getAttribute('id') === CIRCLES.CONSTANTS.PRIMARY_USER_ID ) {
       Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
   
         let rigElem = Context_AF.el;
+        //rigElem.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID);
         const avatarCam = rigElem.querySelector('.avatar');
+
 
         //set camera
         //let cameraElem = event.detail.element;
-        avatarCam.setAttribute('id', 'player1Cam');
+        avatarCam.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
         avatarCam.setAttribute('camera',{});
         avatarCam.setAttribute('look-controls',{pointerLockEnabled:false});
 
@@ -136,6 +138,6 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         console.log('Attached camera controls to avatar');
         Context_AF.el.emit(CIRCLES.EVENTS.CAMERA_ATTACHED, {element:Context_AF.el}, true);
       });
-    }
+    // }
   }
 });
