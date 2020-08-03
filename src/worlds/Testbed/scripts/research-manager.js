@@ -50,9 +50,6 @@ AFRAME.registerSystem('research-manager', {
         //might want these to track number of entities and whether we have the right one
         //can do a query on [networked] entities with the avatar child and chack [circles-networked-user] for additional properties i.e. what userType.
         document.body.addEventListener('entityCreated', function (e) {
-          console.log('research-manager - entityCreated, id:', e.detail.el.id);
-          //if a user component we can safely assume this is a user and not an artefact
-
           if (e.detail.el.id === 'Player1') {
             //don't want to add self
             return;
@@ -70,7 +67,6 @@ AFRAME.registerSystem('research-manager', {
         });
 
         document.body.addEventListener('entityRemoved', function (e) {
-          console.log('research-manager - entityRemoved, id:', e.detail.networkId );
           CONTEXT_COMP.removeResearchUser('naf-' + e.detail.networkId); //'naf' prefix missing when this event called for some reason ...
         });
     },
