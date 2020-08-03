@@ -14,7 +14,6 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         //rigElem.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID);
         const avatarCam = rigElem.querySelector('.avatar');
 
-
         //set camera
         //let cameraElem = event.detail.element;
         avatarCam.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');

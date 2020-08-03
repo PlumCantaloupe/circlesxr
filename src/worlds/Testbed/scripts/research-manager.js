@@ -51,8 +51,7 @@ AFRAME.registerSystem('research-manager', {
         //can do a query on [networked] entities with the avatar child and chack [circles-networked-user] for additional properties i.e. what userType.
         document.body.addEventListener('entityCreated', function (e) {
           if (e.detail.el.id === 'Player1') {
-            //don't want to add self
-            return;
+            return; //don't want to add self as we add it in avatar loaded event call above
           }
 
           const addFunc = (e1) => {
@@ -87,8 +86,6 @@ AFRAME.registerSystem('research-manager', {
           return;
         }
       }
-
-      console.log(CONTEXT_COMP.researchUsers);
     },
     addResearchEventListeners: function() {
       const CONTEXT_COMP = this;
@@ -104,11 +101,9 @@ AFRAME.registerSystem('research-manager', {
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
-            console.log('Research system connected');
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
@@ -116,27 +111,21 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-
         }
         break;
       }
@@ -146,33 +135,24 @@ AFRAME.registerSystem('research-manager', {
 
         switch (data.event_type) {
             case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-                
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-                
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-                
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-                
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: { 
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-                
             }
             break;
         }
-
-        //this is where we will send data to server via sockets
-        //CONTEXT_COMP.socket.emit(data.type, data);
     },
     loadExperimentScript : function (url) {
         const CONTEXT_COMP = this;
@@ -334,32 +314,3 @@ AFRAME.registerComponent('research-manager', {
   init: function () {},
   remove: function () {}
 });
-
-// //component default functions
-// AFRAME.registerComponent('some-name', {
-//     schema: {},
-//     init() {
-//         //called after aframe initialized and this component is setup
-//     },
-//     update: function (oldData) {
-//         //called whenever schema properties are changed
-//     },
-//     updateSchema: function(data) {
-//         //called on evey update (when properties change)
-//     },
-//     tick: function (time, timeDelta) {
-//         //called on every scene render frame
-//     },
-//     tick: function (time, timeDelta, camera) {
-//         //called after every render frame (i.e. after tick)
-//     },
-//     pause: function () {
-//         //called when scene or entity pauses
-//     },
-//     play: function () {
-//         //called when scene or entity plays/resumes
-//     },
-//     remove: function() {
-//         //called when component is removed from entity
-//     }
-// });
