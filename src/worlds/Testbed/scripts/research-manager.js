@@ -79,7 +79,6 @@ AFRAME.registerSystem('research-manager', {
     },
     addResearchUser: function(id, type) {
       this.researchUsers.push({user_id:id, user_type:type});
-      console.log(this.researchUsers);
     },
     removeResearchUser: function(id) {
       const CONTEXT_COMP = this;
@@ -88,9 +87,7 @@ AFRAME.registerSystem('research-manager', {
         if (CONTEXT_COMP.researchUsers[i].user_id === id) {
           index = i;
           CONTEXT_COMP.researchUsers.splice(i, 1);
-
-          console.log(CONTEXT_COMP.researchUsers);
-
+          
           return;
         }
       }
