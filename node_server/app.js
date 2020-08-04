@@ -282,43 +282,47 @@ io.on("connection", socket => {
         socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
-      //better to listen for NAF's default disconnect event 
-      // case CIRCLES.RESEARCH.EVENT_TYPE.DISCONNECTED: {
-      //   console.log('Research user disconnected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-      //   //io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
-      //   socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
-      // }
-      // break;
       case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-
+        //1. create new file to write into
+        //2. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
       case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-
-      }
-      break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
-
-      }
-      break;
-      case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
-
+        //1. stop writing to file, clean up, and send URL?
+        //2. pass on event to others
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
       case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-
+        //1. note time to compare against selection end event
+        //2. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
       case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-
+        //1. calculate time difference from selection start
+        //2. save to file
+        //3. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
       case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-
+        //1. save to file
+        //2. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+      }
+      break;
+      case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
+        //1. save to file
+        //2. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
       case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-
+        //1. save to file
+        //2. pass on event to other clients
+        socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;
     }

@@ -215,7 +215,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     fitts_radius:   CONTEXT_COMP.data.targets_radius,
                     and:            ''
                 };
-                CONTEXT_COMP.sendData(data);
+                CONTEXT_COMP.researchSystem.sendData(data);
             }
             CONTEXT_COMP.mouseDownId = '';
         });
@@ -307,10 +307,10 @@ AFRAME.registerComponent('research-selection-tasks', {
                 fitts_radius:   CONTEXT_COMP.data.targets_radius,
                 and:            ''
             };
-            CONTEXT_COMP.sendData(data);
+            CONTEXT_COMP.researchSystem.sendData(data);
 
             data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-            CONTEXT_COMP.sendData(data);
+            CONTEXT_COMP.researchSystem.sendData(data);
         }
         else {
             //check if this is an active target
@@ -332,10 +332,10 @@ AFRAME.registerComponent('research-selection-tasks', {
                     fitts_radius:   CONTEXT_COMP.data.targets_radius,
                     and:            ''
                 };
-                CONTEXT_COMP.sendData(data);
+                CONTEXT_COMP.researchSystem.sendData(data);
 
                 data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-                CONTEXT_COMP.sendData(data);
+                CONTEXT_COMP.researchSystem.sendData(data);
             }
             else {
                 //Incorrect fitts target selected
@@ -355,7 +355,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                     fitts_radius:   CONTEXT_COMP.data.targets_radius,
                     and:            ''
                 };
-                CONTEXT_COMP.sendData(data);
+                CONTEXT_COMP.researchSystem.sendData(data);
             }
         }
     }

@@ -101,31 +101,39 @@ AFRAME.registerSystem('research-manager', {
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
+          //may want to add logic later to make sure there is at least one researcher and participant
+          console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //researcher sent this
+          }
+          else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+              //show target(s) and let user know that experiment has started?
+          }
+          else {
+              console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
+          }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //researcher sent this
+          }
+          else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+              
+          }
+          else {
+              console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
+          }
         }
         break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_START: {
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.TRIAL_STOP: {
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+        case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
+          //will add logic later
         }
         break;
       }
@@ -135,21 +143,27 @@ AFRAME.registerSystem('research-manager', {
 
         switch (data.event_type) {
             case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: { 
+            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
             case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
+              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
             }
             break;
         }
@@ -215,7 +229,9 @@ AFRAME.registerSystem('research-manager', {
           buttonElem_show.setAttribute('circles-interactive-visible', true);
           
           researchControls.querySelectorAll('.button').forEach( (button) => {
-            button.setAttribute('circles-interactive-visible', false);
+            if (button.classList.contains('auto-visible')) {
+              button.setAttribute('circles-interactive-visible', false);
+            }
           });
         });
         avatarCam.appendChild(buttonElem_hide);
@@ -229,7 +245,9 @@ AFRAME.registerSystem('research-manager', {
           buttonElem_show.setAttribute('circles-interactive-visible', false);
 
           researchControls.querySelectorAll('.button').forEach( (button) => {
-            button.setAttribute('circles-interactive-visible', true);
+            if (button.classList.contains('auto-visible')) {
+              button.setAttribute('circles-interactive-visible', true);
+            }
           });
         });
         avatarCam.appendChild(buttonElem_show);
@@ -273,15 +291,24 @@ AFRAME.registerSystem('research-manager', {
           console.log('click - ' + e.srcElement.id);
         });
         researchControls.appendChild(buttonElem);
+
+        //visual state - invisible
+        buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(245, 221, 66)', 'rgb(0,0,0)', false);
+        buttonElem.setAttribute('position', {x:0.0, y:-0.63, z:0.0});
+        buttonElem.addEventListener('click', (e) => { 
+          console.log('click - ' + e.srcElement.id);
+        });
+        researchControls.appendChild(buttonElem);
    },
-   createBasicButton : function(id, text, width, height, wrapCount) {
+   createBasicButton : function(id, text, width, height, wrapCount, bgCol='rgb(255,255,255)', textCol='rgb(0,0,0)', autoVisible=true) {
     let buttonElem = document.createElement('a-entity');
+    const visClass = (autoVisible) ? 'auto-visible' : ''; //if auto-visible we will control ourselves manually
 
     buttonElem.setAttribute('id', id);
-    buttonElem.setAttribute('class', 'interactive button');
+    buttonElem.setAttribute('class', 'interactive button ' + visClass);
     buttonElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});
-    buttonElem.setAttribute('material', {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});
-    buttonElem.setAttribute('text', {color:'#000000', align:'center', font:'roboto', wrapCount:wrapCount, value:text});
+    buttonElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});
+    buttonElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', wrapCount:wrapCount, value:text});
 
     buttonElem.addEventListener('mouseenter', function (e) { e.target.object3D.scale.set(1.03,1.03, 1.03); });
     buttonElem.addEventListener('mouseleave', function (e) { e.target.object3D.scale.set(1.00,1.00, 1.00); });
