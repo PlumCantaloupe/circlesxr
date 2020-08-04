@@ -292,13 +292,14 @@ AFRAME.registerSystem('research-manager', {
         });
         researchControls.appendChild(buttonElem);
 
-        //visual state - invisible
+        //button for downloading research data later
         buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(245, 221, 66)', 'rgb(0,0,0)', false);
         buttonElem.setAttribute('position', {x:0.0, y:-0.63, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
         });
         researchControls.appendChild(buttonElem);
+        buttonElem.setAttribute('circles-interactive-visible', false); //want it hidden until we have something to download
    },
    createBasicButton : function(id, text, width, height, wrapCount, bgCol='rgb(255,255,255)', textCol='rgb(0,0,0)', autoVisible=true) {
     let buttonElem = document.createElement('a-entity');
