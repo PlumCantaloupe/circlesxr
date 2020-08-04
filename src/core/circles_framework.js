@@ -35,6 +35,7 @@ const USER_TYPE = {
   TEACHER     : 'Teacher',
   RESEARCHER  : 'Researcher',
   PARTICIPANT : 'Participant',
+  NONE        : 'NONE',
 };
 
 const EVENTS = {

@@ -107,10 +107,12 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this
+            //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
-              //show target(s) and let user know that experiment has started?
+            //show target(s) and let user know that experiment has started?
+            //no new trial but will open up all targets to show user what they will be clicking
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -119,7 +121,7 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this
+            //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
               
@@ -138,35 +140,54 @@ AFRAME.registerSystem('research-manager', {
         break;
       }
     },
-    sendData: function(data) {
-        console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date(data.timestamp).toISOString()  + ']');
+    createSelectExpData : function( event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
+                                    target_id='', target_type='', targets_x_rot=0.0, targets_y_rot=0.0, target_depth=0.0, target_size=0.0, fitts_radius=0.0, 
+                                    and={} 
+                                  ) {
+        return {  event_type:     event_type,
+                  exp_id:         exp_id,
+                  user_id:        user_id,
+                  user_type:      user_type,
+                  target_id:      target_id,
+                  target_type:    target_type,
+                  targets_x_rot:  targets_x_rot,
+                  targets_y_rot:  targets_y_rot,
+                  target_depth:   target_depth,
+                  target_size:    target_size,
+                  fitts_radius:   fitts_radius,
+                  and:            and
+                };
+    },
+    sendSelectExpData : function(data) {
+      CONTEXT_COMP = this;
+      console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date().toISOString()  + ']');
 
-        switch (data.event_type) {
-            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
-            case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-              CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
-            }
-            break;
+      switch (data.event_type) {
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
         }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
+      }
     },
     loadExperimentScript : function (url) {
         const CONTEXT_COMP = this;

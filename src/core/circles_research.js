@@ -11,6 +11,14 @@ const EXP_TYPE = {
   FITTS_LOOK  : 'FITTS_LOOK'
 };
 
+const TARGET_TYPE = {
+  LOOK        : 'LOOK',
+  SELECT      : 'SELECT',
+  INCORRECT   : 'INCORRECT',
+  MISSED      : 'MISSED',
+  NONE        : 'NONE'
+};
+
 const EVENT_FROM_SERVER = 'CIRCLES_RESEARCH_EVENT';
 const EVENT_FROM_CLIENT = 'CIRCLES_RESEARCH_EVENT';
 
@@ -23,11 +31,13 @@ const EVENT_TYPE = {
   NEW_TRIAL             : 'NEW_TRIAL',
   SELECTION_ERROR       : 'SELECTION_ERROR',
   TRANSFORM_UPDATE      : 'TRANSFORM_UPDATE',
+  NONE                  : 'NONE'
 };
 
 module.exports = {
   CONSTANTS,
   EXP_TYPE,
+  TARGET_TYPE,
   EVENT_FROM_SERVER,
   EVENT_FROM_CLIENT,
   EVENT_TYPE,
