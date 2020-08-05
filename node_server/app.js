@@ -13,6 +13,8 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
+const researchUtils = require('./modules/research-utils');
+
 // Make the parsed environment config globally accessible
 //global.env = env;
 
