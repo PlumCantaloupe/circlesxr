@@ -278,7 +278,6 @@ io.on("connection", socket => {
     switch (data.event_type) {
       case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
         console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-        //io.sockets.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
       }
       break;

@@ -1,31 +1,11 @@
 {
     "name": "Look and  Selection_Tasks",
     "description": "This is a list of pre-calculated trials for selection tasks across desktop, mobile, and HMD.",
-    "num_targets": 8,
-    "trials": {
-        "comments": "These are the properties required for each trial, where data defines how the targets display. Note if record is false data will not be recorded.",
+    "tests": {
+        "comments": "These are the properties required for each trial (deg and metres), where data defines how the targets display. Note if 'record' is false data will not be recorded. Arrays show multiple possibilities.",
         "data": [
-            {"type":"look",   "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_0"}},
-            {"type":"select", "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_2"}},
-            {"type":"select", "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_3"}},
-            {"type":"select", "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_6"}},
-            {"type":"select", "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_8"}},
-            {"type":"select", "record":false, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_3"}},
-
-            {"type":"look",   "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_0"}},
-            {"type":"select", "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_3"}},
-            {"type":"select", "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_2"}},
-            {"type":"select", "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_5"}},
-            {"type":"select", "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_1"}},
-            {"type":"select", "record":true, "data":{"targets_XY_rot":{"x":0, "y":0}, "targets_size":0.2, "targets_depth":5.0, "targets_radius":2.5, "target_active":"FT_8"}}
+            {"type":"select", "record":true,"num_targets": 8, "targets_x_rot":0.0, "targets_y_rot":0.0, "target_width":[0.25,0.5,0.75], "target_depth":[5.0, 7.0, 9.0], "num_trials":16},
+            {"type":"look", "record":true, "num_targets": 8, "targets_x_rot":[0.0, 45, 90, 135, 180, 225, 270, 315], "targets_y_rot":[0.0, 30, -30], "target_width":0.50, "target_depth":7.0, "num_trials":8}
         ]
-    },
-    "order": {
-        "comments": "To reduce learning effects of this experiment we will re-order selection tasks for platform consistently and make sure the order of platforms is counter-balanced between users.",
-        "data": {
-            "desktop":  [ 0,1,2,3,4,5, 6,7,8,9,10,11 ],
-            "mobile":   [ 0,1,2,3,4,5, 6,11,9,8,7,10 ],
-            "hmd":      [ 0,1,2,3,4,5, 6,8,10,11,7,9 ]
-        }
     }
 }
