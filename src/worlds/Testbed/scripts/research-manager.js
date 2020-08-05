@@ -124,7 +124,7 @@ AFRAME.registerSystem('research-manager', {
             //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
-              
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:false, visible_select_target:false});
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -279,15 +279,15 @@ AFRAME.registerSystem('research-manager', {
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
           CONTEXT_COMP.sendSelectExpData( CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID) );
-
         });
         researchControls.appendChild(buttonElem);
 
         //stop experiment
         buttonElem = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24);
         buttonElem.setAttribute('position', {x:0.0, y:-0.11, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
+        buttonElem.addEventListener('click', (e) => {
+          console.log('click - ' + e.srcElement.id);
+          CONTEXT_COMP.sendSelectExpData( CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID) );
         });
         researchControls.appendChild(buttonElem);
 
