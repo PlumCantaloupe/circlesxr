@@ -277,7 +277,9 @@ AFRAME.registerSystem('research-manager', {
         buttonElem = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24);
         buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
+          console.log('click - ' + e.srcElement.id);
+          CONTEXT_COMP.sendSelectExpData( CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID) );
+
         });
         researchControls.appendChild(buttonElem);
 

@@ -60,9 +60,6 @@ AFRAME.registerComponent('research-selection-tasks', {
         else {
             scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, CONTEXT_COMP.createChecksForNullSelection.bind(CONTEXT_COMP));
         }
-
-        //start experiment (TODO: will want a trigger to start this later)
-        CONTEXT_COMP.researchSystem.sendSelectExpData( CONTEXT_COMP.researchSystem.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID) );
     },
     update: function (oldData) {
         const CONTEXT_COMP  = this;
@@ -192,7 +189,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 data.exp_id         = CONTEXT_COMP.experimentID;
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_type    = CONTEXT_COMP.TARGET_TYPE.MISSED;
+                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.MISSED;
                 data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
                 data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
                 data.target_depth   = CONTEXT_COMP.data.targets_depth;
@@ -281,7 +278,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
             data.user_type      = CONTEXT_COMP.researchSystem.userType;
             data.target_id      = selectedElem.id;
-            data.target_type    = CONTEXT_COMP.TARGET_TYPE.LOOK;
+            data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.LOOK;
             data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
             data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
             data.target_depth   = CONTEXT_COMP.data.targets_depth;
@@ -303,7 +300,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
                 data.target_id      = selectedElem.id;
-                data.target_type    = CONTEXT_COMP.TARGET_TYPE.SELECT;
+                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.SELECT;
                 data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
                 data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
                 data.target_depth   = CONTEXT_COMP.data.targets_depth;
@@ -323,7 +320,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
                 data.target_id      = selectedElem.id;
-                data.target_type    = CONTEXT_COMP.TARGET_TYPE.INCORRECT;
+                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.INCORRECT;
                 data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
                 data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
                 data.target_depth   = CONTEXT_COMP.data.targets_depth;
