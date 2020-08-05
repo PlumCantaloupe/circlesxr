@@ -13,9 +13,6 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.researchUsers          = [];
 
         const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
-
-        console.log('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
-
         player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
             const avatarCam = document.querySelector('.avatar');
             CONTEXT_COMP.userType = avatarCam.components["circles-user-networked"].data.usertype;    
@@ -362,6 +359,22 @@ AFRAME.registerSystem('research-manager', {
 });
 
 AFRAME.registerComponent('research-manager', {
-  init: function () {},
+  multiple: false,
+    schema: {
+        experiment_script_url: {type:'string', default:'/worlds/Testbed/scripts/experiment_script.json'}
+    },
+  init: function () {
+    const CONTEXT_COMP = this;
+
+    const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+    player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
+        const avatarCam = document.querySelector('.avatar');
+        const userType = avatarCam.components["circles-user-networked"].data.usertype; 
+
+        if (userType === CIRCLES.USER_TYPE.RESEARCHER) {
+          CONTEXT_COMP.system.loadExperimentScript(CONTEXT_COMP.data.experiment_script_url);
+        }
+    });
+  },
   remove: function () {}
 });
