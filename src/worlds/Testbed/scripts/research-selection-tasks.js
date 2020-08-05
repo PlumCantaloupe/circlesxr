@@ -45,7 +45,6 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         //let's keep a reference to our research manager
         CONTEXT_COMP.researchSystem = document.querySelector('a-scene').systems['research-manager'];
-        CONTEXT_COMP.experimentID   = CONTEXT_COMP.researchSystem.getNewExperimentID();
 
         CONTEXT_COMP.createTargets();
 
@@ -186,7 +185,7 @@ AFRAME.registerComponent('research-selection-tasks', {
 
                 const data = CONTEXT_COMP.researchSystem.createSelectExpData();
                 data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
-                data.exp_id         = CONTEXT_COMP.experimentID;
+                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
                 data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.MISSED;
@@ -274,7 +273,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             //Look target selected
             const data = CONTEXT_COMP.researchSystem.createSelectExpData();
             data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
-            data.exp_id         = CONTEXT_COMP.experimentID;
+            data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
             data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
             data.user_type      = CONTEXT_COMP.researchSystem.userType;
             data.target_id      = selectedElem.id;
@@ -296,7 +295,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 //Fitts target selected
                 const data = CONTEXT_COMP.researchSystem.createSelectExpData();
                 data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
-                data.exp_id         = CONTEXT_COMP.experimentID;
+                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
                 data.target_id      = selectedElem.id;
@@ -316,7 +315,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 //Incorrect fitts target selected
                 const data = CONTEXT_COMP.researchSystem.createSelectExpData();
                 data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
-                data.exp_id         = CONTEXT_COMP.experimentID;
+                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
                 data.target_id      = selectedElem.id;

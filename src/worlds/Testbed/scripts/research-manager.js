@@ -5,12 +5,15 @@ AFRAME.registerSystem('research-manager', {
         console.log('research-manager: system starting up.');
         const CONTEXT_COMP  = this;
 
+        CONTEXT_COMP.registeredComponents = [];
+
         CONTEXT_COMP.connected              = false;
         CONTEXT_COMP.experimentInProgess    = false;
         CONTEXT_COMP.trialInProgess         = false;
         CONTEXT_COMP.player1AvatarLoaded    = false;
-        CONTEXT_COMP.trialData              = null;
+        CONTEXT_COMP.expScript              = null;
         CONTEXT_COMP.researchUsers          = [];
+        CONTEXT_COMP.experimentID           = CONTEXT_COMP.getNewExperimentID();
 
         const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
         player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
@@ -205,8 +208,8 @@ AFRAME.registerSystem('research-manager', {
             switch(xhr.status) {
                 case 200: {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
-                        CONTEXT_COMP.trialData = xhr.response;
-                        console.log(CONTEXT_COMP.trialData);
+                        CONTEXT_COMP.expScript = xhr.response;
+                        console.log(CONTEXT_COMP.expScript);
                     }
                 }
                 break;
@@ -275,7 +278,9 @@ AFRAME.registerSystem('research-manager', {
         buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
-          CONTEXT_COMP.sendSelectExpData( CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID) );
+          const data = CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID);
+          data.and = CONTEXT_COMP.expScript;
+          CONTEXT_COMP.sendSelectExpData(data);
         });
         researchControls.appendChild(buttonElem);
 
@@ -355,6 +360,14 @@ AFRAME.registerSystem('research-manager', {
     // buttonElem.appendChild(textElem);		
 
     // return buttonElem;
+  },
+  registerComponent: function (comp) {
+    this.registeredComponents.push(comp);
+  },
+
+  unregisterComponent: function (comp) {
+    var index = this.registeredComponents.indexOf(comp);
+    this.registeredComponents.splice(index, 1);
   }
 });
 
@@ -365,6 +378,7 @@ AFRAME.registerComponent('research-manager', {
     },
   init: function () {
     const CONTEXT_COMP = this;
+    CONTEXT_COMP.system.registerComponent(CONTEXT_COMP);
 
     const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
     player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
