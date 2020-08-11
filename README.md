@@ -68,7 +68,7 @@ ___TODO: will add more to this later___
     - This will build the needed bundles and serve the app for viewing. Check
       out the `scripts` section of `package.json` for more build options and
       details.
-1. In a browser (recommend Firefox), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users.
+1. In a browser (recommend Firefox), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users. Note that if you are using localhost and Firefox it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint.
     - Alternatively, you can also go to `localhost:{SERVER_PORT}/add-models-to-db` then `localhost:{SERVER_PORT}/add-users-to-db` to add models then users manually.
     - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire mdmu db (which you will have to do when we make changes to db items) use the following commands within the mongo shell:
         - `use mdmu`
