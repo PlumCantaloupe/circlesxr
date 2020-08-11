@@ -287,7 +287,7 @@ io.on("connection", socket => {
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           //1. create new file to write into
           //2. pass on event to other clients
-          researchUtils.loadExperimentScript(data);
+          researchUtils.loadExperimentScript(data.and);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
