@@ -13,8 +13,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-const researchUtils = require('./modules/research-utils');
-
 // Make the parsed environment config globally accessible
 //global.env = env;
 
@@ -275,6 +273,8 @@ io.on("connection", socket => {
 
   //research socket events
   if (env.ENABLE_RESEARCH_MODE) {
+    const researchUtils = require('./modules/research-utils');
+
     socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
       console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
@@ -287,7 +287,7 @@ io.on("connection", socket => {
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           //1. create new file to write into
           //2. pass on event to other clients
-          console.log(data);
+          researchUtils.loadExperimentScript(data);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
