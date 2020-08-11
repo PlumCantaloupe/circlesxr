@@ -23,6 +23,7 @@ AFRAME.registerComponent('circles-user-networked', {
     original_color_body:        {type: 'string',    default: ''},      
 
     username:                   {type: 'string',    default: ''},
+    usertype:                   {type: 'string',    default: ''},
     networked_data:             {type: 'string',    default: ''},
     costume:                    {type: 'array',    default: ['', '', '']},
   },
@@ -32,7 +33,7 @@ AFRAME.registerComponent('circles-user-networked', {
     Context_AF.isPlayer1  = false;
 
     Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
-      const playerOneNode       = document.querySelector('#player1');
+      const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
       const playerOneAvatarNode = playerOneNode.querySelector('.avatar');
       const thisNode            = Context_AF.el;
       const eventNode           = e.detail.element;
@@ -56,7 +57,8 @@ AFRAME.registerComponent('circles-user-networked', {
             original_color_head:    playerOneNode.getAttribute('circles-head-color'),       
             original_color_hair:    playerOneNode.getAttribute('circles-hair-color'), 
             original_color_body:    playerOneNode.getAttribute('circles-body-color'),  
-            username:               playerOneNode.getAttribute('circles-username')
+            username:               playerOneNode.getAttribute('circles-username'),
+            usertype:               playerOneNode.getAttribute('circles-usertype')
           });
 
           //set device icon here too ... I guess :/
@@ -131,7 +133,7 @@ AFRAME.registerComponent('circles-user-networked', {
     if ( oldData.color_body !== Context_AF.data.color_body ) {
       let avatarNode = Context_AF.el.querySelector('.user_body');
       avatarNode.setAttribute('circles-color', {color: Context_AF.data.color_body});
-      avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, Context_AF.el, true);
+      //avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, Context_AF.el, true);
     }
 
     //username change

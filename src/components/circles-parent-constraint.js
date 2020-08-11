@@ -63,7 +63,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
 
       //see camera weirdness below
       Context_AF.isCamera = ('camera' in this.psuedoParent.components);
-      Context_AF.camRig = this.el.sceneEl.querySelector('#player1CamRig');
+      Context_AF.camRig = this.el.sceneEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
   },
   tick: function(time, timeDelta) {
      if ( time - this.prevTime > this.data.updateRate ) {

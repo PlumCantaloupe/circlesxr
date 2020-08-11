@@ -2,7 +2,7 @@
 
 AFRAME.registerComponent('circles-snap-turning', {
   schema: {
-    snap_amount:{type:'int', default:CIRCLES.CONSTANTS.DEFAULT_SNAP_TURN_DEG}
+    snap_amount:        {type:'int', default:CIRCLES.CONSTANTS.DEFAULT_SNAP_TURN_DEG}
   },
 
   init: function() 
@@ -14,7 +14,7 @@ AFRAME.registerComponent('circles-snap-turning', {
     Context_AF.keyboard_detection();
     Context_AF.trackpad_detection();
     Context_AF.joystick_detection();
-    //Context_AF.touchscreen_detection(); //this detects swipes but niot sure required as A-Frame already does this
+    //Context_AF.touchscreen_detection(); //this detects swipes but not sure required as A-Frame already does this
   },
   update: function(oldData) 
   {
@@ -35,11 +35,11 @@ AFRAME.registerComponent('circles-snap-turning', {
     document.addEventListener('keyup', (event) => {
         const keyName = event.key;
         
-        if (keyName === 'ArrowRight' || keyName == 'd' || keyName == 'D') {
+        if (keyName == 'e' || keyName == 'E') {
             Context_AF.rotateBody(-Context_AF.data.snap_amount);
         }
 
-        if (keyName === 'ArrowLeft' || keyName == 'a' || keyName == 'a') {
+        if (keyName == 'q' || keyName == 'Q') {
             Context_AF.rotateBody(Context_AF.data.snap_amount);
         }
     }, false);

@@ -96,6 +96,7 @@
       'obj-model',
       'circles-object-world',
       'circles-interactive-object',
+      'circles-interactive-visible',
       'circles-inspect-object',
       'shadow',
       'class'
@@ -103,6 +104,17 @@
       //   selector: '.interactive',
       //   component: 'gltf-model',
       // },
+    ]
+  });
+
+  NAF.schemas.add({
+    template: '#text-template',
+    components: [
+      'position',
+      'rotation',
+      'scale',
+      'text',
+      'material'
     ]
   });
 
