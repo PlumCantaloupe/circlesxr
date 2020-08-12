@@ -285,47 +285,30 @@ io.on("connection", socket => {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-          //1. create new file to write into
-          //2. pass on event to other clients
-          researchUtils.loadExperimentScript(data.and);
+          researchUtils.startExperiment(data);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-          //1. stop writing to file, clean up, and send URL?
-          //2. pass on event to others
+          researchUtils.stopExperiment(data);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-          //1. note time to compare against selection end event
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.startSelection(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-          //1. calculate time difference from selection start
-          //2. save to file
-          //3. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.stopSelection(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.noteSelectionError(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          // not implemented yet
+          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
       }

@@ -110,9 +110,7 @@ AFRAME.registerSystem('research-manager', {
             //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
-            //show target(s) and let user know that experiment has started?
-            //no new trial but will open up all targets to show user what they will be clicking
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
+            //no new trial yet so will do nothing
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -136,6 +134,12 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
           //will add logic later
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.DOWNLOAD_READY: {
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //show download button for downloading csv experiment data
+          }
         }
         break;
       }

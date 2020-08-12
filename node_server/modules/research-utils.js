@@ -3,13 +3,13 @@ let experimentInProgress    = false;
 let trials                  = [];
 let currTrialIndex          = -1;
 
-const loadExperimentScript = (data) => {
-    let type, record, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
+const startExperiment = (data) => {
+    let id, record, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
 
-    const expArr = data.tests.data;
+    const expArr = data.and.tests.data;
     for (let i = 0; i < expArr.length; i++) {
-        type            = expArr[i].type;
+        id              = expArr[i].id;
         record          = expArr[i].record;
         targets         = expArr[i].targets;
         targets_x_rots  = expArr[i].targets_x_rots;
@@ -18,7 +18,7 @@ const loadExperimentScript = (data) => {
         target_depths   = expArr[i].target_depths;
         num_trials      = expArr[i].num_trials;
 
-        // console.log('type:' + type);
+        // console.log('id:' + id);
         // console.log('record:' + record);
         // console.log('num_targets:' + num_targets);
         // console.log('targets_x_rots:' + targets_x_rots);
@@ -52,7 +52,7 @@ const loadExperimentScript = (data) => {
 
                             //create trial
                             let randTrial = {
-                                                type:           type,
+                                                id:             id,
                                                 record:         record,
                                                 targets:        targets,                            //all targets visible
                                                 target_active:  targets[trial_i % targets.length],  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
@@ -72,9 +72,7 @@ const loadExperimentScript = (data) => {
         //concat with other experiment trials
         trials = trials.concat(exp_trials);
     }
-};
 
-const startExperiment = () => {
     experimentInProgress = true;
 };
 
@@ -82,20 +80,34 @@ const restartExperiment = () => {
     experimentInProgress = true;
 };
 
-const pauseExperiment = () => {
+const pauseExperiment = (data) => {
     experimentInProgress = false;
 };
 
-const resumeExperiment = () => {
+const unpauseExperiment = (data) => {
     experimentInProgress = true;
 };
 
-const stopExperiment = () => {
+const stopExperiment = (data) => {
     experimentInProgress = false;
 };
 
+const startSelection = (data) => {
+    //start timer
+};
+
+const stopSelection = (data) => {
+    //end timer
+    //write data to file
+};
+
+const noteSelectionError = (data) => {
+    //end timer
+    //write data to file
+};
+
 const startNextTrial = () => {
-    currTrialIndex++;
+    return trials[++currTrialIndex]; //send trial data
 };
 
 const getCurrTrial = () => {
@@ -111,12 +123,14 @@ const isExperimentInprogress = () => {
 }
 
 module.exports = {
-    loadExperimentScript,
     startExperiment,
     restartExperiment,
     pauseExperiment,
-    resumeExperiment,
+    unpauseExperiment,
     stopExperiment,
+    startSelection,
+    stopSelection,
+    noteSelectionError,
     startNextTrial,
     getCurrTrial,
     getCurrTrialIndex,

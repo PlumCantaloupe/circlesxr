@@ -17,8 +17,8 @@ AFRAME.registerComponent('research-selection-tasks', {
         targets_size:               {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
         targets_radius:             {type:'number',     default:2.5},
-        visible_look_target:        {type:'boolean',    default:false},
-        visible_select_target:      {type:'boolean',    default:false}
+        visible_look_target:        {type:'boolean',    default:true},
+        visible_select_target:      {type:'boolean',    default:true}
     },
     init() {
         const CONTEXT_COMP = this;
@@ -268,16 +268,16 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         console.log('SELECTION: Target Selected:' + selectedElem.id + ' active:' + selectedElem.object3D.userData.isActive);
 
-        //if a look target show fitts
-        if (selectedElem.id === CONTEXT_COMP.TARGET_ID_PREFIX + '0') {
-            //Look target selected
+        //check if this is an active target
+        if (selectedElem.object3D.userData.isActive) {
+            //Fitts target selected
             const data = CONTEXT_COMP.researchSystem.createSelectExpData();
             data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
             data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
             data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
             data.user_type      = CONTEXT_COMP.researchSystem.userType;
             data.target_id      = selectedElem.id;
-            data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.LOOK;
+            data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.SELECT;
             data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
             data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
             data.target_depth   = CONTEXT_COMP.data.targets_depth;
@@ -285,49 +285,23 @@ AFRAME.registerComponent('research-selection-tasks', {
             data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
 
             CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-
-            data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-            CONTEXT_COMP.researchSystem.sendSelectExpData(data);
         }
         else {
-            //check if this is an active target
-            if (selectedElem.object3D.userData.isActive) {
-                //Fitts target selected
-                const data = CONTEXT_COMP.researchSystem.createSelectExpData();
-                data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
-                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
-                data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
-                data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_id      = selectedElem.id;
-                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.SELECT;
-                data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-                data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-                data.target_depth   = CONTEXT_COMP.data.targets_depth;
-                data.target_size    = CONTEXT_COMP.data.targets_size;
-                data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
+            //Incorrect fitts target selected
+            const data = CONTEXT_COMP.researchSystem.createSelectExpData();
+            data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
+            data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
+            data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
+            data.user_type      = CONTEXT_COMP.researchSystem.userType;
+            data.target_id      = selectedElem.id;
+            data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.INCORRECT;
+            data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
+            data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
+            data.target_depth   = CONTEXT_COMP.data.targets_depth;
+            data.target_size    = CONTEXT_COMP.data.targets_size;
+            data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
 
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-
-                data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-            }
-            else {
-                //Incorrect fitts target selected
-                const data = CONTEXT_COMP.researchSystem.createSelectExpData();
-                data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
-                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
-                data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
-                data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_id      = selectedElem.id;
-                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.INCORRECT;
-                data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-                data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-                data.target_depth   = CONTEXT_COMP.data.targets_depth;
-                data.target_size    = CONTEXT_COMP.data.targets_size;
-                data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
-
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-            }
+            CONTEXT_COMP.researchSystem.sendSelectExpData(data);
         }
     }
 });
