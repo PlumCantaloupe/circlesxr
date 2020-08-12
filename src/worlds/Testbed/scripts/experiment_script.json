@@ -2,10 +2,10 @@
     "name": "Look and  Selection_Tasks",
     "description": "This is a list of pre-calculated trials for selection tasks across desktop, mobile, and HMD.",
     "tests": {
-        "comments": "These are the properties required for each trial (deg and metres), where data defines how the targets display. Note if 'record' is false data will not be recorded. Arrays show multiple possibilities.",
+        "comments": "These are the properties required for each trial (deg and metres), where data defines how the targets display. Note if 'record' is false data will not be recorded. Arrays show multiple possibilities. Also note that 0 is the centre target and 1-8 are the exterior targets.",
         "data": [
-            {"type":"select", "record":true, "num_trials":16, "num_targets":8, "targets_x_rots":[0.0], "targets_y_rots":[0.0], "target_widths":[0.25,0.5,0.75], "target_depths":[5.0, 7.0, 9.0]},
-            {"type":"look", "record":true, "num_trials":8, "num_targets":8, "targets_x_rots":[0.0, 45, 90, 135, 180, 225, 270, 315], "targets_y_rots":[0.0, 30, -30], "target_widths":[0.50], "target_depths":[7.0]}
+            {"type":"select", "record":true, "num_trials":16, "targets":[1,2,3,4,5,6,7,8], "targets_x_rots":[0.0], "targets_y_rots":[0.0], "target_widths":[0.25,0.5,0.75], "target_depths":[5.0, 7.0, 9.0]},
+            {"type":"look", "record":true, "num_trials":8, "targets":[0], "targets_x_rots":[0.0, 45, 90, 135, 180, 225, 270, 315], "targets_y_rots":[0.0, 30, -30], "target_widths":[0.50], "target_depths":[7.0]}
         ]
     }
 }
