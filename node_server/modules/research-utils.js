@@ -75,8 +75,6 @@ const loadExperimentScript = (data) => {
         //concat with other experiment trials
         trials = trials.concat(exp_trials);
     }
-
-    console.log(trials);
 };
 
 const getNumOfTrialsCompleted = () => {
