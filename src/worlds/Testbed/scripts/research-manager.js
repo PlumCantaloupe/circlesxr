@@ -245,40 +245,42 @@ AFRAME.registerSystem('research-manager', {
         let buttonElem_hide = null;
         let buttonElem_show = null;
 
-        buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8);
-        buttonElem_hide.setAttribute('circles-interactive-visible', true);
+        buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_hide.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
-          buttonElem_hide.setAttribute('circles-interactive-visible', false);
-          buttonElem_show.setAttribute('circles-interactive-visible', true);
+          console.log('click - ' + e.srcElement.id);
+          CONTEXT_COMP.showButton(buttonElem_hide, false);
+          CONTEXT_COMP.showButton(buttonElem_show, true);
           
           researchControls.querySelectorAll('.button').forEach( (button) => {
             if (button.classList.contains('auto-visible')) {
-              button.setAttribute('circles-interactive-visible', false);
+              CONTEXT_COMP.showButton(button, false);
             }
           });
         });
         avatarCam.appendChild(buttonElem_hide);
 
-        buttonElem_show = CONTEXT_COMP.createBasicButton('research_show', 'show', 0.2, 0.07, 8);
-        buttonElem_show.setAttribute('circles-interactive-visible', false);
+        buttonElem_show = CONTEXT_COMP.createBasicButton('research_show', 'show', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_show.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_show.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
-          buttonElem_hide.setAttribute('circles-interactive-visible', true);
-          buttonElem_show.setAttribute('circles-interactive-visible', false);
-
+          console.log('click - ' + e.srcElement.id);
+          CONTEXT_COMP.showButton(buttonElem_hide, true);
+          CONTEXT_COMP.showButton(buttonElem_show, false);
+          
           researchControls.querySelectorAll('.button').forEach( (button) => {
             if (button.classList.contains('auto-visible')) {
-              button.setAttribute('circles-interactive-visible', true);
+              CONTEXT_COMP.showButton(button, true);
             }
           });
         });
         avatarCam.appendChild(buttonElem_show);
 
+        //hide/show these buttons accordingly
+        CONTEXT_COMP.showButton(buttonElem_hide, true);
+        CONTEXT_COMP.showButton(buttonElem_show, false);
+
         //start experiment
-        buttonElem = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24);
+        buttonElem = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
         buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
@@ -289,7 +291,7 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
 
         //stop experiment
-        buttonElem = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24);
+        buttonElem = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
         buttonElem.setAttribute('position', {x:0.0, y:-0.11, z:0.0});
         buttonElem.addEventListener('click', (e) => {
           console.log('click - ' + e.srcElement.id);
@@ -298,7 +300,7 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
 
         //visual state - normal
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24);
+        buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
         buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id); 
@@ -306,7 +308,7 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
 
         //visual state - ghost
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24);
+        buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
         buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id); 
@@ -314,7 +316,7 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
 
         //visual state - invisible
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24);
+        buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
         buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
@@ -322,7 +324,7 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
 
         //button for downloading research data later
-        buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(245, 221, 66)', 'rgb(0,0,0)', false);
+        buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem.setAttribute('position', {x:0.0, y:-0.63, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
@@ -330,40 +332,50 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
         buttonElem.setAttribute('circles-interactive-visible', false); //want it hidden until we have something to download
    },
+   showButton : function(buttonElem, isVisible) {
+    buttonElem.querySelector('.bg').setAttribute('circles-interactive-visible', isVisible);
+    buttonElem.querySelector('.text').setAttribute('visible', isVisible);
+   },
    createBasicButton : function(id, text, width, height, wrapCount, bgCol='rgb(255,255,255)', textCol='rgb(0,0,0)', autoVisible=true) {
-    let buttonElem = document.createElement('a-entity');
-    const visClass = (autoVisible) ? 'auto-visible' : ''; //if auto-visible we will control ourselves manually
+    // let buttonElem = document.createElement('a-entity');
+    // const visClass = (autoVisible) ? 'auto-visible' : ''; //if auto-visible we will control ourselves manually
 
-    buttonElem.setAttribute('id', id);
-    buttonElem.setAttribute('class', 'interactive button ' + visClass);
-    buttonElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});
-    buttonElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});
-    buttonElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', wrapCount:wrapCount, value:text});
+    // buttonElem.setAttribute('id', id);
+    // buttonElem.setAttribute('class', 'interactive button ' + visClass);
+    // buttonElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});
+    // buttonElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});
+    // buttonElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', wrapCount:wrapCount, value:text});
 
-    buttonElem.addEventListener('mouseenter', function (e) { e.target.object3D.scale.set(1.03,1.03, 1.03); });
-    buttonElem.addEventListener('mouseleave', function (e) { e.target.object3D.scale.set(1.00,1.00, 1.00); });
-
-    return buttonElem;
-
-    // let buttonElem = document.createElement('a-entity');		     
-    // buttonElem.setAttribute('id', id);    
-
-    // let bgElem = document.createElement('a-entity');	
-    // bgElem.setAttribute('id', id + '_bg');   	     
-    // bgElem.setAttribute('class', 'interactive bg');		    
-    // bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
-    // bgElem.setAttribute('material', {color:'rgb(255,255,255)', shader:'flat', opacity:0.8, transparent:true});		   
-    // bgElem.addEventListener('mouseenter', function (e) { e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
-    // bgElem.addEventListener('mouseleave', function (e) { e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
-    // buttonElem.appendChild(bgElem);		
-
-    // let textElem = document.createElement('a-entity');
-    // textElem.setAttribute('id', id + '_text');  		
-    // textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
-    // textElem.setAttribute('text', { color:'#000000', align:'center', font:'roboto', width:width * 2.0, value:text });		
-    // buttonElem.appendChild(textElem);		
+    // buttonElem.addEventListener('mouseenter', function (e) { e.target.object3D.scale.set(1.03,1.03, 1.03); });
+    // buttonElem.addEventListener('mouseleave', function (e) { e.target.object3D.scale.set(1.00,1.00, 1.00); });
 
     // return buttonElem;
+
+    const visClass = (autoVisible) ? 'auto-visible' : ''; //if auto-visible we will control ourselves manually
+
+    let buttonElem = document.createElement('a-entity');		     
+    buttonElem.setAttribute('id', id);
+    buttonElem.setAttribute('class', 'button ' + visClass);
+
+    let bgElem = document.createElement('a-entity');	
+    bgElem.setAttribute('id', id + '_bg');   	     
+    bgElem.setAttribute('class', 'interactive bg');
+    bgElem.setAttribute('circles-interactive-visible', true);   
+    bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
+    bgElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});		   
+    bgElem.addEventListener('mouseenter', function (e) { e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
+    bgElem.addEventListener('mouseleave', function (e) { e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
+    buttonElem.appendChild(bgElem);		
+
+    let textElem = document.createElement('a-entity');
+    textElem.setAttribute('id', id + '_text');  
+    textElem.setAttribute('class', 'text');
+    textElem.setAttribute('visible', true); 	
+    textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
+    textElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', width:width, height:height, wrapCount:wrapCount, value:text});	
+    buttonElem.appendChild(textElem);		
+
+    return buttonElem;
   },
   registerComponent: function (comp) {
     this.registeredComponents.push(comp);
