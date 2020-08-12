@@ -56,7 +56,7 @@ const loadExperimentScript = (data) => {
 
                             //create trial
                             let randTrial = {
-                                                activeTarget:   trial_i % num_targets,  //may as well loop through all available targets
+                                                activeTarget:   (trial_i + 1) % num_targets,  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
                                                 targets_x_rot:  targets_x_rots[xRot_i],
                                                 targets_y_rot:  targets_y_rots[yRot_i],
                                                 target_width:   target_widths[width_i],
@@ -72,8 +72,6 @@ const loadExperimentScript = (data) => {
 
         //concat with other experiment trials
         trials = trials.concat(exp_trials);
-
-        console.log(trials.length);
     }
 };
 
