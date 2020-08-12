@@ -1,12 +1,9 @@
 
 let experimentInProgress    = false;
-let trialInProgress         = false;
 let trials                  = [];
 let currTrialIndex          = -1;
 
 const loadExperimentScript = (data) => {
-    // console.log(data);
-    // console.log(data.tests.data);
     let type, record, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
 
@@ -77,26 +74,51 @@ const loadExperimentScript = (data) => {
     }
 };
 
-const getNumOfTrialsCompleted = () => {
-    return currTrialIndex;
+const startExperiment = () => {
+    experimentInProgress = true;
 };
 
-const getNextTrial = () => {
-    return {};
+const restartExperiment = () => {
+    experimentInProgress = true;
+};
+
+const pauseExperiment = () => {
+    experimentInProgress = false;
+};
+
+const resumeExperiment = () => {
+    experimentInProgress = true;
+};
+
+const stopExperiment = () => {
+    experimentInProgress = false;
+};
+
+const startNextTrial = () => {
+    currTrialIndex++;
+};
+
+const getCurrTrial = () => {
+    return (currTrialIndex > -1) ? trials[getCurrTrialIndex] : null;
+};
+
+const getCurrTrialIndex = () => {
+    return currTrialIndex;
 };
 
 const isExperimentInprogress = () => {
     return experimentInProgress;
 }
 
-const isTrialInprogress = () => {
-    return trialInProgress;
-}
-
 module.exports = {
     loadExperimentScript,
-    getNumOfTrialsCompleted,
-    getNextTrial,
-    isExperimentInprogress,
-    isTrialInprogress
+    startExperiment,
+    restartExperiment,
+    pauseExperiment,
+    resumeExperiment,
+    stopExperiment,
+    startNextTrial,
+    getCurrTrial,
+    getCurrTrialIndex,
+    isExperimentInprogress
   };
