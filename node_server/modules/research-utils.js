@@ -9,10 +9,10 @@ const loadExperimentScript = (data) => {
     // console.log(data.tests.data);
 
     let type, record, num_targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
-    let total_trials = [];
+    trials = [];
 
     const expArr = data.tests.data;
-    for (let i = 0; i < expArr.length; i++) 
+    for (let i = 0; i < expArr.length; i++) {
         type            = expArr[i].type;
         record          = expArr[i].record;
         num_targets     = expArr[i].num_targets;
@@ -57,10 +57,10 @@ const loadExperimentScript = (data) => {
                             //create trial
                             let randTrial = {
                                                 activeTarget:   trial_i % num_targets,  //may as well loop through all available targets
-                                                targets_x_rot:  targets_x_rot[xRot_i],
-                                                targets_y_rot:  targets_y_rot[yRot_i],
-                                                target_width:   target_width[width_i],
-                                                target_depth:   target_depth[depth_i],
+                                                targets_x_rot:  targets_x_rots[xRot_i],
+                                                targets_y_rot:  targets_y_rots[yRot_i],
+                                                target_width:   target_widths[width_i],
+                                                target_depth:   target_depths[depth_i],
                                             };
 
                             exp_trials[randIndex] = randTrial;  //set null value at this index to the randTrial object
@@ -70,11 +70,10 @@ const loadExperimentScript = (data) => {
             }
         }
 
-        for (let j = 0; j < num_trials; j++) {
-            let newTrial = {};
-            newTrial.activeTarget = '';
-            trials.push(newTrial);
-        }
+        //concat with other experiment trials
+        trials = trials.concat(exp_trials);
+
+        console.log(trials.length);
     }
 };
 
