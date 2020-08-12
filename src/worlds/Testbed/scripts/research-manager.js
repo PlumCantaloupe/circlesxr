@@ -111,6 +111,7 @@ AFRAME.registerSystem('research-manager', {
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             //no new trial yet so will do nothing
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -188,7 +189,7 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+          // CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
         }
         break;
       }
