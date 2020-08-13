@@ -37,6 +37,25 @@ const EVENT_TYPE = {
   NONE                  : 'NONE'
 };
 
+const createExpData = (   event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
+                          target_active='', targets=[], targets_x_rot=0.0, targets_y_rot=0.0, targets_depth=5.0, targets_size=0.5, targets_radius=5.0, 
+                          and={} 
+                      ) => {
+        return {  event_type:     event_type,
+                  exp_id:         exp_id,
+                  user_id:        user_id,
+                  user_type:      user_type,
+                  target_active:  target_active,
+                  targets:        targets,
+                  targets_x_rot:  targets_x_rot,
+                  targets_y_rot:  targets_y_rot,
+                  targets_depth:  targets_depth,
+                  targets_size:   targets_size,
+                  targets_radius: targets_radius,
+                  and:            and
+                };
+};
+
 module.exports = {
   CONSTANTS,
   EXP_TYPE,
@@ -44,4 +63,5 @@ module.exports = {
   EVENT_FROM_SERVER,
   EVENT_FROM_CLIENT,
   EVENT_TYPE,
+  createExpData
 };

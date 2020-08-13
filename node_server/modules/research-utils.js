@@ -4,13 +4,12 @@ let trials                  = [];
 let currTrialIndex          = -1;
 
 const startExperiment = (data) => {
-    let id, record, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
+    let id, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
 
     const expArr = data.and.tests.data;
     for (let i = 0; i < expArr.length; i++) {
         id              = expArr[i].id;
-        record          = expArr[i].record;
         targets         = expArr[i].targets;
         targets_x_rots  = expArr[i].targets_x_rots;
         targets_y_rots  = expArr[i].targets_y_rots;
@@ -19,7 +18,6 @@ const startExperiment = (data) => {
         num_trials      = expArr[i].num_trials;
 
         // console.log('id:' + id);
-        // console.log('record:' + record);
         // console.log('num_targets:' + num_targets);
         // console.log('targets_x_rots:' + targets_x_rots);
         // console.log('targets_y_rots:' + targets_y_rots);
@@ -53,7 +51,6 @@ const startExperiment = (data) => {
                             //create trial
                             let randTrial = {
                                                 id:             id,
-                                                record:         record,
                                                 targets:        targets,                            //all targets visible
                                                 target_active:  targets[trial_i % targets.length],  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
                                                 targets_x_rot:  targets_x_rots[xRot_i],
@@ -106,7 +103,7 @@ const noteSelectionError = (data) => {
     //write data to file
 };
 
-const startNextTrial = () => {
+const getNextTrial = () => {
     return trials[++currTrialIndex]; //send trial data
 };
 
@@ -131,7 +128,7 @@ module.exports = {
     startSelection,
     stopSelection,
     noteSelectionError,
-    startNextTrial,
+    getNextTrial,
     getCurrTrial,
     getCurrTrialIndex,
     isExperimentInprogress

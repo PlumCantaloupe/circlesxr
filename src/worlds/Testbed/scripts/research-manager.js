@@ -145,24 +145,24 @@ AFRAME.registerSystem('research-manager', {
         break;
       }
     },
-    createSelectExpData : function( event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
-                                    target_id='', target_type='', targets_x_rot=0.0, targets_y_rot=0.0, target_depth=0.0, target_size=0.0, fitts_radius=0.0, 
-                                    and={} 
-                                  ) {
-        return {  event_type:     event_type,
-                  exp_id:         exp_id,
-                  user_id:        user_id,
-                  user_type:      user_type,
-                  target_id:      target_id,
-                  target_type:    target_type,
-                  targets_x_rot:  targets_x_rot,
-                  targets_y_rot:  targets_y_rot,
-                  target_depth:   target_depth,
-                  target_size:    target_size,
-                  fitts_radius:   fitts_radius,
-                  and:            and
-                };
-    },
+    // createSelectExpData : function( event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
+    //                                 target_id='', target_type='', targets_x_rot=0.0, targets_y_rot=0.0, target_depth=0.0, target_size=0.0, fitts_radius=0.0, 
+    //                                 and={} 
+    //                               ) {
+    //     return {  event_type:     event_type,
+    //               exp_id:         exp_id,
+    //               user_id:        user_id,
+    //               user_type:      user_type,
+    //               target_id:      target_id,
+    //               target_type:    target_type,
+    //               targets_x_rot:  targets_x_rot,
+    //               targets_y_rot:  targets_y_rot,
+    //               target_depth:   target_depth,
+    //               target_size:    target_size,
+    //               fitts_radius:   fitts_radius,
+    //               and:            and
+    //             };
+    // },
     sendSelectExpData : function(data) {
       CONTEXT_COMP = this;
       console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date().toISOString()  + ']');
@@ -285,7 +285,7 @@ AFRAME.registerSystem('research-manager', {
         buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
-          const data = CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID);
+          const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           data.and = CONTEXT_COMP.expScript;
           CONTEXT_COMP.sendSelectExpData(data);
         });
@@ -296,7 +296,8 @@ AFRAME.registerSystem('research-manager', {
         buttonElem.setAttribute('position', {x:0.0, y:-0.11, z:0.0});
         buttonElem.addEventListener('click', (e) => {
           console.log('click - ' + e.srcElement.id);
-          CONTEXT_COMP.sendSelectExpData( CONTEXT_COMP.createSelectExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID) );
+          const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
+          CONTEXT_COMP.sendSelectExpData(data);
         });
         researchControls.appendChild(buttonElem);
 

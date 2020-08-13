@@ -281,12 +281,15 @@ io.on("connection", socket => {
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
           console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+          data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           researchUtils.startExperiment(data);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+
+          // const newData = researchUtils.getNextTrial();
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
@@ -300,6 +303,14 @@ io.on("connection", socket => {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
           researchUtils.stopSelection(data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
+          researchUtils.pauseExperiment(data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_UNPAUSE: {
+          researchUtils.unpauseExperiment(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
