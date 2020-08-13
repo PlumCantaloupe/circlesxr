@@ -17,8 +17,9 @@ AFRAME.registerComponent('research-selection-tasks', {
         targets_width:              {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:10.0},
         targets_radius:             {type:'number',     default:8.0},
-        visible_look_target:        {type:'boolean',    default:false},
-        visible_select_target:      {type:'boolean',    default:false}
+        targets:                    {type:'array',      default:[0]},
+        // visible_look_target:        {type:'boolean',    default:false},
+        // visible_select_target:      {type:'boolean',    default:false}
     },
     init() {
         const CONTEXT_COMP = this;
@@ -139,12 +140,32 @@ AFRAME.registerComponent('research-selection-tasks', {
             });
         }
 
-        if (oldData.visible_look_target !== data.visible_look_target) {
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS, data.visible_look_target);
-        }
+        // if (oldData.visible_look_target !== data.visible_look_target) {
+        //     CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS, data.visible_look_target);
+        // }
 
-        if (oldData.visible_select_target !== data.visible_select_target) {
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, data.visible_select_target);
+        // if (oldData.visible_select_target !== data.visible_select_target) {
+        //     CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, data.visible_select_target);
+        // }
+
+        if (oldData.targets !== data.targets) {
+            const targets = this.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
+            targets.forEach( (target) => {
+                target.setAttribute('circles-interactive-visible', false);
+
+                console.log('Hello 1: ' + target.id);
+
+                for (let i = 0; i < data.targets.length; i++) {
+
+                    console.log('Hello 2: ' + target.id);
+                    console.log('Hello 3: ' + 'FT_' + data.targets[i]);
+
+                    if ('FT_' + data.targets[i] === target.id) {
+                        target.setAttribute('circles-interactive-visible', true);
+                        break;
+                    }
+                }
+            });
         }
     },
     tick: function (time, timeDelta) {},
@@ -196,12 +217,12 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         CONTEXT_COMP.el.sceneEl.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, CONTEXT_COMP.createChecksForNullSelection.bind(CONTEXT_COMP));
     },
-    setTargetsVisibility: function(className, isVisible) {
-        const targets = this.targetsInnerContainer.querySelectorAll('.' + className);
-        targets.forEach( (elem) => {
-            elem.setAttribute('circles-interactive-visible', isVisible);
-        });
-    },
+    // setTargetsVisibility: function(className, isVisible) {
+    //     const targets = this.targetsInnerContainer.querySelectorAll('.' + className);
+    //     targets.forEach( (elem) => {
+    //         elem.setAttribute('circles-interactive-visible', isVisible);
+    //     });
+    // },
     createTargets: function() {
         const CONTEXT_COMP = this;
 
