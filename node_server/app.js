@@ -322,6 +322,7 @@ io.on("connection", socket => {
           newData.exp_id      = data.exp_id
           newData.user_id     = data.user_id
           newData.user_type   = data.user_type
+
           io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
         break;

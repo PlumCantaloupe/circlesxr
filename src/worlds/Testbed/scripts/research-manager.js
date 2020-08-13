@@ -126,7 +126,8 @@ AFRAME.registerSystem('research-manager', {
                                 targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
                                 targets_width:    data.targets_width,
                                 targets_depth:    data.targets_depth,
-                                targets_radius:   data.targets_radius
+                                targets_radius:   data.targets_radius,
+                                targets:          data.targets
                               };
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', compData);
 
@@ -166,7 +167,8 @@ AFRAME.registerSystem('research-manager', {
                                 targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
                                 targets_width:    data.targets_width,
                                 targets_depth:    data.targets_depth,
-                                targets_radius:   data.targets_radius
+                                targets_radius:   data.targets_radius,
+                                targets:          data.targets
                               };
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', compData);
 

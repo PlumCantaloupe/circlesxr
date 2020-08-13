@@ -153,13 +153,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             targets.forEach( (target) => {
                 target.setAttribute('circles-interactive-visible', false);
 
-                console.log('Hello 1: ' + target.id);
-
                 for (let i = 0; i < data.targets.length; i++) {
-
-                    console.log('Hello 2: ' + target.id);
-                    console.log('Hello 3: ' + 'FT_' + data.targets[i]);
-
                     if ('FT_' + data.targets[i] === target.id) {
                         target.setAttribute('circles-interactive-visible', true);
                         break;
