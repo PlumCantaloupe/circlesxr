@@ -161,6 +161,7 @@ AFRAME.registerSystem('research-manager', {
             //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+
             const compData = {  target_active:    'FT_' + data.target_active,
                                 targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
                                 targets_width:    data.targets_width,
@@ -168,8 +169,6 @@ AFRAME.registerSystem('research-manager', {
                                 targets_radius:   data.targets_radius
                               };
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', compData);
-
-            console.log(compData);
 
             //send start timer
             const eData = CIRCLES.RESEARCH.createExpData();

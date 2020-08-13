@@ -287,7 +287,7 @@ io.on("connection", socket => {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           researchUtils.startExperiment(data);
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
@@ -301,12 +301,12 @@ io.on("connection", socket => {
           newData.user_id     = data.user_id
           newData.user_type   = data.user_type
           
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           researchUtils.stopExperiment(data);
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
@@ -317,12 +317,12 @@ io.on("connection", socket => {
           researchUtils.stopSelection(data);
 
           //send out new trial
-          // const newData = researchUtils.getNextTrial();
-          // newData.event_type  = data.event_type
-          // newData.exp_id      = data.exp_id
-          // newData.user_id     = data.user_id
-          // newData.user_type   = data.user_type
-          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          const newData = researchUtils.getNextTrial();
+          newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
+          newData.exp_id      = data.exp_id
+          newData.user_id     = data.user_id
+          newData.user_type   = data.user_type
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
