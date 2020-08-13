@@ -38,7 +38,7 @@ const EVENT_TYPE = {
 };
 
 const createExpData = (   event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
-                          target_active='', targets=[], targets_x_rot=0.0, targets_y_rot=0.0, targets_depth=5.0, targets_size=0.5, targets_radius=5.0, 
+                          target_active=-1, targets=[0], targets_x_rot=0.0, targets_y_rot=0.0, targets_depth=5.0, targets_width=0.5, targets_radius=5.0, 
                           and={} 
                       ) => {
         return {  event_type:     event_type,
@@ -50,7 +50,7 @@ const createExpData = (   event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id=''
                   targets_x_rot:  targets_x_rot,
                   targets_y_rot:  targets_y_rot,
                   targets_depth:  targets_depth,
-                  targets_size:   targets_size,
+                  targets_width:  targets_width,
                   targets_radius: targets_radius,
                   and:            and
                 };

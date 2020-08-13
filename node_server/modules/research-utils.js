@@ -13,8 +13,8 @@ const startExperiment = (data) => {
         targets         = expArr[i].targets;
         targets_x_rots  = expArr[i].targets_x_rots;
         targets_y_rots  = expArr[i].targets_y_rots;
-        target_widths   = expArr[i].target_widths;
-        target_depths   = expArr[i].target_depths;
+        targets_widths  = expArr[i].targets_widths;
+        targets_depths  = expArr[i].targets_depths;
         num_trials      = expArr[i].num_trials;
 
         // console.log('id:' + id);
@@ -25,7 +25,7 @@ const startExperiment = (data) => {
         // console.log('target_depths:' + target_depths);
         // console.log('num_trials:' + num_trials);
 
-        total_exp_trials = targets_x_rots.length * targets_y_rots.length * target_widths.length * target_depths.length * num_trials;
+        total_exp_trials = targets_x_rots.length * targets_y_rots.length * targets_widths.length * targets_depths.length * num_trials;
         let exp_trials = [];
         let randIndex = 0;
 
@@ -38,8 +38,8 @@ const startExperiment = (data) => {
         //wonder if this will perform bad :| Hopefully we can avoid threading for now ...
         for (let xRot_i = 0; xRot_i < targets_x_rots.length; xRot_i++) {
             for (let yRot_i = 0; yRot_i < targets_y_rots.length; yRot_i++) {
-                for (let width_i = 0; width_i < target_widths.length; width_i++) {
-                    for (let depth_i = 0; depth_i < target_depths.length; depth_i++) {
+                for (let width_i = 0; width_i < targets_widths.length; width_i++) {
+                    for (let depth_i = 0; depth_i < targets_depths.length; depth_i++) {
                         for (let trial_i = 0; trial_i < num_trials; trial_i++) {
                             
                             //get random index
@@ -49,15 +49,23 @@ const startExperiment = (data) => {
                             }
 
                             //create trial
-                            let randTrial = {
-                                                id:             id,
-                                                targets:        targets,                            //all targets visible
-                                                target_active:  targets[trial_i % targets.length],  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
-                                                targets_x_rot:  targets_x_rots[xRot_i],
-                                                targets_y_rot:  targets_y_rots[yRot_i],
-                                                target_width:   target_widths[width_i],
-                                                target_depth:   target_depths[depth_i],
-                                            };
+                            const randTrial = CIRCLES.RESEARCH.createExpData();
+                            randTrial.target_active     = targets[trial_i % targets.length],    //may as well loop through all available targets. +1 as '0' is reserved for centre look target
+                            randTrial.targets           = [].concat(targets);                   //all targets visible / cloning array so no weird trouble later
+                            randTrial.targets_x_rot     = targets_x_rots[xRot_i];
+                            randTrial.targets_y_rots    = targets_y_rots[yRot_i];
+                            randTrial.targets_width     = targets_widths[width_i];
+                            randTrial.targets_depth     = targets_depths[depth_i];
+
+                            // let randTrial = {
+                            //                     id:             id,
+                            //                     targets:        targets,                            //all targets visible
+                            //                     target_active:  targets[trial_i % targets.length],  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
+                            //                     targets_x_rot:  targets_x_rots[xRot_i],
+                            //                     targets_y_rot:  targets_y_rots[yRot_i],
+                            //                     target_width:   target_widths[width_i],
+                            //                     target_depth:   target_depths[depth_i],
+                            //                 };
 
                             exp_trials[randIndex] = randTrial;  //set null value at this index to the randTrial object
                         }
@@ -70,6 +78,7 @@ const startExperiment = (data) => {
         trials = trials.concat(exp_trials);
     }
 
+    console.log(trials);
     experimentInProgress = true;
 };
 
