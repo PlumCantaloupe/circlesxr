@@ -57,16 +57,6 @@ const startExperiment = (data) => {
                             randTrial.targets_width     = targets_widths[width_i];
                             randTrial.targets_depth     = targets_depths[depth_i];
 
-                            // let randTrial = {
-                            //                     id:             id,
-                            //                     targets:        targets,                            //all targets visible
-                            //                     target_active:  targets[trial_i % targets.length],  //may as well loop through all available targets. +1 as '0' is reserved for centre look target
-                            //                     targets_x_rot:  targets_x_rots[xRot_i],
-                            //                     targets_y_rot:  targets_y_rots[yRot_i],
-                            //                     target_width:   target_widths[width_i],
-                            //                     target_depth:   target_depths[depth_i],
-                            //                 };
-
                             exp_trials[randIndex] = randTrial;  //set null value at this index to the randTrial object
                         }
                     }
@@ -78,7 +68,6 @@ const startExperiment = (data) => {
         trials = trials.concat(exp_trials);
     }
 
-    console.log(trials);
     experimentInProgress = true;
 };
 

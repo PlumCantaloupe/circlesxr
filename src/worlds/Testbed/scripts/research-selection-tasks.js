@@ -14,7 +14,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         show_labels:                {type:'boolean',    default:false},
         target_active:              {type:'string',     default:''},
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
-        targets_size:               {type:'number',     default:0.2},
+        targets_width:              {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:5.0},
         targets_radius:             {type:'number',     default:2.5},
         visible_look_target:        {type:'boolean',    default:false},
@@ -120,10 +120,10 @@ AFRAME.registerComponent('research-selection-tasks', {
             CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_rot.x), THREE.Math.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
         }
 
-        if (oldData.targets_size !== data.targets_size) {
+        if (oldData.targets_width !== data.targets_width) {
             const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
             targets.forEach( (target) => {
-                target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
+                target.object3D.scale.set(data.targets_width, data.targets_width, data.targets_width);
             });
         }
 

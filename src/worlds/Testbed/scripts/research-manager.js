@@ -131,6 +131,23 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
+          //set up targets
+          const compData = {  target_active:    'FT_' + data.target_active,
+                              targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
+                              targets_width:    data.targets_width,
+                              targets_depth:    data.targets_depth,
+                              targets_radius:   data.targets_radius
+                            };
+          CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
+
+          //send start timer
+          const eData = CIRCLES.RESEARCH.createExpData();
+          eData.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
+          eData.exp_id         = CONTEXT_COMP.experimentID;
+          eData.user_id        = CONTEXT_COMP.socket.id;
+          eData.user_type      = CONTEXT_COMP.userType;
+
+          CONTEXT_COMP.sendSelectExpData(eData);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
@@ -145,24 +162,6 @@ AFRAME.registerSystem('research-manager', {
         break;
       }
     },
-    // createSelectExpData : function( event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id='', user_id='', user_type=CIRCLES.USER_TYPE.NONE,
-    //                                 target_id='', target_type='', targets_x_rot=0.0, targets_y_rot=0.0, target_depth=0.0, target_size=0.0, fitts_radius=0.0, 
-    //                                 and={} 
-    //                               ) {
-    //     return {  event_type:     event_type,
-    //               exp_id:         exp_id,
-    //               user_id:        user_id,
-    //               user_type:      user_type,
-    //               target_id:      target_id,
-    //               target_type:    target_type,
-    //               targets_x_rot:  targets_x_rot,
-    //               targets_y_rot:  targets_y_rot,
-    //               target_depth:   target_depth,
-    //               target_size:    target_size,
-    //               fitts_radius:   fitts_radius,
-    //               and:            and
-    //             };
-    // },
     sendSelectExpData : function(data) {
       CONTEXT_COMP = this;
       console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date().toISOString()  + ']');
