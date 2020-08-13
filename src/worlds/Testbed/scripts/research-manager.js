@@ -122,8 +122,24 @@ AFRAME.registerSystem('research-manager', {
             //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
-            //no new trial yet so will do nothing
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
+            const compData = {  target_active:    'FT_' + data.target_active,
+                                targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
+                                targets_width:    data.targets_width,
+                                targets_depth:    data.targets_depth,
+                                targets_radius:   data.targets_radius
+                              };
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
+
+            console.log(compData);
+
+            //send start timer
+            const eData = CIRCLES.RESEARCH.createExpData();
+            eData.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
+            eData.exp_id         = CONTEXT_COMP.experimentID;
+            eData.user_id        = CONTEXT_COMP.socket.id;
+            eData.user_type      = CONTEXT_COMP.userType;
+
+            CONTEXT_COMP.sendSelectExpData(eData);
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -143,9 +159,6 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
-
-          console.log(data);
-
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
             //researcher sent this so ignore
           }

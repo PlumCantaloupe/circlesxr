@@ -296,14 +296,10 @@ io.on("connection", socket => {
           //send out new trial
           const newData = researchUtils.getNextTrial();
 
-          console.log(newData);
-
           newData.event_type  = data.event_type
           newData.exp_id      = data.exp_id
           newData.user_id     = data.user_id
           newData.user_type   = data.user_type
-
-          console.log(newData);
           
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
