@@ -5,7 +5,7 @@ AFRAME.registerSystem('research-manager', {
         console.log('research-manager: system starting up.');
         const CONTEXT_COMP  = this;
 
-        CONTEXT_COMP.registeredComponents = [];
+        CONTEXT_COMP.researchManagerEl = document.querySelector('#research_manager');
 
         CONTEXT_COMP.connected              = false;
         CONTEXT_COMP.experimentInProgess    = false;
@@ -26,7 +26,7 @@ AFRAME.registerSystem('research-manager', {
             }
             else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
                 //attach experiment
-                CONTEXT_COMP.el.setAttribute('research-selection-tasks', '');
+                CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', '');
             }
             else {
                 console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -39,7 +39,7 @@ AFRAME.registerSystem('research-manager', {
             //CONTEXT_COMP.researchUsers.push({'Player1', user_type:CONTEXT_COMP.userType});
         });
 
-        CONTEXT_COMP.el.sceneEl.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
+        CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
             console.log("research-manager: messaging system connected ...");
             CONTEXT_COMP.socket = NAF.connection.adapter.socket;
             CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED});
@@ -111,7 +111,7 @@ AFRAME.registerSystem('research-manager', {
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             //no new trial yet so will do nothing
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
+            CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -128,9 +128,7 @@ AFRAME.registerSystem('research-manager', {
                                 targets_depth:    data.targets_depth,
                                 targets_radius:   data.targets_radius
                               };
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
-
-            console.log(compData);
+            CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', compData);
 
             //send start timer
             const eData = CIRCLES.RESEARCH.createExpData();
@@ -151,7 +149,7 @@ AFRAME.registerSystem('research-manager', {
             //researcher sent this so ignore
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:false, visible_select_target:false});
+            CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {visible_look_target:false, visible_select_target:false});
           }
           else {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
@@ -169,7 +167,7 @@ AFRAME.registerSystem('research-manager', {
                                 targets_depth:    data.targets_depth,
                                 targets_radius:   data.targets_radius
                               };
-            CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
+            CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', compData);
 
             console.log(compData);
 
@@ -453,14 +451,6 @@ AFRAME.registerSystem('research-manager', {
     buttonElem.appendChild(textElem);		
 
     return buttonElem;
-  },
-  registerComponent: function (comp) {
-    this.registeredComponents.push(comp);
-  },
-
-  unregisterComponent: function (comp) {
-    var index = this.registeredComponents.indexOf(comp);
-    this.registeredComponents.splice(index, 1);
   }
 });
 
@@ -471,7 +461,6 @@ AFRAME.registerComponent('research-manager', {
     },
   init: function () {
     const CONTEXT_COMP = this;
-    CONTEXT_COMP.system.registerComponent(CONTEXT_COMP);
 
     const player1 = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
     player1.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
