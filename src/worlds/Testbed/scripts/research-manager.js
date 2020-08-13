@@ -105,6 +105,18 @@ AFRAME.registerSystem('research-manager', {
           console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
         }
         break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //researcher sent this so ignore
+          }
+          else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+            //no new trial yet so will do nothing
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', {visible_look_target:true, visible_select_target:true});
+          }
+          else {
+              console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
+          }
+        }
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
             //researcher sent this so ignore
@@ -131,23 +143,35 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
-          //set up targets
-          const compData = {  target_active:    'FT_' + data.target_active,
-                              targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
-                              targets_width:    data.targets_width,
-                              targets_depth:    data.targets_depth,
-                              targets_radius:   data.targets_radius
-                            };
-          CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
 
-          //send start timer
-          const eData = CIRCLES.RESEARCH.createExpData();
-          eData.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-          eData.exp_id         = CONTEXT_COMP.experimentID;
-          eData.user_id        = CONTEXT_COMP.socket.id;
-          eData.user_type      = CONTEXT_COMP.userType;
+          console.log(data);
 
-          CONTEXT_COMP.sendSelectExpData(eData);
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //researcher sent this so ignore
+          }
+          else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
+            const compData = {  target_active:    'FT_' + data.target_active,
+                                targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
+                                targets_width:    data.targets_width,
+                                targets_depth:    data.targets_depth,
+                                targets_radius:   data.targets_radius
+                              };
+            CONTEXT_COMP.el.setAttribute('research-selection-tasks', compData);
+
+            console.log(compData);
+
+            //send start timer
+            const eData = CIRCLES.RESEARCH.createExpData();
+            eData.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
+            eData.exp_id         = CONTEXT_COMP.experimentID;
+            eData.user_id        = CONTEXT_COMP.socket.id;
+            eData.user_type      = CONTEXT_COMP.userType;
+
+            CONTEXT_COMP.sendSelectExpData(eData);
+          }
+          else {
+              console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
+          }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
@@ -167,6 +191,10 @@ AFRAME.registerSystem('research-manager', {
       console.warn('RESEARCH DATA CAPTURE:  type[' + data.event_type + '], experiment id[' + data.exp_id + '], timeStamp[' + new Date().toISOString()  + ']');
 
       switch (data.event_type) {
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
+          CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
+        }
+        break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, data);
         }
@@ -279,30 +307,65 @@ AFRAME.registerSystem('research-manager', {
         CONTEXT_COMP.showButton(buttonElem_hide, true);
         CONTEXT_COMP.showButton(buttonElem_show, false);
 
+        //toggle controls
+        let buttonElem_prep   = null;
+        let buttonElem_start  = null;
+        let buttonElem_stop   = null;
+
         //start experiment
-        buttonElem = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:0.0, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
+        buttonElem_prep = CONTEXT_COMP.createBasicButton('prepare_experiment', 'prepare experiment', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)', true);
+        buttonElem_prep.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        buttonElem_prep.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
-          const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
+
+          CONTEXT_COMP.showButton(buttonElem_prep,  false);
+          CONTEXT_COMP.showButton(buttonElem_start, true);
+          CONTEXT_COMP.showButton(buttonElem_stop,  false);
+
+          const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           data.and = CONTEXT_COMP.expScript;
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        researchControls.appendChild(buttonElem);
+        avatarCam.appendChild(buttonElem_prep);
+
+        //start experiment
+        buttonElem_start = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)', true);
+        buttonElem_start.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        buttonElem_start.addEventListener('click', (e) => { 
+          console.log('click - ' + e.srcElement.id);
+
+          CONTEXT_COMP.showButton(buttonElem_prep,  false);
+          CONTEXT_COMP.showButton(buttonElem_start, false);
+          CONTEXT_COMP.showButton(buttonElem_stop,  true);
+
+          const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
+          CONTEXT_COMP.sendSelectExpData(data);
+        });
+        avatarCam.appendChild(buttonElem_start);
 
         //stop experiment
-        buttonElem = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.11, z:0.0});
-        buttonElem.addEventListener('click', (e) => {
+        buttonElem_stop = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)', true);
+        buttonElem_stop.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        buttonElem_stop.addEventListener('click', (e) => {
           console.log('click - ' + e.srcElement.id);
+
+          CONTEXT_COMP.showButton(buttonElem_prep,  true);
+          CONTEXT_COMP.showButton(buttonElem_start, false);
+          CONTEXT_COMP.showButton(buttonElem_stop,  false);
+
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        researchControls.appendChild(buttonElem);
+        avatarCam.appendChild(buttonElem_stop);
+
+        //hide/show these buttons accordingly
+        CONTEXT_COMP.showButton(buttonElem_prep,  true);
+        CONTEXT_COMP.showButton(buttonElem_start, false);
+        CONTEXT_COMP.showButton(buttonElem_stop,  false);
 
         //visual state - normal
         buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
+        buttonElem.setAttribute('position', {x:0.0, y:-0.19, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id); 
         });
@@ -310,7 +373,7 @@ AFRAME.registerSystem('research-manager', {
 
         //visual state - ghost
         buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
+        buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id); 
         });
@@ -318,7 +381,7 @@ AFRAME.registerSystem('research-manager', {
 
         //visual state - invisible
         buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
+        buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
         });
@@ -326,7 +389,7 @@ AFRAME.registerSystem('research-manager', {
 
         //button for downloading research data later
         buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.63, z:0.0});
+        buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
         buttonElem.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
         });

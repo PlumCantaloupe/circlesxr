@@ -285,16 +285,26 @@ io.on("connection", socket => {
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           researchUtils.startExperiment(data);
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
+          //start trials
 
           //send out new trial
           const newData = researchUtils.getNextTrial();
+
+          console.log(newData);
+
           newData.event_type  = data.event_type
           newData.exp_id      = data.exp_id
           newData.user_id     = data.user_id
           newData.user_type   = data.user_type
+
+          console.log(newData);
+          
           socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
         break;
@@ -311,12 +321,12 @@ io.on("connection", socket => {
           researchUtils.stopSelection(data);
 
           //send out new trial
-          const newData = researchUtils.getNextTrial();
-          newData.event_type  = data.event_type
-          newData.exp_id      = data.exp_id
-          newData.user_id     = data.user_id
-          newData.user_type   = data.user_type
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          // const newData = researchUtils.getNextTrial();
+          // newData.event_type  = data.event_type
+          // newData.exp_id      = data.exp_id
+          // newData.user_id     = data.user_id
+          // newData.user_type   = data.user_type
+          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
