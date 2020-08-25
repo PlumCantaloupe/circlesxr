@@ -129,8 +129,7 @@ router
   .get('/rooms/:room_id/world/:world_id', authenticated, roomController.serveWorld);
 
 //magic links for students
-router
-  .get('/magic-links', authenticated, controller.serveMagicLinks);
+router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 
 // Lets Encrypt
 router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);

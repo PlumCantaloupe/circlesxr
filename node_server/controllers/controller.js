@@ -22,12 +22,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-exports.generateAuthLink = (email) => {
-  const date = new Date();
-  date.setMinutes(date().getMinutes() + CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES);
-  return 'https://www.circlesxr.com/account?token=' + jwt.sign({email:email, expiration:date}, env.JWT_SECRET);
-};
-
 exports.letsEncrypt = function (req, res, next) {
   let key = req.params.challengeHash;
   let val = null;
@@ -479,8 +473,16 @@ exports.serveExplore = (req, res, next) => {
   });
 };
 
-exports.serveMagicLinks = (req, res, next) => {
-  res.json({message:"testing"});
+exports.generateAuthLink = (email) => {
+  const token = jwt.sign({exp:Math.floor(Date.now() / 1000) + (60 * CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES), data:email}, env.JWT_SECRET); //expects seconds as "exp"iration
+  return 'https://www.circlesxr.com/account?token=' + token;
+};
+
+exports.getMagicLinks = (req, res, next) => {
+  const data = {accounts:[]};
+  data.accounts.push({username:'student1', email:'student1@test.ca', magicLink:exports.generateAuthLink('student1@test.ca')});
+  // data.accounts.push({username:'student1', email:'student1@test.ca', magicLink:'tada'});
+  res.json( data );
 };
 
 const addTestUsers = () => {

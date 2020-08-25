@@ -88,7 +88,7 @@ function createMagicLinks(url) {
   console.log('CREATE LINKS!!!');
   
   let request = new XMLHttpRequest();
-  request.open('GET', '/magic-links');
+  request.open('GET', '/get-magic-links');
   request.responseType = 'text';
 
   request.onload = function() {
