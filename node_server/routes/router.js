@@ -128,6 +128,10 @@ router
 router
   .get('/rooms/:room_id/world/:world_id', authenticated, roomController.serveWorld);
 
+//magic links for students
+router
+  .get('/magic-links', authenticated, controller.serveMagicLinks);
+
 // Lets Encrypt
 router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);
 

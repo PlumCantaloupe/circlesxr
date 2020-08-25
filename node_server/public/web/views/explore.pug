@@ -4,28 +4,66 @@ block append stylesheets
   link(rel="stylesheet" type="text/css" href="/web/css/vendor/color-picker.css")
 
 block content
-  h2 Test Worlds
-  div(class="pure-menu pure-menu-horizontal gutter-bottom-doubled")
-    ul
-      li
-        if userInfo.userType === 'Researcher'
-          input(type='button' class="pure-menu-link" value='Copy Magic Links' onclick='copyMagicLinks(\'/rooms/explore/world/TestWorld\')')
-        a(href='/rooms/explore/world/TestWorld' class="pure-menu-link") Basic Example
-      li
-        a(href='/rooms/explore/world/Wardrobe' class="pure-menu-link") Wardrobe Test
-      li
-        a(href='/rooms/explore/world/Testbed' class="pure-menu-link") Research Room
-      li
-        a(href='/rooms/explore/world/hub' class="pure-menu-link") Hub: The Fire
-      li
-        a(href='/rooms/explore/world/VD_1_Salon' class="pure-menu-link") Viola Desmond, Act 1: The Salon
-      li
-        a(href='/rooms/explore/world/VD_2_Theatre' class="pure-menu-link") Viola Desmond, Act 2: The Roseland Theatre
-      li
-        a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-menu-link") Viola Desmond, Act 3: The Province House
-      li
-        a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-menu-link") Women in Trades, Act 1: Kitchen (In progress)
-      li
-        a(href='/rooms/explore/world/WIT_2_Lab' class="pure-menu-link") Women in Trades, Act 2: Lab
-      li
-        a(href='/rooms/explore/world/WIT_3_Work' class="pure-menu-link") Women in Trades, Act 3: Work (To be done)
+  h2 Circles' Worlds
+  div(class="gutter-bottom-doubled")
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Hubs</span>
+      ul(class="pure-menu-list")
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/hub\')')
+          a(href='/rooms/explore/world/hub' class="pure-button") <strong>Visit:</strong> The Fire
+
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Viola Desmond, Canadian Civil Rights Pioneer</span>
+      ul(class="pure-menu-list")
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_1_Salon\')')
+          a(href='/rooms/explore/world/VD_1_Salon' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 1: The Salon
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_2_Theatre\')')
+          a(href='/rooms/explore/world/VD_2_Theatre' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 2: The Roseland Theatre
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_3_ProvinceHouse\')')
+          a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 3: The Province House
+
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
+      ul(class="pure-menu-list")
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_1_Kitchen\')')
+          a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 1: Kitchen (In progress)
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_2_Lab\')')
+          a(href='/rooms/explore/world/WIT_2_Lab' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 2: Lab
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_3_Work\')')
+          a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 3: Work (To be done)
+
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">For Testing</span>
+      ul(class="pure-menu-list")
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/TestWorld\')')
+          a(href='/rooms/explore/world/TestWorld' class="pure-button") <strong>Visit:</strong> Basic Example
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/Wardrobe\')')
+          a(href='/rooms/explore/world/Wardrobe' class="pure-button") <strong>Visit:</strong> Wardrobe Test
+        li
+          if userInfo.userType === 'Researcher'
+            input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/Testbed\')')
+          a(href='/rooms/explore/world/Testbed' class="pure-button") <strong>Visit:</strong> Research Room
+
+  div(id="MagicLinksWrapper" class="gutter-bottom-doubled")
+    h3 Magic Links for Students
+    p Below you will find generated "magic links" for each student. Just copy and send eacvh link to each student to automatically log them in. <em>Note these links expire in <span id='countdownElem' style='color:#0078e7; font-weight:bold;'>10 minutes</span></em>.
+    div(id="MagicLinksContent" class="gutter-bottom-doubled")
+      p TEST TESTING

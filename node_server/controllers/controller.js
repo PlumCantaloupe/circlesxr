@@ -469,20 +469,11 @@ exports.serveExplore = (req, res, next) => {
     title: "Explore Worlds",
     userInfo: userInfo
   });
-
-  // res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
-  //   title: `Welcome ${user.username}`,
-  //   userInfo: userInfo,
-  //   userOptions: userOptions,
-  //   userRooms: results[5]
-  // });
 };
 
-// exports.serveExplore = (req, res, next) => {
-  // res.render(path.resolve(__dirname + '/../public/web/views/explore'), {
-  //   title: "Explore worlds",
-  // });
-// };
+exports.serveMagicLinks = (req, res, next) => {
+  res.json({message:"testing"});
+};
 
 const addTestUsers = () => {
   let usersToAdd = new Array();
