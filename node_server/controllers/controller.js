@@ -436,10 +436,53 @@ exports.addAllTestData = (req, res, next) => {
 };
 
 exports.serveExplore = (req, res, next) => {
+  // Route now authenticates and ensures a user is logged in by this point
+  let user = req.user;
+
+  const queryChecks = [
+    user.gltf_head_url,
+    user.gltf_hair_url,
+    user.gltf_body_url,
+    user.gltf_hand_left_url,
+    user.gltf_hand_right_url,
+  ];
+
+  const userInfo = {
+    userName: user.username,
+    userType: user.usertype,
+    firstName: user.firstname,
+    lastName: user.lastname,
+    email: user.email,
+    headUrl: user.gltf_head_url,
+    hairUrl: user.gltf_hair_url,
+    bodyUrl: user.gltf_body_url,
+    handLeftUrl: user.gltf_hand_left_url,
+    handRightUrl: user.gltf_hand_right_url,
+    headColor: user.color_head,
+    hairColor: user.color_hair,
+    bodyColor: user.color_body,
+    handLeftColor: user.color_hand_left,
+    handRightColor: user.color_hand_right,
+  }
+
   res.render(path.resolve(__dirname + '/../public/web/views/explore'), {
-    title: "Explore worlds",
+    title: "Explore Worlds",
+    userInfo: userInfo
   });
+
+  // res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
+  //   title: `Welcome ${user.username}`,
+  //   userInfo: userInfo,
+  //   userOptions: userOptions,
+  //   userRooms: results[5]
+  // });
 };
+
+// exports.serveExplore = (req, res, next) => {
+  // res.render(path.resolve(__dirname + '/../public/web/views/explore'), {
+  //   title: "Explore worlds",
+  // });
+// };
 
 const addTestUsers = () => {
   let usersToAdd = new Array();

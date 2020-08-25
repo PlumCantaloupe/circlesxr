@@ -8,6 +8,8 @@ block content
   div(class="pure-menu pure-menu-horizontal gutter-bottom-doubled")
     ul
       li
+        if userInfo.userType === 'Researcher'
+          input(type='button' class="pure-menu-link" value='Copy Magic Links' onclick='copyMagicLinks(\'/rooms/explore/world/TestWorld\')')
         a(href='/rooms/explore/world/TestWorld' class="pure-menu-link") Basic Example
       li
         a(href='/rooms/explore/world/Wardrobe' class="pure-menu-link") Wardrobe Test
