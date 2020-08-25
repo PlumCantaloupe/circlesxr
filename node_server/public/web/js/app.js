@@ -100,7 +100,7 @@ function createMagicLinks(url) {
 
 function showMagicLinks(data) {
   //start timer
-  startCoundown(10 * 60000, 'countdownElem');
+  startCoundown(CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES * 60000, 'countdownElem');
 
   console.log('SHOW MAGIC LINKS');
   console.log(data);

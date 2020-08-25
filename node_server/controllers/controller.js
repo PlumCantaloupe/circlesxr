@@ -10,6 +10,8 @@ const fs       = require('fs');
 const crypto   = require('crypto');
 const dotenv   = require('dotenv');
 const dotenvParseVariables = require('dotenv-parse-variables');
+const jwt      = require('jsonwebtoken');
+const { CONSTANTS } = require('../../src/core/circles_research');
 
 //load in config
 let env = dotenv.config({})
@@ -19,6 +21,12 @@ if (env.error) {
 
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
+
+exports.generateAuthLink = (email) => {
+  const date = new Date();
+  date.setMinutes(date().getMinutes() + CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES);
+  return 'https://www.circlesxr.com/account?token=' + jwt.sign({email:email, expiration:date}, env.JWT_SECRET);
+};
 
 exports.letsEncrypt = function (req, res, next) {
   let key = req.params.challengeHash;
