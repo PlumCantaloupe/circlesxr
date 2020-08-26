@@ -482,9 +482,6 @@ exports.generateAuthLink = (email, baseURL) => {
     expiresIn: CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES + 'm',
   }
 
-  console.log(baseURL);
-  console.log('PPPPPPPPPPPP');
-
   const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
   return baseURL + '/magic-login?token=' + token;
 };
@@ -498,8 +495,6 @@ exports.getMagicLinks = (req, res, next) => {
       res.send(error);
     }
     for (let i = 0; i < data.length; i++) {
-      console.log(baseURL);
-      console.log('OOOOOOOOO');
       allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL)});
 
       if (i === data.length - 1 ) {
