@@ -10,57 +10,57 @@ block content
     <span class="pure-menu-heading">Hubs</span>
       ul(class="pure-menu-list")
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/hub\')')
-          a(href='/rooms/explore/world/hub' class="pure-button") <strong>Visit:</strong> The Fire
+          a(href='/rooms/explore/world/hub' class="pure-button") The Fire
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">Viola Desmond, Canadian Civil Rights Pioneer</span>
       ul(class="pure-menu-list")
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_1_Salon\')')
-          a(href='/rooms/explore/world/VD_1_Salon' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 1: The Salon
+          a(href='/rooms/explore/world/VD_1_Salon' class="pure-button") Viola Desmond, Act 1: The Salon
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_2_Theatre\')')
-          a(href='/rooms/explore/world/VD_2_Theatre' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 2: The Roseland Theatre
+          a(href='/rooms/explore/world/VD_2_Theatre' class="pure-button") Viola Desmond, Act 2: The Roseland Theatre
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/VD_3_ProvinceHouse\')')
-          a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-button") <strong>Visit:</strong> Viola Desmond, Act 3: The Province House
+          a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-button") Viola Desmond, Act 3: The Province House
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
       ul(class="pure-menu-list")
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_1_Kitchen\')')
-          a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 1: Kitchen (In progress)
+          a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-button") Women in Trades, Act 1: Kitchen (In progress)
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_2_Lab\')')
-          a(href='/rooms/explore/world/WIT_2_Lab' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 2: Lab
+          a(href='/rooms/explore/world/WIT_2_Lab' class="pure-button") Women in Trades, Act 2: Lab
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/WIT_3_Work\')')
-          a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") <strong>Visit:</strong> Women in Trades, Act 3: Work (To be done)
+          a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") Women in Trades, Act 3: Work (To be done)
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
       ul(class="pure-menu-list")
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/TestWorld\')')
-          a(href='/rooms/explore/world/TestWorld' class="pure-button") <strong>Visit:</strong> Basic Example
+          a(href='/rooms/explore/world/TestWorld' class="pure-button") Basic Example
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/Wardrobe\')')
-          a(href='/rooms/explore/world/Wardrobe' class="pure-button") <strong>Visit:</strong> Wardrobe Test
+          a(href='/rooms/explore/world/Wardrobe' class="pure-button") Wardrobe Test
         li
-          if userInfo.userType === 'Researcher'
+          if userInfo.userType === CIRCLES.USER_TYPE.TEACHER
             input(type='button' class="pure-button pure-button-primary" value='Create Student Links' onclick='createMagicLinks(\'/rooms/explore/world/Testbed\')')
-          a(href='/rooms/explore/world/Testbed' class="pure-button") <strong>Visit:</strong> Research Room
+          a(href='/rooms/explore/world/Testbed' class="pure-button") Research Room
 
   div(id="MagicLinksWrapper" class="gutter-bottom-doubled")
     h3 Student Links for "Magic" Automatic Login

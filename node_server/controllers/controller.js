@@ -39,8 +39,9 @@ exports.letsEncrypt = function (req, res, next) {
 
 exports.getAllUsers = function(req, res, next) {
   User.find({}, function(error, data) {
-    if (error)
+    if (error) {
       res.send(error);
+    }
     res.json(data);
   });
 };
@@ -479,14 +480,29 @@ exports.generateAuthLink = (email) => {
 };
 
 exports.getMagicLinks = (req, res, next) => {
-  const data = {accounts:[]};
-  data.accounts.push({username:'student1', email:'student1@test.ca', magicLink:exports.generateAuthLink('student1@test.ca')});
+  let allAccounts = [];
+  allAccounts.push({username:'student1', email:'student1@test.ca', magicLink:exports.generateAuthLink('student1@test.ca')});
   // data.accounts.push({username:'student1', email:'student1@test.ca', magicLink:'tada'});
-  res.json( data );
+
+  User.find({usertype:CIRCLES.USER_TYPE.STUDENT}, function(error, data) {
+    if (error) {
+      res.send(error);
+    }
+    for (let i = 0; i < data.length; i++) {
+      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email)});
+
+      if (i === data.length - 1 ) {
+        res.json(allAccounts);
+      }
+    }
+  });
 };
 
 const addTestUsers = () => {
-  let usersToAdd = new Array();
+  let usersToAdd  = [];
+  let tenColors   = [ CIRCLES.COLOR_PALETTE.PEARL, CIRCLES.COLOR_PALETTE.TURQUOISE, CIRCLES.COLOR_PALETTE.EMERALD, CIRCLES.COLOR_PALETTE.RIVER, CIRCLES.COLOR_PALETTE.AMETHYST,
+                      CIRCLES.COLOR_PALETTE.ASPHALT, CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.CARROT, CIRCLES.COLOR_PALETTE.MANDARIN, CIRCLES.COLOR_PALETTE.OCEAN];
+  let threeColors = [CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.AMETHYST, CIRCLES.COLOR_PALETTE.RIVER];
 
   usersToAdd.push({
     username:               'Teacher1',
@@ -527,11 +543,11 @@ const addTestUsers = () => {
   });
 
   usersToAdd.push({
-    username:               'Student1',
-    usertype:               CIRCLES.USER_TYPE.STUDENT,
-    firstname:              'Student',
+    username:               'Tester1',
+    usertype:               CIRCLES.USER_TYPE.TESTER,
+    firstname:              'Tester',
     lastname:               '1',
-    email:                  'student1@test.ca',
+    email:                  'tester1@test.ca',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
@@ -546,11 +562,11 @@ const addTestUsers = () => {
   });
 
   usersToAdd.push({
-    username:               'Student2',
-    usertype:               CIRCLES.USER_TYPE.STUDENT,
-    firstname:              'Student',
+    username:               'Tester2',
+    usertype:               CIRCLES.USER_TYPE.TESTER,
+    firstname:              'Tester',
     lastname:               '2',
-    email:                  'student2@test.ca',
+    email:                  'tester2@test.ca',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
@@ -565,11 +581,11 @@ const addTestUsers = () => {
   });
 
   usersToAdd.push({
-    username:               'Student3',
-    usertype:               CIRCLES.USER_TYPE.STUDENT,
-    firstname:              'Student',
+    username:               'Tester3',
+    usertype:               CIRCLES.USER_TYPE.TESTER,
+    firstname:              'Tester',
     lastname:               '3',
-    email:                  'student3@test.ca',
+    email:                  'tester3@test.ca',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Jaw.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Curly.glb',
@@ -583,62 +599,49 @@ const addTestUsers = () => {
     color_hand_left:        'rgb(237, 194, 122)',
   });
 
-  usersToAdd.push({
-    username:               'Participant1',
-    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
-    firstname:              'Participant',
-    lastname:               '1',
-    email:                  'participant1@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
-    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
-    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
-    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
-    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
-    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
-    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
-    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
-    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
-    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.SUNFLOWER.r + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.g + ',' + CIRCLES.COLOR_PALETTE.SUNFLOWER.b + ')',
-  });
+  //add students
+  for (let i = 0; i < tenColors.length; i++) {
+    usersToAdd.push({
+      username:               'Student' + i,
+      usertype:               CIRCLES.USER_TYPE.STUDENT,
+      firstname:              'Student',
+      lastname:               i,
+      email:                  'student' + i + '@test.ca',
+      password:               env.DEFAULT_PASSWORD,
+      gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+      gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+      gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+      gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+      gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+      color_head:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
+      color_hair:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
+      color_body:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
+      color_hand_right:       'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
+      color_hand_left:        'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
+    });
+  }
 
-  usersToAdd.push({
-    username:               'Participant2',
-    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
-    firstname:              'Participant',
-    lastname:               '2',
-    email:                  'participant2@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
-    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
-    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
-    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
-    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
-    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
-    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
-    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
-    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
-    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.AMETHYST.r + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.g + ',' + CIRCLES.COLOR_PALETTE.AMETHYST.b + ')',
-  });
-
-  usersToAdd.push({
-    username:               'Participant3',
-    usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
-    firstname:              'Participant',
-    lastname:               '3',
-    email:                  'participant3@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
-    gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
-    gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
-    gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
-    gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
-    color_head:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
-    color_hair:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
-    color_body:             'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
-    color_hand_right:       'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
-    color_hand_left:        'rgb(' + CIRCLES.COLOR_PALETTE.RIVER.r + ',' + CIRCLES.COLOR_PALETTE.RIVER.g + ',' + CIRCLES.COLOR_PALETTE.RIVER.b + ')',
-  });
+  //add students
+  for (let i = 0; i < threeColors.length; i++) {
+    usersToAdd.push({
+      username:               'Participant' + i,
+      usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
+      firstname:              'Participant',
+      lastname:               i,
+      email:                  'participant' + i + '@test.ca',
+      password:               env.DEFAULT_PASSWORD,
+      gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+      gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+      gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+      gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+      gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+      color_head:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hair:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_body:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hand_right:       'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hand_left:        'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+    });
+  }
 
   for (let i = 0; i < usersToAdd.length; i++) {
     User.findOne(usersToAdd[i], function(error, data) {
