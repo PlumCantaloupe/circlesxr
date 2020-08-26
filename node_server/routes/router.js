@@ -50,6 +50,29 @@ router.post('/login',  passport.authenticate('local', {
   successRedirect: '/explore',
   failureRedirect: '/'
 }));
+
+//magic links for students
+router.get('/get-magic-links', authenticated, controller.getMagicLinks);
+
+//token login
+router.get('/magic-login',
+  (req, res, next) => {
+    const { incorrectToken, token } = req.query;
+
+    if (token) {
+      next();
+    } else {
+      res.render('login', {
+        incorrectToken: incorrectToken === 'true',
+      })
+    }
+  },
+  passport.authenticate('jwt', {
+    successRedirect: '/explore',
+    failureRedirect: '/',
+  })
+)
+
 // TODO: Get flash messages to work on login failure
 
 // Ensure a user is authenticated before hitting logout
@@ -127,9 +150,6 @@ router
 // Room Worlds
 router
   .get('/rooms/:room_id/world/:world_id', authenticated, roomController.serveWorld);
-
-//magic links for students
-router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 
 // Lets Encrypt
 router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);

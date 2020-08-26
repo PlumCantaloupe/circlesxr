@@ -474,22 +474,33 @@ exports.serveExplore = (req, res, next) => {
   });
 };
 
-exports.generateAuthLink = (email) => {
-  const token = jwt.sign({exp:Math.floor(Date.now() / 1000) + (60 * CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES), data:email}, env.JWT_SECRET); //expects seconds as "exp"iration
-  return 'https://www.circlesxr.com/account?token=' + token;
+exports.generateAuthLink = (email, baseURL) => {
+  const jwtOptions = {
+    issuer: 'circlesxr.com',
+    audience: 'circlesxr.com',
+    algorithm: 'HS256',
+    expiresIn: CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES + 'm',
+  }
+
+  console.log(baseURL);
+  console.log('PPPPPPPPPPPP');
+
+  const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
+  return baseURL + '/magic-login?token=' + token;
 };
 
 exports.getMagicLinks = (req, res, next) => {
   let allAccounts = [];
-  allAccounts.push({username:'student1', email:'student1@test.ca', magicLink:exports.generateAuthLink('student1@test.ca')});
-  // data.accounts.push({username:'student1', email:'student1@test.ca', magicLink:'tada'});
+  const baseURL = req.protocol + '://' + req.get('host');
 
   User.find({usertype:CIRCLES.USER_TYPE.STUDENT}, function(error, data) {
     if (error) {
       res.send(error);
     }
     for (let i = 0; i < data.length; i++) {
-      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email)});
+      console.log(baseURL);
+      console.log('OOOOOOOOO');
+      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL)});
 
       if (i === data.length - 1 ) {
         res.json(allAccounts);
