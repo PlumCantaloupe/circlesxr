@@ -119,11 +119,12 @@ const jwtOptions = {
   secretOrKey: env.JWT_SECRET, //the same one we used for token generation
   algorithms: 'HS256', //the same one we used for token generation
   jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token'), //how we want to extract token from the request
+  passReqToCallback: true
 };
 
 passport.use(
   'jwt',
-  new JwtStrategy(jwtOptions, (token, done) => {
+  new JwtStrategy(jwtOptions, (req, token, done) => {
     const email = token.data
     User.findOne({ email: email })
       .exec(function (err, user) {

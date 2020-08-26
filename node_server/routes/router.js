@@ -55,23 +55,34 @@ router.post('/login',  passport.authenticate('local', {
 router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 
 //token login
-router.get('/magic-login',
-  (req, res, next) => {
-    const { incorrectToken, token } = req.query;
+// router.get('/magic-login',
+//   (req, res, next) => {
+//     const { incorrectToken, token } = req.query;
 
-    if (token) {
-      next();
-    } else {
-      res.render('login', {
-        incorrectToken: incorrectToken === 'true',
-      })
-    }
-  },
-  passport.authenticate('jwt', {
-    successRedirect: '/explore',
-    failureRedirect: '/',
-  })
-)
+//     if (token) {
+//       next();
+//     } else {
+//       res.render('login', {
+//         incorrectToken: incorrectToken === 'true',
+//       })
+//     }
+//   },
+//   passport.authenticate('jwt', {
+//     successRedirect: '/explore',
+//     failureRedirect: '/',
+//   })
+// );
+
+router.get('/magic-login', function(req, res, next) {
+  passport.authenticate('jwt', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect(req.query.route);
+    });
+  })(req, res, next);
+});
 
 // TODO: Get flash messages to work on login failure
 

@@ -474,19 +474,20 @@ exports.serveExplore = (req, res, next) => {
   });
 };
 
-exports.generateAuthLink = (email, baseURL) => {
+exports.generateAuthLink = (email, baseURL, route) => {
   const jwtOptions = {
     issuer: 'circlesxr.com',
     audience: 'circlesxr.com',
     algorithm: 'HS256',
     expiresIn: CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES + 'm',
-  }
+  };
 
   const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
-  return baseURL + '/magic-login?token=' + token;
+  return baseURL + '/magic-login?token=' + token + '&route=' + route;
 };
 
 exports.getMagicLinks = (req, res, next) => {
+  let route = req.query.route;
   let allAccounts = [];
   const baseURL = req.protocol + '://' + req.get('host');
 
@@ -495,7 +496,7 @@ exports.getMagicLinks = (req, res, next) => {
       res.send(error);
     }
     for (let i = 0; i < data.length; i++) {
-      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL)});
+      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL, route)});
 
       if (i === data.length - 1 ) {
         res.json(allAccounts);
