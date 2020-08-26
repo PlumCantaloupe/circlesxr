@@ -98,20 +98,9 @@ function createMagicLinks(url) {
   request.send();
 }
 
-function showMagicLinks(data) {
-  //start timer
-  startCoundown(CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES * 60000, 'countdownElem');
-
-  console.log('SHOW MAGIC LINKS');
-  console.log(data);
-  //remove any existing data ...
-}
-
-function copyText(inputID) {
+function copyText(inputId, username) {
   //https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 
-  console.log('COPYING TEXT!!!');
-
-  const copyText = document.querySelector("#" + inputID);
+  const copyText = document.querySelector("#" + inputId);
 
   copyText.select();                      //select fields
   copyText.setSelectionRange(0, 99999);   //For mobile devices
@@ -119,5 +108,36 @@ function copyText(inputID) {
   document.execCommand("copy");           //copy text inside input
 
   //!!
-  alert("Copied the text: " + copyText.value);
+  alert('Copied magic link for ' + username  + ' to clipboard!');
+}
+
+function showMagicLinks(data) {
+  startCoundown(CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES * 60000, 'countdownElem'); //start visual timer
+
+  const jsonData = JSON.parse(data);
+  const menuElem = document.querySelector('#MagicLinksContent');
+  let tableStr        = '<table class=\'pure-table\'>'        
+  menuElem.setAttribute('class', 'pure-menu gutter-bottom');
+
+  tableStr += '<thead>';
+  tableStr += '<tr>';
+  tableStr += '<th>username</th>';
+  tableStr += '<th>email</th>';
+  tableStr += '<th>magic link</th>';
+  tableStr += '</tr>';
+  tableStr += '</thead>';
+  tableStr += '<tbody>';
+
+  for (let i = 0; i < jsonData.length; i++) {
+    tableStr += '<tr>';
+    tableStr += '<td>' + jsonData[i].username +  '</td>';
+    tableStr += '<td>' + jsonData[i].email +  '</td>';
+    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText("linkCopy' + i + '","' + jsonData[i].username + '")\'>';
+    tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + jsonData[i].magicLink + '\' size=\'50\' readonly></td>';
+    tableStr += '</tr>';
+  }
+
+  tableStr += '</tbody>';
+  tableStr += '</table>';
+  menuElem.innerHTML = tableStr;
 }
