@@ -12,7 +12,8 @@
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
 
-        <a-asset-item id="room" src="/worlds/VD_3_ProvinceHouse/assets/models/ProvinceHouse.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="room" src="/worlds/VD_3_ProvinceHouse/assets/models/province_house/scene.gltf"></a-asset-item>
+        <!-- <a-asset-item id="room" src="/worlds/VD_3_ProvinceHouse/assets/models/ProvinceHouse.glb" response-type="arraybuffer"></a-asset-item> -->
         <a-asset-item id="desmondDoc" src="/worlds/VD_3_ProvinceHouse/assets/models/AboutDesmond.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="desmondBill" src="/worlds/VD_3_ProvinceHouse/assets/models/DesmondBill.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="desmondStamp" src="/worlds/VD_3_ProvinceHouse/assets/models/DesmondStamp.glb" response-type="arraybuffer"></a-asset-item>
@@ -35,7 +36,7 @@
       <circles-avatar/>
 
       <!-- environment -->
-      <a-entity gltf-model="#room" scale="0.01 0.01 0.01" shadow></a-entity>
+      <a-entity gltf-model="#room" scale="0.01 0.01 0.01" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" shadow></a-entity>
 
       <!-- interactive objects -->
       <a-entity id="Artefact-DesmondDoc" 
@@ -53,7 +54,7 @@
       
       <a-entity id="Artefact-DesmondPardon"
                 class="interactive"
-                position="0.264 0.879 -6.706" rotation="-90 191.871 0" scale="0.01 0.01 0.01"
+                position="0.264 0.889 -6.706" rotation="-90 191.871 0" scale="0.01 0.01 0.01"
                 gltf-model="#freePardonDoc" 
                 shadow="receive:true; cast:true;"
                 circles-object-world="object_world:__WORLDNAME__"
@@ -66,7 +67,7 @@
       
       <a-entity id="Artefact-DesmondBill"
                 class="interactive"
-                position="2.160 0.540 -2.212" rotation="-90 200 0" scale="0.02 0.02 0.02" 
+                position="2.160 0.540 -1.876" rotation="-90 200 0" scale="0.02 0.02 0.02" 
                 gltf-model="#desmondBill"
                 shadow="receive:true; cast:true;"
                 circles-object-world="object_world:__WORLDNAME__"
