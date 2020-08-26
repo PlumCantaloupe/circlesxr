@@ -488,10 +488,11 @@ exports.generateAuthLink = (email, baseURL, route) => {
 
 exports.getMagicLinks = (req, res, next) => {
   let route = req.query.route;
+  let userTypeAsking = req.query.userTypeAsking;
   let allAccounts = [];
   const baseURL = req.protocol + '://' + req.get('host');
 
-  User.find({usertype:CIRCLES.USER_TYPE.STUDENT}, function(error, data) {
+  User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }, function(error, data) {
     if (error) {
       res.send(error);
     }

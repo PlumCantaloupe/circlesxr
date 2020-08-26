@@ -84,12 +84,9 @@ function startCoundown(numMS, textId) {
 
 
 //*********** magic links button functionality */
-function createMagicLinks(url) {
-  console.log('CREATE LINKS!!!');
-  console.log(url);
-  
+function createMagicLinks(url, userTypeAsking) {
   let request = new XMLHttpRequest();
-  request.open('GET', '/get-magic-links?route=' + url);
+  request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking);
   request.responseType = 'text';
 
   request.onload = function() {
