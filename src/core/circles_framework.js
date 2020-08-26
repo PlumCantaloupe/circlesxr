@@ -35,6 +35,7 @@ const USER_TYPE = {
   TEACHER     : 'Teacher',
   RESEARCHER  : 'Researcher',
   PARTICIPANT : 'Participant',
+  TESTER      : 'TESTER',
   NONE        : 'NONE',
 };
 
@@ -66,7 +67,8 @@ const COLOR_PALETTE = {
   ASPHALT   : {r:51,   g:73,   b:96},
   SUNFLOWER : {r:243,  g:201,  b:3},
   CARROT    : {r:233,  g:126,  b:1},
-  MANDARIN  : {r:233,  g:65,   b:4}
+  MANDARIN  : {r:233,  g:65,   b:4},
+  OCEAN     : {r:30,   g:100,  b:230}
 };
 
 //from here: https://gist.github.com/jed/92883

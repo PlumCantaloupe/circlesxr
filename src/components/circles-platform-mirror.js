@@ -32,17 +32,19 @@ AFRAME.registerComponent('circles-platform-mirror', {
                                                   });
     }
     else if (AFRAME.utils.device.isMobileVR()) {
-      this.el.setAttribute('aframe-mirror', { 
-                                                    textureOne:this.data.textureOne, 
-                                                    textureTwo:this.data.textureTwo, 
-                                                    wrapOne:this.data.wrapOne, 
-                                                    wrapTwo:this.data.wrapTwo, 
-                                                    color:this.data.color, 
-                                                    intensity:this.data.intensity, 
-                                                    blendIntensity:this.data.blendIntensity, 
-                                                    textureWidth:this.data.textureSizeHMD, 
-                                                    textureHeight:this.data.textureSizeHMD
-                                                  });
+      //mirrors broken on Quest currently
+      this.el.removeAttribute('geometry');
+      // this.el.setAttribute('aframe-mirror', { 
+      //                                               textureOne:this.data.textureOne, 
+      //                                               textureTwo:this.data.textureTwo, 
+      //                                               wrapOne:this.data.wrapOne, 
+      //                                               wrapTwo:this.data.wrapTwo, 
+      //                                               color:this.data.color, 
+      //                                               intensity:this.data.intensity, 
+      //                                               blendIntensity:this.data.blendIntensity, 
+      //                                               textureWidth:this.data.textureSizeHMD, 
+      //                                               textureHeight:this.data.textureSizeHMD
+      //                                             });
     }
     else {
       //Desktop

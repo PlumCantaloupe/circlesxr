@@ -16,7 +16,7 @@ constantly evolve as the research dictates how users will interact with each
 other in variable VR space. Our current focus is within both the formal (classroom) and
 informal (museums) educational contexts; but we  aim to keep the framework flexible where possible to allow for greater creativity.
 
-[More information on Circles](http://portfolio.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)
+**[Click here for more information on Circles and its progress, research, and development](https://www.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)**
 
 ### The (3) main goals for **CIRCLES** are as follows:
 

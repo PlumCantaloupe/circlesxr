@@ -111,6 +111,30 @@ if (env.MAKE_SSL) {
 const passport              = require('passport');
 const passportLocalStrategy = require('passport-local').Strategy;
 
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
+const jwtOptions = {
+  secretOrKey: env.JWT_SECRET, //the same one we used for token generation
+  algorithms: 'HS256', //the same one we used for token generation
+  jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token'), //how we want to extract token from the request
+  passReqToCallback: true
+};
+
+passport.use(
+  'jwt',
+  new JwtStrategy(jwtOptions, (req, token, done) => {
+    const email = token.data
+    User.findOne({ email: email })
+      .exec(function (err, user) {
+        if (user) {
+          done(null, user)
+        } else {
+          done(null, false)
+        }
+      });
+  })
+);
+
 // Build the passport local strategy for authentication
 passport.use(new passportLocalStrategy (
   {
