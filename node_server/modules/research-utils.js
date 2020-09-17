@@ -84,7 +84,9 @@ const unpauseExperiment = (data) => {
 };
 
 const stopExperiment = (data) => {
-    experimentInProgress = false;
+    experimentInProgress    = false;
+    trials                  = [];
+    currTrialIndex          = -1
 };
 
 const startSelection = (data) => {
