@@ -1,10 +1,36 @@
 
+const fs    = require('fs')
+
 let experimentInProgress    = false;
 let trials                  = [];
 let currTrialIndex          = -1;
 let startSelectTime         = 0;
+let logger                  = null;
 
 const startExperiment = (data) => {
+
+    const date = new Date();
+    const fileName =    './downloads/' + 
+                        '/FittsSelectExp__' + 
+                        date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + '_' +
+                        date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds() + 
+                        '__Data.csv';
+
+    //open stream to strat writing data to file
+    logger  = fs.createWriteStream(fileName, {
+        flags: 'a' // 'a' means appending (old data will be preserved)
+    });
+    logger.on('finish', () => {
+        console.log('file created');
+    });
+    logger.on('error', (err) => {
+        console.log(err.stack);
+    });
+
+    logger.write('expID, date, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, select_time');
+    logger.write('ll, ll, ll, ll, dd, dd, dd, dd, ff, 0.0, 0');
+    logger.end();
+
     let id, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
 
