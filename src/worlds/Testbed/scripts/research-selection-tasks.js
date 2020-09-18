@@ -76,7 +76,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
 
         if (oldData.target_active !== data.target_active) {
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.SELECT_TARGET_CLASS);
+            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
             targets.forEach( (target) => {
                 target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
                 target.object3D.userData.isActive = false;

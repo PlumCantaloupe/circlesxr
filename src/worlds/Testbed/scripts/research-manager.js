@@ -178,7 +178,6 @@ AFRAME.registerSystem('research-manager', {
             eData.exp_id         = CONTEXT_COMP.experimentID;
             eData.user_id        = CONTEXT_COMP.socket.id;
             eData.user_type      = CONTEXT_COMP.userType;
-
             CONTEXT_COMP.sendSelectExpData(eData);
           }
           else {

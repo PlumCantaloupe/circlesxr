@@ -35,6 +35,8 @@ const startExperiment = (data) => {
             exp_trials.push(null);
         }
 
+        let targetIndex = -1;
+
         //loop through all possible conditions and add a new trial randomly within trail array
         //wonder if this will perform bad :| Hopefully we can avoid threading for now ...
         for (let xRot_i = 0; xRot_i < targets_x_rots.length; xRot_i++) {
@@ -43,15 +45,20 @@ const startExperiment = (data) => {
                     for (let depth_i = 0; depth_i < targets_depths.length; depth_i++) {
                         for (let trial_i = 0; trial_i < num_trials; trial_i++) {
                             
-                            //get random index
+                            //get random index that hasn't been used yet
                             randIndex = Math.floor(Math.random() * total_exp_trials);
                             while (exp_trials[randIndex] !== null) {
                                 randIndex = Math.floor(Math.random() * total_exp_trials);
                             }
 
+                            //choose new index
+                            if (++targetIndex === targets.length) {
+                                targetIndex = 0;
+                            }
+
                             //create trial
                             const randTrial = CIRCLES.RESEARCH.createExpData();
-                            randTrial.target_active     = targets[trial_i % targets.length],    //may as well loop through all available targets. +1 as '0' is reserved for centre look target
+                            randTrial.target_active     = targets[targetIndex],    //may as well loop through all available targets.
                             randTrial.targets           = [].concat(targets);                   //all targets visible / cloning array so no weird trouble later
                             randTrial.targets_x_rot     = targets_x_rots[xRot_i];
                             randTrial.targets_y_rots    = targets_y_rots[yRot_i];
