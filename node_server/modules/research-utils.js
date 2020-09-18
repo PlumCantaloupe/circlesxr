@@ -2,6 +2,7 @@
 let experimentInProgress    = false;
 let trials                  = [];
 let currTrialIndex          = -1;
+let startSelectTime         = 0;
 
 const startExperiment = (data) => {
     let id, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
@@ -90,12 +91,12 @@ const stopExperiment = (data) => {
 };
 
 const startSelection = (data) => {
-    //start timer
+    startSelectTime = Date.now();
 };
 
 const stopSelection = (data) => {
-    //end timer
-    //write data to file
+    const timeToSelect = Date.now() - startSelectTime;
+    console.log('Time to select: ' + timeToSelect);
 };
 
 const noteSelectionError = (data) => {
