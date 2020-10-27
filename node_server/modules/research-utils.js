@@ -1,4 +1,3 @@
-
 const fs    = require('fs')
 
 let experimentInProgress    = false;
@@ -130,6 +129,11 @@ const startSelection = (data) => {
 const stopSelection = (data) => {
     const timeToSelect = Date.now() - startSelectTime;
     console.log('Time to select: ' + timeToSelect);
+    console.log(data);
+    console.log(getCurrTrial());
+
+    //create a string to add
+    //EXP_ID, USER_ID, TIME_OF_RECORD, SELECTION_TYPE, TIME_TO_COMPLETE, NUM_ERRORS, TARGET_ID, TARGETS_ROT_X, TARGETS_ROT_Y, TARGETs_DEPTH, TARGETS_WIDTH, TARGETS_RADIUS
 };
 
 const noteSelectionError = (data) => {
@@ -142,7 +146,7 @@ const getNextTrial = () => {
 };
 
 const getCurrTrial = () => {
-    return (currTrialIndex > -1) ? trials[getCurrTrialIndex] : null;
+    return (currTrialIndex > -1) ? trials[getCurrTrialIndex()] : null;
 };
 
 const getCurrTrialIndex = () => {

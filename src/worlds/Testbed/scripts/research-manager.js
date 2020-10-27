@@ -137,7 +137,6 @@ AFRAME.registerSystem('research-manager', {
             eData.exp_id         = CONTEXT_COMP.experimentID;
             eData.user_id        = CONTEXT_COMP.socket.id;
             eData.user_type      = CONTEXT_COMP.userType;
-
             CONTEXT_COMP.sendSelectExpData(eData);
           }
           else {
@@ -174,10 +173,16 @@ AFRAME.registerSystem('research-manager', {
 
             //send start timer
             const eData = CIRCLES.RESEARCH.createExpData();
-            eData.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-            eData.exp_id         = CONTEXT_COMP.experimentID;
-            eData.user_id        = CONTEXT_COMP.socket.id;
-            eData.user_type      = CONTEXT_COMP.userType;
+            eData.event_type      = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
+            eData.exp_id          = CONTEXT_COMP.experimentID;
+            eData.user_id         = CONTEXT_COMP.socket.id;
+            eData.user_type       = CONTEXT_COMP.userType;
+            eData.target_active   = data.target_active;
+            eData.targets_x_rot   = data.targets_x_rot;
+            eData.targets_y_rot   = data.targets_y_rot;
+            eData.targets_depth   = data.targets_depth;
+            eData.targets_width   = data.targets_width;
+            eData.targets_radius  = data.targets_radius;
             CONTEXT_COMP.sendSelectExpData(eData);
           }
           else {
