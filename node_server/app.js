@@ -322,8 +322,12 @@ io.on("connection", socket => {
 
           //if no new trial then all trials complete, end experiment
           if (newData === null) {
-            researchUtils.stopExperiment(data);
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+            //creating new object as data may not be valid
+            const eData         = CIRCLES.RESEARCH.createExpData();
+            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            //eData.exp_id        = CONTEXT_COMP.experimentID; (will need to make sure we can run multiple experiments on teh same server someday ..)
+            researchUtils.stopExperiment(eData);
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = data.event_type
             newData.exp_id      = data.exp_id
@@ -349,8 +353,11 @@ io.on("connection", socket => {
           //if no new trial then all trials complete, end experiment
           const newData = researchUtils.getNextTrial();
           if (newData === null) {
-            researchUtils.stopExperiment(data);
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+            const eData         = CIRCLES.RESEARCH.createExpData();
+            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            //eData.exp_id        = CONTEXT_COMP.experimentID; (will need to make sure we can run multiple experiments on teh same server someday ..)
+            researchUtils.stopExperiment(eData);
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
             newData.exp_id      = data.exp_id

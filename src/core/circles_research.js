@@ -6,6 +6,12 @@ const CONSTANTS = {
   CAPTURE_TRANSFORM_INTERVAL_MS : 500,
 };
 
+const RESEARCH_STATE = {
+  STOPPED   : "STOPPED",
+  PREPARED  : "PREPARED",
+  STARTED   : "STARTED",
+};
+
 const EXP_TYPE = {
   FITTS       : 'FITTS',
   FITTS_LOOK  : 'FITTS_LOOK'
@@ -59,6 +65,7 @@ const createExpData = (   event_type=CIRCLES.RESEARCH.EVENT_TYPE.NONE, exp_id=''
 
 module.exports = {
   CONSTANTS,
+  RESEARCH_STATE,
   EXP_TYPE,
   TARGET_TYPE,
   EVENT_FROM_SERVER,

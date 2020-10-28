@@ -107,7 +107,7 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this so ignore
+            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.PREPARED);
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             //no new trial yet so will do nothing
@@ -117,9 +117,10 @@ AFRAME.registerSystem('research-manager', {
               console.warn('unexpected usertype [' + CONTEXT_COMP.userType + '] for this world. Expecting userType [researcher] or [participant].');
           }
         }
+        break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this so ignore
+            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STARTED);
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             const compData = {  target_active:    'FT_' + data.target_active,
@@ -146,7 +147,7 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this so ignore
+            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
           }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {targets:[]});
@@ -289,20 +290,19 @@ AFRAME.registerSystem('research-manager', {
         let buttonElem_hide = null;
         let buttonElem_show = null;
 
-        const button-Hide_Clicked = () => {
+        const button_hide_clicked = () => {
 
         };
 
         buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_hide.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
-          CONTEXT_COMP.showButton(buttonElem_hide, false);
-          CONTEXT_COMP.showButton(buttonElem_show, true);
+          CONTEXT_COMP.showResearchButton(buttonElem_hide, false);
+          CONTEXT_COMP.showResearchButton(buttonElem_show, true);
           
           researchControls.querySelectorAll('.button').forEach( (button) => {
             if (button.classList.contains('auto-visible')) {
-              CONTEXT_COMP.showButton(button, false);
+              CONTEXT_COMP.showResearchButton(button, false);
             }
           });
         });
@@ -311,101 +311,81 @@ AFRAME.registerSystem('research-manager', {
         buttonElem_show = CONTEXT_COMP.createBasicButton('research_show', 'show', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_show.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_show.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
-          CONTEXT_COMP.showButton(buttonElem_hide, true);
-          CONTEXT_COMP.showButton(buttonElem_show, false);
+          CONTEXT_COMP.showResearchButton(buttonElem_hide, true);
+          CONTEXT_COMP.showResearchButton(buttonElem_show, false);
           
           researchControls.querySelectorAll('.button').forEach( (button) => {
             if (button.classList.contains('auto-visible')) {
-              CONTEXT_COMP.showButton(button, true);
+              CONTEXT_COMP.showResearchButton(button, true);
             }
           });
         });
         avatarCam.appendChild(buttonElem_show);
 
         //hide/show these buttons accordingly
-        CONTEXT_COMP.showButton(buttonElem_hide, true);
-        CONTEXT_COMP.showButton(buttonElem_show, false);
+        CONTEXT_COMP.showResearchButton(buttonElem_hide, true);
+        CONTEXT_COMP.showResearchButton(buttonElem_show, false);
 
         //toggle controls
-        let buttonElem_prep   = null;
-        let buttonElem_start  = null;
-        let buttonElem_stop   = null;
+        CONTEXT_COMP.buttonElem_prep   = null;
+        CONTEXT_COMP.buttonElem_start  = null;
+        CONTEXT_COMP.buttonElem_stop   = null;
 
-        //start experiment
-        buttonElem_prep = CONTEXT_COMP.createBasicButton('prepare_experiment', 'prepare experiment', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)', true);
-        buttonElem_prep.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
-        buttonElem_prep.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
-
-          CONTEXT_COMP.showButton(buttonElem_prep,  false);
-          CONTEXT_COMP.showButton(buttonElem_start, true);
-          CONTEXT_COMP.showButton(buttonElem_stop,  false);
-
+        //prepare experiment
+        CONTEXT_COMP.buttonElem_prep = CONTEXT_COMP.createBasicButton('prepare_experiment', 'prepare experiment', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)', true);
+        CONTEXT_COMP.buttonElem_prep.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_prep.addEventListener('click', (e) => { 
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           data.and = CONTEXT_COMP.expScript;
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(buttonElem_prep);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_prep);
 
         //start experiment
-        buttonElem_start = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)', true);
-        buttonElem_start.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
-        buttonElem_start.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
-
-          CONTEXT_COMP.showButton(buttonElem_prep,  false);
-          CONTEXT_COMP.showButton(buttonElem_start, false);
-          CONTEXT_COMP.showButton(buttonElem_stop,  true);
-
+        CONTEXT_COMP.buttonElem_start = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)', true);
+        CONTEXT_COMP.buttonElem_start.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_start.addEventListener('click', (e) => { 
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(buttonElem_start);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_start);
 
         //stop experiment
-        buttonElem_stop = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)', true);
-        buttonElem_stop.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
-        buttonElem_stop.addEventListener('click', (e) => {
-          console.log('click - ' + e.srcElement.id);
-
-          CONTEXT_COMP.showButton(buttonElem_prep,  true);
-          CONTEXT_COMP.showButton(buttonElem_start, false);
-          CONTEXT_COMP.showButton(buttonElem_stop,  false);
-
+        CONTEXT_COMP.buttonElem_stop = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)', true);
+        CONTEXT_COMP.buttonElem_stop.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_stop.addEventListener('click', (e) => {
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(buttonElem_stop);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_stop);
 
-        //hide/show these buttons accordingly
-        CONTEXT_COMP.showButton(buttonElem_prep,  true);
-        CONTEXT_COMP.showButton(buttonElem_start, false);
-        CONTEXT_COMP.showButton(buttonElem_stop,  false);
+        //set initial research state
+        CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
 
-        //visual state - normal
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.19, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
-        });
-        researchControls.appendChild(buttonElem);
+        //not using for now
+        // //visual state - normal
+        // buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
+        // buttonElem.setAttribute('position', {x:0.0, y:-0.19, z:0.0});
+        // buttonElem.addEventListener('click', (e) => { 
+        //   console.log('click - ' + e.srcElement.id); 
+        // });
+        // researchControls.appendChild(buttonElem);
 
-        //visual state - ghost
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id); 
-        });
-        researchControls.appendChild(buttonElem);
+        // //visual state - ghost
+        // buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
+        // buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
+        // buttonElem.addEventListener('click', (e) => { 
+        //   console.log('click - ' + e.srcElement.id); 
+        // });
+        // researchControls.appendChild(buttonElem);
 
-        //visual state - invisible
-        buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
-        });
-        researchControls.appendChild(buttonElem);
+        // //visual state - invisible
+        // buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
+        // buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
+        // buttonElem.addEventListener('click', (e) => { 
+        //   console.log('click - ' + e.srcElement.id);
+        // });
+        // researchControls.appendChild(buttonElem);
 
         //button for downloading research data later
         buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
@@ -416,9 +396,35 @@ AFRAME.registerSystem('research-manager', {
         researchControls.appendChild(buttonElem);
         buttonElem.setAttribute('circles-interactive-visible', false); //want it hidden until we have something to download
    },
-   showButton : function(buttonElem, isVisible) {
+   showResearchButton : function(buttonElem, isVisible) {
     buttonElem.querySelector('.bg').setAttribute('circles-interactive-visible', isVisible);
     buttonElem.querySelector('.text').setAttribute('visible', isVisible);
+   },
+   setResearchState : function(state) {
+    const CONTEXT_COMP = this;
+
+    console.log("switching: " + state);
+    
+    switch (state) {
+      case CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED: {
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_prep,  true);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_start, false);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_stop,  false);
+      }
+      break;
+      case CIRCLES.RESEARCH.RESEARCH_STATE.PREPARED: {
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_prep,  false);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_start, true);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_stop,  false);
+      }
+      break;
+      case CIRCLES.RESEARCH.RESEARCH_STATE.STARTED: {
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_prep,  false);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_start, false);
+        CONTEXT_COMP.showResearchButton(CONTEXT_COMP.buttonElem_stop,  true);
+      }
+      break;
+    }
    },
    createBasicButton : function(id, text, width, height, wrapCount, bgCol='rgb(255,255,255)', textCol='rgb(0,0,0)', autoVisible=true) {
     // let buttonElem = document.createElement('a-entity');
