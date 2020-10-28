@@ -320,12 +320,18 @@ io.on("connection", socket => {
           //send out new trial
           const newData = researchUtils.getNextTrial();
 
-          newData.event_type  = data.event_type
-          newData.exp_id      = data.exp_id
-          newData.user_id     = data.user_id
-          newData.user_type   = data.user_type
-          
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          //if no new trial then all trials complete, end experiment
+          if (newData === null) {
+            researchUtils.stopExperiment(data);
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          } else {
+            newData.event_type  = data.event_type
+            newData.exp_id      = data.exp_id
+            newData.user_id     = data.user_id
+            newData.user_type   = data.user_type
+            
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
@@ -340,14 +346,19 @@ io.on("connection", socket => {
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
           researchUtils.stopSelection(data);
 
-          //send out new trial
+          //if no new trial then all trials complete, end experiment
           const newData = researchUtils.getNextTrial();
-          newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
-          newData.exp_id      = data.exp_id
-          newData.user_id     = data.user_id
-          newData.user_type   = data.user_type
+          if (newData === null) {
+            researchUtils.stopExperiment(data);
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          } else {
+            newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
+            newData.exp_id      = data.exp_id
+            newData.user_id     = data.user_id
+            newData.user_type   = data.user_type
 
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          } 
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {

@@ -289,6 +289,10 @@ AFRAME.registerSystem('research-manager', {
         let buttonElem_hide = null;
         let buttonElem_show = null;
 
+        const button-Hide_Clicked = () => {
+
+        };
+
         buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_hide.addEventListener('click', (e) => { 

@@ -34,6 +34,11 @@ const startExperiment = (data) => {
     trials = [];
 
     const expArr = data.and.tests.data;
+
+    if (expArr.length === 0) {
+        console.warn("No Experimental Trials loaded");
+    }
+
     for (let i = 0; i < expArr.length; i++) {
         id              = expArr[i].id;
         targets         = expArr[i].targets;
@@ -142,7 +147,8 @@ const noteSelectionError = (data) => {
 };
 
 const getNextTrial = () => {
-    return trials[++currTrialIndex]; //send trial data
+    //return null if we went through all trials
+    return (++currTrialIndex > trials.length - 1) ? null : trials[currTrialIndex]; //send trial data
 };
 
 const getCurrTrial = () => {
