@@ -5,8 +5,17 @@ let trials                  = [];
 let currTrialIndex          = -1;
 let startSelectTime         = 0;
 let logger                  = null;
+let num_errors              = 0;
 
 const startExperiment = (data) => {
+
+    //reset
+    experimentInProgress    = false;
+    trials                  = [];
+    currTrialIndex          = -1;
+    startSelectTime         = 0;
+    logger                  = null;
+    num_errors              = 0;
 
     const date = new Date();
     const fileName =    './downloads/' + 
@@ -26,11 +35,11 @@ const startExperiment = (data) => {
         console.log(err.stack);
     });
 
-    logger.write('expID, date, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, select_time');
-    logger.write('ll, ll, ll, ll, dd, dd, dd, dd, ff, 0.0, 0');
-    logger.end();
+    logger.write('exp_id, date, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, select_time');
+    //logger.write('ll, ll, ll, ll, dd, dd, dd, dd, ff, 0.0, 0');
+    //logger.end();
 
-    let id, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
+    let id, type, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
 
     const expArr = data.and.tests.data;
@@ -41,6 +50,7 @@ const startExperiment = (data) => {
 
     for (let i = 0; i < expArr.length; i++) {
         id              = expArr[i].id;
+        type            = expArr[i].type;
         targets         = expArr[i].targets;
         targets_x_rots  = expArr[i].targets_x_rots;
         targets_y_rots  = expArr[i].targets_y_rots;
@@ -88,8 +98,9 @@ const startExperiment = (data) => {
 
                             //create trial
                             const randTrial = CIRCLES.RESEARCH.createExpData();
-                            randTrial.target_active     = targets[targetIndex],    //may as well loop through all available targets.
-                            randTrial.targets           = [].concat(targets);                   //all targets visible / cloning array so no weird trouble later
+                            randTrial.target_active     = targets[targetIndex];     //may as well loop through all available targets.
+                            randTrial.type              = expArr[i].type;           //knowing what type of select task this is will be useful
+                            randTrial.targets           = [].concat(targets);       //all targets visible / cloning array so no weird trouble later
                             randTrial.targets_x_rot     = targets_x_rots[xRot_i];
                             randTrial.targets_y_rots    = targets_y_rots[yRot_i];
                             randTrial.targets_width     = targets_widths[width_i];
@@ -125,6 +136,11 @@ const stopExperiment = (data) => {
     experimentInProgress    = false;
     trials                  = [];
     currTrialIndex          = -1
+
+    logger.end();
+    
+    logger                  = null;
+    num_errors              = 0;
 };
 
 const startSelection = (data) => {
@@ -132,18 +148,35 @@ const startSelection = (data) => {
 };
 
 const stopSelection = (data) => {
-    const timeToSelect = Date.now() - startSelectTime;
+    const date = new Date();
+    const timeToSelect = date - startSelectTime;
     console.log('Time to select: ' + timeToSelect);
-    console.log(data);
     console.log(getCurrTrial());
+    const currTrialObj  = getCurrTrial();
+    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + '_' +
+                        date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
 
     //create a string to add
-    //EXP_ID, USER_ID, TIME_OF_RECORD, SELECTION_TYPE, TIME_TO_COMPLETE, NUM_ERRORS, TARGET_ID, TARGETS_ROT_X, TARGETS_ROT_Y, TARGETs_DEPTH, TARGETS_WIDTH, TARGETS_RADIUS
+    writeExpdata(   currTrialObj.exp_id,         expDateStr,                 currTrialObj.target_active, currTrialObj.targets_x_rot, 
+                    currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, currTrialObj.targets_radius, 
+                    currTrialObj.targets,       num_errors,                 date.toISOString());
+};
+
+const writeExpdata = ( exp_id,      date,           target_active,  targets_x_rot,
+                    targets_y_rot,  targets_width,  targets_depth,  targets_radius, 
+                    targets,        num_errors,     select_time ) => {
+    if (logger !== null) {
+        logger.write('\n');
+        logger.write(   exp_id + ',' + date + ',' + target_active + ',' + targets_x_rot + ',' + 
+                        targets_y_rot + ',' + targets_width + ',' + targets_depth + ',' + targets_radius + ',' + 
+                        targets + ',' + num_errors + ',' + select_time);
+    }
 };
 
 const noteSelectionError = (data) => {
     //end timer
     //write data to file
+    num_errors++;
 };
 
 const getNextTrial = () => {
