@@ -146,7 +146,13 @@ AFRAME.registerSystem('research-manager', {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {}
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+            //make download link visible
+            CONTEXT_COMP.buttonElem_download.setAttribute('href', data.and.downloadURL);
+            console.log(data);
+            console.log(CONTEXT_COMP.buttonElem_download);
+            CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, true);  //show download button
+          }
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {targets:[]});
           }
@@ -191,11 +197,11 @@ AFRAME.registerSystem('research-manager', {
           //will add logic later
         }
         break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.DOWNLOAD_READY: {
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //show download button for downloading csv experiment data
-          }
-        }
+        // case CIRCLES.RESEARCH.EVENT_TYPE.DOWNLOAD_READY: {
+        //   if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
+        //     //show download button for downloading csv experiment data
+        //   }
+        // }
         break;
       }
     },
@@ -311,9 +317,9 @@ AFRAME.registerSystem('research-manager', {
         let buttonElem_hide = null;
         let buttonElem_show = null;
 
-        const button_hide_clicked = () => {
+        // const button_hide_clicked = () => {
 
-        };
+        // };
 
         buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
@@ -380,9 +386,6 @@ AFRAME.registerSystem('research-manager', {
         });
         avatarCam.appendChild(CONTEXT_COMP.buttonElem_stop);
 
-        //set initial research state
-        CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
-
         //not using for now
         // //visual state - normal
         // buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
@@ -409,13 +412,17 @@ AFRAME.registerSystem('research-manager', {
         // view.appendChild(buttonElem);
 
         //button for downloading research data later
-        buttonElem = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
-        buttonElem.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
-        buttonElem.addEventListener('click', (e) => { 
+        CONTEXT_COMP.buttonElem_download = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
+        CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
+        CONTEXT_COMP.buttonElem_download.setAttribute('download', '');  //make it downloadable ...
+        CONTEXT_COMP.buttonElem_download.addEventListener('click', (e) => { 
           console.log('click - ' + e.srcElement.id);
         });
-        view.appendChild(buttonElem);
-        buttonElem.setAttribute('circles-interactive-visible', false); //want it hidden until we have something to download
+        view.appendChild(CONTEXT_COMP.buttonElem_download);
+        CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, false);  //hide download button
+
+        //set initial research state
+        CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
    },
    showResearchElem : function(elem, isVisible) {
     const bgElem = elem.querySelector('.bg');
@@ -437,21 +444,22 @@ AFRAME.registerSystem('research-manager', {
     if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
       switch (state) {
         case CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED: {
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,  true);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start, false);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,  false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,     true);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start,    false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,     false);
         }
         break;
         case CIRCLES.RESEARCH.RESEARCH_STATE.PREPARED: {
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,  false);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start, true);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,  false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,     false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start,    true);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,     false);
         }
         break;
         case CIRCLES.RESEARCH.RESEARCH_STATE.STARTED: {
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,  false);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start, false);
-          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,  true);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_prep,     false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_start,    false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_stop,     true);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, false);
         }
         break;
       }

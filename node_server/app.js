@@ -325,8 +325,8 @@ io.on("connection", socket => {
             //creating new object as data may not be valid
             const eData         = CIRCLES.RESEARCH.createExpData();
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
-            //eData.exp_id        = CONTEXT_COMP.experimentID; (will need to make sure we can run multiple experiments on teh same server someday ..)
             researchUtils.stopExperiment(eData);
+            eData.and = {downloadURL:researchUtils.getDownloadLink()};
             io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = data.event_type
@@ -340,6 +340,7 @@ io.on("connection", socket => {
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           researchUtils.stopExperiment(data);
+          data.and = {downloadURL:researchUtils.getDownloadLink()};
           io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
@@ -355,8 +356,8 @@ io.on("connection", socket => {
           if (newData === null) {
             const eData         = CIRCLES.RESEARCH.createExpData();
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
-            //eData.exp_id        = CONTEXT_COMP.experimentID; (will need to make sure we can run multiple experiments on teh same server someday ..)
             researchUtils.stopExperiment(eData);
+            eData.and = {downloadURL:researchUtils.getDownloadLink()};
             io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
@@ -369,11 +370,11 @@ io.on("connection", socket => {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
-          researchUtils.pauseExperiment(data);
+          // researchUtils.pauseExperiment(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_UNPAUSE: {
-          researchUtils.unpauseExperiment(data);
+          // researchUtils.unpauseExperiment(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {

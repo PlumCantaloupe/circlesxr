@@ -6,6 +6,7 @@ let currTrialIndex          = -1;
 let startSelectTime         = 0;
 let logger                  = null;
 let num_errors              = 0;
+let expDataFileName        = '';
 
 const startExperiment = (data) => {
 
@@ -18,14 +19,15 @@ const startExperiment = (data) => {
     num_errors              = 0;
 
     const date = new Date();
-    const fileName =    './downloads/' + 
-                        '/FittsSelectExp__' + 
+    const prefixFilePath = __dirname + '/../public';
+    expDataFileName =   '/downloads/' + 
+                        'FittsSelectExp__' + 
                         date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + '_' +
                         date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds() + 
                         '__Data.csv';
 
     //open stream to start writing data to file
-    logger  = fs.createWriteStream(fileName, {
+    logger  = fs.createWriteStream(prefixFilePath + expDataFileName, {
         flags: 'a' // 'a' means appending (old data will be preserved)
     });
     logger.on('finish', () => {
@@ -111,17 +113,17 @@ const startExperiment = (data) => {
     experimentInProgress = true;
 };
 
-const restartExperiment = () => {
-    experimentInProgress = true;
-};
+// const restartExperiment = () => {
+//     experimentInProgress = true;
+// };
 
-const pauseExperiment = (data) => {
-    experimentInProgress = false;
-};
+// const pauseExperiment = (data) => {
+//     experimentInProgress = false;
+// };
 
-const unpauseExperiment = (data) => {
-    experimentInProgress = true;
-};
+// const unpauseExperiment = (data) => {
+//     experimentInProgress = true;
+// };
 
 const stopExperiment = (data) => {
     experimentInProgress    = false;
@@ -190,11 +192,15 @@ const isExperimentInprogress = () => {
     return experimentInProgress;
 }
 
+const getDownloadLink = () => {
+    return (experimentInProgress) ? null : expDataFileName;
+}
+
 module.exports = {
     startExperiment,
-    restartExperiment,
-    pauseExperiment,
-    unpauseExperiment,
+    // restartExperiment,
+    // pauseExperiment,
+    // unpauseExperiment,
     stopExperiment,
     startSelection,
     stopSelection,
@@ -202,5 +208,6 @@ module.exports = {
     getNextTrial,
     getCurrTrial,
     getCurrTrialIndex,
-    isExperimentInprogress
+    isExperimentInprogress,
+    getDownloadLink
   };
