@@ -35,7 +35,7 @@ const startExperiment = (data) => {
         console.log(err.stack);
     });
 
-    logger.write('exp_id, date, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, select_time');
+    logger.write('exp_id, date, time, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors');
     //logger.write('ll, ll, ll, ll, dd, dd, dd, dd, ff, 0.0, 0');
     //logger.end();
 
@@ -153,23 +153,23 @@ const stopSelection = (data) => {
     console.log('Time to select: ' + timeToSelect);
     console.log(getCurrTrial());
     const currTrialObj  = getCurrTrial();
-    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + '_' +
-                        date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
+    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); + '-' + date.getDay().toString().padStart(2, '0');
+    const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
 
     //create a string to add
-    writeExpdata(   currTrialObj.exp_id,         expDateStr,                 currTrialObj.target_active, currTrialObj.targets_x_rot, 
-                    currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, currTrialObj.targets_radius, 
-                    currTrialObj.targets,       num_errors,                 date.toISOString());
+    writeExpdata(   currTrialObj.exp_id,            expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
+                    currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
+                    currTrialObj.targets_radius,    currTrialObj.targets,       num_errors );
 };
 
-const writeExpdata = ( exp_id,      date,           target_active,  targets_x_rot,
-                    targets_y_rot,  targets_width,  targets_depth,  targets_radius, 
-                    targets,        num_errors,     select_time ) => {
+const writeExpdata = (  exp_id,         date,           time,           target_active,  
+                        targets_x_rot,  targets_y_rot,  targets_width,  targets_depth,  
+                        targets_radius, targets,        num_errors ) => {
     if (logger !== null) {
-        logger.write('\n');
-        logger.write(   exp_id + ',' + date + ',' + target_active + ',' + targets_x_rot + ',' + 
-                        targets_y_rot + ',' + targets_width + ',' + targets_depth + ',' + targets_radius + ',' + 
-                        targets + ',' + num_errors + ',' + select_time);
+        const arrTargetsStr = '"[' + targets.join(',') + ']"';
+        logger.write(   '\n' +  exp_id + ',' +          date + ',' +            time + ',' +            target_active + ',' + 
+                                targets_x_rot + ',' +   targets_y_rot + ',' +   targets_width + ',' +   targets_depth + ',' + 
+                                targets_radius + ',' +  arrTargetsStr + ',' +   num_errors );
     }
 };
 
