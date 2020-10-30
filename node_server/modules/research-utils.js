@@ -24,7 +24,7 @@ const startExperiment = (data) => {
                         date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds() + 
                         '__Data.csv';
 
-    //open stream to strat writing data to file
+    //open stream to start writing data to file
     logger  = fs.createWriteStream(fileName, {
         flags: 'a' // 'a' means appending (old data will be preserved)
     });
@@ -35,9 +35,8 @@ const startExperiment = (data) => {
         console.log(err.stack);
     });
 
-    logger.write('exp_id, date, time, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors');
-    //logger.write('ll, ll, ll, ll, dd, dd, dd, dd, ff, 0.0, 0');
-    //logger.end();
+    //set csv titles
+    logger.write('exp_id, exp_type, date, time, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, selection_time_ms');
 
     let id, type, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
     trials = [];
@@ -57,14 +56,6 @@ const startExperiment = (data) => {
         targets_widths  = expArr[i].targets_widths;
         targets_depths  = expArr[i].targets_depths;
         num_trials      = expArr[i].num_trials;
-
-        // console.log('id:' + id);
-        // console.log('num_targets:' + num_targets);
-        // console.log('targets_x_rots:' + targets_x_rots);
-        // console.log('targets_y_rots:' + targets_y_rots);
-        // console.log('target_widths:' + target_widths);
-        // console.log('target_depths:' + target_depths);
-        // console.log('num_trials:' + num_trials);
 
         total_exp_trials = targets_x_rots.length * targets_y_rots.length * targets_widths.length * targets_depths.length * num_trials;
         let exp_trials = [];
@@ -150,26 +141,28 @@ const startSelection = (data) => {
 const stopSelection = (data) => {
     const date = new Date();
     const timeToSelect = date - startSelectTime;
-    console.log('Time to select: ' + timeToSelect);
-    console.log(getCurrTrial());
     const currTrialObj  = getCurrTrial();
+
+    //formating date and time strings nicely :)
     const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); + '-' + date.getDay().toString().padStart(2, '0');
     const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
 
+    console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
+
     //create a string to add
-    writeExpdata(   currTrialObj.exp_id,            expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
+    writeExpdata(   currTrialObj.exp_id,            currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
                     currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
-                    currTrialObj.targets_radius,    currTrialObj.targets,       num_errors );
+                    currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
 };
 
-const writeExpdata = (  exp_id,         date,           time,           target_active,  
+const writeExpdata = (  exp_id,         exp_type,       date,           time,           target_active,  
                         targets_x_rot,  targets_y_rot,  targets_width,  targets_depth,  
-                        targets_radius, targets,        num_errors ) => {
+                        targets_radius, targets,        num_errors,     select_time_ms ) => {
     if (logger !== null) {
         const arrTargetsStr = '"[' + targets.join(',') + ']"';
-        logger.write(   '\n' +  exp_id + ',' +          date + ',' +            time + ',' +            target_active + ',' + 
+        logger.write(   '\n' +  exp_id + ',' +          exp_type + ',' +        date + ',' +            time + ',' +            target_active + ',' + 
                                 targets_x_rot + ',' +   targets_y_rot + ',' +   targets_width + ',' +   targets_depth + ',' + 
-                                targets_radius + ',' +  arrTargetsStr + ',' +   num_errors );
+                                targets_radius + ',' +  arrTargetsStr + ',' +   num_errors + ',' +      select_time_ms );
     }
 };
 
