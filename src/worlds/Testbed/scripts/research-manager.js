@@ -281,12 +281,12 @@ AFRAME.registerSystem('research-manager', {
         avatarCam.appendChild(view);
 
         //stopped experiment
-        CONTEXT_COMP.labelElem_stopped = CONTEXT_COMP.createBasicLabel('experiment_stopped', 'experiment stopped', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)');
+        CONTEXT_COMP.labelElem_stopped = CONTEXT_COMP.createBasicLabel('experiment_stopped', 'STOPPED', 0.3, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_stopped.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         avatarCam.appendChild(CONTEXT_COMP.labelElem_stopped);
 
         //stop experiment
-        CONTEXT_COMP.labelElem_running = CONTEXT_COMP.createBasicLabel('experiment_running', 'experiment running', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)');
+        CONTEXT_COMP.labelElem_running = CONTEXT_COMP.createBasicLabel('experiment_running', 'RUNNING', 0.3, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_running.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         avatarCam.appendChild(CONTEXT_COMP.labelElem_running);
 
@@ -418,7 +418,15 @@ AFRAME.registerSystem('research-manager', {
         buttonElem.setAttribute('circles-interactive-visible', false); //want it hidden until we have something to download
    },
    showResearchElem : function(elem, isVisible) {
-    elem.querySelector('.bg').setAttribute('circles-interactive-visible', isVisible);
+    const bgElem = elem.querySelector('.bg');
+    //only want to adjust interactive visibility  elem is interactive to begin with ...
+    console.log(bgElem.classList);
+    if (bgElem.classList.contains('not_interactive') === true) {
+      bgElem.setAttribute('visible', isVisible);
+    }
+    else {
+      bgElem.setAttribute('circles-interactive-visible', isVisible);
+    }
     elem.querySelector('.text').setAttribute('visible', isVisible);
    },
    setResearchState : function(state) {
@@ -481,14 +489,14 @@ AFRAME.registerSystem('research-manager', {
     bgElem.setAttribute('class', 'interactive bg');
     bgElem.setAttribute('circles-interactive-visible', true);   
     bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
-    bgElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});		   
+    bgElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.6, transparent:true});		   
     bgElem.addEventListener('mouseenter', function (e) { e.target.setAttribute('scale',{x:1.03, y:1.03, z:1.03}); });		  
     bgElem.addEventListener('mouseleave', function (e) { e.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });		
     buttonElem.appendChild(bgElem);		
 
     let textElem = document.createElement('a-entity');
     textElem.setAttribute('id', id + '_text');  
-    textElem.setAttribute('class', 'text');
+    textElem.setAttribute('class', 'text not_interactive');
     textElem.setAttribute('visible', true); 	
     textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
     textElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', width:width, height:height, wrapCount:wrapCount, value:text});	
@@ -499,18 +507,18 @@ AFRAME.registerSystem('research-manager', {
   createBasicLabel : function(id, text, width, height, wrapCount, bgCol='rgb(255,255,255)', textCol='rgb(0,0,0)') {
     let labelElem = document.createElement('a-entity');		     
     labelElem.setAttribute('id', id);
-    labelElem.setAttribute('class', 'label ');
+    labelElem.setAttribute('class', 'label');
 
     let bgElem = document.createElement('a-entity');	
     bgElem.setAttribute('id', id + '_bg');   	     
-    bgElem.setAttribute('class', 'bg');
+    bgElem.setAttribute('class', 'bg not_interactive');
     bgElem.setAttribute('geometry', {primitive:'plane', width:width, height:height});		
-    bgElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.8, transparent:true});		   	
+    bgElem.setAttribute('material', {color:bgCol, shader:'flat', opacity:0.5, transparent:true});		   	
     labelElem.appendChild(bgElem);		
 
     let textElem = document.createElement('a-entity');
     textElem.setAttribute('id', id + '_text');  
-    textElem.setAttribute('class', 'text');
+    textElem.setAttribute('class', 'text not_interactive');
     textElem.setAttribute('visible', true); 	
     textElem.setAttribute('position', {x:0.0, y:0.0, z:0.01});		
     textElem.setAttribute('text', {color:textCol, align:'center', font:'roboto', width:width, height:height, wrapCount:wrapCount, value:text});	
