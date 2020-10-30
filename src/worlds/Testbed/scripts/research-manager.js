@@ -281,12 +281,12 @@ AFRAME.registerSystem('research-manager', {
         avatarCam.appendChild(view);
 
         //stopped experiment
-        CONTEXT_COMP.labelElem_stopped = CONTEXT_COMP.createBasicLabel('experiment_stopped', 'STOPPED', 0.3, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)');
+        CONTEXT_COMP.labelElem_stopped = CONTEXT_COMP.createBasicLabel('experiment_stopped', 'STOPPED', 0.3, 0.1, 12, 'rgb(245, 64, 88)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_stopped.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         avatarCam.appendChild(CONTEXT_COMP.labelElem_stopped);
 
         //stop experiment
-        CONTEXT_COMP.labelElem_running = CONTEXT_COMP.createBasicLabel('experiment_running', 'RUNNING', 0.3, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)');
+        CONTEXT_COMP.labelElem_running = CONTEXT_COMP.createBasicLabel('experiment_running', 'RUNNING', 0.3, 0.1, 12, 'rgb(64, 245, 67)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_running.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         avatarCam.appendChild(CONTEXT_COMP.labelElem_running);
 
