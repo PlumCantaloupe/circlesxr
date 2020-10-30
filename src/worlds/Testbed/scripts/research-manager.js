@@ -107,9 +107,8 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.PREPARED);
-          }
+          CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.PREPARED);
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {}
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             //no new trial yet so will do nothing
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {targets:[0,1,2,3,4,5,6,7,8]});
@@ -120,9 +119,8 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STARTED);
-          }
+          CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STARTED);
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {}
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             const compData = {  target_active:    'FT_' + data.target_active,
                                 targets_XY_rot:   {x:data.targets_x_rot, y:data.targets_y_rot},
@@ -147,9 +145,8 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
-          }
+          CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {}
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
             CONTEXT_COMP.researchManagerEl.setAttribute('research-selection-tasks', {targets:[]});
           }
@@ -159,9 +156,7 @@ AFRAME.registerSystem('research-manager', {
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
-          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {
-            //researcher sent this so ignore
-          }
+          if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.RESEARCHER) {}
           else if (CONTEXT_COMP.userType === CIRCLES.USER_TYPE.PARTICIPANT) {
 
             const compData = {  target_active:    'FT_' + data.target_active,
@@ -288,12 +283,12 @@ AFRAME.registerSystem('research-manager', {
         //stopped experiment
         CONTEXT_COMP.labelElem_stopped = CONTEXT_COMP.createBasicLabel('experiment_stopped', 'experiment stopped', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_stopped.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
-        view.appendChild(CONTEXT_COMP.labelElem_stopped);
+        avatarCam.appendChild(CONTEXT_COMP.labelElem_stopped);
 
         //stop experiment
         CONTEXT_COMP.labelElem_running = CONTEXT_COMP.createBasicLabel('experiment_running', 'experiment running', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)');
         CONTEXT_COMP.labelElem_running.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
-        view.appendChild(CONTEXT_COMP.labelElem_running);
+        avatarCam.appendChild(CONTEXT_COMP.labelElem_running);
 
         //set initial research state
         CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
@@ -365,7 +360,7 @@ AFRAME.registerSystem('research-manager', {
           data.and = CONTEXT_COMP.expScript;
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        view.appendChild(CONTEXT_COMP.buttonElem_prep);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_prep);
 
         //start experiment
         CONTEXT_COMP.buttonElem_start = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)', true);
@@ -374,7 +369,7 @@ AFRAME.registerSystem('research-manager', {
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        view.appendChild(CONTEXT_COMP.buttonElem_start);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_start);
 
         //stop experiment
         CONTEXT_COMP.buttonElem_stop = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)', true);
@@ -383,7 +378,7 @@ AFRAME.registerSystem('research-manager', {
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        view.appendChild(CONTEXT_COMP.buttonElem_stop);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_stop);
 
         //set initial research state
         CONTEXT_COMP.setResearchState(CIRCLES.RESEARCH.RESEARCH_STATE.STOPPED);
