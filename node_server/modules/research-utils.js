@@ -135,6 +135,7 @@ const stopExperiment = (data) => {
 };
 
 const startSelection = (data) => {
+    num_errors = 0; //reset errors
     startSelectTime = Date.now();
 };
 
