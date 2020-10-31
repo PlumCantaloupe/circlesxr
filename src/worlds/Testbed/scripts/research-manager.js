@@ -414,9 +414,10 @@ AFRAME.registerSystem('research-manager', {
         //button for downloading research data later
         CONTEXT_COMP.buttonElem_download = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
-        CONTEXT_COMP.buttonElem_download.setAttribute('download', '');  //make it downloadable ...
         CONTEXT_COMP.buttonElem_download.addEventListener('click', (e) => { 
-          console.log('click - ' + e.srcElement.id);
+          //will open a new tab and file. Most browsers will automatically download this. Don't think this will work on headset
+          //but a researcher will likely be using a desktop for testing ...
+          window.open(CONTEXT_COMP.buttonElem_download.getAttribute('href'));
         });
         view.appendChild(CONTEXT_COMP.buttonElem_download);
         CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, false);  //hide download button
