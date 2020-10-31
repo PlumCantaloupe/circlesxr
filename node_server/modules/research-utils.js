@@ -153,7 +153,7 @@ const stopSelection = (data) => {
     console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
 
     //create a string to add
-    writeExpdata(   currTrialObj.exp_id,            currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
+    writeExpdata(   data.exp_id,                    currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
                     currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
                     currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
 };
