@@ -147,7 +147,7 @@ const stopSelection = (data) => {
     const currTrialObj  = getCurrTrial();
 
     //formating date and time strings nicely :)
-    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); + '-' + date.getDay().toString().padStart(2, '0');
+    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0');
     const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
 
     console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
