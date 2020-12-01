@@ -387,39 +387,47 @@ AFRAME.registerSystem('research-manager', {
         avatarCam.appendChild(CONTEXT_COMP.buttonElem_stop);
 
         //not using for now
-        // //visual state - normal
-        // buttonElem = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        // buttonElem.setAttribute('position', {x:0.0, y:-0.19, z:0.0});
-        // buttonElem.addEventListener('click', (e) => { 
-        //   console.log('click - ' + e.srcElement.id); 
-        // });
-        // view.appendChild(buttonElem);
+        //visual state - normal
+        CONTEXT_COMP.button_show = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
+        CONTEXT_COMP.button_show.setAttribute('position', {x:0.5, y:0.37, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.button_show.addEventListener('click', (e) => { 
+          let avatarNodes = document.querySelector('#Player1Cam').querySelectorAll('.avatar_node');
+          avatarNodes.forEach(function(node) {
+            node.setAttribute('visible', true);
+          });
 
-        // //visual state - ghost
-        // buttonElem = CONTEXT_COMP.createBasicButton('vs_ghost', 'visual state - ghost', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        // buttonElem.setAttribute('position', {x:0.0, y:-0.3, z:0.0});
-        // buttonElem.addEventListener('click', (e) => { 
-        //   console.log('click - ' + e.srcElement.id); 
-        // });
-        // view.appendChild(buttonElem);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, false);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_hide, true);
+        });
+        avatarCam.appendChild(CONTEXT_COMP.button_show);
 
-        // //visual state - invisible
-        // buttonElem = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        // buttonElem.setAttribute('position', {x:0.0, y:-0.41, z:0.0});
-        // buttonElem.addEventListener('click', (e) => { 
-        //   console.log('click - ' + e.srcElement.id);
-        // });
-        // view.appendChild(buttonElem);
+        //visual state - invisible
+        CONTEXT_COMP.button_hide = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
+        CONTEXT_COMP.button_hide.setAttribute('position', {x:0.5, y:0.37, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.button_hide.addEventListener('click', (e) => { 
+          let avatarNodes = document.querySelector('#Player1Cam').querySelectorAll('.avatar_node');
+          avatarNodes.forEach(function(node) {
+            node.setAttribute('visible', false);
+          });
+
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, true);
+          CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_hide, false);
+        });
+        avatarCam.appendChild(CONTEXT_COMP.button_hide);
+
+        //init state
+        CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, false);
+        CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_hide, true);
 
         //button for downloading research data later
         CONTEXT_COMP.buttonElem_download = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
-        CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.0, y:-0.52, z:0.0});
+        CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.5, y:0.24, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         CONTEXT_COMP.buttonElem_download.addEventListener('click', (e) => { 
           //will open a new tab and file. Most browsers will automatically download this. Don't think this will work on headset
           //but a researcher will likely be using a desktop for testing ...
           window.open(CONTEXT_COMP.buttonElem_download.getAttribute('href'));
         });
-        view.appendChild(CONTEXT_COMP.buttonElem_download);
+        avatarCam.appendChild(CONTEXT_COMP.buttonElem_download);
         CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, false);  //hide download button
 
         //set initial research state
