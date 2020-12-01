@@ -54,7 +54,6 @@ AFRAME.registerComponent('circles-manager', {
           let positionOffsetZ = (Context_AF.zoomNear) ? -1.0 : -2.0;
           //Context_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
 
-          console.log("zoom artefact");
           Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
     });
