@@ -16,7 +16,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
         targets_width:              {type:'number',     default:0.2},
         targets_depth:              {type:'number',     default:10.0},
-        targets_radius:             {type:'number',     default:8.0},
+        targets_radius:             {type:'number',     default:4.0},
         targets:                    {type:'array',      default:[0]},
         // visible_look_target:        {type:'boolean',    default:false},
         // visible_select_target:      {type:'boolean',    default:false}

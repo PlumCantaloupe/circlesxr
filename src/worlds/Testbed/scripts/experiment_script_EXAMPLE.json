@@ -8,7 +8,7 @@
                 "targets_x_rots":[0.0], "targets_y_rots":[0.0], "targets_widths":[0.25,0.5,0.75], "targets_depths":[5.0, 7.0, 9.0]},
             
             {   "id":"look_1", "type":"look", "record":true, "num_trials":8, "targets":[0], 
-                "targets_x_rots":[0.0, 45, 90, 135, 180, 225, 270, 315], "targets_y_rots":[0.0, 30, -30], "targets_widths":[0.50], "targets_depths":[7.0]}
+                "targets_x_rots":[0.0, 30, -30], "targets_y_rots":[0.0, 45, 90, 135, 180, 225, 270, 315], "targets_widths":[0.50], "targets_depths":[7.0]}
         ]
     }
 }

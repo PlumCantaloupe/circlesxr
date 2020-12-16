@@ -95,7 +95,7 @@ const startExperiment = (data) => {
                             randTrial.type              = expArr[i].type;           //knowing what type of select task this is will be useful
                             randTrial.targets           = [].concat(targets);       //all targets visible / cloning array so no weird trouble later
                             randTrial.targets_x_rot     = targets_x_rots[xRot_i];
-                            randTrial.targets_y_rots    = targets_y_rots[yRot_i];
+                            randTrial.targets_y_rot     = targets_y_rots[yRot_i];
                             randTrial.targets_width     = targets_widths[width_i];
                             randTrial.targets_depth     = targets_depths[depth_i];
 
