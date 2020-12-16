@@ -168,7 +168,7 @@ exports.updateUser = (req, res, next) => {
           return res.redirect('/profile');
         }
       });
-    }).comtch(function(err){
+    }).catch(function(err){
       console.log(err);
     });
   }
@@ -288,7 +288,7 @@ exports.serveProfile = (req, res, next) => {
       userOptions: userOptions,
       userRooms: results[5]
     });
-  }).comtch(function(err){
+  }).catch(function(err){
     console.log(err);
   });
 };
@@ -361,7 +361,7 @@ exports.registerUser = (req, res, next) => {
           return next();
         }
       });
-    }).comtch(function (err) {
+    }).catch(function (err) {
       return next(error);
     });
   } else {
@@ -413,7 +413,7 @@ exports.serveRegister = (req, res, next) => {
       title: `Register for Circles`,
       userOptions: userOptions,
     });
-  }).comtch(function(err){
+  }).catch(function(err){
     console.log(err);
   });
 
@@ -509,7 +509,7 @@ exports.getMagicLinks = (req, res, next) => {
 const addTestUsers = () => {
   let usersToAdd  = [];
   let tenColors   = [ CIRCLES.COLOR_PALETTE.PEARL, CIRCLES.COLOR_PALETTE.TURQUOISE, CIRCLES.COLOR_PALETTE.EMERALD, CIRCLES.COLOR_PALETTE.RIVER, CIRCLES.COLOR_PALETTE.AMETHYST,
-                      CIRCLES.COLOR_PALETTE.ASPHALT, CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.comRROT, CIRCLES.COLOR_PALETTE.MANDARIN, CIRCLES.COLOR_PALETTE.OCEAN];
+                      CIRCLES.COLOR_PALETTE.ASPHALT, CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.CARROT, CIRCLES.COLOR_PALETTE.MANDARIN, CIRCLES.COLOR_PALETTE.OCEAN];
   let threeColors = [CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.AMETHYST, CIRCLES.COLOR_PALETTE.RIVER];
 
   usersToAdd.push({
