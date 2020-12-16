@@ -50,7 +50,7 @@ const GUI = {
   rounded_rectangle_radius: 0.15,
   text_z_pos: 0.01,
   font_body: '/global/assets/fonts/Roboto-msdf.json',
-  font_header: '/global/assets/fonts/Exo2Bold.fnt'
+  font_header: '/global/assets/fonts/Roboto-msdf.json'
 };
 
 module.exports = {
