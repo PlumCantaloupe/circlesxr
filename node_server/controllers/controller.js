@@ -168,7 +168,7 @@ exports.updateUser = (req, res, next) => {
           return res.redirect('/profile');
         }
       });
-    }).catch(function(err){
+    }).comtch(function(err){
       console.log(err);
     });
   }
@@ -288,7 +288,7 @@ exports.serveProfile = (req, res, next) => {
       userOptions: userOptions,
       userRooms: results[5]
     });
-  }).catch(function(err){
+  }).comtch(function(err){
     console.log(err);
   });
 };
@@ -361,7 +361,7 @@ exports.registerUser = (req, res, next) => {
           return next();
         }
       });
-    }).catch(function (err) {
+    }).comtch(function (err) {
       return next(error);
     });
   } else {
@@ -413,7 +413,7 @@ exports.serveRegister = (req, res, next) => {
       title: `Register for Circles`,
       userOptions: userOptions,
     });
-  }).catch(function(err){
+  }).comtch(function(err){
     console.log(err);
   });
 
@@ -509,7 +509,7 @@ exports.getMagicLinks = (req, res, next) => {
 const addTestUsers = () => {
   let usersToAdd  = [];
   let tenColors   = [ CIRCLES.COLOR_PALETTE.PEARL, CIRCLES.COLOR_PALETTE.TURQUOISE, CIRCLES.COLOR_PALETTE.EMERALD, CIRCLES.COLOR_PALETTE.RIVER, CIRCLES.COLOR_PALETTE.AMETHYST,
-                      CIRCLES.COLOR_PALETTE.ASPHALT, CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.CARROT, CIRCLES.COLOR_PALETTE.MANDARIN, CIRCLES.COLOR_PALETTE.OCEAN];
+                      CIRCLES.COLOR_PALETTE.ASPHALT, CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.comRROT, CIRCLES.COLOR_PALETTE.MANDARIN, CIRCLES.COLOR_PALETTE.OCEAN];
   let threeColors = [CIRCLES.COLOR_PALETTE.SUNFLOWER, CIRCLES.COLOR_PALETTE.AMETHYST, CIRCLES.COLOR_PALETTE.RIVER];
 
   usersToAdd.push({
@@ -517,7 +517,7 @@ const addTestUsers = () => {
     usertype:               CIRCLES.USER_TYPE.TEACHER,
     firstname:              'Teacher',
     lastname:               '1',
-    email:                  't1@circles.ca',
+    email:                  't1@circles.com',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
@@ -536,7 +536,7 @@ const addTestUsers = () => {
     usertype:               CIRCLES.USER_TYPE.RESEARCHER,
     firstname:              'Researcher',
     lastname:               '1',
-    email:                  'r1@circles.ca',
+    email:                  'r1@circles.com',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
@@ -557,7 +557,7 @@ const addTestUsers = () => {
       usertype:               CIRCLES.USER_TYPE.STUDENT,
       firstname:              'Student',
       lastname:               i,
-      email:                  's' + i + '@test.ca',
+      email:                  's' + i + '@circles.com',
       password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
@@ -579,7 +579,7 @@ const addTestUsers = () => {
       usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
       firstname:              'Participant',
       lastname:               i,
-      email:                  'p' + i + '@test.ca',
+      email:                  'p' + i + '@circles.com',
       password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
