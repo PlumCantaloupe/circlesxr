@@ -14,9 +14,11 @@
       <a-assets>
         <!-- physical environment -->
         <a-asset-item id="Worksite-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/Worksite/Worksite.gltf"></a-asset-item>
+        <a-asset-item id="Truck-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/Truck/Truck.gltf"></a-asset-item>
 
         <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <!-- <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous"> -->
+        <img id='skyMap' src='/worlds/WIT_3_Work/assets/images/CloudySky.jpg' crossorigin="anonymous">
 
         <!-- templates, mixins etc. -->
         <circles-assets/>
@@ -39,13 +41,15 @@
       <!-- the ground -->
       <!-- <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 100, 50);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity> -->
       <a-entity id="Worksite_model" gltf-model="#Worksite-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="Truck_model" gltf-model="#Truck-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.5 0.5 0.5" shadow="receive:false; cast:false;"></a-entity>
+
 
       <!-- sky and lights -->
       <a-entity light="type:spot; intensity:10.0; color:#d5e4f5; angle:80; penumbra:0.1;" circles-platform-shadows rotation="-90 0 0" position='0.0 5.4 -7.0'></a-entity>
       <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
-                geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
+                geometry='primitive:sphere; radius:120; segments-height:6; segments-width:6;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
     </a-scene>
