@@ -488,10 +488,11 @@ exports.generateAuthLink = (email, baseURL, route) => {
 
 exports.getMagicLinks = (req, res, next) => {
   let route = req.query.route;
+  let userTypeAsking = req.query.userTypeAsking;
   let allAccounts = [];
   const baseURL = req.protocol + '://' + req.get('host');
 
-  User.find({usertype:CIRCLES.USER_TYPE.STUDENT}, function(error, data) {
+  User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }, function(error, data) {
     if (error) {
       res.send(error);
     }
@@ -516,7 +517,7 @@ const addTestUsers = () => {
     usertype:               CIRCLES.USER_TYPE.TEACHER,
     firstname:              'Teacher',
     lastname:               '1',
-    email:                  'teacher1@test.ca',
+    email:                  't1@circlesxr.com',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
@@ -535,7 +536,7 @@ const addTestUsers = () => {
     usertype:               CIRCLES.USER_TYPE.RESEARCHER,
     firstname:              'Researcher',
     lastname:               '1',
-    email:                  'researcher1@test.ca',
+    email:                  'r1@circlesxr.com',
     password:               env.DEFAULT_PASSWORD,
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
@@ -549,63 +550,6 @@ const addTestUsers = () => {
     color_hand_left:        'rgb(237, 194, 122)',
   });
 
-  usersToAdd.push({
-    username:               'Tester1',
-    usertype:               CIRCLES.USER_TYPE.TESTER,
-    firstname:              'Tester',
-    lastname:               '1',
-    email:                  'tester1@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
-    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
-    gltf_body_url:          '/global/assets/models/gltf/body/Body_Thin.glb',
-    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
-    color_head:             'rgb(255, 209, 237)',
-    color_hair:             'rgb(255, 255, 255)',
-    color_body:             'rgb(92, 237, 255)',
-    color_hand_right:       'rgb(255, 209, 237)',
-    color_hand_left:        'rgb(255, 209, 237)',
-  });
-
-  usersToAdd.push({
-    username:               'Tester2',
-    usertype:               CIRCLES.USER_TYPE.TESTER,
-    firstname:              'Tester',
-    lastname:               '2',
-    email:                  'tester2@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
-    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
-    gltf_body_url:          '/global/assets/models/gltf/body/Body_Hourglass.glb',
-    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
-    color_head:             'rgb(59, 45, 37)',
-    color_hair:             'rgb(10, 7, 5)',
-    color_body:             'rgb(101, 255, 101)',
-    color_hand_right:       'rgb(59, 45, 37)',
-    color_hand_left:        'rgb(59, 45, 37)',
-  });
-
-  usersToAdd.push({
-    username:               'Tester3',
-    usertype:               CIRCLES.USER_TYPE.TESTER,
-    firstname:              'Tester',
-    lastname:               '3',
-    email:                  'tester3@test.ca',
-    password:               env.DEFAULT_PASSWORD,
-    gltf_head_url:          '/global/assets/models/gltf/head/Head_Jaw.glb',
-    gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Curly.glb',
-    gltf_body_url:          '/global/assets/models/gltf/body/Body_Strong.glb',
-    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
-    color_head:             'rgb(237, 194, 122)',
-    color_hair:             'rgb(222, 126, 20)',
-    color_body:             'rgb(255, 42, 36)',
-    color_hand_right:       'rgb(237, 194, 122)',
-    color_hand_left:        'rgb(237, 194, 122)',
-  });
-
   //add students
   for (let i = 0; i < tenColors.length; i++) {
     usersToAdd.push({
@@ -613,7 +557,7 @@ const addTestUsers = () => {
       usertype:               CIRCLES.USER_TYPE.STUDENT,
       firstname:              'Student',
       lastname:               i,
-      email:                  'student' + i + '@test.ca',
+      email:                  's' + i + '@circlesxr.com',
       password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
@@ -635,7 +579,7 @@ const addTestUsers = () => {
       usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
       firstname:              'Participant',
       lastname:               i,
-      email:                  'participant' + i + '@test.ca',
+      email:                  'p' + i + '@circlesxr.com',
       password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,

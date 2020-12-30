@@ -71,13 +71,13 @@ ___TODO: will add more to this later___
 1. In a browser (recommend Firefox), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users. Note that if you are using localhost and Firefox it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint. You may also have to change NAF_SERVER in .env i.e. **'NAF_SERVER='wss://<your_ngrok_server>.ngrok.io'**
     - Alternatively, you can also go to `localhost:{SERVER_PORT}/add-models-to-db` then `localhost:{SERVER_PORT}/add-users-to-db` to add models then users manually.
     - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire mdmu db (which you will have to do when we make changes to db items) use the following commands within the mongo shell:
-        - `use mdmu`
+        - `use circles`
         - `db.dropDatabase()`
 1. Login with one of the 3 test users
     - `{username}:{password}`
-    - `student1@test.ca:password`
-    - `student2@test.ca:password`
-    - `student3@test.ca:password`
+    - `s1@circlesxr.com:password`
+    - `s2@circlesxr.com:password`
+    - `s3@circlesxr.com:password`
 1. Open another app instance of browser
     - e.g. [https://support.mozilla.org/en-US/questions/1184891](https://support.mozilla.org/en-US/questions/1184891)
 1. Log in with anbother user (or same) and have fun :)

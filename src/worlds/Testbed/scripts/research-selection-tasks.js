@@ -14,11 +14,12 @@ AFRAME.registerComponent('research-selection-tasks', {
         show_labels:                {type:'boolean',    default:false},
         target_active:              {type:'string',     default:''},
         targets_XY_rot:             {type:'vec2',       default:{x: 0, y: 0}},
-        targets_size:               {type:'number',     default:0.2},
-        targets_depth:              {type:'number',     default:5.0},
-        targets_radius:             {type:'number',     default:2.5},
-        visible_look_target:        {type:'boolean',    default:false},
-        visible_select_target:      {type:'boolean',    default:false}
+        targets_width:              {type:'number',     default:0.2},
+        targets_depth:              {type:'number',     default:10.0},
+        targets_radius:             {type:'number',     default:4.0},
+        targets:                    {type:'array',      default:[0]},
+        // visible_look_target:        {type:'boolean',    default:false},
+        // visible_select_target:      {type:'boolean',    default:false}
     },
     init() {
         const CONTEXT_COMP = this;
@@ -75,7 +76,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         }
 
         if (oldData.target_active !== data.target_active) {
-            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.SELECT_TARGET_CLASS);
+            const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
             targets.forEach( (target) => {
                 target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
                 target.object3D.userData.isActive = false;
@@ -120,10 +121,10 @@ AFRAME.registerComponent('research-selection-tasks', {
             CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_rot.x), THREE.Math.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
         }
 
-        if (oldData.targets_size !== data.targets_size) {
+        if (oldData.targets_width !== data.targets_width) {
             const targets = CONTEXT_COMP.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.TARGET_CONTAINER_CLASS);
             targets.forEach( (target) => {
-                target.object3D.scale.set(data.targets_size, data.targets_size, data.targets_size);
+                target.object3D.scale.set(data.targets_width, data.targets_width, data.targets_width);
             });
         }
 
@@ -139,12 +140,26 @@ AFRAME.registerComponent('research-selection-tasks', {
             });
         }
 
-        if (oldData.visible_look_target !== data.visible_look_target) {
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS, data.visible_look_target);
-        }
+        // if (oldData.visible_look_target !== data.visible_look_target) {
+        //     CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.LOOK_TARGET_CLASS, data.visible_look_target);
+        // }
 
-        if (oldData.visible_select_target !== data.visible_select_target) {
-            CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, data.visible_select_target);
+        // if (oldData.visible_select_target !== data.visible_select_target) {
+        //     CONTEXT_COMP.setTargetsVisibility(CONTEXT_COMP.SELECT_TARGET_CLASS, data.visible_select_target);
+        // }
+
+        if (oldData.targets !== data.targets) {
+            const targets = this.targetsInnerContainer.querySelectorAll('.' + CONTEXT_COMP.FITTS_TARGET_CLASS);
+            targets.forEach( (target) => {
+                target.setAttribute('circles-interactive-visible', false);
+
+                for (let i = 0; i < data.targets.length; i++) {
+                    if ('FT_' + data.targets[i] === target.id) {
+                        target.setAttribute('circles-interactive-visible', true);
+                        break;
+                    }
+                }
+            });
         }
     },
     tick: function (time, timeDelta) {},
@@ -183,17 +198,11 @@ AFRAME.registerComponent('research-selection-tasks', {
             if (CONTEXT_COMP.mouseDownId !== mouseUpId || mouseUpId === '' && CONTEXT_COMP.lastPointerPos.length() < CONTEXT_COMP.data.click_updown_distance_max) {
                 console.log('SELECTION: No target selected');
 
-                const data = CONTEXT_COMP.researchSystem.createSelectExpData();
+                const data = CIRCLES.RESEARCH.createExpData();
                 data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
                 data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
                 data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
                 data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.MISSED;
-                data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-                data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-                data.target_depth   = CONTEXT_COMP.data.targets_depth;
-                data.target_size    = CONTEXT_COMP.data.targets_size;
-                data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
 
                 CONTEXT_COMP.researchSystem.sendSelectExpData(data);
             }
@@ -202,12 +211,12 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         CONTEXT_COMP.el.sceneEl.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, CONTEXT_COMP.createChecksForNullSelection.bind(CONTEXT_COMP));
     },
-    setTargetsVisibility: function(className, isVisible) {
-        const targets = this.targetsInnerContainer.querySelectorAll('.' + className);
-        targets.forEach( (elem) => {
-            elem.setAttribute('circles-interactive-visible', isVisible);
-        });
-    },
+    // setTargetsVisibility: function(className, isVisible) {
+    //     const targets = this.targetsInnerContainer.querySelectorAll('.' + className);
+    //     targets.forEach( (elem) => {
+    //         elem.setAttribute('circles-interactive-visible', isVisible);
+    //     });
+    // },
     createTargets: function() {
         const CONTEXT_COMP = this;
 
@@ -268,66 +277,26 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         console.log('SELECTION: Target Selected:' + selectedElem.id + ' active:' + selectedElem.object3D.userData.isActive);
 
-        //if a look target show fitts
-        if (selectedElem.id === CONTEXT_COMP.TARGET_ID_PREFIX + '0') {
-            //Look target selected
-            const data = CONTEXT_COMP.researchSystem.createSelectExpData();
+        //check if this is an active target
+        if (selectedElem.object3D.userData.isActive) {
+            //Fitts target selected
+            const data = CIRCLES.RESEARCH.createExpData();
             data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
             data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
             data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
             data.user_type      = CONTEXT_COMP.researchSystem.userType;
-            data.target_id      = selectedElem.id;
-            data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.LOOK;
-            data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-            data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-            data.target_depth   = CONTEXT_COMP.data.targets_depth;
-            data.target_size    = CONTEXT_COMP.data.targets_size;
-            data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
 
-            CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-
-            data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
             CONTEXT_COMP.researchSystem.sendSelectExpData(data);
         }
         else {
-            //check if this is an active target
-            if (selectedElem.object3D.userData.isActive) {
-                //Fitts target selected
-                const data = CONTEXT_COMP.researchSystem.createSelectExpData();
-                data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP;
-                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
-                data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
-                data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_id      = selectedElem.id;
-                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.SELECT;
-                data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-                data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-                data.target_depth   = CONTEXT_COMP.data.targets_depth;
-                data.target_size    = CONTEXT_COMP.data.targets_size;
-                data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
+            //Incorrect fitts target selected
+            const data = CIRCLES.RESEARCH.createExpData();
+            data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
+            data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
+            data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
+            data.user_type      = CONTEXT_COMP.researchSystem.userType;
 
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-
-                data.type = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START;
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-            }
-            else {
-                //Incorrect fitts target selected
-                const data = CONTEXT_COMP.researchSystem.createSelectExpData();
-                data.event_type     = CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR;
-                data.exp_id         = CONTEXT_COMP.researchSystem.experimentID;
-                data.user_id        = CONTEXT_COMP.researchSystem.socket.id;
-                data.user_type      = CONTEXT_COMP.researchSystem.userType;
-                data.target_id      = selectedElem.id;
-                data.target_type    = CIRCLES.RESEARCH.TARGET_TYPE.INCORRECT;
-                data.targets_x_rot  = CONTEXT_COMP.data.targets_XY_rot.x;
-                data.targets_y_rot  = CONTEXT_COMP.data.targets_XY_rot.y;
-                data.target_depth   = CONTEXT_COMP.data.targets_depth;
-                data.target_size    = CONTEXT_COMP.data.targets_size;
-                data.fitts_radius   = CONTEXT_COMP.data.targets_radius;
-
-                CONTEXT_COMP.researchSystem.sendSelectExpData(data);
-            }
+            CONTEXT_COMP.researchSystem.sendSelectExpData(data);
         }
     }
 });

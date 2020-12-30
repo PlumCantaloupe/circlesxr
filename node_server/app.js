@@ -13,8 +13,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-const researchUtils = require('./modules/research-utils');
-
 // Make the parsed environment config globally accessible
 //global.env = env;
 
@@ -299,57 +297,93 @@ io.on("connection", socket => {
 
   //research socket events
   if (env.ENABLE_RESEARCH_MODE) {
+    const researchUtils = require('./modules/research-utils');
+
     socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
       console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
           console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          // data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
+          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
+          researchUtils.startExperiment(data);
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
-          //1. create new file to write into
-          //2. pass on event to other clients
-          console.log(data);
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          //start trials
+
+          //send out new trial
+          const newData = researchUtils.getNextTrial();
+
+          //if no new trial then all trials complete, end experiment
+          if (newData === null) {
+            //creating new object as data may not be valid
+            const eData         = CIRCLES.RESEARCH.createExpData();
+            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            researchUtils.stopExperiment(eData);
+            eData.and = {downloadURL:researchUtils.getDownloadLink()};
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+          } else {
+            newData.event_type  = data.event_type
+            newData.exp_id      = data.exp_id
+            newData.user_id     = data.user_id
+            newData.user_type   = data.user_type
+            
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
-          //1. stop writing to file, clean up, and send URL?
-          //2. pass on event to others
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.stopExperiment(data);
+          data.and = {downloadURL:researchUtils.getDownloadLink()};
+          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
-          //1. note time to compare against selection end event
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.startSelection(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
-          //1. calculate time difference from selection start
-          //2. save to file
-          //3. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.stopSelection(data);
+
+          //if no new trial then all trials complete, end experiment
+          const newData = researchUtils.getNextTrial();
+          if (newData === null) {
+            const eData         = CIRCLES.RESEARCH.createExpData();
+            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            researchUtils.stopExperiment(eData);
+            eData.and = {downloadURL:researchUtils.getDownloadLink()};
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+          } else {
+            newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
+            newData.exp_id      = data.exp_id
+            newData.user_id     = data.user_id
+            newData.user_type   = data.user_type
+
+            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+          } 
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
+          // researchUtils.pauseExperiment(data);
+        }
+        break;
+        case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_UNPAUSE: {
+          // researchUtils.unpauseExperiment(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
-        }
-        break;
-        case CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          researchUtils.noteSelectionError(data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
-          //1. save to file
-          //2. pass on event to other clients
-          socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          // not implemented yet
+          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
       }
