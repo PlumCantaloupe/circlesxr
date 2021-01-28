@@ -24,3 +24,4 @@ require('./circles-rounded-rectangle');
 require('./circles-manager');
 require('./circles-artefact');
 require('./circles-wasd-movement');
+require('./circles-media-loader');

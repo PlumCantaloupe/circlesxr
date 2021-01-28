@@ -6,10 +6,14 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
+
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
   </head>
   <body>
-
+    <div id="page">
+      <!-- <canvas id="pdf-canvas">   <embed src="/global/images/youth-jeunes-en.pdf"></embed></canvas> -->
+  
+    </div>
     <a-scene circles_properties>
       <a-assets>
         <!-- add your assets here -->
@@ -21,7 +25,7 @@
 
       <!-- avatar -->
       <circles-avatar/>
-
+     
       <!-- checkpoints -->
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2 0.05 -2"></a-entity>
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2 0.05 2"></a-entity>
@@ -32,7 +36,7 @@
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0 0.05 3"></a-entity>
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="3 0.05 0"></a-entity>
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-3 0.05 0"></a-entity>
-      
+      <a-entity circles-pdf-loader src="/global/images/youth-jeunes-en.pdf"></a-entity>
       <!-- the ground -->
       <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 55, 210);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity>
 
