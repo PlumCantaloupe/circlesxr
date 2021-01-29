@@ -6,6 +6,7 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
+    <script src="/global/js/libs/pdf.min.js"></script>
 
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
   </head>
@@ -36,7 +37,7 @@
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0 0.05 3"></a-entity>
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="3 0.05 0"></a-entity>
       <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-3 0.05 0"></a-entity>
-      <a-entity circles-pdf-loader src="/global/images/youth-jeunes-en.pdf"></a-entity>
+      <a-entity id="pdf-test" position="0 3 0" scale="2.0 2.0 2.0" circles-pdf-loader="src:/global/images/youth-jeunes-en.pdf;"></a-entity>
       <!-- the ground -->
       <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 55, 210);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity>
 
