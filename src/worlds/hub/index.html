@@ -44,6 +44,7 @@
       <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
         <a-entity
           id="fireParticlesSound"
+          class="ambient-music"
           fire="particles:200;"
           position="0.0 -0.2 0.0"
           sound="src:#fireCrackling-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
@@ -150,7 +151,7 @@
 
       <!-- sounds -->
       <!-- wilderness sounds from user https://freesound.org/people/Arctura/ here: https://freesound.org/people/Arctura/sounds/39829/ -->
-      <a-entity position="15 0 0" sound="src:#wilderness-snd; autoplay:true; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.1; distanceModel:inverse;" ></a-entity>
+      <a-entity class="ambient-music" position="15 0 0" sound="src:#wilderness-snd; autoplay:false; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.1; distanceModel:inverse;" ></a-entity>
     </a-scene>
 
     <!-- circles_END_SCRIPTS -->

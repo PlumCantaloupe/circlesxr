@@ -103,11 +103,11 @@
       <a-entity id="environment" gltf-model="#salon" scale="1.35 1.35 1.35" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" shadow="receive:true; cast:true;"></a-entity>
       <!-- <a-entity gltf-model="#curtain" scale="0.01 0.01 0.01" circles-material-override="src:#curtainMap; side:double;" shadow="receive:true; cast:true;"></a-entity> -->
 
-      <a-entity position="-5 1.5 -1" sound="src:#salonAmbience-snd; autoplay:true; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.7; distanceModel:inverse;" ></a-entity>
-      <a-entity position="-2 1 -4" sound="src:#salonRadio-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:5.0; distanceModel:inverse;" ></a-entity>
-      <a-entity position="-0.5 1.5 5.5" sound="src:#streetAmbience-snd; autoplay:true; loop:true; refDistance:1.0; rolloffFactor:1.0; volume:1.0; distanceModel:exponential;"></a-entity>
+      <a-entity class="ambient-music" position="-5 1.5 -1" sound="src:#salonAmbience-snd; autoplay:false; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.7; distanceModel:inverse;" ></a-entity>
+      <a-entity class="ambient-music" position="-2 1 -4" sound="src:#salonRadio-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:5.0; distanceModel:inverse;" ></a-entity>
+      <a-entity class="ambient-music" position="-0.5 1.5 5.5" sound="src:#streetAmbience-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:1.0; volume:1.0; distanceModel:exponential;"></a-entity>
 
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
       <!-- <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:4.0"></a-entity> -->
       <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:spot; angle:50; intensity:20.0; color:#d5e4f5; distance:15.0; penumbra:0.1;" circles-platform-shadows></a-entity>
       <!-- <a-entity id="insideLight" position="-1.6 3.0 -3.9" rotation="-90 0 0" light="type:spot; angle:50; color:#fff09b; distance:8.0; castShadow:false; penumbra:0.3;"></a-entity> -->
