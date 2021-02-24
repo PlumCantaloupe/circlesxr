@@ -136,4 +136,6 @@ div.grid2col {
     display:block;
     width:50px;
     height:50px;
+    margin-left: auto;
+    margin-right: auto;
   }
