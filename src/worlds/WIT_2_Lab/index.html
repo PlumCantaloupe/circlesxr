@@ -25,93 +25,102 @@
             Context_AF.safetyNarrFirstPlay = false;
             Context_AF.cultureNarrFirstPlay = false;
             
-            document.querySelectorAll('.narrative').forEach( entity => {
-              console.log("adding sound listener");
+            const player1 = document.querySelector('#Player1');
+            const attachListenerFunc = () => {
+              document.querySelectorAll('.narrative').forEach( entity => {
+                console.log("adding sound listener");
+                entity.addEventListener('click', (event) => {
+                  if ( entity.getAttribute('id') == Context_AF.toolsNarr.getAttribute('id') ) {
+                    if (Context_AF.toolsNarrFirstPlay === false) {
+                      console.log('toolsNarrFirstPlay');
+                      Context_AF.toolsNarr.components.sound.playSound();
+                      Context_AF.toolsNarrFirstPlay = true;
+                    }
+                    else if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
+                      Context_AF.toolsNarr.components.sound.stopSound();
+                      console.log("stopping toolsNarr");
+                    }
+                    else {
+                      Context_AF.toolsNarr.components.sound.playSound();
+                      console.log("playing toolsNarr");
+                    }
 
-              entity.addEventListener('click', event => {
+                    if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
+                      Context_AF.safetyNarr.components.sound.stopSound();
+                      console.log("stopping SafetyNarr");
+                    }
 
-                if ( entity.getAttribute('id') == Context_AF.toolsNarr.getAttribute('id') ) {
-
-                  if (Context_AF.toolsNarrFirstPlay === false) {
-                    console.log('toolsNarrFirstPlay');
-                    Context_AF.toolsNarr.components.sound.playSound();
-                    Context_AF.toolsNarrFirstPlay = true;
+                    if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
+                      Context_AF.cultureNarr.components.sound.stopSound();
+                      console.log("stopping CultureNarr");
+                    }
                   }
-                  else if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
+                  else if ( entity.getAttribute('id') == Context_AF.safetyNarr.getAttribute('id') ) {
+                    if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
+                      Context_AF.toolsNarr.components.sound.stopSound();
+                      console.log("stopping toolsNarr");
+                    }
+
+                    if (Context_AF.safetyNarrFirstPlay === false) {
+                      console.log('safetyNarrFirstPlay');
+                      Context_AF.safetyNarr.components.sound.playSound();
+                      Context_AF.safetyNarrFirstPlay = true;
+                    }
+                    else if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
+                      Context_AF.safetyNarr.components.sound.stopSound();
+                      console.log("stopping SafetyNarr");
+                    }
+                    else {
+                      Context_AF.safetyNarr.components.sound.playSound();
+                    }
+
+                    if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
+                      Context_AF.cultureNarr.components.sound.stopSound();
+                      console.log("stopping CultureNarr");
+                    }
+                  } 
+                  else if ( entity.getAttribute('id') == Context_AF.cultureNarr.getAttribute('id') ) {
+                    if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
+                      Context_AF.toolsNarr.components.sound.stopSound();
+                      console.log("stopping toolsNarr");
+                    }
+
+                    if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
+                      Context_AF.safetyNarr.components.sound.stopSound();
+                      console.log("stopping SafetyNarr");
+                    }
+
+                    if (Context_AF.cultureNarrFirstPlay === false) {
+                      console.log('cultureNarrFirstPlay');
+                      Context_AF.cultureNarr.components.sound.playSound();
+                      Context_AF.cultureNarrFirstPlay = true;
+                    }
+                    else if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
+                      Context_AF.cultureNarr.components.sound.stopSound();
+                      console.log("stopping CultureNarr");
+                    }
+                    else {
+                      Context_AF.cultureNarr.components.sound.playSound();
+                    }
+                  }
+                  else if ( entity.getAttribute('id') == 'release_control' ) {
+                    //hacky ... I need to clean this up sometime to be a more general solution
                     Context_AF.toolsNarr.components.sound.stopSound();
-                    console.log("stopping toolsNarr");
-                  }
-                  else {
-                    Context_AF.toolsNarr.components.sound.playSound();
-                    console.log("playing toolsNarr");
-                  }
-
-                  if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
                     Context_AF.safetyNarr.components.sound.stopSound();
-                    console.log("stopping SafetyNarr");
-                  }
-
-                  if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
                     Context_AF.cultureNarr.components.sound.stopSound();
-                    console.log("stopping CultureNarr");
                   }
-                }
-
-
-                if ( entity.getAttribute('id') == Context_AF.safetyNarr.getAttribute('id') ) {
-                  if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
-                    Context_AF.toolsNarr.components.sound.stopSound();
-                    console.log("stopping toolsNarr");
-                  }
-
-                  if (Context_AF.safetyNarrFirstPlay === false) {
-                    console.log('safetyNarrFirstPlay');
-                    Context_AF.safetyNarr.components.sound.playSound();
-                    Context_AF.safetyNarrFirstPlay = true;
-                  }
-                  else if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
-                    Context_AF.safetyNarr.components.sound.stopSound();
-                    console.log("stopping SafetyNarr");
-                  }
-                  else {
-                    Context_AF.safetyNarr.components.sound.playSound();
-                  }
-
-                  if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
-                    Context_AF.cultureNarr.components.sound.stopSound();
-                    console.log("stopping CultureNarr");
-                  }
-                }
-
-
-                if ( entity.getAttribute('id') == Context_AF.cultureNarr.getAttribute('id') ) {
-                  if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
-                    Context_AF.toolsNarr.components.sound.stopSound();
-                    console.log("stopping toolsNarr");
-                  }
-
-                  if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
-                    Context_AF.safetyNarr.components.sound.stopSound();
-                    console.log("stopping SafetyNarr");
-                  }
-
-                  if (Context_AF.cultureNarrFirstPlay === false) {
-                    console.log('cultureNarrFirstPlay');
-                    Context_AF.cultureNarr.components.sound.playSound();
-                    Context_AF.cultureNarrFirstPlay = true;
-                  }
-                  else if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
-                    Context_AF.cultureNarr.components.sound.stopSound();
-                    console.log("stopping CultureNarr");
-                  }
-                  else {
-                    Context_AF.cultureNarr.components.sound.playSound();
-                  }
-                }
-
-                
+                });
               });
-            });
+
+              player1.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
+            };
+
+            if (player1.querySelector('#release_control')) {
+              attachListenerFunc();
+            }
+            else {
+              player1.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
+            }
           }
         });
     </script>
