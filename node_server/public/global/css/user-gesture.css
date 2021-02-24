@@ -39,9 +39,10 @@ div.grid2col {
     transform: translate(-50%, -50%);
 
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 1.0);
     padding: 10px;
     width: 300px;
+    filter: drop-shadow(0 0 0.75rem rgb(50, 50, 50));
 }
 
 #user-gesture-overlay {
@@ -52,6 +53,7 @@ div.grid2col {
     padding: 10px;
     width: 100%;
     height: 100%;
+    background-color: rgba(255,255,255,0.5);
     backdrop-filter: blur(10px);
 }
 
