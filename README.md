@@ -71,7 +71,6 @@ ___TODO: will add more to this later___
       out the `scripts` section of `package.json` for more build options and
       details.
 1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users. Note that if you are using localhost it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (this also allows you to easily test your local content on a mobile device i.e., a smartphone or Oculus Quest). You may also have to change NAF_SERVER in .env i.e. **'NAF_SERVER='wss://<your_ngrok_server>.ngrok.io'**
-    - Alternatively, you can also go to `localhost:{SERVER_PORT}/add-models-to-db` then `localhost:{SERVER_PORT}/add-users-to-db` to add models then users manually.
     - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire mdmu db (which you will have to do when we make changes to db items) use the following commands within the mongo shell:
         - `use circles`
         - `db.dropDatabase()`
