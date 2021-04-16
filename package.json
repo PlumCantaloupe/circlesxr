@@ -23,7 +23,6 @@
     "helmet": "^4.4.1",
     "jquery": "^3.5.1",
     "jstransformer-markdown-it": "^2.1.0",
-    "mailgun-js": "^0.22.0",
     "mongodb": "^3.6.6",
     "mongoose": "^5.9.18",
     "node-sass-middleware": "^0.11.0",
