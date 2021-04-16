@@ -140,25 +140,29 @@ const stopExperiment = (data) => {
 };
 
 const startSelection = (data) => {
-    num_errors = 0; //reset errors
-    startSelectTime = Date.now();
+    if (experimentInProgress) {
+        num_errors = 0; //reset errors
+        startSelectTime = Date.now();
+    }
 };
 
 const stopSelection = (data) => {
-    const date = new Date();
-    const timeToSelect = date - startSelectTime;
-    const currTrialObj  = getCurrTrial();
+    if (experimentInProgress) {
+        const date = new Date();
+        const timeToSelect = date - startSelectTime;
+        const currTrialObj  = getCurrTrial();
 
-    //formating date and time strings nicely :)
-    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0');
-    const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
+        //formating date and time strings nicely :)
+        const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0');
+        const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
 
-    console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
+        console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
 
-    //create a string to add
-    writeExpdata(   data.exp_id,                    currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
-                    currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
-                    currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
+        //create a string to add
+        writeExpdata(   data.exp_id,                    currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
+                        currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
+                        currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
+    }
 };
 
 const writeExpdata = (  exp_id,         exp_type,       date,           time,           target_active,  
