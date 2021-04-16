@@ -35,25 +35,25 @@
     "validator": "^13.0.0"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.0.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^8.1.1",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.4",
     "passport-jwt": "^4.0.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
   },
   "scripts": {
     "easyrtc-install": "cd ./node_modules/easyrtc; npm install; cd ../../;",
-    "build:dev:client": "webpack src/core/circles_client.js -o node_server/public/global/js/circles_client_bundle.js --mode=development --devtool=source-map --debug:true",
-    "build:client": "webpack src/core/circles_client.js -o node_server/public/global/js/circles_client_bundle.js --mode=production",
-    "build:dev:worlds": "webpack --config webpack.worlds.js --mode=development --devtool=source-map --debug:true",
-    "build:worlds": "webpack --config webpack.worlds.js --mode=production",
+    "build:dev:client": "webpack --config ./webpack.client.js --mode=development",
+    "build:client": "webpack --config ./webpack.client.js --mode=production",
+    "build:dev:worlds": "webpack --config ./webpack.worlds.js --mode=development",
+    "build:worlds": "webpack --config ./webpack.worlds.js --mode=production",
     "build:dev": "npm run build:dev:client && npm run build:dev:worlds",
     "build": "npm run build:client && npm run build:worlds",
-    "serve:dev": "npm run build:dev && nodemon node_server/app.js",
-    "serve": "npm run build && nodemon node_server/app.js",
-    "serve:cert": "node node_server/app_cert.js",
-    "mongo": "node node_server/mongo.js"
+    "serve:dev": "npm run build:dev && nodemon ./node_server/app.js",
+    "serve": "npm run build && nodemon ./node_server/app.js",
+    "serve:cert": "node ./node_server/app_cert.js",
+    "mongo": "node ./node_server/mongo.js"
   }
 }
