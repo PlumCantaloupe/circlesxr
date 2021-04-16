@@ -98,11 +98,11 @@
       </a-entity>
 
       <!-- sound -->
-      <a-entity position="5 1 -10" sound="src:#crowd1-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="5 1 0" sound="src:#crowd2-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="5 1 10" sound="src:#crowd3-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="-3.5 1.5 -13.5" sound="src:#police-snd; autoplay:true; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;"></a-entity>
-      <a-entity position="-10 0 0" sound="src:#darkMirror-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:1.0; distanceModel:inverse;" ></a-entity>
+      <a-entity position="5 1 -10" class="ambient-music" sound="src:#crowd1-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
+      <a-entity position="5 1 0" class="ambient-music" sound="src:#crowd2-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
+      <a-entity position="5 1 10" class="ambient-music" sound="src:#crowd3-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
+      <a-entity position="-3.5 1.5 -13.5" class="ambient-music" sound="src:#police-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;"></a-entity>
+      <a-entity position="-10 0 0" class="ambient-music" sound="src:#darkMirror-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:1.0; distanceModel:inverse;" ></a-entity>
 
       <!-- dark mirror screen -->
       <a-entity position="-9.469 3.645 0.018" rotation="0 90 0" scale="7.766 5.823 4.825" geometry="primitive:plane;" material="src:#darkMirrorMap; shader:flat;" shadow="receive:true; cast:false;"

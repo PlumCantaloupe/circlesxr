@@ -266,8 +266,13 @@ AFRAME.registerComponent('research-selection-tasks', {
 
         //add exterior targets
         for (let i = 0; i < CONTEXT_COMP.data.num_targets; i++) {
-            createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + (i+1), pointerVec.x, pointerVec.y, pointerVec.z, 'select-target');
-            pointerVec.applyAxisAngle(rotateVec, ANGLE_BETWEEN);
+
+            //create id that follows "side-to-side" structure of https://www.yorku.ca/mack/interaccion2017.html
+            //i.e. clockwise for 8 targets will be 1, 3, 5, 7, 2, 4, 6, 8 ...
+             let ft_i = (i < CONTEXT_COMP.data.num_targets/2) ?  (i * 2) + 1 : (i - CONTEXT_COMP.data.num_targets/2) * 2 + 2;
+
+            createTarget_f(CONTEXT_COMP.TARGET_ID_PREFIX + ft_i, pointerVec.x, pointerVec.y, pointerVec.z, 'select-target');
+            pointerVec.applyAxisAngle(rotateVec, -ANGLE_BETWEEN);
         }
 //!!
     },
