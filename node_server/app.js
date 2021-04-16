@@ -16,7 +16,6 @@ env = dotenvParseVariables(env.parsed);
 // Make the parsed environment config globally accessible
 //global.env = env;
 
-//shared CIRCLES code with client
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
