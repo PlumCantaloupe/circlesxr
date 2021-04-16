@@ -276,7 +276,7 @@ io.on("connection", socket => {
   });
 
   socket.on("broadcast", data => {
-    socket.to(curRoom).broadcast.emit("broadcast", data);
+    socket.to(curRoom).emit("broadcast", data);
   });
 
   socket.on("disconnect", () => {
@@ -286,7 +286,7 @@ io.on("connection", socket => {
 
       delete rooms[curRoom].occupants[socket.id];
       const occupants = rooms[curRoom].occupants;
-      socket.to(curRoom).broadcast.emit("occupantsChanged", { occupants });
+      socket.to(curRoom).emit("occupantsChanged", { occupants });
 
       if (occupants == {}) {
         console.log("everybody left room");
