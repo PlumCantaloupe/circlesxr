@@ -48,6 +48,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'node_server/public/worlds')
   },
+  target: 'web',
+  devtool: "source-map",
+  performance: {
+    hints: false
+  },
   performance: {
     hints: false
   },
