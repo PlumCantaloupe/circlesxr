@@ -48,7 +48,7 @@ if (env.MAKE_SSL) {
 
 //server stuff
 const session       = require('express-session');
-const MongoStore    = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 //database
 const mongoose      = require('mongoose');
@@ -66,8 +66,8 @@ const sessionObj    = session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
+  store: MongoStore.create({
+    mongoUrl: dbURL
   })
 });
 
