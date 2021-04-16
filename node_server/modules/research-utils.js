@@ -40,7 +40,7 @@ const startExperiment = (data) => {
     //set csv titles
     logger.write('exp_id, exp_type, date, time, target_active, targets_x_rot, targets_y_rot, targets_width, targets_depth, targets_radius, targets, num_errors, selection_time_ms');
 
-    let id, type, targets, targets_x_rots, targets_y_rots, target_widths, target_depths, num_trials = null;
+    let id, type, targets, targets_x_rots, targets_y_rots, targets_widths, targets_depths, num_trials, num_targets, total_exp_permutations, total_exp_trials = null;
     trials = [];
 
     const expArr = data.and.tests.data;
@@ -59,16 +59,20 @@ const startExperiment = (data) => {
         targets_depths  = expArr[i].targets_depths;
         num_trials      = expArr[i].num_trials;
 
-        total_exp_trials = targets_x_rots.length * targets_y_rots.length * targets_widths.length * targets_depths.length * num_trials;
+        num_targets = targets.length;
+        num_rounds = Math.floor(num_trials/num_targets);
+
+        total_exp_permutations = targets_x_rots.length * targets_y_rots.length * targets_widths.length * targets_depths.length * num_rounds;
+        total_exp_trials = total_exp_permutations * num_targets;
         let exp_trials = [];
         let randIndex = 0;
+        let randTrial = null;
 
-        //create empty array that we will set each null index randomly to a trial object
+        //create empty array that we will set each null index randomly to a permutation object
+        //this is so we can randomly order which "trial type we are doing"
         for (let exp_i = 0; exp_i < total_exp_trials; exp_i++) {
             exp_trials.push(null);
         }
-
-        let targetIndex = -1;
 
         //loop through all possible conditions and add a new trial randomly within trail array
         //wonder if this will perform bad :| Hopefully we can avoid threading for now ...
@@ -76,30 +80,29 @@ const startExperiment = (data) => {
             for (let yRot_i = 0; yRot_i < targets_y_rots.length; yRot_i++) {
                 for (let width_i = 0; width_i < targets_widths.length; width_i++) {
                     for (let depth_i = 0; depth_i < targets_depths.length; depth_i++) {
-                        for (let trial_i = 0; trial_i < num_trials; trial_i++) {
+                        for (let round_i = 0; round_i < num_rounds; round_i++) {
                             
                             //get random index that hasn't been used yet
-                            randIndex = Math.floor(Math.random() * total_exp_trials);
+                            randIndex = Math.floor(Math.random() * total_exp_permutations) * num_targets;
                             while (exp_trials[randIndex] !== null) {
-                                randIndex = Math.floor(Math.random() * total_exp_trials);
+                                randIndex = Math.floor(Math.random() * total_exp_permutations) * num_targets;
                             }
 
-                            //choose new index
-                            if (++targetIndex === targets.length) {
-                                targetIndex = 0;
+                            //add trials 
+                            for (let trial_i = 0; trial_i < num_targets; trial_i++) {
+                                //create trial
+                                randTrial                   = null;
+                                randTrial                   = CIRCLES.RESEARCH.createExpData();
+                                randTrial.target_active     = targets[trial_i];                   //loop through targets. f we go over num of targets just loop around
+                                randTrial.type              = expArr[i].type;                   //knowing what type of select task this is will be useful for the future
+                                randTrial.targets           = [].concat(targets);               //all targets visible / cloning array so no weird trouble later
+                                randTrial.targets_x_rot     = targets_x_rots[xRot_i];
+                                randTrial.targets_y_rot     = targets_y_rots[yRot_i];
+                                randTrial.targets_width     = targets_widths[width_i];
+                                randTrial.targets_depth     = targets_depths[depth_i];
+
+                                exp_trials[randIndex + trial_i] = randTrial;  //set null value at this index to the randTrial object
                             }
-
-                            //create trial
-                            const randTrial = CIRCLES.RESEARCH.createExpData();
-                            randTrial.target_active     = targets[targetIndex];     //may as well loop through all available targets.
-                            randTrial.type              = expArr[i].type;           //knowing what type of select task this is will be useful
-                            randTrial.targets           = [].concat(targets);       //all targets visible / cloning array so no weird trouble later
-                            randTrial.targets_x_rot     = targets_x_rots[xRot_i];
-                            randTrial.targets_y_rot     = targets_y_rots[yRot_i];
-                            randTrial.targets_width     = targets_widths[width_i];
-                            randTrial.targets_depth     = targets_depths[depth_i];
-
-                            exp_trials[randIndex] = randTrial;  //set null value at this index to the randTrial object
                         }
                     }
                 }
@@ -137,25 +140,29 @@ const stopExperiment = (data) => {
 };
 
 const startSelection = (data) => {
-    num_errors = 0; //reset errors
-    startSelectTime = Date.now();
+    if (experimentInProgress) {
+        num_errors = 0; //reset errors
+        startSelectTime = Date.now();
+    }
 };
 
 const stopSelection = (data) => {
-    const date = new Date();
-    const timeToSelect = date - startSelectTime;
-    const currTrialObj  = getCurrTrial();
+    if (experimentInProgress) {
+        const date = new Date();
+        const timeToSelect = date - startSelectTime;
+        const currTrialObj  = getCurrTrial();
 
-    //formating date and time strings nicely :)
-    const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0');
-    const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
+        //formating date and time strings nicely :)
+        const expDateStr    = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDay().toString().padStart(2, '0');
+        const expTimeStr    = date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0') + ':' + date.getMilliseconds().toString().padStart(3, '0');
 
-    console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
+        console.log('Logging trial --- selectionTime: ' + timeToSelect + ' numErrors: ' + num_errors);
 
-    //create a string to add
-    writeExpdata(   data.exp_id,                    currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
-                    currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
-                    currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
+        //create a string to add
+        writeExpdata(   data.exp_id,                    currTrialObj.type,          expDateStr,                 expTimeStr,                 currTrialObj.target_active, 
+                        currTrialObj.targets_x_rot,     currTrialObj.targets_y_rot, currTrialObj.targets_width, currTrialObj.targets_depth, 
+                        currTrialObj.targets_radius,    currTrialObj.targets,       num_errors,                 timeToSelect );
+    }
 };
 
 const writeExpdata = (  exp_id,         exp_type,       date,           time,           target_active,  

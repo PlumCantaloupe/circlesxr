@@ -3,7 +3,7 @@
 const path = require('path');
 const Room = require('../models/room');
 const validator = require('validator');
-const emailService = require('../services/email');
+//const emailService = require('../services/email');
 const fs = require('fs');
 
 /**
@@ -333,7 +333,7 @@ CirclesXR Team`
       };
 
       // Send off the email
-      emailService.send(member.email, message);
+      //emailService.send(member.email, message);
 
       // Store when the email was sent
       member.dateEmailSent = Date.now();

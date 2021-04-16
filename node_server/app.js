@@ -48,7 +48,7 @@ if (env.MAKE_SSL) {
 
 //server stuff
 const session       = require('express-session');
-const MongoStore    = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 //database
 const mongoose      = require('mongoose');
@@ -66,8 +66,8 @@ const sessionObj    = session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
+  store: MongoStore.create({
+    mongoUrl: dbURL
   })
 });
 
@@ -79,7 +79,20 @@ db.once('open', function () {
 
 //use sessions for tracking logins (needs to be before routes app.use)
 app.use(sessionObj);
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "default-src": ["'self'"],
+      "connect-src": ["'self'", "'unsafe-inline'", "cdn.aframe.io", "blob:", "ws://localhost:1111", "ws://circles-xr-research.ngrok.io"],
+      "img-src": ["*"],
+      "media-src": ["*"],
+      "frame-src": ["player.vimeo.com"],
+      "style-src": ["'self'", "'unsafe-inline'", "unpkg.com"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com"],
+      "object-src": ["'none'"],
+    },
+  })
+);
 app.use(bodyParser.json());                                 //set body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -276,7 +289,7 @@ io.on("connection", socket => {
   });
 
   socket.on("broadcast", data => {
-    socket.to(curRoom).broadcast.emit("broadcast", data);
+    socket.to(curRoom).emit("broadcast", data);
   });
 
   socket.on("disconnect", () => {
@@ -286,7 +299,7 @@ io.on("connection", socket => {
 
       delete rooms[curRoom].occupants[socket.id];
       const occupants = rooms[curRoom].occupants;
-      socket.to(curRoom).broadcast.emit("occupantsChanged", { occupants });
+      socket.to(curRoom).emit("occupantsChanged", { occupants });
 
       if (occupants == {}) {
         console.log("everybody left room");

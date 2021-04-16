@@ -1,9 +1,9 @@
     <!-- html to get appropriate user interactions to trigger permission and user choices. Turning off for now until we figure out permissions with link traversal -->
-    <!-- <div id="EnterCircles-UI" class="overlayCover" >
+    <div id="user-gesture-overlay" >
         <div id="Permissions" class="overlay">
             <img class="logo" src="/global/assets/textures/logos/circles_logo.svg" alt="Circles logo" />
-            <div class="suboverlay">
-            <p class="title">Permissions</p>
+            <!-- <div class="suboverlay"> -->
+            <!-- <p class="title">Permissions</p>
                 
             <div class="grid2col">
                 <span class="label">Microphone</span>
@@ -14,12 +14,14 @@
                     <span class="onoffswitch-switch"></span>
                 </label>
                 </div>
-            </div>
+            </div> -->
 
-            <input id="EnterCircles" type="submit" value="Enter Circles">
-            </div>
+            <input id="user-gesture-enter" type="submit" value="Enter Circles">
+            <!-- loading gif from: https://www.behance.net/gallery/31234507/Open-source-Loading-GIF-Icons-Vol-1 -->
+            <img id="loading-animation-enter" src="/global/images/loading.gif">
+            <!-- </div> -->
         </div>
-    </div> -->
+    </div>
 
 <!-- <a-scene    renderer="  antialias:true; 
                         gammaOutput: true;
@@ -41,11 +43,12 @@
                                 onConnect: onConnect;
                                 audio: {{ NAF_AUDIO }};
                                 debug: false;
-                                adapter: {{ NAF_ADAPTER }};
-                                serverURL: {{ NAF_SERVER }};"
+                                adapter: {{ NAF_ADAPTER }};"
                                 
             shadow="autoUpdate:false; type:basic;"
-            vr-mode-ui="enabled: true"
+            vr-mode-ui="enabled:true;"
+            loading-screen="enabled:false;"
+            device-orientation-permission-ui="enabled:true;"
             circles-enter-ui
             circles-platform-scene-shadows>
                                 <!-- adapter: wsEasyRTC;"> -->

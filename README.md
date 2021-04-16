@@ -47,17 +47,19 @@ ___TODO: will add more to this later___
 ## Running Locally
 
 1. Clone repo
-    - `git clone https://github.com/PlumCantaloupe/circles_framework.git`
+    - `git clone https://github.com/PlumCantaloupe/circlesxr.git`
+1. Though not necessary, it is recommend to use [Visual Studio Code](https://code.visualstudio.com/) to develop, run, and modify _Circles_. It also allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
 1. [Install mongo](https://docs.mongodb.com/manual/installation/)
-1. **Create a `data/db` folder on your PC** that Mongo can write to
+    - **Create a `data/db` folder on your PC** that Mongo can write to
     - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 7)
+    - Please note that if the _mongo_ or _mongod_ cmds "are not recognized" that you may need to add the [mongo executables to your windows path](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#add-mongodb-binaries-to-the-system-path). More information [here](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/).
 1. [Install node/npm](https://nodejs.org/en/download/)
 1. In terminal install webpack globally
     - `npm install --save-dev webpack`
 1. Go into project folder and install NPM dependencies
     - `npm install`
 1. Set up the Environment file
-    - `cp .env.dist .env`
+    - `cp .env.dist .env` (or just duplicate the .env.dist file and rename it as .env :)
     - Make any changes to your .env file that are specific to your environment
 1. Open another terminal window/session and start Mongo
     - `npm run mongo`
@@ -68,29 +70,25 @@ ___TODO: will add more to this later___
     - This will build the needed bundles and serve the app for viewing. Check
       out the `scripts` section of `package.json` for more build options and
       details.
-1. In a browser (recommend Firefox), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users. Note that if you are using localhost and Firefox it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint. You may also have to change NAF_SERVER in .env i.e. **'NAF_SERVER='wss://<your_ngrok_server>.ngrok.io'**
-    - Alternatively, you can also go to `localhost:{SERVER_PORT}/add-models-to-db` then `localhost:{SERVER_PORT}/add-users-to-db` to add models then users manually.
-    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire mdmu db (which you will have to do when we make changes to db items) use the following commands within the mongo shell:
+1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` to add both models to mongo db and test users. Note that if you are using localhost it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (this also allows you to easily test your local content on a mobile device i.e., a smartphone or Oculus Quest).
+    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire _circles_ db (which you will have to do when we make changes to db items) use the following commands within the mongo shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
-1. Login with one of the 3 test users
+1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
     - `{username}:{password}`
     - `s1@circlesxr.com:password`
     - `s2@circlesxr.com:password`
     - `s3@circlesxr.com:password`
-1. Open another app instance of browser
-    - e.g. [https://support.mozilla.org/en-US/questions/1184891](https://support.mozilla.org/en-US/questions/1184891)
-1. Log in with anbother user (or same) and have fun :)
+1. Open another instance of browser (or open incognito mode, or another browser)
+1. Log in with another user and have fun seeing each other :)
 
 ### Instance Routes
 
 - /register
 - /profile
 - /campfire
-- /add-all-test-data
-- /add-models-to-db
-- /add-users-to-db
 - /rooms
+- /add-all-test-data (only do this once, or if you have deleted/dropped the database and need to re-populate test data )
 
 ----------------
 
