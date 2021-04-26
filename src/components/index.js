@@ -25,3 +25,6 @@ require('./circles-manager');
 require('./circles-artefact');
 require('./circles-wasd-movement');
 require('./circles-enter-ui');
+require('./circles-checkpoint');
+require('./circles-sendpoint');
+require('./circles-spawnpoint');

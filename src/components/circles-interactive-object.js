@@ -11,6 +11,11 @@ AFRAME.registerComponent('circles-interactive-object', {
     const Context_AF = this;
     const data = this.data;
 
+    //make sure this is interactive
+    if (!Context_AF.el.classList.contains('interactive')) {
+        Context_AF.el.classList.add('interactive');
+    }
+
     Context_AF.highlightElem = document.createElement('a-entity');
 
     const callbackHighlight = (e) => {
@@ -100,6 +105,9 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'shadow' && 
                 keys[i] !== 'visible' && 
                 keys[i] !== 'circles-interactive-object' &&
+                keys[i] !== 'circles-checkpoint' &&
+                keys[i] !== 'circles-sendpoint' &&
+                keys[i] !== 'circles-spawnpoint' &&
                 keys[i] !== 'circles-object-label' &&
                 keys[i] !== 'networked' &&
                 keys[i] !== 'circles-inspect-object' &&
