@@ -39,12 +39,21 @@ AFRAME.registerComponent('circles-wasd-movement', {
   },
 
   init: function () {
+    const CONTEXT_AF = this;
 
     if (this.el.components['camera']) {
-        this.cameraElem = this.el.components['camera'];
+      CONTEXT_AF.cameraElem = CONTEXT_AF.el.components['camera'];
     }
     else {
-        this.cameraElem = this.el.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+      CONTEXT_AF.cameraElem = this.el.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+
+      if (!CONTEXT_AF.cameraElem) {
+        const camHandle = (e) => {
+          CONTEXT_AF.cameraElem = this.el.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+          CONTEXT_AF.el.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, camHandle);
+        };
+        CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, camHandle);
+      }
     }
 
     // To keep track of the pressed keys.

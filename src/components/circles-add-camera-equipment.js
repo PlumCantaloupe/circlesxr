@@ -22,9 +22,11 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         //set rig
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
-        rigElem.setAttribute('circles-teleport',{});
+        //rigElem.setAttribute('circles-teleport',{});
         rigElem.setAttribute('circles-snap-turning',{});
-        rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
+        // rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
+        rigElem.setAttribute('movement-controls',{controls:'gamepad,keyboard,touch,checkpoint'});
+        rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
         console.log('Attached camera controls to rig');
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
