@@ -39,7 +39,8 @@
       </a-entity> -->
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0.0 0.05 0.0"></a-entity>
+      <!-- circles-spawnpoint is only added if you want this checkpoint to also be a spawn point when users log in -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.05 0.0"></a-entity>
 
       
       <!-- the ground, let's remove for now to keep elements present minimal for testing -->
