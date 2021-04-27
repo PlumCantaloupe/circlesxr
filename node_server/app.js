@@ -83,11 +83,11 @@ app.use(
     directives: {
       "default-src": ["'self'"],
       "connect-src": ["'self'", "'unsafe-inline'", "cdn.aframe.io", "blob:", "ws://localhost:1111", "ws://circles-xr-research.ngrok.io"],
-      "img-src": ["*"],
+      "img-src": ["*", "blob:"],
       "media-src": ["*"],
       "frame-src": ["player.vimeo.com"],
       "style-src": ["'self'", "'unsafe-inline'", "unpkg.com"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io"],
       "object-src": ["'none'"],
     },
   })
