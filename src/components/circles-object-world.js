@@ -23,18 +23,19 @@ schema: {
     const data          = this.data;
     const world         = data.world; //refers to world the object originates from
     const pickedUp      = data.pickedup; //refers to world the object originates from
+    const curr_world    = document.querySelector('[circles-manager]').components['circles-manager'].getWorld(); //world we are curently within
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     //model change
     if ( (oldData.pickedup !== data.pickedup) && (data.pickedup !== '') ) {
         if ( pickedUp ) {
-            if ( window.circles_curr_world !== world ) {
+            if ( curr_world !== world ) {
                 Context_AF.el.setAttribute('visible', true);
             }
         }
         else {
-            if ( window.circles_curr_world !== world ) {
+            if ( curr_world !== world ) {
                 Context_AF.el.setAttribute('visible', false);
             }
         }

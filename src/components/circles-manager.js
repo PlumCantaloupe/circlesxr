@@ -2,7 +2,8 @@
 
 AFRAME.registerComponent('circles-manager', {
   schema: {
-    world: {type:'string', default:''}     //use __WORLDNAME__ unless you want to control synching in some other fashion
+    world: {type:'string', default:''},    //use __WORLDNAME__ unless you want to control synching in some other fashion
+    user: {type:'string', default:''}     //use __USERNAME__ unless you want to control synching in some other fashion
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function()
@@ -68,6 +69,9 @@ AFRAME.registerComponent('circles-manager', {
   },
   getWorld: function() {
     return this.data.world;
+  },
+  getUser: function() {
+    return this.data.user;
   },
   addEventListeners : function () {
     let Context_AF  = this;
