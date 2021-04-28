@@ -12,7 +12,7 @@ AFRAME.registerComponent('circles-enter-ui', {
             //hide user-gesture overlay
             document.querySelector('#user-gesture-overlay').style.display='none';
             
-            //start all ambient music
+            //start all autoplay/ambient music
             const ambientSounds = document.querySelectorAll('.autoplay-sound');
             ambientSounds.forEach(function(soundEntity) {
                 soundEntity.setAttribute('circles-sound', {state:'play'});
