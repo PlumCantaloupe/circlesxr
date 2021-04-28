@@ -4,6 +4,8 @@ AFRAME.registerComponent('circles-artefact', {
   schema: {
     title:              {type:'string',   default:'No Title Set'},
     description:        {type:'string',   default:'No decription set'},
+    audio:              {type:'audio',    default:''},
+    volume:             {type:'number',   default:1.0},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     origPos:            {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
@@ -16,13 +18,18 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200},
-
-    object_world:       {type:'string',     default:''}     //use __WORLDNAME__ unless you want to control synching in some other fashion
+    updateRate:         {type:'number',     default:200}
   },
   init: function() {
-    const Context_AF = this;
-    const data = this.data;
+    const Context_AF  = this;
+    const data        = this.data;
+    const world       = document.querySelector('[circles-manager]').components['circles-manager'].getWorld();
+
+    console.log('!!!! ' + world);
+
+    if (!Context_AF.el.classList.contains('narrative')) {
+      Context_AF.el.classList.add('narrative');
+    }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
     //Context_AF.el.classList.add('interactive');
@@ -37,18 +44,22 @@ AFRAME.registerComponent('circles-artefact', {
                                                             arrow_position:data.arrow_position,     updateRate:data.updateRate
                                                         });
     
-    Context_AF.el.setAttribute('circles-object-world', {object_world:data.object_world});
+    Context_AF.el.setAttribute('circles-object-world', {world:world});
+
+    Context_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
+
     Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
     Context_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
   },
-//   update : function(oldData) {
-//     const Context_AF = this;
-//     const data = this.data;
+  //!!TODO should probably make this component dynamic ...
+  // update : function(oldData) {
+  //   const Context_AF = this;
+  //   const data = this.data;
 
-//     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+  //   if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
-//     if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
-//         Context_AF.labelText.setAttribute('text', {value:data.label_text});
-//     }
-//   }
+  //   if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
+  //       Context_AF.labelText.setAttribute('text', {value:data.label_text});
+  //   }
+  // }
 });

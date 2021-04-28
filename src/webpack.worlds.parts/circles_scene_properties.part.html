@@ -37,7 +37,6 @@
                         logarithmicDepthBuffer: false;
                         precision: high;"
 
-
             networked-scene="   room: __ROOM_NAME__;
                                 connectOnLoad: true;
                                 onConnect: onConnect;
@@ -53,4 +52,4 @@
             circles-platform-scene-shadows>
                                 <!-- adapter: wsEasyRTC;"> -->
     <!-- our "game manager" object -->
-    <a-entity id="circles-Manager" circles-manager></a-entity>
+    <a-entity id="circles-manager" circles-manager="world:__WORLDNAME__"></a-entity>

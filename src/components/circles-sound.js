@@ -5,13 +5,13 @@
 
 AFRAME.registerComponent('circles-sound', {
   schema: {
-    autoplay: {type:'boolean', default:false},
-    type:     {type:'string', default:'basic', oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience']},
-    loop:     {type:'boolean', default:false},
-    volume:   {type:'number', default:1.0},
-    state:    {type:'string', default:'stop', oneOf: ['play', 'stop', 'pause']},
-    poolSize: {type:'int', default:1},
-    src:      {type:'audio', default:null},
+    autoplay: {type:'boolean',  default:false},
+    type:     {type:'string',   default:'basic', oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']},
+    loop:     {type:'boolean',  default:false},
+    volume:   {type:'number',   default:1.0}, 
+    state:    {type:'string',   default:'stop', oneOf: ['play', 'stop', 'pause']},
+    poolSize: {type:'int',      default:1},
+    src:      {type:'audio',    default:''},
   },
 
   init: function () {
@@ -54,6 +54,7 @@ AFRAME.registerComponent('circles-sound', {
           ontext_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
         } break;
         case 'music':
+        case 'artefact':
         case 'ambience': {
           Context_AF.el.setAttribute('sound', {positional:false});
         } break;
