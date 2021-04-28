@@ -1,8 +1,8 @@
 'use strict';
 
-AFRAME.registerComponent('circles-sendpoint', {
+AFRAME.registerComponent('circles-sound', {
   schema: {
-    target: {type: 'selector'}    //pass in id to checkpoint you want user to go to ...
+    target: {type: 'selector'}
   },
 
   init: function () {

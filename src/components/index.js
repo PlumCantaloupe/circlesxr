@@ -28,3 +28,4 @@ require('./circles-enter-ui');
 require('./circles-checkpoint');
 require('./circles-sendpoint');
 require('./circles-spawnpoint');
+require('./circles-sound');

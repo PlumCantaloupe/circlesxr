@@ -13,9 +13,9 @@ AFRAME.registerComponent('circles-enter-ui', {
             document.querySelector('#user-gesture-overlay').style.display='none';
             
             //start all ambient music
-            const ambientSounds = document.querySelectorAll('.ambient-music');
+            const ambientSounds = document.querySelectorAll('.autoplay-sound');
             ambientSounds.forEach(function(soundEntity) {
-                soundEntity.components.sound.playSound();
+                soundEntity.setAttribute('circles-sound', {state:'play'});
             });
         });
 
