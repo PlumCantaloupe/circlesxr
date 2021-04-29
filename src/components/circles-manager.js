@@ -21,6 +21,7 @@ AFRAME.registerComponent('circles-manager', {
 
     CONTEXT_AF.createFloatingObjectDescriptions();
     CONTEXT_AF.addEventListeners(); //want after everything loaded in via network
+    CONTEXT_AF.addArtefactNarrationController();
 
     scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e) => {
         CONTEXT_AF.objectControls = scene.querySelector('#object_controls');
@@ -66,6 +67,53 @@ AFRAME.registerComponent('circles-manager', {
     const data        = CONTEXT_AF.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+  },
+  addArtefactNarrationController: function() {
+    const scene = document.querySelector('a-scene');
+    const player1 = document.querySelector('#Player1');
+
+    const narrativeElems = document.querySelectorAll('[circles-artefact]');
+    let narrativePlayingID = '';
+
+    const stopAllNarrativesFunc = () => {
+      narrativePlayingID = '';
+      narrativeElems.forEach( artefact => {
+        if (artefact.components['circles-sound']) {
+          artefact.setAttribute('circles-sound', {state:'stop'});
+        }
+      });
+    };    
+
+    narrativeElems.forEach( artefact => {
+      artefact.addEventListener('click', (e) => {
+        if (artefact.components['circles-sound']) {
+          if ( artefact.getAttribute('id') !== narrativePlayingID ) {
+            //if clicking on a new narrtive then stop any playing and play this one.
+            stopAllNarrativesFunc();
+            narrativePlayingID = artefact.getAttribute('id');
+            artefact.setAttribute('circles-sound', {state:'play'});
+          }
+          else {
+            //if you click on the same artefact stop the narrative playing
+            stopAllNarrativesFunc();
+          }
+        }
+      });
+    });
+
+    //need to also stop sound when "release" button clicked on camera during inspect
+    const checkForCameraFunc = (e) => {
+      let release_control = player1.querySelector('#release_control');
+      //wait until release control exists before we try to add ...
+      if (release_control) {
+        release_control.addEventListener('click', stopAllNarrativesFunc);
+        player1.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, checkForCameraFunc);
+      }
+      else {
+        player1.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, checkForCameraFunc);
+      }
+    };
+    checkForCameraFunc();
   },
   getWorld: function() {
     return this.data.world;

@@ -97,7 +97,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         let releaseElem = document.createElement('a-entity');
         releaseElem.setAttribute('id', 'release_control');
-        releaseElem.setAttribute('class', 'interactive button narrative');
+        releaseElem.setAttribute('class', 'interactive button');
         releaseElem.setAttribute('position', {x:0.0, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
         releaseElem.setAttribute('geometry',  {  primitive:'plane', 
                                                 width:CONTROL_BUTTON_SIZE,

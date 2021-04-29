@@ -7,123 +7,6 @@
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-    <script>
-        AFRAME.registerComponent('narrative-soundmanager', {
-          schema: {
-          },
-
-          init: function() {
-            console.log("starting up narr man");
-            const scene = document.querySelector('a-scene');
-
-            const CONTEXT_AF = this;
-            CONTEXT_AF.toolsNarr      = scene.querySelector('#Artefact-Drill');
-            CONTEXT_AF.safetyNarr     = scene.querySelector('#Artefact-Gloves');
-            CONTEXT_AF.cultureNarr    = scene.querySelector('#Artefact-Clipboard');
-
-            CONTEXT_AF.toolsNarrFirstPlay = false;
-            CONTEXT_AF.safetyNarrFirstPlay = false;
-            CONTEXT_AF.cultureNarrFirstPlay = false;
-            
-            const player1 = document.querySelector('#Player1');
-            const attachListenerFunc = () => {
-              document.querySelectorAll('.narrative').forEach( entity => {
-                console.log("adding sound listener");
-                entity.addEventListener('click', (event) => {
-                  if ( entity.getAttribute('id') == CONTEXT_AF.toolsNarr.getAttribute('id') ) {
-                    if (CONTEXT_AF.toolsNarrFirstPlay === false) {
-                      console.log('toolsNarrFirstPlay');
-                      CONTEXT_AF.toolsNarr.components.sound.playSound();
-                      CONTEXT_AF.toolsNarrFirstPlay = true;
-                    }
-                    else if (CONTEXT_AF.toolsNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-                    else {
-                      CONTEXT_AF.toolsNarr.components.sound.playSound();
-                      console.log("playing toolsNarr");
-                    }
-
-                    if (CONTEXT_AF.safetyNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-
-                    if (CONTEXT_AF.cultureNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                  }
-                  else if ( entity.getAttribute('id') == CONTEXT_AF.safetyNarr.getAttribute('id') ) {
-                    if (CONTEXT_AF.toolsNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-
-                    if (CONTEXT_AF.safetyNarrFirstPlay === false) {
-                      console.log('safetyNarrFirstPlay');
-                      CONTEXT_AF.safetyNarr.components.sound.playSound();
-                      CONTEXT_AF.safetyNarrFirstPlay = true;
-                    }
-                    else if (CONTEXT_AF.safetyNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-                    else {
-                      CONTEXT_AF.safetyNarr.components.sound.playSound();
-                    }
-
-                    if (CONTEXT_AF.cultureNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                  } 
-                  else if ( entity.getAttribute('id') == CONTEXT_AF.cultureNarr.getAttribute('id') ) {
-                    if (CONTEXT_AF.toolsNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-
-                    if (CONTEXT_AF.safetyNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-
-                    if (CONTEXT_AF.cultureNarrFirstPlay === false) {
-                      console.log('cultureNarrFirstPlay');
-                      CONTEXT_AF.cultureNarr.components.sound.playSound();
-                      CONTEXT_AF.cultureNarrFirstPlay = true;
-                    }
-                    else if (CONTEXT_AF.cultureNarr.components.sound.isPlaying === true) {
-                      CONTEXT_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                    else {
-                      CONTEXT_AF.cultureNarr.components.sound.playSound();
-                    }
-                  }
-                  else if ( entity.getAttribute('id') == 'release_control' ) {
-                    //hacky ... I need to clean this up sometime to be a more general solution
-                    CONTEXT_AF.toolsNarr.components.sound.stopSound();
-                    CONTEXT_AF.safetyNarr.components.sound.stopSound();
-                    CONTEXT_AF.cultureNarr.components.sound.stopSound();
-                  }
-                });
-              });
-
-              player1.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
-            };
-
-            if (player1.querySelector('#release_control')) {
-              attachListenerFunc();
-            }
-            else {
-              player1.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
-            }
-          }
-        });
-    </script>
   </head>
   <body>
 
@@ -133,7 +16,7 @@
         <!-- add your assets here -->
 
         <!-- audio -->
-
+        
         <!-- narration -->
         <audio id="Narr_tools-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Tools.ogg" preload="true"></audio>
         <audio id="Narr_safety-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Safety.ogg" preload="true"></audio>
@@ -188,7 +71,7 @@
       <a-entity circles-checkpoint circles-spawnpoint position="5.7 0.05 1.0"></a-entity>
 
       <!-- sky and lights -->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
       <!-- sounds -->
       <a-entity position="7.5 1.0 4.7" circles-sound="type:ambient; src:#Amb_fan-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
