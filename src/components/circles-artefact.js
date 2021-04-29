@@ -30,7 +30,6 @@ AFRAME.registerComponent('circles-artefact', {
     }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    //CONTEXT_AF.el.classList.add('interactive');
     CONTEXT_AF.el.setAttribute('circles-interactive-object', '');
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
@@ -44,7 +43,9 @@ AFRAME.registerComponent('circles-artefact', {
     
     CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
-    CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
+    if (data.audio) {
+      CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
+    }
 
     CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
     CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
