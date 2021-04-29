@@ -9,47 +9,47 @@ AFRAME.registerComponent('circles-cutout-material', {
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
-    Context_AF.loader = new THREE.TextureLoader();
-    Context_AF.applyMats();
-    Context_AF.el.addEventListener('object3dset', this.applyMats.bind(this));
+    CONTEXT_AF.loader = new THREE.TextureLoader();
+    CONTEXT_AF.applyMats();
+    CONTEXT_AF.el.addEventListener('object3dset', this.applyMats.bind(this));
   },
   //custom function
   applyMats : function () {
-    const Context_AF = this;
-    const mesh = Context_AF.el.getObject3D('mesh');
+    const CONTEXT_AF = this;
+    const mesh = CONTEXT_AF.el.getObject3D('mesh');
 
     if (!mesh) return;
 
-    if ( Context_AF.data.src === '' ) {
+    if ( CONTEXT_AF.data.src === '' ) {
       console.warn('No src defined in component');
     }
     else {
-      Context_AF.loader.load( Context_AF.data.src,
+      CONTEXT_AF.loader.load( CONTEXT_AF.data.src,
         function onLoad(texture) {
           //texture.anisotropy = 16;
 
           const customDepthMaterial = new THREE.MeshDepthMaterial( {
             depthPacking: THREE.RGBADepthPacking,
             map: texture,
-            alphaTest: Context_AF.data.alphaTest
+            alphaTest: CONTEXT_AF.data.alphaTest
           });
 
           const basicMaterial = new THREE.MeshBasicMaterial();
 
           let renderSide = THREE.DoubleSide;
-          if ( Context_AF.data.renderSide === 'front' ) {
+          if ( CONTEXT_AF.data.renderSide === 'front' ) {
             renderSide = THREE.FrontSide;
           }
-          else if ( Context_AF.data.renderSide === 'back' ) {
+          else if ( CONTEXT_AF.data.renderSide === 'back' ) {
             renderSide = THREE.BackSide;
           }
 
           if (mesh) {
             mesh.traverse(function (node) {
 
-              if (!Context_AF.data.shading) {
+              if (!CONTEXT_AF.data.shading) {
                 node.material = basicMaterial;
               }
 
@@ -57,7 +57,7 @@ AFRAME.registerComponent('circles-cutout-material', {
               //https://stackoverflow.com/questions/43848330/three-js-shadows-cast-by-partially-transparent-mesh?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa\
               node.material.map           = texture;
               node.material.side          = renderSide;
-              node.material.alphaTest     = Context_AF.data.alphaTest;
+              node.material.alphaTest     = CONTEXT_AF.data.alphaTest;
               node.customDepthMaterial    = customDepthMaterial;
 
               node.customDepthMaterial.needsUpdate    = true;
@@ -66,7 +66,7 @@ AFRAME.registerComponent('circles-cutout-material', {
             });
           }
 
-          Context_AF.el.emit(CIRCLES.EVENTS.CUSTOM_MAT_SET);
+          CONTEXT_AF.el.emit(CIRCLES.EVENTS.CUSTOM_MAT_SET);
         },
         function onProgress(xmlHttpRequest) {
           //xmlHttpRequest.total (bytes), xmlHttpRequest.loaded (bytes)

@@ -7,18 +7,18 @@ AFRAME.registerComponent('circles-snap-turning', {
 
   init: function() 
   {
-    const Context_AF = this;
-    Context_AF.trackpadX = 0.0;
-    Context_AF.trackpadY = 0.0;
+    const CONTEXT_AF = this;
+    CONTEXT_AF.trackpadX = 0.0;
+    CONTEXT_AF.trackpadY = 0.0;
 
-    Context_AF.keyboard_detection();
-    Context_AF.trackpad_detection();
-    Context_AF.joystick_detection();
-    //Context_AF.touchscreen_detection(); //this detects swipes but not sure required as A-Frame already does this
+    CONTEXT_AF.keyboard_detection();
+    CONTEXT_AF.trackpad_detection();
+    CONTEXT_AF.joystick_detection();
+    //CONTEXT_AF.touchscreen_detection(); //this detects swipes but not sure required as A-Frame already does this
   },
   update: function(oldData) 
   {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
@@ -29,42 +29,42 @@ AFRAME.registerComponent('circles-snap-turning', {
     this.el.object3D.rotation.y += THREE.Math.degToRad(angleDeg);
   },
   keyboard_detection: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
     //keyboard controls
     document.addEventListener('keyup', (event) => {
         const keyName = event.key;
         
         if (keyName == 'e' || keyName == 'E') {
-            Context_AF.rotateBody(-Context_AF.data.snap_amount);
+            CONTEXT_AF.rotateBody(-CONTEXT_AF.data.snap_amount);
         }
 
         if (keyName == 'q' || keyName == 'Q') {
-            Context_AF.rotateBody(Context_AF.data.snap_amount);
+            CONTEXT_AF.rotateBody(CONTEXT_AF.data.snap_amount);
         }
     }, false);
   },
   trackpad_detection: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
     //Oculusgo / gearVR / trackpad controllers ////
-    Context_AF.el.addEventListener('trackpadmoved', function(event) {
-        Context_AF.trackpadX = event.detail.x;
-        Context_AF.trackpadY = event.detail.y;
+    CONTEXT_AF.el.addEventListener('trackpadmoved', function(event) {
+        CONTEXT_AF.trackpadX = event.detail.x;
+        CONTEXT_AF.trackpadY = event.detail.y;
     });
 
-    Context_AF.el.addEventListener('trackpadup', function(event) { 
+    CONTEXT_AF.el.addEventListener('trackpadup', function(event) { 
         //check which side of trackpad is being pressed
-        if (Context_AF.trackpadX > 0.0) {
-            Context_AF.rotateBody(-Context_AF.data.snap_amount);
+        if (CONTEXT_AF.trackpadX > 0.0) {
+            CONTEXT_AF.rotateBody(-CONTEXT_AF.data.snap_amount);
         }
-        else if (Context_AF.trackpadX < 0.0) {
-            Context_AF.rotateBody(Context_AF.data.snap_amount);
+        else if (CONTEXT_AF.trackpadX < 0.0) {
+            CONTEXT_AF.rotateBody(CONTEXT_AF.data.snap_amount);
         }
     });
   },
   joystick_detection: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
     //need to set timer and thresholds
     const threshold         = 0.8;      //max is 1.0 for all the way to the side
@@ -75,13 +75,13 @@ AFRAME.registerComponent('circles-snap-turning', {
     let snapRightTimerFunc  = null;
 
     //Oculusgo / gearVR / trackpad controllers ////
-    Context_AF.el.addEventListener('thumbstickmoved', function(event) {
-        Context_AF.trackpadX = event.detail.x;
-        Context_AF.trackpadY = event.detail.y;
+    CONTEXT_AF.el.addEventListener('thumbstickmoved', function(event) {
+        CONTEXT_AF.trackpadX = event.detail.x;
+        CONTEXT_AF.trackpadY = event.detail.y;
         
-        if (Context_AF.trackpadX > threshold) {
+        if (CONTEXT_AF.trackpadX > threshold) {
             if (canSnapLeft === true) {
-                Context_AF.rotateBody(-Context_AF.data.snap_amount);
+                CONTEXT_AF.rotateBody(-CONTEXT_AF.data.snap_amount);
                 canSnapLeft = false;
                 snapLeftTimerFunc = setTimeout(() => { canSnapLeft = true }, snapTime);
 
@@ -90,9 +90,9 @@ AFRAME.registerComponent('circles-snap-turning', {
                 clearTimeout( snapRightTimerFunc );
             }
         }
-        else if (Context_AF.trackpadX < -threshold) {
+        else if (CONTEXT_AF.trackpadX < -threshold) {
             if (canSnapRight === true) {
-                Context_AF.rotateBody(Context_AF.data.snap_amount);
+                CONTEXT_AF.rotateBody(CONTEXT_AF.data.snap_amount);
                 canSnapRight = false;
                 snapRightTimerFunc = setTimeout(() => { canSnapRight = true }, snapTime);
 
@@ -104,7 +104,7 @@ AFRAME.registerComponent('circles-snap-turning', {
     });
   },
   touchscreen_detection: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
     //http://javascriptkit.com/javatutors/touchevents2.shtml
     let touchsurface = document;
@@ -146,7 +146,7 @@ AFRAME.registerComponent('circles-snap-turning', {
                 swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
             }
         }
-        Context_AF.handleTouchSwipe(swipedir)
+        CONTEXT_AF.handleTouchSwipe(swipedir)
         e.preventDefault()
     }, false);
 

@@ -8,71 +8,71 @@ AFRAME.registerComponent('circles-interactive-object', {
     neutral_scale:      {type:'number',     default:1.00}
   },
   init: function() {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     //make sure this is interactive
-    if (!Context_AF.el.classList.contains('interactive')) {
-        Context_AF.el.classList.add('interactive');
+    if (!CONTEXT_AF.el.classList.contains('interactive')) {
+        CONTEXT_AF.el.classList.add('interactive');
     }
 
-    Context_AF.highlightElem = document.createElement('a-entity');
+    CONTEXT_AF.highlightElem = document.createElement('a-entity');
 
     const callbackHighlight = (e) => {
         //have to make sure there is geo to copy for highlight first
-        if (Context_AF.el.getObject3D('mesh')) {
+        if (CONTEXT_AF.el.getObject3D('mesh')) {
             //MUST remove thos when created else an infinite loop will trigger as child highlight elem bubbles object3dset event
-            Context_AF.el.removeEventListener('object3dset', callbackHighlight);
+            CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
         }
         else {
             return;
         }
 
-        Context_AF.createHighlightElement(Context_AF);
+        CONTEXT_AF.createHighlightElement(CONTEXT_AF);
     };
-    Context_AF.el.addEventListener('object3dset', callbackHighlight);
+    CONTEXT_AF.el.addEventListener('object3dset', callbackHighlight);
 
-    if (Context_AF.el.getObject3D('mesh')) {
-        Context_AF.createHighlightElement(Context_AF);
-        Context_AF.el.removeEventListener('object3dset', callbackHighlight);
+    if (CONTEXT_AF.el.getObject3D('mesh')) {
+        CONTEXT_AF.createHighlightElement(CONTEXT_AF);
+        CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
     }
   },
   update: function(oldData) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     //highlight color change
     if ( (oldData.highlight_color !== data.highlight_color) && (data.highlight_color !== '') ) {
-        Context_AF.highlightElem.highlight_color = data.highlight_color;
-        Context_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
+        CONTEXT_AF.highlightElem.highlight_color = data.highlight_color;
+        CONTEXT_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
     }
 
     //size changes
     if ( (oldData.hovered_scale !== data.hovered_scale) && (data.hovered_scale !== '') ) {
-        Context_AF.highlightElem.hovered_scale = data.hovered_scale;
+        CONTEXT_AF.highlightElem.hovered_scale = data.hovered_scale;
     }
 
     if ( (oldData.clicked_scale !== data.clicked_scale) && (data.clicked_scale !== '') ) {
-        Context_AF.highlightElem.clicked_scale = data.clicked_scale;
+        CONTEXT_AF.highlightElem.clicked_scale = data.clicked_scale;
     }
 
     if ( (oldData.neutral_scale !== data.neutral_scale) && (data.neutral_scale !== '') ) {
-        Context_AF.highlightElem.neutral_scale = data.neutral_scale;
-        Context_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
+        CONTEXT_AF.highlightElem.neutral_scale = data.neutral_scale;
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
     }
   },
-  createHighlightElement : function (Context_AF) {
-    const data = Context_AF.data;
-    let modelElem = Context_AF.el;
+  createHighlightElement : function (CONTEXT_AF) {
+    const data = CONTEXT_AF.data;
+    let modelElem = CONTEXT_AF.el;
 
-    Context_AF.highlightElem = null;
-    Context_AF.highlightElem = document.createElement('a-entity');
+    CONTEXT_AF.highlightElem = null;
+    CONTEXT_AF.highlightElem = document.createElement('a-entity');
     
     //need to do this for loaded objects like gltf ...
-    Context_AF.highlightElem.addEventListener('model-loaded', function (e) {
-        let model               = Context_AF.highlightElem.getObject3D('mesh');
+    CONTEXT_AF.highlightElem.addEventListener('model-loaded', function (e) {
+        let model               = CONTEXT_AF.highlightElem.getObject3D('mesh');
         let flatMat             = new THREE.MeshBasicMaterial();
         flatMat.color           = new THREE.Color(data.highlight_color);
         flatMat.transparency    = false;
@@ -87,7 +87,7 @@ AFRAME.registerComponent('circles-interactive-object', {
         });
     });
 
-    Context_AF.highlightElem.setAttribute('class', 'object_highlight');
+    CONTEXT_AF.highlightElem.setAttribute('class', 'object_highlight');
 
     const keys      = Object.keys(modelElem.components);
     const values    = Object.values(modelElem.components);
@@ -114,36 +114,36 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'circles-object-world' && 
                 keys[i] !== 'circles-artefact' ) {
 
-                Context_AF.highlightElem.setAttribute(keys[i], values[i].data);
+                CONTEXT_AF.highlightElem.setAttribute(keys[i], values[i].data);
         }
     }
 
     //inverse shell method as post-processing is far too expensive for mobile VR (setting mat also so that primitives also work)
-    Context_AF.highlightElem.setAttribute('material', {color:data.highlight_color, shader:'flat', side:'back'});    
-    Context_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
-    Context_AF.highlightElem.setAttribute('shadow', {cast:false, receive:false});
-    Context_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON)); //don't hide if neutral scale is larger suggestinga  want for a permanent outline
-    modelElem.appendChild(Context_AF.highlightElem);
+    CONTEXT_AF.highlightElem.setAttribute('material', {color:data.highlight_color, shader:'flat', side:'back'});    
+    CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
+    CONTEXT_AF.highlightElem.setAttribute('shadow', {cast:false, receive:false});
+    CONTEXT_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON)); //don't hide if neutral scale is larger suggestinga  want for a permanent outline
+    modelElem.appendChild(CONTEXT_AF.highlightElem);
 
     //clicked
     modelElem.addEventListener('click', (e) => {
-        Context_AF.highlightElem.setAttribute('scale', {x:data.clicked_scale, y:data.clicked_scale, z:data.clicked_scale});
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.clicked_scale, y:data.clicked_scale, z:data.clicked_scale});
         const timeoutObj = setTimeout(() => {
-            Context_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
+            CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
             clearTimeout(timeoutObj);
           }, 200);
     });
 
     //hovering
     modelElem.addEventListener('mouseenter', (e) => {
-        Context_AF.highlightElem.setAttribute('visible', true);
-        Context_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
+        CONTEXT_AF.highlightElem.setAttribute('visible', true);
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
     });
 
     //not hovering
     modelElem.addEventListener('mouseleave', (e) => {
-        Context_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON));
-        Context_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
+        CONTEXT_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON));
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
     });
   },
   remove: function () {}

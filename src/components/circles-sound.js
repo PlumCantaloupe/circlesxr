@@ -15,10 +15,10 @@ AFRAME.registerComponent('circles-sound', {
   },
 
   init: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
   },
   update: function (oldData) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
@@ -26,12 +26,12 @@ AFRAME.registerComponent('circles-sound', {
     if ( (oldData.autoplay !== data.autoplay) && (data.autoplay !== '') ) {
 
       if (data.autoplay === true) {
-        if (!Context_AF.el.classList.contains('autoplay-sound')) {
-          Context_AF.el.classList.add('autoplay-sound');
+        if (!CONTEXT_AF.el.classList.contains('autoplay-sound')) {
+          CONTEXT_AF.el.classList.add('autoplay-sound');
         }
       }
 
-      Context_AF.el.setAttribute('sound', {autoplay:false});
+      CONTEXT_AF.el.setAttribute('sound', {autoplay:false});
     }
 
     //note that for all psoitional sound we shoudl be using mono sound clips
@@ -39,10 +39,10 @@ AFRAME.registerComponent('circles-sound', {
       switch (data.type) {
         case 'basic':
         case 'basic-diegetic': {
-          Context_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
+          CONTEXT_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
         } break;
         case 'basic-nondiegetic': {
-          Context_AF.el.setAttribute('sound', {positional:false});
+          CONTEXT_AF.el.setAttribute('sound', {positional:false});
         } break;
         case 'dialogue': {
           ontext_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
@@ -56,42 +56,42 @@ AFRAME.registerComponent('circles-sound', {
         case 'music':
         case 'artefact':
         case 'ambience': {
-          Context_AF.el.setAttribute('sound', {positional:false});
+          CONTEXT_AF.el.setAttribute('sound', {positional:false});
         } break;
       }
     }
 
     if ( (oldData.loop !== data.loop) && (data.loop !== '') ) {
-      Context_AF.el.setAttribute('sound', {loop:data.loop});
+      CONTEXT_AF.el.setAttribute('sound', {loop:data.loop});
     }
 
     if ( (oldData.volume !== data.volume) && (data.volume !== '') ) {
-      Context_AF.el.setAttribute('sound', {volume:data.volume});
+      CONTEXT_AF.el.setAttribute('sound', {volume:data.volume});
     }
 
     if ( (oldData.state !== data.state) && (data.state !== '') ) {
       switch (data.state) {
         case 'stop': {
-          Context_AF.el.setAttribute('sound', {});
-          Context_AF.el.components['sound'].stopSound();
+          CONTEXT_AF.el.setAttribute('sound', {});
+          CONTEXT_AF.el.components['sound'].stopSound();
         } break;
         case 'play': {
-          Context_AF.el.setAttribute('sound', {});
-          Context_AF.el.components['sound'].playSound();
+          CONTEXT_AF.el.setAttribute('sound', {});
+          CONTEXT_AF.el.components['sound'].playSound();
         } break;
         case 'pause': {
-          Context_AF.el.setAttribute('sound', {});
-          Context_AF.el.components['sound'].pauseSound();
+          CONTEXT_AF.el.setAttribute('sound', {});
+          CONTEXT_AF.el.components['sound'].pauseSound();
         } break;
       }
     }
 
     if ( (oldData.poolSize !== data.poolSize) && (data.poolSize !== '') ) {
-      Context_AF.el.setAttribute('poolSize', {poolSize:data.poolSize});
+      CONTEXT_AF.el.setAttribute('poolSize', {poolSize:data.poolSize});
     }
 
     if ( (oldData.src !== data.src) && (data.src !== '') ) {
-      Context_AF.el.setAttribute('sound', {src:data.src});
+      CONTEXT_AF.el.setAttribute('sound', {src:data.src});
     }
   }
 });

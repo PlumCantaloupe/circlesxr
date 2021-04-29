@@ -21,43 +21,43 @@ AFRAME.registerComponent('circles-artefact', {
     updateRate:         {type:'number',     default:200}
   },
   init: function() {
-    const Context_AF  = this;
+    const CONTEXT_AF  = this;
     const data        = this.data;
     const world       = document.querySelector('[circles-manager]').components['circles-manager'].getWorld();
 
-    if (!Context_AF.el.classList.contains('narrative')) {
-      Context_AF.el.classList.add('narrative');
+    if (!CONTEXT_AF.el.classList.contains('narrative')) {
+      CONTEXT_AF.el.classList.add('narrative');
     }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    //Context_AF.el.classList.add('interactive');
-    Context_AF.el.setAttribute('circles-interactive-object', '');
+    //CONTEXT_AF.el.classList.add('interactive');
+    CONTEXT_AF.el.setAttribute('circles-interactive-object', '');
 
-    Context_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
+    CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
                                                             inspectRotation:data.inspectRotation,   origPos:data.origPos,               origRot:data.origRot,
                                                             origScale:data.origScale,               textRotationY:data.textRotationY,   textLookAt:data.textLookAt  
                                                         });
 
-    Context_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 
+    CONTEXT_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 
                                                             arrow_position:data.arrow_position,     updateRate:data.updateRate
                                                         });
     
-    Context_AF.el.setAttribute('circles-object-world', {world:world});
+    CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
-    Context_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
+    CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
 
-    Context_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
-    Context_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
+    CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
+    CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
   },
   //!!TODO should probably make this component dynamic ...
   // update : function(oldData) {
-  //   const Context_AF = this;
+  //   const CONTEXT_AF = this;
   //   const data = this.data;
 
   //   if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
   //   if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
-  //       Context_AF.labelText.setAttribute('text', {value:data.label_text});
+  //       CONTEXT_AF.labelText.setAttribute('text', {value:data.label_text});
   //   }
   // }
 });

@@ -6,12 +6,12 @@ AFRAME.registerComponent('checkpoint', {
   },
 
   init: function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
-    Context_AF.active = false;
-    Context_AF.targetEl = null;
-    Context_AF.fire = Context_AF.fire.bind(Context_AF);
-    Context_AF.offset = new THREE.Vector3();
+    CONTEXT_AF.active = false;
+    CONTEXT_AF.targetEl = null;
+    CONTEXT_AF.fire = CONTEXT_AF.fire.bind(CONTEXT_AF);
+    CONTEXT_AF.offset = new THREE.Vector3();
   },
 
   update: function () {

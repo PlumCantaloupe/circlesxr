@@ -13,62 +13,62 @@ AFRAME.registerComponent('circles-inspect-object', {
     textLookAt:       {type:'boolean',  default:false}               //will we do a look at to rotate to where user is at first?
   },
   init: function() {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (data.origPos.x > 10000) {
-      Context_AF.el.setAttribute('circles-inspect-object', {origPos:{x:Context_AF.el.object3D.position.x, y:Context_AF.el.object3D.position.y, z:Context_AF.el.object3D.position.z}}); //save it so network syncs this
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origPos:{x:CONTEXT_AF.el.object3D.position.x, y:CONTEXT_AF.el.object3D.position.y, z:CONTEXT_AF.el.object3D.position.z}}); //save it so network syncs this
     }
 
     if (data.origRot.x > 10000) {
-      Context_AF.el.setAttribute('circles-inspect-object', {origRot:{x:Context_AF.el.object3D.rotation.x, y:Context_AF.el.object3D.rotation.y, z:Context_AF.el.object3D.rotation.z}}); //save it so network syncs this
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origRot:{x:CONTEXT_AF.el.object3D.rotation.x, y:CONTEXT_AF.el.object3D.rotation.y, z:CONTEXT_AF.el.object3D.rotation.z}}); //save it so network syncs this
     }
 
     if (data.origScale.x > 10000) {
-      Context_AF.el.setAttribute('circles-inspect-object', {origScale:{x:Context_AF.el.object3D.scale.x, y:Context_AF.el.object3D.scale.y, z:Context_AF.el.object3D.scale.z}}); //save it so network syncs this
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origScale:{x:CONTEXT_AF.el.object3D.scale.x, y:CONTEXT_AF.el.object3D.scale.y, z:CONTEXT_AF.el.object3D.scale.z}}); //save it so network syncs this
     }
 
     let eventsAttached = false;
-    Context_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, function (event) {
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, function (event) {
       if (eventsAttached === false) {
         eventsAttached = true;
-        NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
 
           console.log("adding events");
   
           el.addEventListener('ownership-gained', (e) => {
             console.log("ownership-gained");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
           });
   
           el.addEventListener('ownership-lost', (e) => {
             console.log("ownership-lost");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
           });
   
           el.addEventListener('ownership-changed', (e) => {
             console.log("ownership-changed");
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
           });
         });
       }
     });
 
-    if (Context_AF.el.hasAttribute('networked') === true) {
+    if (CONTEXT_AF.el.hasAttribute('networked') === true) {
       if (eventsAttached === false) {
         eventsAttached = true;
-        NAF.utils.getNetworkedEntity(Context_AF.el).then((el) => {
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
 
           el.addEventListener('ownership-gained', (e) => {
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
           });
   
           el.addEventListener('ownership-lost', (e) => {
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
           });
   
           el.addEventListener('ownership-changed', (e) => {
-            Context_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, Context_AF.el, true );
+            CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
           });
         });
       }
@@ -76,8 +76,8 @@ AFRAME.registerComponent('circles-inspect-object', {
     
 
     //send click event to manager
-    Context_AF.el.addEventListener('click', (e) => {
-      Context_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
+    CONTEXT_AF.el.addEventListener('click', (e) => {
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
      });
   },
   update : function(oldData) 

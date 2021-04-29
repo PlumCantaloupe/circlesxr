@@ -6,20 +6,20 @@ schema: {
     pickedup:   {type: 'bool', default:false}
     },
   init: function() {
-    const Context_AF    = this;
+    const CONTEXT_AF    = this;
 
-    Context_AF.el.addEventListener(CIRCLES.EVENTS.INSPECT_THIS_OBJECT, function (evt) {
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.INSPECT_THIS_OBJECT, function (evt) {
         console.log("Event: CIRCLES.EVENTS.INSPECT_THIS_OBJECT");
-        Context_AF.el.setAttribute('circles-object-world', {pickedup:true}); //want visible in all worlds so we can "share" what we are lookinhg at
+        CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:true}); //want visible in all worlds so we can "share" what we are lookinhg at
     });
 
-    Context_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function (evt) {
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function (evt) {
         console.log("Event: CIRCLES.EVENTS.RELEASE_THIS_OBJECT");
-        Context_AF.el.setAttribute('circles-object-world', {pickedup:false});
+        CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:false});
     });
   },
   update: function(oldData) {
-    const Context_AF    = this;
+    const CONTEXT_AF    = this;
     const data          = this.data;
     const world         = data.world; //refers to world the object originates from
     const pickedUp      = data.pickedup; //refers to world the object originates from
@@ -31,12 +31,12 @@ schema: {
     if ( (oldData.pickedup !== data.pickedup) && (data.pickedup !== '') ) {
         if ( pickedUp ) {
             if ( curr_world !== world ) {
-                Context_AF.el.setAttribute('visible', true);
+                CONTEXT_AF.el.setAttribute('visible', true);
             }
         }
         else {
             if ( curr_world !== world ) {
-                Context_AF.el.setAttribute('visible', false);
+                CONTEXT_AF.el.setAttribute('visible', false);
             }
         }
     }

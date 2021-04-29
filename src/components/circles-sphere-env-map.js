@@ -15,27 +15,27 @@ AFRAME.registerComponent('circles-sphere-env-map', {
   },
   //custom function
   applyEnvMap : function () {
-    const Context_AF = this;
-    const mesh = Context_AF.el.getObject3D('mesh');
+    const CONTEXT_AF = this;
+    const mesh = CONTEXT_AF.el.getObject3D('mesh');
 
-    if ( Context_AF.data.src === '' ) {
+    if ( CONTEXT_AF.data.src === '' ) {
       console.warn('No src defined in component');
     }
     else {
-      //console.warn('Loading env-map: ' + Context_AF.data.src + " from " + Context_AF.el.getAttribute('id'));
-      Context_AF.loader.load( Context_AF.data.src,
+      //console.warn('Loading env-map: ' + CONTEXT_AF.data.src + " from " + CONTEXT_AF.el.getAttribute('id'));
+      CONTEXT_AF.loader.load( CONTEXT_AF.data.src,
         function onLoad(texture) {
           texture.mapping    = THREE.EquirectangularReflectionMapping;
           texture.magFilter  = THREE.LinearFilter;
           texture.minFilter  = THREE.LinearMipMapLinearFilter;
-          texture.format     = THREE[Context_AF.data.format];
+          texture.format     = THREE[CONTEXT_AF.data.format];
 
           if (mesh) {
             mesh.traverse(function (node) {
               if (node.material && 'envMap' in node.material) {
                 node.material.envMap = texture;
                 node.material.needsUpdate = true;
-                //console.warn('Loaded env-map: ' + Context_AF.data.src + " from " + Context_AF.el.getAttribute('id'));
+                //console.warn('Loaded env-map: ' + CONTEXT_AF.data.src + " from " + CONTEXT_AF.el.getAttribute('id'));
               }
             });
           }
