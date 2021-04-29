@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
     <script src="/worlds/Wardrobe/scripts/costume.js"></script> 
  
 </head>
   <body>
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
 
 
@@ -34,13 +35,13 @@
         <a-asset-item id="Head_Square_Model" src='/global/assets/models/gltf/head/Head_Square.glb' response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Head_Thin_Model" src='/global/assets/models/gltf/head/Head_Thin.glb' response-type="arraybuffer"></a-asset-item>
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
 
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- portal back to campfire -->
@@ -208,7 +209,7 @@
 
     </a-scene>
 
-        <!-- circles_END_SCRIPTS -->
+        <!-- Circles' end scripts [REQUIRED] -->
         <circles-end-scripts/>
     </body>
 </html>

@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <script src="/worlds/hub/scripts/fire.js"></script>
@@ -10,6 +10,7 @@
   </head>
   <body>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <a-assets>
         <!-- assets -->
@@ -31,13 +32,13 @@
         <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3"></audio>
         <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3"></audio>
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
       <a-entity id="GameManager" campfire-interactive></a-entity>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- fire FX -->
@@ -155,7 +156,7 @@
       <a-entity class="ambient-music" position="15 0 0" sound="src:#wilderness-snd; autoplay:false; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.1; distanceModel:inverse;" ></a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>

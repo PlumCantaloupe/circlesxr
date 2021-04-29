@@ -101,7 +101,8 @@ ___TODO: will add more to this later___
   ```  
   <circles-start-scripts/>
 
-  <a-scene circles_properties>
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_properties>
 
   <circles-assets/>
 

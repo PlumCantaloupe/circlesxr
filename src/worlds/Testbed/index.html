@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
@@ -11,17 +11,18 @@
   </head>
   <body>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- source: https://www.artstation.com/artwork/oOGk4W -->
         <img id='skyMap' src='/worlds/Testbed/assets/textures/tim-barton-skybox.jpg' crossorigin="anonymous">
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <a-entity id="research_manager" research-manager="experiment_script_url:/worlds/Testbed/scripts/experiment_script_EXAMPLE.json"></a-entity>
@@ -60,7 +61,7 @@
       </a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>
