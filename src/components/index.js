@@ -3,7 +3,7 @@ require('./circles-color');
 require('./circles-shadow');
 require('./circles-sphere-env-map.js');
 require('./circles-cube-env-map.js');
-require('./circles-cutout-material.js');
+//require('./circles-cutout-material.js');
 require('./circles-material-override.js');
 require('./circles-user-networked');
 require('./circles-boundaries');

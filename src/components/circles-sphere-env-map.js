@@ -22,8 +22,9 @@ AFRAME.registerComponent('circles-sphere-env-map', {
       console.warn('No src defined in component');
     }
     else {
-      //console.warn('Loading env-map: ' + CONTEXT_AF.data.src + " from " + CONTEXT_AF.el.getAttribute('id'));
-      CONTEXT_AF.loader.load( CONTEXT_AF.data.src,
+      const imagePath = (typeof CONTEXT_AF.data.src === 'string') ? CONTEXT_AF.data.src : CONTEXT_AF.data.src.getAttribute('src');
+
+      CONTEXT_AF.loader.load( imagePath,
         function onLoad(texture) {
           texture.mapping    = THREE.EquirectangularReflectionMapping;
           texture.magFilter  = THREE.LinearFilter;
@@ -35,7 +36,6 @@ AFRAME.registerComponent('circles-sphere-env-map', {
               if (node.material && 'envMap' in node.material) {
                 node.material.envMap = texture;
                 node.material.needsUpdate = true;
-                //console.warn('Loaded env-map: ' + CONTEXT_AF.data.src + " from " + CONTEXT_AF.el.getAttribute('id'));
               }
             });
           }

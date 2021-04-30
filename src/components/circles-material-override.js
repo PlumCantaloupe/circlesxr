@@ -30,11 +30,11 @@ AFRAME.registerComponent('circles-material-override', {
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     if ( (oldData.src !== data.src) && (data.src !== '') ) {
-        if ( data.src instanceof HTMLElement ) {
-            CONTEXT_AF.mapURL = data.src.getAttribute('src');
+        if ( typeof data.src === 'string') {
+            CONTEXT_AF.mapURL = data.src;
         }
         else {
-            CONTEXT_AF.mapURL = data.src;
+            CONTEXT_AF.mapURL = data.src.getAttribute('src');
         }
     }
   },
