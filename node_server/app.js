@@ -87,7 +87,7 @@ app.use(
       "media-src": ["*"],
       "frame-src": ["player.vimeo.com"],
       "style-src": ["'self'", "'unsafe-inline'", "unpkg.com"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
       "object-src": ["'none'"],
     },
   })
