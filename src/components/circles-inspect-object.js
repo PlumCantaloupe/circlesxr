@@ -81,5 +81,8 @@ AFRAME.registerComponent('circles-inspect-object', {
      });
   },
   update : function(oldData) 
-  {}
+  {},
+  getOrigScaleThree : function() {
+    return new THREE.Vector3(this.data.origScale.x, this.data.origScale.y, this.data.origScale.z);
+  }
 });

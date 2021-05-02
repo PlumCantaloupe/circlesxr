@@ -2,10 +2,12 @@
 
 AFRAME.registerComponent('circles-interactive-object', {
   schema: {
-    highlight_color:    {type:'color',      default:'rgb(255,255,255)'},
-    hovered_scale:      {type:'number',     default:1.08},
-    clicked_scale:      {type:'number',     default:1.08},
-    neutral_scale:      {type:'number',     default:1.00}
+    //highlight_color:    {type:'color',      default:'rgb(255,255,255)'},
+    type:               {stype:'string',    default:'outline', oneOf:['outline','scale']},
+    highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline effect
+    neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
+    hover_scale:        {type:'number',     default:1.08},
+    click_scale:        {type:'number',     default:1.10}
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -16,25 +18,55 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.el.classList.add('interactive');
     }
 
-    CONTEXT_AF.highlightElem = document.createElement('a-entity');
+    if (data.type === 'outline') {
+        CONTEXT_AF.highlightElem = document.createElement('a-entity');
 
-    const callbackHighlight = (e) => {
-        //have to make sure there is geo to copy for highlight first
+        const callbackHighlight = (e) => {
+            //have to make sure there is geo to copy for highlight first
+            if (CONTEXT_AF.el.getObject3D('mesh')) {
+                //MUST remove thos when created else an infinite loop will trigger as child highlight elem bubbles object3dset event
+                CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
+            }
+            else {
+                return;
+            }
+
+            CONTEXT_AF.createHighlightElement(CONTEXT_AF);
+        };
+        CONTEXT_AF.el.addEventListener('object3dset', callbackHighlight);
+
         if (CONTEXT_AF.el.getObject3D('mesh')) {
-            //MUST remove thos when created else an infinite loop will trigger as child highlight elem bubbles object3dset event
+            CONTEXT_AF.createHighlightElement(CONTEXT_AF);
             CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
         }
-        else {
-            return;
-        }
+    }
+    else {
+        //removing highlight as it doesn't work very well with more complex models. Until we can figure out a better post-processing solution
+        //we will just use scale for now ...
+        //let;s keep this code in case we need it later
+        CONTEXT_AF.el.addEventListener('click', (e) => {
+            console.log('click');
+            const newScale = CONTEXT_AF.origScale.clone();
+            newScale.multiplyScalar(CONTEXT_AF.data.click_scale);
+            CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
+        });
 
-        CONTEXT_AF.createHighlightElement(CONTEXT_AF);
-    };
-    CONTEXT_AF.el.addEventListener('object3dset', callbackHighlight);
+        CONTEXT_AF.el.addEventListener('mouseenter', (e) => {
+            console.log('mouseenter');
+            CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
+            console.log('CONTEXT_AF.origScale');
+            console.log(CONTEXT_AF.origScale);
+            const newScale = CONTEXT_AF.origScale.clone();
+            newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
+            console.log('newScale');
+            console.log(newScale);
+            CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
+        });
 
-    if (CONTEXT_AF.el.getObject3D('mesh')) {
-        CONTEXT_AF.createHighlightElement(CONTEXT_AF);
-        CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
+        CONTEXT_AF.el.addEventListener('mouseleave', (e) => {
+            console.log('mouseleave');
+            CONTEXT_AF.el.object3D.scale.set(CONTEXT_AF.origScale.x, CONTEXT_AF.origScale.y, CONTEXT_AF.origScale.z);
+        });
     }
   },
   update: function(oldData) {
@@ -45,22 +77,34 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //highlight color change
     if ( (oldData.highlight_color !== data.highlight_color) && (data.highlight_color !== '') ) {
-        CONTEXT_AF.highlightElem.highlight_color = data.highlight_color;
-        CONTEXT_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
+        if (data.type === 'outline') {
+            CONTEXT_AF.highlightElem.highlight_color = data.highlight_color;
+            CONTEXT_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
+        }
     }
 
     //size changes
-    if ( (oldData.hovered_scale !== data.hovered_scale) && (data.hovered_scale !== '') ) {
-        CONTEXT_AF.highlightElem.hovered_scale = data.hovered_scale;
+    if ( (oldData.hover_scale !== data.hover_scale) && (data.hover_scale !== '') ) {
+        if (data.type === 'outline') {
+            CONTEXT_AF.highlightElem.hover_scale = data.hover_scale;
+        }
     }
 
-    if ( (oldData.clicked_scale !== data.clicked_scale) && (data.clicked_scale !== '') ) {
-        CONTEXT_AF.highlightElem.clicked_scale = data.clicked_scale;
+    if ( (oldData.click_scale !== data.click_scale) && (data.click_scale !== '') ) {
+        if (data.type === 'outline') {
+            CONTEXT_AF.highlightElem.click_scale = data.click_scale;
+        }
     }
 
     if ( (oldData.neutral_scale !== data.neutral_scale) && (data.neutral_scale !== '') ) {
-        CONTEXT_AF.highlightElem.neutral_scale = data.neutral_scale;
-        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
+        if (data.type === 'outline') {
+            CONTEXT_AF.highlightElem.neutral_scale = data.neutral_scale;
+            CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
+        }
+    }
+
+    if ( (oldData.type !== data.type) && (data.type !== '') ) {
+        console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
     }
   },
   createHighlightElement : function (CONTEXT_AF) {
@@ -127,9 +171,9 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //clicked
     modelElem.addEventListener('click', (e) => {
-        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.clicked_scale, y:data.clicked_scale, z:data.clicked_scale});
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.click_scale, y:data.click_scale, z:data.click_scale});
         const timeoutObj = setTimeout(() => {
-            CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
+            CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
             clearTimeout(timeoutObj);
           }, 200);
     });
@@ -137,7 +181,7 @@ AFRAME.registerComponent('circles-interactive-object', {
     //hovering
     modelElem.addEventListener('mouseenter', (e) => {
         CONTEXT_AF.highlightElem.setAttribute('visible', true);
-        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hovered_scale, y:data.hovered_scale, z:data.hovered_scale});
+        CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
     });
 
     //not hovering
