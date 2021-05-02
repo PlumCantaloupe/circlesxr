@@ -14,7 +14,20 @@
     <a-scene circles_properties>
       <a-assets>
         <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <img id='skyMap' src='/worlds/TestWorld/assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+
+        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
+        <audio id="magic_music" src="/worlds/TestWorld/assets/sounds/magic_music.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <!-- loading .obj model asset -->
+        <!-- credits:  -->
+        <a-asset-item id="island_1_gltf"  src="/worlds/TestWorld/assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_2_gltf"  src="/worlds/TestWorld/assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_3_gltf"  src="/worlds/TestWorld/assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_leaves_gltf"  src="/worlds/TestWorld/assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <!-- credit: imwolfgang @ https://sketchfab.com/3d-models/simple-magic-potion-e197490f4a5f4ad98dbd8531b899cfa9 -->
+        <a-asset-item id="potion_gltf"    src="/worlds/TestWorld/assets/models/magic_potion/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -23,28 +36,25 @@
       <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
-      <!-- checkpoints, with each a possible spawn point when they enter the world -->
+      <!-- checkpoints, a possible spawn point for users to land in when entering this world -->
       <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 -2"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 2"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="2 0.05 2"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="2 0.05 -2"></a-entity>
 
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -3"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 3"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="3 0.05 0"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-3 0.05 0"></a-entity>
+      <!-- checkponts with no spawn-points -->
+      <a-entity circles-checkpoint position="2 0.05 2"></a-entity>
+      <a-entity circles-checkpoint position="2 0.05 -2"></a-entity>
 
-      <!-- button -->
+      <!-- button that we will use to "teleport" to far off places -->
       <a-entity circles-button position="0 0.5 2"></a-entity>
-      
-      <!-- the ground -->
-      <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 55, 210);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity>
+
+      <!-- ambient music/sound -->
+      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.1;"></a-entity>
 
       <!-- example "artefact" -->
-      <a-entity id="Artefact-Sphere"
+      <a-entity id="Artefact-Gem"
                 class="interactive"
-                position="0.0 0.5 0.0" rotation="0.0 0.0 0.0" scale="1.0 1.0 1.0"
-                geometry="primitive:torus; radius:0.5; radiusTubular:0.1; arc:360;"
+                position="0 0 1" rotation="0.0 0.0 0.0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
                 material="color:rgb(255, 100, 20); roughness:0.4; metalness:0.8; sphericalEnvMap:#skyMap;"
                 circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
                                   label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
@@ -52,12 +62,42 @@
                                   description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
                                   label_text:Artefact;"></a-entity>
 
-      <!-- sky and lights -->
-      <a-entity light="type:spot; intensity:10.0; color:#d5e4f5; angle:80; penumbra:0.1;" circles-platform-shadows rotation="-90 0 0" position='0.0 5.4 -7.0'></a-entity>
-      <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:3.0"></a-entity>
+      <!-- <a-entity id="Artefact-Sword"
+                class="interactive"
+                position="0 0 2" rotation="0.0 0.0 0.0" scale="1 1 1"
+                gltf-model="#potion_gltf"
+                circles-sphere-env-map="src:#skyMap"
+                circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
+                                  label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                  title:Artefact;
+                                  description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
+                                  label_text:Artefact;"></a-entity>
 
-      <a-entity id='skyBox' 
-                geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
+      <a-entity id="Artefact-Shield"
+                class="interactive"
+                position="0 0 3" rotation="0.0 0.0 0.0" scale="0.01 0.01 0.01"
+                obj-model="obj:#chest_obj;"
+                material="src:#chest_albedo_map; roughnessMap:#chest_roughness_map; metalnessMap:#chest_metalness_map; sphericalEnvMap:#skyMap;"
+                circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
+                                  label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                  title:Artefact;
+                                  description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
+                                  label_text:Artefact;"></a-entity> -->
+
+      <!-- the environment -->
+      <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_3_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+
+      <!-- sky and lights -->
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
+                light="type:directional; intensity:4; color:#d5e4f5; castShadow:true; shadowBias:-0.0002; shadowCameraBottom:-10; shadowCameraLeft:-10; shadowCameraTop:10; shadowCameraRight:10; shadowCameraFar:50;"></a-entity>
+      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+
+      <a-entity id='skyBox'
+                rotation='0 200 0'
+                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
     </a-scene>
