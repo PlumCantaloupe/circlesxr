@@ -5,7 +5,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
       parent:                 {type: "selector", default:null},
       positionOn:             {type: "boolean",  default:true},
       rotationOn:             {type: "boolean",  default:true},
-      scaleOn:                {type: "boolean",  default:false},
       positionOffset:         {type: "vec3"},
       rotationOffset:         {type: "vec3"},
       updateRate:             {type:'number',    default:100},
@@ -59,7 +58,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
 
       CONTEXT_AF.originalPos         = CONTEXT_AF.el.object3D.position.clone();
       CONTEXT_AF.originalRot         = CONTEXT_AF.el.object3D.quaternion.clone();
-      CONTEXT_AF.originalSca         = CONTEXT_AF.el.object3D.scale.clone();
 
       //see camera weirdness below
       CONTEXT_AF.isCamera = ('camera' in this.psuedoParent.components);
@@ -76,20 +74,13 @@ AFRAME.registerComponent('circles-parent-constraint', {
           this.posMat_Off.identity();
           this.rotMat.identity();
           this.rotMat_Off.identity();
-          this.scaleMat.identity();
 
           //if camera need to handle differently as Oculus browser does not report world matrices properly
           //note this weirdness also appearts to apply to any child of camera
           if (this.isCamera) {
-            // matrix math doesn't work
-            // this.worldMat_Constraint.multiplyMatrices(this.camRig.object3D.matrix, this.psuedoParent.object3D.matrix);
-            // this.worldMat_Constraint.decompose(this.position_E, this.rotation_E, this.scale_E);
-            // this.worldMat_Constraint.identity();
-
             //this is so messed up. Matrix math doesn't work but adding independently (w/o matrices) does ...???
             this.position_E.addVectors(this.camRig.object3D.position, this.psuedoParent.object3D.position);
             this.rotation_E.multiplyQuaternions(this.camRig.object3D.quaternion, this.psuedoParent.object3D.quaternion);
-            this.scale_E.multiplyVectors(this.camRig.object3D.scale, this.psuedoParent.object3D.scale);
           }
           else {
             this.psuedoParent.object3D.updateMatrixWorld(true);
@@ -101,12 +92,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
           this.posMat_Off.makeTranslation(this.data.positionOffset.x, this.data.positionOffset.y, this.data.positionOffset.z);
           this.rotMat.makeRotationFromQuaternion(this.rotation_E);
           this.rotMat_Off.makeRotationFromEuler(new THREE.Euler(THREE.Math.DEG2RAD * this.data.rotationOffset.x, THREE.Math.DEG2RAD * this.data.rotationOffset.y, THREE.Math.DEG2RAD * this.data.rotationOffset.z, "XYZ"));
-          if ( this.scale_E.length() > Number.EPSILON ) { //zero-vector will throw a bunch of errors here ...
-              this.scaleMat.makeScale(this.scale_E.x, this.scale_E.y, this.scale_E.z);
-          }
-
-          //now lets recreate our new world matrix
-          this.worldMat_Constraint.scale( this.originalSca  ); //will maintain offset of pos, rot, but need to remember scale
 
           //set the offsets first
           if (this.data.rotationOn) { 
@@ -117,9 +102,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
           }
 
           //set matrix copies
-          if (this.data.scaleOn) {
-              this.worldMat_Constraint.premultiply( this.scaleMat );
-          }
           if (this.data.rotationOn) { 
               this.worldMat_Constraint.premultiply( this.rotMat );
           }
@@ -133,7 +115,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
           if (this.data.smoothingOn === false) {
             this.el.object3D.position.set(this.position_E.x, this.position_E.y, this.position_E.z);
             this.el.object3D.quaternion.set(this.rotation_E.x, this.rotation_E.y, this.rotation_E.z, this.rotation_E.w);
-            this.el.object3D.scale.set(this.scale_E.x, this.scale_E.y, this.scale_E.z);
           }
       }
 
@@ -143,7 +124,6 @@ AFRAME.registerComponent('circles-parent-constraint', {
     if ( this.data.smoothingOn === true ) {
         this.el.object3D.position.lerp(this.position_E, this.data.smoothingAlpha);
         this.el.object3D.quaternion.slerp(this.rotation_E, this.data.smoothingAlpha);
-        this.el.object3D.scale.lerp(this.scale_E, this.data.smoothingAlpha);
     }
   },
   remove: function() {
@@ -152,6 +132,5 @@ AFRAME.registerComponent('circles-parent-constraint', {
     
     thisObject3D.position.set(CONTEXT_AF.originalPos.x, CONTEXT_AF.originalPos.y, CONTEXT_AF.originalPos.z);
     thisObject3D.quaternion.set(this.originalRot.x, this.originalRot.y, this.originalRot.z, this.originalRot.w);
-    thisObject3D.scale.set(CONTEXT_AF.originalSca.x, CONTEXT_AF.originalSca.y, CONTEXT_AF.originalSca.z);
   }
 }); 
