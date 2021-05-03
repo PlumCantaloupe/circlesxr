@@ -31,10 +31,10 @@
     ],
     "materials" : [
         {
-            "alphaCutoff" : 0.8747572898864746,
+            "alphaCutoff" : 0.875,
             "alphaMode" : "MASK",
             "doubleSided" : true,
-            "name" : "standardSurface4SG",
+            "name" : "standardSurface4SG.001",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0
@@ -45,7 +45,7 @@
     ],
     "meshes" : [
         {
-            "name" : "island_leaves.001",
+            "name" : "island_leaves",
             "primitives" : [
                 {
                     "attributes" : {
@@ -76,15 +76,15 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 9259,
+            "count" : 5398,
             "max" : [
                 -719.1734619140625,
-                1256.4053955078125,
+                1256.405517578125,
                 -138.525634765625
             ],
             "min" : [
                 -1585.853271484375,
-                -786.4577026367188,
+                -786.4576416015625,
                 -635.7371826171875
             ],
             "type" : "VEC3"
@@ -92,42 +92,42 @@
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 9259,
+            "count" : 5398,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 9259,
+            "count" : 5398,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 31842,
+            "count" : 18552,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 111108,
+            "byteLength" : 64776,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 111108,
-            "byteOffset" : 111108
+            "byteLength" : 64776,
+            "byteOffset" : 64776
         },
         {
             "buffer" : 0,
-            "byteLength" : 74072,
-            "byteOffset" : 222216
+            "byteLength" : 43184,
+            "byteOffset" : 129552
         },
         {
             "buffer" : 0,
-            "byteLength" : 63684,
-            "byteOffset" : 296288
+            "byteLength" : 37104,
+            "byteOffset" : 172736
         }
     ],
     "samplers" : [
@@ -138,7 +138,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 359972,
+            "byteLength" : 209840,
             "uri" : "scene.bin"
         }
     ]

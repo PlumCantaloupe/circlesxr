@@ -45,26 +45,19 @@ AFRAME.registerComponent('circles-interactive-object', {
         //we will just use scale for now ...
         //let;s keep this code in case we need it later
         CONTEXT_AF.el.addEventListener('click', (e) => {
-            console.log('click');
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.click_scale);
             CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
         });
 
         CONTEXT_AF.el.addEventListener('mouseenter', (e) => {
-            console.log('mouseenter');
             CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
-            console.log('CONTEXT_AF.origScale');
-            console.log(CONTEXT_AF.origScale);
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
-            console.log('newScale');
-            console.log(newScale);
             CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
         });
 
         CONTEXT_AF.el.addEventListener('mouseleave', (e) => {
-            console.log('mouseleave');
             CONTEXT_AF.el.object3D.scale.set(CONTEXT_AF.origScale.x, CONTEXT_AF.origScale.y, CONTEXT_AF.origScale.z);
         });
     }

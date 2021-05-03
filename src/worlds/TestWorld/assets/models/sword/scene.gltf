@@ -15,35 +15,27 @@
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "island_1",
-            "rotation" : [
-                0.7071068286895752,
-                0,
-                0,
-                0.7071067094802856
-            ],
-            "scale" : [
-                0.009999999776482582,
-                0.009999999776482582,
-                0.009999999776482582
-            ]
+            "name" : "Espada"
         }
     ],
     "materials" : [
         {
             "doubleSided" : true,
-            "name" : "standardSurface9SG",
+            "name" : "Material.002",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0
                 },
-                "metallicFactor" : 0
+                "metallicFactor" : 0.30000001192092896,
+                "metallicRoughnessTexture" : {
+                    "index" : 1
+                }
             }
         }
     ],
     "meshes" : [
         {
-            "name" : "island_1",
+            "name" : "Espada e escudo.003",
             "primitives" : [
                 {
                     "attributes" : {
@@ -61,71 +53,80 @@
         {
             "sampler" : 0,
             "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
         }
     ],
     "images" : [
         {
             "mimeType" : "image/jpeg",
-            "name" : "island_1_diffuse",
-            "uri" : "textures/island_1_diffuse.jpg"
+            "name" : "Sword_color",
+            "uri" : "textures/Sword_color.jpg"
+        },
+        {
+            "mimeType" : "image/png",
+            "name" : "Sword_Roughness",
+            "uri" : "textures/Sword_Roughness.png"
         }
     ],
     "accessors" : [
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 23337,
+            "count" : 1270,
             "max" : [
-                -524.713134765625,
-                1356.953125,
-                1015.4940795898438
+                0.281320720911026,
+                0.7165749669075012,
+                0.13843794167041779
             ],
             "min" : [
-                -1575.572509765625,
-                -380.13568115234375,
-                -622.3036499023438
+                -0.3499577045440674,
+                -0.5112283229827881,
+                -0.11764812469482422
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 23337,
+            "count" : 1270,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 23337,
+            "count" : 1270,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 25032,
+            "count" : 4914,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 280044,
+            "byteLength" : 15240,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 280044,
-            "byteOffset" : 280044
+            "byteLength" : 15240,
+            "byteOffset" : 15240
         },
         {
             "buffer" : 0,
-            "byteLength" : 186696,
-            "byteOffset" : 560088
+            "byteLength" : 10160,
+            "byteOffset" : 30480
         },
         {
             "buffer" : 0,
-            "byteLength" : 50064,
-            "byteOffset" : 746784
+            "byteLength" : 9828,
+            "byteOffset" : 40640
         }
     ],
     "samplers" : [
@@ -136,7 +137,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 796848,
+            "byteLength" : 50468,
             "uri" : "scene.bin"
         }
     ]

@@ -27,7 +27,7 @@
         <a-asset-item id="island_leaves_gltf"  src="/worlds/TestWorld/assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- credit: imwolfgang @ https://sketchfab.com/3d-models/simple-magic-potion-e197490f4a5f4ad98dbd8531b899cfa9 -->
-        <a-asset-item id="potion_gltf"    src="/worlds/TestWorld/assets/models/magic_potion/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="sword_gltf"    src="/worlds/TestWorld/assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -36,53 +36,57 @@
       <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
-      <!-- checkpoints, a possible spawn point for users to land in when entering this world -->
-      <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 -2"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 2"></a-entity>
+      <!-- island 1, with some spawnpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="-9.404 0.592 9.588"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-9.751 0.546 7.433"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-11.233 0.618 9.290"></a-entity>
 
-      <!-- checkponts with no spawn-points -->
-      <a-entity circles-checkpoint position="2 0.05 2"></a-entity>
-      <a-entity circles-checkpoint position="2 0.05 -2"></a-entity>
+      <!-- bridge (don't want to spawn people here as they may get dizzy looking down :) -->
+      <a-entity circles-checkpoint position="-12.514 0.050 3.387"></a-entity>
+      <a-entity circles-checkpoint position="-13.701 -0.296 0.336"></a-entity>
 
-      <!-- button that we will use to "teleport" to far off places -->
-      <a-entity circles-button position="0 0.5 2"></a-entity>
+      <!-- island 2, top -->
+      <a-entity circles-checkpoint position="-16.312 -0.321 -6.120"></a-entity>
+      <a-entity circles-checkpoint position="-12.931 -0.394 -5.361"></a-entity>
+      <a-entity circles-checkpoint position="-14.979 -0.295 -3.137"></a-entity>
+
+      <!-- island 2, steps -->
+      <a-entity id="door_island_2" circles-checkpoint position="-10.202 -5.867 -2.003"></a-entity>
+      <a-entity circles-checkpoint position="-12.111 -2.054 -7.609"></a-entity>
+      <a-entity circles-checkpoint position="-10.319 -3.648 -5.525"></a-entity>
+
+      <!-- island 3 -->
+      <a-entity id="door_island_3" circles-checkpoint position="5.000 -9.665 2.444"></a-entity>
+      <a-entity circles-checkpoint position="5.413 -9.709 0.099"></a-entity>
+      <a-entity circles-checkpoint position="2.422 -9.769 0.526"></a-entity>
+
+      <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
+      <a-entity circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door_island_2;" position="6.850 -8.949 2.397" rotation="-89.089 86.144 -53.584" scale="0.8 0.8 0.8"></a-entity>
+      <a-entity circles-button="pedastal_color:rgb(80, 91, 100);" circles-sendpoint="target:#door_island_3" position="-11.503 -5.121 -0.803" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
 
       <!-- ambient music/sound -->
       <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.1;"></a-entity>
 
       <!-- example "artefact" -->
       <a-entity id="Artefact-Gem"
-                class="interactive"
-                position="0 0 1" rotation="0.0 0.0 0.0" scale="1 1 1"
+                position="1.963 -8.241 2.339" rotation="0 0 0" scale="1 1 1"
                 geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.4; metalness:0.8; sphericalEnvMap:#skyMap;"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8; sphericalEnvMap:#skyMap;"
                 circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
                                   label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
-                                  title:Artefact;
+                                  title:Artefact - Gem;
                                   description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
-                                  label_text:Artefact;"></a-entity>
+                                  label_text:Gem;"></a-entity>
 
-      <!-- <a-entity id="Artefact-Sword"
-                class="interactive"
-                position="0 0 2" rotation="0.0 0.0 0.0" scale="1 1 1"
-                gltf-model="#potion_gltf"
+      <a-entity id="Artefact-Sword"
+                position="-13.171 0.899 9.197" rotation="-18.718 42.756 2.641" scale="1 1 1"
+                gltf-model="#sword_gltf"
                 circles-sphere-env-map="src:#skyMap"
                 circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
                                   label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
-                                  title:Artefact;
+                                  title:Artefact - Sword;
                                   description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
-                                  label_text:Artefact;"></a-entity>
-
-      <a-entity id="Artefact-Shield"
-                class="interactive"
-                position="0 0 3" rotation="0.0 0.0 0.0" scale="0.01 0.01 0.01"
-                obj-model="obj:#chest_obj;"
-                material="src:#chest_albedo_map; roughnessMap:#chest_roughness_map; metalnessMap:#chest_metalness_map; sphericalEnvMap:#skyMap;"
-                circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0;
-                                  label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
-                                  title:Artefact;
-                                  description:This is is the text that will display when an object is picked up. Adjust scale size and text rotation properties for the effect you want.;
-                                  label_text:Artefact;"></a-entity> -->
+                                  label_text:Sword;"></a-entity>
 
       <!-- the environment -->
       <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
