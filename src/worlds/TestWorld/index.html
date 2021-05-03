@@ -20,7 +20,7 @@
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="/worlds/TestWorld/assets/sounds/magic_music.mp3" preload="auto" crossorigin="anonymous"></audio>
 
-        <!-- loading .obj model asset -->
+        <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
         <!-- Emiel @ https://sketchfab.com/3d-models/stylized-assets-7c180198693542a49fb39c8f81af14fd -->
         <!-- Glezova @ https://sketchfab.com/3d-models/stylized-bridge-dea55cb580e44d458e84d4455eda5de8 -->
@@ -33,6 +33,9 @@
 
         <!-- credit: Raystani E. de Oliveira @ https://sketchfab.com/3d-models/stylized-sword-and-shield-lowpoly-e076a1a9fae84c97b8a6cdd5c9162ca2 [editted]-->
         <a-asset-item id="sword_gltf"    src="/worlds/TestWorld/assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
+        <a-asset-item id="navmesh_gltf" src="/worlds/TestWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -98,6 +101,8 @@
       <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_3_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
