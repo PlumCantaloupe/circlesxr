@@ -25,7 +25,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         //rigElem.setAttribute('circles-teleport',{});
         rigElem.setAttribute('circles-snap-turning',{});
         // rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
-        rigElem.setAttribute('movement-controls',{controls:'gamepad,keyboard,touch,checkpoint', constrainToNavMesh:true, speed:0.2});
+        rigElem.setAttribute('movement-controls',{controls:'gamepad,keyboard,checkpoint', constrainToNavMesh:true, speed:0.2});
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
         console.log('Attached camera controls to rig');
 
