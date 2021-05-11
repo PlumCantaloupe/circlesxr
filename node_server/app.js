@@ -82,7 +82,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "default-src": ["'self'"],
-      "connect-src": ["'self'", "'unsafe-inline'", "cdn.aframe.io", "blob:", "ws://localhost:1111", "ws://circles-xr-research.ngrok.io"],
+      "connect-src": ["'self'", "'unsafe-inline'", "cdn.aframe.io", "blob:", "ws://localhost:1111", "ws://circles-xr-research.ngrok.io", 
+                      "ws://circlesxr.com/janus", "wss://circlesxr.com/janus", "ws://circlesxr.com:8188/janus", "wss://circlesxr.com:8989/janus", "wss://circlesxr.com:8089/janus"],
       "img-src": ["*", "blob:"],
       "media-src": ["*"],
       "frame-src": ["player.vimeo.com"],
