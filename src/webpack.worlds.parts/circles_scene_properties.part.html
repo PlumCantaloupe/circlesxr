@@ -2,8 +2,9 @@
     <div id="user-gesture-overlay" >
         <div id="Permissions" class="overlay">
             <img class="logo" src="/global/assets/textures/logos/circles_logo.svg" alt="Circles logo" />
-            <!-- <div class="suboverlay"> -->
-            <!-- <p class="title">Permissions</p>
+            
+            <div class="suboverlay">
+            <p class="title">Permissions</p>
                 
             <div class="grid2col">
                 <span class="label">Microphone</span>
@@ -14,19 +15,14 @@
                     <span class="onoffswitch-switch"></span>
                 </label>
                 </div>
-            </div> -->
+            </div>
 
             <input id="user-gesture-enter" type="submit" value="Enter Circles">
             <!-- loading gif from: https://www.behance.net/gallery/31234507/Open-source-Loading-GIF-Icons-Vol-1 -->
             <img id="loading-animation-enter" src="/global/images/loading.gif">
-            <!-- </div> -->
+            </div>
         </div>
     </div>
-
-<!-- <a-scene    renderer="  antialias:true; 
-                        gammaOutput: true;
-                        sortObjects: false;
-                        physicallyCorrectLights: true;"  -->
 
 <a-scene    renderer="  antialias: true;
                         colorManagement: true;
@@ -51,6 +47,6 @@
             device-orientation-permission-ui="enabled:true;"
             circles-enter-ui
             circles-platform-scene-shadows>
-                                <!-- adapter: wsEasyRTC;"> -->
+
     <!-- our "game manager" object -->
     <a-entity id="circles-manager" circles-manager="world:__WORLDNAME__; user:__USERNAME__"></a-entity>
