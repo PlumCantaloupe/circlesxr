@@ -1,4 +1,22 @@
 <script>
+
+  // Prompt for audio.
+  document.addEventListener('DOMContentLoaded', () => {
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+      const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
+      adapter.setClientId(clientId);
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        adapter.setLocalMediaStream(stream).then(() => {
+          // Note that networked-scene audio:true option has no effect with the janus adapter
+          adapter.enableMicrophone(true); // set it to false if you want to be muted initially.
+        });
+      }).catch(err => {
+        console.warn("Microphone access not allowed. This client will not broadcast audio.");
+      });
+    });
+  });
+
   //naf schemas
   NAF.schemas.add({
     template: '#user-template',
@@ -137,6 +155,7 @@
   // Called by Networked-Aframe when connected to server
   function onConnect () {
     console.log("custom onConnect: ", new Date());
-    document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+
+    CIRCLES.setupCirclesWebsocket();
   }
 </script>

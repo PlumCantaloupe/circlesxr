@@ -3,6 +3,8 @@
 const CONSTANTS = require('./circles_constants');
 const RESEARCH  = require('./circles_research');
 
+let circlesWebsocket = null;
+
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
   MODE_BOUNDINGBOX  : 1,
@@ -76,7 +78,38 @@ const getUUID = function() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
-}; 
+};
+
+const setupCirclesWebsocket = function() {
+  if (!circlesWebsocket) {
+    if (NAF.connection.adapter.socket) {
+      circlesWebsocket = NAF.connection.adapter.socket
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+    }
+    else {
+      let socket = io();
+      socket.on('connect', (userData) => {
+        circlesWebsocket = socket;
+        document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+      });
+    }
+  }
+  else {
+    console.warn('CIRCLES: web socket already set up. Use CIRCLES.getCirclesWebsocket() to find it');
+  }
+};
+
+const getCirclesWebsocket = function() {
+  if ( !circlesWebsocket ) {
+    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.NAF_CONNECTED to flag ready');
+  }
+
+  return circlesWebsocket;
+};
+
+const getCirclesRoom = function() {
+  return document.querySelector('a-scene').components['networked-scene'].data.room;
+}
 
 module.exports = {
   CONSTANTS,
@@ -88,5 +121,8 @@ module.exports = {
   USER_TYPE,
   EVENTS,
   COLOR_PALETTE,
-  getUUID
+  getUUID,
+  setupCirclesWebsocket,
+  getCirclesWebsocket,
+  getCirclesRoom
 };
