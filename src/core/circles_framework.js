@@ -4,6 +4,7 @@ const CONSTANTS = require('./circles_constants');
 const RESEARCH  = require('./circles_research');
 
 let circlesWebsocket = null;
+let circlesResearchWebsocket = null;
 
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
@@ -56,7 +57,8 @@ const EVENTS = {
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
   OBJECT_OWNERSHIP_CHANGED  : 'OBJECT_OWNERSHIP_CHANGED',
   OBJECT_NETWORKED_ATTACHED : 'OBJECT_NETWORKED_ATTACHED',
-  NAF_CONNECTED             : 'NAF_CONNECTED'
+  WS_CONNECTED              : 'WS_CONNECTED',
+  WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED'
 };
 
 //!!DEPRE 8 color
@@ -84,13 +86,19 @@ const setupCirclesWebsocket = function() {
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
       circlesWebsocket = NAF.connection.adapter.socket
-      document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
     }
     else {
       let socket = io();
       socket.on('connect', (userData) => {
         circlesWebsocket = socket;
-        document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+        document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
+      });
+
+      let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+      rs_socket.on('connect', (userData) => {
+        circlesResearchWebsocket = rs_socket;
+        document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
       });
     }
   }
@@ -101,10 +109,16 @@ const setupCirclesWebsocket = function() {
 
 const getCirclesWebsocket = function() {
   if ( !circlesWebsocket ) {
-    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.NAF_CONNECTED to flag ready');
+    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_CONNECTED to flag ready');
   }
-
   return circlesWebsocket;
+};
+
+const getCirclesResearchWebsocket = function() {
+  if ( !circlesResearchWebsocket ) {
+    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_RESEARCH_CONNECTED to flag ready');
+  }
+  return circlesResearchWebsocket;
 };
 
 const getCirclesRoom = function() {
@@ -124,5 +138,6 @@ module.exports = {
   getUUID,
   setupCirclesWebsocket,
   getCirclesWebsocket,
+  getCirclesResearchWebsocket,
   getCirclesRoom
 };

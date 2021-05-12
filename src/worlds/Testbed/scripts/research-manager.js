@@ -40,13 +40,12 @@ AFRAME.registerSystem('research-manager', {
             //CONTEXT_COMP.researchUsers.push({'Player1', user_type:CONTEXT_COMP.userType});
         });
 
-        CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            CONTEXT_COMP.socket = CIRCLES.getCirclesWebsocket();
+        CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED, function (event) {
+            CONTEXT_COMP.socket = CIRCLES.getCirclesResearchWebsocket();
             CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, room:CIRCLES.getCirclesRoom()});
             CONTEXT_COMP.connected = true;
             CONTEXT_COMP.addResearchEventListeners();
             console.warn("research-manager: messaging system connected at socket: " + CONTEXT_COMP.socket.id);
-            console.log(CONTEXT_COMP.socket);
         });
 
         //might want these to track number of entities and whether we have the right one
