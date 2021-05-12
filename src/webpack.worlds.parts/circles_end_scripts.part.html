@@ -2,14 +2,16 @@
 
   // Prompt for audio.
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded');
     const scene = document.querySelector('a-scene');
     scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+      console.log('adapter-ready');
       const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
       adapter.setClientId(clientId);
       navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         adapter.setLocalMediaStream(stream).then(() => {
           // Note that networked-scene audio:true option has no effect with the janus adapter
-          adapter.enableMicrophone(true); // set it to false if you want to be muted initially.
+          adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
         });
       }).catch(err => {
         console.warn("Microphone access not allowed. This client will not broadcast audio.");
