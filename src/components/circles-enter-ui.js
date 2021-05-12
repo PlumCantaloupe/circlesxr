@@ -39,7 +39,7 @@ AFRAME.registerComponent('circles-enter-ui', {
         const controlElems = document.querySelectorAll('[hand-controls]');
         if (controlElems) {
             controlElems.forEach((controlElem) => {
-                el.addEventListener('ybuttonup', function(e) {
+                controlElem.addEventListener('ybuttonup', function(e) {
                     toggleMicFunc(!micOn);
                 });
             });
