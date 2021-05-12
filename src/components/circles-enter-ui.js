@@ -35,6 +35,16 @@ AFRAME.registerComponent('circles-enter-ui', {
             toggleMicFunc(!micOn);
         });
 
+        //add listener to 'y' button on oculus-touch-controllers for now
+        const controlElems = document.querySelectorAll('[hand-controls]');
+        if (controlElems) {
+            controlElems.forEach((controlElem) => {
+                el.addEventListener('ybuttonup', function(e) {
+                    toggleMicFunc(!micOn);
+                });
+            });
+        }
+
         document.querySelector('#user-gesture-enter').addEventListener('click', function() {
             document.querySelector('#user-gesture-overlay').style.display='none';   //hide user-gesture overlay
             document.querySelector('#ui_wrapper').style.display='block';            //show "extra" controls i.e. microphone toggle
