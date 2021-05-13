@@ -6,8 +6,9 @@ AFRAME.registerComponent('circles-enter-ui', {
         //we can't play sound on some browsers until we have some user interaction
         //this means we should only start playing ambient music after this button is clicked
         console.log('scene loaded');
-        document.querySelector('#loading-animation-enter').style.display='none';
-        document.querySelector('#user-gesture-enter').style.display='block';
+        //moved the following code into the onConnect NAF fundtion in circles_end_scripts.js file as the mic diable/enable button doesn't work until then.
+        // document.querySelector('#loading-animation-enter').style.display='none';
+        // document.querySelector('#user-gesture-enter').style.display='block';
 
         let micOn = false;
         const toggleMicFunc = (enable) => {

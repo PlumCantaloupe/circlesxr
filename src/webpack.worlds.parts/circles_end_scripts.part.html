@@ -11,7 +11,9 @@
       navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         adapter.setLocalMediaStream(stream).then(() => {
           // Note that networked-scene audio:true option has no effect with the janus adapter
-          adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          console.log('!!!!!!!!!');
+          // adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          NAF.connection.adapter.enableMicrophone(false);
         });
       }).catch(err => {
         console.warn("Microphone access not allowed. This client will not broadcast audio.");
@@ -159,5 +161,12 @@
     console.log("custom onConnect: ", new Date());
 
     CIRCLES.setupCirclesWebsocket();
+
+    //depending on scene loaded results in the mic button not working if clicked too fast
+    //it also means the mic button has no effect (when 'adapter-ready' fires the mic also cannot be enabled/diabled) ...
+    //I am not sure this is the best way to do this; but audio feedback is even worse ...
+    document.querySelector('#loading-animation-enter').style.display='none';
+    document.querySelector('#user-gesture-enter').style.display='block';
+    NAF.connection.adapter.enableMicrophone(false);
   }
 </script>
