@@ -2,7 +2,8 @@
 
 AFRAME.registerComponent('circles-snap-turning', {
   schema: {
-    snap_amount:        {type:'int', default:CIRCLES.CONSTANTS.DEFAULT_SNAP_TURN_DEG}
+    snap_amount: {type:'int', default:CIRCLES.CONSTANTS.DEFAULT_SNAP_TURN_DEG},
+    enabled:     {type:'boolean', default:true}     
   },
 
   init: function() 
@@ -16,6 +17,10 @@ AFRAME.registerComponent('circles-snap-turning', {
     CONTEXT_AF.joystick_detection();
     //CONTEXT_AF.touchscreen_detection(); //this detects swipes but not sure required as A-Frame already does this
   },
+  //need to start cleaning up these components to properly remove/clean themselves up one day ...
+  addEventListeners: function() {},
+  removeEventListeners: function() {},
+  remove : function() {},
   update: function(oldData) 
   {
     const CONTEXT_AF = this;
@@ -26,7 +31,9 @@ AFRAME.registerComponent('circles-snap-turning', {
   },
   rotateBody: function(angleDeg) 
   {
-    this.el.object3D.rotation.y += THREE.Math.degToRad(angleDeg);
+    if (this.data.enabled === true) {
+      this.el.object3D.rotation.y += THREE.Math.degToRad(angleDeg);
+    }
   },
   keyboard_detection: function () {
     const CONTEXT_AF = this;
