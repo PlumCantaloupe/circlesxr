@@ -2,137 +2,21 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-    <script>
-        AFRAME.registerComponent('narrative-soundmanager', {
-          schema: {
-          },
-
-          init: function() {
-            console.log("starting up narr man");
-            const scene = document.querySelector('a-scene');
-
-            let Context_AF = this;
-            Context_AF.toolsNarr      = scene.querySelector('#Artefact-Drill');
-            Context_AF.safetyNarr     = scene.querySelector('#Artefact-Gloves');
-            Context_AF.cultureNarr    = scene.querySelector('#Artefact-Clipboard');
-
-            Context_AF.toolsNarrFirstPlay = false;
-            Context_AF.safetyNarrFirstPlay = false;
-            Context_AF.cultureNarrFirstPlay = false;
-            
-            const player1 = document.querySelector('#Player1');
-            const attachListenerFunc = () => {
-              document.querySelectorAll('.narrative').forEach( entity => {
-                console.log("adding sound listener");
-                entity.addEventListener('click', (event) => {
-                  if ( entity.getAttribute('id') == Context_AF.toolsNarr.getAttribute('id') ) {
-                    if (Context_AF.toolsNarrFirstPlay === false) {
-                      console.log('toolsNarrFirstPlay');
-                      Context_AF.toolsNarr.components.sound.playSound();
-                      Context_AF.toolsNarrFirstPlay = true;
-                    }
-                    else if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
-                      Context_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-                    else {
-                      Context_AF.toolsNarr.components.sound.playSound();
-                      console.log("playing toolsNarr");
-                    }
-
-                    if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
-                      Context_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-
-                    if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
-                      Context_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                  }
-                  else if ( entity.getAttribute('id') == Context_AF.safetyNarr.getAttribute('id') ) {
-                    if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
-                      Context_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-
-                    if (Context_AF.safetyNarrFirstPlay === false) {
-                      console.log('safetyNarrFirstPlay');
-                      Context_AF.safetyNarr.components.sound.playSound();
-                      Context_AF.safetyNarrFirstPlay = true;
-                    }
-                    else if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
-                      Context_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-                    else {
-                      Context_AF.safetyNarr.components.sound.playSound();
-                    }
-
-                    if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
-                      Context_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                  } 
-                  else if ( entity.getAttribute('id') == Context_AF.cultureNarr.getAttribute('id') ) {
-                    if (Context_AF.toolsNarr.components.sound.isPlaying === true) {
-                      Context_AF.toolsNarr.components.sound.stopSound();
-                      console.log("stopping toolsNarr");
-                    }
-
-                    if (Context_AF.safetyNarr.components.sound.isPlaying === true) {
-                      Context_AF.safetyNarr.components.sound.stopSound();
-                      console.log("stopping SafetyNarr");
-                    }
-
-                    if (Context_AF.cultureNarrFirstPlay === false) {
-                      console.log('cultureNarrFirstPlay');
-                      Context_AF.cultureNarr.components.sound.playSound();
-                      Context_AF.cultureNarrFirstPlay = true;
-                    }
-                    else if (Context_AF.cultureNarr.components.sound.isPlaying === true) {
-                      Context_AF.cultureNarr.components.sound.stopSound();
-                      console.log("stopping CultureNarr");
-                    }
-                    else {
-                      Context_AF.cultureNarr.components.sound.playSound();
-                    }
-                  }
-                  else if ( entity.getAttribute('id') == 'release_control' ) {
-                    //hacky ... I need to clean this up sometime to be a more general solution
-                    Context_AF.toolsNarr.components.sound.stopSound();
-                    Context_AF.safetyNarr.components.sound.stopSound();
-                    Context_AF.cultureNarr.components.sound.stopSound();
-                  }
-                });
-              });
-
-              player1.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
-            };
-
-            if (player1.querySelector('#release_control')) {
-              attachListenerFunc();
-            }
-            else {
-              player1.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, attachListenerFunc);
-            }
-          }
-        });
-    </script>
   </head>
   <body>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <a-assets timeout="10000">
         <!-- add your assets here -->
 
         <!-- audio -->
-
+        
         <!-- narration -->
         <audio id="Narr_tools-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Tools.ogg" preload="true"></audio>
         <audio id="Narr_safety-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Safety.ogg" preload="true"></audio>
@@ -163,91 +47,84 @@
         <a-asset-item id="Gloves-gltf" src="/worlds/WIT_2_Lab/assets/models/Gloves.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_2_Lab/assets/models/Clipboard.glb" response-type="arraybuffer"></a-asset-item>
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="6.5 0.050 3.5"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="2.0 0.05 3.5"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="6.5 0.050 3.5"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="2.0 0.05 3.5"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 4.1"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 0.48"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.8 0.05 -3.15"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2.8 0.05 4.1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2.8 0.05 0.48"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2.8 0.05 -3.15"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-1.4 0.05 2.3"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-1.4 0.05 -1.32"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.4 0.05 2.3"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.4 0.05 -1.32"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="2.0 0.05 1.0"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="2.0 0.05 -1.7"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="5.7 0.05 -1.7"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="5.7 0.05 1.0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="2.0 0.05 1.0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="2.0 0.05 -1.7"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="5.7 0.05 -1.7"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="5.7 0.05 1.0"></a-entity>
 
       <!-- sky and lights -->
-      <!-- bad place for narrative manager but :) -->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
-      <a-entity class="ambient-music" position="7.5 1.0 4.7" sound="src:#Amb_fan-snd; autoplay:false; loop:true; volume:0.1;" ></a-entity>
-      <a-entity class="ambient-music" position="7.5 1.0 -4.7" sound="src:#Amb_voices-snd; autoplay:false; loop:true; volume:0.1;" ></a-entity>
-      <a-entity class="ambient-music" position="-4.3 2.3 -3.7" sound="src:#Amb_extractor-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:0.4; distanceModel:inverse;" ></a-entity>
+      <!-- sounds -->
+      <a-entity position="7.5 1.0 4.7" circles-sound="type:ambient; src:#Amb_fan-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="7.5 1.0 -4.7" circles-sound="type:ambient; src:#Amb_voices-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="-4.3 2.3 -3.7" circles-sound="type:ambient; src:#Amb_extractor-snd; autoplay:true; loop:true; volume:0.4;" ></a-entity>
 
+      <!-- environment / models -->
       <a-entity id="TestBench_model" gltf-model="#TestBench-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="TestWall_model" gltf-model="#TestWall-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="Room_Model" gltf-model="#Room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="Table_Model" gltf-model="#Table-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
 
-      <!-- removed networked items bit so no duplicates for now -->
+      <!-- artefacts -->
       <a-entity id="Artefact-Drill"
-                class="interactive narrative"
-                position="4.0 0.95 0.0" rotation="0.0 30.0 0.0" scale="0.01 0.01 0.01"
+                position="4 0.95 0" rotation="0 30 0" scale="0.01 0.01 0.01"
                 gltf-model="#Drill-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0.0; textLookAt:false; inspectRotation:0 90.0 0; 
-                                  title:Group Work; description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                  label_text:Power Drill; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
-                                  object_world:__WORLDNAME__"
-                sound="src:#Narr_tools-snd; volume:0.4;">
-      </a-entity>
+                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0; textLookAt:false; inspectRotation:0 90 0;
+                                  label_visible:true; label_offset:0 0.5 0; arrow_position:down;
+                                  title:Group Work; 
+                                  description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                  label_text:Power Drill;
+                                  audio:#Narr_tools-snd; volume:0.4;"></a-entity>
 
       <a-entity id="Artefact-Gloves"
                 class="interactive narrative"
-                position="-4.2 0.83 4.3" rotation="-90.0 -50.0 0.0" scale="0.015 0.015 0.015"
+                position="-4.2 0.83 4.3" rotation="-90 -50 0" scale="0.015 0.015 0.015"
                 gltf-model="#Gloves-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.05 0.05 0.05; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
-                                  title:Equipment; description:To save on costs and space, schools tend to purchase generic sizes for safety and protective wear. Large sizes are common. Women often must compensate by making adjustments or risking safety and fine motor skills by wearing ill-fitting attire.;
-                                  label_text:Safety Gloves; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
-                                  object_world:__WORLDNAME__"
-                sound="src:#Narr_safety-snd; volume:0.4;" >
-      </a-entity>
+                circles-artefact="inspectScale:0.05 0.05 0.05; textRotationY:90; textLookAt:false; inspectRotation:0 0 0;
+                                  label_visible:true; label_offset:0 0.5 0; arrow_position:down;
+                                  title:Equipment; 
+                                  description:To save on costs and space, schools tend to purchase generic sizes for safety and protective wear. Large sizes are common. Women often must compensate by making adjustments or risking safety and fine motor skills by wearing ill-fitting attire.;
+                                  label_text:Safety Gloves;
+                                  audio:#Narr_safety-snd; volume:0.4;"></a-entity>
 
       <a-entity id="Artefact-Clipboard"
                 class="interactive narrative"
-                position="0.65 0.79 1.61" rotation="-90.0 15.0 0.0" scale="0.015 0.015 0.015"
+                position="0.65 0.79 1.61" rotation="-90 15 0.0" scale="0.015 0.015 0.015"
                 gltf-model="#Clipboard-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.03 0.03 0.03; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; 
-                                  title:Culture; description:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about.;
-                                  label_text:Clipboard; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
-                                  object_world:__WORLDNAME__"
-                sound="src:#Narr_culture-snd; volume:0.4;" >
-      </a-entity>
-
-      <!-- <a-entity obj-model="obj:#Table-obj;"
-                material="src:#Table-color; roughnessMap:#Table-roughness; metalnessMap:#Table-metalness; normalMap:#Table-normal; sphericalEnvMap:#skyMap;" 
-                postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
-
-      <!-- <a-entity obj-model="obj:#TestingStation-obj;"
-                postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
+                circles-artefact="inspectScale:0.03 0.03 0.03; textRotationY:90; textLookAt:false; inspectRotation:0 0 0;
+                                  label_visible:true; label_offset:0 0.5 0; arrow_position:down;
+                                  title:Culture; 
+                                  description:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about.;
+                                  label_text:Clipboard;
+                                  audio:#Narr_culture-snd; volume:0.4;"></a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>

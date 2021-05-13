@@ -16,14 +16,14 @@ AFRAME.registerComponent('circles-cube-map', {
   },
   //custom function
   applyEnvMap : function () {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const mesh = this.el.getObject3D('mesh');
     const data = this.data;
 
     if (!mesh) {return;}
 
     if (data.dirPath !== null) {
-      Context_AF.loader.load([
+      CONTEXT_AF.loader.load([
         data.dirPath + 'posx.' + data.extension, data.dirPath + 'negx.' + data.extension,
         data.dirPath + 'posy.' + data.extension, data.dirPath + 'negy.' + data.extension,
         data.dirPath + 'posz.' + data.extension, data.dirPath + 'negz.' + data.extension

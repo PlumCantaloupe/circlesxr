@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
@@ -10,31 +10,39 @@
   </head>
   <body>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <a-assets>
-        <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <!-- physical environment -->
+        <a-asset-item id="Worksite-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/Worksite/Worksite.gltf"></a-asset-item>
+        <a-asset-item id="Truck-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/Truck/Truck.gltf"></a-asset-item>
 
-        <!-- templates, mixins etc. -->
+        <!-- add your assets here -->
+        <!-- <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous"> -->
+        <img id='skyMap' src='/worlds/WIT_3_Work/assets/images/CloudySky.jpg' crossorigin="anonymous">
+
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2 0.05 -2"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2 0.05 2"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="2 0.05 2"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="2 0.05 -2"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 -2"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2 0.05 2"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="2 0.05 2"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="2 0.05 -2"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0 0.05 -3"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0 0.05 3"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="3 0.05 0"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-3 0.05 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -3"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 3"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="3 0.05 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-3 0.05 0"></a-entity>
       
       <!-- the ground -->
-      <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 100, 50);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity>
+      <!-- <a-entity geometry="primitive:circle; radius:10.0;" rotation="-90 0 0" material="color:rgb(100, 100, 50);; roughness:0.9; metalness:0.3; sphericalEnvMap:#skyMap;"></a-entity> -->
+      <a-entity id="Worksite_model" gltf-model="#Worksite-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="Truck_model" gltf-model="#Truck-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.5 0.5 0.5" shadow="receive:false; cast:false;"></a-entity>
 
 
       <!-- sky and lights -->
@@ -42,12 +50,12 @@
       <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
-                geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
+                geometry='primitive:sphere; radius:120; segments-height:6; segments-width:6;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>

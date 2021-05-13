@@ -1,4 +1,26 @@
 <script>
+
+  // Prompt for audio.
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOMContentLoaded');
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+      console.log('adapter-ready');
+      const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
+      adapter.setClientId(clientId);
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+        adapter.setLocalMediaStream(stream).then(() => {
+          // Note that networked-scene audio:true option has no effect with the janus adapter
+          console.log('!!!!!!!!!');
+          // adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          NAF.connection.adapter.enableMicrophone(false);
+        });
+      }).catch(err => {
+        console.warn("Microphone access not allowed. This client will not broadcast audio.");
+      });
+    });
+  });
+
   //naf schemas
   NAF.schemas.add({
     template: '#user-template',
@@ -137,6 +159,14 @@
   // Called by Networked-Aframe when connected to server
   function onConnect () {
     console.log("custom onConnect: ", new Date());
-    document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+
+    CIRCLES.setupCirclesWebsocket();
+
+    //depending on scene loaded results in the mic button not working if clicked too fast
+    //it also means the mic button has no effect (when 'adapter-ready' fires the mic also cannot be enabled/diabled) ...
+    //I am not sure this is the best way to do this; but audio feedback is even worse ...
+    document.querySelector('#loading-animation-enter').style.display='none';
+    document.querySelector('#user-gesture-enter').style.display='block';
+    NAF.connection.adapter.enableMicrophone(false);
   }
 </script>

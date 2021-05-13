@@ -15,43 +15,43 @@ AFRAME.registerComponent('circles-material-override', {
     //TODO - this shader should replace the cutout material component (being a more general use-case)
   },
   init: function() {
-    const Context_AF = this;
-    Context_AF.mapURL = null;
+    const CONTEXT_AF = this;
+    CONTEXT_AF.mapURL = null;
 
-    Context_AF.loader = new THREE.TextureLoader();
+    CONTEXT_AF.loader = new THREE.TextureLoader();
 
-    Context_AF.applyMats();
-    Context_AF.el.addEventListener('object3dset', this.applyMats.bind(this));
+    CONTEXT_AF.applyMats();
+    CONTEXT_AF.el.addEventListener('object3dset', this.applyMats.bind(this));
   },
   update: function(oldData) {
-    const Context_AF = this;
-    const data = Context_AF.data;
+    const CONTEXT_AF = this;
+    const data = CONTEXT_AF.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     if ( (oldData.src !== data.src) && (data.src !== '') ) {
-        if ( data.src instanceof HTMLElement ) {
-            Context_AF.mapURL = data.src.getAttribute('src');
+        if ( typeof data.src === 'string') {
+            CONTEXT_AF.mapURL = data.src;
         }
         else {
-            Context_AF.mapURL = data.src;
+            CONTEXT_AF.mapURL = data.src.getAttribute('src');
         }
     }
   },
   applyMats : function () {
-    const Context_AF = this;
-    const mesh = Context_AF.el.getObject3D('mesh');
+    const CONTEXT_AF = this;
+    const mesh = CONTEXT_AF.el.getObject3D('mesh');
     if (!mesh) return;
 
-    if ( Context_AF.mapURL === null ) {
+    if ( CONTEXT_AF.mapURL === null ) {
       console.warn('No src defined in component');
       //just apply override without map
-      Context_AF.applyShader(null);
+      CONTEXT_AF.applyShader(null);
     }
     else {
-        Context_AF.loader.load( Context_AF.mapURL ,
+        CONTEXT_AF.loader.load( CONTEXT_AF.mapURL ,
             function onLoad(texture) {
-                Context_AF.applyShader(texture);
+                CONTEXT_AF.applyShader(texture);
             },
             function onProgress(xmlHttpRequest) {
                 //xmlHttpRequest.total (bytes), xmlHttpRequest.loaded (bytes)
@@ -64,35 +64,35 @@ AFRAME.registerComponent('circles-material-override', {
         }
     },
     applyShader : function (texture) {
-        const Context_AF = this;
-        const mesh = Context_AF.el.getObject3D('mesh');
+        const CONTEXT_AF = this;
+        const mesh = CONTEXT_AF.el.getObject3D('mesh');
         let customDepthMaterial = null;
 
         if (texture !== null) {
             texture.wrapS           = THREE.RepeatWrapping;
             texture.wrapT           = THREE.RepeatWrapping;
-            if ( Context_AF.data.flipTextureY === true ) {
+            if ( CONTEXT_AF.data.flipTextureY === true ) {
                 texture.repeat.y =      -1;
             }
-            if ( Context_AF.data.flipTextureX === true ) {
+            if ( CONTEXT_AF.data.flipTextureX === true ) {
                 texture.repeat.x =      -1;
             }
 
-            if (Context_AF.data.transparent === true) {
+            if (CONTEXT_AF.data.transparent === true) {
                 //https://stackoverflow.com/questions/43848330/three-js-shadows-cast-by-partially-transparent-mesh?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa\
                 customDepthMaterial = new THREE.MeshDepthMaterial( {
                 depthPacking:   THREE.RGBADepthPacking,
                 map:            texture,
-                alphaTest:      Context_AF.data.alphaTest
+                alphaTest:      CONTEXT_AF.data.alphaTest
             });
             }
         }
 
         let newMaterial = null; 
-        if (Context_AF.data.shader === 'flat') {
+        if (CONTEXT_AF.data.shader === 'flat') {
             newMaterial = new THREE.MeshBasicMaterial();
         }
-        else if (Context_AF.data.shader === 'standard') {
+        else if (CONTEXT_AF.data.shader === 'standard') {
             newMaterial = new THREE.MeshStandardMaterial();
         }
         else {
@@ -101,13 +101,13 @@ AFRAME.registerComponent('circles-material-override', {
         }
 
         let renderSide = null;
-        if ( Context_AF.data.side === 'front' ) {
+        if ( CONTEXT_AF.data.side === 'front' ) {
             renderSide = THREE.FrontSide;
         }
-        else if ( Context_AF.data.side === 'back' ) {
+        else if ( CONTEXT_AF.data.side === 'back' ) {
             renderSide = THREE.BackSide;
         }
-        else if (Context_AF.data.side === 'double') {
+        else if (CONTEXT_AF.data.side === 'double') {
             renderSide = THREE.DoubleSide;
         }
         else {
@@ -124,12 +124,12 @@ AFRAME.registerComponent('circles-material-override', {
                     node.material.map       = texture;
                 }
 
-                if ( Context_AF.data.transparent === true) {
-                    node.material.transparent   = Context_AF.data.transparent;
-                    node.material.opacity       = Context_AF.data.opacity; 
-                    node.material.alphaTest     = Context_AF.data.alphaTest;
+                if ( CONTEXT_AF.data.transparent === true) {
+                    node.material.transparent   = CONTEXT_AF.data.transparent;
+                    node.material.opacity       = CONTEXT_AF.data.opacity; 
+                    node.material.alphaTest     = CONTEXT_AF.data.alphaTest;
 
-                    if (texture !== null && Context_AF.data.transparent === true) {
+                    if (texture !== null && CONTEXT_AF.data.transparent === true) {
                         node.customDepthMaterial = customDepthMaterial;
                         node.customDepthMaterial.needsUpdate = true;
                     }
@@ -138,6 +138,6 @@ AFRAME.registerComponent('circles-material-override', {
             });
         }
 
-        Context_AF.el.emit(CIRCLES.EVENTS.CUSTOM_MAT_SET, false);
+        CONTEXT_AF.el.emit(CIRCLES.EVENTS.CUSTOM_MAT_SET, false);
     }
 });

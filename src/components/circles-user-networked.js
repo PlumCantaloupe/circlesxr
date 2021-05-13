@@ -29,22 +29,22 @@ AFRAME.registerComponent('circles-user-networked', {
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
-    const Context_AF      = this;
-    Context_AF.isPlayer1  = false;
+    const CONTEXT_AF      = this;
+    CONTEXT_AF.isPlayer1  = false;
 
-    Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
       const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
       const playerOneAvatarNode = playerOneNode.querySelector('.avatar');
-      const thisNode            = Context_AF.el;
+      const thisNode            = CONTEXT_AF.el;
       const eventNode           = e.detail.element;
 
       //lets only move forward to event node is the same as this one
       if ( thisNode.isSameNode(eventNode) === true ) {
-        Context_AF.isPlayer1 = thisNode.isSameNode(playerOneAvatarNode); //now make sure this is the player1 node
+        CONTEXT_AF.isPlayer1 = thisNode.isSameNode(playerOneAvatarNode); //now make sure this is the player1 node
 
-        if (Context_AF.isPlayer1 === true) {
+        if (CONTEXT_AF.isPlayer1 === true) {
           //we can assume that node wants to load itself. We are doing this to minimize race-conditions overwriting each by doing so in user-template
-          Context_AF.el.setAttribute('circles-user-networked', {
+          CONTEXT_AF.el.setAttribute('circles-user-networked', {
             gltf_head:              playerOneNode.getAttribute('circles-head-model'),
             gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
             gltf_body:              playerOneNode.getAttribute('circles-body-model'),
@@ -62,8 +62,8 @@ AFRAME.registerComponent('circles-user-networked', {
           });
 
           //set device icon here too ... I guess :/
-          let avatarNode3 = Context_AF.el.querySelector('.deviceicon_front');
-          let avatarNode4 = Context_AF.el.querySelector('.deviceicon_back');
+          let avatarNode3 = CONTEXT_AF.el.querySelector('.deviceicon_front');
+          let avatarNode4 = CONTEXT_AF.el.querySelector('.deviceicon_back');
           let iconPath    = CIRCLES.CONSTANTS.ICON_DEVICE_UNKNOWN;
 
           if (AFRAME.utils.device.isMobile()) {
@@ -95,54 +95,54 @@ AFRAME.registerComponent('circles-user-networked', {
     // this.addUser();
   },
   update: function(oldData)  {
-    let Context_AF  = this;
+    const CONTEXT_AF  = this;
 
-    if (Object.keys(Context_AF.data).length === 0) { return; } // No need to update. as nothing here yet
+    if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
     //head model change
-    if ( (oldData.gltf_head !== Context_AF.data.gltf_head) && (Context_AF.data.gltf_head !== '') ) {
-      let avatarNode = Context_AF.el.querySelector('.user_head');
-      avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_head);
+    if ( (oldData.gltf_head !== CONTEXT_AF.data.gltf_head) && (CONTEXT_AF.data.gltf_head !== '') ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_head');
+      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_head);
     }
 
     //hair model change
-    if ( (oldData.gltf_hair !== Context_AF.data.gltf_hair) && (Context_AF.data.gltf_hair !== '') ) {
-      let avatarNode = Context_AF.el.querySelector('.user_hair');
-      avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_hair);
+    if ( (oldData.gltf_hair !== CONTEXT_AF.data.gltf_hair) && (CONTEXT_AF.data.gltf_hair !== '') ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_hair');
+      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_hair);
     }
 
     //body model change
-    if ( (oldData.gltf_body !== Context_AF.data.gltf_body) && (Context_AF.data.gltf_body !== '') ) {
-      let avatarNode = Context_AF.el.querySelector('.user_body');
-      avatarNode.setAttribute('gltf-model', Context_AF.data.gltf_body);
+    if ( (oldData.gltf_body !== CONTEXT_AF.data.gltf_body) && (CONTEXT_AF.data.gltf_body !== '') ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_body');
+      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_body);
     }
 
     //head color change
-    if ( oldData.color_head !== Context_AF.data.color_head ) {
-      let avatarNode = Context_AF.el.querySelector('.user_head');
-      avatarNode.setAttribute('circles-color', {color: Context_AF.data.color_head});
+    if ( oldData.color_head !== CONTEXT_AF.data.color_head ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_head');
+      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_head});
     }
 
     //hair color change
-    if ( oldData.color_hair !== Context_AF.data.color_hair ) {
-      let avatarNode = Context_AF.el.querySelector('.user_hair');
-      avatarNode.setAttribute('circles-color', {color: Context_AF.data.color_hair});
+    if ( oldData.color_hair !== CONTEXT_AF.data.color_hair ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_hair');
+      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair});
     }
 
     //body color change
-    if ( oldData.color_body !== Context_AF.data.color_body ) {
-      let avatarNode = Context_AF.el.querySelector('.user_body');
-      avatarNode.setAttribute('circles-color', {color: Context_AF.data.color_body});
-      //avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, Context_AF.el, true);
+    if ( oldData.color_body !== CONTEXT_AF.data.color_body ) {
+      let avatarNode = CONTEXT_AF.el.querySelector('.user_body');
+      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_body});
+      //avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
     }
 
     //username change
-    if ( oldData.username !== Context_AF.data.username ) {
+    if ( oldData.username !== CONTEXT_AF.data.username ) {
       //get/set nametag nodes
-      let avatarNode1 = Context_AF.el.querySelector('.nametag_front');
-      let avatarNode2 = Context_AF.el.querySelector('.nametag_back');
-      avatarNode1.setAttribute('text', {value: Context_AF.data.username});
-      avatarNode2.setAttribute('text', {value: Context_AF.data.username});
+      let avatarNode1 = CONTEXT_AF.el.querySelector('.nametag_front');
+      let avatarNode2 = CONTEXT_AF.el.querySelector('.nametag_back');
+      avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.username});
+      avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.username});
     }
   },
   // tick: function(time, timeDelta) {},

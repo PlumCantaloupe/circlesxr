@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
   </head>
   <body>
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <!-- assets -->
       <a-assets timeout="10000">
@@ -32,11 +33,11 @@
         <audio id="police-snd"      src="/worlds/VD_2_Theatre/assets/audio/Street_noise_police.mp3"></audio>
         <audio id="darkMirror-snd"  src="/worlds/VD_2_Theatre/assets/audio/Dark_Mirror_soundtrack.mp3"></audio>
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- environment -->
@@ -44,49 +45,48 @@
       <a-entity gltf-model="#seats-model" scale="0.01 0.01 0.01" rotation="0.0 -90 0.0" shadow="receive:true; cast:true;"></a-entity>
       <a-entity gltf-model="#objects-model" scale="0.01 0.01 0.01" rotation="0.0 -90 0.0" shadow="receive:true; cast:true;"></a-entity>
 
-      <!-- objects -->
+      <!-- dark mirror movie screen -->
+      <a-entity position="-9.469 3.645 0.018" rotation="0 90 0" scale="7.766 5.823 4.825" geometry="primitive:plane;" material="src:#darkMirrorMap; shader:flat;" shadow="receive:true; cast:false;"
+                animation="property:material.color; dur:1000; dir:alternate; from:rgb(255, 255, 255); to:rgb(100, 100, 100); loop:true; easing:easeInOutCubic">
+      </a-entity>
+
+      <!-- non-artefact objects -->
       <a-entity gltf-model="#bag-model" scale="0.01 0.01 0.01" position="0.9 0.161 -5.0" rotation="-73.0 -119.0 168.0" shadow="receive:true; cast:true;"></a-entity>
       <a-entity gltf-model="#poster2-model" scale="0.011 0.011 0.011" position="14.9 2.65 -4.57" rotation="0 -90.0 0.0" shadow="receive:true; cast:true;"></a-entity>
 
-      <!-- interactive -->
+      <!-- artefacts (no narrative audio attached) -->
       <a-entity id="Artefact-Shoe" 
                 class="interactive"
                 position="1.43 0.114 -4.53" rotation="82.0 -96.1 -72.2" scale="0.01 0.01 0.01" 
                 gltf-model="#shoe-model"
                 shadow="receive:true; cast:true;"
-                circles-object-world="object_world:__WORLDNAME__"
-                circles-inspect-object=" inspectScale:0.05 0.05 0.05; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
-                                       title:Viola's Shoe; description:Viola was forcibly removed from the seat she refused to give up. In her struggle with the police she dropped her handbag and shoe."
-                circles-interactive-object
-                circles-object-label="label_text:Shoe; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;"
-                networked="template:#interactive-object-template; attachTemplateToLocal:true;">
-      </a-entity>
+                circles-artefact="inspectScale:0.05 0.05 0.05; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0;
+                                  label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  title:Viola's Shoe;
+                                  description:Viola was forcibly removed from the seat she refused to give up. In her struggle with the police she dropped her handbag and shoe.;
+                                  label_text:Viola's Shoe;"></a-entity>
 
       <a-entity id="Artefact-Ticket" 
                 class="interactive"
                 position="1.0 0.06 4.4" rotation="90.5 -135.0 0.3" scale="0.014 0.014 0.014"
                 gltf-model="#ticket-model"
                 shadow="receive:true; cast:true;"
-                circles-object-world="object_world:__WORLDNAME__" 
-                circles-inspect-object=" inspectScale:0.06 0.06 0.06; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
-                                      title:The Price of a Ticket; description:Viola was convicted with tax evasion for the 1c difference between a balcony and main seat, serving a fine and 30 days in jail. Though there were no Jim Crow laws in Canada many businesses practised segregation."
-                circles-interactive-object
-                circles-object-label="label_text:Ticket; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;"
-                networked="template:#interactive-object-template; attachTemplateToLocal:true;">
-      </a-entity>
+                circles-artefact="inspectScale:0.06 0.06 0.06; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
+                                  label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  title:Ticket;
+                                  description:Viola was convicted with tax evasion for the 1c difference between a balcony and main seat, serving a fine and 30 days in jail. Though there were no Jim Crow laws in Canada many businesses practised segregation.;
+                                  label_text:Ticket;"></a-entity>
 
-      <a-entity   id="Artefact-Poster"
-                  class="interactive"
-                  position="-1.77 1.72 -12.6" rotation="0.0 0.0 0.0" scale="0.013 0.013 0.013" 
-                  gltf-model="#poster1-model"
-                  shadow="receive:true; cast:true;"
-                  circles-object-world="object_world:__WORLDNAME__"
-                  circles-inspect-object=" inspectScale:0.005 0.005 0.005; textRotationY:-172.0; textLookAt:false; inspectRotation:0 0 0; 
-                                        title:The Dark Mirror; description:Viola's car broke down during a delivery so she watched 'The Dark Mirror' while she waited for repairs. She wasn't aware of the segregation of Roseland Theatre and sat on the main floor, instead of the balcony."
-                  circles-interactive-object
-                  circles-object-label="label_text:Movie Poster; label_visible:true; label_offset:0.0 1.5 0.0; arrow_position:down;"
-                  networked="template:#interactive-object-template; attachTemplateToLocal:true;">
-      </a-entity>
+      <a-entity id="Artefact-Poster"
+                class="interactive"
+                position="-1.77 1.72 -12.6" rotation="0 0 0" scale="0.013 0.013 0.013" 
+                gltf-model="#poster1-model"
+                shadow="receive:true; cast:true;"
+                circles-artefact="inspectScale:0.005 0.005 0.005; textRotationY:-172.0; textLookAt:false; inspectRotation:0 0 0;
+                                  label_visible:true; label_offset:0 1.5 0; arrow_position:down;
+                                  title:Movie Poster;
+                                  description:Viola's car broke down during a delivery so she watched 'The Dark Mirror' while she waited for repairs. She wasn't aware of the segregation of Roseland Theatre and sat on the main floor, instead of the balcony.;
+                                  label_text:Movie Poster;"></a-entity>
 
       <!-- portal back to campfire -->
       <a-entity id="campfireLink" class="interactive" position="13.2 2.5 0" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
@@ -98,34 +98,29 @@
       </a-entity>
 
       <!-- sound -->
-      <a-entity position="5 1 -10" class="ambient-music" sound="src:#crowd1-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="5 1 0" class="ambient-music" sound="src:#crowd2-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="5 1 10" class="ambient-music" sound="src:#crowd3-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 5.0; volume:0.8; distanceModel:inverse;" ></a-entity>
-      <a-entity position="-3.5 1.5 -13.5" class="ambient-music" sound="src:#police-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;"></a-entity>
-      <a-entity position="-10 0 0" class="ambient-music" sound="src:#darkMirror-snd; autoplay:false; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:1.0; distanceModel:inverse;" ></a-entity>
-
-      <!-- dark mirror screen -->
-      <a-entity position="-9.469 3.645 0.018" rotation="0 90 0" scale="7.766 5.823 4.825" geometry="primitive:plane;" material="src:#darkMirrorMap; shader:flat;" shadow="receive:true; cast:false;"
-                animation="property:material.color; dur:1000; dir:alternate; from:rgb(255, 255, 255); to:rgb(100, 100, 100); loop:true; easing:easeInOutCubic">
-      </a-entity>
+      <a-entity position="5 1 -10"  circles-sound="type:ambient; src:#crowd1-snd; autoplay:true; loop:true; volume:0.8;" ></a-entity>
+      <a-entity position="5 1 0"  circles-sound="type:ambient; src:#crowd2-snd; autoplay:true; loop:true; volume:0.8;" ></a-entity>
+      <a-entity position="5 1 10" circles-sound="type:ambient; src:#crowd3-snd; autoplay:true; loop:true; volume:0.8;" ></a-entity>
+      <a-entity position="-3.5 1.5 -13.5" circles-sound="type:ambient; src:#police-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
+      <a-entity position="-10 0 0" circles-sound="type:ambient; src:#darkMirror-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-0.17 0.05 0"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-8.5 0.05 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.17 0.05 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.5 0.05 0"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-8.5 0.05 9.8"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-0.27 0.05 3.95"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-8.5 0.05 4.96"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.60 0.05 11.49"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-1.43 0.05 7.70"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.5 0.05 9.8"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.27 0.05 3.95"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.5 0.05 4.96"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2.60 0.05 11.49"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.43 0.05 7.70"></a-entity>
 
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-8.5 0.05 -9.8"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-0.27 0.05 -3.95"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-8.5 0.05 -4.96"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-2.60 0.05 -11.49"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-1.43 0.05 -7.70"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.5 0.05 -9.8"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.27 0.05 -3.95"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.5 0.05 -4.96"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-2.60 0.05 -11.49"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.43 0.05 -7.70">></a-entity>
 
-      <!-- position="17.03 1.7 -9.35" position="17.03 1.7 -9.35" -->
+      <!-- "police" light in the back door -->
       <a-entity id="policeSiren" position="17.03 1.7 -9.35" >
           <a-entity id="policeLight1" rotation="0 0 0" light="type:spot; angle:20; intensity:10.0; color:#ff0000; distance:12.0; castShadow:false;"
                     animation="property:rotation.y; dur:1000; dir:normal; to:360; loop:true; easing:linear">
@@ -136,15 +131,17 @@
           </a-entity>
       </a-entity>
 
-      <!-- <a-entity light='type:directional; castShadow:false; shadowCameraNear:0.01; shadowCameraFar:100; intensity:0.4; shadowMapWidth:2048; shadowMapHeight:2048;' position='2 3 1'></a-entity> -->
+      <!-- faking some light coming from screen -->
       <a-entity id="screenLight" position="-10.3 3.645 0.018" rotation="0 -90 0" light="type:spot; color:#ffffff; intensity:10.0; distance:100.0; angle:60; penumbra:0.5;"
                 circles-platform-shadows
                 animation="property:light.intensity; dur:1000; dir:alternate; to:5.0; loop:true; easing:easeInOutCubic">
       </a-entity>
+
+      <!-- brightening up scene -->
       <a-entity light='type:ambient; intensity:0.08;'></a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>
