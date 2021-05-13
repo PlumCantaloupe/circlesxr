@@ -5,6 +5,9 @@ const RESEARCH  = require('./circles_research');
 
 let circlesWebsocket = null;
 let circlesResearchWebsocket = null;
+let warningLogsEnabled = true;
+let basicLogsEnabled = true;
+let errorLogsEnabled = true;
 
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
@@ -125,6 +128,36 @@ const getCirclesRoom = function() {
   return document.querySelector('a-scene').components['networked-scene'].data.room;
 }
 
+//CIRCLES.log(text);
+const log = function(text) {
+  if (basicLogsEnabled === true) {
+    console.log(text);
+  }
+}
+const enableLogs = function(enable) {
+  basicLogsEnabled = enabled;
+}
+
+//CIRCLES.warn(text);
+const warn = function(text) {
+  if (warningLogsEnabled === true) {
+    console.warn(text);
+  }
+}
+const enableWarning = function(enable) {
+  warningLogsEnabled = enabled;
+}
+
+//CIRCLES.error(text);
+const error = function(text) {
+  if (errorLogsEnabled === true) {
+    console.error(text);
+  }
+}
+const enableErrors = function(enable) {
+  errorLogsEnabled = enabled;
+}
+
 module.exports = {
   CONSTANTS,
   RESEARCH,
@@ -139,5 +172,11 @@ module.exports = {
   setupCirclesWebsocket,
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
-  getCirclesRoom
+  getCirclesRoom,
+  log,
+  enableLogs,
+  warn,
+  enableWarning,
+  error,
+  enableErrors
 };
