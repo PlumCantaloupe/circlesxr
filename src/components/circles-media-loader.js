@@ -1,4 +1,4 @@
-// import pdfjs from "pdfjs-dist";
+ //import pdfjs from "pdfjs-dist";
 //import errorImageSrc from "../assets/images/media-error.png";
 
 //const pdfjsLib = window['pdfjs-dist/build/pdf.js'];
@@ -9,20 +9,12 @@
 
 // pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-
 function scaleToAspectRatio(el, ratio) {
     const width = Math.min(1.0, 1.0 / ratio);
     const height = Math.min(1.0, ratio);
     el.object3DMap.mesh.scale.set(width, height, 1);
     el.object3DMap.mesh.matrixNeedsUpdate = true;
 }
-// const errorImage = new Image();
-// errorImage.src = errorImageSrc;
-// const errorTexture = new THREE.Texture(errorImage);
-// errorImage.onload = () => {
-//     errorTexture.needsUpdate = true;
-// };
-
 
 AFRAME.registerComponent("circles-pdf-loader", {
     schema: {
@@ -33,7 +25,7 @@ AFRAME.registerComponent("circles-pdf-loader", {
         batch: { default: false },
     },
     multiple: false,
-    init() {
+    init: function() {
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         this.pdfjs = window['pdfjs-dist/build/pdf'];
@@ -47,119 +39,144 @@ AFRAME.registerComponent("circles-pdf-loader", {
         this.texture = new THREE.CanvasTexture(this.canvas);
         this.texture.encoding = THREE.sRGBEncoding;
         this.texture.minFilter = THREE.LinearFilter;
+        this.createControls();
+
+    },
+    createControls: function() {
+
+        const CONTEXT_AF = this;
+        const CONTROL_BUTTON_SIZE = 0.25;
+
+        CONTEXT_AF.controlsWrapper = document.createElement('a-entity');
+        CONTEXT_AF.controlsWrapper.setAttribute('id', 'pdf_controls_wrapper');
+        CONTEXT_AF.controlsWrapper.setAttribute('position', {x:0, y:-0.7, z:0});
+        CONTEXT_AF.el.appendChild(CONTEXT_AF.controlsWrapper);
+
+        CONTEXT_AF.nextBtn = document.createElement('a-entity');
+        CONTEXT_AF.nextBtn.setAttribute('id', 'pdfNextBtn');
+        CONTEXT_AF.nextBtn.setAttribute('class', 'interactive button');
+        CONTEXT_AF.nextBtn.setAttribute('position', {x:-0.2, y:0, z:0});
+        CONTEXT_AF.nextBtn.setAttribute('rotation', {x:0, y:0, z:-90});
+        CONTEXT_AF.nextBtn.setAttribute('geometry',  {  primitive:'plane', 
+                                                width:CONTROL_BUTTON_SIZE,
+                                                height:CONTROL_BUTTON_SIZE
+                                                });
+        CONTEXT_AF.nextBtn.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_RELEASE, color:'rgb(255,255,255)', shader:'flat', transparent:true,side:'double'});
+        CONTEXT_AF.controlsWrapper.appendChild(CONTEXT_AF.nextBtn);
+      
+      CONTEXT_AF.nextBtn.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
+      CONTEXT_AF.nextBtn.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+      CONTEXT_AF.nextBtn.addEventListener('click', function (evt){
+        if (CONTEXT_AF.pageNum >= CONTEXT_AF.pdf.numPages) {
+            return;
+        }
+
+          CONTEXT_AF.changePage(CONTEXT_AF.pageNum + 1);
+      });
+
+
+        CONTEXT_AF.prevBtn = document.createElement('a-entity');
+        CONTEXT_AF.prevBtn.setAttribute('id', 'pdfPrevBtn');
+        CONTEXT_AF.prevBtn.setAttribute('class', 'interactive button');
+        CONTEXT_AF.prevBtn.setAttribute('position', {x:0.2, y:0, z:0});
+        CONTEXT_AF.prevBtn.setAttribute('rotation', {x:0, y:0, z:90});
+        CONTEXT_AF.prevBtn.setAttribute('geometry',  {  primitive:'plane', 
+                                                width:CONTROL_BUTTON_SIZE,
+                                                height:CONTROL_BUTTON_SIZE
+                                                });
+        CONTEXT_AF.prevBtn.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_RELEASE, color:'rgb(255,255,255)', shader:'flat', transparent:true,side:'double'});
+        CONTEXT_AF.controlsWrapper.appendChild(CONTEXT_AF.prevBtn);
+        CONTEXT_AF.prevBtn.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
+        CONTEXT_AF.prevBtn.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+        CONTEXT_AF.prevBtn.addEventListener('click', function (evt){
+            if (CONTEXT_AF.pageNum <= 1) {
+                return;
+            }
+            CONTEXT_AF.changePage(CONTEXT_AF.pageNum - 1 );
+        });
+
+
     },
     async update(oldData) {
         const CONTEXT_AF = this;
+        const CONTROL_BUTTON_SIZE = 0.25;
         const data = this.data;
         let ratio = 1;
 
         if ( (oldData.src !== data.src) && (data.src !== '') ) {
+        {
             // Using DocumentInitParameters object to load binary data.
             const loadingTask = CONTEXT_AF.pdfjs.getDocument(data.src);
             loadingTask.promise.then(function(pdf) {
                 /* following simpler example from here: https://jsfiddle.net/pdfjs/cq0asLqz/ */
-                console.log('PDF loaded');
-
+                
                 CONTEXT_AF.pdf = pdf;
                 CONTEXT_AF.el.setAttribute("media-pager", { maxIndex: CONTEXT_AF.pdf.numPages - 1 });
-        
-                // Fetch the first page
                 var pageNumber = 1;
-                CONTEXT_AF.pdf.getPage(pageNumber).then(function(page) {
-                    console.log('Page loaded');
-
-                    var scale = 3.0;
-                    var viewport = page.getViewport({scale: scale});
+                CONTEXT_AF.changePage(pageNumber);
                 
-                    // Prepare canvas using PDF page dimensions
-                    CONTEXT_AF.canvas.height = viewport.height;
-                    CONTEXT_AF.canvas.width = viewport.width;
-                    ratio = CONTEXT_AF.canvas.height / CONTEXT_AF.canvas.width;
-                
-                    // Render PDF page into canvas context
-                    var renderContext = {
-                        canvasContext: CONTEXT_AF.canvasContext,
-                        viewport: viewport
-                    };
-                    var renderTask = page.render(renderContext);
-                    renderTask.promise.then(function () {
-                        console.log('Page rendered');
-
-                        if (!CONTEXT_AF.mesh) {
-                            const material = new THREE.MeshBasicMaterial();
-                            const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
-                            material.side = THREE.DoubleSide;
-
-                            CONTEXT_AF.mesh = new THREE.Mesh(geometry, material);
-                            CONTEXT_AF.el.setObject3D("mesh", CONTEXT_AF.mesh);
-                        }
-
-                        CONTEXT_AF.mesh.material.transparent        = false;
-                        CONTEXT_AF.mesh.material.map                = CONTEXT_AF.texture;
-                        CONTEXT_AF.mesh.material.map.needsUpdate    = true;
-                        CONTEXT_AF.mesh.material.needsUpdate        = true;
-
-                        scaleToAspectRatio(CONTEXT_AF.el, ratio);
-                    });
-                });
             }, function (reason) {
                 // PDF loading error
                 console.error("Error loading PDF", reason);
             });
         }
+    
+    }},
+    async changePage(pageNum) {
+        const CONTEXT_AF = this;
 
-    //     try {
-    //         const { src, index } = this.data;
-    //         if (!src) return;
+        if (!CONTEXT_AF.pdf) {
+            console.warn('No PDF loaded yet.');
+            return;
+        }
 
-    //         if (this.renderTask) {
-    //             await this.renderTask.promise;
-    //             if (src !== this.data.src || index !== this.data.index) return;
-    //         }
-    //         if (src !== oldData.src) {
-    //             const loadingSrc = this.data.src;
-    //             const pdf = await CONTEXT_AF.pdfjs.getDocument(src);
-    //             if (loadingSrc !== this.data.src) return;
+        if (pageNum < 1 || pageNum > CONTEXT_AF.pdf.numPages - 1) {
+            console.warn('The page ' + pageNum + ' selected is out of range of PDF pages [1, ' + CONTEXT_AF.pdf.numPages + '] available.');
+            return;
+        }
 
-    //             this.pdf = pdf;
-    //             this.el.setAttribute("media-pager", { maxIndex: this.pdf.numPages - 1 });
-    //         }
-    //         const page = await this.pdf.getPage(index + 1);
-    //         if (src !== this.data.src || index !== this.data.index) return;
-    //         const viewport = page.getViewport({ scale: 3 });
-    //         const pw = viewport.width;
-    //         const ph = viewport.height;
-    //         texture = this.texture;
-    //         ratio = ph / pw;
+        //let's save which page we are at so we can save it for later
+        CONTEXT_AF.pageNum = pageNum;
 
-    //         this.canvas.width = pw;
-    //         this.canvas.height = ph;
-    //         this.renderTask = page.render({ canvasContext: this.canvasContext, viewport });
+        CONTEXT_AF.pdf.getPage(pageNum).then(function(page) {
+            console.log('Page loaded');
 
-    //         await this.renderTask.promise;
+            var scale = 3.0;
+            var viewport = page.getViewport({scale: scale});
+        
+            // Prepare canvas using PDF page dimensions
+            CONTEXT_AF.canvas.height = viewport.height;
+            CONTEXT_AF.canvas.width = viewport.width;
+            ratio = CONTEXT_AF.canvas.height / CONTEXT_AF.canvas.width;
+        
+            // Render PDF page into canvas context
+            var renderContext = {
+                canvasContext: CONTEXT_AF.canvasContext,
+                viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+            renderTask.promise.then(function () {
+                console.log('Page rendered');
 
-    //         this.renderTask = null;
-    //         if (src !== this.data.src || index !== this.data.index) return;
-    //     } catch (e) {
-    //         console.error("Error loading PDF", this.data.src, e);
-    //         texture = errorTexture;
-    //     }
+                if (!CONTEXT_AF.mesh) {
+                    const material = new THREE.MeshBasicMaterial();
+                    const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
+                    material.side = THREE.DoubleSide;
 
-    //     if (!this.mesh) {
-    //         const material = new THREE.MeshBasicMaterial();
-    //         const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, texture.flipY);
-    //         material.side = THREE.DoubleSide;
+                    CONTEXT_AF.mesh = new THREE.Mesh(geometry, material);
+                    CONTEXT_AF.el.setObject3D("mesh", CONTEXT_AF.mesh);
+                }
 
-    //         this.mesh = new THREE.Mesh(geometry, material);
-    //         this.el.setObject3D("mesh", this.mesh);
-    //     }
+                CONTEXT_AF.mesh.material.transparent        = false;
+                CONTEXT_AF.mesh.material.map                = CONTEXT_AF.texture;
+                CONTEXT_AF.mesh.material.map.needsUpdate    = true;
+                CONTEXT_AF.mesh.material.needsUpdate        = true;
 
-    //     this.mesh.material.transparent = texture == errorTexture;
-    //     this.mesh.material.map = texture;
-    //     this.mesh.material.map.needsUpdate = true;
-    //     this.mesh.material.needsUpdate = true;
-
-    //     scaleToAspectRatio(this.el, ratio);
-
+                scaleToAspectRatio(CONTEXT_AF.el, ratio);
+            });
+        });
     }
-});
+ 
+}
+
+);
