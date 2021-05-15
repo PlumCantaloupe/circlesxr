@@ -209,6 +209,8 @@ The general structure of the framework (and the Github repository) follows:
 - [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including any constants, or global functions, we would like to be able to access on both the server and client sides. This will be invisible to most developers. To simplify development for content we also modify code during the [webpack](https://webpack.js.org) powered project build before we serve it. 
 - [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds): All Circles' worlds are placed here. From here they are modified to include Circles specific functionality and copied into an untracked folder on the server.
 
+*Also note, that a [TestBed](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) is currently in development for testing selection and find performance using [Fitt's Law](https://www.yorku.ca/mack/hhci2018.html). At this time the TestBed, and the associated [research-manager](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) just a ["TestBed" world](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed). After some more testing it will likely be moved to the Circles core.*
+
 ----------------
 
 ## Circles Components
@@ -370,7 +372,7 @@ Thank you from an aspiring student of all things XR and learning, [Anthony Scava
 
 - **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*
 - **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
-- **[Nathaniel Parant](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *Storyteller*
+- **[Nathaniel Parant](https://www.linkedin.com/in/nathaniel-parant-43901341/?originalSubdomain=ca)**, *Storyteller*
 - **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
 - **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
 - **[Dr. Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
