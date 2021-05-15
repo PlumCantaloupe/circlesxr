@@ -31,14 +31,14 @@ developers to create multi-user and multi-platform
 [WebXR](https://www.w3.org/TR/webxr/) learning activities on top of another WebXR framework
 [A-Frame](https://aframe.io), with networking provided by [Networked-Aframe](https://github.com/networked-aframe/networked-aframe).
 
-CIRCLES is the practical Work-In-Progress (WIP) implmenetation of a research project into [universal](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/) and [inclusive](https://www.microsoft.com/design/inclusive/) multi-user VR that evolves as research dictates how users interact with each other, their physical and virtual environments, and with learning artefacts in variable VR space. Our current focus is within both guided and unguided classroom and museum learning contexts; but we aim to keep the framework flexible where possible to allow for greater creativity.
+CIRCLES is the practical Work-In-Progress (WIP) implementation of a research project into [universal](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/) and [inclusive](https://www.microsoft.com/design/inclusive/) multi-user VR considering how people interact with each other, their physical and virtual environments, and with learning artefacts in variable VR space. Our current focus is within both guided and unguided classroom and museum learning contexts; but we aim to keep the framework flexible where possible to allow for greater creativity.
 
 **[Click here for more information on Circles and its progress, research, and development](https://www.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)**
 
 ### The (3) main impetuses for **CIRCLES** are as follows:
 
 - **Accessibility**
-  - **Device Scalability:** Platform Scalability refers to a system capable of adapting to a range of [VR](https://en.wikipedia.org/wiki/Virtual_reality)/[AR](https://en.wikipedia.org/wiki/Augmented_reality) capable platforms (desktop, mobile, large screens, etc.). This is comparable to a virtual form of [UDL (Universal Design for Learning)](https://udlguidelines.cast.org), which suggests increasing the accessibility of learning activities via (1) Multiple Means of Representation, (2) Multiple Means of Expression, and (3) Multiple Means of Engagement ([Rose et al., 2006](https://scholar.google.com/scholar_lookup?title=Universal%20design%20for%20learning%20in%20postsecondary%20education%3A%20reflections%20on%20principles%20and%20their%20application&journal=J%20Postsecond%20Educ%20Disabil&volume=19&issue=2&pages=135-151&publication_year=2006&author=Rose%2CDH&author=Harbour%2CWS&author=Johnston%2CCS&author=Daley%2CSG&author=Abarnall%2CL)). By supporting multiple platforms (Desktop, Mobile\[tablet\], and Head-Mounted Display (HMD - [Oculus Quest](https://www.oculus.com/blog/introducing-oculus-quest-our-first-6dof-all-in-one-vr-system-launching-spring-2019/) only right now)), VR/AR content can be potentially more accessible with “multiple means of action and expression.” *Note that we are only supporting Oculus Quest 1/2 at this time because the Quest does not introduce trip-hazards i.e., wires to a computer, is the most cost-effective immersive HMD on the market currently, includes the most well-supported HMD [WebXR browser](https://developer.oculus.com/documentation/oculus-browser/), and has **much less** friction pushing WebXR content to a VR HMD over an HMD wired to a PC.*
+  - **Device Scalability:** Platform Scalability refers to a system capable of adapting to a range of [VR](https://en.wikipedia.org/wiki/Virtual_reality)/[AR](https://en.wikipedia.org/wiki/Augmented_reality) capable platforms (desktop, mobile, large screens, etc.). This is comparable to a virtual form of [UDL (Universal Design for Learning)](https://udlguidelines.cast.org), which suggests increasing the accessibility of learning activities via (1) Multiple Means of Representation, (2) Multiple Means of Expression, and (3) Multiple Means of Engagement ([Rose et al., 2006](https://scholar.google.com/scholar_lookup?title=Universal%20design%20for%20learning%20in%20postsecondary%20education%3A%20reflections%20on%20principles%20and%20their%20application&journal=J%20Postsecond%20Educ%20Disabil&volume=19&issue=2&pages=135-151&publication_year=2006&author=Rose%2CDH&author=Harbour%2CWS&author=Johnston%2CCS&author=Daley%2CSG&author=Abarnall%2CL)). By supporting multiple platforms (Desktop, Mobile\[tablet\], and Head-Mounted Display (HMD - [Oculus Quest](https://www.oculus.com/blog/introducing-oculus-quest-our-first-6dof-all-in-one-vr-system-launching-spring-2019/) only right now)), VR/AR content can be potentially more accessible with “multiple means of action and expression.” *Note that we are only supporting Oculus Quest 1/2 at this time because the Quest does not introduce trip-hazards i.e., wires to a computer, is the most cost-effective immersive HMD on the market, includes the most well-supported HMD [WebXR browser](https://developer.oculus.com/documentation/oculus-browser/), and has **much less** friction pushing WebXR content to a VR HMD over an HMD wired to a PC.*
 
   - **Social Scalability:** To create a framework that allows variable forms of one-to-many users across both co-located and remote perspectives. This framework should encourage the use of experiences that allow one to interact; but that also the experience should scale naturally and with collaboration and/or competition in mind to provide a more visceral experience as the number of users increases. Social Scalability is based on Snibbe et al’s definition of social scalability within a museum context whereby *“interactions are designed to share with others ... interaction, representation, and users’ engagement and satisfaction should become richer as more people interact”* ([Snibbe & Raffle, 2009](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Snibbe+SS%2C+Raffle+HS+%282009%29+Social+immersive+media&btnG=)).
 
@@ -56,7 +56,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 <br/>
 
-In navigating within the 3D spaces of Circles all interactions are single-click to explore how we make controls symmetric across all three platforms (Desktop, Mobile, and HMD) similarly understandable. This may change as our user studies and feedback suggest that more significant differences between the three platforms. As this is a learning framework meant for use within classrooms and museums it is is important that advanced functionality is hidden by default (i.e., joystick movement in VR so we don't get unexpected users nauseous) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3) for new users. We are also inspired by reducing interactions to a form that could be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but important use-cases.
+In navigating within the 3D spaces of Circles all interactions aim to be single-click to explore how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD) similarly understandable. This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework meant for use within classrooms and museums it is is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired by reducing interactions to a form that could be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
 
 ### Controls 
 - **Desktop/Laptop**
@@ -102,7 +102,7 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
 
 1. Clone repo
     - `git clone https://github.com/PlumCantaloupe/circlesxr.git`
-1. Though not necessary, it is recommend to use [Visual Studio Code](https://code.visualstudio.com/) to develop, run, and modify _Circles_. VSCode allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
+1. Though not necessary, [Visual Studio Code](https://code.visualstudio.com/) is recommended to develop, run, and modify *Circles*. Additionally, VSCode allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
 1. [Install mongo](https://docs.mongodb.com/manual/installation/)
     - **Create a `data/db` folder on your PC** that Mongo can write to
     - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 6)
@@ -123,7 +123,7 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
       out the `scripts` section of `package.json` for more build options and
       details.
 1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` (default is `localhost:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https).
-    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop entire _circles_ db (which you will have to do when we make changes to db items) use the following commands within the mongo shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
+    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongo shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
 1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
@@ -132,11 +132,11 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
     - `s2@circlesxr.com:password`
     - `s3@circlesxr.com:password`
 1. Open another instance of browser (or open incognito mode, or another browser)
-1. Log in with another user and have fun seeing each other :)
+1. Log in with another user and have fun seeing each other!
 
 ### Instance Routes
 
-- */register* (has been diabled for now)
+- */register* (has been disabled for now)
 - */profile*
 - */campfire*
 - */explore* (this is to see the list of worlds included here)
@@ -150,9 +150,9 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
 <br/>
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
-- See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a simple example of how to set up your own
-- Currently, routes are not automatically created for each world ([in progress]); but you can type in URL http://localhost:{SERVER_PORT}/rooms/explore/world/{YOUR_WORLD_FOLDER}
-- Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTMl entities that are required for your world to properly connect to all features of this framework. These are replaced when served for the appropriate scripts so please pay attention to their position within the page.
+- See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a simple example of how to set up your own.
+- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in teh following format: http://localhost:{SERVER_PORT}/rooms/explore/world/{YOUR_WORLD_FOLDER}
+- Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTML entities that are required for your world to properly connect to this framework. These are replaced with the appropriate scripts in [webpack.worlds.parts](https://github.com/PlumCantaloupe/circlesxr/tree/Workshop_Features/src/webpack.worlds.parts) during the build stage so please pay attention to their position within the page.
   ```html  
   <circles-start-scripts/>
 
@@ -165,7 +165,7 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
 
   <circles-end-scripts/>
   ```
-  And below is the most basic example, with only an avatar. Feel free to use [A-Frame]() components to add [geometry](), [3D models](), [animations](), [lights](), and [load assets](). You may also want to add some [Circles specific components (see next section)]() for navigation, artefacts, buttons etc. 
+  And below is the most basic example, with only an avatar. Feel free to use [A-Frame](https://aframe.io) components to add [geometry](https://github.com/aframevr/aframe/blob/master/docs/components/geometry.md), [3D models](https://aframe.io/docs/1.2.0/introduction/models.html), [animations](https://github.com/aframevr/aframe/blob/master/docs/components/animation.md), [lights](https://github.com/aframevr/aframe/blob/master/docs/components/light.md), and [load assets](https://aframe.io/docs/1.2.0/core/asset-management-system.html). You may also want to add some [Circles specific components](#circles-components) for navigation, artefacts, buttons etc. 
 
   ```html
   <html>
@@ -201,13 +201,13 @@ In navigating within the 3D spaces of Circles all interactions are single-click 
 
 <br/>
 
-Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) structure of the the [A-Frame](https://aframe.io) library it is builds from, and will likely be a more familiar programming design pattern for Unity Developers.
+Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, and will likely be faniliar to [Unity](https://unity.com) Developers.
 
-The general structure of the framework (and the Github repository) consist of the following:
+The general structure of the framework (and the Github repository) follows:
 
-- [The Server](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server): Circles using a javscript server [node.js] and all associated code relavant to the delivery of all HTML and JS content is can be found in this folder. [app.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/app.js) is the main file that ties everything together and connects to a javascript databse [MongoDB](https://www.mongodb.com/) for saving user information. Note that [router.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/routes/router.js) is reposnible for creating appropriate paths to content, and [controller.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/controllers/controller.js) is reponsible for connecting with the mongo databse, and that much of the 2D html content (e.g., login and explore pages) are rendered with [PUG](https://pugjs.org/) that allows us to render HTMl and CSS via javascript. All files related to 2D htmland CSS are found within the [web folder](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server/public/web).
-- [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including anyt constants we would like to be able to access on both the server and client sides. This will be invisible to most developers. The simplify development for content we also modify code during the [webpack](https://webpack.js.org) powered project build before we serve it. 
-- [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds):
+- [The Server](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server): Circles using a javscript server [node.js] and all associated code relavant to the delivery of all HTML and JS content is can be found in this folder. [app.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/app.js) is the main file that connects to a javascript databse [MongoDB](https://www.mongodb.com/) for saving user information, and serves up Circles' html and javascript pages. Note that [router.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/routes/router.js) is reponsible for creating appropriate paths to content, and [controller.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/controllers/controller.js) is reponsible for connecting with the mongo database, and that much of the 2D html content (e.g., login and explore pages) are rendered with [PUG](https://pugjs.org/). Pug allows us to generate HTML and CSS via javascript. All files related to 2D HTML and CSS are found within the [web folder](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server/public/web).
+- [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including any constants, or global functions, we would like to be able to access on both the server and client sides. This will be invisible to most developers. To simplify development for content we also modify code during the [webpack](https://webpack.js.org) powered project build before we serve it. 
+- [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds): All Circles' worlds are placed here. From here they are modified to include Circles specific functionality and copied into an untracked folder on the server.
 
 ----------------
 
