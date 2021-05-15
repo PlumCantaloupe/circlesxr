@@ -10,6 +10,7 @@
 <br/>
 
 - [Circles Overview](#circles-overview)
+- [Circles Controls](#circles-controls)
 - [Running Circles Locally](#running-circles-locally)
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
@@ -47,6 +48,50 @@ CIRCLES is the practical implmenetation of a research project into [universal](h
 There is some work looking at how the virtual work can affect our reality, in how we identify in virtual worlds can change our behaviour ([Yee & Bailenson, 2007]()), in how task performance can be affected by others through social facilitation and social inhibition ([Miller et al., 2019]()), and in how virtual spaces can also change behaviour ([MacIntyre et al., 2004](); [Proulx et al., 2016]()); but there is still much work to be done on how the physical learning spaces we inhabit may affect our virtual behaviours. We have seen that the very nature of using this technology can inhibit participation and comfort ([Brignull & Rogers, 2002](); [Outlaw & Duckles, 2017](); [Rogers et al., 2019]()); but it is still very early beyond some studies into how we prevent collisions in shared virtual spaces ([Langbehn et al., 2018](); [Scavarelli & Teather, 2017]()). Just as connectivism and activity theory suggest that our digital tools and the socio-historical culture that surround learners become intrinsic part of the learning process, we should also consider how these same processes apply to both virtual environments and physical worlds as it becomes clear that the virtual worlds and physical worlds are not mutually exclusive entities.
 
 - **Learning Foundations:** Though most VR/AR projects in learning depend on constructivism, experiential learning, and/or social cognitive theory as a foundation for chosen features and properties, there are additional theoretical and methodological foundations within [CSCL (Computer-Supported Collaborative Learning)]() that may help lend more significant consideration to both the virtual and physical environments within a socio-cultural context. [Activity theory](), in the form of expansive learning, includes not only digital tools and objects/artefacts as an intrinsic part of the learning process; but also the socio-historical properties of learning spaces ([Engeström, 2016; Stahl & Hakkarainen, 2020]()). This could include some exciting explorations into the interplay between the social, spatial, and cultural aspects present within both the virtual and physical learning spaces; and how to better create VR/AR content that acknowledges them. This could include exploring how wearing in HMDs in learning spaces is not yet culturally acceptable ([Rogers et al., 2019]()), or that being a woman in social VR spaces may encourage virtual harassment, decreasing participation in activities using these technologies ([Outlaw & Duckles, 2017]()). The interconnected processes of learning within individuals and their actions, the social environment, and the spatial environments are complex, and as we add in virtual environments that may change behaviour, we may need to look towards additional learning theories that better encapsulate how this learning happens.
+
+----------------
+
+## Circles Controls
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+In navigating within the 3D spaces of Circles all interactions are single-click to explore how we make controls symmetric across all three platforms (Desktop, Mobile, and HMD) similarly understandable. This may change as our user studies and feedback suggest that more significant differences between the three platforms. As this is a learning framework meant for use within classrooms and museums it is is important that advanced functionality is hidden by default (i.e., joystick movement in VR so we don't get unexpected users nauseous) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3) for new users. We are also inspired by reducing interactions to a form that could be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but important use-cases.
+
+### Controls 
+- **Desktop/Laptop**
+  - *Navigation*
+    - Default: left-mouse button click on checkpoint to teleport, left-mouse button drag to look.
+    - Advanced: WASD keys to move, q/e keys to snap-turn left/right.
+  - *Select*
+    - Default: left-mouse button click on interactive element i.e., click on artefact to pick up.
+  - *Manipulate*
+    - Default: left-mouse button click on controls under artefact to change orientation.
+  - *Release*
+    - Default: left-mouse button click on 'drop' control or artefact to stop "inspecting".
+- **Mobile/Tablet**
+  - *Navigation*
+    - Default:  tap click on checkpoint to teleport, point device aroudn to look (i.e., "magic window").
+    - Advanced: tap-drag to look left/right.
+  - *Select*
+    - Default: tap click on interactive element i.e., click on artefact to pick up.
+  - *Manipulate*
+    - Default: tap click on controls under artefact to change orientation.
+  - *Release*
+    - Default: tap click on 'drop' control or artefact to stop "inspecting".
+- **HMD (Oculus Quest)**
+  - *Navigation*
+    - Default: point ray at, then trigger-click to select checkpoint to teleport, move head to look.
+    - Advanced: click-down on left-joystick, then move joystick, to move, joystick left/right to snap-turn left/right.
+  - *Select*
+    - Default: point ray at, then trigger-click to select interactive element i.e., trigger-click on artefact to pick up.
+  - *Manipulate*
+    - Default: point ray at, then trigger-click to select controls under artefact to change orientation.
+  - *Release*
+    - Default: point ray at, then trigger-click to select 'drop' control or artefact to stop "inspecting".
+
+
+
 
 ----------------
 
@@ -291,7 +336,7 @@ This is a core component in our framework that explores learning around tools an
 
 ----------------
 
-## Learning More About AFrame and Javascript Development
+## Learning More About Aframe and Javascript Development
 ##### *[back to top](#circles-vr-learning-framework)*
 
 <br/>
