@@ -4,7 +4,26 @@
 
 ![Screenshot of CIRCLES' world that highlights the challenges women face in the trades](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_WomenInTrades.jpg?raw=true)
 
-## Overview
+## Table of Contents
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+- [Circles Overview](#circles-overview)
+- [Running Circles Locally](#running-circles-locally)
+- [Creating A New Circles World](#creating-a-new-circles-world)
+- [Circles Structure](#circles-structure)
+- [Circles Components](#circles-components)
+- [Learning More About AFrame and Javascript Development](#learning-more-about-aFrame-and-javascript-development)
+- [Contributing to Circles](#contributing-to-circles)
+- [Early Contributors](#early-contributors)
+
+----------------
+
+## Circles Overview
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
 
 This **CIRCLES** framework is meant to easily allow
 developers to create multi-user and multi-platform
@@ -31,7 +50,10 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ----------------
 
-## Running this Framwork Locally
+## Running Circles Locally
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
 
 1. Clone repo
     - `git clone https://github.com/PlumCantaloupe/circlesxr.git`
@@ -77,7 +99,10 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ----------------
 
-## Creating your own "world"
+## Creating A New Circles World
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a simple example of how to set up your own
@@ -95,10 +120,204 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
   <circles-end-scripts/>
   ```
-  
-  ----------------
+  And below is the most basic example, with only an avatar. Feel free to use [A-Frame]() components to add [geometry](), [3D models](), [animations](), [lights](), and [load assets](). You may also want to add some [Circles specific components (see next section)]() for navigation, artefacts, buttons etc. 
+
+  ```html
+  <html>
+  <head>
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+  </head>
+  <body>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_properties>
+      <a-assets>
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in avatar [REQUIRED] -->
+      <circles-avatar/>
+
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+   </body>
+  </html>
+  ```
+
+----------------
+
+## Circles Structure
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) structure of the the [A-Frame](https://aframe.io) library it is builds from, and will likely be a more familiar programming design pattern for Unity Developers.
+
+The general structure of the framework (and the Github repository) consist of the following:
+
+- [The Server](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server): Circles using a javscript server [node.js] and all associated code relavant to the delivery of all HTML and JS content is can be found in this folder. [app.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/app.js) is the main file that ties everything together and connects to a javascript databse [MongoDB](https://www.mongodb.com/) for saving user information. Note that [router.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/routes/router.js) is reposnible for creating appropriate paths to content, and [controller.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/controllers/controller.js) is reponsible for connecting with the mongo databse, and that much of the 2D html content (e.g., login and explore pages) are rendered with [PUG](https://pugjs.org/) that allows us to render HTMl and CSS via javascript. All files related to 2D htmland CSS are found within the [web folder](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server/public/web).
+- [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including anyt constants we would like to be able to access on both the server and client sides. This will be invisible to most developers. The simplify development for content we also modify code during the [webpack](https://webpack.js.org) powered project build before we serve it. 
+- [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds):
+
+----------------
+
+## Circles Components
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+There are dozens of components created for use within this framework that you can find in the [components folder of this repo](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/components); but the following will likely be the most used, and thus most significant
+
+- [circles-artefact](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-artefact.js):
+This is a core component in our framework that explores learning around tools and objects. The circles-artefact allows you to create an object that has textutal (and audio) descriptions and narratives, that can be picked up by an avatar and manipulated.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | inspectScale    | Vec3            | Adjust the size of artefact when picked up.               | 1 1 1                |
+  | textRotationY   | number, degrees | Adjust the rotation of the description text. Degrees.     | 0                    |
+  | textLookAt      | boolean         | Whether to generate a default environment                 | false                |
+  | inspectRotation | vec3, degrees   | Adjust rotation of artefact when picked up.               | 0 0 0                |
+  | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
+  | label_visible   | booelan         | Whether label is visible.                                 | true                 |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
+  | title           | string          | Title of description.                                     | 'No Title Set'       |
+  | description     | string          | Description text.                                         | 'No decription set'  |
+  | label_text      | string          | Label text.                                               | 'label_text'         |
+
+  *Example 'circles-artefact' code: Note we are loading in a gltf model sing A-Frame's [gltf-model loader](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md), setting position, rotation, scale, and then setting several properties for the 'circles-artefact.'*
+
+  ```html
+  <a-entity id="Artefact_ID"
+            position="0 0 0" 
+            rotation="0 0 0" 
+            scale="1 1 1"
+            gltf-model="#model_gltf"
+            circles-artefact="
+                inspectScale:     0.5 0.5 0.5;
+                textRotationY:    90;
+                textLookAt:       false; 
+                inspectRotation:  0 0 0;
+                label_offset:     0 1 0;
+                label_visible:    true;
+                arrow_position:   down;
+                title:            Some Title;
+                description:      Some description text.;
+                label_text:       Some Label;">
+  </a-entity>
+  ```
+
+- [circles-checkpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-checkpoint.js): Attach to to an entity that you wish to act as a navigation checkpoint. Appearance is automatically set.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | offset          | vec3            | Adjust where the player is positioned, relative to checkpoint position.               | 0 0 0                |
+
+  *Example 'circles-checkpoint' code: Note we are setting position of the checkpoint to also denote where the player is placed after clicking on this checkpoint.*
+
+  ```html
+  <a-entity circles-checkpoint position="10 0 9.5"></a-entity>
+  ```
+- [circles-spawnpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-spawnpoint.js): Attach to to a circles-checkpoint entity that you wish to act as a spawn point when entering the world. If there are multiple spawnpoints in a single world one is chosen randomly to position the player on.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | n/a             | n/a             | no properties                                             | n/a                  |
+
+  *Example 'circles-checkpoint' set as a 'circles-spawnpoint'*
+
+  ```html
+  <a-entity circles-checkpoint circles-spawnpoint position="10 0 9.5"></a-entity>
+  ```
+- [circles-button](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-button.js): This is a general purpose button that we can use to listen for click events on and trigger our own code or use in combination with another Circles' component i.e., '[circles-sendpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sendpoint.js), see next below'.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | type               | string, oneOf:['box', 'cylinder']            | Set whether the button pedastal is a cylinder or box shape.                                             | 'box'                  |
+  | button_color       | color           | colour of button                                          | 'rgb(255, 100, 100)'                  |
+  | button_color_hover | color           | colour of button on mouseover/hover.                      | 'rgb(255, 0, 0)'                      |
+  | pedastal_color     | color           | colour of button pedsatal                                 | 'rgb(255, 255, 255)'                  |
+  | diameter           | number          | set the size of the button                                | 0.5                                   |
+
+  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
+
+  ```html
+  <a-entity id="checkpoint_far" circles-checkpoint position="30 0 0"></a-entity>
+
+  <!-- click on this button to be sent to the checkpoint above -->
+  <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+  ```
+- [circles-sendpoint](): Attach to to a circles-button entity when you want that button to send them to any checkpoint (with an id that we can point to).
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | target          | selector        | The id of the checkpoint you want to send the player to.  | null                 |
+
+  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
+
+  ```html
+  <a-entity id="checkpoint_far" circles-checkpoint position="30 0 0"></a-entity>
+
+  <!-- click on this button to be sent to the checkpoint above -->
+  <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+  ```
+
+- [circles-sphere-env-map](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sphere-env-map.js): In the [Physical-Based Rendering (PBR)](https://marmoset.co/posts/basic-theory-of-physically-based-rendering/) workflow that A-frame defaults to "metal" objects will reflect their environment. To make sure metal objects are not reflecting black we must set a env-map. A common format is to use a [spherical-environment map](https://www.zbrushcentral.com/t/100-free-spherical-environment-maps-200-sky-backgrounds-1000-textures/328672). This component allows you to add a spherical-env-map to any model. In particular, [GLTF models](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md) that the A-Frame material component cannot affect. If not using gltf models you can just use the A-Frame [material component](https://github.com/aframevr/aframe/blob/master/docs/components/material.md). If using GLTF models are would also like to affect other properties i.e, transparency please use the [circles-material-override](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-material-override.js) component. 
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | src             | asset           | The id of the spherical environment map image asset.      | ''                 |
+  | format          | string          | The format of the image. You likely don't have to change this.      | 'RGBFormat'                 |
+
+  *Example 'circles-sphere-env-map' uses the 'sphericalEnvMap' image asset in the gltf 'model_gltf' reflections below. *
+
+  ```html
+  <a-assets>
+    <img id='sphericalEnvMap' src='/worlds/ExampleWorld/assets/textures/above_clouds.jpg' crossorigin="anonymous">
+
+    <a-asset-item id="model_gltf"  src="/worlds/ExampleWorld/assets/models/model/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+    <!-- Circles' built-in assets [REQUIRED] -->
+    <circles-assets/>
+  </a-assets>
+
+  <!-- a gltf model with the spherical-env-map applied -->
+  <a-entity gltf-model="#model_gltf" circles-sphere-env-map="src:#sphericalEnvMap"></a-entity>
+  ```
+
+----------------
+
+## Learning More About AFrame and Javascript Development
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+- **To learn more about A-Frame development, I recommend checking out this [brief introduction to A-Frame](https://aframe.io/docs/1.2.0/introduction/), and a [brief tutorial that overviews some of the most common functionality](https://glitch.com/edit/#!/aframe-1hr-intro).**
+- For a quick refresher on Javsscript please see [W3 Schools Javascript Introduction](https://www.w3schools.com/js/js_intro.asp).
+
+----------------
+
+## Contributing to Circles
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
+
+We can always learn more, and can always do things better. This framework is open-source under the MIT license in the hopes that it can be co-designed and extended by others looking for a similar VR learning tool. To do so please make a new [fork](https://github.com/PlumCantaloupe/circlesxr/network/members), or if already a collaborator, a new [branch](https://github.com/PlumCantaloupe/circlesxr/branches), add your changes into that new fork/branch and submit a [PR (pull request)](https://github.com/PlumCantaloupe/circlesxr/pulls) to this repository. We can then review the changes, make sure they work, then merge them into to this main branch for us all to use :smiley:
+
+Also, of course, if you have any formal or informal bugs, feedback, or suggestions please submit an [issue](https://github.com/PlumCantaloupe/circlesxr/issues).
+
+:pray: :pray: :pray:
+
+----------------
 
 ## Early Contributors
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br/>
 
 The following are several companions that have helped to bring this project into existence. Starting as a prototype for [Oculus Launchpad 2018](https://developer.oculus.com/launch-pad/) to showcase [Viola Desmond's story as a pioneer for Canadian civil rights](https://humanrights.ca/story/one-womans-resistance) and, more recently, helping direct content for highlighting the challenges women face in the trades, I wanted to recognize them for their early direction and support. Though this is mainly a research project for my [Ph.D. work at Carleton University](https://carleton.ca/engineering-design/story/giving-new-life-to-a-canadian-legend/) I hope that their contributions in this open-source repository will also help and inspire others as they have myself.
 
