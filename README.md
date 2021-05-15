@@ -38,7 +38,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 1. Though not necessary, it is recommend to use [Visual Studio Code](https://code.visualstudio.com/) to develop, run, and modify _Circles_. VSCode allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
 1. [Install mongo](https://docs.mongodb.com/manual/installation/)
     - **Create a `data/db` folder on your PC** that Mongo can write to
-    - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 7)
+    - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 6)
     - Please note that if the _mongo_ or _mongod_ cmds "are not recognized" that you may need to add the [mongo executables to your windows path](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#add-mongodb-binaries-to-the-system-path). More information [here](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/).
 1. [Install node/npm](https://nodejs.org/en/download/)
 1. Go into project folder and install NPM dependencies
