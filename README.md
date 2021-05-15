@@ -69,11 +69,11 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ### Instance Routes
 
-- /register
-- /profile
-- /campfire
-- /rooms
-- /add-all-test-data (only do this once, or if you have deleted/dropped the database and need to re-populate test data )
+- */register* (has been diabled for now)
+- */profile*
+- */campfire*
+- */explore* (this is to see the list of worlds included here)
+- */add-all-test-data* (only do this once, or if you have deleted/dropped the database and need to re-populate test data )
 
 ----------------
 
@@ -83,11 +83,11 @@ There is some work looking at how the virtual work can affect our reality, in ho
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a simple example of how to set up your own
 - Currently, routes are not automatically created for each world ([in progress]); but you can type in URL http://localhost:{SERVER_PORT}/rooms/explore/world/{YOUR_WORLD_FOLDER}
 - Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTMl entities that are required for your world to properly connect to all features of this framework. These are replaced when served for the appropriate scripts so please pay attention to their position within the page.
-  ```  
+  ```html  
   <circles-start-scripts/>
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+  <a-scene circles_properties>
 
   <circles-assets/>
 
