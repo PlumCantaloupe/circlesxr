@@ -311,7 +311,7 @@ This is a core component in our framework that explores learning around tools an
   <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
   ```
 
-- [circles-sphere-env-map](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sphere-env-map.js): In the [Physical-Based Rendering (PBR)](https://marmoset.co/posts/basic-theory-of-physically-based-rendering/) workflow that A-frame defaults to "metal" objects will reflect their environment. To make sure metal objects are not reflecting black we must set a env-map. A common format is to use a [spherical-environment map](https://www.zbrushcentral.com/t/100-free-spherical-environment-maps-200-sky-backgrounds-1000-textures/328672). This component allows you to add a spherical-env-map to any model. In particular, [GLTF models](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md) that the A-Frame material component cannot affect. If not using gltf models you can just use the A-Frame [material component](https://github.com/aframevr/aframe/blob/master/docs/components/material.md). If using GLTF models are would also like to affect other properties i.e, transparency please use the [circles-material-override](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-material-override.js) component. 
+- [circles-sphere-env-map](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sphere-env-map.js): In the [Physical-Based Rendering (PBR)](https://marmoset.co/posts/basic-theory-of-physically-based-rendering/) workflow that A-frame uses "metal" objects will reflect their environment. To make sure metal objects are not reflecting black we must set a [environment map](https://www.reindelsoftware.com/Documents/Mapping/Mapping.html). A common format is to use a [spherical-environment map](https://www.zbrushcentral.com/t/100-free-spherical-environment-maps-200-sky-backgrounds-1000-textures/328672). This component allows you to add a spherical-env-map to any model. In particular, [GLTF models](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md). If not using gltf models you may use the standard A-Frame [material component](https://github.com/aframevr/aframe/blob/master/docs/components/material.md). If while using GLTF models you would like to affect some other material properties i.e, transparency please use the [circles-material-override](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-material-override.js) component. 
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -351,7 +351,7 @@ This is a core component in our framework that explores learning around tools an
 
 <br/>
 
-We can always learn more, and can always do things better. This framework is open-source under the MIT license in the hopes that it can be co-designed and extended by others looking for a similar VR learning tool. To do so please make a new [fork](https://github.com/PlumCantaloupe/circlesxr/network/members), or if already a collaborator, a new [branch](https://github.com/PlumCantaloupe/circlesxr/branches), add your changes into that new fork/branch and submit a [PR (pull request)](https://github.com/PlumCantaloupe/circlesxr/pulls) to this repository. We can then review the changes, make sure they work, then merge them into to this main branch for us all to use :smiley:
+We can always learn more, and can always do things better. This framework is open-source under the MIT license in the hopes that it can be co-designed and extended by others looking for a similar VR learning tool. To do so please make a new [fork](https://github.com/PlumCantaloupe/circlesxr/network/members), or if already a collaborator, a new [branch](https://github.com/PlumCantaloupe/circlesxr/branches), add your changes into that new fork/branch and submit a [PR (pull request)](https://github.com/PlumCantaloupe/circlesxr/pulls). We can then review the changes and merge them into to this main branch for us all to use when ready.
 
 Also, of course, if you have any formal or informal bugs, feedback, or suggestions please submit an [issue](https://github.com/PlumCantaloupe/circlesxr/issues).
 
@@ -370,6 +370,7 @@ Thank you from an aspiring student of all things XR and learning, [Anthony Scava
 
 - **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*
 - **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
+- **[Nathaniel Parant](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *Storyteller*
 - **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
 - **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
 - **[Dr. Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
