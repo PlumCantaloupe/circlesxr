@@ -1,5 +1,8 @@
 ### start global ignore
 
+#just a dumb way to have some folders/files in here that we can ignore by inclding 'IGNORE_THIS' somewhere in the file/folder name
+*IGNORE_THIS*
+
 # Ignore generated Browserify bundles from the repo
 *_bundle.js
 

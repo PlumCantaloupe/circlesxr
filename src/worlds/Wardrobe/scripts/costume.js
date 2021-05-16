@@ -4,23 +4,23 @@ AFRAME.registerComponent('costume', {
         schema: {   
     },
     init: function() {
-        const Context_AF = this;
+        const CONTEXT_AF = this;
 
-        Context_AF.el.addEventListener('click', (e) => {
+        CONTEXT_AF.el.addEventListener('click', (e) => {
             const avatar        = e.detail.cursorEl.parentEl
            console.log(avatar);
             // Checking which function to run by the class associated with the costume obj
-            if(Context_AF.el.classList.contains("body")){
-                Context_AF.setBody(avatar, Context_AF.el.id);
+            if(CONTEXT_AF.el.classList.contains("body")){
+                CONTEXT_AF.setBody(avatar, CONTEXT_AF.el.id);
             }
-            else if(Context_AF.el.classList.contains("hair")){
-                Context_AF.setHair(avatar, Context_AF.el.id);
+            else if(CONTEXT_AF.el.classList.contains("hair")){
+                CONTEXT_AF.setHair(avatar, CONTEXT_AF.el.id);
             }
-            else if(Context_AF.el.classList.contains("head")){
-                Context_AF.setHead(avatar, Context_AF.el.id);
+            else if(CONTEXT_AF.el.classList.contains("head")){
+                CONTEXT_AF.setHead(avatar, CONTEXT_AF.el.id);
             }
-            else if(Context_AF.el.classList.contains("color")){
-                Context_AF.setColor(avatar, Context_AF.el.id);
+            else if(CONTEXT_AF.el.classList.contains("color")){
+                CONTEXT_AF.setColor(avatar, CONTEXT_AF.el.id);
             }
             else{
                 console.log("Costume has no corresponding function");
@@ -28,10 +28,10 @@ AFRAME.registerComponent('costume', {
         });
     },
     setColor: function(avatar, id){
-        const Context_AF                = document.querySelector('#' + id);
+        const CONTEXT_AF                = document.querySelector('#' + id);
         let avatarNode                  = document.querySelector(".user_body");
-        avatar.components["circles-user-networked"].data.color_body = Context_AF.attributes.color.value;
-        avatarNode.setAttribute("circles-color", {color: Context_AF.attributes.color.value});
+        avatar.components["circles-user-networked"].data.color_body = CONTEXT_AF.attributes.color.value;
+        avatarNode.setAttribute("circles-color", {color: CONTEXT_AF.attributes.color.value});
     },
     reset: function(avatar){
         avatar.components["circles-user-networked"].data.color_body = avatar.components["circles-user-networked"].data.original_color_body;

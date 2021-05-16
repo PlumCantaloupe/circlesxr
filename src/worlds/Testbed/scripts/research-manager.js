@@ -40,12 +40,12 @@ AFRAME.registerSystem('research-manager', {
             //CONTEXT_COMP.researchUsers.push({'Player1', user_type:CONTEXT_COMP.userType});
         });
 
-        CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.NAF_CONNECTED, function (event) {
-            CONTEXT_COMP.socket = NAF.connection.adapter.socket;
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED});
+        CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED, function (event) {
+            CONTEXT_COMP.socket = CIRCLES.getCirclesResearchWebsocket();
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, room:CIRCLES.getCirclesRoom()});
             CONTEXT_COMP.connected = true;
             CONTEXT_COMP.addResearchEventListeners();
-            console.log("research-manager: messaging system connected at socket: " + CONTEXT_COMP.socket);
+            console.warn("research-manager: messaging system connected at socket: " + CONTEXT_COMP.socket.id);
         });
 
         //might want these to track number of entities and whether we have the right one
@@ -103,7 +103,7 @@ AFRAME.registerSystem('research-manager', {
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
           //may want to add logic later to make sure there is at least one researcher and participant
-          console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
+          console.warn('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {

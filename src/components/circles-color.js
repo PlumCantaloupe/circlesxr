@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-color', {
     });
   },
   update: function (oldData) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet

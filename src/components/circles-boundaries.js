@@ -10,9 +10,9 @@ AFRAME.registerComponent('circles-boundaries', {
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
     var loader = new THREE.GLTFLoader();
-    var Context_AF = this;
+    var CONTEXT_AF = this;
 
-    Context_AF.el.addEventListener('object3dset', () => {
+    CONTEXT_AF.el.addEventListener('object3dset', () => {
       //console.log('BOUNDARIES');
     });
 
@@ -23,8 +23,8 @@ AFRAME.registerComponent('circles-boundaries', {
       renderSide: 'double' //front, back, double
     };
 
-    Context_AF.el.setAttribute('circles-cutout-material', properties);
-    Context_AF.el.setAttribute('circles-color', {color:'rgba(0, 255, 0)', alpha:0.5});
+    CONTEXT_AF.el.setAttribute('circles-cutout-material', properties);
+    CONTEXT_AF.el.setAttribute('circles-color', {color:'rgba(0, 255, 0)', alpha:0.5});
 
     loader.load(
       // resource URL
@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-boundaries', {
       // called when the resource is loaded
       function ( gltf ) {
         const model = gltf.scene || gltf.scenes[0];
-        Context_AF.el.setObject3D('mesh', model);
+        CONTEXT_AF.el.setObject3D('mesh', model);
       },
       // called when loading is in progresses
       function ( xhr ) {
@@ -45,17 +45,17 @@ AFRAME.registerComponent('circles-boundaries', {
     );
   },
   update: function (oldData) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     if ( (oldData.color !== data.color) && (data.color !== '') ) {
-      Context_AF.el.setAttribute('circles-color', {color: data.color});
+      CONTEXT_AF.el.setAttribute('circles-color', {color: data.color});
     }
 
     if ( (oldData.alpha !== data.alpha) && (data.alpha !== '') ) {
-      Context_AF.el.setAttribute('circles-color', {alpha: data.alpha});
+      CONTEXT_AF.el.setAttribute('circles-color', {alpha: data.alpha});
     }
   },
   // tick: function(time, timeDelta) {},

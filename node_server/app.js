@@ -16,7 +16,6 @@ env = dotenvParseVariables(env.parsed);
 // Make the parsed environment config globally accessible
 //global.env = env;
 
-//shared CIRCLES code with client
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
@@ -83,12 +82,12 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "default-src": ["'self'"],
-      "connect-src": ["'self'", "'unsafe-inline'", "cdn.aframe.io", "blob:", "ws://localhost:1111", "ws://circles-xr-research.ngrok.io"],
-      "img-src": ["*"],
+      "connect-src": ["*", "'unsafe-inline'", "blob:"],
+      "img-src": ["*", "blob:", "data:"],
       "media-src": ["*"],
-      "frame-src": ["player.vimeo.com"],
-      "style-src": ["'self'", "'unsafe-inline'", "unpkg.com"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com"],
+      "frame-src": ["*"],
+      "style-src": ["*", "'unsafe-inline'"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
       "object-src": ["'none'"],
     },
   })
@@ -223,8 +222,8 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-//!!easyRTC start
 //websockets
+//we will us ethis for sending messages we want to intercept with this server
 let io = null;
 if (env.MAKE_SSL) {
   //io = require('socket.io')(serverSecure);
@@ -255,8 +254,8 @@ else {
   });
 }
 
+//this code is unused when we are using teh janus sever/adapter 
 const rooms = {};
-
 io.on("connection", socket => {
   console.log("user connected", socket.id);
 
@@ -307,9 +306,17 @@ io.on("connection", socket => {
       }
     }
   });
+});
 
-  //research socket events
-  if (env.ENABLE_RESEARCH_MODE) {
+//let's create a research namespace.
+//This will definitely need to be redone if we run more than one experiemnet on this server at a time in the future
+if (env.ENABLE_RESEARCH_MODE) {
+  var rnsp = io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+  rnsp.on("connection", socket => {
+    console.log("research websockets connected", socket.id);
+
+    //research socket events
+    
     const researchUtils = require('./modules/research-utils');
 
     socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
@@ -317,14 +324,12 @@ io.on("connection", socket => {
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
-          console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-          // data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
-          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          console.log('CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED:' + data.room);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           researchUtils.startExperiment(data);
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
@@ -340,21 +345,21 @@ io.on("connection", socket => {
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
             eData.and = {downloadURL:researchUtils.getDownloadLink()};
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = data.event_type
             newData.exp_id      = data.exp_id
             newData.user_id     = data.user_id
             newData.user_type   = data.user_type
             
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
           }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           researchUtils.stopExperiment(data);
           data.and = {downloadURL:researchUtils.getDownloadLink()};
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
@@ -378,7 +383,7 @@ io.on("connection", socket => {
             newData.user_id     = data.user_id
             newData.user_type   = data.user_type
 
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
           } 
         }
         break;
@@ -401,9 +406,8 @@ io.on("connection", socket => {
         break;
       }
     });
-  }
-});
-//!!easyRTC end
+  });
+}
 
 //lets start up
 server.listen(env.SERVER_PORT, () => {

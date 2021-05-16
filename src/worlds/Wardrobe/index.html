@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
     <script src="/worlds/Wardrobe/scripts/costume.js"></script> 
  
 </head>
   <body>
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
 
 
@@ -34,13 +35,13 @@
         <a-asset-item id="Head_Square_Model" src='/global/assets/models/gltf/head/Head_Square.glb' response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Head_Thin_Model" src='/global/assets/models/gltf/head/Head_Thin.glb' response-type="arraybuffer"></a-asset-item>
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
 
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- portal back to campfire -->
@@ -52,7 +53,7 @@
                   <a-entity text="value:The Fire; align:center; width:5.0; shader:custom-sdf;" rotation="0 90 0" position="0.0 1.0 0.0"></a-entity>
         </a-entity>
         
-        <a-entity class="interactive checkpoint" circles-interactive-object="" mixin="checkpoint" position="1.0 0.0 -1.0"></a-entity>
+        <a-entity circles-checkpoint circles-spawnpoint position="1.0 0.0 -1.0"></a-entity>
         
         <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="1.0 1.5 -2.5" rotation="0 0 0" scale="1.0 1.0 1.0" 
                     circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000; intensity:0.8;"></a-entity>
@@ -208,7 +209,7 @@
 
     </a-scene>
 
-        <!-- circles_END_SCRIPTS -->
+        <!-- Circles' end scripts [REQUIRED] -->
         <circles-end-scripts/>
     </body>
 </html>

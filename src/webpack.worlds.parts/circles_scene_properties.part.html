@@ -2,10 +2,11 @@
     <div id="user-gesture-overlay" >
         <div id="Permissions" class="overlay">
             <img class="logo" src="/global/assets/textures/logos/circles_logo.svg" alt="Circles logo" />
-            <!-- <div class="suboverlay"> -->
-            <!-- <p class="title">Permissions</p>
+            
+            <div class="suboverlay">
+            <p class="title">Permissions</p>
                 
-            <div class="grid2col">
+            <div id="user-microphone-wrapper" class="grid2col">
                 <span class="label">Microphone</span>
                 <div class="onoffswitch">
                 <input type="checkbox" name="onoffswitch_mic" class="onoffswitch-checkbox" id="switch_mic" autocomplete="off">
@@ -14,19 +15,18 @@
                     <span class="onoffswitch-switch"></span>
                 </label>
                 </div>
-            </div> -->
+            </div>
 
             <input id="user-gesture-enter" type="submit" value="Enter Circles">
             <!-- loading gif from: https://www.behance.net/gallery/31234507/Open-source-Loading-GIF-Icons-Vol-1 -->
             <img id="loading-animation-enter" src="/global/images/loading.gif">
-            <!-- </div> -->
+            </div>
         </div>
     </div>
 
-<!-- <a-scene    renderer="  antialias:true; 
-                        gammaOutput: true;
-                        sortObjects: false;
-                        physicallyCorrectLights: true;"  -->
+    <div id="ui_wrapper">
+        <input id="button_microphone" type="submit" value="">
+    </div>
 
 <a-scene    renderer="  antialias: true;
                         colorManagement: true;
@@ -37,13 +37,13 @@
                         logarithmicDepthBuffer: false;
                         precision: high;"
 
-
             networked-scene="   room: __ROOM_NAME__;
                                 connectOnLoad: true;
                                 onConnect: onConnect;
                                 audio: {{ NAF_AUDIO }};
                                 debug: false;
-                                adapter: {{ NAF_ADAPTER }};"
+                                adapter: {{ NAF_ADAPTER }};
+                                serverURL: {{ NAF_SERVER }}"
                                 
             shadow="autoUpdate:false; type:basic;"
             vr-mode-ui="enabled:true;"
@@ -51,6 +51,6 @@
             device-orientation-permission-ui="enabled:true;"
             circles-enter-ui
             circles-platform-scene-shadows>
-                                <!-- adapter: wsEasyRTC;"> -->
+
     <!-- our "game manager" object -->
-    <a-entity id="circles-Manager" circles-manager></a-entity>
+    <a-entity id="circles-manager" circles-manager="world:__WORLDNAME__; user:__USERNAME__"></a-entity>

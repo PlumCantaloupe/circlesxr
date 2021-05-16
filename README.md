@@ -54,8 +54,6 @@ ___TODO: will add more to this later___
     - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 7)
     - Please note that if the _mongo_ or _mongod_ cmds "are not recognized" that you may need to add the [mongo executables to your windows path](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#add-mongodb-binaries-to-the-system-path). More information [here](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/).
 1. [Install node/npm](https://nodejs.org/en/download/)
-1. In terminal install webpack globally
-    - `npm install --save-dev webpack`
 1. Go into project folder and install NPM dependencies
     - `npm install`
 1. Set up the Environment file
@@ -101,7 +99,8 @@ ___TODO: will add more to this later___
   ```  
   <circles-start-scripts/>
 
-  <a-scene circles_properties>
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_properties>
 
   <circles-assets/>
 

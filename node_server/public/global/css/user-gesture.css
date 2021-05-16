@@ -129,8 +129,33 @@ div.grid2col {
     border-radius: 20px;
     cursor: pointer;
 }
-
 #user-gesture-enter:hover {
+    background-color: rgb(123, 196, 255);
+}
+
+#ui_wrapper {
+    display: none;
+    z-index: 99;
+    position: absolute;
+    left:20px;
+    bottom:20px;
+}
+
+#button_microphone {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: #2196F3;
+    background-image: url("/global/images/microphone_off.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    color: white;
+    margin: 10px 10px 10px 10px;
+    border: 2px solid #FFFFFF; 
+    border-radius: 15px;
+    cursor: pointer;
+}
+#button_microphone:hover {
     background-color: rgb(123, 196, 255);
 }
 

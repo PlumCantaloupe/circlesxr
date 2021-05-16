@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
@@ -10,6 +10,7 @@
   </head>
   <body>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_properties>
       <a-assets>
         <!-- add your assets here -->
@@ -31,17 +32,17 @@
         <!-- ambience -->
         <!-- <audio id="Amb_fan-snd" src="/worlds/WIT_1_ElectricLab/assets/audio/Amb_Fan.mp3"></audio> -->
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
+      <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-1.44 0.05 2.6"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="-0.8 0.05 -1.0"></a-entity>
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="1.3 0.05 1.3"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.44 0.05 2.6"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.8 0.05 -1.0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.3 0.05 1.3"></a-entity>
 
       <!-- sky and lights -->
       <!-- bad place for narrative manager but :) -->
@@ -74,7 +75,7 @@
                 postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>
