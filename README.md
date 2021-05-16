@@ -7,7 +7,7 @@
 ## Table of Contents
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 - [Circles Overview](#circles-overview)
 - [Circles Controls](#circles-controls)
@@ -24,7 +24,7 @@
 ## Circles Overview
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 This **CIRCLES** framework is meant to easily allow
 developers to create multi-user and multi-platform [WebXR](https://www.w3.org/TR/webxr/) learning activities on top of another WebXR framework [A-Frame](https://aframe.io), with networking provided by [Networked-Aframe](https://github.com/networked-aframe/networked-aframe).
@@ -52,51 +52,30 @@ There is some work looking at how the virtual work can affect our reality, in ho
 ## Circles Controls
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
+
+![Illustration of the three different control schemes for Circles. From left to right, Desktop with mouse, Mobile with finger tap, and raycast with HMD VR controller](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_PlatformInteractions.jpg?raw=true)
 
 In navigating within the 3D spaces of Circles all interactions aim to be single-click to explore how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD) similarly understandable. This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework meant for use within classrooms and museums it is is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired by reducing interactions to a form that could be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
 
-### Controls 
-- **Desktop/Laptop**
-  - *Navigation*
-    - Default: left-mouse button click on checkpoint to teleport, left-mouse button drag to look.
-    - Advanced: WASD keys to move, q/e keys to snap-turn left/right.
-  - *Select*
-    - Default: left-mouse button click on interactive element i.e., click on artefact to pick up.
-  - *Manipulate*
-    - Default: left-mouse button click on controls under artefact to change orientation.
-  - *Release*
-    - Default: left-mouse button click on 'drop' control or artefact to stop "inspecting".
-- **Mobile/Tablet**
-  - *Navigation*
-    - Default:  tap click on checkpoint to teleport, point device aroudn to look (i.e., "magic window").
-    - Advanced: tap-drag to look left/right.
-  - *Select*
-    - Default: tap click on interactive element i.e., click on artefact to pick up.
-  - *Manipulate*
-    - Default: tap click on controls under artefact to change orientation.
-  - *Release*
-    - Default: tap click on 'drop' control or artefact to stop "inspecting".
-- **HMD (Oculus Quest)**
-  - *Navigation*
-    - Default: point ray at, then trigger-click to select checkpoint to teleport, move head to look.
-    - Advanced: click-down on left-joystick, then move joystick, to move, joystick left/right to snap-turn left/right.
-  - *Select*
-    - Default: point ray at, then trigger-click to select interactive element i.e., trigger-click on artefact to pick up.
-  - *Manipulate*
-    - Default: point ray at, then trigger-click to select controls under artefact to change orientation.
-  - *Release*
-    - Default: point ray at, then trigger-click to select 'drop' control or artefact to stop "inspecting".
+### Interaction Controls
 
+| <br>Interaction      | Default<br>Desktop  | <br>Mobile          |<br>HMD              | Advanced<br>Desktop | <br>Mobile          | <br>HMD             |
+|:---                  |:---                 |:---                 |:---                 |:---                 |:---                 |:---                 |
+|  Navigation          | Checkpoint Teleport                       ||                    | WASD                | n/a                 | Left Joysick        |
+|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | tap-drag left/right | n/a                 |
+|  Selection           | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |
+|  Manipulation        | Non-Diegetic UI (rotate, zoom, release)   ||                    | TBD                 | TBD                 | TBD                 |
+|  Release             | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |         
 
-
+<br>
 
 ----------------
 
 ## Running Circles Locally
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 1. Clone repo
     - `git clone https://github.com/PlumCantaloupe/circlesxr.git`
@@ -145,7 +124,7 @@ In navigating within the 3D spaces of Circles all interactions aim to be single-
 ## Creating A New Circles World
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a simple example of how to set up your own.
@@ -197,7 +176,7 @@ In navigating within the 3D spaces of Circles all interactions aim to be single-
 ## Circles Structure
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, and will likely be faniliar to [Unity](https://unity.com) Developers.
 
@@ -214,7 +193,7 @@ The general structure of the framework (and the Github repository) follows:
 ## Circles Components
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 There are dozens of components created for use within this framework that you can find in the [components folder of this repo](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/components); but the following will likely be the most used, and thus most significant
 
@@ -339,7 +318,7 @@ This is a core component in our framework that explores learning around tools an
 ## Learning More About Aframe and Javascript Development
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 - **To learn more about A-Frame development, I recommend checking out this [brief introduction to A-Frame](https://aframe.io/docs/1.2.0/introduction/), and a [brief tutorial that overviews some of the most common functionality](https://glitch.com/edit/#!/aframe-1hr-intro).**
 - For a quick refresher on Javsscript please see [W3 Schools Javascript Introduction](https://www.w3schools.com/js/js_intro.asp).
@@ -349,7 +328,7 @@ This is a core component in our framework that explores learning around tools an
 ## Contributing to Circles
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 We can always learn more, and can always do things better. This framework is open-source under the MIT license in the hopes that it can be co-designed and extended by others looking for a similar VR learning tool. To do so please make a new [fork](https://github.com/PlumCantaloupe/circlesxr/network/members), or if already a collaborator, a new [branch](https://github.com/PlumCantaloupe/circlesxr/branches), add your changes into that new fork/branch and submit a [PR (pull request)](https://github.com/PlumCantaloupe/circlesxr/pulls). We can then review the changes and merge them into to this main branch for us all to use when ready.
 
@@ -362,7 +341,7 @@ Also, of course, if you have any formal or informal bugs, feedback, or suggestio
 ## Early Contributors
 ##### *[back to top](#circles-vr-learning-framework)*
 
-<br/>
+<br>
 
 The following are several companions that have helped to bring this project into existence. Starting as a prototype for [Oculus Launchpad 2018](https://developer.oculus.com/launch-pad/) to showcase [Viola Desmond's story as a pioneer for Canadian civil rights](https://humanrights.ca/story/one-womans-resistance) and, more recently, helping direct content for highlighting the challenges women face in the trades, I wanted to recognize them for their early direction and support. Though this is mainly a research project for my [Ph.D. work at Carleton University](https://carleton.ca/engineering-design/story/giving-new-life-to-a-canadian-legend/) I hope that their contributions in this open-source repository will also help and inspire others as they have myself.
 
