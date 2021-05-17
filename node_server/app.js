@@ -57,7 +57,10 @@ const sessionObj    = session({
 });
 
 //handle mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function(e) {
+  console.log('connection error:' + e);
+  process.exit(1);
+});
 db.once('open', function () {
   console.log("Database connected!");
 });
