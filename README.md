@@ -35,6 +35,8 @@ CIRCLES is the practical Work-In-Progress (WIP) implementation of a research pro
 
 **[Click here for more information on Circles and its progress, research, and development](https://www.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)**
 
+<br>
+
 ### **Why use VR in Learning?**
 ##### *[back to top](#circles-vr-learning-framework)*
 
@@ -44,14 +46,17 @@ While VR/AR technologies first appeared in research and development dating back 
 
 Post-Secondary Education in many industrialized countries such as Canada is currently facing performance and outcome challenges due to the lack of student engagement, experiential learning, and higher-order [21st-century skills such as critical thinking, communication, and collaboration](https://en.wikipedia.org/wiki/21st_century_skills). Virtual reality, with its ability to increase engagement, embodiment, experiential learning, and enhanced collaboration across co-located and remote spaces, appears a powerful tool for addressing some of the challenges we face in learning within social learning spaces. However, there are still many challenges concerning the ubiquitous use of virtual reality technology for learning within social learning spaces.
 
+<br>
+
 ### **Why Circles?**
 ##### *[back to top](#circles-vr-learning-framework)*
 
 <br>
-Rather than trying to recreate our physical spaces or be a general communication platform, of which there are many already, we are developing this Circles framework as a transformative learning tool for use within social learning spaces, that aims to provide engaging, social, and experiential learning activities from which to springboard toward deeper processing and reflection. This framework is based on the concept of Circle, a collection of virtual environments or worlds that connect to one another - the basic experiential element of the virtual learning environments - and Artefacts - the basic element for sharing and receiving knowledge. Though creating more inclusive VR technologies is an extremely broad objective we choose to use the concept of social accessibility to focus on increasing the comfort of using VR technologies around and with others within social learning spaces.
+
+Rather than trying to recreate our physical spaces or be a general communication platform, of [which](https://hubs.mozilla.com) [there](https://framevr.io) [are](https://altvr.com) [many](https://recroom.com), we are developing this Circles framework as a transformative learning tool for use within social learning spaces, that aims to provide engaging, social, and experiential learning activities from which to springboard toward deeper processing and reflection. This framework is based on the concept of Circle, a collection of virtual environments or worlds that connect to one another - the basic experiential element of the virtual learning environments - and Artefacts - the basic element for sharing and receiving knowledge. Though creating more inclusive VR technologies is an extremely broad objective we choose to use the concept of social accessibility to focus on increasing the comfort of using VR technologies around and with others within social learning spaces.
 <br><br>
 
-### The (3) main motivations for **CIRCLES** are as follows:
+### The (3) primary motivations for **CIRCLES** are as follows:
 derived from [Scavarelli et al. 2020](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Scavarelli%2C+A.%2C+Arya%2C+A.%2C+%26+Teather%2C+R.+J.+%282020%29.+Virtual+reality+and+augmented+reality+in+social+learning+spaces%3A+a+literature+review.+Virtual+Reality.+https%3A%2F%2Fdoi.org%2F10.1007%2Fs10055-020-00444-8++&btnG=)
 
 - **Accessibility**
