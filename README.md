@@ -106,7 +106,7 @@ In navigating within the the 3D spaces of Circles all interactions aim toward si
 1. Though not necessary, [Visual Studio Code](https://code.visualstudio.com/) is recommended to develop, run, and modify *Circles*. Additionally, VSCode allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
 1. [Install mongo](https://docs.mongodb.com/manual/installation/)
     - **Create a `data/db` folder on your PC** that Mongo can write to
-    - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 6)
+    - `chmod -R 755 /data` should be sufficient (if using Mac OSX Catalina you can will have to create this data/db folder in a non-root area. Make sure to set this in your .env file - see Step 6. Also note that Windows does not have 'chmod' to change folder permission so please consider using [another method to make sure the folder is writeable](https://www.educative.io/edpresso/what-is-chmod-in-windows).)
     - Please note that if the _mongo_ or _mongod_ cmds "are not recognized" that you may need to add the [mongo executables to your windows path](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#add-mongodb-binaries-to-the-system-path). More information [here](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/).
 1. [Install node/npm](https://nodejs.org/en/download/)
 1. Go into project folder and install NPM dependencies
@@ -117,7 +117,7 @@ In navigating within the the 3D spaces of Circles all interactions aim toward si
 1. Open another terminal window/session and start Mongo
     - `npm run mongo`
     - You can also query Mongo using the consle by just running `mongo` in your
-      terminal (if you also have the mongo db running)
+      terminal (if you also have the mongo db running). Also note that if you are running this on a remote server it is instead [recommended to set up Mongo to run as a process](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#start-mongodb).
 1. Server the app so you can view it in your browser
     - `npm run serve`
     - This will build the needed bundles and serve the app for viewing. Check
