@@ -10,8 +10,8 @@
 <br>
 
 - [Circles Overview](#circles-overview)
-  - [Why Use VR in Learning?](#why-use-vr-in-learning?)
-  - [Why Circles?](#why-circles?)
+  - [Why Use VR in Learning?](#why-use-vr-in-learning)
+  - [Why Circles?](#why-circles)
 - [Circles Controls](#circles-controls)
 - [Running Circles Locally](#running-circles-locally)
 - [Creating A New Circles World](#creating-a-new-circles-world)
