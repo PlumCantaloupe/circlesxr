@@ -30,7 +30,7 @@ AFRAME.registerComponent('circles-artefact', {
     }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'scale'});
+    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
                                                             inspectRotation:data.inspectRotation,   origPos:data.origPos,               origRot:data.origRot,
