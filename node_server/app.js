@@ -25,29 +25,15 @@ const fs              = require('fs');
 const url             = require('url');
 const path            = require('path');
 const helmet          = require("helmet");
-const forceSSL        = require('express-force-ssl');
+//const forceSSL        = require('express-force-ssl');
 const sassMiddleware  = require('node-sass-middleware');
 
-// const easyrtc         = require("easyrtc");               // EasyRTC external module
-
-let serverSecure      = null; //use on remote 'linux' server
 const http            = require('http');
 const server          = http.createServer(app);
 
-//if linux we can assume this is our remote server otherwise just run over http for localhost)
-if (env.MAKE_SSL) {
-  const http = require('https');
-  const options = {
-    key:    fs.readFileSync('/etc/letsencrypt/live/circlesxr.com/privkey.pem', 'utf8'),
-    cert:  fs.readFileSync('/etc/letsencrypt/live/circlesxr.com/fullchain.pem', 'utf8')
-  };
-  console.log('HTTPS server being created ...');
-  serverSecure  = http.createServer(options, app);
-}
-
 //server stuff
 const session       = require('express-session');
-const MongoStore = require('connect-mongo');
+const MongoStore    = require('connect-mongo');
 
 //database
 const mongoose      = require('mongoose');
@@ -71,7 +57,10 @@ const sessionObj    = session({
 });
 
 //handle mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function(e) {
+  console.log('connection error:' + e);
+  process.exit(1);
+});
 db.once('open', function () {
   console.log("Database connected!");
 });
@@ -115,9 +104,6 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.static(__dirname + '/public'));             //set root path of server ...
-if (env.MAKE_SSL) {
-  app.use(forceSSL);
-}
 
 // Set up Passport
 const passport              = require('passport');
@@ -223,36 +209,17 @@ app.use(function (err, req, res, next) {
 });
 
 //websockets
-//we will us ethis for sending messages we want to intercept with this server
-let io = null;
-if (env.MAKE_SSL) {
-  //io = require('socket.io')(serverSecure);
-  io = require("socket.io")(serverSecure, {
-      handlePreflightRequest: (req, res) => {
-          const headers = {
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-              "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-              "Access-Control-Allow-Credentials": true
-          };
-          res.writeHead(200, headers);
-          res.end();
-      }
-  });
-}
-else {
-  //io = require('socket.io')(server);
-  io = require("socket.io")(server, {
-      handlePreflightRequest: (req, res) => {
-          const headers = {
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-              "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-              "Access-Control-Allow-Credentials": true
-          };
-          res.writeHead(200, headers);
-          res.end();
-      }
-  });
-}
+let io = require("socket.io")(server, {
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }
+});
 
 //this code is unused when we are using teh janus sever/adapter 
 const rooms = {};
@@ -413,13 +380,6 @@ if (env.ENABLE_RESEARCH_MODE) {
 server.listen(env.SERVER_PORT, () => {
   console.log("Listening on http port: " + env.SERVER_PORT );
 });
-
-if (env.MAKE_SSL) {
-  serverSecure.listen(env.SERVER_PORT_SECURE, () => {
-    console.log("Listening on https port: " + env.SERVER_PORT_SECURE );
-  });
-}
-
 
 app.set('views', './views');
 app.set('view engine', 'pug');
