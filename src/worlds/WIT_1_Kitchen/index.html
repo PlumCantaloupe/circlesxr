@@ -20,6 +20,9 @@
         <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
         <!-- added additional geometry, optimized, re-UV'd and re-textured (WIP) -->
         <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Kitchen.glb"></a-asset-item>
+        <a-asset-item id="homework-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Homework/scene.gltf"></a-asset-item>
+        <a-asset-item id="acceptance-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Acceptance/scene.gltf"></a-asset-item>
+        <a-asset-item id="keys-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Keys/scene.gltf"></a-asset-item>
 
         <!-- artefact models -->
         <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
@@ -53,20 +56,38 @@
 
       <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.011 0.011 0.011" shadow="receive:false; cast:false;"></a-entity>
 
-      <!-- removed networked items bit so no duplicates for now -->
-      <!-- <a-entity id="Artefact-Drill"
-                class="interactive narrative"
-                position="4.0 0.95 0.0" rotation="0.0 30.0 0.0" scale="0.01 0.01 0.01"
-                gltf-model="#Drill-gltf" 
-                shadow="receive:false; cast:false;"
-                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0.0; textLookAt:false; inspectRotation:0 90.0 0; 
-                                  title:Group Work; description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                  label_text:Power Drill; label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
-                                  object_world:__WORLDNAME__"
-                sound="src:#Narr_tools-snd; volume:0.4;">
-      </a-entity> -->
+      <a-entity id="Artefact-Homework"
+                position="0.658 0.853 -0.443" rotation="-90 0 0" scale="1 1 1"
+                gltf-model="#homework-gltf"
+                circles-sphere-env-map="src:#skyMap"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8; sphericalEnvMap:#skyMap;"
+                circles-artefact="inspectScale:2 2 2; textRotationY:0.0; textLookAt:false; inspectRotation:0 0 0;
+                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  title:Math Homework;
+                                  description:Statistically administrative and financial roles tend to be more female accepting. Since Sarah has always excelled in math, a program that’s more 'femininely inclined' such as business accounting would suit her parents more.;
+                                  label_text:Homework;"></a-entity>
 
+      <a-entity id="Artefact-Acceptance"
+                                  position="1.008 1.049 3.238" rotation="-90 200 0" scale="1 1 1"
+                                  gltf-model="#acceptance-gltf"
+                                  circles-sphere-env-map="src:#skyMap"
+                                  material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8; sphericalEnvMap:#skyMap;"
+                                  circles-artefact="inspectScale:3 3 3; textRotationY:0.0; textLookAt:false; inspectRotation:0 0 0;
+                                                    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                                    title:Acceptance Letter;
+                                                    description:The letter reads accepted and the anxious waiting has finally subsided. Now it’s simply down to getting the approval from her family. Many of which still don’t understand the value of a College technician diploma.;
+                                                    label_text:Acceptance;"></a-entity>
+
+      <a-entity id="Artefact-Keys"
+                                  position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1 1 1"
+                                  gltf-model="#keys-gltf"
+                                  circles-sphere-env-map="src:#skyMap"
+                                  material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8; sphericalEnvMap:#skyMap;"
+                                  circles-artefact="inspectScale:5 5 5; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0;
+                                                    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                                    title:Shop Keys;
+                                                    description:The years of dedication and hardship her parents fought through are felt in these shop keys. She passes them daily, reassuring herself that's not her path. Yet her parents quickly formed a decision for her early on - follow their footsteps and continue the legacy.;
+                                                    label_text:Keys;"></a-entity>                                                    
       <!-- <a-entity obj-model="obj:#Table-obj;"
                 material="src:#Table-color; roughnessMap:#Table-roughness; metalnessMap:#Table-metalness; normalMap:#Table-normal; sphericalEnvMap:#skyMap;" 
                 postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01"></a-entity> -->
