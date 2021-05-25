@@ -8,59 +8,50 @@
         {
             "name" : "Scene",
             "nodes" : [
-                3
+                2
             ]
         }
     ],
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "Mesh_0"
+            "name" : "ujnjdj_12345:main_Cube1.001"
         },
         {
             "children" : [
                 0
             ],
-            "name" : "d56ea2f9c10d43c3a0fd81365903da2c.obj.cleaner.materialmerger.gle"
+            "name" : "ujnjdj_12345:main_Cube1"
         },
         {
             "children" : [
                 1
             ],
-            "name" : "RootNode (model correction matrix).002"
-        },
-        {
-            "children" : [
-                2
-            ],
-            "name" : "RootNode (gltf orientation matrix).002",
-            "rotation" : [
-                -0.7071068286895752,
-                0,
-                0,
-                0.7071068286895752
-            ]
+            "name" : "Wallet.obj"
         }
     ],
     "materials" : [
         {
-            "doubleSided" : true,
-            "name" : "Material_000001",
+            "name" : "initialShadingGroup",
             "normalTexture" : {
                 "index" : 0
             },
+            "occlusionTexture" : {
+                "index" : 1
+            },
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
-                    "index" : 1
+                    "index" : 2
                 },
-                "metallicFactor" : 0,
-                "roughnessFactor" : 0.6000000238418579
+                "metallicRoughnessTexture" : {
+                    "index" : 1
+                }
             }
         }
     ],
     "meshes" : [
         {
-            "name" : "Mesh_0",
+            "name" : "ujnjdj_12345:main_Cube1",
             "primitives" : [
                 {
                     "attributes" : {
@@ -82,76 +73,85 @@
         {
             "sampler" : 0,
             "source" : 1
+        },
+        {
+            "sampler" : 0,
+            "source" : 2
         }
     ],
     "images" : [
         {
             "mimeType" : "image/jpeg",
-            "name" : "Material_000001_normal",
-            "uri" : "textures/Material_000001_normal.jpg"
+            "name" : "initialShadingGroup_normal",
+            "uri" : "textures/initialShadingGroup_normal.jpg"
         },
         {
             "mimeType" : "image/jpeg",
-            "name" : "Material_000001_baseColor",
-            "uri" : "textures/Material_000001_baseColor.jpg"
+            "name" : "initialShadingGroup_occlusionRoughnessMetallic",
+            "uri" : "textures/initialShadingGroup_occlusionRoughnessMetallic.jpg"
+        },
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "initialShadingGroup_baseColor",
+            "uri" : "textures/initialShadingGroup_baseColor.jpg"
         }
     ],
     "accessors" : [
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 3979,
+            "count" : 848,
             "max" : [
-                0.19609375298023224,
-                0.21974360942840576,
-                0.7862499952316284
+                0.04061831906437874,
+                0.050132133066654205,
+                0.013569101691246033
             ],
             "min" : [
-                -0.19609375298023224,
-                -0.2571313679218292,
-                -0.00042266998207196593
+                -0.04101550951600075,
+                -0.06276969611644745,
+                -0.0001276210241485387
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 3979,
+            "count" : 848,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 3979,
+            "count" : 848,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 4266,
+            "count" : 2964,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 47748,
+            "byteLength" : 10176,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 47748,
-            "byteOffset" : 47748
+            "byteLength" : 10176,
+            "byteOffset" : 10176
         },
         {
             "buffer" : 0,
-            "byteLength" : 31832,
-            "byteOffset" : 95496
+            "byteLength" : 6784,
+            "byteOffset" : 20352
         },
         {
             "buffer" : 0,
-            "byteLength" : 8532,
-            "byteOffset" : 127328
+            "byteLength" : 5928,
+            "byteOffset" : 27136
         }
     ],
     "samplers" : [
@@ -162,7 +162,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 135860,
+            "byteLength" : 33064,
             "uri" : "scene.bin"
         }
     ]
