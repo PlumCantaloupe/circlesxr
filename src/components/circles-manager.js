@@ -296,7 +296,7 @@ AFRAME.registerComponent('circles-manager', {
 
     CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
     CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
+    CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:obj.data.inspectOffsetY, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
 
     if ( showDescription )  {
       //show description text with appropriate values

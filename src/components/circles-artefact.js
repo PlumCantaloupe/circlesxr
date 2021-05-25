@@ -7,6 +7,7 @@ AFRAME.registerComponent('circles-artefact', {
     audio:              {type:'audio',    default:''},
     volume:             {type:'number',   default:1.0},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
+    inspectOffsetY:     {type:'number',   default:0.0},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     origPos:            {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
     origRot:            {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
@@ -34,7 +35,8 @@ AFRAME.registerComponent('circles-artefact', {
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
                                                             inspectRotation:data.inspectRotation,   origPos:data.origPos,               origRot:data.origRot,
-                                                            origScale:data.origScale,               textRotationY:data.textRotationY,   textLookAt:data.textLookAt  
+                                                            origScale:data.origScale,               textRotationY:data.textRotationY,   textLookAt:data.textLookAt,
+                                                            inspectOffsetY:data.inspectOffsetY  
                                                         });
 
     CONTEXT_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 
