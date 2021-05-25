@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Kinematics Lab",
+        "type": "hub",
+        "imgPath": "./profile.png",
+        "description_short": "The laboratory for exploring Kinematics experiments.",
+        "description_long": "Participants .",
+        "tags": [ "kinematics", "lab", "laboratory", "shoot", "drop", "physics"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
