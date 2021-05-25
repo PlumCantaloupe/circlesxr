@@ -43,24 +43,18 @@ AFRAME.registerComponent('circles-artefact', {
                                                             arrow_position:data.arrow_position,     updateRate:data.updateRate
                                                         });
     
-    CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
+    //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
+    //CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
     }
-
-    CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
-    CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
   },
   //!!TODO should probably make this component dynamic ...
-  // update : function(oldData) {
-  //   const CONTEXT_AF = this;
-  //   const data = this.data;
+  update : function(oldData) {
+    // const CONTEXT_AF = this;
+    // const data = this.data;
 
-  //   if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
-
-  //   if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
-  //       CONTEXT_AF.labelText.setAttribute('text', {value:data.label_text});
-  //   }
-  // }
+    // if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+  }
 });

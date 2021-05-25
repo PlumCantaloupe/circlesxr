@@ -264,6 +264,8 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.selectedObject = obj.el;
     CONTEXT_AF.zoomNear       = false;
 
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true});
+
     //hide label
     if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
       CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:false});
@@ -273,7 +275,6 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
     
     //take over networked membership
-    console.log("this");
     if (CONTEXT_AF.selectedObject.hasAttribute('networked') === true) {
       NAF.utils.getNetworkedEntity(CONTEXT_AF.selectedObject).then((el) => {
         console.log("is this mine?");
@@ -329,6 +330,8 @@ AFRAME.registerComponent('circles-manager', {
   },
   releaseInspectedObject : function ( obj ) {
     const CONTEXT_AF = this;
+
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false});
 
     //show label
     if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
