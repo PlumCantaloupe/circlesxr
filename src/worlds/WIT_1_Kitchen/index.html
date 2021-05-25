@@ -19,7 +19,7 @@
         <!-- physical environment -->
         <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
         <!-- added additional geometry, optimized, re-UV'd and re-textured (WIP) -->
-        <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Kitchen.glb"></a-asset-item>
+        <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Kitchen/scene.gltf"></a-asset-item>
         <a-asset-item id="homework-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Homework/scene.gltf"></a-asset-item>
         <a-asset-item id="acceptance-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Acceptance/scene.gltf"></a-asset-item>
         <a-asset-item id="keys-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Keys/scene.gltf"></a-asset-item>
@@ -54,7 +54,7 @@
       <!-- <a-entity position="0 0 0" sound="src:#Amb_fan-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:5.0; distanceModel:inverse;" ></a-entity> -->
       <!-- <a-entity position="7.5 1.0 -4.7" sound="src:#Amb_voices-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity> -->
 
-      <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.011 0.011 0.011" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
 
       <a-entity id="Artefact-Homework"
                 position="0.658 0.853 -0.443" rotation="-90 0 0" scale="1 1 1"
@@ -69,7 +69,7 @@
                                   ></a-entity>
 
       <a-entity id="Artefact-Keys"
-                                  position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1 1 1"
+                                  position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1.3 1.3 1.3"
                                   gltf-model="#keys-gltf"
                                   circles-sphere-env-map="src:#skyMap"
                                   ></a-entity>                                                    

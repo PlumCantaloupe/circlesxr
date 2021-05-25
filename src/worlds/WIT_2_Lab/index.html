@@ -37,15 +37,15 @@
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
 
         <!-- physical environment -->
-        <a-asset-item id="TestBench-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/TestBenches/TestBenches.gltf"></a-asset-item>
-        <a-asset-item id="Room-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/Room/Room.gltf"></a-asset-item>
-        <a-asset-item id="Table-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/Table/Table.gltf"></a-asset-item>
-        <a-asset-item id="TestWall-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/TestWalls/TestWall_ALL.gltf"></a-asset-item>
+        <a-asset-item id="TestBench-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/test_benches/scene.gltf"></a-asset-item>
+        <a-asset-item id="Room-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/room/scene.gltf"></a-asset-item>
+        <a-asset-item id="Table-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/table/scene.gltf"></a-asset-item>
+        <a-asset-item id="TestWall-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/test_walls/scene.gltf"></a-asset-item>
 
         <!-- artefact models -->
-        <a-asset-item id="Drill-gltf" src="/worlds/WIT_2_Lab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Gloves-gltf" src="/worlds/WIT_2_Lab/assets/models/Gloves.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_2_Lab/assets/models/Clipboard.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="Drill-gltf" src="/worlds/WIT_2_Lab/assets/models/drill/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="Gloves-gltf" src="/worlds/WIT_2_Lab/assets/models/gloves/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_2_Lab/assets/models/clipboard/scene.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -79,18 +79,18 @@
       <a-entity position="-4.3 2.3 -3.7" circles-sound="type:ambient; src:#Amb_extractor-snd; autoplay:true; loop:true; volume:0.4;" ></a-entity>
 
       <!-- environment / models -->
-      <a-entity id="TestBench_model" gltf-model="#TestBench-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
-      <a-entity id="TestWall_model" gltf-model="#TestWall-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
-      <a-entity id="Room_Model" gltf-model="#Room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
-      <a-entity id="Table_Model" gltf-model="#Table-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="TestBench_model" gltf-model="#TestBench-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="TestWall_model" gltf-model="#TestWall-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="Room_Model" gltf-model="#Room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="Table_Model" gltf-model="#Table-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
 
       <!-- artefacts -->
       <a-entity id="Artefact-Drill"
-                position="4 0.95 0" rotation="0 30 0" scale="0.01 0.01 0.01"
+                position="4 0.95 0" rotation="0 30 0" scale="1 1 1"
                 gltf-model="#Drill-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0; textLookAt:false; inspectRotation:0 90 0;
+                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
                                   label_visible:true; label_offset:0 0.5 0; arrow_position:down;
                                   title:Group Work; 
                                   description:Men usually go into trades with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
@@ -99,11 +99,11 @@
 
       <a-entity id="Artefact-Gloves"
                 class="interactive narrative"
-                position="-4.2 0.83 4.3" rotation="-90 -50 0" scale="0.015 0.015 0.015"
+                position="-4.2 0.83 4.3" rotation="-90 -50 0" scale="1 1 1"
                 gltf-model="#Gloves-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.05 0.05 0.05; textRotationY:90; textLookAt:false; inspectRotation:0 0 0;
+                circles-artefact="inspectScale:2 2 2; textRotationY:90; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.1;
                                   label_visible:true; label_offset:0 0.5 0; arrow_position:down;
                                   title:Equipment; 
                                   description:To save on costs and space, schools tend to purchase generic sizes for safety and protective wear. Large sizes are common. Women often must compensate by making adjustments or risking safety and fine motor skills by wearing ill-fitting attire.;
@@ -112,11 +112,11 @@
 
       <a-entity id="Artefact-Clipboard"
                 class="interactive narrative"
-                position="0.65 0.79 1.61" rotation="-90 15 0.0" scale="0.015 0.015 0.015"
+                position="0.65 0.79 1.61" rotation="-90 15 0.0" scale="1 1 1"
                 gltf-model="#Clipboard-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:0.03 0.03 0.03; textRotationY:90; textLookAt:false; inspectRotation:0 0 0;
+                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:0;
                                   label_visible:true; label_offset:0 0.5 0; arrow_position:down;
                                   title:Culture; 
                                   description:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about.;
