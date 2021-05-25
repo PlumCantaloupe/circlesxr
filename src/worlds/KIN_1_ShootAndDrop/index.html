@@ -2,13 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Circles</title>
 
     <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+    <script src="/worlds/KIN_1_ShootAndDrop/scripts/components/test-ball-triggerable.js"></script>
+    <script src="/worlds/KIN_1_ShootAndDrop/scripts/components/test-ball-animated.js"></script>
+    <script src="/worlds/KIN_1_ShootAndDrop/scripts/onButton1Press.js"></script>
   </head>
   <body>
 
@@ -32,13 +34,24 @@
       <circles-avatar/>
 
       <!-- island 1, with some spawnpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.592 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint></a-entity>
 
       <!-- ambient music/sound -->
-      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+      <a-entity circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
 
       <!-- the environment -->
-      <a-entity id="floor" position="0 0 0" rotation="-90 0 0" scale="50 50 1" geometry="primitive: plane"></a-entity>
+      <a-entity id="floor" rotation="-90 0 0" geometry="primitive: plane; height: 50; width: 50;" material="color: grey"></a-entity>
+
+      <!-- Scene objects -->
+      <a-entity id="button1" circles-button onclick="onButton1Press()" position="-3 0 -2"></a-entity>
+      <a-entity id="test-ball-triggerable" test-ball-triggerable geometry="primitive: sphere; radius: 0.5;" material="color: red" position="-3 2 -2.5"></a-entity>
+      <a-entity id="test-ball-animated" test-ball-animated geometry="primitive: sphere; radius: 0.5;" material="color: blue" position="0 2 -2.5"></a-entity>
+      <a-entity id="test-ball-pickupable" geometry="primitive: sphere; radius: 0.5;" material="color: black" position="3 2 -2.5"
+                circles-artefact="inspectScale:0.5 0.5 0.5; textLookAt:true; inspectRotation:0.0 0.0 0;
+                        label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                        title:A Tarbar;
+                        description:This is a tarball, do what you will with it.;
+                        label_text:Tarbar;"></a-entity>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
@@ -47,7 +60,7 @@
 
       <a-entity id="skybox"
                 rotation="0 200 0"
-                geometry="primitive:sphere; radius:50; segments-height:24; segments-width:24;"
+                geometry="primitive:sphere; radius:100; segments-height:24; segments-width:24;"
                 material="shader:flat; src:#skyMap; side:back;">
       </a-entity>
     </a-scene>
