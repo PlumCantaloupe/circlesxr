@@ -21,9 +21,18 @@
         <a-asset-item id="worksite-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/worksite/scene.gltf"></a-asset-item>
 
         <!-- artefacts -->
+        <!-- gltf models -->
+        <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
+        <!-- shihdigital @ https://sketchfab.com/3d-models/lunchbox-b5c67a35561b4db6a90cd2d3dc2f63fa -->
+        <!-- Meerschaum Digital @ https://sketchfab.com/3d-models/apple-315c36aceae940a0ac7325949c97db93 -->
+        <!-- Meerschaum Digital @ https://sketchfab.com/3d-models/sub-sandwich-b7aa7644a6f9481b89da16eb2b9ca39b  -->
         <a-asset-item id="lunch-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/lunch/scene.gltf"></a-asset-item>
+
+        <!-- credit: Craig_lee @ https://sketchfab.com/3d-models/step-ladder-small-b627dfe2eeaf48ab86559a742c3119df [editted]-->        
         <a-asset-item id="step-ladder-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/step_ladder/scene.gltf"></a-asset-item>
-        <!-- <a-asset-item id="Wallet-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/Worksite/scene.gltf"></a-asset-item> -->
+
+        <!-- credit: apleesee @ https://sketchfab.com/3d-models/wallet-ccfcc4ae6efa44a2ba34c4c479be7daf [editted]-->
+        <a-asset-item id="wallet-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/wallet/scene.gltf"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -48,26 +57,39 @@
 
       <!-- artefacts -->
       <a-entity id="Artefact-Lunch"
-                position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                position="-7.954 0.536 7.534" rotation="0 0 0" scale="1 1 1"
                 gltf-model="#lunch-gltf"
                 circles-sphere-env-map="src:#skyMap"
-                circles-artefact="inspectScale:2 2 2; textRotationY:0.0; textLookAt:false; inspectRotation:0 0 0;
+                circles-artefact="inspectScale:2 2 2; textRotationY:-60.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
                                   label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
-                                  title:Math Homework;
-                                  description:Statistically administrative and financial roles tend to be more female accepting. Since Sarah has always excelled in math, a program that’s more 'femininely inclined' such as business accounting would suit her parents more.;
-                                  label_text:Homework;"></a-entity>
+                                  title:Lunch Alone;
+                                  description:After a long morning on the road, I'm starving. This sandwich is going to hit the spot. I would offer half to Jim but the last time I told him the benefits of eating healthier he mocked me. Oh well, he only eats with the other guys in the crew anyway.;
+                                  label_text:Lunch;"
+                ></a-entity>
 
-      <a-entity id="Artefact-Acceptance"
-                                  position="1.008 1.049 3.238" rotation="-90 200 0" scale="1 1 1"
-                                  gltf-model="#acceptance-gltf"
-                                  circles-sphere-env-map="src:#skyMap"
-                                  circles-artefact="inspectScale:3 3 3; textRotationY:0.0; textLookAt:false; inspectRotation:0 0 0;
-                                                    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
-                                                    title:Acceptance Letter;
-                                                    description:The letter reads accepted and the anxious waiting has finally subsided. Now it’s simply down to getting the approval from her family. Many of which still don’t understand the value of a College technician diploma.;
-                                                    label_text:Acceptance;"></a-entity>
+      <a-entity id="Artefact-Steps"
+                position="-8.511 0.016 3.243" rotation="2.347 -138.544 1.202" scale="1 1 1"
+                gltf-model="#step-ladder-gltf"
+                circles-sphere-env-map="src:#skyMap"
+                circles-artefact="inspectScale:0.7 0.7 0.7; textRotationY:30.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
+                                  label_offset:0.0 1.2 0.0; label_visible:true; arrow_position:down;
+                                  title:Ladder to Reach;
+                                  description:I need a stool or ladder to reach things, but I get this look from everyone like why is she even here if she needs that? But if the job is still getting done properly and efficiently what does it matter if I need to reach things that most men don’t.;
+                                  label_text:Ladder;"
+                ></a-entity>
 
-      <a-entity id="Artefact-Keys"
+      <a-entity id="Artefact-Wallet"
+                position="-7.340 0.534 8.404" rotation="-90 153.220 0" scale="1 1 1"
+                gltf-model="#wallet-gltf"
+                circles-sphere-env-map="src:#skyMap"
+                circles-artefact="inspectScale:5 5 5; textRotationY:-60.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:0.0;
+                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  title:Photo Reminder;
+                                  description:I carry a picture with me at all times in my wallet, so that I can look at my family and remember why I keep pushing on through adversity. Sometimes, I just need a reminder before hitting a 10 hour shift with the guys.;
+                                  label_text:Photo;"
+                ></a-entity>
+
+      <!-- <a-entity id="Artefact-Keys"
                                   position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1 1 1"
                                   gltf-model="#keys-gltf"
                                   circles-sphere-env-map="src:#skyMap"
@@ -75,7 +97,7 @@
                                                     label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
                                                     title:Shop Keys;
                                                     description:The years of dedication and hardship her parents fought through are felt in these shop keys. She passes them daily, reassuring herself that's not her path. Yet her parents quickly formed a decision for her early on - follow their footsteps and continue the legacy.;
-                                                    label_text:Keys;"></a-entity> 
+                                                    label_text:Keys;"></a-entity>  -->
 
       <!-- sky and lights -->
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
