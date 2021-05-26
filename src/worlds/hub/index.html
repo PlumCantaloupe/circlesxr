@@ -30,9 +30,11 @@
 
         <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-        <!-- TODO:https://github.com/aframevr/aframe/issues/2754 bug so can't use preload=auto :  -->
-        <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3"></audio>
-        <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3"></audio>
+        <!-- TODO:https://github.com/aframevr/aframe/issues/2754 bug so can't use preload=auto:  -->
+        <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3" preload="true"></audio>
+
+        <!-- credit: Arctura @ https://freesound.org/people/Arctura/sounds/39829/ -->
+        <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3" preload="true"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
