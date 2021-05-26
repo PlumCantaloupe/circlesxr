@@ -39,6 +39,13 @@
         <!-- credit: apleesee @ https://sketchfab.com/3d-models/wallet-ccfcc4ae6efa44a2ba34c4c479be7daf [editted]-->
         <a-asset-item id="wallet-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/wallet/scene.gltf"></a-asset-item>
 
+        <!-- audio -->
+        
+        <!-- narration -->
+        <audio id="Narr_ladder-snd" src="/worlds/WIT_3_Work/assets/audio/Narr_WIT_3_Ladder.mp3" preload="true"></audio>
+        <audio id="Narr_lunch-snd" src="/worlds/WIT_3_Work/assets/audio/Narr_WIT_3_Lunch.mp3" preload="true"></audio>
+        <audio id="Narr_photo-snd" src="/worlds/WIT_3_Work/assets/audio/Narr_WIT_3_Photo.mp3" preload="true"></audio>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -71,8 +78,8 @@
                                   description:'After a long morning on the road, Jim and I are starving. When we get to the site, this sandwich is going to hit the spot. He mocks me for eating healthy. Oh well, he only eats with the other guys anyway.';
                                   title_back:Unintentional Exclusion;
                                   description_back:Being excluded is not always obvious, but even something as simple as eating lunch together can create feelings of isolation in those that don't belong';
-                                  label_text:Lunch;"
-                ></a-entity>
+                                  label_text:Lunch;
+                                  audio:#Narr_lunch-snd; volume:0.4;"></a-entity>
 
       <a-entity id="Artefact-Steps"
                 position="-8.511 0.016 3.243" rotation="2.347 -138.544 1.202" scale="1 1 1"
@@ -84,8 +91,8 @@
                                   description:'I need a stool or ladder to reach things, but I get this look from everyone like why is she even here if she needs that? But if the job is still getting done properly and efficiently what does it matter if I need to reach things that most men don’t.';
                                   title_back:Standing Out;
                                   description_back:Job tasks remain identical regardless of size or gender. Handling large machinery can be a challenge, when less than average height. Creating added supports or materials can help in accomplishing these tasks. However for those who don't require extras, it continues to isolate those who do.;
-                                  label_text:Ladder;"
-                ></a-entity>
+                                  label_text:Ladder;
+                                  audio:#Narr_ladder-snd; volume:0.4;"></a-entity>
 
       <a-entity id="Artefact-Wallet"
                 position="-7.340 0.534 8.404" rotation="-90 153.220 0" scale="1 1 1"
@@ -97,8 +104,8 @@
                                   description:'I carry a picture with me at all times in my wallet, so that I can look at my family and remember why I keep pushing on through adversity. Sometimes, I just need a reminder before hitting a 10 hour shift with the guys.';
                                   title_back:Reducing Attrition;
                                   description_back:With so many seemingly small challanges adding up to make going to work a chore, sometimes the additional motivation of being stubborn or supporting others can help. What about those that do not?;
-                                  label_text:Photo;"
-                ></a-entity>
+                                  label_text:Photo;
+                                  audio:#Narr_photo-snd; volume:0.4;"></a-entity>
 
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
