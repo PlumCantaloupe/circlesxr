@@ -22,6 +22,9 @@
         <audio id="Narr_safety-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Safety.ogg" preload="true"></audio>
         <audio id="Narr_culture-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_Culture.ogg" preload="true"></audio>
 
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
+
         <!-- ambience -->
         <!-- 
           ATTRIBUTION:
@@ -128,6 +131,13 @@
                                   description_back:As the professor walks around taking attendance, women notice he talks more with the men. Without knowing, the teacher is adding another layer of insecurity by assuming the women wouldn't have anything to interesting to talk about.;
                                   label_text:Culture;
                                   audio:#Narr_culture-snd; volume:0.4;"></a-entity>
+      
+    <a-entity id="hub_link" position="6.549 1.347 4.864" rotation="0 143.672 0" scale="0.7 0.7 0.7" visible="true" shadow
+                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
+                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+                material="src:#link_1_360; shader:flat;"
+                link="href:/rooms/explore/world/hub; visualAspectEnabled:false;">
+                <a-entity text="value:Campfire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

@@ -24,6 +24,9 @@
         <a-asset-item id="acceptance-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Acceptance/scene.gltf"></a-asset-item>
         <a-asset-item id="keys-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Keys/scene.gltf"></a-asset-item>
 
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
+
         <!-- artefact models -->
         <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
 
@@ -92,7 +95,14 @@
                                   description:'When I was young, the options my parents had were limited. They needed to work long hours for this shop, but I need to find my own path. Maybe my love of working with my hands and building could help automate areas in the shop.';
                                   title_back:Not Her Future;
                                   description_back:The years of dedication and hardship her parents fought through are felt in those shop keys. She passes them daily, reassuring herself that is not her path. Yet her parents quickly formed a decision to follow their footsteps and continue the legacy.;
-                                  label_text:Keys;"></a-entity>                                                    
+                                  label_text:Keys;"></a-entity>  
+                                  
+      <a-entity id="hub_link" position="4.919 1.347 1.291" rotation="0 180 0" scale="0.7 0.7 0.7" visible="true" shadow
+                                  circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
+                                  geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+                                  material="src:#link_1_360; shader:flat;"
+                                  link="href:/rooms/explore/world/hub; visualAspectEnabled:false;">
+                                  <a-entity text="value:Campfire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

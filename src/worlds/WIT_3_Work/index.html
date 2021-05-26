@@ -20,6 +20,9 @@
         <!-- physical environment -->
         <a-asset-item id="worksite-gltf" response-type="arraybuffer" src="/worlds/WIT_3_Work/assets/models/worksite/scene.gltf"></a-asset-item>
 
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
+
         <!-- artefacts -->
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -95,15 +98,12 @@
                                   label_text:Photo;"
                 ></a-entity>
 
-      <!-- <a-entity id="Artefact-Keys"
-                                  position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1 1 1"
-                                  gltf-model="#keys-gltf"
-                                  circles-sphere-env-map="src:#skyMap"
-                                  circles-artefact="inspectScale:5 5 5; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0;
-                                                    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
-                                                    title:Shop Keys;
-                                                    description:The years of dedication and hardship her parents fought through are felt in these shop keys. She passes them daily, reassuring herself that's not her path. Yet her parents quickly formed a decision for her early on - follow their footsteps and continue the legacy.;
-                                                    label_text:Keys;"></a-entity>  -->
+      <a-entity id="hub_link" position="0.656 1.347 9.268" rotation="0 143.672 0" scale="0.7 0.7 0.7" visible="true" shadow
+                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
+                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+                material="src:#link_1_360; shader:flat;"
+                link="href:/rooms/explore/world/hub; visualAspectEnabled:false;">
+                <a-entity text="value:Campfire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity></a-entity>
 
       <!-- sky and lights -->
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
