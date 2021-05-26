@@ -4,6 +4,8 @@ AFRAME.registerComponent('circles-inspect-object', {
   schema: {
     title:            {type:'string',   default:'No Title Set'},
     description:      {type:'string',   default:'No decription set'},
+    title_back:       {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
+    description_back: {type:'string',   default:''},
     inspectScale:     {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
     inspectOffsetY:   {type:'number',   default:0.0},
     inspectRotation:  {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},

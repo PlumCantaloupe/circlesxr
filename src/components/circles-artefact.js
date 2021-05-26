@@ -4,6 +4,8 @@ AFRAME.registerComponent('circles-artefact', {
   schema: {
     title:              {type:'string',   default:'No Title Set'},
     description:        {type:'string',   default:'No decription set'},
+    title_back:         {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
+    description_back:   {type:'string',   default:''},
     audio:              {type:'audio',    default:''},
     volume:             {type:'number',   default:1.0},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
@@ -33,9 +35,10 @@ AFRAME.registerComponent('circles-artefact', {
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
     CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
 
-    CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       inspectScale:data.inspectScale,
-                                                            inspectRotation:data.inspectRotation,   origPos:data.origPos,               origRot:data.origRot,
-                                                            origScale:data.origScale,               textRotationY:data.textRotationY,   textLookAt:data.textLookAt,
+    CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
+                                                            title_back:data.title_back,             description_back:data.description_back, inspectScale:data.inspectScale,
+                                                            inspectRotation:data.inspectRotation,   origPos:data.origPos,                   origRot:data.origRot,
+                                                            origScale:data.origScale,               textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
                                                             inspectOffsetY:data.inspectOffsetY  
                                                         });
 
