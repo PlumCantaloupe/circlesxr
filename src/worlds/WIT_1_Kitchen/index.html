@@ -40,7 +40,8 @@
         <audio id="Narr_math-snd" src="/worlds/WIT_1_Kitchen/assets/audio/Narr_WIT_1_Math.mp3" preload="true"></audio>
 
         <!-- ambience -->
-        <!-- <audio id="Amb_fan-snd" src="/worlds/WIT_1_ElectricLab/assets/audio/Amb_Fan.mp3"></audio> -->
+        <audio id="Amb_suburb-snd" src="/worlds/WIT_1_Kitchen/assets/audio/Amb_Suburb.mp3"></audio>
+        <audio id="Amb_kitchen-snd" src="/worlds/WIT_1_Kitchen/assets/audio/Amb_Kitchen.mp3"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -60,8 +61,9 @@
       <!-- bad place for narrative manager but :) -->
       <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
 
-      <!-- <a-entity position="0 0 0" sound="src:#Amb_fan-snd; autoplay:true; loop:true; refDistance: 3.0; rolloffFactor: 3.0; volume:5.0; distanceModel:inverse;" ></a-entity> -->
-      <!-- <a-entity position="7.5 1.0 -4.7" sound="src:#Amb_voices-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity> -->
+      <!-- sounds -->
+      <a-entity position="0 0 -4" circles-sound="type:ambient; src:#Amb_suburb-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="-2.895 1 1.164" circles-sound="type:ambient; src:#Amb_kitchen-snd; autoplay:true; loop:true; volume:0.7;" ></a-entity>
 
       <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
 

@@ -46,12 +46,19 @@
         <audio id="Narr_lunch-snd" src="/worlds/WIT_3_Work/assets/audio/Narr_WIT_3_Lunch.mp3" preload="true"></audio>
         <audio id="Narr_photo-snd" src="/worlds/WIT_3_Work/assets/audio/Narr_WIT_3_Photo.mp3" preload="true"></audio>
 
+        <audio id="Amb_construction-snd" src="/worlds/WIT_3_Work/assets/audio/Amb_Construction.mp3" preload="true"></audio>
+        <audio id="Amb_truck-snd" src="/worlds/WIT_3_Work/assets/audio/Amb_Truck.mp3" preload="true"></audio>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
       <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-avatar/>
+
+      <!-- sounds -->
+      <a-entity position="-4.308 1.0 11.468" circles-sound="type:ambient; src:#Amb_construction-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
+      <a-entity position="-8.853 1.0 1.888" circles-sound="type:ambient; src:#Amb_truck-snd; autoplay:true; loop:true; volume:0.2;" ></a-entity>
 
       <!-- checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-1.845 0.050 0.329"></a-entity>
