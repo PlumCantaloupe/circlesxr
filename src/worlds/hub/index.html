@@ -28,6 +28,8 @@
         <a-asset-item id="moon-gltf"      src="/worlds/hub/assets/models/moon.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="campfire-gltf"  src="/worlds/hub/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
 
+        <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- TODO:https://github.com/aframevr/aframe/issues/2754 bug so can't use preload=auto :  -->
         <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3"></audio>
         <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3"></audio>
@@ -92,15 +94,6 @@
                 <a-entity text="value:Nova Scotia Province House\n2010; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       </a-entity>
 
-      <!-- <a-entity id="costumeObjLink" position="-0.5 1.5 -3.5" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
-                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
-                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#provinceHouse360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/rooms/explore/world/HH_CostumeObj_World; visualAspectEnabled:false;"
-                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
-                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;">
-                <a-entity text="value:Costume Object\n2010; align:center; width:5.0; shader:custom-sdf;" rotation="0 90 0" position="0 1 0"></a-entity>
-        </a-entity> -->
       <!-- environment -->
       <a-entity
         gltf-model="#enviro-gltf"
@@ -150,6 +143,8 @@
 
       <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
               material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <!-- sounds -->
       <!-- wilderness sounds from user https://freesound.org/people/Arctura/ here: https://freesound.org/people/Arctura/sounds/39829/ -->
