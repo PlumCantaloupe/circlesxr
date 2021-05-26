@@ -195,7 +195,7 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.objectDescriptionText.setAttribute('id', 'description_text');
     // CONTEXT_AF.objectDescriptionText.setAttribute('material',  {depthTest:false});
     CONTEXT_AF.objectDescriptionText.setAttribute('position', {x:TEXT_PADDING, y:0.0, z:CIRCLES.CONSTANTS.GUI.text_z_pos});
-    CONTEXT_AF.objectDescriptionText.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:30,
+    CONTEXT_AF.objectDescriptionText.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:33,
                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING * 2, height:TEXT_DESC_WINDOW_HEIGHT - TEXT_PADDING * 2,
                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                       value:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.'});
@@ -205,7 +205,7 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.objectDescriptionBack.setAttribute('id', 'description_text2');
     CONTEXT_AF.objectDescriptionBack.setAttribute('rotation', {x:0.0, y:180.0, z:0.0});
     CONTEXT_AF.objectDescriptionBack.setAttribute('position', {x:TEXT_WINDOW_WIDTH - TEXT_PADDING, y:0.0, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
-    CONTEXT_AF.objectDescriptionBack.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:30,
+    CONTEXT_AF.objectDescriptionBack.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:33,
                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING * 2, height:TEXT_DESC_WINDOW_HEIGHT - TEXT_PADDING * 2,
                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                       value:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.'});
@@ -234,10 +234,10 @@ AFRAME.registerComponent('circles-manager', {
     let rotateElem = document.createElement('a-entity');
     rotateElem.setAttribute('id', 'rotate_desc_control');
     rotateElem.setAttribute('class', 'interactive button');
-    rotateElem.setAttribute('position', {x:TEXT_WINDOW_WIDTH/2, y:0.6, z:0});
+    rotateElem.setAttribute('position', {x:TEXT_WINDOW_WIDTH/2, y:0.55, z:0});
     rotateElem.setAttribute('geometry',  {  primitive:'plane', 
-                                            width:0.4,
-                                            height:0.4 
+                                            width:0.3,
+                                            height:0.3 
                                           });
     rotateElem.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_ROTATE, color:'rgb(255,255,255)', shader:'flat', transparent:true, side:'double'});
     infoOffsetElem.appendChild(rotateElem);
