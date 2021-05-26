@@ -23,6 +23,8 @@
         <!-- 360 -->
         <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
 
+        <a-asset-item id="navmesh_gltf" src="/worlds/WIT_3_Work/assets/models/wit-3-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- artefacts -->
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -97,6 +99,8 @@
                                   description_back:With so many seemingly small challanges adding up to make going to work a chore, sometimes the additional motivation of being stubborn or supporting others can help. What about those that do not?;
                                   label_text:Photo;"
                 ></a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <a-entity id="hub_link" position="0.656 1.347 9.268" rotation="0 143.672 0" scale="0.7 0.7 0.7" visible="true" shadow
                 circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                

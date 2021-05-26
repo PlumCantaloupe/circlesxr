@@ -27,6 +27,8 @@
         <!-- 360 -->
         <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
 
+        <a-asset-item id="navmesh_gltf" src="/worlds/WIT_1_Kitchen/assets/models/wit-1-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- artefact models -->
         <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
 
@@ -96,6 +98,8 @@
                                   title_back:Not Her Future;
                                   description_back:The years of dedication and hardship her parents fought through are felt in those shop keys. She passes them daily, reassuring herself that is not her path. Yet her parents quickly formed a decision to follow their footsteps and continue the legacy.;
                                   label_text:Keys;"></a-entity>  
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
                                   
       <a-entity id="hub_link" position="4.919 1.347 1.291" rotation="0 180 0" scale="0.7 0.7 0.7" visible="true" shadow
                                   circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
