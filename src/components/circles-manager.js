@@ -85,7 +85,8 @@ AFRAME.registerComponent('circles-manager', {
     };    
 
     narrativeElems.forEach( artefact => {
-      artefact.addEventListener('click', (e) => {
+      
+      const start_sound_func = (e) => {
         if (artefact.components['circles-sound']) {
           if ( artefact.getAttribute('id') !== narrativePlayingID ) {
             //if clicking on a new narrtive then stop any playing and play this one.
@@ -98,7 +99,9 @@ AFRAME.registerComponent('circles-manager', {
             stopAllNarrativesFunc();
           }
         }
-      });
+      };
+
+      artefact.addEventListener('click', start_sound_func);
     });
 
     //need to also stop sound when "release" button clicked on camera during inspect
