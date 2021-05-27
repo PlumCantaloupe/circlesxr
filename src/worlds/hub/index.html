@@ -156,8 +156,7 @@
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <!-- sounds -->
-      <!-- wilderness sounds from user https://freesound.org/people/Arctura/ here: https://freesound.org/people/Arctura/sounds/39829/ -->
-      <a-entity class="ambient-music" position="15 0 0" sound="src:#wilderness-snd; autoplay:false; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.1; distanceModel:inverse;" ></a-entity>
+      <a-entity position="0 0 10" circles-sound="type:ambient; src:#wilderness-snd; autoplay:true; loop:true; volume:2.0;" ></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
