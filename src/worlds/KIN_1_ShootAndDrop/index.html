@@ -53,6 +53,15 @@
                         description:This is a tarball, do what you will with it.;
                         label_text:Tarbar;"></a-entity>
 
+
+      <!-- Kinematics scene objects -->
+      <a-entity id="droppingBall" position="1 2 4.5" geometry="primitive: sphere; radius: 0.3;" material="color: grey"></a-entity>
+      <a-entity id="shootingBall" position="-1 2 4.5" geometry="primitive: sphere; radius: 0.3;" material="color: yellow"></a-entity>
+      <a-entity id="triggerButton" position="0.5 0 3.5" rotation="" circles-button>
+        <a-text value="Trigger" geometry="primitive: plane;" position="0 0 0"></a-text>
+      </a-entity>
+      <a-entity id="resetButton" position="-0.5 0 3.5" circles-button></a-entity>
+
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
