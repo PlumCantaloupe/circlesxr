@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+    <!-- Physics script goes after the Circles' head scripts [IMPORTANT]-->
+    <script src="/global/js/libs/aframe-physics-system.min.js"></script>
+
+    <script>
+
+      // ================================= //
+      // For free fall
+      AFRAME.registerComponent('drop', {
+        multiple: false,
+        init: function() {
+
+            // Array containing all the freefall boxes
+            let freeFallBoxArray = document.querySelectorAll('.freeFallBox');
+
+            // Append the dynamic body to each box with the freeFallBox class
+            for (i = 0 ; i <= freeFallBoxArray.length ; i++) {
+              // Add physics
+              freeFallBoxArray[i].setAttribute('dynamic-body', '');
+            }
+
+        } // end of init
+      });
+    </script>
+
+  </head>
+  <body>
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_properties physics="debug: true;">
+      <!-- assets -->
+      <a-assets timeout="10000">
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in avatar [REQUIRED] -->
+      <circles-avatar/>
+
+      <!-- ===================== -->
+      <!-- Free fall experiment -->
+
+      <!-- Boxes -->
+      <a-box class="freeFallBox" position="-12 9.5 -7" rotation="0 0 0" color="#4CC3D9"></a-box>
+      <a-box class="freeFallBox" position="-7 10 -7" rotation="0 0 0" color="#d94a4a" width="2" height="2" depth="2"></a-box>
+
+      <!-- Label -->
+      <a-entity   position="-9.5 1 0"
+                  text="value: Free Fall; align: center"
+                  scale="2.5 2.5 2.5">
+      </a-entity>
+      <!-- Button -->
+      <a-entity id="freeFallButton" circles-button="" position="-9.5 0.5 0"></a-entity>
+
+      <!-- Button -->
+      <a-entity circles-button="" launch position="0 0.5 0"></a-entity>
+
+      <!-- ===================== -->
+      <!-- Floor -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" color="#7BC8A4" static-body></a-plane>
+
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+  <script>
+
+    // ================================= //
+    // Free fall
+    let freeFallButton = document.querySelector('#freeFallButton');
+    freeFallButton.addEventListener('click', function () {
+      this.setAttribute('drop', '');
+    });
+  </script>
+</html>
