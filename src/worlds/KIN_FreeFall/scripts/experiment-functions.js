@@ -55,13 +55,7 @@ function increaseGravity () {
 
     // increase the gravity
     currentGravityStrength += gravityIncrementAmount;
-
-    // update the gravity strength text
-    gravityStengthText = document.querySelector('#gravityStrengthText');
-    gravityStengthText.setAttribute('text', {
-      value: "Gravity: " + currentGravityStrength,
-      align: "center"
-    });
+    setGravity(currentGravityStrength);
   }
 };
 
@@ -72,12 +66,24 @@ function decreaseGravity () {
 
     // decrease the gravity
     currentGravityStrength -= gravityIncrementAmount;
-
-    // update the gravity strength text
-    gravityStengthText = document.querySelector('#gravityStrengthText');
-    gravityStengthText.setAttribute('text', {
-      value: "Gravity: " + currentGravityStrength,
-      align: "center"
-    });
+    setGravity(currentGravityStrength);
   }
+}
+
+// used to easily update the gravity text and physics system
+function setGravity (gMultiplier) {
+  // get the a-scene
+  let sceneEl = document.querySelector('a-scene');
+
+  // update the physics system
+  sceneEl.systems.physics.driver.world.gravity.y = -9.8 * gMultiplier
+
+  console.log(sceneEl.getAttribute('physics'));
+
+  // update the gravity strength text
+  gravityStengthText = document.querySelector('#gravityStrengthText');
+  gravityStengthText.setAttribute('text', {
+    value: "Current Gravity: " + gMultiplier + "g",
+    align: "center"
+  });
 }

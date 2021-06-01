@@ -13,7 +13,7 @@
 
   <body>
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties physics="debug: true;">
+    <a-scene circles_properties physics="debug: false; gravity: -9.8;">
       <!-- assets -->
       <a-assets timeout="10000">
 
@@ -32,23 +32,23 @@
       <a-entity id="controlStation" geometry="primitive: plane; width:5; height:3;" material="side: double; color: black;" position="0 0.8 0" rotation="-30 0 0" scale="0.5 0.5 0.5">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
-          <a-entity id="startButtonGroup" position="-0.5 0.1 0.9" scale="1.5 1.5 1.5">
+          <a-entity id="startButtonGroup" position="0.5 0.1 0.9" scale="1.5 1.5 1.5">
             <a-entity id="startButton" onclick="startExperiment()" circles-button></a-entity>
             <a-entity text="value: Start; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="resetButtonGroup" position="0.5 0.1 0.9" scale="1.5 1.5 1.5">
+          <a-entity id="resetButtonGroup" position="-0.5 0.1 0.9" scale="1.5 1.5 1.5">
             <a-entity id="resetButton" onclick="resetExperiment()" circles-button></a-entity>
             <a-entity text="value: Reset; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <!-- Gravity control buttons -->
-          <a-entity id="gravityIncreaseButtonGroup" position="-0.5 0.1 -0.9">
+          <a-entity id="gravityIncreaseButtonGroup" position="0.5 0.1 -0.9">
             <a-entity id="gravityIncreaseButton" onclick="increaseGravity()" circles-button></a-entity>
             <a-entity text="value: Increase Gravity; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="gravityDecreaseButtonGroup" position="0.5 0.1 -0.9">
+          <a-entity id="gravityDecreaseButtonGroup" position="-0.5 0.1 -0.9">
             <a-entity id="gravityDecreaseButton" onclick="decreaseGravity()" circles-button></a-entity>
             <a-entity text="value: Decrease Gravity; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
@@ -86,8 +86,8 @@
           </a-entity>
         </a-entity>
 
-        <a-entity id="controlStationUI">
-          <a-entity id="gravityStrengthText" text="value: Gravity: N/A; align: center;" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
+        <a-entity id="controlStationUI" rotation="90 0 0">
+          <a-entity id="gravityStrengthText" text="value: Current Gravity: 1g; align: center;" position="0 0 -0.4" rotation="-90 0 0" scale="2.5 2.5 2.5"></a-entity>
         </a-entity>
       </a-entity>
 
