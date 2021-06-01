@@ -9,23 +9,23 @@
     <script src="/global/js/libs/aframe-physics-system.min.js"></script>
 
     <script>
+      // Free fall object component
+      AFRAME.registerComponent('physics-object', {
+        schema: {
+          initialPosition: {type: "vec3"}
+        },
 
-      // ================================= //
-      // For free fall
-      AFRAME.registerComponent('drop', {
-        multiple: false,
-        init: function() {
+        init: function () {
+          const CONTEXT_AF = this;
 
-            // Array containing all the freefall boxes
-            let freeFallBoxArray = document.querySelectorAll('.freeFallBox');
+          CONTEXT_AF.el.addEventListener('resetPosition', function (event) {
+            CONTEXT_AF.el.setAttribute('position', CONTEXT_AF.data.initialPosition);
+            console.log('Resetting position!');
+          });
 
-            // Append the dynamic body to each box with the freeFallBox class
-            for (i = 0 ; i <= freeFallBoxArray.length ; i++) {
-              // Add physics
-              freeFallBoxArray[i].setAttribute('dynamic-body', '');
-            }
-
-        } // end of init
+          // position the physics object at it's starting position
+          CONTEXT_AF.el.emit('resetPosition', {});
+        }
       });
     </script>
 
@@ -47,19 +47,22 @@
       <!-- Free fall experiment -->
 
       <!-- Boxes -->
-      <a-box class="freeFallBox" position="-12 9.5 -7" rotation="0 0 0" color="#4CC3D9"></a-box>
-      <a-box class="freeFallBox" position="-7 10 -7" rotation="0 0 0" color="#d94a4a" width="2" height="2" depth="2"></a-box>
+      <a-box class="freeFallObject" physics-object="initialPosition: -2 9.5 -7" rotation="0 0 0" color="#4CC3D9"></a-box>
+      <a-box class="freeFallObject" physics-object="initialPosition: 2 10 -7" rotation="0 0 0" color="#d94a4a" width="2" height="2" depth="2"></a-box>
 
-      <!-- Label -->
-      <a-entity   position="-9.5 1 0"
+      <!-- Labels -->
+      <a-entity   position="-1.5 1 -1"
                   text="value: Free Fall; align: center"
                   scale="2.5 2.5 2.5">
       </a-entity>
-      <!-- Button -->
-      <a-entity id="freeFallButton" circles-button="" position="-9.5 0.5 0"></a-entity>
+      <a-entity   position="1.5 1 -1"
+                  text="value: Reset; align: center"
+                  scale="2.5 2.5 2.5">
+      </a-entity>
 
-      <!-- Button -->
-      <a-entity circles-button="" launch position="0 0.5 0"></a-entity>
+      <!-- Buttons -->
+      <a-entity id="freeFallButton" circles-button position="-1.5 0.5 -1"></a-entity>
+      <a-entity id="resetButton" circles-button position="1.5 0.5 -1"></a-entity>
 
       <!-- ===================== -->
       <!-- Floor -->
@@ -71,12 +74,30 @@
     <circles-end-scripts/>
   </body>
   <script>
+    // get all the free fall objects
+    let freeFallObjects = document.querySelectorAll(".freeFallObject");
 
-    // ================================= //
-    // Free fall
+    // Free fall button
     let freeFallButton = document.querySelector('#freeFallButton');
     freeFallButton.addEventListener('click', function () {
-      this.setAttribute('drop', '');
+      // loop through each free fall object
+      freeFallObjects.forEach(element => {
+        // enable physics on the object
+        element.setAttribute('dynamic-body', '');
+      });
+    });
+
+    // Reset button
+    let resetButton = document.querySelector("#resetButton");
+    resetButton.addEventListener('click', function () {
+        // loop through each free fall object
+        freeFallObjects.forEach(element => {
+          // disable physics on the object
+          element.removeAttribute('dynamic-body');
+
+          // reset the position of the object
+          element.emit('resetPosition', {});
+        });
     });
   </script>
 </html>
