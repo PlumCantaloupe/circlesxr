@@ -17,6 +17,11 @@
       <!-- assets -->
       <a-assets timeout="10000">
 
+        <!-- Three objects -->
+        <a-asset-item id="Ball-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
+        <a-asset-item id="Teddy-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
+        <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -25,8 +30,8 @@
       <circles-avatar/>
 
       <!-- Experiment Objects -->
-      <a-box physics-object="initialPosition: -2 9.5 -7; mass: 1;" rotation="0 0 0" color="#4CC3D9" circles-shadow></a-box>
-      <a-box physics-object="initialPosition: 2 10 -7; mass: 5;" rotation="0 0 0" color="#d94a4a" width="2" height="2" depth="2" circles-shadow></a-box>
+      <a-entity geometry="primitive: box" id="leftObject" physics-object="initialPosition: -2 9.5 -7; mass: 1;" rotation="0 0 0" material="color: #4CC3D9" circles-shadow></a-entity>
+      <a-entity geometry="primitive: box; width: 2; height: 2; depth:2; " id="rightObject" physics-object="initialPosition: 2 10 -7; mass: 5;" rotation="0 0 0" material="color: #d94a4a" circles-shadow></a-entity>
 
       <!-- Control station -->
       <a-entity id="controlStation" geometry="primitive: plane; width:5; height:3;" material="side: double; color: black;" position="0 0.8 0" rotation="-30 0 0" scale="0.5 0.5 0.5">
@@ -55,33 +60,33 @@
 
           <!-- Left object switching buttons -->
           <a-entity id="leftObject1ButtonGroup" position="-2 0.1 -0.9">
-            <a-entity id="leftObject1Button" circles-button></a-entity>
+            <a-entity id="leftObject1Button" onclick="setLeftObject('object1')" circles-button></a-entity>
             <a-entity text="value: Object 1; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <a-entity id="leftObject2ButtonGroup" position="-2 0.1 0">
-            <a-entity id="leftObject2Button" circles-button></a-entity>
+            <a-entity id="leftObject2Button" onclick="setLeftObject('object2')" circles-button></a-entity>
             <a-entity text="value: Object 2; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <a-entity id="leftObject3ButtonGroup" position="-2 0.1 0.9">
-            <a-entity id="leftObject3Button" circles-button></a-entity>
+            <a-entity id="leftObject3Button" onclick="setLeftObject('object3')" circles-button></a-entity>
             <a-entity text="value: Object 3; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <!-- Right object switching buttons -->
           <a-entity id="rightObject1ButtonGroup" position="2 0.1 -0.9">
-            <a-entity id="rightObject1Button" circles-button></a-entity>
+            <a-entity id="rightObject1Button" onclick="setRightObject('object1')" circles-button></a-entity>
             <a-entity text="value: Object 1; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <a-entity id="rightObject2ButtonGroup" position="2 0.1 0">
-            <a-entity id="rightObject2Button" circles-button></a-entity>
+            <a-entity id="rightObject2Button" onclick="setRightObject('object2')" circles-button></a-entity>
             <a-entity text="value: Object 2; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <a-entity id="rightObject3ButtonGroup" position="2 0.1 0.9">
-            <a-entity id="rightObject3Button" circles-button></a-entity>
+            <a-entity id="rightObject3Button" onclick="setRightObject('object3')" circles-button></a-entity>
             <a-entity text="value: Object 3; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
         </a-entity>
