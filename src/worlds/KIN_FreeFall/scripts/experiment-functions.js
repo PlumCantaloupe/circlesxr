@@ -62,6 +62,7 @@ function setLeftObject (object) {
   // set new height
   let objectPosition = leftObject.getAttribute('position');
   leftObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
+  leftObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
 };
 
 function setRightObject (object) {
@@ -86,6 +87,7 @@ function setRightObject (object) {
   // set new height
   let objectPosition = rightObject.getAttribute('position');
   rightObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
+  rightObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
 };
 
 function increaseGravity () {
