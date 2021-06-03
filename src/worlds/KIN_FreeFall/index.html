@@ -13,7 +13,9 @@
 
   <body>
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties physics="debug: false; gravity: -9.8;">
+    <a-scene circles_properties physics="debug: false; gravity: -9.8;" background="color:#0476D9;" shadow="type: pcfsoft"  fog="type: linear; color: #0482d1; far: 30; near: 0">
+
+      <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
       <a-assets timeout="10000">
 
@@ -21,6 +23,7 @@
         <a-asset-item id="Ball-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
         <a-asset-item id="Teddy-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
         <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
+        <a-asset-item id="hand-obj" response-type="arraybuffer" src="/worlds/KIN_FreeFall/assets/models/hand.glb"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -30,21 +33,28 @@
       <circles-avatar/>
 
       <!-- Experiment Objects -->
-      <a-entity geometry="primitive: box" id="leftObject" physics-object="initialPosition: -2 9.5 -7; mass: 1;" rotation="0 0 0" material="color: #4CC3D9" circles-shadow></a-entity>
-      <a-entity geometry="primitive: box; width: 2; height: 2; depth:2; " id="rightObject" physics-object="initialPosition: 2 10 -7; mass: 5;" rotation="0 0 0" material="color: #d94a4a" circles-shadow></a-entity>
+      <a-entity geometry="primitive: sphere" id="leftObject" physics-object="initialPosition: -1.745 3.8 -7; mass: 1" rotation="" material="color: #F2B705" scale="0.6 0.6 0.6" roughness="0.4"></a-entity>
+      <a-entity geometry="primitive: sphere; width: 2; height: 2; depth:2; " id="rightObject" physics-object="initialPosition: 1.843 4.064 -7; mass: 5;" rotation="0 0 0" material="color: #2A405A" roughness="0.4"></a-entity>
+
+      <!-- Control station Text -->
+      <!--<a-entity id="TitleText" text="value: FREE FALL; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="1.8 1.8 1.8" position="0.255 1.642 -3.283" rotation="-29.999999999999996 0 0"></a-entity>-->
+      <a-entity id="StartText" text="value: START; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.0 1.0 1.0" position="0.255 0.929 -2.841" rotation="-29.999999999999996 0 0"></a-entity>
+      <a-entity id="ResetText" text="value: RESET; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.0 1.0 1.0" position="-0.255 0.929 -2.841" rotation="-29.999999999999996 0 0"></a-entity>
+      <!--<a-entity id="GravityText" text="value: INCREASE GRAVITY; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.0 1.0 1.0" position="0.255 1.642 -3.283" rotation="-29.999999999999996 0 0"></a-entity>-->
 
       <!-- Control station -->
-      <a-entity id="controlStation" geometry="primitive: plane; width:5; height:3;" material="side: double; color: black;" position="0 0.8 0" rotation="-30 0 0" scale="0.5 0.5 0.5">
+      <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #025d96" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity>
+      <a-entity id="controlStation" geometry="primitive: plane; width:5; height:3;" material="side: double; color: #025d96;" position="0 0.995 -2.951" rotation="-30 0 0" scale="0.5 0.5 0.5">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
           <a-entity id="startButtonGroup" position="0.5 0.1 0.9" scale="1.5 1.5 1.5">
             <a-entity id="startButton" onclick="startExperiment()" circles-button></a-entity>
-            <a-entity text="value: Start; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
+            <!--<a-entity text="value: Start; align: center; color: white;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="resetButtonGroup" position="-0.5 0.1 0.9" scale="1.5 1.5 1.5">
             <a-entity id="resetButton" onclick="resetExperiment()" circles-button></a-entity>
-            <a-entity text="value: Reset; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
+            <!--<a-entity text="value: Reset; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <!-- Gravity control buttons -->
@@ -98,7 +108,11 @@
 
 
       <!-- Floor -->
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="100" height="100" color="#7BC8A4" static-body circles-shadow></a-plane>
+      <a-plane position="0 0 -1.99196" scale="20 10.57 4" rotation="-90 0 0" width="4" height="4" color="#047cc7" static-body circles-shadow></a-plane>
+
+      <!-- Hand Model -->
+      <a-entity id="hand1" gltf-model="/worlds/KIN_FreeFall/assets/models/hand.glb" scale="0.3 0.3 0.3" position="-2.3332 4.02422 -7.13517" rotation="0.57 -3.0000000000000004 -50"></a-entity>
+      <a-entity id="hand2" gltf-model="/worlds/KIN_FreeFall/assets/models/hand.glb" scale="-0.3 -0.3 -0.3" position="2.66791 4.82252 -7.01743" rotation="-0.89 -179.66 -239.99999999999997"></a-entity>
 
     </a-scene>
 
