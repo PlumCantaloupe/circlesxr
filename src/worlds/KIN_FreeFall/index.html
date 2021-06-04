@@ -25,6 +25,7 @@
         <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
         <a-asset-item id="hand-obj" response-type="arraybuffer" src="/worlds/KIN_FreeFall/assets/models/hand.glb"></a-asset-item>
         <a-asset-item id="counter-obj" response-type="arraybuffer" src="/worlds/KIN_FreeFall/assets/models/Counter.glb"></a-asset-item>
+        <a-asset-item id="bear-obj" response-type="arraybuffer" src="/worlds/KIN_FreeFall/assets/models/Bear.glb"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -43,10 +44,10 @@
       <a-entity id="ResetText" text="value: RESET; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.0 1.0 1.0" position="-0.255 0.929 -2.841" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="IncreaseGravityText" text="value: INCREASE GRAVITY; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="0.27392 1.60667 -3.26338" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="DecreaseGravityText" text="value: DECREASE GRAVITY; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="-0.25562 1.607 -3.263" rotation="-29.999999999999996 0 0"></a-entity>
-      <a-entity id="Obj1Text" text="value: OBJECT 1; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="-1.00204 1.607 -3.263" rotation="-29.999999999999996 0 0"></a-entity>
+      <a-entity id="Bear" text="value: BEAR; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="-1.00204 1.607 -3.263" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="Obj2Text" text="value: OBJECT 2; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="-1.00381 1.20034 -3.02957" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="Obj3Text" text="value: OBJECT 3; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="-1.00344 0.81033 -2.80181" rotation="-29.999999999999996 0 0"></a-entity>
-      <a-entity id="Obj1Text" text="value: OBJECT 1; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="1.00204 1.607 -3.263" rotation="-29.999999999999996 0 0"></a-entity>
+      <a-entity id="Bear" text="value: BEAR; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="1.00204 1.607 -3.263" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="Obj2Text" text="value: OBJECT 2; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="1.00381 1.20034 -3.02957" rotation="-29.999999999999996 0 0"></a-entity>
       <a-entity id="Obj3Text" text="value: OBJECT 3; color: #024975; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="0.5 0.5 0.5" position="1.00344 0.81033 -2.80181" rotation="-29.999999999999996 0 0"></a-entity>
 
@@ -56,55 +57,55 @@
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
           <a-entity id="startButtonGroup" position="0.5 0.1 0.9" scale="1.5 1.5 1.5">
-            <a-entity id="startButton" onclick="startExperiment()" circles-button></a-entity>
+            <a-entity id="startButton" onclick="startExperiment()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Start; align: center; color: white;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="resetButtonGroup" position="-0.5 0.1 0.9" scale="1.5 1.5 1.5">
-            <a-entity id="resetButton" onclick="resetExperiment()" circles-button></a-entity>
+            <a-entity id="resetButton" onclick="resetExperiment()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Reset; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <!-- Gravity control buttons -->
           <a-entity id="gravityIncreaseButtonGroup" position="0.5 0.1 -0.9">
-            <a-entity id="gravityIncreaseButton" onclick="increaseGravity()" circles-button></a-entity>
+            <a-entity id="gravityIncreaseButton" onclick="increaseGravity()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Increase Gravity; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="gravityDecreaseButtonGroup" position="-0.5 0.1 -0.9">
-            <a-entity id="gravityDecreaseButton" onclick="decreaseGravity()" circles-button></a-entity>
+            <a-entity id="gravityDecreaseButton" onclick="decreaseGravity()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Decrease Gravity; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <!-- Left object switching buttons -->
           <a-entity id="leftObject1ButtonGroup" position="-2 0.1 -0.9">
-            <a-entity id="leftObject1Button" onclick="setLeftObject('object1')" circles-button></a-entity>
+            <a-entity id="leftObject1Button" onclick="setLeftObject('object1')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 1; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="leftObject2ButtonGroup" position="-2 0.1 0">
-            <a-entity id="leftObject2Button" onclick="setLeftObject('object2')" circles-button></a-entity>
+            <a-entity id="leftObject2Button" onclick="setLeftObject('object2')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 2; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="leftObject3ButtonGroup" position="-2 0.1 0.9">
-            <a-entity id="leftObject3Button" onclick="setLeftObject('object3')" circles-button></a-entity>
+            <a-entity id="leftObject3Button" onclick="setLeftObject('object3')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 3; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <!-- Right object switching buttons -->
           <a-entity id="rightObject1ButtonGroup" position="2 0.1 -0.9">
-            <a-entity id="rightObject1Button" onclick="setRightObject('object1')" circles-button></a-entity>
+            <a-entity id="rightObject1Button" onclick="setRightObject('object1')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 1; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="rightObject2ButtonGroup" position="2 0.1 0">
-            <a-entity id="rightObject2Button" onclick="setRightObject('object2')" circles-button></a-entity>
+            <a-entity id="rightObject2Button" onclick="setRightObject('object2')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 2; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
 
           <a-entity id="rightObject3ButtonGroup" position="2 0.1 0.9">
-            <a-entity id="rightObject3Button" onclick="setRightObject('object3')" circles-button></a-entity>
+            <a-entity id="rightObject3Button" onclick="setRightObject('object3')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <!--<a-entity text="value: Object 3; align: center;" scale="2.5 2.5 2.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>-->
           </a-entity>
         </a-entity>
@@ -126,7 +127,7 @@
       <a-entity id="Counter1" gltf-model="/worlds/KIN_FreeFall/assets/models/Counter.glb" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter2" gltf-model="/worlds/KIN_FreeFall/assets/models/Counter.glb" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter3" gltf-model="/worlds/KIN_FreeFall/assets/models/Counter.glb" scale="-0.438 0.43783 0.43783" position="-0.45572 0.55975 -11.05981" rotation="0 270 0"></a-entity>
-
+      <a-entity id="Bear" gltf-model="/worlds/KIN_FreeFall/assets/models/Bear.glb" scale="-0.126 0.12629 0.12629" position="-4.57595 2.03556 -5.80507" rotation="0 220.33 0"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
