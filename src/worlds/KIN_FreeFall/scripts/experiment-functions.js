@@ -32,6 +32,9 @@ function setup () {
     // trigger the stop event on the right indicator
     indicator.emit('stop');
   });
+
+  // set the starting gravity
+  setGravity(currentGravityStrength);
 }
 
 // called when the start button is pressed
@@ -142,9 +145,8 @@ function setGravity (gMultiplier) {
   sceneEl.systems.physics.driver.world.gravity.y = -9.8 * gMultiplier
 
   // update the gravity strength text
-  gravityStengthText = document.querySelector('#gravityStrengthText');
-  gravityStengthText.setAttribute('text', {
-    value: "Current Gravity: " + gMultiplier + "g",
-    align: "center"
+  let gravityStrengthTexts = document.querySelectorAll('.gravityStrengthText');
+  gravityStrengthTexts.forEach(text => {
+    AFRAME.utils.entity.setComponentProperty(text, 'text', {value: `Gravity: ${gMultiplier}g`});
   });
 }
