@@ -1,8 +1,8 @@
 // the list of physics objects that can be used in the scene (and their properties)
 const PHYSICS_OBJECTS = {
-  object1 = {name: "Ball", mass: 0.3, assetId="", height: 10.3, scale: {x: 0.1, y: 0.1, z: 0.1}},
-  object2 = {name: "Teddy", mass: 0.1, assetId="", height: 10.3, scale: {x: 0.1, y: 0.1, z: 0.1}},
-  object3 = {name: "Car", mass: 100, assetId="", height: 10.3, scale: {x: 0.1, y: 0.1, z: 0.1}}
+  object1 = {name: "Ball", mass: 0.3, assetId="", height: 4, handHeight: 4.8, scale: {x: 1, y: 1, z: 1}, rotationY: 0, mesh: "sphere"},
+  object2 = {name: "Bear", mass: 0.1, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.15, y: 0.15, z: 0.15}, rotationY: 180, mesh: "box"},
+  object3 = {name: "Car", mass: 100, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.1, y: 0.1, z: 0.1}, rotationY: 0, mesh: "box"}
 };
 
 // the gravity control that controls the physics of each object in the scene
@@ -16,11 +16,12 @@ function startExperiment () {
 
   // get all the free fall objects
   let freeFallObjects = document.querySelectorAll("[physics-object]");
+  console.log(freeFallObjects);
 
   // loop through each free fall object
   freeFallObjects.forEach(element => {
     // enable physics on the object
-    element.setAttribute('dynamic-body', '');
+    element.setAttribute('dynamic-body', 'shape: box;');
   });
 };
 
@@ -40,54 +41,33 @@ function resetExperiment () {
   });
 };
 
-function setLeftObject (object) {
+function setNewObject (object, direction) {
   let newObject = PHYSICS_OBJECTS[object];
-  console.log('Setting left object to ' + newObject.name);
+  console.log('Setting ' + direction + ' object to ' + newObject.name);
 
   // get left object
-  let leftObject = document.querySelector("#leftObject");
+  let sceneObject = document.querySelector('#'+ direction + 'Object');
 
   // remove  geometry
-  leftObject.removeAttribute('geometry');
+  sceneObject.removeAttribute('geometry');
 
   // set gltf model to newObject
-  leftObject.setAttribute('gltf-model', '#' + newObject.name + '-gltf');
+  sceneObject.setAttribute('gltf-model', '/worlds/KIN_FreeFall/assets/models/' + newObject.name + '.glb');
 
   // set new model scale
-  leftObject.setAttribute('scale', newObject.scale.x + " " + newObject.scale.y + " " + newObject.scale.z);
+  sceneObject.setAttribute('scale', newObject.scale.x + " " + newObject.scale.y + " " + newObject.scale.z);
 
   // update model mass
-  leftObject.setAttribute('physics-object', 'mass:' + newObject.mass);
+  sceneObject.setAttribute('physics-object', 'mass:' + newObject.mass);
+
+  // rotate the object in the Y axis
+  let objectRotation = sceneObject.getAttribute('rotation');
+  sceneObject.setAttribute('rotation', objectRotation.x + " " + newObject.rotationY + " " + objectRotation.z);
 
   // set new height
-  let objectPosition = leftObject.getAttribute('position');
-  leftObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
-  leftObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
-};
-
-function setRightObject (object) {
-  let newObject = PHYSICS_OBJECTS[object];
-  console.log('Setting right object to ' + newObject.name);
-
-  // get left object
-  let rightObject = document.querySelector("#rightObject");
-
-  // remove  geometry
-  rightObject.removeAttribute('geometry');
-
-  // set gltf model to newObject
-  rightObject.setAttribute('gltf-model', '#' + newObject.name + '-gltf');
-
-  // set new model scale
-  rightObject.setAttribute('scale', newObject.scale.x + " " + newObject.scale.y + " " + newObject.scale.z);
-
-  // update model mass
-  rightObject.setAttribute('physics-object', 'mass:' + newObject.mass);
-
-  // set new height
-  let objectPosition = rightObject.getAttribute('position');
-  rightObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
-  rightObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
+  let objectPosition = sceneObject.getAttribute('position');
+  sceneObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
+  sceneObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
 };
 
 function increaseGravity () {
