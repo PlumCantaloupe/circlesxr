@@ -11,6 +11,30 @@ const gravityMaxStrength = 3;
 const gravityMinStrength = 0;
 const gravityIncrementAmount = 0.5;
 
+// to be called once the scene is loaded to perform setup tasks
+function setup () {
+  // add collision events to both objects
+  let leftObject = document.querySelector('#leftObject');
+  let rightObject = document.querySelector('#rightObject');
+
+  leftObject.addEventListener('collide', function () {
+    // get the left object collision indicator
+    let indicator = document.querySelector('#leftCollisionIndicator');
+
+    // trigger the stop event on the left indicator
+    indicator.emit('stop');
+  });
+
+  rightObject.addEventListener('collide', function () {
+    // get the right object collision indicator
+    let indicator = document.querySelector('#rightCollisionIndicator');
+
+    // trigger the stop event on the right indicator
+    indicator.emit('stop');
+  });
+}
+
+// called when the start button is pressed
 function startExperiment () {
   console.log('Starting experiment');
 
@@ -23,8 +47,17 @@ function startExperiment () {
     // enable physics on the object
     element.setAttribute('dynamic-body', 'shape: box;');
   });
+
+  // get the collision indicators
+  let leftIndicator = document.querySelector('#leftCollisionIndicator');
+  let rightIndicator = document.querySelector('#rightCollisionIndicator');
+
+  // start the indicators
+  leftIndicator.emit('start');
+  rightIndicator.emit('start');
 };
 
+// called when the reset button is pressed
 function resetExperiment () {
   console.log('Reseting experiment');
 
@@ -39,6 +72,14 @@ function resetExperiment () {
     // reset the position of the object
     element.emit('resetTransform', {});
   });
+
+  // get the collision indicators
+  let leftIndicator = document.querySelector('#leftCollisionIndicator');
+  let rightIndicator = document.querySelector('#rightCollisionIndicator');
+
+  // reset the indicators
+  leftIndicator.emit('reset');
+  rightIndicator.emit('reset');
 };
 
 function setNewObject (object, direction) {
@@ -70,24 +111,24 @@ function setNewObject (object, direction) {
   sceneObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
 };
 
+// called when the 'increaseGravity' button is pressed
 function increaseGravity () {
   // ensure the gravity is not currently at max value
   if (currentGravityStrength < gravityMaxStrength) {
-    console.log('Increasing gravity');
-
     // increase the gravity
     currentGravityStrength += gravityIncrementAmount;
+    console.log(`Increasing gravity to ${currentGravityStrength}`);
     setGravity(currentGravityStrength);
   }
 };
 
+// called when the 'decreaseGravity' button is pressed
 function decreaseGravity () {
   // ensure the gravity is not currently at min value
   if (currentGravityStrength > gravityMinStrength) {
-    console.log('Decreasing gravity');
-
     // decrease the gravity
     currentGravityStrength -= gravityIncrementAmount;
+    console.log(`Decreasing gravity to ${currentGravityStrength}`);
     setGravity(currentGravityStrength);
   }
 }
@@ -99,8 +140,6 @@ function setGravity (gMultiplier) {
 
   // update the physics system
   sceneEl.systems.physics.driver.world.gravity.y = -9.8 * gMultiplier
-
-  console.log(sceneEl.getAttribute('physics'));
 
   // update the gravity strength text
   gravityStengthText = document.querySelector('#gravityStrengthText');
