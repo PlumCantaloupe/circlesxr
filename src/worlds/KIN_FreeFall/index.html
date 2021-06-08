@@ -29,6 +29,12 @@ leftright<!DOCTYPE html>
         <a-asset-item id="Hand-gltf" src="/worlds/KIN_FreeFall/assets/models/Hand.glb"></a-asset-item>
         <a-asset-item id="Counter-gltf" src="/worlds/KIN_FreeFall/assets/models/Counter.glb"></a-asset-item>
 
+        <!-- Images -->
+        <img id="TennisBall-img" src="/worlds/KIN_FreeFall/assets/images/tennis_icon.png">
+        <img id="SoccerBall-img" src="/worlds/KIN_FreeFall/assets/images/soccer_icon.png">
+        <img id="Bear-img" src="/worlds/KIN_FreeFall/assets/images/bear_icon.png">
+        <img id="Car-img" src="/worlds/KIN_FreeFall/assets/images/car_icon.png">
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -48,7 +54,7 @@ leftright<!DOCTYPE html>
 
       <!-- Control station -->
       <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #025d96" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
-      <a-entity id="controlStation" geometry="primitive: box; width:5; height: 3; depth: 0.15" material="color: #035AF7;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
+      <a-entity id="controlStation" geometry="primitive: box; width:5.5; height: 3; depth: 0.15" material="color: #035AF7;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
           <a-entity id="startButtonGroup" position="0.7 0.1 0.9" scale="1.5 1.5 1.5">
@@ -73,35 +79,47 @@ leftright<!DOCTYPE html>
           </a-entity>
 
           <!-- right object switching buttons -->
-          <a-entity id="rightObject1ButtonGroup" position="-2 0.1 -0.9">
+          <a-entity id="rightObject1ButtonGroup" position="-2.3 0.1 -0.9">
             <a-entity id="rightObject1Button" onclick="setNewObject('object1', 'right')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="rightObject1Text" text="value: BALL; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="rightObject1Text" text="value: BALL; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="rightObject1Image" src="#TennisBall-img" position="0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="rightObject1Mass" text="value: 0.06 kg; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="rightObject2ButtonGroup" position="-2 0.1 0">
+          <a-entity id="rightObject2ButtonGroup" position="-2.3 0.1 0">
             <a-entity id="rightObject2Button" onclick="setNewObject('object2', 'right')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="rightObject2Text" text="value: BEAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="rightObject2Text" text="value: BEAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="rightObject2Image" src="#Bear-img" position="0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="rightObject2Mass" text="value: 0.23 g; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="rightObject3ButtonGroup" position="-2 0.1 0.9">
+          <a-entity id="rightObject3ButtonGroup" position="-2.3 0.1 0.9">
             <a-entity id="rightObject3Button" onclick="setNewObject('object3', 'right')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="rightObject3Text" text="value: CAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="rightObject3Text" text="value: CAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="rightObject3Image" src="#Car-img" position="0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="rightObject3Mass" text="value: 1300 kg; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
 
           <!-- left object switching buttons -->
-          <a-entity id="leftObject1ButtonGroup" position="2 0.1 -0.9">
+          <a-entity id="leftObject1ButtonGroup" position="2.3 0.1 -0.9">
             <a-entity id="leftObject1Button" onclick="setNewObject('object1', 'left')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="leftObject1Text" text="value: BALL; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="leftObject1Text" text="value: BALL; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="leftObject1Image" src="#SoccerBall-img" position="-0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="leftObject1Mass" text="value: 0.43 kg; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="leftObject2ButtonGroup" position="2 0.1 0">
+          <a-entity id="leftObject2ButtonGroup" position="2.3 0.1 0">
             <a-entity id="leftObject2Button" onclick="setNewObject('object2', 'left')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="leftObject2Text" text="value: BEAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="leftObject2Text" text="value: BEAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="leftObject2Image" src="#Bear-img" position="-0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="leftObject2Mass" text="value: 0.23 g; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="leftObject3ButtonGroup" position="2 0.1 0.9">
+          <a-entity id="leftObject3ButtonGroup" position="2.3 0.1 0.9">
             <a-entity id="leftObject3Button" onclick="setNewObject('object3', 'left')" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
-            <a-entity id="leftObject3Text" text="value: CAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" position="0 0 -0.5" rotation="-90 0 0"></a-entity>
+            <a-entity id="leftObject3Text" text="value: CAR; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 -0.25" rotation="-90 0 0"></a-entity>
+            <a-image id="leftObject3Image" src="#Car-img" position="-0.6 0 0" rotation="-90 0 0" scale="0.3 0.3 0.3"></a-image>
+            <a-entity id="leftObject3Mass" text="value: 1300 kg; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="-0.6 0 0.19" rotation="-90 0 0"></a-entity>
           </a-entity>
         </a-entity>
 
