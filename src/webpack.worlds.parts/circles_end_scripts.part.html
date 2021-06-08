@@ -11,9 +11,7 @@
       navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         adapter.setLocalMediaStream(stream).then(() => {
           // Note that networked-scene audio:true option has no effect with the janus adapter
-          console.log('!!!!!!!!!');
-          // adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
-          NAF.connection.adapter.enableMicrophone(false);
+          NAF.connection.adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
         });
       }).catch(err => {
         console.warn("Microphone access not allowed. This client will not broadcast audio.");
