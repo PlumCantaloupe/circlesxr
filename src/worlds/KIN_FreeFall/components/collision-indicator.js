@@ -30,7 +30,7 @@ AFRAME.registerComponent('collision-indicator', {
     let text = document.createElement('a-entity');
     text.setAttribute('class', 'indicatorText');
     text.setAttribute('indicatorText');
-    text.setAttribute('position', '0 0.133 0.1');
+    text.setAttribute('position', '0 0.133 0.12');
     text.setAttribute('text', {
       value: "00.00",
       color: "#0476d9",
@@ -45,7 +45,7 @@ AFRAME.registerComponent('collision-indicator', {
     let text2 = document.createElement('a-entity');
     text2.setAttribute('class', 'indicatorText');
     text2.setAttribute('indicatorText');
-    text2.setAttribute('position', '0 0.133 -0.1');
+    text2.setAttribute('position', '0 0.133 -0.12');
     text2.setAttribute('rotation', '0 180 0');
     text2.setAttribute('text', {
       value: "00.00",
