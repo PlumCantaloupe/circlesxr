@@ -30,27 +30,31 @@ AFRAME.registerComponent('collision-indicator', {
     let text = document.createElement('a-entity');
     text.setAttribute('class', 'indicatorText');
     text.setAttribute('indicatorText');
-    text.setAttribute('position', '0 0 0.1');
+    text.setAttribute('position', '0 0.133 0.1');
     text.setAttribute('text', {
       value: "00.00",
-      color: "black",
+      color: "#0476d9",
       width: 8,
       wrapCount: 22,
-      align: "center"
+      align: "center",
+      font: "/worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json",
+      negate: "false"
     });
     CONTEXT_AF.el.appendChild(text);
 
     let text2 = document.createElement('a-entity');
     text2.setAttribute('class', 'indicatorText');
     text2.setAttribute('indicatorText');
-    text2.setAttribute('position', '0 0 -0.1');
+    text2.setAttribute('position', '0 0.133 -0.1');
     text2.setAttribute('rotation', '0 180 0');
     text2.setAttribute('text', {
       value: "00.00",
-      color: "black",
+      color: "#0476d9",
       width: 8,
       wrapCount: 22,
-      align: "center"
+      align: "center",
+      font: "/worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json",
+      negate: "false"
     });
     CONTEXT_AF.el.appendChild(text2);
 
@@ -132,7 +136,7 @@ AFRAME.registerComponent('collision-indicator', {
     texts.forEach(text => {
       text.setAttribute('text', {
         value: textValue,
-        color: "black",
+        color: "#0476d9",
         width: 8,
         wrapCount: 22,
         align: "center"
