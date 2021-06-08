@@ -90,9 +90,7 @@ const setupCirclesWebsocket = function() {
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
       circlesWebsocket = NAF.connection.adapter.socket;
-      // circlesResearchWebsocket = circlesWebsocket;
       document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
-      // document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
     }
     else {
       let socket = io();
