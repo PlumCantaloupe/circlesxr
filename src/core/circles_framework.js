@@ -89,8 +89,10 @@ const getUUID = function() {
 const setupCirclesWebsocket = function() {
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
-      circlesWebsocket = NAF.connection.adapter.socket
+      circlesWebsocket = NAF.connection.adapter.socket;
+      // circlesResearchWebsocket = circlesWebsocket;
       document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
+      // document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
     }
     else {
       let socket = io();
@@ -98,13 +100,13 @@ const setupCirclesWebsocket = function() {
         circlesWebsocket = socket;
         document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
       });
-
-      let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
-      rs_socket.on('connect', (userData) => {
-        circlesResearchWebsocket = rs_socket;
-        document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
-      });
     }
+
+    let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+    rs_socket.on('connect', (userData) => {
+      circlesResearchWebsocket = rs_socket;
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
+    });
   }
   else {
     console.warn('CIRCLES: web socket already set up. Use CIRCLES.getCirclesWebsocket() to find it');
