@@ -28,12 +28,19 @@ leftright<!DOCTYPE html>
         <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
         <a-asset-item id="Hand-gltf" src="/worlds/KIN_FreeFall/assets/models/Hand.glb"></a-asset-item>
         <a-asset-item id="Counter-gltf" src="/worlds/KIN_FreeFall/assets/models/Counter.glb"></a-asset-item>
+        <a-asset-item id="Beaker1-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group1.glb"></a-asset-item>
+        <a-asset-item id="Beaker2-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group2.glb"></a-asset-item>
+        <a-asset-item id="Beaker3-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group3.glb"></a-asset-item>
+        <a-asset-item id="Beaker3-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group4.glb"></a-asset-item>
+        <a-asset-item id="Trolley-gltf" src="/worlds/KIN_FreeFall/assets/models/Trolley.glb"></a-asset-item>
+        <a-asset-item id="Locker-gltf" src="/worlds/KIN_FreeFall/assets/models/Locker.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_FreeFall/assets/images/tennis_icon.png">
         <img id="SoccerBall-img" src="/worlds/KIN_FreeFall/assets/images/soccer_icon.png">
         <img id="Bear-img" src="/worlds/KIN_FreeFall/assets/images/bear_icon.png">
         <img id="Car-img" src="/worlds/KIN_FreeFall/assets/images/car_icon.png">
+        <img id="Arrow-img" src="/worlds/KIN_FreeFall/assets/images/arrow_icon.png">
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -50,6 +57,8 @@ leftright<!DOCTYPE html>
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" text="value: FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="10 10 10"></a-entity>
         <a-entity class="gravityStrengthText" text="value: Gravity: 1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity id="ControlPanelText" text="value: CONTROL PANEL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="10 10 10" position="0 4.8 0"></a-entity>
+        <!--<a-image id="ArrowImage" src="#Arrow-img" position="-0.00261 2.05191 0.00704" scale="2.5 2.5 2.5"></a-image>-->
       </a-entity>
 
       <!-- Control station -->
@@ -143,7 +152,13 @@ leftright<!DOCTYPE html>
       <!-- Lab Counters-->
       <a-entity id="Counter1" gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity>
-      <a-entity id="Counter-Bear" gltf-model="#Bear-gltf" scale="-0.126 0.12629 0.12629" position="-4.57595 2.03556 -5.80507" rotation="0 220.33 0"></a-entity>
+      <a-entity id="Counter-Beaker-1" gltf-model="/worlds/KIN_FreeFall/assets/models/Beaker_Group1.glb" scale="0.5 0.5 0.5" position="-5.19169 0.45397 -9.71019" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Counter-Beaker-2" gltf-model="/worlds/KIN_FreeFall/assets/models/Beaker_Group2.glb" scale="0.5 0.5 0.5" position="-6.30783 0.46012 -6.56721" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Counter-Beaker-3" gltf-model="/worlds/KIN_FreeFall/assets/models/Beaker_Group3.glb" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Counter-Beaker-4" gltf-model="/worlds/KIN_FreeFall/assets/models/Beaker_Group4.glb" scale="0.5 0.5 0.5" position="5.2437 0.46012 -6.57949" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Counter-Beaker-4" gltf-model="/worlds/KIN_FreeFall/assets/models/Beaker_Group4.glb" scale="0.3 0.3 0.3" position="-4.81186 0.6212 -4.79106" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Trolley-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Trolley.glb" scale="0.29061 0.29061 0.29061" position="-4.70786 0.658 -4.07963" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Locker-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Locker.glb" scale="0.3 0.3 0.3" position="3.81684 -0.03724 -10.23056" rotation="0 -40 0"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
