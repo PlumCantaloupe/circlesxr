@@ -1,4 +1,4 @@
-leftright<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -25,7 +25,6 @@ leftright<!DOCTYPE html>
         <a-asset-item id="TennisBall-gltf" src="/worlds/KIN_FreeFall/assets/models/TennisBall.glb"></a-asset-item>
         <a-asset-item id="SoccerBall-gltf" src="/worlds/KIN_FreeFall/assets/models/SoccerBall.glb"></a-asset-item>
         <a-asset-item id="Bear-gltf" src="/worlds/KIN_FreeFall/assets/models/Bear.glb"></a-asset-item>
-        <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Drill.glb"></a-asset-item>
         <a-asset-item id="Hand-gltf" src="/worlds/KIN_FreeFall/assets/models/Hand.glb"></a-asset-item>
         <a-asset-item id="Counter-gltf" src="/worlds/KIN_FreeFall/assets/models/Counter.glb"></a-asset-item>
         <a-asset-item id="Beaker1-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group1.glb"></a-asset-item>
@@ -34,6 +33,7 @@ leftright<!DOCTYPE html>
         <a-asset-item id="Beaker3-gltf" src="/worlds/KIN_FreeFall/assets/models/Beaker_Group4.glb"></a-asset-item>
         <a-asset-item id="Trolley-gltf" src="/worlds/KIN_FreeFall/assets/models/Trolley.glb"></a-asset-item>
         <a-asset-item id="Locker-gltf" src="/worlds/KIN_FreeFall/assets/models/Locker.glb"></a-asset-item>
+        <a-asset-item id="Car-gltf" src="/worlds/KIN_FreeFall/assets/models/Car.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_FreeFall/assets/images/tennis_icon.png">
@@ -52,6 +52,8 @@ leftright<!DOCTYPE html>
       <!-- Experiment Objects -->
       <a-entity gltf-model="#SoccerBall-gltf" id="leftObject" physics-object="initialPosition: -1.869 4.092 -6.719; mass: 0.3;" scale="0.05 0.05 0.05"></a-entity>
       <a-entity gltf-model="#TennisBall-gltf" id="rightObject" physics-object="initialPosition: 2.15 4.105 -6.762; mass: 0.3;" scale="0.4 0.4 0.4"></a-entity>
+      <a-entity gltf-model="#Car-gltf" physics-object="initialPosition: 5 0 5;"></a-entity>
+
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
