@@ -87,31 +87,35 @@ function resetExperiment () {
 
 function setNewObject (object, direction) {
   let newObject = PHYSICS_OBJECTS[object];
-  console.log('Setting ' + direction + ' object to ' + newObject.name);
+  console.log(`Setting ${direction} object to ${newObject.name}`);
 
   // get left object
-  let sceneObject = document.querySelector('#'+ direction + 'Object');
+  let sceneObject = document.querySelector(`#${direction}Object`);
 
   // remove  geometry
   sceneObject.removeAttribute('geometry');
 
   // set gltf model to newObject
-  sceneObject.setAttribute('gltf-model', '/worlds/KIN_FreeFall/assets/models/' + newObject.name + '.glb');
+  sceneObject.setAttribute('gltf-model', `/worlds/KIN_FreeFall/assets/models/${newObject.name}.glb`);
 
   // set new model scale
-  sceneObject.setAttribute('scale', newObject.scale.x + " " + newObject.scale.y + " " + newObject.scale.z);
+  sceneObject.setAttribute('scale', `${newObject.scale.x} ${newObject.scale.y} ${newObject.scale.z}`);
 
   // update model mass
-  sceneObject.setAttribute('physics-object', 'mass:' + newObject.mass);
+  sceneObject.setAttribute('physics-object', `mass: ${newObject.mass}`);
 
   // rotate the object in the Y axis
   let objectRotation = sceneObject.getAttribute('rotation');
-  sceneObject.setAttribute('rotation', objectRotation.x + " " + newObject.rotationY + " " + objectRotation.z);
+  sceneObject.setAttribute('rotation', `${objectRotation.x} ${newObject.rotationY} ${objectRotation.z}`);
 
   // set new height
   let objectPosition = sceneObject.getAttribute('position');
-  sceneObject.setAttribute('position', objectPosition.x + " " + newObject.height + " " + objectPosition.z);
-  sceneObject.setAttribute('physics-object', 'initialPosition:' + objectPosition.x + " " + newObject.height + " " + objectPosition.z);
+  sceneObject.setAttribute('position', `${objectPosition.x} ${newObject.height} ${objectPosition.z}`);
+  sceneObject.setAttribute('physics-object', `initialPosition: ${objectPosition.x} ${newObject.height} ${objectPosition.z}`);
+
+  // change mass text
+  let objectMassText = document.querySelector(`#mass${direction}ObjText`);
+  AFRAME.utils.entity.setComponentProperty(objectMassText, 'text', {value: `${newObject.mass}kg`});
 };
 
 // called when the 'increaseGravity' button is pressed
@@ -147,6 +151,6 @@ function setGravity (gMultiplier) {
   // update the gravity strength text
   let gravityStrengthTexts = document.querySelectorAll('.gravityStrengthText');
   gravityStrengthTexts.forEach(text => {
-    AFRAME.utils.entity.setComponentProperty(text, 'text', {value: `Gravity: ${gMultiplier}g`});
+    AFRAME.utils.entity.setComponentProperty(text, 'text', {value: `${gMultiplier}g`});
   });
 }

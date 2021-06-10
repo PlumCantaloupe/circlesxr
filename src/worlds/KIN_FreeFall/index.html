@@ -50,8 +50,19 @@
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
-        <a-entity id="TitleText" text="value: FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="10 10 10"></a-entity>
-        <a-entity class="gravityStrengthText" text="value: Gravity: 1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity id="TitleText" position="0 -3 0" text="value:FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+
+        <!-- Gravity -->
+        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+
+        <!-- Mass left object-->
+        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+
+        <!-- Mass right object-->
+        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
       </a-entity>
 
       <!-- Control station -->
