@@ -1,8 +1,9 @@
 // the list of physics objects that can be used in the scene (and their properties)
 const PHYSICS_OBJECTS = {
-  object1 = {name: "Ball", mass: 0.3, assetId="", height: 4, handHeight: 4.8, scale: {x: 1, y: 1, z: 1}, rotationY: 0, mesh: "sphere"},
+  object1 = {name: "Ball", mass: 0.3, assetId="", height: 4, handHeight: 4.82, scale: {x: 0.05, y: 0.05, z: 0.05}, rotationY: 0, mesh: "sphere"},
   object2 = {name: "Bear", mass: 0.1, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.15, y: 0.15, z: 0.15}, rotationY: 180, mesh: "box"},
-  object3 = {name: "Car", mass: 100, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.1, y: 0.1, z: 0.1}, rotationY: 0, mesh: "box"}
+  object3 = {name: "Car", mass: 100, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.1, y: 0.1, z: 0.1}, rotationY: 0, mesh: "box"},
+  object4 = {name: "TennisBall", mass: 0.06, assetId="", height: 4.1, handHeight: 4.83, scale: {x: 0.4, y: 0.4, z: 0.4}, rotationY: 0, mesh: "sphere"}
 };
 
 // the gravity control that controls the physics of each object in the scene
