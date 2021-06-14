@@ -14,7 +14,7 @@
 
   <body onload="setup()">
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties physics="debug: true; gravity: -9.8;" background="color:#0476D9;" shadow="type: pcfsoft"  fog="type: linear; color: #0482d1; far: 30; near: 0">
+    <a-scene circles_properties physics="debug: true; gravity: -9.8;" background="color:#d9a60b;" shadow="type: pcfsoft"  fog="type: linear; color: #d9a60b; far: 30; near: 0">
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -41,6 +41,7 @@
         <a-asset-item id="Book3-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Book3.glb"></a-asset-item>
         <a-asset-item id="Book4-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Book4.glb"></a-asset-item>
         <a-asset-item id="Stickies-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Stickies.glb"></a-asset-item>
+        <a-asset-item id="Canon-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb"></a-asset-item>
     
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_ShootAndDrop/assets/images/tennis_icon.png">
@@ -62,28 +63,27 @@
 
       <!-- Hand Model -->
       <a-entity id="leftHand" gltf-model="#Hand-gltf" scale="0.3 0.3 0.3" position="-2.5 5.55 -7.1" rotation="-9 -3 -64"></a-entity>
-      <a-entity id="rightHand" gltf-model="#Hand-gltf" scale="-0.3 -0.3 -0.3" position="2.7 4.8 -7.1" rotation="-0.89 -179.66 -239.99999999999997"></a-entity>
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
-        <a-entity id="TitleText" position="0 -3 0" text="value:SHOOT AND DROP; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+        <a-entity id="TitleText" position="0 -3 0" text="value:SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
 
         <!-- Gravity -->
-        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
 
         <!-- Mass left object-->
-        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
 
         <!-- Mass right object-->
-        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
       </a-entity>
 
       <!-- Control station -->
-      <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #025d96" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
-      <a-entity id="controlStation" geometry="primitive: box; width:5.5; height: 3; depth: 0.15" material="color: #035AF7;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
+      <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #d9a60b" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
+      <a-entity id="controlStation" geometry="primitive: box; width:5.5; height: 3; depth: 0.15" material="color: #bc7306;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
           <a-entity id="startButtonGroup" position="0.7 0.1 0.9" scale="1.5 1.5 1.5">
@@ -163,23 +163,24 @@
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-      <a-box position="0 -0.5 -5" height="30" width="30" depth="1" rotation="-90 0 0" color="#047cc7" static-body="shape: plane;" circles-shadow></a-box>
+      <a-box position="0 -0.5 -5" height="30" width="30" depth="1" rotation="-90 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box>
 
       <!-- Lab Counters-->
       <a-entity id="Counter1" gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
-      <!-- <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity> -->
+      <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity> 
       <a-entity id="Counter-Beaker-1" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group1.glb" scale="0.5 0.5 0.5" position="-5.19169 0.45397 -9.71019" rotation="0 222.39 0"></a-entity>
       <a-entity id="Counter-Beaker-2" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group2.glb" scale="0.5 0.5 0.5" position="-6.30783 0.46012 -6.56721" rotation="0 222.39 0"></a-entity>
-      <!-- <a-entity id="Counter-Beaker-3" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group3.glb" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
+      <a-entity id="Counter-Beaker-3" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group3.glb" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
       <a-entity id="Counter-Beaker-4" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group4.glb" scale="0.5 0.5 0.5" position="5.2437 0.46012 -6.57949" rotation="0 222.39 0"></a-entity> -->
       <a-entity id="Counter-Beaker-4" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Beaker_Group4.glb" scale="0.3 0.3 0.3" position="-4.81186 0.6212 -4.79106" rotation="0 222.39 0"></a-entity>
       <a-entity id="Trolley-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Trolley.glb" scale="0.29061 0.29061 0.29061" position="-4.70786 0.658 -4.07963" rotation="0 222.39 0"></a-entity>
       <a-entity id="Locker-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Locker.glb" scale="0.3 0.3 0.3" position="3.81684 -0.03724 -10.23056" rotation="0 -40 0"></a-entity>
       <a-entity id="Book1-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book1.glb" position="1.03344 -0.44939 -6.9434" rotation="" scale="0.01 0.01 0.01"></a-entity>
-      <!-- <a-entity id="Book2-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book2.glb" position="9.53261 -0.44939 -9.34175" rotation="" scale="0.01 0.01 0.01"></a-entity> -->
-      <!-- <a-entity id="Book3-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book3.glb" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity> -->
-      <a-entity id="Book4-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book4.glb" position="-2.3532 -0.24596 -2.40105" rotation="0 122.57859069028834 0" scale="0.006 0.006 0.006"></a-entity>
+      <a-entity id="Book2-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book2.glb" position="9.53261 -0.44939 -9.34175" rotation="" scale="0.01 0.01 0.01"></a-entity> -->
+      <a-entity id="Book3-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book3.glb" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity> -->
+      <a-entity id="Book4-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Book4.glb" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
       <a-entity id="Stickies-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Stickies.glb" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+      <a-entity id="Canon-gltf" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb" position="0.24249 0.83149 -7.20419" scale="0.15 0.15 0.15" rotation="0 14.999999999999998 0"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

@@ -33,7 +33,7 @@ AFRAME.registerComponent('collision-indicator', {
     text.setAttribute('position', '0 0.133 0.12');
     text.setAttribute('text', {
       value: "00.00",
-      color: "#0476d9",
+      color: "#b38600",
       width: 8,
       wrapCount: 22,
       align: "center",
@@ -49,7 +49,7 @@ AFRAME.registerComponent('collision-indicator', {
     text2.setAttribute('rotation', '0 180 0');
     text2.setAttribute('text', {
       value: "00.00",
-      color: "#0476d9",
+      color: "#b38600",
       width: 8,
       wrapCount: 22,
       align: "center",
@@ -136,7 +136,7 @@ AFRAME.registerComponent('collision-indicator', {
     texts.forEach(text => {
       text.setAttribute('text', {
         value: textValue,
-        color: "#0476d9",
+        color: "#b38600",
         width: 8,
         wrapCount: 22,
         align: "center"
