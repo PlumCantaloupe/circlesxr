@@ -1,9 +1,9 @@
 // the list of physics objects that can be used in the scene (and their properties)
 const PHYSICS_OBJECTS = {
-  object1 = {name: "Ball", mass: 0.3, assetId="", height: 4, handHeight: 4.82, scale: {x: 0.05, y: 0.05, z: 0.05}, rotationY: 0, mesh: "sphere"},
-  object2 = {name: "Bear", mass: 0.1, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.15, y: 0.15, z: 0.15}, rotationY: 180, mesh: "box"},
-  object3 = {name: "Car", mass: 100, assetId="", height: 4, handHeight: 4.8, scale: {x: 0.1, y: 0.1, z: 0.1}, rotationY: 0, mesh: "box"},
-  object4 = {name: "TennisBall", mass: 0.06, assetId="", height: 4.1, handHeight: 4.83, scale: {x: 0.4, y: 0.4, z: 0.4}, rotationY: 0, mesh: "sphere"}
+  object1 = {name: "SoccerBall", mass: 0.3, assetId="", height: 4.83, handHeight: 5.55, scale: {x: 0.05, y: 0.05, z: 0.05}, rotationY: 0, mesh: "sphere"},
+  object2 = {name: "Bear", mass: 0.23, assetId="", height: 4.98, handHeight: 5.63, scale: {x: 0.15, y: 0.15, z: 0.15}, rotationY: 180, mesh: "box"},
+  object3 = {name: "Car", mass: 1300, assetId="", height: 3.94, handHeight: 6.01, scale: {x: 1.3, y: 1.3, z: 1.3}, rotationY: 0, mesh: "box"},
+  object4 = {name: "TennisBall", mass: 0.06, assetId="", height: 4.03, handHeight: 4.8, scale: {x: 0.4, y: 0.4, z: 0.4}, rotationY: 0, mesh: "sphere"}
 };
 
 // the gravity control that controls the physics of each object in the scene
@@ -105,14 +105,24 @@ function setNewObject (object, direction) {
   // update model mass
   sceneObject.setAttribute('physics-object', `mass: ${newObject.mass}`);
 
-  // rotate the object in the Y axis
-  let objectRotation = sceneObject.getAttribute('rotation');
-  sceneObject.setAttribute('rotation', `${objectRotation.x} ${newObject.rotationY} ${objectRotation.z}`);
+  // update model mesh shape
+  //sceneObject.setAttribute('static-body', `shape: ${newObject.mesh}`);
 
-  // set new height
+  // rotate the object in the Y axis
+  // let objectRotation = sceneObject.getAttribute('rotation');
+  // sceneObject.setAttribute('rotation', `${objectRotation.x} ${newObject.rotationY} ${objectRotation.z}`);
+
+  // set new object height
   let objectPosition = sceneObject.getAttribute('position');
   sceneObject.setAttribute('position', `${objectPosition.x} ${newObject.height} ${objectPosition.z}`);
   sceneObject.setAttribute('physics-object', `initialPosition: ${objectPosition.x} ${newObject.height} ${objectPosition.z}`);
+
+  // set hand's new height
+  let hand = document.querySelector(`#${direction}Hand`);
+  console.log(hand);
+  let handPosition = hand.getAttribute('position');
+  console.log(handPosition);
+  hand.setAttribute('position', `${handPosition.x} ${newObject.handHeight} ${handPosition.z}`);
 
   // change mass text
   let objectMassText = document.querySelector(`#mass${direction}ObjText`);
