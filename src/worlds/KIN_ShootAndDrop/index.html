@@ -42,6 +42,7 @@
         <a-asset-item id="Book4-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Book4.glb"></a-asset-item>
         <a-asset-item id="Stickies-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Stickies.glb"></a-asset-item>
         <a-asset-item id="Canon-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb"></a-asset-item>
+        <a-asset-item id="Confetti-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Confetti.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_ShootAndDrop/assets/images/tennis_icon.png">
@@ -64,12 +65,12 @@
       <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Trolley.glb"></a-entity>
 
       <!-- Hand Model -->
-      <a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 0.1" position="-2.56 1.6 -6.96" rotation="-9 180 -64"></a-entity>
+      <a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 -0.1" position="-2.56 1.6 -6.96" rotation="-9 180 -64"></a-entity>
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" position="0 -3 0" scale="12 12 12" text="value:SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-
+        
         <!-- Mass -->
         <a-entity class="massObjLabel" position="-3.2 -0.12 0" scale="4.5 4.5 4.5" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
         <a-entity id="massleftObjText" position="-3.2 -0.8 0" scale="5 5 5" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
@@ -136,6 +137,7 @@
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box id="floor" position="0 -0.5 -5" height="30" width="30" depth="1" rotation="-90 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box>
+      <a-cylinder color="crimson" height="3" radius="1.5" material="color: #996206" geometry="" scale="0.8 0.0001 0.8" position="-1.940 0.009 -6.882"></a-cylinder>
 
       <!-- Lab Counters-->
 
@@ -153,6 +155,7 @@
       <a-entity gltf-model="#Book3-gltf" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
       <a-entity gltf-model="#Book4-gltf" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
       <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+      <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
