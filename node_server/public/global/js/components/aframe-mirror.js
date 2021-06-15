@@ -1,7 +1,8 @@
 //modified from Three.js mirror example: https://github.com/mrdoob/three.js/blob/r125/examples/jsm/objects/Reflector.js 
-let Reflector = function ( mesh, renderer, options ) {
+let Reflector = function ( mesh, renderer, options, cameraEl ) {
 
-	//Mesh.call( this, geometry );
+	//we need a reference to the main camera used in the scene for some "hacky" fixes later (see below) ... 
+   let sceneCam = cameraEl.object3D;
 
 	this.type = 'Reflector';
 
@@ -56,6 +57,9 @@ let Reflector = function ( mesh, renderer, options ) {
 	mesh.material = material;
 
 	mesh.onBeforeRender = function ( renderer, scene, camera ) {
+    
+    //camera.matrix.copy( cameraVR.matrix );
+		//camera.matrix.decompose( camera.position, camera.quaternion, camera.scale );
 
 		reflectorWorldPosition.setFromMatrixPosition( scope.matrixWorld );
 		cameraWorldPosition.setFromMatrixPosition( camera.matrixWorld );
@@ -68,7 +72,6 @@ let Reflector = function ( mesh, renderer, options ) {
 		view.subVectors( reflectorWorldPosition, cameraWorldPosition );
 
 		// Avoid rendering when reflector is facing away
-
 		if ( view.dot( normal ) > 0 ) return;
 
 		view.reflect( normal ).negate();
@@ -130,7 +133,6 @@ let Reflector = function ( mesh, renderer, options ) {
 		projectionMatrix.elements[ 14 ] = clipPlane.w;
 
 		// Render
-
 		renderTarget.texture.encoding = renderer.outputEncoding;
 
 		scope.visible = false;
@@ -148,7 +150,15 @@ let Reflector = function ( mesh, renderer, options ) {
 		renderer.state.buffers.depth.setMask( true ); // make sure the depth buffer is writable so it can be properly cleared, see #18897
 
 		if ( renderer.autoClear === false ) renderer.clear();
+    
+    //!!hacky note, part 1/2: but if we make sure teh marix is full before rendering to the mirror the mirror will shopw the proper rotations
+    //something to do with how a-frame has modified default camera behaviour witha. fork of three called super-three
+    sceneCam.matrix.compose(sceneCam.position, sceneCam.quaternion, sceneCam.scale);
+    
 		renderer.render( scene, virtualCamera );
+    
+    //!!hacky note part 2/2: now if we do not set the matrix back to an identity matrix here we will get doubled transforms where everything is twice, as high, rotates twice as fast etc.
+    sceneCam.matrix.identity();
 
 		renderer.xr.enabled = currentXrEnabled;
 		renderer.shadowMap.autoUpdate = currentShadowAutoUpdate;
@@ -166,13 +176,6 @@ let Reflector = function ( mesh, renderer, options ) {
 		scope.visible = true;
 
 	};
-
-	// this.getRenderTarget = function () {
-
-	// 	return renderTarget;
-
-	// };
-
 };
 
 Reflector.prototype = Object.create( THREE.Mesh.prototype );
@@ -240,18 +243,37 @@ AFRAME.registerComponent('aframe-mirror',
 	schema:{
 	    textureWidth: 	{type:'int', 		default:256},
 	    textureHeight: 	{type:'int', 		default:256},
-	    color: 			{type:'color', 		default:'#848485'},
-	    clipBias: 		{type:'number', 	default:0.0}
+	    color: 			{type:'color', 	default:'#848485'},
+	    clipBias: 		{type:'number', default:0.0}
 	},
 	init: function () 
 	{
-	    const mirrorMesh 	= this.el.getObject3D('mesh');
+		const CONTEXT_AF = this;
+	    const mirrorMesh = CONTEXT_AF.el.getObject3D('mesh');
 
 	    if(!mirrorMesh) {
 			console.warn("no mesh attached to mirror component");
 	    	return;
 		}
+    
+		const cameraRigEl = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+		let cameraEl = cameraRigEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
 
-	    this.reflector = Reflector(mirrorMesh, this.el.sceneEl.renderer, this.data);
+		console.log(cameraRigEl);
+		console.log(cameraEl);
+
+		const createMirrorFunc = (e) => { 
+			cameraEl = cameraRigEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+			CONTEXT_AF.reflector = Reflector(mirrorMesh, CONTEXT_AF.el.sceneEl.renderer, CONTEXT_AF.data, cameraEl);
+			cameraRigEl.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, createMirrorFunc);
+			console.log(cameraEl);
+		};
+
+		if (!cameraEl) {
+			cameraRigEl.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, createMirrorFunc);
+		}
+		else {
+			createMirrorFunc(null);
+		}
 	},
 });
