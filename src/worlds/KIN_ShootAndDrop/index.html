@@ -58,34 +58,34 @@
       <circles-avatar/>
 
       <!-- Experiment Objects -->
-      <a-entity id="ball1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -2.74 1.55 -6.98; mass: 0.06;" scale="0.1 0.1 0.1"></a-entity>
-      <a-entity id="ball2" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -0.97 1.55 -6.98; mass: 0.06;" scale="0.1 0.1 0.1"></a-entity>
-      <a-entity id="cannon" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb" position="-1.41 1.46 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0"></a-entity>
-      <a-entity id="trolley" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Trolley.glb" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0"></a-entity>
+      <a-entity id="ball1" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -2.74 1.55 -6.98; mass: 0.06;"></a-entity>
+      <a-entity id="ball2" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -0.98 1.55 -6.98; mass: 0.06;"></a-entity>
+      <a-entity id="cannon" position="-1.38 1.46 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb"></a-entity>
+      <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Trolley.glb"></a-entity>
 
       <!-- Hand Model -->
       <a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 0.1" position="-2.56 1.6 -6.96" rotation="-9 180 -64"></a-entity>
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
-        <a-entity id="TitleText" position="0 -3 0" text="value:SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+        <a-entity id="TitleText" position="0 -3 0" scale="12 12 12" text="value:SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+
+        <!-- Mass -->
+        <a-entity class="massObjLabel" position="-3.2 -0.12 0" scale="4.5 4.5 4.5" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity id="massleftObjText" position="-3.2 -0.8 0" scale="5 5 5" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
 
         <!-- Gravity -->
-        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" scale="4.5 4.5 4.5" text="value: Gravity; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity class="gravityStrengthText" position="0 -0.8 0" scale="5 5 5" text="color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
 
-        <!-- Mass left object-->
-        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
-
-        <!-- Mass right object-->
-        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <!-- Power -->
+        <a-entity id="floorPowerLabel" position="3.2 -0.12 0" scale="4.5 4.5 4.5" text="value: Cannon power; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity id="floorPowerText" class="powerText" position="3.2 -0.8 0" scale="5 5 5" text="color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       </a-entity>
 
       <!-- Control station -->
       <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #d9a60b" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
-      <a-entity id="controlStation" geometry="primitive: box; width:3; height: 3; depth: 0.15" material="color: #bc7306;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
+      <a-entity id="controlStation" geometry="primitive: box; width:4.5; height: 3; depth: 0.15" material="color: #bc7306;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
           <a-entity id="startButtonGroup" position="0.7 0.1 0.9" scale="1.5 1.5 1.5">
@@ -99,19 +99,33 @@
           </a-entity>
 
           <!-- Gravity control buttons -->
-          <a-entity id="gravityIncreaseButtonGroup" position="0.5 0.1 -0.9">
+          <a-entity id="gravityIncreaseButtonGroup" position="1.75 0.1 -0.9">
             <a-entity id="gravityIncreaseButton" onclick="increaseGravity()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <a-entity id="increaseGravityText" text="value: INCREASE; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5"  position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
 
-          <a-entity id="gravityDecreaseButtonGroup" position="-0.5 0.1 -0.9">
+          <a-entity id="gravityDecreaseButtonGroup" position="0.8 0.1 -0.9">
             <a-entity id="gravityDecreaseButton" onclick="decreaseGravity()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
             <a-entity id="decreaseGravityText" text="value: DECREASE; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
+          </a-entity>
+
+          <!-- Gravity control buttons -->
+          <a-entity id="powerIncreaseButtonGroup" position="-0.8 0.1 -0.9">
+            <a-entity id="powerIncreaseButton" onclick="increasePower()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
+            <a-entity id="increasePowerText" text="value: INCREASE; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5"  position="0 0 -0.4" rotation="-90 0 0"></a-entity>
+          </a-entity>
+
+          <a-entity id="powerDecreaseButtonGroup" position="-1.75 0.1 -0.9">
+            <a-entity id="powerDecreaseButton" onclick="decreasePower()" circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)"></a-entity>
+            <a-entity id="decreasePowerText" text="value: DECREASE; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" position="0 0 -0.4" rotation="-90 0 0"></a-entity>
           </a-entity>
         </a-entity>
 
         <a-entity id="controlStationUI" position="0 0 0.1" rotation="90 0 0">
-          <a-entity class="gravityStrengthText" text="value: 'Gravity: 1g'; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" position="0 0 -0.5" rotation="-90 0 0" scale="2 2 2"></a-entity>
+          <a-entity class="gravityLabel" position="1.05 0 -0.5" rotation="-90 0 0" scale="2 2 2" text="value: 'Gravity'; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60"></a-entity>
+          <a-entity class="gravityStrengthText" position="1.6 0 -0.5" rotation="-90 0 0" scale="2 2 2" text="color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60"></a-entity>
+          <a-entity class="powerLabel" position="-1.5 0 -0.5" rotation="-90 0 0" scale="2 2 2" text="value: Power:; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60"></a-entity>
+          <a-entity class="powerText" position="-0.99 0 -0.5" rotation="-90 0 0" scale="2 2 2" text="color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60"></a-entity>
         </a-entity>
       </a-entity>
 
@@ -121,7 +135,7 @@
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-      <a-box position="0 -0.5 -5" height="30" width="30" depth="1" rotation="-90 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box>
+      <a-box id="floor" position="0 -0.5 -5" height="30" width="30" depth="1" rotation="-90 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box>
 
       <!-- Lab Counters-->
 
