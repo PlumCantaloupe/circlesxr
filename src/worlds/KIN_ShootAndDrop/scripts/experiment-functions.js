@@ -4,6 +4,12 @@ const gravityMaxStrength = 3;
 const gravityMinStrength = 0;
 const gravityIncrementAmount = 0.5;
 
+// the shoot strength that controls ball2's initial velocity
+let currentShootStrength = 1;
+const shootStrengthMax = 3;
+const shootStrengthMin = 0;
+const shootStrengthIncrementAmount = 0.5;
+
 // to be called once the scene is loaded to perform setup tasks
 function setup () {
   // add collision events to both balls
@@ -34,15 +40,16 @@ function setup () {
 function startExperiment () {
   console.log('Starting experiment');
 
-  // get all the free fall objects
-  let freeFallObjects = document.querySelectorAll("[physics-object]");
-  console.log(freeFallObjects);
+  // get the balls
+  let ball1 = document.querySelector('#ball1');
+  let ball2 = document.querySelector('#ball2');
 
-  // loop through each free fall object
-  freeFallObjects.forEach(element => {
-    // enable physics on the object
-    element.setAttribute('dynamic-body', 'shape: box;');
-  });
+  // drop ball1
+  ball1.setAttribute('dynamic-body', 'shape: box;');
+
+  // shoot object2
+  ball2.setAttribute('dynamic-body', 'shape: sphere; radius: 10; offset: 0 -1 0;');
+  ball2.body.velocity.set(currentShootStrength, 0, 0);
 
   // get the collision indicators
   let leftIndicator = document.querySelector('#leftCollisionIndicator');
@@ -62,6 +69,9 @@ function resetExperiment () {
 
   // loop through each free fall object
   freeFallObjects.forEach(element => {
+    // remove velocity on the object
+    element.setAttribute('velocity', {x: 0, y: 0, z: 0});
+
     // disable physics on the object
     element.removeAttribute('dynamic-body');
 
