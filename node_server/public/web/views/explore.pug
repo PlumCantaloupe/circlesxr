@@ -51,6 +51,14 @@ block content
           a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") Women in Trades, Act 3: Work (In progress)
 
     div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Education - Kinematics</span>
+      ul(class="pure-menu-list")
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_FreeFall", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_FreeFall' class="pure-button") Kinematics lab - Freefall
+
+    div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
       ul(class="pure-menu-list")
         li
@@ -65,10 +73,6 @@ block content
           if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/Testbed", "' + userInfo.userType + '")')
           a(href='/rooms/explore/world/Testbed' class="pure-button") Research Room
-        li
-          if userCanGenMagicLinks
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_FreeFall", "' + userInfo.userType + '")')
-          a(href='/rooms/explore/world/KIN_FreeFall' class="pure-button") Kinematics lab - Freefall
 
   if userCanGenMagicLinks
     div(id="MagicLinksWrapper" class="gutter-bottom-doubled")
