@@ -48,7 +48,7 @@ function startExperiment () {
   ball1.setAttribute('dynamic-body', 'shape: box;');
 
   // shoot object2
-  ball2.setAttribute('dynamic-body', 'shape: sphere; radius: 10; offset: 0 -1 0;');
+  ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.1; offset: 0 -1 0;');
   ball2.body.velocity.set(currentShootStrength, 0, 0);
 
   // get the collision indicators
