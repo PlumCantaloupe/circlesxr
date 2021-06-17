@@ -71,17 +71,21 @@
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" position="0 -3 0" scale="12 12 12" text="value:SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
         
-        <!-- Mass -->
-        <a-entity class="massObjLabel" position="-3.2 -0.12 0" scale="4.5 4.5 4.5" text="value:Object mass; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-        <a-entity id="massleftObjText" position="-3.2 -0.8 0" scale="5 5 5" text="value:0.3kg; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <!-- Control panel -->
+        <a-entity class="controlLabel" position="0 4.8 0" text="value:Control; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 4.2 0" text="value:Panel; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
 
         <!-- Gravity -->
-        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" scale="4.5 4.5 4.5" text="value: Gravity; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-        <a-entity class="gravityStrengthText" position="0 -0.8 0" scale="5 5 5" text="color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
 
         <!-- Power -->
         <a-entity id="floorPowerLabel" position="3.2 -0.12 0" scale="4.5 4.5 4.5" text="value: Cannon power; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
         <a-entity id="floorPowerText" class="powerText" position="3.2 -0.8 0" scale="5 5 5" text="color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+
+        <!-- Back to hub -->
+        <a-entity class="backToLabel" position="0 -7.7 0" rotation="0 0 180" text="value:Back to; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 -7 0" rotation="0 0 180" text="value:Hub; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
       </a-entity>
 
       <!-- Control station -->
@@ -140,7 +144,6 @@
       <a-cylinder color="crimson" height="3" radius="1.5" material="color: #996206" geometry="" scale="0.8 0.0001 0.8" position="-1.940 0.009 -6.882"></a-cylinder>
 
       <!-- Lab Counters-->
-
       <a-entity gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0" static-body></a-entity>
       <a-entity gltf-model="#Beaker1-gltf" scale="0.5 0.5 0.5" position="-5.19169 0.45397 -9.71019" rotation="0 222.39 0"></a-entity>
@@ -156,6 +159,23 @@
       <a-entity gltf-model="#Book4-gltf" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
       <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
       <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity>
+
+
+      <!-- Portal to back to experiment Hub -->
+      <a-entity id="HubLink" class="interactive" position="0 1.5 5" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+      circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
+      geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+      material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+      link="href:/rooms/explore/world/KIN_Hub; visualAspectEnabled:false;">
+      </a-entity>
+
+      <!-- Checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+      <a-entity circles-checkpoint position="-3.5 0.05 -3"></a-entity>
+      <a-entity circles-checkpoint position="3.5 0.05 -3"></a-entity>
+      <a-entity circles-checkpoint position="-2.8 0.05 -10"></a-entity>
+      <a-entity circles-checkpoint position="2.8 0.05 -10"></a-entity>
+      <a-entity circles-checkpoint position="0 0.05 -12"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
