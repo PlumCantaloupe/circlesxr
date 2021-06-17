@@ -68,17 +68,25 @@
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" position="0 -3 0" text="value:FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
 
+        <!-- Control panel -->
+        <a-entity class="controlLabel" position="0 4.8 0" text="value:Control; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 4.2 0" text="value:Panel; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+
         <!-- Gravity -->
-        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
 
         <!-- Mass left object-->
-        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="massObjLabel" position="-3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massleftObjText" position="-3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
 
         <!-- Mass right object-->
-        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="4.5 4.5 4.5"></a-entity>
-        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" position="0 -1.25 0" scale="5 5 5"></a-entity>
+        <a-entity class="massObjLabel" position="3.2 -0.12 0" text="value:Object mass; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
+
+        <!-- Back to hub -->
+        <a-entity class="backToLabel" position="0 -7.7 0" rotation="0 0 180" text="value:Back to; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 -7 0" rotation="0 0 180" text="value:Hub; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
       </a-entity>
 
       <!-- Control station -->
@@ -180,6 +188,24 @@
       <a-entity id="Book3-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Book3.glb" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
       <a-entity id="Book4-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Book4.glb" position="-2.3532 -0.24596 -2.40105" rotation="0 122.57859069028834 0" scale="0.006 0.006 0.006"></a-entity>
       <a-entity id="Stickies-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Stickies.glb" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+
+      <!-- Portal to back to experiment Hub -->
+      <a-entity id="HubLink" class="interactive" position="0 1.5 5" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+            circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
+            geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+            material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+            link="href:/rooms/explore/world/KIN_Hub; visualAspectEnabled:false;">
+            
+      </a-entity>
+
+      <!-- Checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+      <a-entity circles-checkpoint position="-3.5 0.05 -1.7"></a-entity>
+      <a-entity circles-checkpoint position="3.5 0.05 -1.7"></a-entity>
+      <a-entity circles-checkpoint position="-2.8 0.05 -10"></a-entity>
+      <a-entity circles-checkpoint position="2.8 0.05 -10"></a-entity>
+      <a-entity circles-checkpoint position="0 0.05 -12"></a-entity>
+
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
