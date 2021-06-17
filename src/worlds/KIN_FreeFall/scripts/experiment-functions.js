@@ -1,7 +1,7 @@
 // the list of physics objects that can be used in the scene (and their properties)
 const PHYSICS_OBJECTS = {
   object1 = {name: "SoccerBall", mass: 0.3, assetId="", height: 4.83, handHeight: 5.55, mesh: "sphere"},
-  object2 = {name: "Bear", mass: 0.23, assetId="", height: 4.98, handHeight: 5.63, mesh: "box"},
+  object2 = {name: "Bear", mass: 0.23, assetId="", height: 4.98, handHeight: 6.5, mesh: "box"},
   object3 = {name: "Car", mass: 1300, assetId="", height: 3.94, handHeight: 6.01, mesh: "box"},
   object4 = {name: "TennisBall", mass: 0.06, assetId="", height: 4.03, handHeight: 4.8, mesh: "sphere"}
 };
@@ -97,10 +97,10 @@ function setNewObject (object, direction) {
   sceneObject.removeAttribute('geometry');
 
   // set gltf model to newObject
-  sceneObject.setAttribute('gltf-model', `/worlds/KIN_FreeFall/assets/models/${newObject.name}.glb`);
+  sceneObject.setAttribute('gltf-model', `/worlds/KIN_FreeFall/assets/models/experimentObjects/${newObject.name}.glb`);
 
   // set new model scale
-  sceneObject.setAttribute('scale', `${newObject.scale.x} ${newObject.scale.y} ${newObject.scale.z}`);
+  // sceneObject.setAttribute('scale', `${newObject.scale.x} ${newObject.scale.y} ${newObject.scale.z}`);
 
   // update model mass
   sceneObject.setAttribute('physics-object', `mass: ${newObject.mass}`);
