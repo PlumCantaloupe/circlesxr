@@ -17,6 +17,10 @@ block content
           if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/hub", "' + userInfo.userType + '")')
           a(href='/rooms/explore/world/hub' class="pure-button") The Fire
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_Hub", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_Hub' class="pure-button") Kinematics lab - Hub
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
@@ -55,8 +59,16 @@ block content
       ul(class="pure-menu-list")
         li
           if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_Hub", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_Hub' class="pure-button") Kinematics lab - Hub
+        li
+          if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_FreeFall", "' + userInfo.userType + '")')
           a(href='/rooms/explore/world/KIN_FreeFall' class="pure-button") Kinematics lab - Freefall
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_ShootAndDrop", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_ShootAndDrop' class="pure-button") Kinematics lab - Shoot and Drop
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
