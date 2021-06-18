@@ -21,7 +21,7 @@ let circles_header           =  fs.readFileSync('./src/webpack.worlds.parts/circ
 let circles_enter_ui         =  fs.readFileSync('./src/webpack.worlds.parts/circles_enter_ui.part.html', 'utf8');
 let circles_scene_properties =  fs.readFileSync('./src/webpack.worlds.parts/circles_scene_properties.part.html', 'utf8');
 let circles_assets           =  fs.readFileSync('./src/webpack.worlds.parts/circles_assets.part.html', 'utf8');
-let circles_avatar           =  fs.readFileSync('./src/webpack.worlds.parts/circles_avatar.part.html', 'utf8');
+let circles_avatar           =  fs.readFileSync('./src/webpack.worlds.parts/circles_avatar_manager.part.html', 'utf8');
 let circles_end_scripts      =  fs.readFileSync('./src/webpack.worlds.parts/circles_end_scripts.part.html', 'utf8');
 
 const nafAudioRegex   = new RegExp(/\{\{(\s+)?NAF_AUDIO(\s+)?\}\}/,   'gmi');
