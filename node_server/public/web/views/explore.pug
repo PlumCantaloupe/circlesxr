@@ -51,6 +51,14 @@ block content
           a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-button") Viola Desmond, Act 3: The Province House
 
     div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Education - Kinematics</span>
+      ul(class="pure-menu-list")
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_FreeFall", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_FreeFall' class="pure-button") Kinematics lab - Freefall
+
+    div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
       ul(class="pure-menu-list")
         li
