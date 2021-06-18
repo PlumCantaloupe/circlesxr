@@ -10,9 +10,11 @@
     <script src="/worlds/Testbed/scripts/research-selection-tasks.js"></script>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- source: https://www.artstation.com/artwork/oOGk4W -->
@@ -22,8 +24,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <a-entity id="research_manager" research-manager="experiment_script_url:/worlds/Testbed/scripts/experiment_script_EXAMPLE.json"></a-entity>
 

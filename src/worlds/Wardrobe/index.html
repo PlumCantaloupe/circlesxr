@@ -9,9 +9,11 @@
  
 </head>
   <body>
-    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
 
       <!-- assets -->
       <a-assets>
@@ -41,8 +43,8 @@
 
 
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- portal back to campfire -->
       <a-entity id="campfireLink" class="interactive" position="0.15 1.5 10.3" rotation="0 90 0" scale="1.0 1.0 1.0" visible="true" shadow
