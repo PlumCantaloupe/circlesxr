@@ -27,7 +27,7 @@ module.exports = {
           // replace:'9999'
           multiple: [
              { search: /'REPLACE_CIRCLES_WEBRTC_ENABLED_REPLACE'/, replace: (env.NAF_ADAPTER === 'socketio')?'false':'true', flags:'gmi'},
-             { search: /'REPLACE_CIRCLES_MIC_ENABLED_REPLACE'/, replace: (env.NAF_AUDIO == 'true')?'true':'false', flags:'gmi'}
+             { search: /'REPLACE_CIRCLES_MIC_ENABLED_REPLACE'/, replace: (env.NAF_AUDIO === true)?'true':'false', flags:'gmi'}
             ]
         }
       }
