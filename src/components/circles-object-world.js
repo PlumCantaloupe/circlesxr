@@ -29,7 +29,7 @@ schema: {
 
     //model change
     if ( (oldData.pickedup !== data.pickedup) && (data.pickedup !== '') ) {
-        if ( pickedUp ) {
+        if ( pickedUp === true ) {
             if ( curr_world !== world ) {
                 CONTEXT_AF.el.setAttribute('visible', true);
             }

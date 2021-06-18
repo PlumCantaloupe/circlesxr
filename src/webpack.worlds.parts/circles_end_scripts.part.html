@@ -1,25 +1,29 @@
 <script>
-
   // Prompt for audio.
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded');
-    const scene = document.querySelector('a-scene');
-    scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
-      console.log('adapter-ready');
-      const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
-      adapter.setClientId(clientId);
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        adapter.setLocalMediaStream(stream).then(() => {
-          // Note that networked-scene audio:true option has no effect with the janus adapter
-          console.log('!!!!!!!!!');
-          // adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
-          NAF.connection.adapter.enableMicrophone(false);
+  if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded');
+      const scene = document.querySelector('a-scene');
+      scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+        console.log('adapter-ready');
+        const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
+        adapter.setClientId(clientId);
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          adapter.setLocalMediaStream(stream).then(() => {
+            // Note that networked-scene audio:true option has no effect with the janus adapter
+            NAF.connection.adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          });
+        }).catch(err => {
+          console.warn("Microphone access not allowed. This client will not broadcast audio.");
         });
-      }).catch(err => {
-        console.warn("Microphone access not allowed. This client will not broadcast audio.");
       });
     });
-  });
+  }
+  else {
+    //disable HTML mic elements
+    document.querySelector('#button_microphone').style.display = 'none';
+    document.querySelector('#user-microphone-wrapper').style.display = 'none';
+  }
 
   //naf schemas
   NAF.schemas.add({
@@ -132,12 +136,12 @@
       'geometry',
       'material',
       'obj-model',
-      'circles-object-world',
-      'circles-interactive-object',
-      'circles-interactive-visible',
-      'circles-inspect-object',
+      //'circles-object-world',
+      //'circles-interactive-object',
+      //'circles-interactive-visible',
+      //'circles-inspect-object',
       'shadow',
-      'class'
+      //'class'
       // {
       //   selector: '.interactive',
       //   component: 'gltf-model',
@@ -167,6 +171,10 @@
     //I am not sure this is the best way to do this; but audio feedback is even worse ...
     document.querySelector('#loading-animation-enter').style.display='none';
     document.querySelector('#user-gesture-enter').style.display='block';
-    NAF.connection.adapter.enableMicrophone(false);
+    
+    //mic sometimes is on for some reason
+    if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+      NAF.connection.adapter.enableMicrophone(false);
+    }
   }
 </script>

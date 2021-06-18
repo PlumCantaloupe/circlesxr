@@ -7,8 +7,11 @@
     <circles-start-scripts/>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+    
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <!-- assets -->
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
@@ -35,12 +38,12 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- a mirror -->
       <a-entity geometry="primitive:plane; width:1; height:1" position="-3.228 1.822 1.052" rotation="0 90 0" scale="6.742 1.667 1.000" 
-                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256; color:#000; intensity:0.5;"></a-entity>
+                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256; color:#002920;"></a-entity>
 
       <!-- portal back to campfire -->
       <a-entity id="campfireLink" class="interactive" position="1.0 1.5 4.2" rotation="0 90 0" scale="0.5 0.5 0.5" visible="true"

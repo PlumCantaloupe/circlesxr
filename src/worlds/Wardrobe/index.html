@@ -9,9 +9,11 @@
  
 </head>
   <body>
-    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
 
       <!-- assets -->
       <a-assets>
@@ -41,8 +43,8 @@
 
 
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- portal back to campfire -->
       <a-entity id="campfireLink" class="interactive" position="0.15 1.5 10.3" rotation="0 90 0" scale="1.0 1.0 1.0" visible="true" shadow
@@ -56,7 +58,7 @@
         <a-entity circles-checkpoint circles-spawnpoint position="1.0 0.0 -1.0"></a-entity>
         
         <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="1.0 1.5 -2.5" rotation="0 0 0" scale="1.0 1.0 1.0" 
-                    circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000; intensity:0.8;"></a-entity>
+                    circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
 
       <!-- Body Shape Choices -->
         <a-entity id="Body_Hourglass" class="interactive body" position="-3.0 0.5 -5.0" rotation="0 40 0" scale="3 3 3" visible="true" shadow

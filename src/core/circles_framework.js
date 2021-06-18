@@ -60,6 +60,7 @@ const EVENTS = {
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
   OBJECT_OWNERSHIP_CHANGED  : 'OBJECT_OWNERSHIP_CHANGED',
   OBJECT_NETWORKED_ATTACHED : 'OBJECT_NETWORKED_ATTACHED',
+  OBJECT_NETWORKED_DETACHED : 'OBJECT_NETWORKED_DETACHED',
   WS_CONNECTED              : 'WS_CONNECTED',
   WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED'
 };
@@ -88,7 +89,7 @@ const getUUID = function() {
 const setupCirclesWebsocket = function() {
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
-      circlesWebsocket = NAF.connection.adapter.socket
+      circlesWebsocket = NAF.connection.adapter.socket;
       document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
     }
     else {
@@ -97,13 +98,13 @@ const setupCirclesWebsocket = function() {
         circlesWebsocket = socket;
         document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
       });
-
-      let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
-      rs_socket.on('connect', (userData) => {
-        circlesResearchWebsocket = rs_socket;
-        document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
-      });
     }
+
+    let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+    rs_socket.on('connect', (userData) => {
+      circlesResearchWebsocket = rs_socket;
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
+    });
   }
   else {
     console.warn('CIRCLES: web socket already set up. Use CIRCLES.getCirclesWebsocket() to find it');

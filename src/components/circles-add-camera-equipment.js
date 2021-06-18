@@ -29,7 +29,6 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
         console.log('Attached camera controls to rig');
-        console.log(rigElem);
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {

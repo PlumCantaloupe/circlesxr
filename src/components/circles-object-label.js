@@ -105,7 +105,8 @@ AFRAME.registerComponent('circles-object-label', {
 
     //create white bg for text legibility
     let bg = document.createElement('a-entity');
-    bg.setAttribute('class', 'interactive');
+    bg.classList.add('interactive');
+    bg.classList.add('label_bg');
     bg.setAttribute('circles-rounded-rectangle',  {width:CONTEXT_AF.LABEL_WIDTH, height:CONTEXT_AF.LABEL_HEIGHT, radius:CIRCLES.CONSTANTS.GUI.rounded_rectangle_radius});
     bg.setAttribute('position',  {x:0.0, y:0.0, z:0.0});
     bg.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
@@ -113,7 +114,7 @@ AFRAME.registerComponent('circles-object-label', {
 
         //want this clicked to also send message to manager (to trigger inspect). Users have asked for this.
         bg.addEventListener('click', (e) => {
-            CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, CONTEXT_AF.el.components['circles-inspect-object'], true );
+            CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
         });
 
         bg.addEventListener('mouseenter', (e) => {
