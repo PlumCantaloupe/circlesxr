@@ -19,18 +19,21 @@
         <img id='skyMap'           src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
 
         <!-- 360 -->
-        <img id='salon360'          src='/global/assets/textures/equirectangular/Salon_360.jpg' crossorigin="anonymous">
-        <img id='theatre360'        src='/global/assets/textures/equirectangular/Theatre_360.jpg' crossorigin="anonymous">
-        <img id='provinceHouse360'  src='/global/assets/textures/equirectangular/ProvinceHouse_360.jpg' crossorigin="anonymous">
+        <img id='link_1_360'        src='/global/images/WIT_1_Screen.jpg' crossorigin="anonymous">
+        <img id='link_2_360'        src='/global/images/WIT_2_Screen.jpg' crossorigin="anonymous">
+        <img id='link_3_360'        src='/global/images/WIT_3_Screen.jpg' crossorigin="anonymous">
 
         <a-asset-item id="enviro-gltf"    src="/worlds/hub/assets/models/hubenviro.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="treeline-gltf"  src="/worlds/hub/assets/models/Treeline.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="moon-gltf"      src="/worlds/hub/assets/models/moon.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="campfire-gltf"  src="/worlds/hub/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
 
-        <!-- TODO:https://github.com/aframevr/aframe/issues/2754 bug so can't use preload=auto :  -->
-        <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3"></audio>
-        <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3"></audio>
+        <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3" preload="true"></audio>
+
+        <!-- credit: Arctura @ https://freesound.org/people/Arctura/sounds/39829/ -->
+        <audio id="wilderness-snd" src="/worlds/hub/assets/audio/arctura_wilderness.mp3" preload="true"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -62,45 +65,43 @@
       </a-entity>
 
       <!-- links to desmond worlds -->
-      <a-entity id="salonLink" position="-1.7 1.5 1.5" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
+      <a-entity id="link_1" position="-0.559 1.7 4.134" rotation="0 56.215 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
                 circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"
                 geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#salon360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/rooms/explore/world/VD_1_Salon; visualAspectEnabled:false;"
+                material="src:#link_1_360; shader:flat;"
+                link="href:/rooms/explore/world/WIT_1_Kitchen; visualAspectEnabled:false;"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;">
-                <a-entity text="value:Viola Desmond's Salon\n1938; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+                <a-entity text="value:Growing Up; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       </a-entity>
+      <a-entity position="-1.011 0.8 4.123" rotation="0 146.215 0" text="value:How can we support women considering tech' careers?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-1.011 0.4 4.123" rotation="0 146.215 0" text="value:What cultural biases should we be aware of?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
 
-      <a-entity id="theatreLink" position="-1.7 1.5 0" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
+      <a-entity id="link_2" position="-1.7 1.7 0" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
                 circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"
                 geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#theatre360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/rooms/explore/world/VD_2_Theatre; visualAspectEnabled:false;"
+                material="src:#link_2_360; shader:flat;"
+                link="href:/rooms/explore/world/WIT_2_Lab; visualAspectEnabled:false;"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;">
-                <a-entity text="value:Roseland Theatre\n1946; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+                <a-entity text="value:In The Classroom; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       </a-entity>
+      <a-entity position="-2.309 0.8 0" rotation="0 90 0"  text="value:How can we make our tech' classrooms more inclusive?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-2.309 0.4 0" rotation="0 90 0"  text="value:What are some strategies for dealing with unbalanced group issues?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      
 
-      <a-entity id="provinceHouseLink" position="-1.7 1.5 -1.5" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
+      <a-entity id="link_3" position="-0.637 1.7 -3.730" rotation="0 -46.494 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
                 circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
                 geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#provinceHouse360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/rooms/explore/world/VD_3_ProvinceHouse; visualAspectEnabled:false;"
+                material="src:#link_3_360; shader:flat;"
+                link="href:/rooms/explore/world/WIT_3_Work; visualAspectEnabled:false;"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;">
-                <a-entity text="value:Nova Scotia Province House\n2010; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+                <a-entity text="value:On The Job; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       </a-entity>
+      <a-entity position="-0.884 0.8 -3.975" rotation="0 46.494 0"  text="value:What can we do to make women feel more welcome in tech' work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-0.884 0.4 -3.975" rotation="0 46.494 0"  text="value:What can we do when we see someone being excluded at work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
 
-      <!-- <a-entity id="costumeObjLink" position="-0.5 1.5 -3.5" rotation="0 0 0" scale="0.0001 0.0001 0.0001" visible="true" shadow
-                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
-                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#provinceHouse360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/rooms/explore/world/HH_CostumeObj_World; visualAspectEnabled:false;"
-                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
-                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;">
-                <a-entity text="value:Costume Object\n2010; align:center; width:5.0; shader:custom-sdf;" rotation="0 90 0" position="0 1 0"></a-entity>
-        </a-entity> -->
       <!-- environment -->
       <a-entity
         gltf-model="#enviro-gltf"
@@ -151,9 +152,10 @@
       <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
               material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
 
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+
       <!-- sounds -->
-      <!-- wilderness sounds from user https://freesound.org/people/Arctura/ here: https://freesound.org/people/Arctura/sounds/39829/ -->
-      <a-entity class="ambient-music" position="15 0 0" sound="src:#wilderness-snd; autoplay:false; loop:true; refDistance: 5.0; rolloffFactor: 1.0; volume: 0.1; distanceModel:inverse;" ></a-entity>
+      <a-entity position="0 0 10" circles-sound="type:ambient; src:#wilderness-snd; autoplay:true; loop:true; volume:2.0;" sound="refDistance:10; rolloffFactor:4.0;" ></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

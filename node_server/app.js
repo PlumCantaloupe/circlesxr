@@ -343,7 +343,7 @@ if (env.ENABLE_RESEARCH_MODE) {
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
             eData.and = {downloadURL:researchUtils.getDownloadLink()};
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
             newData.exp_id      = data.exp_id

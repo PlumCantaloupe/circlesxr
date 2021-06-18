@@ -12,10 +12,9 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.campfireElem = scene.querySelector('#campfire');     
         CONTEXT_AF.fireOn       = false; //at scene start is false    
 
-        CONTEXT_AF.salonLink    = scene.querySelector('#salonLink');
-        CONTEXT_AF.theatreLink  = scene.querySelector('#theatreLink');
-        CONTEXT_AF.phLink       = scene.querySelector('#provinceHouseLink'); 
-        CONTEXT_AF.costumeLink  = scene.querySelector('#costumeObjLink');
+        CONTEXT_AF.link_1       = scene.querySelector('#link_1');
+        CONTEXT_AF.link_2       = scene.querySelector('#link_2');
+        CONTEXT_AF.link_3       = scene.querySelector('#link_3'); 
 
         // CONTEXT_AF.salonLink.addEventListener('animationcomplete', function(event) {
 
@@ -81,17 +80,15 @@ AFRAME.registerComponent('campfire-interactive', {
         // CONTEXT_AF.phLink.setAttribute('visible', true);
 
         //raycaster interaction back on
-        CONTEXT_AF.salonLink.setAttribute('class', 'interactive');
-        CONTEXT_AF.theatreLink.setAttribute('class', 'interactive');
-        CONTEXT_AF.phLink.setAttribute('class', 'interactive');
-        CONTEXT_AF.costumeLink.setAttribute('class', 'interactive');
+        CONTEXT_AF.link_1.setAttribute('class', 'interactive');
+        CONTEXT_AF.link_2.setAttribute('class', 'interactive');
+        CONTEXT_AF.link_3.setAttribute('class', 'interactive');
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
 
         //animate
-        CONTEXT_AF.salonLink.emit('startFireAnim',{}, false);
-        CONTEXT_AF.theatreLink.emit('startFireAnim',{}, false);
-        CONTEXT_AF.phLink.emit('startFireAnim',{}, false);
-        CONTEXT_AF.costumeLink.emit('startFireAnim',{}, false);
+        CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
+        CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
+        CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
 
         CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
     },
@@ -110,17 +107,15 @@ AFRAME.registerComponent('campfire-interactive', {
 
         //don't want raycaster accessing when not visible
         //TODO: definiotely need to make a portal link component ...
-        CONTEXT_AF.salonLink.removeAttribute("class");
-        CONTEXT_AF.theatreLink.removeAttribute("class");
-        CONTEXT_AF.phLink.removeAttribute("class");
-        CONTEXT_AF.costumeLink.removeAttribute("class");
+        CONTEXT_AF.link_1.removeAttribute("class");
+        CONTEXT_AF.link_2.removeAttribute("class");
+        CONTEXT_AF.link_3.removeAttribute("class");
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
         //animate
-        CONTEXT_AF.salonLink.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.theatreLink.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.phLink.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.costumeLink.emit('stopFireAnim',{}, false);
+        CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
+        CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
+        CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
 
         CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
     },
