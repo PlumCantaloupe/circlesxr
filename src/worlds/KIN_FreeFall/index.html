@@ -13,8 +13,11 @@
   </head>
 
   <body onload="setup()">
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties physics="debug: true; gravity: -9.8;" background="color:#0476D9;" shadow="type: pcfsoft"  fog="type: linear; color: #0482d1; far: 30; near: 0">
+    <a-scene circles_scene_properties physics="debug: true; gravity: -9.8;" background="color:#0476D9;" shadow="type: pcfsoft"  fog="type: linear; color: #0482d1; far: 30; near: 0">
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -53,8 +56,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- Experiment Objects -->
       <a-entity gltf-model="#SoccerBall-gltf" id="leftObject" physics-object="initialPosition: -1.869 4.83 -6.719; mass: 0.43;" scale="1 1 1"></a-entity>

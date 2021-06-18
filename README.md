@@ -160,11 +160,11 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
   <circles-start-scripts/>
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-  <a-scene circles_properties>
+  <a-scene circles_scene_properties>
 
   <circles-assets/>
 
-  <circles-avatar/>
+  <circles-manager-avatar/>
 
   <circles-end-scripts/>
   ```
@@ -177,17 +177,19 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
     <circles-start-scripts/>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <a-assets>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
     </a-scene>
 

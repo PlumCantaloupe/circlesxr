@@ -10,8 +10,11 @@
   </head>
   <body>
 
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- assets -->
         <img id='silhouettesMap'    src='/worlds/hub/assets/textures/Silhouettes.png' crossorigin="anonymous">
@@ -41,8 +44,8 @@
 
       <a-entity id="GameManager" campfire-interactive></a-entity>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- fire FX -->
       <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">

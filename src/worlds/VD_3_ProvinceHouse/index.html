@@ -7,8 +7,11 @@
     <circles-start-scripts/>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+    
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <!-- assets -->
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
@@ -33,8 +36,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- environment -->
       <a-entity gltf-model="#room" scale="0.01 0.01 0.01" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" shadow></a-entity>

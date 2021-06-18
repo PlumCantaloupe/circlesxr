@@ -7,8 +7,11 @@
     <circles-start-scripts/>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+    
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <!-- assets -->
       <a-assets timeout="10000">
           <img id='darkMirrorMap' src='/worlds/VD_2_Theatre/assets/textures/DarkMirrorStill.jpg' crossorigin="anonymous">
@@ -37,8 +40,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- environment -->
       <a-entity gltf-model="#theatre-model" scale="0.01 0.01 0.01" rotation="0.0 -90 0.0" shadow="receive:true; cast:true;"></a-entity>

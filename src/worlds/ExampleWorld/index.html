@@ -10,8 +10,11 @@
   </head>
   <body>
 
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -41,8 +44,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- island 1, with some spawnpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-9.404 0.592 9.588"></a-entity>

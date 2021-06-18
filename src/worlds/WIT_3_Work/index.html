@@ -9,9 +9,11 @@
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties>
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/egg-mountain-at-afternoon/ -->
@@ -58,8 +60,8 @@
         <circles-assets/>
       </a-assets>
 
-      <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <!-- sounds -->
       <a-entity position="-4.308 1.0 11.468" circles-sound="type:ambient; src:#Amb_construction-snd; autoplay:true; loop:true; volume:1.0;" sound="refDistance:10; rolloffFactor:4.0;" ></a-entity>
