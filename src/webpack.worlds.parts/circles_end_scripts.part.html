@@ -18,9 +18,11 @@
         });
       });
     });
-
+  }
+  else {
     //disable HTML mic elements
-    //???
+    document.querySelector('#button_microphone').style.display = 'none';
+    document.querySelector('#user-microphone-wrapper').style.display = 'none';
   }
 
   //naf schemas
@@ -169,6 +171,10 @@
     //I am not sure this is the best way to do this; but audio feedback is even worse ...
     document.querySelector('#loading-animation-enter').style.display='none';
     document.querySelector('#user-gesture-enter').style.display='block';
-    NAF.connection.adapter.enableMicrophone(false);
+    
+    //mic sometimes is on for some reason
+    if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+      NAF.connection.adapter.enableMicrophone(false);
+    }
   }
 </script>
