@@ -45,9 +45,6 @@ module.exports = {
   performance: {
     hints: false
   },
-  performance: {
-    hints: false
-  },
   plugins: [
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: ['node_server/public/worlds'],

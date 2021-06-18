@@ -1,23 +1,27 @@
 <script>
-
   // Prompt for audio.
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded');
-    const scene = document.querySelector('a-scene');
-    scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
-      console.log('adapter-ready');
-      const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
-      adapter.setClientId(clientId);
-      navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        adapter.setLocalMediaStream(stream).then(() => {
-          // Note that networked-scene audio:true option has no effect with the janus adapter
-          NAF.connection.adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+  if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded');
+      const scene = document.querySelector('a-scene');
+      scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+        console.log('adapter-ready');
+        const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
+        adapter.setClientId(clientId);
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          adapter.setLocalMediaStream(stream).then(() => {
+            // Note that networked-scene audio:true option has no effect with the janus adapter
+            NAF.connection.adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          });
+        }).catch(err => {
+          console.warn("Microphone access not allowed. This client will not broadcast audio.");
         });
-      }).catch(err => {
-        console.warn("Microphone access not allowed. This client will not broadcast audio.");
       });
     });
-  });
+
+    //disable HTML mic elements
+    //???
+  }
 
   //naf schemas
   NAF.schemas.add({
