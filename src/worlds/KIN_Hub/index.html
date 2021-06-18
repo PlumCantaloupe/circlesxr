@@ -5,12 +5,14 @@
 
     <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
-    
   </head>
 
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_properties physics="debug: true; gravity: -9.8;" background="color:#D1D4D5;" shadow="type: pcfsoft"  fog="type: linear; color: #D1D4D5; far: 30; near: 0">
+    <a-scene circles_scene_properties background="color:#D1D4D5;" fog="type:linear; color:#D1D4D5; far:30; near:0">
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -53,7 +55,7 @@
       </a-assets>
 
       <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-avatar/>
+      <circles-manager-avatar/>
 
       <!-- Free fall display -->
       <a-entity id="freeFallDisplay">
@@ -127,6 +129,8 @@
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box position="0 -0.5 -5" height="60" width="60" depth="1" rotation="-90 0 0" color="#fff" static-body="shape: plane;" circles-shadow></a-box>
 
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
