@@ -3,8 +3,14 @@
 #just a dumb way to have some folders/files in here that we can ignore by inclding 'IGNORE_THIS' somewhere in the file/folder name
 *IGNORE_THIS*
 
-# Ignore generated Browserify bundles from the repo
+# Ignore generated Webpack bundles from the repo
 *_bundle.js
+*_bundle.js.map
+*_bundle.js.LICENSE.txt
+
+*_bundle.min.js
+*_bundle.min.js.map
+*_bundle.min.js.LICENSE.txt
 
 # Ignore main environment file
 .env
