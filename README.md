@@ -1,8 +1,8 @@
 # CIRCLES VR Learning Framework
 
-![Screenshot of 3D avatars around the campfire in CIRCLES](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_MultiPlatform.jpg?raw=true)
+![Screenshot of 3D avatars around the campfire in CIRCLES](node_server/public/global/images/Circles_MultiPlatform.jpg?raw=true)
 
-![Screenshot of CIRCLES' world that highlights the challenges women face in the trades](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_WomenInTrades.jpg?raw=true)
+![Screenshot of CIRCLES' world that highlights the challenges women face in the trades](node_server/public/global/images/Circles_WomenInTrades.jpg?raw=true)
 
 ## Table of Contents
 ##### *[back to top](#circles-vr-learning-framework)*
@@ -17,7 +17,7 @@
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
 - [Circles Components](#circles-components)
-- [Learning More About AFrame and Javascript Development](#learning-more-about-aFrame-and-javascript-development)
+- [Learning More About AFrame and Javascript Development](#learning-more-about-aframe-and-javascript-development)
 - [Contributing to Circles](#contributing-to-circles)
 - [Early Contributors](#early-contributors)
 
@@ -80,7 +80,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 In navigating within the 3D spaces of Circles all interactions aim toward single-click as an exploration into how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD). This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework is meant for use within classrooms and museums it is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired to reduce interactions to a form that *could* be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
 
-![Illustration of the three different control schemes for Circles. From left to right, Desktop with mouse, Mobile with finger tap, and raycast with HMD VR controller](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/public/global/images/Circles_PlatformInteractions.jpg?raw=true)
+![Illustration of the three different control schemes for Circles. From left to right, Desktop with mouse, Mobile with finger tap, and raycast with HMD VR controller](node_server/public/global/images/Circles_PlatformInteractions.jpg?raw=true)
 
 ### Interaction Controls
 
@@ -343,7 +343,7 @@ This is a core component in our framework that explores learning around tools an
 
 ----------------
 
-## Learning More About Aframe and Javascript Development
+## Learning More About AFrame and Javascript Development
 ##### *[back to top](#circles-vr-learning-framework)*
 
 <br>
