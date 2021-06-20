@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+  </head>
+
+  <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties background="color:#D1D4D5;" fog="type:linear; color:#D1D4D5; far:30; near:0">
+
+      <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
+      <!-- assets -->
+      <a-assets timeout="10000">
+
+        <!-- Images -->
+        <img id='freeFall360' src='/worlds/KIN_Hub/assets/images/freeFallImage.png' crossorigin="anonymous">
+        <img id='shootDrop360' src='/worlds/KIN_Hub/assets/images/shootDropImage.png' crossorigin="anonymous">
+
+        <!-- Environment free fall -->
+        <a-asset-item id="Counter-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Counter.glb"></a-asset-item>
+        <a-asset-item id="Beaker1-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Beaker_Group1.glb"></a-asset-item>
+        <a-asset-item id="Beaker2-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Beaker_Group2.glb"></a-asset-item>
+        <a-asset-item id="Beaker3-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Beaker_Group3.glb"></a-asset-item>
+        <a-asset-item id="Beaker4-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Beaker_Group4.glb"></a-asset-item>
+        <a-asset-item id="Trolley-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Trolley.glb"></a-asset-item>
+        <a-asset-item id="Locker-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Locker.glb"></a-asset-item>
+        <a-asset-item id="Book1-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Book1.glb"></a-asset-item>
+        <a-asset-item id="Book2-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Book2.glb"></a-asset-item>
+        <a-asset-item id="Book3-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Book3.glb"></a-asset-item>
+        <a-asset-item id="Book4-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Book4.glb"></a-asset-item>
+        <a-asset-item id="Stickies-gltf-freefall" src="/worlds/KIN_Hub/assets/models/freefall/Stickies.glb"></a-asset-item>
+
+        <!-- Environment shoot and drop -->
+        <a-asset-item id="Counter-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Counter.glb"></a-asset-item>
+        <a-asset-item id="Beaker1-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Beaker_Group1.glb"></a-asset-item>
+        <a-asset-item id="Beaker2-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Beaker_Group2.glb"></a-asset-item>
+        <a-asset-item id="Beaker3-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Beaker_Group3.glb"></a-asset-item>
+        <a-asset-item id="Beaker4-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Beaker_Group4.glb"></a-asset-item>
+        <a-asset-item id="Trolley-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Trolley.glb"></a-asset-item>
+        <a-asset-item id="Locker-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Locker.glb"></a-asset-item>
+        <a-asset-item id="Book1-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Book1.glb"></a-asset-item>
+        <a-asset-item id="Book2-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Book2.glb"></a-asset-item>
+        <a-asset-item id="Book3-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Book3.glb"></a-asset-item>
+        <a-asset-item id="Book4-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Book4.glb"></a-asset-item>
+        <a-asset-item id="Stickies-gltf-shootAndDrop" src="/worlds/KIN_Hub/assets/models/shootanddrop/Stickies.glb"></a-asset-item>
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!-- Free fall display -->
+      <a-entity id="freeFallDisplay">
+        <!-- Ground texts -->
+        <a-entity id="groundTextFreeFall" position="0 0 -8" rotation="-90 0 0">
+          <a-entity id="FreeFall" position="0 -3 0" text="value:FREE FALL; color: #D1D4D5; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+        </a-entity>
+
+        <!-- Links -->
+        <!-- Portal to Free Fall -->
+        <a-entity id="FreeFallLink" class="interactive" position="0 2.5 -6.2" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+                  circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
+                  geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+                  material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+                  link="href:/rooms/explore/world/KIN_FreeFall; visualAspectEnabled:false;">
+                  <a-entity text="value:Click me to be teleported; align:center; width:5.0;" rotation="0 0 0" position="0 1 0"></a-entity>
+        </a-entity>
+
+        <!-- Lab Counters-->
+        <a-entity gltf-model="#Counter-gltf-freefall" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
+        <a-entity gltf-model="#Counter-gltf-freefall" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0" static-body="shape: box;offset: -1 0 0;"></a-entity>
+        <a-entity gltf-model="#Beaker1-gltf-freefall" scale="0.5 0.5 0.5" position="-5.19169 0.45397 -9.71019" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker2-gltf-freefall" scale="0.5 0.5 0.5" position="-6.30783 0.46012 -6.56721" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker3-gltf-freefall" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker4-gltf-freefall" scale="0.5 0.5 0.5" position="5.2437 0.46012 -6.57949" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker4-gltf-freefall" scale="0.3 0.3 0.3" position="-4.81186 0.6212 -4.79106" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Trolley-gltf-freefall" scale="0.29061 0.29061 0.29061" position="-4.70786 0.658 -4.07963" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Locker-gltf-freefall" scale="0.3 0.3 0.3" position="3.81684 -0.03724 -10.23056" rotation="0 -40 0"></a-entity>
+        <a-entity gltf-model="#Book1-gltf-freefall" position="1.03344 -0.44939 -6.9434" rotation="" scale="0.01 0.01 0.01"></a-entity>
+        <a-entity gltf-model="#Book3-gltf-freefall" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
+        <!-- <a-entity gltf-model="#Book4-gltf" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity> -->
+        <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+      </a-entity>
+      <!-- End Free Fall Display-->
+
+      <!-- Shoot and drop display -->
+      <a-entity id="shootDropDisplay" position="0 0 2" rotation="0 270 0">
+        <!-- Ground texts -->
+        <a-entity id="groundTextShootDrop" position="0 0 -8" rotation="-90 0 0">
+          <a-entity id="ShootDrop" position="0 -3 0" text="value:SHOOT AND DROP; color: #D1D4D5; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+        </a-entity>
+
+        <!-- Links -->
+        <!-- Portal to Free Fall -->
+        <a-entity id="ShootDropLink" class="interactive" position="0 2.5 -6.2" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+                  circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
+                  geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
+                  material="src:#shootDrop360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+                  link="href:/rooms/explore/world/KIN_ShootAndDrop; visualAspectEnabled:false;">
+                  <a-entity text="value:Click me to be teleported; align:center; width:5.0;" rotation="0 0 0" position="0 1 0"></a-entity>
+        </a-entity>
+
+        <!-- Lab Counters-->
+        <a-entity gltf-model="#Counter-gltf-shootAndDrop" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
+        <a-entity gltf-model="#Counter-gltf-shootAndDrop" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0" static-body="shape: box;offset: -1 0 0;"></a-entity>
+        <a-entity gltf-model="#Beaker1-gltf-shootAndDrop" scale="0.5 0.5 0.5" position="-5.19169 0.45397 -9.71019" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker2-gltf-shootAndDrop" scale="0.5 0.5 0.5" position="-6.30783 0.46012 -6.56721" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker3-gltf-shootAndDrop" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker4-gltf-shootAndDrop" scale="0.5 0.5 0.5" position="5.2437 0.46012 -6.57949" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Beaker4-gltf-shootAndDrop" scale="0.3 0.3 0.3" position="-4.81186 0.6212 -4.79106" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Trolley-gltf-shootAndDrop" scale="0.29061 0.29061 0.29061" position="-4.70786 0.658 -4.07963" rotation="0 222.39 0"></a-entity>
+        <a-entity gltf-model="#Locker-gltf-shootAndDrop" scale="0.3 0.3 0.3" position="3.81684 -0.03724 -10.23056" rotation="0 -40 0"></a-entity>
+        <a-entity gltf-model="#Book1-gltf-shootAndDrop" position="1.03344 -0.44939 -6.9434" rotation="" scale="0.01 0.01 0.01"></a-entity>
+        <a-entity gltf-model="#Book3-gltf-shootAndDrop" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
+        <!-- <a-entity gltf-model="#Book4-gltf" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity> -->
+        <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+      </a-entity>
+      <!-- End shoot and drop Display-->
+
+      <!-- Floor -->
+      <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
+      <a-box position="0 -0.5 -5" height="60" width="60" depth="1" rotation="-90 0 0" color="#fff" static-body="shape: plane;" circles-shadow></a-box>
+
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
