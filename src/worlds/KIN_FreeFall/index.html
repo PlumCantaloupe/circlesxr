@@ -52,6 +52,9 @@
         <img id="Car-img" src="/worlds/KIN_FreeFall/assets/images/car_icon.png">
         <img id="Arrow-img" src="/worlds/KIN_FreeFall/assets/images/arrow_icon.png">
 
+        <!-- Hub image -->
+        <img id='hub360' src='/worlds/KIN_ShootAndDrop/assets/images/hubImage.png' crossorigin="anonymous">
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -197,7 +200,7 @@
       <a-entity id="HubLink" class="interactive" position="0 1.5 5" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
             circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-            material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+            material="src:#hub360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
             link="href:/rooms/explore/world/KIN_Hub; visualAspectEnabled:false;">
             
       </a-entity>

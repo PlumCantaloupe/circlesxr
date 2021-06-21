@@ -8,10 +8,14 @@ const gravityMinStrength = 0;
 const gravityIncrementAmount = 0.5;
 
 // the shoot strength that controls ball2's initial velocity
-let currentPower = 2;
-const powerMax = 5;
-const powerMin = 0.5;
-const powerIncrementAmount = 0.5;
+let currentAngle = 0;
+const angleMax = 60;
+const angleMin = 0;
+const angleIncrementAmount = 30;
+let forceToApply = {
+  x = 1,
+  y = 0
+}
 
 // to be called once the scene is loaded to perform setup tasks
 function setup () {
@@ -44,8 +48,8 @@ function setup () {
   // set the starting gravity
   setGravity(currentGravityStrength);
 
-  // set the starting power
-  updatePowerTexts();
+  // set the starting angle
+  updateAngleTexts();
 }
 
 // called when the start button is pressed
@@ -64,7 +68,8 @@ function startExperiment () {
 
     // shoot object2
     ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
-    ball2.body.velocity.set(currentPower * 2, 0, 0);
+    console.log(forceToApply.x);
+    ball2.body.velocity.set(forceToApply.x * 3, forceToApply.y * 3, 0);
 
     // get the collision indicators
     let leftIndicator = document.querySelector('#leftCollisionIndicator');
@@ -94,6 +99,11 @@ function resetExperiment () {
     // reset the position of the object
     element.emit('resetTransform', {});
   });
+
+  // reset nozzle to 0 degrees
+  currentAngle = 0;
+  updateAngleTexts();
+  rotateNozzle();
 
   // get the collision indicators
   let leftIndicator = document.querySelector('#leftCollisionIndicator');
@@ -128,24 +138,30 @@ function decreaseGravity () {
   }
 }
 
-// increases the power of the cannon (initial ball velocity)
-function increasePower () {
-  // ensure the power is not currently at max value
-  if (currentPower < powerMax) {
-    // increase the power
-    currentPower += powerIncrementAmount;
-    console.log(`Increasing power to ${currentPower}`);
-    updatePowerTexts();
+// increases the angle of the cannon (initial ball velocity)
+function increaseAngle () {
+  // ensure the angle is not currently at max value
+  if (currentAngle < angleMax) {
+    // increase the angle
+    currentAngle += angleIncrementAmount;
+    console.log(`Increasing angle to ${currentAngle} degrees`);
+    updateAngleTexts();
+
+    // rotate the cannon nozzle
+    rotateNozzle();
   }
 }
 
-function decreasePower () {
-  // ensure the power is not currently at min value
-  if (currentPower > powerMin) {
-    // decrease the power
-    currentPower -= powerIncrementAmount;
-    console.log(`Decreasing power to ${currentPower}`);
-    updatePowerTexts();
+function decreaseAngle () {
+  // ensure the angle is not currently at min value
+  if (currentAngle > angleMin) {
+    // decrease the angle
+    currentAngle -= angleIncrementAmount;
+    console.log(`Decreasing angle to ${currentAngle} degrees`);
+    updateAngleTexts();
+
+    // rotate the cannon nozzle
+    rotateNozzle();
   }
 }
 
@@ -164,11 +180,39 @@ function setGravity (gMultiplier) {
   });
 }
 
-// updates all texts with class 'powerText' to show the current power
-function updatePowerTexts () {
-  // update the power texts
-  let powerTexts = document.querySelectorAll('.powerText');
-  powerTexts.forEach(text => {
-    AFRAME.utils.entity.setComponentProperty(text, 'text', {value: currentPower});
+// updates all texts with class 'angleText' to show the current angle
+function updateAngleTexts () {
+  // update the angle texts
+  let angleTexts = document.querySelectorAll('.angleText');
+  angleTexts.forEach(text => {
+    AFRAME.utils.entity.setComponentProperty(text, 'text', {value: currentAngle + ' deg'});
   });
+}
+
+// rotates the cannon's nozzle when the angle is either increased or decreased
+function rotateNozzle() {
+  let cannonNozzle = document.querySelector('#cannonNozzle');
+  cannonNozzle.setAttribute('rotation', `-${currentAngle} 90 0`);
+
+  // Update the ball's position as well as set the force to apply to it
+  let cannonBall = document.querySelector('#ball2');
+  switch(currentAngle) {
+    case 0:
+      cannonBall.setAttribute('position', `-0.98 1.55 -6.98`);
+      forceToApply.x = 1;
+      forceToApply.y = 0;
+      break;
+    
+    case 30:
+      cannonBall.setAttribute('position', `-1.0 1.77 -6.98`);
+      forceToApply.x = 1 / 2;
+      forceToApply.y = 1 / 2;
+      break;
+
+    case 60:
+      cannonBall.setAttribute('position', `-1.17 1.94 -6.98`);
+      forceToApply.x = Math.sqrt(3) / 2;
+      forceToApply.y = 1 / 2;
+      break;
+  }
 }
