@@ -3,6 +3,12 @@
 const CONSTANTS = require('./circles_constants');
 const RESEARCH  = require('./circles_research');
 
+let circlesWebsocket = null;
+let circlesResearchWebsocket = null;
+let warningLogsEnabled = true;
+let basicLogsEnabled = true;
+let errorLogsEnabled = true;
+
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
   MODE_BOUNDINGBOX  : 1,
@@ -54,7 +60,9 @@ const EVENTS = {
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
   OBJECT_OWNERSHIP_CHANGED  : 'OBJECT_OWNERSHIP_CHANGED',
   OBJECT_NETWORKED_ATTACHED : 'OBJECT_NETWORKED_ATTACHED',
-  NAF_CONNECTED             : 'NAF_CONNECTED'
+  OBJECT_NETWORKED_DETACHED : 'OBJECT_NETWORKED_DETACHED',
+  WS_CONNECTED              : 'WS_CONNECTED',
+  WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED'
 };
 
 //!!DEPRE 8 color
@@ -76,7 +84,80 @@ const getUUID = function() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
-}; 
+};
+
+const setupCirclesWebsocket = function() {
+  if (!circlesWebsocket) {
+    if (NAF.connection.adapter.socket) {
+      circlesWebsocket = NAF.connection.adapter.socket;
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
+    }
+    else {
+      let socket = io();
+      socket.on('connect', (userData) => {
+        circlesWebsocket = socket;
+        document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
+      });
+    }
+
+    let rs_socket = io(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+    rs_socket.on('connect', (userData) => {
+      circlesResearchWebsocket = rs_socket;
+      document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED);
+    });
+  }
+  else {
+    console.warn('CIRCLES: web socket already set up. Use CIRCLES.getCirclesWebsocket() to find it');
+  }
+};
+
+const getCirclesWebsocket = function() {
+  if ( !circlesWebsocket ) {
+    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_CONNECTED to flag ready');
+  }
+  return circlesWebsocket;
+};
+
+const getCirclesResearchWebsocket = function() {
+  if ( !circlesResearchWebsocket ) {
+    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_RESEARCH_CONNECTED to flag ready');
+  }
+  return circlesResearchWebsocket;
+};
+
+const getCirclesRoom = function() {
+  return document.querySelector('a-scene').components['networked-scene'].data.room;
+}
+
+//CIRCLES.log(text);
+const log = function(text) {
+  if (basicLogsEnabled === true) {
+    console.log(text);
+  }
+}
+const enableLogs = function(enable) {
+  basicLogsEnabled = enabled;
+}
+
+//CIRCLES.warn(text);
+const warn = function(text) {
+  if (warningLogsEnabled === true) {
+    console.warn(text);
+  }
+}
+const enableWarning = function(enable) {
+  warningLogsEnabled = enabled;
+}
+
+//CIRCLES.error(text);
+const error = function(text) {
+  if (errorLogsEnabled === true) {
+    console.error(text);
+  }
+}
+const enableErrors = function(enable) {
+  errorLogsEnabled = enabled;
+}
 
 module.exports = {
   CONSTANTS,
@@ -88,5 +169,15 @@ module.exports = {
   USER_TYPE,
   EVENTS,
   COLOR_PALETTE,
-  getUUID
+  getUUID,
+  setupCirclesWebsocket,
+  getCirclesWebsocket,
+  getCirclesResearchWebsocket,
+  getCirclesRoom,
+  log,
+  enableLogs,
+  warn,
+  enableWarning,
+  error,
+  enableErrors
 };

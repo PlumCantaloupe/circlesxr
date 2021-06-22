@@ -1,53 +1,23 @@
-    <!-- html to get appropriate user interactions to trigger permission and user choices. Turning off for now until we figure out permissions with link traversal -->
-    <!-- <div id="EnterCircles-UI" class="overlayCover" >
-        <div id="Permissions" class="overlay">
-            <img class="logo" src="/global/assets/textures/logos/circles_logo.svg" alt="Circles logo" />
-            <div class="suboverlay">
-            <p class="title">Permissions</p>
-                
-            <div class="grid2col">
-                <span class="label">Microphone</span>
-                <div class="onoffswitch">
-                <input type="checkbox" name="onoffswitch_mic" class="onoffswitch-checkbox" id="switch_mic" autocomplete="off">
-                <label class="onoffswitch-label" for="switch_mic">
-                    <span class="onoffswitch-inner"></span>
-                    <span class="onoffswitch-switch"></span>
-                </label>
-                </div>
-            </div>
+renderer="  antialias: true;
+            colorManagement: true;
+            sortObjects: false;
+            foveationLevel: 3;
+            highRefreshRate: true;
+            physicallyCorrectLights: true;
+            logarithmicDepthBuffer: false;
+            precision: high;"
 
-            <input id="EnterCircles" type="submit" value="Enter Circles">
-            </div>
-        </div>
-    </div> -->
-
-<!-- <a-scene    renderer="  antialias:true; 
-                        gammaOutput: true;
-                        sortObjects: false;
-                        physicallyCorrectLights: true;"  -->
-
-<a-scene    renderer="  antialias: true;
-                        colorManagement: true;
-                        sortObjects: false;
-                        foveationLevel: 3;
-                        highRefreshRate: true;
-                        physicallyCorrectLights: true;
-                        logarithmicDepthBuffer: false;
-                        precision: high;"
-
-
-            networked-scene="   room: __ROOM_NAME__;
-                                connectOnLoad: true;
-                                onConnect: onConnect;
-                                audio: {{ NAF_AUDIO }};
-                                debug: false;
-                                adapter: {{ NAF_ADAPTER }};
-                                serverURL: {{ NAF_SERVER }};"
-                                
-            shadow="autoUpdate:false; type:basic;"
-            vr-mode-ui="enabled: true"
-            circles-enter-ui
-            circles-platform-scene-shadows>
-                                <!-- adapter: wsEasyRTC;"> -->
-    <!-- our "game manager" object -->
-    <a-entity id="circles-Manager" circles-manager></a-entity>
+networked-scene="   room: __ROOM_NAME__;
+                    connectOnLoad: true;
+                    onConnect: onConnect;
+                    audio: {{ NAF_AUDIO }};
+                    debug: false;
+                    adapter: {{ NAF_ADAPTER }};
+                    serverURL: {{ NAF_SERVER }}"
+                    
+shadow="autoUpdate:false; type:basic;"
+vr-mode-ui="enabled:true;"
+loading-screen="enabled:false;"
+device-orientation-permission-ui="enabled:true;"
+circles-enter-ui
+circles-platform-scene-shadows

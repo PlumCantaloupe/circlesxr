@@ -4,13 +4,13 @@
 AFRAME.registerComponent('circles-add-camera-equipment', {
   schema: {},
   init: function() {
-    let Context_AF = this;
+    const CONTEXT_AF = this;
 
     //only want to attach to 'this' player aka 'player1'
-    // if ( Context_AF.el.getAttribute('id') === CIRCLES.CONSTANTS.PRIMARY_USER_ID ) {
-      Context_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
+    // if ( CONTEXT_AF.el.getAttribute('id') === CIRCLES.CONSTANTS.PRIMARY_USER_ID ) {
+      CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
   
-        let rigElem = Context_AF.el;
+        let rigElem = CONTEXT_AF.el;
         //rigElem.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID);
         const avatarCam = rigElem.querySelector('.avatar');
 
@@ -22,9 +22,12 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         //set rig
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
-        rigElem.setAttribute('circles-teleport',{});
-        rigElem.setAttribute('circles-snap-turning',{});
-        rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
+        rigElem.setAttribute('circles-snap-turning',{enabled:true});
+        //rigElem.setAttribute('circles-teleport',{});
+        //rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
+        rigElem.setAttribute('movement-controls',{controls:'gamepad,keyboard,checkpoint', constrainToNavMesh:true, speed:0.2});
+        rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
+        rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
         console.log('Attached camera controls to rig');
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
@@ -66,6 +69,33 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           //modify cursor down and up events that laser-controls is setting 
           //look to laser-controls https://github.com/aframevr/aframe/blob/master/src/components/laser-controls.js
           //cursor: {downEvents: ['trackpaddown', 'triggerdown'], upEvents: ['trackpadup', 'triggerup']},
+
+          //advanced features
+          //we want 'gamepade movement-controls' as an "advanced" feature only triggered when the user clicks down on joystick as a new Vr doing this can make themselves nauseous
+          //just don't want joystick movement and snap-turning on at the same time (as we want to have each controller have the same controls)
+          const toggleGamepadControlsFunc = (e) => {
+            console.log(e.type);
+            console.log(CONTEXT_AF.el);
+            if (e.type === 'thumbstickdown') {
+              console.log('turn on gamepad controls');
+              CONTEXT_AF.el.setAttribute('gamepad-controls', {enabled:true});
+              CONTEXT_AF.el.setAttribute('circles-snap-turning', {enabled:false});
+            } 
+            else if (e.type === 'thumbstickup') {
+              console.log('turn on gamepad controls');
+              CONTEXT_AF.el.setAttribute('gamepad-controls', {enabled:false});
+              CONTEXT_AF.el.setAttribute('circles-snap-turning',{enabled:true});
+            }
+            else {
+              console.warn('toggleGamepadControlsFunc has an unexpected event');
+            }
+          };
+
+          entity_Controller_1.addEventListener('thumbstickdown', toggleGamepadControlsFunc);
+          entity_Controller_1.addEventListener('thumbstickup', toggleGamepadControlsFunc);
+
+          entity_Controller_2.addEventListener('thumbstickdown', toggleGamepadControlsFunc);
+          entity_Controller_2.addEventListener('thumbstickup', toggleGamepadControlsFunc);
         }
 
         const CONTROL_BUTTON_SIZE = 0.2;
@@ -73,7 +103,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         const CONTROL_BUTTON_OFFSET_Y = 0.45;
         const CONTROLS_OFFSET_Y = -0.4;
 
-        //create object controls will toggle on when pickung up an object
+        //create object controls will toggle on when picking up an object
         let objectControls = document.createElement('a-entity');
         objectControls.setAttribute('id', 'object_controls');
         objectControls.setAttribute('position', {x:0.0, y:CONTROLS_OFFSET_Y, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
@@ -135,7 +165,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         }
 
         console.log('Attached camera controls to avatar');
-        Context_AF.el.emit(CIRCLES.EVENTS.CAMERA_ATTACHED, {element:Context_AF.el}, true);
+        CONTEXT_AF.el.emit(CIRCLES.EVENTS.CAMERA_ATTACHED, {element:CONTEXT_AF.el}, true);
       });
     // }
   }

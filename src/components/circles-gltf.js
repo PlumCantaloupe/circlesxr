@@ -13,27 +13,27 @@ AFRAME.registerComponent('circles-gltf', {
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function()
   {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
   },
   update: function(oldData) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     //model change
     if ( (oldData.src !== data.src) && (data.src !== '') ) {
-      Context_AF.el.setAttribute('gltf-model', data.src);
+      CONTEXT_AF.el.setAttribute('gltf-model', data.src);
     }
 
     // //envMap change
     // if ((oldData.envMap !== data.envMap) && (data.envMap !== '')) {
-    //     Context_AF.el.setAttribute('circles-sphere-env-map', { src:data.envMap });
+    //     CONTEXT_AF.el.setAttribute('circles-sphere-env-map', { src:data.envMap });
     // }
 
     //color change
     if (oldData.color !== data.color) {
-      Context_AF.el.setAttribute('circles-color', {color:data.color});
+      CONTEXT_AF.el.setAttribute('circles-color', {color:data.color});
     }
   },
   // tick: function(time, timeDelta) {},

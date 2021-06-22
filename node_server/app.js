@@ -16,7 +16,6 @@ env = dotenvParseVariables(env.parsed);
 // Make the parsed environment config globally accessible
 //global.env = env;
 
-//shared CIRCLES code with client
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
@@ -26,29 +25,15 @@ const fs              = require('fs');
 const url             = require('url');
 const path            = require('path');
 const helmet          = require("helmet");
-const forceSSL        = require('express-force-ssl');
+//const forceSSL        = require('express-force-ssl');
 const sassMiddleware  = require('node-sass-middleware');
 
-// const easyrtc         = require("easyrtc");               // EasyRTC external module
-
-let serverSecure      = null; //use on remote 'linux' server
 const http            = require('http');
 const server          = http.createServer(app);
 
-//if linux we can assume this is our remote server otherwise just run over http for localhost)
-if (env.MAKE_SSL) {
-  const http = require('https');
-  const options = {
-    key:    fs.readFileSync('/etc/letsencrypt/live/circlesxr.com/privkey.pem', 'utf8'),
-    cert:  fs.readFileSync('/etc/letsencrypt/live/circlesxr.com/fullchain.pem', 'utf8')
-  };
-  console.log('HTTPS server being created ...');
-  serverSecure  = http.createServer(options, app);
-}
-
 //server stuff
 const session       = require('express-session');
-const MongoStore    = require('connect-mongo')(session);
+const MongoStore    = require('connect-mongo');
 
 //database
 const mongoose      = require('mongoose');
@@ -66,20 +51,36 @@ const sessionObj    = session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
+  store: MongoStore.create({
+    mongoUrl: dbURL
   })
 });
 
 //handle mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function(e) {
+  console.log('connection error:' + e);
+  process.exit(1);
+});
 db.once('open', function () {
   console.log("Database connected!");
 });
 
 //use sessions for tracking logins (needs to be before routes app.use)
 app.use(sessionObj);
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "default-src": ["'self'"],
+      "connect-src": ["*", "'unsafe-inline'", "blob:"],
+      "img-src": ["*", "blob:", "data:"],
+      "media-src": ["*"],
+      "frame-src": ["*"],
+      "style-src": ["*", "'unsafe-inline'"],
+      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
+      "object-src": ["'none'"],
+    },
+  })
+);
 app.use(bodyParser.json());                                 //set body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -103,9 +104,6 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.static(__dirname + '/public'));             //set root path of server ...
-if (env.MAKE_SSL) {
-  app.use(forceSSL);
-}
 
 // Set up Passport
 const passport              = require('passport');
@@ -210,40 +208,21 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-//!!easyRTC start
 //websockets
-let io = null;
-if (env.MAKE_SSL) {
-  //io = require('socket.io')(serverSecure);
-  io = require("socket.io")(serverSecure, {
-      handlePreflightRequest: (req, res) => {
-          const headers = {
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-              "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-              "Access-Control-Allow-Credentials": true
-          };
-          res.writeHead(200, headers);
-          res.end();
-      }
-  });
-}
-else {
-  //io = require('socket.io')(server);
-  io = require("socket.io")(server, {
-      handlePreflightRequest: (req, res) => {
-          const headers = {
-              "Access-Control-Allow-Headers": "Content-Type, Authorization",
-              "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-              "Access-Control-Allow-Credentials": true
-          };
-          res.writeHead(200, headers);
-          res.end();
-      }
-  });
-}
+let io = require("socket.io")(server, {
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }
+});
 
+//this code is unused when we are using teh janus sever/adapter 
 const rooms = {};
-
 io.on("connection", socket => {
   console.log("user connected", socket.id);
 
@@ -276,7 +255,7 @@ io.on("connection", socket => {
   });
 
   socket.on("broadcast", data => {
-    socket.to(curRoom).broadcast.emit("broadcast", data);
+    socket.to(curRoom).emit("broadcast", data);
   });
 
   socket.on("disconnect", () => {
@@ -286,7 +265,7 @@ io.on("connection", socket => {
 
       delete rooms[curRoom].occupants[socket.id];
       const occupants = rooms[curRoom].occupants;
-      socket.to(curRoom).broadcast.emit("occupantsChanged", { occupants });
+      socket.to(curRoom).emit("occupantsChanged", { occupants });
 
       if (occupants == {}) {
         console.log("everybody left room");
@@ -294,9 +273,17 @@ io.on("connection", socket => {
       }
     }
   });
+});
 
-  //research socket events
-  if (env.ENABLE_RESEARCH_MODE) {
+//let's create a research namespace.
+//This will definitely need to be redone if we run more than one experiemnet on this server at a time in the future
+if (env.ENABLE_RESEARCH_MODE) {
+  var rnsp = io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH);
+  rnsp.on("connection", socket => {
+    console.log("research websockets connected", socket.id);
+
+    //research socket events
+    
     const researchUtils = require('./modules/research-utils');
 
     socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
@@ -304,14 +291,12 @@ io.on("connection", socket => {
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
-          console.log('Research user connected, user_type:' + data.user_type + ' user_id:' + data.user_id);
-          // data.event_type = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
-          // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          console.log('CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED:' + data.room);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           researchUtils.startExperiment(data);
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
@@ -327,21 +312,21 @@ io.on("connection", socket => {
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
             eData.and = {downloadURL:researchUtils.getDownloadLink()};
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = data.event_type
             newData.exp_id      = data.exp_id
             newData.user_id     = data.user_id
             newData.user_type   = data.user_type
             
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
           }
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           researchUtils.stopExperiment(data);
           data.and = {downloadURL:researchUtils.getDownloadLink()};
-          io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
+          io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
         break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
@@ -358,14 +343,14 @@ io.on("connection", socket => {
             eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
             eData.and = {downloadURL:researchUtils.getDownloadLink()};
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
             newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
             newData.exp_id      = data.exp_id
             newData.user_id     = data.user_id
             newData.user_type   = data.user_type
 
-            io.in(curRoom).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
+            io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
           } 
         }
         break;
@@ -388,21 +373,13 @@ io.on("connection", socket => {
         break;
       }
     });
-  }
-});
-//!!easyRTC end
+  });
+}
 
 //lets start up
 server.listen(env.SERVER_PORT, () => {
   console.log("Listening on http port: " + env.SERVER_PORT );
 });
-
-if (env.MAKE_SSL) {
-  serverSecure.listen(env.SERVER_PORT_SECURE, () => {
-    console.log("Listening on https port: " + env.SERVER_PORT_SECURE );
-  });
-}
-
 
 app.set('views', './views');
 app.set('view engine', 'pug');

@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
+    <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
@@ -10,19 +10,22 @@
     <script src="/worlds/Testbed/scripts/research-selection-tasks.js"></script>
   </head>
   <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
 
-    <a-scene circles_properties>
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- source: https://www.artstation.com/artwork/oOGk4W -->
         <img id='skyMap' src='/worlds/Testbed/assets/textures/tim-barton-skybox.jpg' crossorigin="anonymous">
 
-        <!-- templates, mixins etc. -->
+        <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-      <!-- avatar -->
-      <circles-avatar/>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
       <a-entity id="research_manager" research-manager="experiment_script_url:/worlds/Testbed/scripts/experiment_script_EXAMPLE.json"></a-entity>
 
@@ -39,7 +42,8 @@
       </a-entity> -->
 
       <!-- checkpoints -->
-      <a-entity class="interactive checkpoint" circles-interactive-object mixin="checkpoint" position="0.0 0.05 0.0"></a-entity>
+      <!-- circles-spawnpoint is only added if you want this checkpoint to also be a spawn point when users log in -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.05 0.0"></a-entity>
 
       
       <!-- the ground, let's remove for now to keep elements present minimal for testing -->
@@ -59,7 +63,7 @@
       </a-entity>
     </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
+    <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>

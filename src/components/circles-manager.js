@@ -1,33 +1,37 @@
 'use strict';
 
 AFRAME.registerComponent('circles-manager', {
-  schema: {},
+  schema: {
+    world: {type:'string', default:''},    //use __WORLDNAME__ unless you want to control synching in some other fashion
+    user: {type:'string', default:''}     //use __USERNAME__ unless you want to control synching in some other fashion
+  },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function()
   {
-    const Context_AF  = this;
+    const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
-    Context_AF.selectedObject  = null;
-    Context_AF.zoomNear         = false;    //1=normal, 2=near
-    Context_AF.camera           = null;
+    CONTEXT_AF.selectedObject  = null;
+    CONTEXT_AF.zoomNear         = false;    //1=normal, 2=near
+    CONTEXT_AF.camera           = null;
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
       scene.setAttribute('vr-mode-ui', {enabled:false});
     }
 
-    Context_AF.createFloatingObjectDescriptions();
-    Context_AF.addEventListeners(); //want after everything loaded in via network
+    CONTEXT_AF.createFloatingObjectDescriptions();
+    CONTEXT_AF.addEventListeners(); //want after everything loaded in via network
+    CONTEXT_AF.addArtefactNarrationController();
 
     scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e) => {
-        Context_AF.objectControls           = scene.querySelector('#object_controls');
+        CONTEXT_AF.objectControls = scene.querySelector('#object_controls');
 
-        Context_AF.rotateControl  = scene.querySelector('#rotate_control');
-        Context_AF.zoomControl    = scene.querySelector('#zoom_control');
-        Context_AF.releaseControl = scene.querySelector('#release_control');
+        CONTEXT_AF.rotateControl  = scene.querySelector('#rotate_control');
+        CONTEXT_AF.zoomControl    = scene.querySelector('#zoom_control');
+        CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
 
-        Context_AF.rotateControl.addEventListener('click', (e) => { 
-          let rotationOffset = Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
+        CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
+          let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
           let rotationOffsetY =  rotationOffset.y;
           rotationOffsetY += 90.0;
           //now round to 90 increments so that if a user presses quickly it doesn't end on a strange angle
@@ -37,38 +41,94 @@ AFRAME.registerComponent('circles-manager', {
           rotationOffsetY += diff;
 
           console.log("rotate artefact");
-          Context_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
+          CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
         });
 
         //release object (can also click on object)
-        Context_AF.releaseControl.addEventListener('click', (e) => { 
-          if ( Context_AF.selectedObject !== null ) {
-            Context_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-            Context_AF.releaseInspectedObject(Context_AF.selectedObject.components['circles-inspect-object']);
+        CONTEXT_AF.releaseControl.addEventListener('click', (e) => { 
+          if ( CONTEXT_AF.selectedObject !== null ) {
+            CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
+            CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
           }
         });
 
-        Context_AF.zoomControl.addEventListener('click', (e) => { 
-          Context_AF.zoomNear = !Context_AF.zoomNear;
-          let positionOffset =  Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
-          let positionOffsetZ = (Context_AF.zoomNear) ? -1.0 : -2.0;
-          //Context_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
+        CONTEXT_AF.zoomControl.addEventListener('click', (e) => { 
+          CONTEXT_AF.zoomNear = !CONTEXT_AF.zoomNear;
+          let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
+          let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
+          //CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
 
-          Context_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
+          CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
     });
   },
   update: function() {
-    const Context_AF  = this;
-    const data        = Context_AF.data;
+    const CONTEXT_AF  = this;
+    const data        = CONTEXT_AF.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
   },
+  addArtefactNarrationController: function() {
+    const scene = document.querySelector('a-scene');
+    const player1 = document.querySelector('#Player1');
+
+    const narrativeElems = document.querySelectorAll('[circles-artefact]');
+    let narrativePlayingID = '';
+
+    const stopAllNarrativesFunc = () => {
+      narrativePlayingID = '';
+      narrativeElems.forEach( artefact => {
+        if (artefact.components['circles-sound']) {
+          artefact.setAttribute('circles-sound', {state:'stop'});
+        }
+      });
+    };    
+
+    narrativeElems.forEach( artefact => {
+      
+      const start_sound_func = (e) => {
+        if (artefact.components['circles-sound']) {
+          if ( artefact.getAttribute('id') !== narrativePlayingID ) {
+            //if clicking on a new narrtive then stop any playing and play this one.
+            stopAllNarrativesFunc();
+            narrativePlayingID = artefact.getAttribute('id');
+            artefact.setAttribute('circles-sound', {state:'play'});
+          }
+          else {
+            //if you click on the same artefact stop the narrative playing
+            stopAllNarrativesFunc();
+          }
+        }
+      };
+
+      artefact.addEventListener('click', start_sound_func);
+    });
+
+    //need to also stop sound when "release" button clicked on camera during inspect
+    const checkForCameraFunc = (e) => {
+      let release_control = player1.querySelector('#release_control');
+      //wait until release control exists before we try to add ...
+      if (release_control) {
+        release_control.addEventListener('click', stopAllNarrativesFunc);
+        player1.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, checkForCameraFunc);
+      }
+      else {
+        player1.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, checkForCameraFunc);
+      }
+    };
+    checkForCameraFunc();
+  },
+  getWorld: function() {
+    return this.data.world;
+  },
+  getUser: function() {
+    return this.data.user;
+  },
   addEventListeners : function () {
-    let Context_AF  = this;
+    const CONTEXT_AF  = this;
     
     document.addEventListener(CIRCLES.EVENTS.SELECT_THIS_OBJECT, (e) => {
-      Context_AF.selectObject( e.detail );
+      CONTEXT_AF.selectObject( e.detail );
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, (e) => {
@@ -78,9 +138,9 @@ AFRAME.registerComponent('circles-manager', {
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, (e) => {
       console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
 
-      if ( Context_AF.selectedObject !== null ) {
-        Context_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-        Context_AF.releaseInspectedObject(Context_AF.selectedObject.components['circles-inspect-object']);
+      if ( CONTEXT_AF.selectedObject !== null ) {
+        CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
+        CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
       }
     });
 
@@ -92,8 +152,8 @@ AFRAME.registerComponent('circles-manager', {
         console.log("Event: "  + e.detail.components["circles-user-networked"].data.username + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
       });
 
-    Context_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {
-      Context_AF.camera = e.detail.cameraEl; //get reference to camera in scene (assume there is only one)
+    CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {
+      CONTEXT_AF.camera = e.detail.cameraEl; //get reference to camera in scene (assume there is only one)
     });
   },
   removeEventListeners : function () {
@@ -101,8 +161,8 @@ AFRAME.registerComponent('circles-manager', {
   },
   createFloatingObjectDescriptions : function () 
   {
-    let Context_AF  = this;
-    let scene = Context_AF.el.sceneEl;
+    const CONTEXT_AF  = this;
+    let scene = CONTEXT_AF.el.sceneEl;
 
     const TEXT_WINDOW_WIDTH         = 2.0;
     const TEXT_DESC_WINDOW_HEIGHT   = 0.9;
@@ -111,16 +171,19 @@ AFRAME.registerComponent('circles-manager', {
     const DIST_BETWEEN_PLATES       = 0.05;
     const POINTER_HEIGHT            = 0.2;
 
-    Context_AF.objectDescriptions  = document.createElement('a-entity');
-    Context_AF.objectDescriptions.setAttribute('id', 'object_descriptions');
-    Context_AF.objectDescriptions.setAttribute('visible', false);
-    Context_AF.objectDescriptions.setAttribute('position', {x:0.0, y:0.0, z:0.0});
-    Context_AF.objectDescriptions.setAttribute('rotation', {x:0, y:0, z:0});
-    scene.appendChild(Context_AF.objectDescriptions );
+    CONTEXT_AF.objectDescriptions  = document.createElement('a-entity');
+    CONTEXT_AF.objectDescriptions.setAttribute('id', 'object_descriptions');
+    CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
+    CONTEXT_AF.objectDescriptions.setAttribute('position', {x:0.0, y:0.0, z:0.0});
+    CONTEXT_AF.objectDescriptions.setAttribute('rotation', {x:0, y:0, z:0});
+    scene.appendChild(CONTEXT_AF.objectDescriptions );
+
+    CONTEXT_AF.rotateDescElem = document.createElement('a-entity');
+    CONTEXT_AF.objectDescriptions.appendChild(CONTEXT_AF.rotateDescElem);
 
     let infoOffsetElem = document.createElement('a-entity');
     infoOffsetElem.setAttribute('position',{x:-TEXT_WINDOW_WIDTH/2, y:-(DIST_BETWEEN_PLATES + TEXT_TITLE_WINDOW_HEIGHT)/2, z:0});
-    Context_AF.objectDescriptions .appendChild(infoOffsetElem);
+    CONTEXT_AF.rotateDescElem.appendChild(infoOffsetElem);
 
     //add bg for desc
     let desc_BG = document.createElement('a-entity');
@@ -131,45 +194,62 @@ AFRAME.registerComponent('circles-manager', {
     infoOffsetElem.appendChild(desc_BG);
 
     //add description text (220 char limit for now)
-    Context_AF.objectDescriptionText = document.createElement('a-entity');
-    Context_AF.objectDescriptionText.setAttribute('id', 'description_text');
-    // Context_AF.objectDescriptionText.setAttribute('material',  {depthTest:false});
-    Context_AF.objectDescriptionText.setAttribute('position', {x:TEXT_PADDING, y:0.0, z:CIRCLES.CONSTANTS.GUI.text_z_pos});
-    Context_AF.objectDescriptionText.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:30,
+    CONTEXT_AF.objectDescriptionText = document.createElement('a-entity');
+    CONTEXT_AF.objectDescriptionText.setAttribute('id', 'description_text');
+    // CONTEXT_AF.objectDescriptionText.setAttribute('material',  {depthTest:false});
+    CONTEXT_AF.objectDescriptionText.setAttribute('position', {x:TEXT_PADDING, y:0.0, z:CIRCLES.CONSTANTS.GUI.text_z_pos});
+    CONTEXT_AF.objectDescriptionText.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:33,
                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING * 2, height:TEXT_DESC_WINDOW_HEIGHT - TEXT_PADDING * 2,
                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                       value:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.'});
-    infoOffsetElem.appendChild(Context_AF.objectDescriptionText);
+    infoOffsetElem.appendChild(CONTEXT_AF.objectDescriptionText);
 
-    Context_AF.objectDescriptionText2 = document.createElement('a-entity');
-    Context_AF.objectDescriptionText2.setAttribute('id', 'description_text2');
-    Context_AF.objectDescriptionText2.setAttribute('rotation', {x:0.0, y:180.0, z:0.0});
-    Context_AF.objectDescriptionText2.setAttribute('position', {x:TEXT_WINDOW_WIDTH - TEXT_PADDING, y:0.0, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
-    Context_AF.objectDescriptionText2.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:30,
+    CONTEXT_AF.objectDescriptionBack = document.createElement('a-entity');
+    CONTEXT_AF.objectDescriptionBack.setAttribute('id', 'description_text2');
+    CONTEXT_AF.objectDescriptionBack.setAttribute('rotation', {x:0.0, y:180.0, z:0.0});
+    CONTEXT_AF.objectDescriptionBack.setAttribute('position', {x:TEXT_WINDOW_WIDTH - TEXT_PADDING, y:0.0, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+    CONTEXT_AF.objectDescriptionBack.setAttribute('text', {  anchor:'left', baseline:'top', wrapCount:33,
                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING * 2, height:TEXT_DESC_WINDOW_HEIGHT - TEXT_PADDING * 2,
                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                       value:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.'});
-    infoOffsetElem.appendChild(Context_AF.objectDescriptionText2);
+    infoOffsetElem.appendChild(CONTEXT_AF.objectDescriptionBack);
 
     //add title text (15 char limit for now)
-    Context_AF.objectTitleText = document.createElement('a-entity');
-    Context_AF.objectTitleText.setAttribute('id', 'title_text');
-    Context_AF.objectTitleText.setAttribute('position', {x:TEXT_PADDING, y:-TEXT_PADDING + TEXT_TITLE_WINDOW_HEIGHT, z:CIRCLES.CONSTANTS.GUI.text_z_pos});
-    Context_AF.objectTitleText.setAttribute('text', { anchor:'left', baseline:'top', wrapCount:20,
+    CONTEXT_AF.objectTitleText = document.createElement('a-entity');
+    CONTEXT_AF.objectTitleText.setAttribute('id', 'title_text');
+    CONTEXT_AF.objectTitleText.setAttribute('position', {x:TEXT_PADDING, y:-TEXT_PADDING + TEXT_TITLE_WINDOW_HEIGHT, z:CIRCLES.CONSTANTS.GUI.text_z_pos});
+    CONTEXT_AF.objectTitleText.setAttribute('text', { anchor:'left', baseline:'top', wrapCount:20,
                                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING*2, height:TEXT_TITLE_WINDOW_HEIGHT- TEXT_PADDING*1.5, 
                                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                                       value:'A Story Title'});
-    infoOffsetElem.appendChild(Context_AF.objectTitleText);
+    infoOffsetElem.appendChild(CONTEXT_AF.objectTitleText);
 
-    Context_AF.objectTitleText2 = document.createElement('a-entity');
-    Context_AF.objectTitleText2.setAttribute('id', 'title_text2');
-    Context_AF.objectTitleText2.setAttribute('rotation', {x:0.0, y:180.0, z:0.0});
-    Context_AF.objectTitleText2.setAttribute('position', {x:TEXT_WINDOW_WIDTH - TEXT_PADDING, y:-TEXT_PADDING + TEXT_TITLE_WINDOW_HEIGHT, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
-    Context_AF.objectTitleText2.setAttribute('text', { anchor:'left', baseline:'top', wrapCount:20,
+    CONTEXT_AF.objectTitleBack = document.createElement('a-entity');
+    CONTEXT_AF.objectTitleBack.setAttribute('id', 'title_text2');
+    CONTEXT_AF.objectTitleBack.setAttribute('rotation', {x:0.0, y:180.0, z:0.0});
+    CONTEXT_AF.objectTitleBack.setAttribute('position', {x:TEXT_WINDOW_WIDTH - TEXT_PADDING, y:-TEXT_PADDING + TEXT_TITLE_WINDOW_HEIGHT, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+    CONTEXT_AF.objectTitleBack.setAttribute('text', { anchor:'left', baseline:'top', wrapCount:20,
                                       color:'rgb(0,0,0)', width:TEXT_WINDOW_WIDTH - TEXT_PADDING*2, height:TEXT_TITLE_WINDOW_HEIGHT- TEXT_PADDING*1.5, 
                                       font: CIRCLES.CONSTANTS.GUI.font_body,
                                       value:'A Story Title'});
-    infoOffsetElem.appendChild(Context_AF.objectTitleText2);
+    infoOffsetElem.appendChild(CONTEXT_AF.objectTitleBack);
+
+    let rotateElem = document.createElement('a-entity');
+    rotateElem.setAttribute('id', 'rotate_desc_control');
+    rotateElem.setAttribute('class', 'interactive button');
+    rotateElem.setAttribute('position', {x:TEXT_WINDOW_WIDTH/2, y:0.55, z:0});
+    rotateElem.setAttribute('geometry',  {  primitive:'plane', 
+                                            width:0.3,
+                                            height:0.3 
+                                          });
+    rotateElem.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_ROTATE, color:'rgb(255,255,255)', shader:'flat', transparent:true, side:'double'});
+    infoOffsetElem.appendChild(rotateElem);
+    rotateElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
+    rotateElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+    rotateElem.addEventListener('click', function (evt) {
+      CONTEXT_AF.rotationDesc += 180;
+      CONTEXT_AF.rotateDescElem.setAttribute('animation', {property:'rotation.y', dur:500, dir:'normal', to:CONTEXT_AF.rotationDesc, easing:'easeInQuad'});
+    });
 
     let triangle_point = document.createElement('a-entity');
     triangle_point.setAttribute('geometry',  {  primitive:'triangle', 
@@ -181,20 +261,20 @@ AFRAME.registerComponent('circles-manager', {
     infoOffsetElem.appendChild(triangle_point);
   },
   selectObject : function ( obj ) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
 
-    if ( Context_AF.selectedObject === null) {
+    if ( CONTEXT_AF.selectedObject === null) {
       let regex = /(naf)/i;
       let nafMatch  = regex.test(obj.el.getAttribute('id')); //don't want description if being taken from someone else
 
-      Context_AF.pickupInspectedObject(obj, !nafMatch);
+      CONTEXT_AF.pickupInspectedObject(obj, !nafMatch);
       obj.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, {}, true );
     }
     else {
-      //release currentlys elected object
-      const isSameObject = Context_AF.selectedObject.isSameNode( obj.el );
-      Context_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-      Context_AF.releaseInspectedObject( Context_AF.selectedObject.components['circles-inspect-object'] );
+      //release currently selected object
+      const isSameObject = CONTEXT_AF.selectedObject.isSameNode( obj.el );
+      CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
+      CONTEXT_AF.releaseInspectedObject( CONTEXT_AF.selectedObject.components['circles-inspect-object'] );
 
       //pick up another object if not the same object that was released
       if ( !isSameObject ) {
@@ -203,22 +283,27 @@ AFRAME.registerComponent('circles-manager', {
     }
   },
   pickupInspectedObject : function ( obj, showDescription ) {
-    const Context_AF = this;
-    Context_AF.selectedObject = obj.el;
-    Context_AF.zoomNear       = false;
+    const CONTEXT_AF = this;
+    CONTEXT_AF.selectedObject = obj.el;
+    CONTEXT_AF.zoomNear       = false;
+
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true});
 
     //hide label
-    if (Context_AF.selectedObject.hasAttribute('circles-object-label') === true) {
-      Context_AF.selectedObject.setAttribute('circles-object-label', {label_visible:false});
+    if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
+      CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:false});
     }
 
     //reset control position
-    Context_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
+    CONTEXT_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
+
+    //reset rotation of description
+    CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0, y:0, z:0});
+    CONTEXT_AF.rotationDesc = 0.0;
     
     //take over networked membership
-    console.log("this");
-    if (Context_AF.selectedObject.hasAttribute('networked') === true) {
-      NAF.utils.getNetworkedEntity(Context_AF.selectedObject).then((el) => {
+    if (CONTEXT_AF.selectedObject.hasAttribute('networked') === true) {
+      NAF.utils.getNetworkedEntity(CONTEXT_AF.selectedObject).then((el) => {
         console.log("is this mine?");
         if (!NAF.utils.isMine(el)) {
           console.log("No but ... ")
@@ -231,67 +316,70 @@ AFRAME.registerComponent('circles-manager', {
       });
     }
 
-    // let avatarHead = Context_AF.el.sceneEl.querySelector('#player1');
+    // let avatarHead = CONTEXT_AF.el.sceneEl.querySelector('#player1');
     // avatarHead = avatarHead.querySelector('.user_head');
 
     //set new transform
-    //Context_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
-    Context_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
-    Context_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    Context_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:0.0, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
+    //CONTEXT_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
+
+    CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
+    CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
+    CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:obj.data.inspectOffsetY, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
 
     if ( showDescription )  {
       //show description text with appropriate values
-      Context_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
-      Context_AF.objectDescriptionText.setAttribute('text', {value:obj.data.description});
-      Context_AF.objectTitleText2.setAttribute('text', {value:obj.data.title});
-      Context_AF.objectDescriptionText2.setAttribute('text', {value:obj.data.description});
-      Context_AF.objectDescriptions.setAttribute('visible', true);
+      CONTEXT_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
+      CONTEXT_AF.objectDescriptionText.setAttribute('text', {value:obj.data.description});
+      CONTEXT_AF.objectTitleBack.setAttribute('text', {value:(obj.data.title_back === '') ? obj.data.title : obj.data.title_back});
+      CONTEXT_AF.objectDescriptionBack.setAttribute('text', {value:(obj.data.description_back === '') ? obj.data.description : obj.data.description_back});
+      CONTEXT_AF.objectDescriptions.setAttribute('visible', true);
 
       //display element at position 
-      Context_AF.objectDescriptions.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y + 1.5, obj.data.origPos.z);
+      CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y + 1.5, obj.data.origPos.z);
       if ( obj.data.textLookAt === true ) {
         let worldPos = new THREE.Vector3();
-        Context_AF.camera.object3D.getWorldPosition(worldPos);
+        CONTEXT_AF.camera.object3D.getWorldPosition(worldPos);
         worldPos.y = obj.data.origPos.y + 1.3;
 
-        Context_AF.objectDescriptions.object3D.lookAt(Context_AF.camera.object3D.getWorldPosition()); //rotate to face user
-        Context_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
-        Context_AF.objectDescriptions.object3D.rotation.z = 0.0;
+        CONTEXT_AF.objectDescriptions.object3D.lookAt(CONTEXT_AF.camera.object3D.getWorldPosition()); //rotate to face user
+        CONTEXT_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
+        CONTEXT_AF.objectDescriptions.object3D.rotation.z = 0.0;
       } 
       else {
-        Context_AF.objectDescriptions.object3D.rotation.y = THREE.Math.degToRad(obj.data.textRotationY);
+        CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.Math.degToRad(obj.data.textRotationY);
       }
     }
 
-    //Context_AF.objectControls.setAttribute('visible', true); //turn on object controls
-    Context_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
+    //CONTEXT_AF.objectControls.setAttribute('visible', true); //turn on object controls
+    CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', true);
     });
   },
   releaseInspectedObject : function ( obj ) {
-    const Context_AF = this;
+    const CONTEXT_AF = this;
+
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false});
 
     //show label
-    if (Context_AF.selectedObject.hasAttribute('circles-object-label') === true) {
-      Context_AF.selectedObject.setAttribute('circles-object-label', {label_visible:true});
+    if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
+      CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:true});
     }
 
-    Context_AF.selectedObject.removeAttribute('circles-parent-constraint');
+    CONTEXT_AF.selectedObject.removeAttribute('circles-parent-constraint');
 
-    Context_AF.selectedObject.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y, obj.data.origPos.z);
-    Context_AF.selectedObject.object3D.rotation.set(obj.data.origRot.x, obj.data.origRot.y, obj.data.origRot.z);
-    Context_AF.selectedObject.object3D.scale.set(obj.data.origScale.x, obj.data.origScale.y, obj.data.origScale.z);
+    CONTEXT_AF.selectedObject.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y, obj.data.origPos.z);
+    CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.origRot.x, obj.data.origRot.y, obj.data.origRot.z);
+    CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.origScale.x, obj.data.origScale.y, obj.data.origScale.z);
 
     //hide floating descriptions
-    Context_AF.objectDescriptions.setAttribute('visible', false);
+    CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
 
     //turn off object controls
-    //Context_AF.objectControls.setAttribute('visible', false);
-    Context_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
+    //CONTEXT_AF.objectControls.setAttribute('visible', false);
+    CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', false);
     });
 
-    Context_AF.selectedObject  = null;
+    CONTEXT_AF.selectedObject  = null;
   }
 });

@@ -17,6 +17,26 @@ block content
           if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/hub", "' + userInfo.userType + '")')
           a(href='/rooms/explore/world/hub' class="pure-button") The Fire
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_Hub", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_Hub' class="pure-button") Kinematics lab - Hub
+
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
+      ul(class="pure-menu-list")
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_1_Kitchen", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-button") Women in Tech., Act 1: Growing Up
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_2_Lab", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/WIT_2_Lab' class="pure-button") Women in Tech., Act 2: In The Classroom
+        li
+          if userCanGenMagicLinks
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_3_Work", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") Women in Tech., Act 3: On The Job
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">Viola Desmond, Canadian Civil Rights Pioneer</span>
@@ -35,28 +55,28 @@ block content
           a(href='/rooms/explore/world/VD_3_ProvinceHouse' class="pure-button") Viola Desmond, Act 3: The Province House
 
     div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
+    <span class="pure-menu-heading">Education - Kinematics</span>
       ul(class="pure-menu-list")
         li
           if userCanGenMagicLinks
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_1_Kitchen", "' + userInfo.userType + '")')
-          a(href='/rooms/explore/world/WIT_1_Kitchen' class="pure-button") Women in Trades, Act 1: Kitchen (In progress)
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_Hub", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_Hub' class="pure-button") Kinematics lab - Hub
         li
           if userCanGenMagicLinks
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_2_Lab", "' + userInfo.userType + '")')
-          a(href='/rooms/explore/world/WIT_2_Lab' class="pure-button") Women in Trades, Act 2: Lab
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_FreeFall", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_FreeFall' class="pure-button") Kinematics lab - Freefall
         li
           if userCanGenMagicLinks
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/WIT_3_Work", "' + userInfo.userType + '")')
-          a(href='/rooms/explore/world/WIT_3_Work' class="pure-button") Women in Trades, Act 3: Work (To be done)
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_ShootAndDrop", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/KIN_ShootAndDrop' class="pure-button") Kinematics lab - Shoot and Drop
 
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
       ul(class="pure-menu-list")
         li
           if userCanGenMagicLinks
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/TestWorld", "' + userInfo.userType + '")')
-          a(href='/rooms/explore/world/TestWorld' class="pure-button") Basic Example
+            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/ExampleWorld", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/ExampleWorld' class="pure-button") Example World
         li
           if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/Wardrobe", "' + userInfo.userType + '")')

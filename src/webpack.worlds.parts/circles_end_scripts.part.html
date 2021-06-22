@@ -1,4 +1,30 @@
 <script>
+  // Prompt for audio.
+  if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOMContentLoaded');
+      const scene = document.querySelector('a-scene');
+      scene.addEventListener('adapter-ready', ({ detail: adapter }) => {
+        console.log('adapter-ready');
+        const clientId = CIRCLES.getUUID(); // generate a random 16 characters string, but you can use a uuid4 for example
+        adapter.setClientId(clientId);
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          adapter.setLocalMediaStream(stream).then(() => {
+            // Note that networked-scene audio:true option has no effect with the janus adapter
+            NAF.connection.adapter.enableMicrophone(false); // set it to false if you want to be muted initially.
+          });
+        }).catch(err => {
+          console.warn("Microphone access not allowed. This client will not broadcast audio.");
+        });
+      });
+    });
+  }
+  else {
+    //disable HTML mic elements
+    document.querySelector('#button_microphone').style.display = 'none';
+    document.querySelector('#user-microphone-wrapper').style.display = 'none';
+  }
+
   //naf schemas
   NAF.schemas.add({
     template: '#user-template',
@@ -110,12 +136,12 @@
       'geometry',
       'material',
       'obj-model',
-      'circles-object-world',
-      'circles-interactive-object',
-      'circles-interactive-visible',
-      'circles-inspect-object',
+      //'circles-object-world',
+      //'circles-interactive-object',
+      //'circles-interactive-visible',
+      //'circles-inspect-object',
       'shadow',
-      'class'
+      //'class'
       // {
       //   selector: '.interactive',
       //   component: 'gltf-model',
@@ -137,6 +163,18 @@
   // Called by Networked-Aframe when connected to server
   function onConnect () {
     console.log("custom onConnect: ", new Date());
-    document.querySelector('a-scene').emit(CIRCLES.EVENTS.NAF_CONNECTED);
+
+    CIRCLES.setupCirclesWebsocket();
+
+    //depending on scene loaded results in the mic button not working if clicked too fast
+    //it also means the mic button has no effect (when 'adapter-ready' fires the mic also cannot be enabled/diabled) ...
+    //I am not sure this is the best way to do this; but audio feedback is even worse ...
+    document.querySelector('#loading-animation-enter').style.display='none';
+    document.querySelector('#user-gesture-enter').style.display='block';
+    
+    //mic sometimes is on for some reason
+    if (CIRCLES.CONSTANTS.CIRCLES_WEBRTC_ENABLED && CIRCLES.CONSTANTS.CIRCLES_MIC_ENABLED) {
+      NAF.connection.adapter.enableMicrophone(false);
+    }
   }
 </script>
