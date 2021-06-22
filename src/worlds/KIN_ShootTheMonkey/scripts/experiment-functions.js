@@ -23,6 +23,7 @@ function setup () {
   let ball1 = document.querySelector('#ball1');
   let ball2 = document.querySelector('#ball2');
 
+  /*
   ball1.addEventListener('collide', function (e) {
     // check if the other object is the floor
     if (e.detail.body.el.id == "floor") {
@@ -33,10 +34,11 @@ function setup () {
       indicator.emit('stop');
     }
   });
+  */
 
   ball2.addEventListener('collide', function (e) {
-    // check if the other object is the floor
-    if (e.detail.body.el.id == "floor") {
+    // check if the other object is the monkey
+    if (e.detail.body.el.id == "ball1") {
       // get the right object collision indicator
       let indicator = document.querySelector('#rightCollisionIndicator');
 
@@ -64,7 +66,7 @@ function startExperiment () {
     let ball2 = document.querySelector('#ball2');
 
     // drop ball1
-    ball1.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
+    ball1.setAttribute('dynamic-body', 'shape: box; sphereRadius: 0.125; offset: 0 -1 0;');
 
     // shoot object2
     ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
@@ -72,11 +74,11 @@ function startExperiment () {
     ball2.body.velocity.set(forceToApply.x * 3, forceToApply.y * 3, 0);
 
     // get the collision indicators
-    let leftIndicator = document.querySelector('#leftCollisionIndicator');
+    // let leftIndicator = document.querySelector('#leftCollisionIndicator');
     let rightIndicator = document.querySelector('#rightCollisionIndicator');
 
     // start the indicators
-    leftIndicator.emit('start');
+    // leftIndicator.emit('start');
     rightIndicator.emit('start');
   }
 };
@@ -106,11 +108,11 @@ function resetExperiment () {
   rotateNozzle();
 
   // get the collision indicators
-  let leftIndicator = document.querySelector('#leftCollisionIndicator');
+  // let leftIndicator = document.querySelector('#leftCollisionIndicator');
   let rightIndicator = document.querySelector('#rightCollisionIndicator');
 
   // reset the indicators
-  leftIndicator.emit('reset');
+  // leftIndicator.emit('reset');
   rightIndicator.emit('reset');
 
   experimentRunning = false;
