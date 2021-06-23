@@ -125,6 +125,12 @@
       </a-entity>
       <!-- End shoot and drop Display-->
 
+      <!-- Shoot the monkey display -->
+      <!-- Ground texts -->
+      <a-entity id="groundTextShootMonkey" position="0 0 8" rotation="90 0 0">
+        <a-entity id="ShootMonkey" position="0 3 0" text="value:Shoot THE MONKEY; color: #D1D4D5; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
+      </a-entity>
+
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box position="0 -0.5 -5" height="60" width="60" depth="1" rotation="-90 0 0" color="#fff" static-body="shape: plane;" circles-shadow></a-box>
