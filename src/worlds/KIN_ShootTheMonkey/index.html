@@ -23,7 +23,7 @@
       <!-- assets -->
       <a-assets timeout="10000">
         <!-- Experiment objects -->
-        <!--<a-asset-item id="TennisBall-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/experimentObjects/TennisBall.glb"></a-asset-item>-->
+        <a-asset-item id="TennisBall-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/TennisBall.glb"></a-asset-item>
         <a-asset-item id="Hand-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Hand.glb"></a-asset-item>
         <a-asset-item id="Cannon-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Cannon.glb"></a-asset-item>
         <a-asset-item id="Cannon-Base-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/CannonBase.glb"></a-asset-item>
@@ -42,6 +42,8 @@
         <a-asset-item id="Book3-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Book3.glb"></a-asset-item>
         <a-asset-item id="Book4-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Book4.glb"></a-asset-item>
         <a-asset-item id="Confetti-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Confetti.glb"></a-asset-item>
+        <a-asset-item id="Monkey-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb"></a-asset-item>
+        <a-asset-item id="Tree-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_ShootTheMonkey/assets/images/tennis_icon.png">
@@ -62,14 +64,15 @@
 
       <!-- Experiment Objects -->
       <!-- <a-entity id="ball1" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -2.74 1.55 -6.98; mass: 0.06;"></a-entity> -->
-      <a-box id="ball1" scale="0.4 0.4 0.4" physics-object="initialPosition: 0.75 1.63 -6.98; mass: 0.06;" material="color:red;"></a-box>
+      <a-entity id="ball1" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb" rotation="" scale="0.055 0.055 0.055" physics-object="initialPosition: 1.895 -0.422 -6.86972; mass: 0.06" position="1.89631 -0.42189 -6.86972"></a-entity>
+      <!--<a-box id="ball1" scale="0.4 0.4 0.4" physics-object="initialPosition: 0.75 1.63 -6.98; mass: 0.06;" material="color:red;"></a-box>-->
       <a-entity id="ball2" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -0.98 1.55 -6.98; mass: 0.06;"></a-entity>
       <a-entity id="cannonBase" position="-1.38 1.46 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Base-gltf"></a-entity>
       <a-entity id="cannonNozzle" position="-1.38 1.53 -6.98" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Nozzle-gltf"></a-entity>
       <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Trolley.glb"></a-entity>
 
       <!-- Hand Model -->
-      <a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 -0.1" position="0.98 1.82 -6.96" rotation="-9 180 -64"></a-entity>
+      <!--<a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 -0.1" position="0.98 1.82 -6.96" rotation="-9 180 -64"></a-entity>-->
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
@@ -153,6 +156,7 @@
 
       <!-- Lab Counters-->
       <a-entity gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
+      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb" position="2.04564 -0.00145 -6.86711" rotation="0 180 0" scale="0.05 0.05 0.05"></a-entity>
       <a-entity gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0" static-body></a-entity>
       <a-entity gltf-model="#Beaker1-gltf" scale="0.5 0.5 0.5" position="-5.28 0.48 -9.7" rotation="0 222.39 0"></a-entity>
       <a-entity gltf-model="#Beaker2-gltf" scale="0.5 0.5 0.5" position="-6.0 0.45 -7.4" rotation="0 222.39 0"></a-entity>
