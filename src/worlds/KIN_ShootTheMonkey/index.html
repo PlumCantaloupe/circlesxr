@@ -46,6 +46,7 @@
         <a-asset-item id="Tree-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb"></a-asset-item>
         <a-asset-item id="Rope-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb"></a-asset-item>
         <a-asset-item id="ChalkBoard-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb"></a-asset-item>
+        <a-asset-item id="Stickies-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Stickies.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_ShootTheMonkey/assets/images/tennis_icon.png">
@@ -100,11 +101,12 @@
       </a-entity>
 
       <!-- Chalk Board -->
-      <a-entity id="Welcome" position="-3.05115 2.84245 -11.04551" rotation="0 22 0" text="value: WELCOME TO; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
-      <a-entity id="Monkey Shoot" position="-3.04209 2.51004 -11.04551" rotation="0 22 0" text="value: MONKEY SHOOT; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
-      <a-entity id="Instructions" position="-3.04209 2.05572 -11.04551" rotation="0 22 0" text="value: Monkey Shoot is a demonstration that shows gravity's effect on projectile motion.; color: #6BA32D; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
-      <a-entity id="Leader" position="-3.04209 1.63044 -11.04551" rotation="0 22 0" text="value: If you are the leader of the experiment, please use the control panel to the right.; color: #6BA32D; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
-
+      <a-entity id="Welcome" position="-3.05115 2.84245 -11.04551" rotation="0 22 0" text="value: WELCOME TO MONKEY SHOOT; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
+      <a-entity id="Instructions" position="-3.04209 2.45423 -11.04551" rotation="0 22 0" text="value: Monkey Shoot is a demonstration that shows gravity's effect on projectile motion.; color: #6BA32D; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-entity id="Leader" position="-3.04209 2.03159 -11.04551" rotation="0 22 0" text="value: If you are the leader of the experiment, please use the control panel to the right.; color: #6BA32D; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-entity id="Monkey Warning" position="-3.04209 1.42662 -11.04551" rotation="0 22 0" text="value: No monkeys were harmed in the making of this experiment; color: #6BA32D; width: 1.7; wrapCount: 60; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-image id="arrowImage" src="#Arrow-img" position="-3.04209 1.66529 -11.04551" rotation="0 22 0" scale="0.3 0.3 0.3" material="" geometry=""></a-image>
+      
       <!-- Control station -->
       <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #d9a60b" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
       <a-entity id="controlStation" geometry="primitive: box; width:4.5; height: 3; depth: 0.15" material="color: #96CC39;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
@@ -179,6 +181,7 @@
       <a-entity gltf-model="#Book4-gltf" position="-6.2 -0.08 -6.5" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
       <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb" position="2.01837 -2.57559 -8.0504" rotation="0 122.57859069028834 0" scale="0.09 0.09 0.09"></a-entity>
       <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
+      <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
 
       <!-- <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity> -->
 

@@ -46,6 +46,7 @@
         <a-asset-item id="Stickies-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Stickies.glb"></a-asset-item>
         <a-asset-item id="Canon-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Canon.glb"></a-asset-item>
         <a-asset-item id="Confetti-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Confetti.glb"></a-asset-item>
+        <a-asset-item id="ChalkBoard-gltf" src="/worlds/KIN_ShootAndDrop/assets/models/Board.glb"></a-asset-item>
 
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_ShootAndDrop/assets/images/tennis_icon.png">
@@ -93,6 +94,12 @@
         <a-entity class="backToLabel" position="0 -7.7 0" rotation="0 0 180" text="value:Back to; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
         <a-entity class="panelLabel" position="0 -7 0" rotation="0 0 180" text="value:Hub; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
       </a-entity>
+
+      <!-- Chalk Board -->
+      <a-entity id="Welcome" position="-3.05115 2.7573 -11.04551" rotation="0 22 0" text="value: WELCOME TO SHOOT AND DROP; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
+      <a-entity id="Instructions" position="-3.09441 2.30158 -11.046" rotation="0 22 0" text="value: Shoot and Drop is a demonstration that shows the independent relationship between the horizontal and vertical motion of a projectile.; color: #c79600; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-entity id="Leader" position="-3.10068 1.8634 -11.04551" rotation="0 22 0" text="value: If you are the leader of the experiment, please use the control panel to the right.; color: #c79600; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-image id="arrowImage" src="#Arrow-img" position="-3.04209 1.50797 -11.04551" rotation="0 22 0" scale="0.3 0.3 0.3"></a-image>
 
       <!-- Control station -->
       <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #d9a60b" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
@@ -167,6 +174,7 @@
       <a-entity gltf-model="#Book4-gltf" position="-6.41434 -0.08015 -5.81517" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
       <a-entity gltf-model="#Stickies-gltf" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
       <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity>
+      <a-entity gltf-model="/worlds/KIN_ShootAndDrop/assets/models/Board.glb" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
 
 
       <!-- Portal to back to experiment Hub -->
