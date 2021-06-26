@@ -24,6 +24,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
     this.rotMat_Off           = new THREE.Matrix4();
     this.scaleMat             = new THREE.Matrix4();
     this.prevTime             = 0;
+    this.firstTickRun         = false;
   },
   update: function(oldData)  {
       const CONTEXT_AF    = this;
@@ -64,7 +65,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
       CONTEXT_AF.camRig = this.el.sceneEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
   },
   tick: function(time, timeDelta) {
-     if ( time - this.prevTime > this.data.updateRate ) {
+     if ( (time - this.prevTime > this.data.updateRate) || (this.firstTickRun === false) ) {
       if (this.psuedoParent !== null) {
           this.position_E.set(0,0,0);
           this.rotation_E.set(0,0,0,1);
@@ -84,7 +85,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
           }
           else {
             this.psuedoParent.object3D.updateMatrixWorld(true);
-		    this.psuedoParent.object3D.matrixWorld.decompose( this.position_E, this.rotation_E, this.scale_E );
+		        this.psuedoParent.object3D.matrixWorld.decompose( this.position_E, this.rotation_E, this.scale_E );
           }
 
           //set matrices
@@ -112,16 +113,18 @@ AFRAME.registerComponent('circles-parent-constraint', {
           //set new matrix and update
           this.worldMat_Constraint.decompose( this.position_E, this.rotation_E, this.scale_E );
 
-          if (this.data.smoothingOn === false) {
+          if ((this.data.smoothingOn === false) || (this.firstTickRun === false)) {
+            console.log('RUNNING');
             this.el.object3D.position.set(this.position_E.x, this.position_E.y, this.position_E.z);
             this.el.object3D.quaternion.set(this.rotation_E.x, this.rotation_E.y, this.rotation_E.z, this.rotation_E.w);
+            this.firstTickRun = true;
           }
       }
 
       this.prevTime = time;
     }
 
-    if ( this.data.smoothingOn === true ) {
+    if ( (this.data.smoothingOn === true) && (this.firstTickRun === true)) {
         this.el.object3D.position.lerp(this.position_E, this.data.smoothingAlpha);
         this.el.object3D.quaternion.slerp(this.rotation_E, this.data.smoothingAlpha);
     }
