@@ -67,15 +67,12 @@
 
       <!-- Experiment Objects -->
       <!-- <a-entity id="ball1" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -2.74 1.55 -6.98; mass: 0.06;"></a-entity> -->
-      <a-entity id="ball1" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 1.33513 -0.34207 -6.88156; mass: 0.06"></a-entity>
+      <a-entity id="ball1" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 3 0.69 -6.88; mass: 37"></a-entity>
       <!--<a-box id="ball1" scale="0.4 0.4 0.4" physics-object="initialPosition: 0.75 1.63 -6.98; mass: 0.06;" material="color:red;"></a-box>-->
-      <a-entity id="ball2" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -0.98 1.55 -6.98; mass: 0.06;"></a-entity>
-      <a-entity id="cannonBase" position="-1.38 1.46 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Base-gltf"></a-entity>
-      <a-entity id="cannonNozzle" position="-1.38 1.53 -6.98" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Nozzle-gltf"></a-entity>
-      <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Trolley.glb"></a-entity>
-
-      <!-- Hand Model -->
-      <!--<a-entity id="hand" gltf-model="#Hand-gltf" scale="0.1 0.1 -0.1" position="0.98 1.82 -6.96" rotation="-9 180 -64"></a-entity>-->
+      <a-entity id="ball2" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -3.01 3.62 -6.97; mass: 0.06;"></a-entity>
+      <a-entity id="cannonBase" position="-3.5 3.53 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Base-gltf"></a-entity>
+      <a-entity id="cannonNozzle" position="-3.45 3.6 -6.98" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Nozzle-gltf"></a-entity>
+      <!-- <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Trolley.glb"></a-entity> -->
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
@@ -166,23 +163,22 @@
       <a-cylinder color="crimson" height="3" radius="1.5" material="color: #3B5C0A" geometry="" scale="0.8 0.0001 0.8" position="-1.940 0.009 -6.882"></a-cylinder>
 
       <!-- Lab Counters-->
-      <a-entity gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb" position="2.04564 -0.00145 -7.95356" rotation="0 180 0" scale="0.05 0.05 0.05"></a-entity>
-      <a-entity gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0" static-body></a-entity>
-      <a-entity gltf-model="#Beaker1-gltf" scale="0.5 0.5 0.5" position="-5.28 0.48 -9.7" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Beaker2-gltf" scale="0.5 0.5 0.5" position="-6.0 0.45 -7.4" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Beaker3-gltf" scale="0.5 0.5 0.5" position="6.33522 0.46012 -6.34913" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Beaker4-gltf" scale="0.5 0.5 0.5" position="5.2437 0.46012 -6.57949" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Beaker4-gltf" scale="0.3 0.3 0.3" position="-4.81186 0.6212 -4.79106" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Trolley-gltf" scale="0.29061 0.29061 0.29061" position="-4.70786 0.658 -4.07963" rotation="0 222.39 0"></a-entity>
-      <a-entity gltf-model="#Locker-gltf" scale="0.3 0.3 0.3" position="4.2 -0.03724 -10.7" rotation="0 -40 0"></a-entity>
-      <a-entity gltf-model="#Book1-gltf" position="0.28 -0.44939 -6.84" rotation="" scale="0.01 0.01 0.01"></a-entity>
-      <a-entity gltf-model="#Book3-gltf" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
-      <a-entity gltf-model="#Book4-gltf" position="-6.2 -0.08 -6.5" rotation="0 122.57859069028834 0" scale="0.005 0.005 0.005"></a-entity>
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb" position="2.01837 -2.57559 -8.0504" rotation="0 122.57859069028834 0" scale="0.09 0.09 0.09"></a-entity>
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
-      <a-entity gltf-model="#Stickies-gltf" position="0.7 0.008 -6.1" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
-
+      <!-- <a-entity gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity> -->
+      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb" position="3.36 0 -7.95" rotation="0 180 0" scale="0.06 0.06 0.06"></a-entity>
+      <a-entity gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="6.83 0.56 -7.14" rotation="0 180 0" static-body></a-entity>
+      <!-- <a-entity gltf-model="#Beaker1-gltf" scale="0.5 0.5 0.5" position="-5.28 0.48 -9.7" rotation="0 222.39 0"></a-entity> -->
+      <!-- <a-entity gltf-model="#Beaker2-gltf" scale="0.5 0.5 0.5" position="-6.0 0.45 -7.4" rotation="0 222.39 0"></a-entity> -->
+      <a-entity gltf-model="#Beaker3-gltf" scale="0.5 0.5 0.5" position="8.34 0.46 -6.35" rotation="0 222 0"></a-entity>
+      <a-entity gltf-model="#Beaker4-gltf" scale="0.5 0.5 0.5" position="7.24 0.46 -6.58" rotation="0 222 0"></a-entity>
+      <a-entity gltf-model="#Beaker4-gltf" scale="0.3 0.3 0.3" position="-4.81 0.62 -4.79" rotation="0 222 0"></a-entity>
+      <a-entity gltf-model="#Trolley-gltf" scale="0.29 0.29 0.29" position="-4.71 0.66 -4.1" rotation="0 222 0"></a-entity>
+      <a-entity gltf-model="#Locker-gltf" scale="0.3 0.3 0.3" position="-4.0 -0.04 -6.85" rotation="0 20 0"></a-entity>
+      <!-- <a-entity gltf-model="#Book1-gltf" position="0.28 -0.44939 -6.84" rotation="" scale="0.01 0.01 0.01"></a-entity> -->
+      <a-entity gltf-model="#Book3-gltf" position="8.31 -0.45 -3.39" rotation="0 122.58 0" scale="0.01 0.01 0.01"></a-entity>
+      <a-entity gltf-model="#Book4-gltf" position="-6.2 -0.08 -6.5" rotation="0 122.58 0" scale="0.005 0.005 0.005"></a-entity>
+      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb" position="3.7 0.95 -8.05" rotation="0 122 0" scale="0.09 0.05 0.09"></a-entity>
+      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb" position="-3.15 0.55 -11.1" rotation="0 -68 0" scale="0.28 0.28 0.28"></a-entity>
+      <!-- <a-entity gltf-model="#Stickies-gltf" position="0.7 0.008 -6.1" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity> -->
       <!-- <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity> -->
 
 

@@ -13,28 +13,14 @@ const angleMax = 60;
 const angleMin = 0;
 const angleIncrementAmount = 30;
 let forceToApply = {
-  x = 1,
+  x = 8,
   y = 0
 }
 
 // to be called once the scene is loaded to perform setup tasks
 function setup () {
   // add collision events to both balls
-  let ball1 = document.querySelector('#ball1');
   let ball2 = document.querySelector('#ball2');
-
-  /*
-  ball1.addEventListener('collide', function (e) {
-    // check if the other object is the floor
-    if (e.detail.body.el.id == "floor") {
-      // get the left object collision indicator
-      let indicator = document.querySelector('#leftCollisionIndicator');
-
-      // trigger the stop event on the left indicator
-      indicator.emit('stop');
-    }
-  });
-  */
 
   ball2.addEventListener('collide', function (e) {
     // check if the other object is the monkey
@@ -71,7 +57,7 @@ function startExperiment () {
     // shoot object2
     ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
     console.log(forceToApply.x);
-    ball2.body.velocity.set(forceToApply.x * 3, forceToApply.y * 3, 0);
+    ball2.body.velocity.set(forceToApply.x, forceToApply.y, 0);
 
     // get the collision indicators
     // let leftIndicator = document.querySelector('#leftCollisionIndicator');
@@ -200,21 +186,21 @@ function rotateNozzle() {
   let cannonBall = document.querySelector('#ball2');
   switch(currentAngle) {
     case 0:
-      cannonBall.setAttribute('position', `-0.98 1.55 -6.98`);
-      forceToApply.x = 1;
+      cannonBall.setAttribute('position', `-3.01 3.62 -6.97`);
+      forceToApply.x = 8;
       forceToApply.y = 0;
       break;
     
     case 30:
-      cannonBall.setAttribute('position', `-1.0 1.77 -6.98`);
-      forceToApply.x = 1 / 2;
-      forceToApply.y = 1 / 2;
+      cannonBall.setAttribute('position', `-3.07 3.84 -6.97`);
+      forceToApply.x = 7 + 1 / 2;
+      forceToApply.y = 7 + 1 / 2;
       break;
 
     case 60:
-      cannonBall.setAttribute('position', `-1.17 1.94 -6.98`);
-      forceToApply.x = Math.sqrt(3) / 2;
-      forceToApply.y = 1 / 2;
+      cannonBall.setAttribute('position', `-1.17 1.94 -6.97`);
+      forceToApply.x = 7 + Math.sqrt(3) / 2;
+      forceToApply.y = 7 + 1 / 2;
       break;
   }
 }
