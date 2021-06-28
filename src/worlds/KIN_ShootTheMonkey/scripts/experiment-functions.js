@@ -7,11 +7,12 @@ const gravityMaxStrength = 3;
 const gravityMinStrength = 0;
 const gravityIncrementAmount = 0.5;
 
-// the shoot strength that controls ball2's initial velocity
+// the shoot strength that controls ball's initial velocity
 let currentAngle = 0;
 const angleMax = 60;
 const angleMin = 0;
 const angleIncrementAmount = 30;
+const force = 8;
 let forceToApply = {
   x = 8,
   y = 0
@@ -20,11 +21,11 @@ let forceToApply = {
 // to be called once the scene is loaded to perform setup tasks
 function setup () {
   // add collision events to both balls
-  let ball2 = document.querySelector('#ball2');
+  let ball = document.querySelector('#ball');
 
-  ball2.addEventListener('collide', function (e) {
+  ball.addEventListener('collide', function (e) {
     // check if the other object is the monkey
-    if (e.detail.body.el.id == "ball1") {
+    if (e.detail.body.el.id == "monkey") {
       // get the right object collision indicator
       let indicator = document.querySelector('#rightCollisionIndicator');
 
@@ -48,23 +49,21 @@ function startExperiment () {
     console.log('Starting experiment');
 
     // get the balls
-    let ball1 = document.querySelector('#ball1');
-    let ball2 = document.querySelector('#ball2');
+    let monkey = document.querySelector('#monkey');
+    let ball = document.querySelector('#ball');
 
-    // drop ball1
-    ball1.setAttribute('dynamic-body', 'shape: box; sphereRadius: 0.125; offset: 0 -1 0;');
+    // drop monkey
+    monkey.setAttribute('dynamic-body', 'shape: box; sphereRadius: 0.125; offset: 0 -1 0;');
 
     // shoot object2
-    ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
+    ball.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
     console.log(forceToApply.x);
-    ball2.body.velocity.set(forceToApply.x, forceToApply.y, 0);
+    ball.body.velocity.set(forceToApply.x, forceToApply.y, 0);
 
     // get the collision indicators
-    // let leftIndicator = document.querySelector('#leftCollisionIndicator');
     let rightIndicator = document.querySelector('#rightCollisionIndicator');
 
     // start the indicators
-    // leftIndicator.emit('start');
     rightIndicator.emit('start');
   }
 };
@@ -88,17 +87,13 @@ function resetExperiment () {
     element.emit('resetTransform', {});
   });
 
-  // reset nozzle to 0 degrees
-  currentAngle = 0;
-  updateAngleTexts();
+  // reset ball position
   rotateNozzle();
 
   // get the collision indicators
-  // let leftIndicator = document.querySelector('#leftCollisionIndicator');
   let rightIndicator = document.querySelector('#rightCollisionIndicator');
 
   // reset the indicators
-  // leftIndicator.emit('reset');
   rightIndicator.emit('reset');
 
   experimentRunning = false;
@@ -183,24 +178,24 @@ function rotateNozzle() {
   cannonNozzle.setAttribute('rotation', `-${currentAngle} 90 0`);
 
   // Update the ball's position as well as set the force to apply to it
-  let cannonBall = document.querySelector('#ball2');
+  let cannonBall = document.querySelector('#ball');
   switch(currentAngle) {
     case 0:
       cannonBall.setAttribute('position', `-3.01 3.62 -6.97`);
-      forceToApply.x = 8;
+      forceToApply.x = force;
       forceToApply.y = 0;
       break;
     
     case 30:
       cannonBall.setAttribute('position', `-3.07 3.84 -6.97`);
-      forceToApply.x = 7 + 1 / 2;
-      forceToApply.y = 7 + 1 / 2;
+      forceToApply.x = force * (Math.sqrt(3) / 2);
+      forceToApply.y = force * (1 / 2);
       break;
 
     case 60:
-      cannonBall.setAttribute('position', `-1.17 1.94 -6.97`);
-      forceToApply.x = 7 + Math.sqrt(3) / 2;
-      forceToApply.y = 7 + 1 / 2;
+      cannonBall.setAttribute('position', `-3.26 3.97 -6.97`);
+      forceToApply.y = force * (1 / 2);
+      forceToApply.x = force * (Math.sqrt(3) / 2);
       break;
   }
 }
