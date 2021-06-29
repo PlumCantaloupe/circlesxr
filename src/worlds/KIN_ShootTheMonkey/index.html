@@ -23,9 +23,8 @@
       <!-- assets -->
       <a-assets timeout="10000">
         <!-- Experiment objects -->
+        <a-asset-item id="Monkey-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb"></a-asset-item>
         <a-asset-item id="TennisBall-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/TennisBall.glb"></a-asset-item>
-        <a-asset-item id="Hand-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Hand.glb"></a-asset-item>
-        <a-asset-item id="Cannon-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Cannon.glb"></a-asset-item>
         <a-asset-item id="Cannon-Base-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/CannonBase.glb"></a-asset-item>
         <a-asset-item id="Cannon-Nozzle-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/CannonNozzle.glb"></a-asset-item>
 
@@ -42,17 +41,14 @@
         <a-asset-item id="Book3-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Book3.glb"></a-asset-item>
         <a-asset-item id="Book4-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Book4.glb"></a-asset-item>
         <a-asset-item id="Confetti-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Confetti.glb"></a-asset-item>
-        <a-asset-item id="Monkey-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb"></a-asset-item>
         <a-asset-item id="Tree-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb"></a-asset-item>
         <a-asset-item id="Rope-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb"></a-asset-item>
         <a-asset-item id="ChalkBoard-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb"></a-asset-item>
         <a-asset-item id="Stickies-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Stickies.glb"></a-asset-item>
+        <a-asset-item id="Rope-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb"></a-asset-item>
+        <a-asset-item id="Board-gltf" src="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb"></a-asset-item>
 
         <!-- Images -->
-        <img id="TennisBall-img" src="/worlds/KIN_ShootTheMonkey/assets/images/tennis_icon.png">
-        <img id="SoccerBall-img" src="/worlds/KIN_ShootTheMonkey/assets/images/soccer_icon.png">
-        <img id="Bear-img" src="/worlds/KIN_ShootTheMonkey/assets/images/bear_icon.png">
-        <img id="Car-img" src="/worlds/KIN_ShootTheMonkey/assets/images/car_icon.png">
         <img id="Arrow-img" src="/worlds/KIN_ShootTheMonkey/assets/images/arrow_icon.png">
 
         <!-- Hub image -->
@@ -66,13 +62,10 @@
       <circles-manager-avatar/>
 
       <!-- Experiment Objects -->
-      <!-- <a-entity id="ball1" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -2.74 1.55 -6.98; mass: 0.06;"></a-entity> -->
-      <a-entity id="ball1" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Monkey.glb" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 3 0.69 -6.88; mass: 37"></a-entity>
-      <!--<a-box id="ball1" scale="0.4 0.4 0.4" physics-object="initialPosition: 0.75 1.63 -6.98; mass: 0.06;" material="color:red;"></a-box>-->
-      <a-entity id="ball2" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -3.01 3.62 -6.97; mass: 0.06;"></a-entity>
+      <a-entity id="monkey" gltf-model="#Monkey-gltf" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 3 0.69 -6.88; mass: 37"></a-entity>
+      <a-entity id="ball" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -3.01 3.62 -6.97; mass: 0.06;"></a-entity>
       <a-entity id="cannonBase" position="-3.5 3.53 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Base-gltf"></a-entity>
       <a-entity id="cannonNozzle" position="-3.45 3.6 -6.98" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Nozzle-gltf"></a-entity>
-      <!-- <a-entity id="trolley" scale="0.291 0.291 0.291" position="-1.65 0.66 -6.97" rotation="0 90 0" gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Trolley.glb"></a-entity> -->
 
       <!-- Ground texts -->
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
@@ -89,9 +82,8 @@
         <!-- Back to hub -->
         <a-entity class="backToLabel" position="0 -10.3 0" rotation="0 0 180" text="value:Back to; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
         <a-entity class="panelLabel" position="0 -9.6 0" rotation="0 0 180" text="value:Hub; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
-
-
       </a-entity>
+      <!-- End Ground texts -->
 
       <!-- Chalk Board -->
       <a-entity id="Welcome" position="-3.05115 2.84245 -11.04551" rotation="0 22 0" text="value: WELCOME TO MONKEY SHOOT; color: #6BA32D; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
@@ -101,7 +93,6 @@
       <a-image id="arrowImage" src="#Arrow-img" position="-3.04209 1.66529 -11.04551" rotation="0 22 0" scale="0.3 0.3 0.3" material="" geometry=""></a-image>
 
       <!-- Control station -->
-      <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #d9a60b" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
       <a-entity id="controlStation" geometry="primitive: box; width:4.5; height: 3; depth: 0.15" material="color: #96CC39;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
@@ -149,38 +140,29 @@
           <a-entity class="angleText" position="-0.99 0 -0.5" rotation="-90 0 0" scale="2 2 2" text="color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootTheMonkey/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60"></a-entity>
         </a-entity>
       </a-entity>
+      <!-- End control station -->
 
       <!-- Experiment indicators -->
       <!-- We only need to know when the object hits the monkey, so I'm removing the collision indicator -->
-      <!-- <a-entity id="leftCollisionIndicator" collision-indicator position="-3.54 0.5 -5.5" scale="0.5 0.5 0.5"></a-entity> -->
       <a-entity id="rightCollisionIndicator" collision-indicator position="3.54 0.5 -5.5" scale="0.5 0.5 0.5"></a-entity>
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box id="floor" position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#96CC39" static-body="shape: plane;" circles-shadow></a-box>
 
-      <!-- Cylinder beneath the trolley -->
-      <a-cylinder color="crimson" height="3" radius="1.5" material="color: #3B5C0A" geometry="" scale="0.8 0.0001 0.8" position="-1.940 0.009 -6.882"></a-cylinder>
-
-      <!-- Lab Counters-->
-      <!-- <a-entity gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity> -->
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Tree.glb" position="3.36 0 -7.95" rotation="0 180 0" scale="0.06 0.06 0.06"></a-entity>
+      <!-- Environment -->
+      <a-entity gltf-model="#Tree-gltf" position="3.36 0 -7.95" rotation="0 180 0" scale="0.06 0.06 0.06"></a-entity>
       <a-entity gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="6.83 0.56 -7.14" rotation="0 180 0" static-body></a-entity>
-      <!-- <a-entity gltf-model="#Beaker1-gltf" scale="0.5 0.5 0.5" position="-5.28 0.48 -9.7" rotation="0 222.39 0"></a-entity> -->
-      <!-- <a-entity gltf-model="#Beaker2-gltf" scale="0.5 0.5 0.5" position="-6.0 0.45 -7.4" rotation="0 222.39 0"></a-entity> -->
       <a-entity gltf-model="#Beaker3-gltf" scale="0.5 0.5 0.5" position="8.34 0.46 -6.35" rotation="0 222 0"></a-entity>
       <a-entity gltf-model="#Beaker4-gltf" scale="0.5 0.5 0.5" position="7.24 0.46 -6.58" rotation="0 222 0"></a-entity>
       <a-entity gltf-model="#Beaker4-gltf" scale="0.3 0.3 0.3" position="-4.81 0.62 -4.79" rotation="0 222 0"></a-entity>
       <a-entity gltf-model="#Trolley-gltf" scale="0.29 0.29 0.29" position="-4.71 0.66 -4.1" rotation="0 222 0"></a-entity>
       <a-entity gltf-model="#Locker-gltf" scale="0.3 0.3 0.3" position="-4.0 -0.04 -6.85" rotation="0 20 0"></a-entity>
-      <!-- <a-entity gltf-model="#Book1-gltf" position="0.28 -0.44939 -6.84" rotation="" scale="0.01 0.01 0.01"></a-entity> -->
       <a-entity gltf-model="#Book3-gltf" position="8.31 -0.45 -3.39" rotation="0 122.58 0" scale="0.01 0.01 0.01"></a-entity>
       <a-entity gltf-model="#Book4-gltf" position="-6.2 -0.08 -6.5" rotation="0 122.58 0" scale="0.005 0.005 0.005"></a-entity>
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Rope.glb" position="3.7 0.95 -8.05" rotation="0 122 0" scale="0.09 0.05 0.09"></a-entity>
-      <a-entity gltf-model="/worlds/KIN_ShootTheMonkey/assets/models/Board.glb" position="-3.15 0.55 -11.1" rotation="0 -68 0" scale="0.28 0.28 0.28"></a-entity>
-      <!-- <a-entity gltf-model="#Stickies-gltf" position="0.7 0.008 -6.1" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity> -->
-      <!-- <a-entity gltf-model="#Confetti-gltf" position="0.172 0.630 -9.256" scale="0.2 0.2 0.2" rotation="1.35 3.58 0"></a-entity> -->
-
+      <a-entity gltf-model="#Rope-gltf" position="3.7 0.95 -8.05" rotation="0 122 0" scale="0.09 0.05 0.09"></a-entity>
+      <a-entity gltf-model="#Board-gltf" position="-3.15 0.55 -11.1" rotation="0 -68 0" scale="0.28 0.28 0.28"></a-entity>
+      <a-entity gltf-model="#Stickies-gltf" position="-1.25 0.01 -1.7" scale="0.009 0.009 0.009" rotation="1.35 65 0"></a-entity>
 
       <!-- Portal to back to experiment Hub -->
       <a-entity id="HubLink" class="interactive" position="0 1.5 6.33" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
