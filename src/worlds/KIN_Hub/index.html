@@ -49,7 +49,7 @@
                   geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
                   material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
                   link="href:/rooms/explore/world/KIN_FreeFall; visualAspectEnabled:false;">
-                  <a-entity text="value: Click me to be teleported; color: #13446e; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
+                  <a-entity text="value: Click me to be teleported; color: #13446e; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
         </a-entity>
         <!-- Shoot the monkey link-->
         <a-entity id="ShootTheMonkeyLink" class="interactive" position="-0.077 2.5 -2.538" rotation="0 0 0" scale="1 1 1" visible="true" shadow="receive:true; cast:true;"
@@ -57,7 +57,7 @@
                   geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
                   material="src:#monkeyShoot360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
                   link="href:/rooms/explore/world/KIN_ShootTheMonkey; visualAspectEnabled:false;">
-                  <a-entity text="value: Click me to be teleported; color: #6ba32d; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
+                  <a-entity text="value: Click me to be teleported; color: #6ba32d; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
         </a-entity>
         
         <!-- Ground texts -->
@@ -74,7 +74,7 @@
                   geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
                   material="src:#shootDrop360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
                   link="href:/rooms/explore/world/KIN_ShootAndDrop; visualAspectEnabled:false;">
-                  <a-entity text="value: Click me to be teleported; color: #ce800d; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Poppins-Light-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
+                  <a-entity text="value: Click me to be teleported; color: #ce800d; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" rotation="0 0 0" position="0 1 0"scale="1.5 1.5 1.5"></a-entity>
         </a-entity>
 
       <!-- Ground texts -->
@@ -87,6 +87,11 @@
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box position="0 -0.5 -5" height="60" width="60" depth="1" rotation="-90 0 0" color="#fff" static-body="shape: plane;" circles-shadow></a-box>
+      <a-entity id="Welcome" position="3.913 2.835 -11.075" text="value: WELCOME; color: #595959; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" rotation="0 -29.999999999999996 0"></a-entity>
+      <a-entity id="TO" position="3.91293 2.527 -11.07472" text="value: TO; color: #595959; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" rotation="0 -29.999999999999996 0"></a-entity>
+      <a-entity id="BIT 1002" position="3.91293 2.238 -11.07472" text="value: BIT 1002: Physics; color: #595959; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2" rotation="0 -29.999999999999996 0"></a-entity>
+      <a-entity id="Intro" position="3.91293 1.83616 -11.07472" text="value: This virtual reality space has been created as an opportunity to explore a variety of kinematics experiments as it pertains to BIT-1002 Physics.; color: #595959; width: 1.7; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="" rotation="0 -29.999999999999996 0"></a-entity>
+      <a-entity id="Goal" position="3.91293 1.47869 -11.07472" text="value: The goal of this space is to learn, experiment, and have FUN!; color: #595959; width: 1.7; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" scale="" rotation="0 -29.999999999999996 0"></a-entity>
 
       <!-- Checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 1"></a-entity>
