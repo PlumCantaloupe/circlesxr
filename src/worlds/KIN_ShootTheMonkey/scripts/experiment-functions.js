@@ -53,7 +53,7 @@ function startExperiment () {
     let ball = document.querySelector('#ball');
 
     // drop monkey
-    monkey.setAttribute('dynamic-body', 'shape: box; sphereRadius: 0.125; offset: 0 -1 0;');
+    monkey.setAttribute('dynamic-body', 'shape: cylinder;');
 
     // shoot object2
     ball.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');

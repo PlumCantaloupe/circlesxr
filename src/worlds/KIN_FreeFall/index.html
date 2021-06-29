@@ -75,10 +75,6 @@
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" position="0 -3 0" text="value:FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
 
-        <!-- Control panel -->
-        <a-entity class="controlLabel" position="0 4.8 0" text="value:Control; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="panelLabel" position="0 4.2 0" text="value:Panel; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-
         <!-- Gravity -->
         <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
         <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
@@ -92,8 +88,8 @@
         <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
 
         <!-- Back to hub -->
-        <a-entity class="backToLabel" position="0 -7.7 0" rotation="0 0 180" text="value:Back to; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="panelLabel" position="0 -7 0" rotation="0 0 180" text="value:Hub; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
+        <a-entity class="backToLabel" position="0 -10.3 0" rotation="0 0 180" text="value:Back to; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 -9.6 0" rotation="0 0 180" text="value:Hub; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
       </a-entity>
 
       <!-- Chalk Board -->
@@ -103,7 +99,6 @@
       <a-image id="arrowImage" src="#Arrow-img" position="-3.04209 1.50797 -11.04551" rotation="0 22 0" scale="0.3 0.3 0.3"></a-image>
 
       <!-- Control station -->
-      <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #025d96" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
       <a-entity id="controlStation" geometry="primitive: box; width:5.5; height: 3; depth: 0.15" material="color: #035AF7;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
@@ -174,6 +169,11 @@
         </a-entity>
 
         <a-entity id="controlStationUI" position="0 0 0.1" rotation="90 0 0">
+          <!-- Control panel label -->
+          <a-entity class="controlLabel" position="0 -0.2 -0.75" rotation="90 90 -90" scale="7 7 7" text="value:Control; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+          <a-entity class="panelLabel" position="0 -0.2 0.2" rotation="90 90 -90" scale="7 7 7" text="value:Panel; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+
+          <!-- Gravity -->
           <a-entity class="gravityStrengthText" text="value: 'Gravity: 1g'; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" position="0 0 -0.5" rotation="-90 0 0" scale="2 2 2"></a-entity>
         </a-entity>
       </a-entity>
@@ -186,7 +186,6 @@
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#047cc7" static-body="shape: plane;" circles-shadow></a-box>
       
-
       <!-- Lab Counters-->
       <a-entity id="Counter1" gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity>
@@ -205,7 +204,7 @@
       <a-entity gltf-model="/worlds/KIN_FreeFall/assets/models/Board.glb" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
 
       <!-- Portal to back to experiment Hub -->
-      <a-entity id="HubLink" class="interactive" position="0 1.5 5" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+      <a-entity id="HubLink" class="interactive" position="0 1.5 6.33" rotation="0 90 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
             circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
             material="src:#hub360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
