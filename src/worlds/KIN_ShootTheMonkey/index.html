@@ -17,7 +17,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="debug:false; gravity:-9.8; friction: 0.1;" background="color:#6BA32D;" fog="type:linear; color:#6BA32D; far:30; near:10">
+    <a-scene circles_scene_properties physics="debug:true; gravity:-9.8; friction: 0.1;" background="color:#6BA32D;" fog="type:linear; color:#6BA32D; far:30; near:10">
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -173,12 +173,12 @@
       </a-entity>
 
       <!-- Checkpoints -->
-      <a-entity circles-checkpoint position="0 0.05 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
       <a-entity circles-checkpoint position="-3.5 0.05 -3"></a-entity>
       <a-entity circles-checkpoint position="3.5 0.05 -3"></a-entity>
       <a-entity circles-checkpoint position="-2.8 0.05 -10"></a-entity>
       <a-entity circles-checkpoint position="2.8 0.05 -10"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 -12"></a-entity>
+      <a-entity circles-checkpoint position="0 0.05 -12"></a-entity>
 
       <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
