@@ -55,16 +55,14 @@ function startExperiment () {
     experimentRunning = true;
     console.log('Starting experiment');
 
-    // get the balls
-    let ball1 = document.querySelector('#ball1');
+    // shoot ball 2
     let ball2 = document.querySelector('#ball2');
-
-    // drop ball1
-    ball1.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
-
-    // shoot object2
-    ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
+    ball2.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0; linearDamping:0.2;');
     ball2.body.velocity.set(currentPower * 2, 0, 0);
+
+    // Drop ball 1
+    let ball1 = document.querySelector('#ball1');
+    ball1.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
 
     // get the collision indicators
     let leftIndicator = document.querySelector('#leftCollisionIndicator');

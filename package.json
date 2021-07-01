@@ -55,5 +55,9 @@
     "serve:dev": "npm run build:dev && nodemon ./node_server/app.js",
     "serve": "npm run build && node ./node_server/app.js",
     "mongo": "node ./node_server/mongo.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PlumCantaloupe/circlesxr.git"
   }
 }

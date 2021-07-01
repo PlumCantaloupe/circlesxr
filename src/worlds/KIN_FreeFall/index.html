@@ -44,6 +44,7 @@
         <a-asset-item id="Book3-gltf" src="/worlds/KIN_FreeFall/assets/models/Book3.glb"></a-asset-item>
         <a-asset-item id="Book4-gltf" src="/worlds/KIN_FreeFall/assets/models/Book4.glb"></a-asset-item>
         <a-asset-item id="Stickies-gltf" src="/worlds/KIN_FreeFall/assets/models/Stickies.glb"></a-asset-item>
+        <a-asset-item id="ChalkBoard-gltf" src="/worlds/KIN_FreeFall/assets/models/Board.glb"></a-asset-item>
     
         <!-- Images -->
         <img id="TennisBall-img" src="/worlds/KIN_FreeFall/assets/images/tennis_icon.png">
@@ -51,6 +52,9 @@
         <img id="Bear-img" src="/worlds/KIN_FreeFall/assets/images/bear_icon.png">
         <img id="Car-img" src="/worlds/KIN_FreeFall/assets/images/car_icon.png">
         <img id="Arrow-img" src="/worlds/KIN_FreeFall/assets/images/arrow_icon.png">
+
+        <!-- Hub image -->
+        <img id='hub360' src='/worlds/KIN_ShootAndDrop/assets/images/hubImage.png' crossorigin="anonymous">
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -71,10 +75,6 @@
       <a-entity id="groundTexts" position="0 0 -5" rotation="-90 0 0">
         <a-entity id="TitleText" position="0 -3 0" text="value:FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="12 12 12"></a-entity>
 
-        <!-- Control panel -->
-        <a-entity class="controlLabel" position="0 4.8 0" text="value:Control; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="panelLabel" position="0 4.2 0" text="value:Panel; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-
         <!-- Gravity -->
         <a-entity class="gravityStrengthLabel" position="0 -0.12 0" text="value:Gravity; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
         <a-entity class="gravityStrengthText" position="0 -0.8 0" text="value:1g; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
@@ -88,12 +88,17 @@
         <a-entity id="massrightObjText" position="3.2 -0.8 0" text="value:0.3kg; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
 
         <!-- Back to hub -->
-        <a-entity class="backToLabel" position="0 -7.7 0" rotation="0 0 180" text="value:Back to; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="panelLabel" position="0 -7 0" rotation="0 0 180" text="value:Hub; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
+        <a-entity class="backToLabel" position="0 -10.3 0" rotation="0 0 180" text="value:Back to; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 -9.6 0" rotation="0 0 180" text="value:Hub; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
       </a-entity>
 
+      <!-- Chalk Board -->
+      <a-entity id="Welcome" position="-3.05115 2.7573 -11.04551" rotation="0 22 0" text="value: WELCOME TO FREE FALL; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="2 2 2"></a-entity>
+      <a-entity id="Instructions" position="-3.09441 2.30158 -11.046" rotation="0 22 0" text="value: Free Fall is a demonstration that shows that an object's speed and time to hit the ground depends only on gravity and not size and weight.; color: #025d96; width: 1.7; wrapCount: 43.190; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-entity id="Leader" position="-3.10068 1.8634 -11.04551" rotation="0 22 0" text="value: If you are the leader of the experiment, please use the control panel to the right.; color: #025d96; width: 1.7; wrapCount: 41.46; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 70" scale="1.3 1.3 1.3"></a-entity>
+      <a-image id="arrowImage" src="#Arrow-img" position="-3.04209 1.50797 -11.04551" rotation="0 22 0" scale="0.3 0.3 0.3"></a-image>
+
       <!-- Control station -->
-      <!-- <a-entity id="controlStation1" geometry="width: 5; height: 3" material="side: double; color: #025d96" position="0 1.018 -2.999" rotation="-29.999999999999996 0 0" scale="0.51 0.54 0.13"></a-entity> -->
       <a-entity id="controlStation" geometry="primitive: box; width:5.5; height: 3; depth: 0.15" material="color: #035AF7;" position="0 0.68 -10.5" rotation="-30 180 0" scale="0.4 0.4 0.4">
         <a-entity id="controlStationButtons" rotation="90 0 0">
           <!-- Experiment control buttons -->
@@ -164,19 +169,23 @@
         </a-entity>
 
         <a-entity id="controlStationUI" position="0 0 0.1" rotation="90 0 0">
+          <!-- Control panel label -->
+          <a-entity class="controlLabel" position="0 -0.2 -0.75" rotation="90 90 -90" scale="7 7 7" text="value:Control; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+          <a-entity class="panelLabel" position="0 -0.2 0.2" rotation="90 90 -90" scale="7 7 7" text="value:Panel; color: #025d96; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+
+          <!-- Gravity -->
           <a-entity class="gravityStrengthText" text="value: 'Gravity: 1g'; color: white; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_FreeFall/assets/font/Nunito-Bold-msdf.json; negate: false; lineHeight: 60" position="0 0 -0.5" rotation="-90 0 0" scale="2 2 2"></a-entity>
         </a-entity>
       </a-entity>
 
       <!-- Experiment indicators -->
-      <a-entity id="leftCollisionIndicator" collision-indicator position="-3.3 0.5 -5.5" scale="0.7 0.7 0.7"></a-entity>
-      <a-entity id="rightCollisionIndicator" collision-indicator position="3.5 0.5 -5.5" scale="0.7 0.7 0.7"></a-entity>
+      <a-entity id="leftCollisionIndicator" collision-indicator position="-0.6 0.3 -5.5" scale="0.5 0.5 0.5"></a-entity>
+      <a-entity id="rightCollisionIndicator" collision-indicator position="0.6 0.3 -5.5" scale="0.5 0.5 0.5"></a-entity>
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
       <a-box position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#047cc7" static-body="shape: plane;" circles-shadow></a-box>
       
-
       <!-- Lab Counters-->
       <a-entity id="Counter1" gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity>
@@ -192,12 +201,13 @@
       <a-entity id="Book3-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Book3.glb" position="6.31293 -0.44674 -3.39237" rotation="0 122.57859069028834 0" scale="0.01 0.01 0.01"></a-entity>
       <a-entity id="Book4-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Book4.glb" position="-2.3532 -0.24596 -2.40105" rotation="0 122.57859069028834 0" scale="0.006 0.006 0.006"></a-entity>
       <a-entity id="Stickies-gltf" gltf-model="/worlds/KIN_FreeFall/assets/models/Stickies.glb" position="0.27411 0.0084 -5.65924" scale="0.009 0.009 0.009" rotation="1.35 3.58 0"></a-entity>
+      <a-entity gltf-model="/worlds/KIN_FreeFall/assets/models/Board.glb" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
 
       <!-- Portal to back to experiment Hub -->
-      <a-entity id="HubLink" class="interactive" position="0 1.5 5" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+      <a-entity id="HubLink" class="interactive" position="0 1.5 6.33" rotation="0 90 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
             circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-            material="src:#freeFall360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
+            material="src:#hub360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
             link="href:/rooms/explore/world/KIN_Hub; visualAspectEnabled:false;">
             
       </a-entity>
