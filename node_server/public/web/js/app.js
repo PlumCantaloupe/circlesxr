@@ -84,13 +84,13 @@ function startCoundown(numMS, textId) {
 
 
 //*********** magic links button functionality */
-function createMagicLinks(url, userTypeAsking) {
+function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
   let request = new XMLHttpRequest();
-  request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking);
+  request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking + '&expiryTimeMin=' + expiryTimeMin);
   request.responseType = 'text';
 
   request.onload = function() {
-    showMagicLinks(request.response); //show copy button
+    showMagicLinks(request.response, expiryTimeMin); //show copy button
   };
 
   request.send();
@@ -109,8 +109,8 @@ function copyText(inputId, username) {
   alert('Copied magic link for ' + username  + ' to clipboard!');
 }
 
-function showMagicLinks(data) {
-  startCoundown(CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES * 60000, 'countdownElem'); //start visual timer
+function showMagicLinks(data, expiryTimeMin) {
+  startCoundown(expiryTimeMin * 60000, 'countdownElem'); //start visual timer
 
   const jsonData = JSON.parse(data);
   const menuElem = document.querySelector('#MagicLinksContent');
