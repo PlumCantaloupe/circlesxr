@@ -38,12 +38,23 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!-- island 1, with some spawnpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0 0"></a-entity>
+      <!-- islands, with some spawnpoints -->
+      <a-entity id="env_group" position="0 0 20">
+        <!-- Environment -->
+        <a-entity id="island_1" position="-17 0 33" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_5" position="-14 23 -50" rotation="0 150 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_6" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
+        <a-entity circles-checkpoint circles-spawnpoint position="-18 0.6 33"></a-entity>
 
-      <!-- the environment -->
-      <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
+        <a-entity id="island_1_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_button_1;" position="-19 0.86 32" rotation="0 0 -90" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity id="island_2_button_2" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24.3 8.3 8.2" rotation="4 167 1.6" scale="0.8 0.8 0.8"></a-entity>
+      </a-entity>
 
       <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
 
@@ -54,6 +65,7 @@
 
       <a-entity id='skyBox'
                 rotation='0 200 0'
+                scale='2 2 2'
                 geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
