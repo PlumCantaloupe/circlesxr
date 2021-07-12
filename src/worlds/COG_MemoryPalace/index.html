@@ -7,6 +7,8 @@
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+    <!-- <script src="/worlds/COG_MemoryPalace/Scripts/animation-mixer.js" response-type="arraybuffer" crossorigin="anonymous"></script> -->
+    <!-- <script src="/global/js/libs/aframe-extras.animation-mixer.js"></script> -->
   </head>
   <body>
 
@@ -18,7 +20,7 @@
       <a-assets>
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <img id="skyMap" src="/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
 
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -31,6 +33,8 @@
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
         <a-asset-item id="navmesh_gltf" src="/worlds/ExampleWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -41,7 +45,14 @@
       <!-- islands, with some spawnpoints -->
       <a-entity id="env_group" position="0 0 20">
         <!-- Environment -->
-        <a-entity id="island_1" position="-17 0 33" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+
+        <!-- ISLAND 1 -->
+        <a-entity id="island_1_group">
+          <a-entity id="island_1" position="-17 0 33" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+          <a-entity id="spine" position="-8.3 0 22" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
+        </a-entity>
+
+
         <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
@@ -59,7 +70,7 @@
       <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
 
       <!-- sky and lights -->
-      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
