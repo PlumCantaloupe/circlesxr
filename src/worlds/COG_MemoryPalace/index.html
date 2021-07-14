@@ -9,6 +9,7 @@
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
     <!-- <script src="/worlds/COG_MemoryPalace/Scripts/animation-mixer.js" response-type="arraybuffer" crossorigin="anonymous"></script> -->
     <!-- <script src="/global/js/libs/aframe-extras.animation-mixer.js"></script> -->
+    <script src='/worlds/COG_MemoryPalace/components/look-at.js'></script>
   </head>
   <body>
 
@@ -21,6 +22,8 @@
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id="skyMap" src="/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
+        <!-- Images -->
+        <img id="banana-img" crossorigin="anonymous" src="/worlds/COG_MemoryPalace/assets/images/banana.jpeg" crossorigin="anonymous">
 
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -52,22 +55,25 @@
           <a-entity id="spine" position="-8.3 0 22" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
         </a-entity>
 
-
         <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_5" position="-14 23 -50" rotation="0 150 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_6" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_5" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_6" position="-6.6 26 -70" rotation="0 80 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
-        <a-entity circles-checkpoint circles-spawnpoint position="-18 0.6 33"></a-entity>
+        <a-entity id="island_1_checkpoint_1" circles-checkpoint circles-spawnpoint position="-18 0.6 33"></a-entity>
+        <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-26.4 7.37 21.65"></a-entity>
 
         <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
-        <a-entity id="island_1_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_button_1;" position="-19 0.86 32" rotation="0 0 -90" scale="0.8 0.8 0.8"></a-entity>
-        <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity id="island_1_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_checkpoint_1;" position="-19 0.86 32" rotation="0 0 -90" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
         <a-entity id="island_2_button_2" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24.3 8.3 8.2" rotation="4 167 1.6" scale="0.8 0.8 0.8"></a-entity>
       </a-entity>
 
       <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
+
+      <!-- Image plane -->
+      <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
