@@ -162,6 +162,10 @@ router
 router
   .get('/rooms/:room_id/world/:world_id', authenticated, roomController.serveWorld);
 
+// Serving relative links properly (this also means we can't use index.html) ...
+router
+  .get('/rooms/:room_id/world/:world_id/*', authenticated, controller.serveRelativeWorldContent);
+
 // Lets Encrypt
 router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);
 

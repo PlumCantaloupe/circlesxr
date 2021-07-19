@@ -417,6 +417,15 @@ exports.processDeleteConfirmation = asyncWrapper(async (req, res, next) => {
  * Serve Room Specific Worlds
  */
 exports.serveWorld = asyncWrapper(async (req, res, next) => {
+
+  //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
+  //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
+  if (req.url.charAt(req.url.length - 1) !== '/') {
+    res.writeHead(302, { "Location": req.url + "/" });
+    res.end();
+    return;
+  }
+
   //get world name from path (will have to enforce standards in naming conventions later ...)
   const worldName = req.params.world_id;
   const user = req.user;

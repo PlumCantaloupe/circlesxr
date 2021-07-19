@@ -175,6 +175,14 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.serveWorld = (req, res, next) => {
+  //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
+  //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
+  if (req.url.charAt(req.url.length - 1) !== '/') {
+    res.writeHead(302, { "Location": req.url + "/" });
+    res.end();
+    return;
+  }
+
   const worldName = req.params.world_id;
   const user = req.user;
   const pathStr = path.resolve(__dirname + '/../public/worlds/' + worldName + '/index.html');
@@ -215,6 +223,16 @@ exports.serveWorld = (req, res, next) => {
       res.end(result); //not sure exactly why res.send doesn't work here ...
     }
   });
+};
+
+exports.serveRelativeWorldContent = (req, res, next) => {
+  //just re-directing to correct URL that doesn't have the roomid and the like in it ...
+  //making it easier for devs as absolute paths are a pain to type in ...
+  const worldName = req.params.world_id;
+  const relURL = req.params[0];
+  const newURL = '/worlds/' + worldName + '/' + relURL;
+
+  return res.redirect(newURL);
 };
 
 exports.serveProfile = (req, res, next) => {
