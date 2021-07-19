@@ -9,7 +9,7 @@
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
     <!-- <script src="/worlds/COG_MemoryPalace/Scripts/animation-mixer.js" response-type="arraybuffer" crossorigin="anonymous"></script> -->
     <!-- <script src="/global/js/libs/aframe-extras.animation-mixer.js"></script> -->
-    <script src='/worlds/COG_MemoryPalace/components/look-at.js'></script>
+    <script src="/worlds/COG_MemoryPalace/components/look-at.js"></script>
   </head>
   <body>
 
@@ -23,7 +23,7 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id="skyMap" src="/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
         <!-- Images -->
-        <img id="banana-img" crossorigin="anonymous" src="/worlds/COG_MemoryPalace/assets/images/banana.jpeg" crossorigin="anonymous">
+        <img id="banana-img" src="/worlds/COG_MemoryPalace/assets/images/banana.jpeg" crossorigin="anonymous">
 
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -31,7 +31,9 @@
         <!-- Glezova @ https://sketchfab.com/3d-models/stylized-bridge-dea55cb580e44d458e84d4455eda5de8 -->
         <!-- Sereda @ https://sketchfab.com/3d-models/stylized-stones-minipack-719d8ee393db4b218ace19ce9124918d -->
         <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
-        <!-- <a-asset-item id="island_1_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
+
+        <!-- Islands -->
+        <a-asset-item id="island_placeholder_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="island_1_gltf"  src="/worlds/COG_MemoryPalace/assets/models/Island1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
@@ -56,11 +58,11 @@
           <a-entity id="spine" position="-17 1 36" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
         </a-entity>
 
-        <!-- <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_5" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_6" position="-6.6 26 -70" rotation="0 80 0" scale="2.7 2.7 2.7" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
+        <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_5" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="island_6" position="-6.6 26 -70" rotation="0 80 0" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
         <a-entity id="island_1_checkpoint_1" circles-checkpoint circles-spawnpoint position="-18 0.6 33"></a-entity>
         <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-26.4 7.37 21.65"></a-entity>
@@ -81,11 +83,11 @@
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                scale='2 2 2'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
+      <a-entity id="skyBox"
+                rotation="0 200 0"
+                scale="5 5 5"
+                geometry="primitive:sphere; radius:50; segments-height:24; segments-width:24;"
+                material="shader:flat; src:#skyMap; side:back;">
       </a-entity>
     </a-scene>
 
