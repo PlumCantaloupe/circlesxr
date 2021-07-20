@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -33,13 +34,14 @@
         <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
 
         <!-- Islands -->
-        <a-asset-item id="island_placeholder_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_1_gltf"  src="/worlds/COG_MemoryPalace/assets/models/Island1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_placeholder_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_placeholder/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_navmesh_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
         <a-asset-item id="navmesh_gltf" src="/worlds/ExampleWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-        <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/Island1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -54,7 +56,8 @@
 
         <!-- ISLAND 1 -->
         <a-entity id="island_1_group">
-          <a-entity id="island_1" position="-17 0.75 33" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+          <a-entity id="island_1" position="-17 0.75 33" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+          <a-entity id="island_1_navmesh" position="-17 0.75 33" gltf-model="#island_1_navmesh_gltf" nav-mesh></a-entity>
           <a-entity id="spine" position="-17 1 36" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
         </a-entity>
 
