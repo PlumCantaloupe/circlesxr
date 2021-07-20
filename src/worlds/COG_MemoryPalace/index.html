@@ -43,6 +43,9 @@
 
         <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <!-- Island 1 props and assets -->
+        <a-asset-item id="stem-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1_models/Stem.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -59,6 +62,7 @@
           <a-entity id="island_1" position="-17 0.75 33" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
           <a-entity id="island_1_navmesh" position="-17 0.75 33" gltf-model="#island_1_navmesh_gltf" nav-mesh></a-entity>
           <a-entity id="spine" position="-17 1 36" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
+          <a-entity id="stem" position="-17 0.77 40.4" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
         </a-entity>
 
         <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
@@ -79,7 +83,7 @@
       <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
 
       <!-- Image plane -->
-      <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image>
+      <!-- <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image> -->
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
