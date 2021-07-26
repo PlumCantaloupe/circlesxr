@@ -8,8 +8,6 @@
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-    <!-- <script src="/worlds/COG_MemoryPalace/Scripts/animation-mixer.js" response-type="arraybuffer" crossorigin="anonymous"></script> -->
-    <!-- <script src="/global/js/libs/aframe-extras.animation-mixer.js"></script> -->
     <script src="/worlds/COG_MemoryPalace/components/look-at.js"></script>
   </head>
   <body>
@@ -23,6 +21,7 @@
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id="skyMap" src="/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
+
         <!-- Images -->
         <img id="banana-img" src="/worlds/COG_MemoryPalace/assets/images/banana.jpeg" crossorigin="anonymous">
 
@@ -34,9 +33,10 @@
         <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
 
         <!-- Islands -->
-        <a-asset-item id="island_placeholder_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_placeholder/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_1_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_1_navmesh_gltf"  src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_placeholder_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_placeholder/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_navmesh_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/island_1_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_2_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/island_2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
         <a-asset-item id="navmesh_gltf" src="/worlds/ExampleWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -54,49 +54,76 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!-- islands, with some spawnpoints -->
+      <!-- ENVIRONMENT -->
       <a-entity id="env_group" position="0 0 20">
-        <!-- Environment -->
 
         <!-- ISLAND 1 -->
-        <a-entity id="island_1_group">
-          <a-entity id="island_1" position="-17 0.75 33" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-          <a-entity id="navmesh" position="-17 0.8 33" gltf-model="#island_1_navmesh_gltf" nav-mesh visible="false"></a-entity>
-          <a-entity id="island_1_checkpoint_1" circles-checkpoint circles-spawnpoint position="-7.83 0.85 30"></a-entity>
-          <a-entity id="island_1_checkpoint_2" circles-checkpoint position="-16.9 0.88 32.67"></a-entity>
+        <a-entity id="island_1_group" position="-21 0.75 35.6" rotation="0 -60 0">
+          <a-entity id="island_1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
-          <a-entity id="spine" position="-17 1 36" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
-          <a-entity id="stem" position="-17 0.77 40.4" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
-          <a-entity id="brain" position="-17 6.656 41.024" scale="60 60 60" rotation="0 -90 0" gltf-model="#brain-gltf"></a-entity>
+          <a-entity id="spine" position="0 1 4" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
+          <a-entity id="stem" position="0 0 8.5" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
+          <a-entity id="brain" position="0 7 8.5" scale="60 60 60" rotation="0 -90 0" gltf-model="#brain-gltf"></a-entity>
+
+          <!-- <a-entity id="navmesh" position="0 0.05 0" gltf-model="#island_1_navmesh_gltf" nav-mesh visible="false"></a-entity> -->
+
+          <a-entity id="island_1_checkpoint_1" position="9 0.1 -2.9" circles-checkpoint circles-spawnpoint></a-entity>
+          <a-entity id="island_1_checkpoint_2" circles-checkpoint position="0 0.1 -0.5"></a-entity>
+          <a-entity id="island_1_checkpoint_3" circles-checkpoint position="-8.4 0.17 1.7"></a-entity>
+
+          <a-entity id="island_1_button_1" position="-9.5 1.4 1.8" rotation="0 0 -90" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_checkpoint_1;"></a-entity>
+
+          <!-- Image plane -->
+          <!-- <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image> -->
         </a-entity>
 
-        <a-entity id="island_2" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_3" position="5 12 -1" rotation="0 -50 0" scale="2 2 2" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_4" position="9 10 -30" rotation="0 -25 0" scale="2.4 2.4 2.4" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_5" position="23 27 -52" rotation="0 115 0" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-        <a-entity id="island_6" position="-6.6 26 -70" rotation="0 80 0" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        <!-- ISLAND 2 -->
+        <a-entity id="island_2_group" position="-37 8 -0.5" rotation="0 -173 0">
+          <!-- <a-entity id="island_2_placeholder" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
+          <a-entity id="island_2" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
-        <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-26.4 7.37 21.65"></a-entity>
+          <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-5.5 -0.3 -23.9"></a-entity>
+          <a-entity id="island_2_checkpoint_2" circles-checkpoint position="-1 0 -19"></a-entity>
+          <a-entity id="island_2_checkpoint_3" circles-checkpoint position="16.8 0.175 -2"></a-entity>
+          <a-entity id="island_2_checkpoint_4" circles-checkpoint position="-11 0 2.9"></a-entity>
 
-        <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
-        <a-entity id="island_1_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_checkpoint_1;" position="-19 0.86 32" rotation="0 0 -90" scale="0.8 0.8 0.8"></a-entity>
-        <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
-        <a-entity id="island_2_button_2" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24.3 8.3 8.2" rotation="4 167 1.6" scale="0.8 0.8 0.8"></a-entity>
+          <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
+          <a-entity id="island_2_button_2" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24.3 8.3 8.2" rotation="4 167 1.6" scale="0.8 0.8 0.8"></a-entity>
+        </a-entity>
+
+        <!-- ISLAND 3 -->
+        <a-entity id="island_3_group" position="5 12 -1" rotation="0 -50 0">
+          <a-entity id="island_3_placeholder" scale="2 2 2" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        </a-entity>
+
+        <!-- ISLAND 4 -->
+        <a-entity id="island_4_group" position="9 10 -30" rotation="0 -25 0">
+          <a-entity id="island_4_placeholder" scale="2.4 2.4 2.4" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        </a-entity>
+
+        <!-- ISLAND 5 -->
+        <a-entity id="island_5_group" position="23 27 -52" rotation="0 115 0">
+          <a-entity id="island_5_placeholder" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        </a-entity>
+
+        <!-- ISLAND 6 -->
+        <a-entity id="island_6_group" position="-6.6 26 -70" rotation="0 80 0">
+          <a-entity id="island_6_placeholder" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+        </a-entity>
       </a-entity>
 
-      <!-- Image plane -->
-      <!-- <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image> -->
-
       <!-- sky and lights -->
-      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
-                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
-      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+      <a-entity id="lighting_group">
+        <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
+                  light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+        <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
-      <a-entity id="skyBox"
-                rotation="0 200 0"
-                scale="100 100 100"
-                geometry="primitive:sphere; radius:50; segments-height:24; segments-width:24;"
-                material="shader:flat; src:#skyMap; side:back;">
+        <a-entity id="skyBox"
+                  rotation="0 200 0"
+                  scale="100 100 100"
+                  geometry="primitive:sphere; radius:50; segments-height:24; segments-width:24;"
+                  material="shader:flat; src:#skyMap; side:back;">
+        </a-entity>
       </a-entity>
     </a-scene>
 
