@@ -74,8 +74,6 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           //we want 'gamepade movement-controls' as an "advanced" feature only triggered when the user clicks down on joystick as a new Vr doing this can make themselves nauseous
           //just don't want joystick movement and snap-turning on at the same time (as we want to have each controller have the same controls)
           const toggleGamepadControlsFunc = (e) => {
-            console.log(e.type);
-            console.log(CONTEXT_AF.el);
             if (e.type === 'thumbstickdown') {
               console.log('turn on gamepad controls');
               CONTEXT_AF.el.setAttribute('gamepad-controls', {enabled:true});
