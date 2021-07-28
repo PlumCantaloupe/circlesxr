@@ -22,7 +22,7 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-exports.letsEncrypt = function (req, res, next) {
+const letsEncrypt = function (req, res, next) {
   let key = req.params.challengeHash;
   let val = null;
   let challengePath = path.resolve(__dirname + '/../public/certs/webroot/.well_known/acme-challenge/' + key);
@@ -37,7 +37,7 @@ exports.letsEncrypt = function (req, res, next) {
   });
 };
 
-exports.getAllUsers = function(req, res, next) {
+const getAllUsers = function(req, res, next) {
   User.find({}, function(error, data) {
     if (error) {
       res.send(error);
@@ -46,7 +46,7 @@ exports.getAllUsers = function(req, res, next) {
   });
 };
 
-exports.getUser = (req, res, next) => {
+const getUser = (req, res, next) => {
   User.findOne({username: req.params.username}, function(error, data) {
     if (error) {
       res.send(error);
@@ -56,7 +56,7 @@ exports.getUser = (req, res, next) => {
 };
 
 //!!TODO: look this over
-exports.updateUser = (req, res, next) => {
+const updateUser = (req, res, next) => {
   User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function(error, data) {
     if (error) {
       res.send(error);
@@ -65,7 +65,7 @@ exports.updateUser = (req, res, next) => {
   });
 };
 
-exports.deleteUser = (req, res, next) => {
+const deleteUser = (req, res, next) => {
   User.remove({username: req.params.username}, function(error, data) {
     if (error) {
       res.send(error);
@@ -74,7 +74,7 @@ exports.deleteUser = (req, res, next) => {
   });
 };
 
-exports.updateUser = (req, res, next) => {
+const updateUserInfo = (req, res, next) => {
   if (!req.body) {
     return res.sendStatus(400);
   }
@@ -174,19 +174,7 @@ exports.updateUser = (req, res, next) => {
   }
 };
 
-exports.serveWorld = (req, res, next) => {
-  //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
-  //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
-  if (req.url.charAt(req.url.length - 1) !== '/') {
-    res.writeHead(302, { "Location": req.url + "/" });
-    res.end();
-    return;
-  }
-
-  const worldName = req.params.world_id;
-  const user = req.user;
-  const pathStr = path.resolve(__dirname + '/../public/worlds/' + worldName + '/index.html');
-
+const modifyServeWorld = (worldName, user, pathStr, req, res) => {
   // Ensure the world file exists
   fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
     if (error) {
@@ -205,6 +193,7 @@ exports.serveWorld = (req, res, next) => {
       let result = data.replace(/__WORLDNAME__/g, worldName);
       result = result.replace(/__USERTYPE__/g, user.usertype);
       result = result.replace(/__USERNAME__/g, user.username + specialStatus);
+      result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
       result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
       result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
@@ -212,7 +201,6 @@ exports.serveWorld = (req, res, next) => {
       result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
       result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
       result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-      result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
       result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
 
       // Replace room ID with generic explore name too keep the HTML output
@@ -225,7 +213,60 @@ exports.serveWorld = (req, res, next) => {
   });
 };
 
-exports.serveRelativeWorldContent = (req, res, next) => {
+const serveWorld = (req, res, next) => {
+  //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
+  //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
+  if (req.url.charAt(req.url.length - 1) !== '/') {
+    res.writeHead(302, { "Location": req.url + "/" });
+    res.end();
+    return;
+  }
+
+  const worldName = req.params.world_id;
+  const user = req.user;
+  const pathStr = path.resolve(__dirname + '/../public/worlds/' + worldName + '/index.html');
+
+  modifyServeWorld(worldName, user, pathStr, req, res);
+
+  // Ensure the world file exists
+  // fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
+  //   if (error) {
+  //     return res.redirect('/profile');
+  //   }
+  //   else {
+  //     let specialStatus = '';
+
+  //     if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
+  //       specialStatus = '*';
+  //     }
+  //     else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
+  //       specialStatus = '**';
+  //     }
+
+  //     let result = data.replace(/__WORLDNAME__/g, worldName);
+  //     result = result.replace(/__USERTYPE__/g, user.usertype);
+  //     result = result.replace(/__USERNAME__/g, user.username + specialStatus);
+
+  //     result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
+  //     result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
+  //     result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
+  //     result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
+  //     result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
+  //     result = result.replace(/__COLOR_BODY__/g,  user.color_body);
+  //     result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
+  //     result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+
+  //     // Replace room ID with generic explore name too keep the HTML output
+  //     // clean
+  //     result = result.replace(/__ROOM_NAME__/g, 'explore');
+
+  //     res.set('Content-Type', 'text/html');
+  //     res.end(result); //not sure exactly why res.send doesn't work here ...
+  //   }
+  // });
+};
+
+const serveRelativeWorldContent = (req, res, next) => {
   //just re-directing to correct URL that doesn't have the roomid and the like in it ...
   //making it easier for devs as absolute paths are a pain to type in ...
   const worldName = req.params.world_id;
@@ -235,7 +276,7 @@ exports.serveRelativeWorldContent = (req, res, next) => {
   return res.redirect(newURL);
 };
 
-exports.serveProfile = (req, res, next) => {
+const serveProfile = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
   let user = req.user;
 
@@ -311,7 +352,7 @@ exports.serveProfile = (req, res, next) => {
   });
 };
 
-exports.registerUser = (req, res, next) => {
+const registerUser = (req, res, next) => {
   //!!
   console.log('disabling register feature for prototype'); 
   return next();
@@ -390,7 +431,7 @@ exports.registerUser = (req, res, next) => {
   */
 };
 
-exports.serveRegister = (req, res, next) => {
+const serveRegister = (req, res, next) => {
   //Mongoose promises http://mongoosejs.com/docs/promises.html
 
   const promises = [
@@ -434,29 +475,28 @@ exports.serveRegister = (req, res, next) => {
   }).catch(function(err){
     console.log(err);
   });
-
 };
 
 
 //test function to add models to dbs
-exports.addModel3Ds = (req, res, next) => {
+const addModel3Ds = (req, res, next) => {
   addAvatarModels();
   return res.redirect('/');
 };
 
 //test function to add test users to dbs
-exports.addUsers = (req, res, next) => {
+const addUsers = (req, res, next) => {
   addTestUsers();
   return res.redirect('/');
 };
 
-exports.addAllTestData = (req, res, next) => {
+const addAllTestData = (req, res, next) => {
   addAvatarModels();
   addTestUsers();
   return res.redirect('/');
 };
 
-exports.serveExplore = (req, res, next) => {
+const serveExplore = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
   let user = req.user;
 
@@ -492,7 +532,7 @@ exports.serveExplore = (req, res, next) => {
   });
 };
 
-exports.generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
+const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
   const jwtOptions = {
     issuer: 'circlesxr.com',
     audience: 'circlesxr.com',
@@ -504,7 +544,7 @@ exports.generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
   return baseURL + '/magic-login?token=' + token + '&route=' + route;
 };
 
-exports.getMagicLinks = (req, res, next) => {
+const getMagicLinks = (req, res, next) => {
   const route = req.query.route;
   const userTypeAsking = req.query.userTypeAsking;
   const expiryTimeMin = req.query.expiryTimeMin;
@@ -516,7 +556,7 @@ exports.getMagicLinks = (req, res, next) => {
       res.send(error);
     }
     for (let i = 0; i < data.length; i++) {
-      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL, route, expiryTimeMin)});
+      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:generateAuthLink(data[i].email, baseURL, route, expiryTimeMin)});
 
       if (i === data.length - 1 ) {
         res.json(allAccounts);
@@ -782,4 +822,25 @@ const addAvatarModels = () => {
   }
 
   console.log('added test models to db');
+};
+
+module.exports = {
+  letsEncrypt,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  updateUserInfo,
+  modifyServeWorld,
+  serveWorld,
+  serveRelativeWorldContent,
+  serveProfile,
+  registerUser,
+  serveRegister,
+  addModel3Ds,
+  addUsers,
+  addAllTestData,
+  serveExplore,
+  generateAuthLink,
+  getMagicLinks
 };

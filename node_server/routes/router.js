@@ -120,7 +120,7 @@ router
       successRedirect: '/explore',
       failureRedirect: '/'
     }));
-router.post('/update-user', controller.updateUser);
+router.post('/update-user', controller.updateUserInfo);
 
 //TODO: this is a temporary fix. Sometime will have to add in ability for user to upload ....
 router.get('/add-models-to-db', controller.addModel3Ds);

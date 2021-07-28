@@ -2,6 +2,7 @@
 
 const path = require('path');
 const Room = require('../models/room');
+const controller = require('../controllers/controller');
 const validator = require('validator');
 //const emailService = require('../services/email');
 const fs = require('fs');
@@ -451,42 +452,44 @@ exports.serveWorld = asyncWrapper(async (req, res, next) => {
     return res.redirect('/profile');
   }
 
-  // Ensure the world file exists
-  fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
-    if (error) {
-      return res.redirect('/profile');
-    }
-    else {
-      let specialStatus = '';
+  controller.modifyServeWorld(worldName, user, pathStr, req, res);
 
-      if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
-        specialStatus = '*';
-      }
-      else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
-        specialStatus = '**';
-      }
+     // Ensure the world file exists
+  // fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
+  //   if (error) {
+  //     return res.redirect('/profile');
+  //   }
+  //   else {
+  //     let specialStatus = '';
 
-      let result = data.replace(/__WORLDNAME__/g, worldName);
-      result = result.replace(/__USERTYPE__/g, user.usertype);
-      result = result.replace(/__USERNAME__/g, user.username + specialStatus);
+  //     if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
+  //       specialStatus = '*';
+  //     }
+  //     else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
+  //       specialStatus = '**';
+  //     }
 
-      result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
-      result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
-      result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
-      result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
-      result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
-      result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-      result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
-      result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+  //     let result = data.replace(/__WORLDNAME__/g, worldName);
+  //     result = result.replace(/__USERTYPE__/g, user.usertype);
+  //     result = result.replace(/__USERNAME__/g, user.username + specialStatus);
 
-      // Replace room name template string with the room ID
-      result = result.replace(/__ROOM_NAME__/g, room._id);
+  //     result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
+  //     result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
+  //     result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
+  //     result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
+  //     result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
+  //     result = result.replace(/__COLOR_BODY__/g,  user.color_body);
+  //     result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
+  //     result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
 
-      // Replace world links with rooms ID
-      result = result.replace(/rooms\/explore/g, 'rooms/' + room._id);
+  //     // Replace room name template string with the room ID
+  //     result = result.replace(/__ROOM_NAME__/g, room._id);
 
-      res.set('Content-Type', 'text/html');
-      res.end(result); //not sure exactly why res.send doesn't work here ...
-    }
-  });
+  //     // Replace world links with rooms ID
+  //     result = result.replace(/rooms\/explore/g, 'rooms/' + room._id);
+
+  //     res.set('Content-Type', 'text/html');
+  //     res.end(result); //not sure exactly why res.send doesn't work here ...
+  //   }
+  // });
 })
