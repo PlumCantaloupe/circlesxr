@@ -23,8 +23,10 @@
         <img id="skyMap" src="/worlds/COG_MemoryPalace/assets/images/086_hdrmaps_com_free_above_clouds.jpg" crossorigin="anonymous">
 
         <!-- Images -->
-        <img id="banana-img" src="/worlds/COG_MemoryPalace/assets/images/banana.jpeg" crossorigin="anonymous">
         <img id="heart1_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/heart_1.png" crossorigin="anonymous">
+
+        <!-- Multiple island assets -->
+        <a-asset-item id="pedestal-gltf" src="/worlds/COG_MemoryPalace/assets/models/general/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Islands -->
         <a-asset-item id="island_placeholder_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_placeholder/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -63,18 +65,23 @@
           <a-entity id="stem" position="0 0 8.5" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
           <a-entity id="brain" position="0 7 8.5" scale="60 60 60" rotation="0 -90 0" gltf-model="#brain-gltf"></a-entity>
 
-
-          <a-entity id="island_1_checkpoint_1" position="9 0.1 -2.9" circles-checkpoint circles-spawnpoint></a-entity>
-          <a-entity id="island_1_checkpoint_2" circles-checkpoint position="0 0.1 -0.5"></a-entity>
-          <a-entity id="island_1_checkpoint_3" circles-checkpoint position="-8.4 0.17 1.7"></a-entity>
-
-          <a-entity id="island_1_button_1" position="-9.5 1.4 1.8" rotation="0 0 -90" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_checkpoint_1;"></a-entity>
-
-          <!-- Image plane -->
-          <!-- <a-image id="banana-img-plane" src="#banana-img" position="-17 2 50" look-at="#Player1"></a-image> -->
-
+          <!-- Teleport to second island -->
+          <!-- Weird bug: for some reason, I can't group the following entities in a group since we're going to re-use them on other islands. It resets the spawnpoint to origin. -->
+          <!-- Button -->
+          <a-entity id="island_1_button_1" position="-9 1.4 -0.15" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_2_checkpoint_1;"></a-entity>
+          <!-- Text label -->
+          <a-entity text="value: To Second Island; align: center; color: black;" position="-9 1.7 -0.15" scale="2 2 1" look-at="#Player1"></a-entity>
+          <!-- Pedestal -->
+          <a-entity id="pedestal1-island1" position="-9 -0.1 -0.15" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+          
           <!-- Ladder -->
           <a-entity id="ladder-island1" position="-11.59 -0.4 1.87" scale="1 1 1" rotation="0.32 -16.48 9.3" gltf-model="#ladder-gltf"></a-entity>
+
+          <!-- Island 1 checkpoints -->
+          <a-entity id="island_1_checkpoint_1" position="9 0.1 -2.9" circles-checkpoint circles-spawnpoint></a-entity>
+          <a-entity id="island_1_checkpoint_2" circles-checkpoint position="0 0.1 -0.5"></a-entity>
+          <a-entity id="island_1_checkpoint_3" circles-checkpoint position="-8.4 0.13 1.7"></a-entity>
+
         </a-entity>
 
         <!-- ISLAND 2 -->
@@ -84,13 +91,35 @@
 
           <a-image id="heart1" position="22.5 1.6 -2.5" scale="3 3 3" src="#heart1_img" look-at="#Player1"></a-image>
 
+          <!-- Teleport to island 1-->
+          <!-- Button -->
+          <a-entity id="island_2_button_1" position="-3.4 1 -24.7" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_3;"></a-entity>
+          <!-- Text label -->
+          <a-entity text="value: To First Island; align: center; color: black;" position="-3.4 1.3 -24.7" scale="2 2 1" look-at="#Player1"></a-entity>
+          <!-- Pedestal -->
+          <a-entity id="pedestal1-island2" position="-3.4 -0.5 -24.7" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+
+          <!-- Teleport to island 3 -->
+          <!-- Button -->
+          <a-entity id="island_2_button_2" position="-21 1.1 9" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:;"></a-entity>
+          <!-- Text label -->
+          <a-entity text="value: Under Construction; align: center; color: black;" position="-21 1.4 9" scale="2 2 1" look-at="#Player1"></a-entity>
+          <!-- Pedestal -->
+          <a-entity id="pedestal2-island2" position="-21 -0.4 9" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+
+          <!-- Checkpoints -->
           <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-5.5 -0.3 -23.9"></a-entity>
           <a-entity id="island_2_checkpoint_2" circles-checkpoint position="-1 0 -19"></a-entity>
           <a-entity id="island_2_checkpoint_3" circles-checkpoint position="16.8 0.175 -2"></a-entity>
           <a-entity id="island_2_checkpoint_4" circles-checkpoint position="-11 0.07 2.9"></a-entity>
+          <a-entity id="island_2_checkpoint_5" circles-checkpoint position="-6.3 0.07 11.8"></a-entity>
+          <a-entity id="island_2_checkpoint_6" circles-checkpoint position="-0.1 -0.1 20.3"></a-entity>
+          <a-entity id="island_2_checkpoint_7" circles-checkpoint position="6.94 0.09 14.75"></a-entity>
+          <a-entity id="island_2_checkpoint_8" circles-checkpoint position="13.4 0.12 6"></a-entity>
+          <a-entity id="island_2_checkpoint_9" circles-checkpoint position="9.04 0.02 -18.3"></a-entity>
+          <a-entity id="island_2_checkpoint_10" circles-checkpoint position="16.2 0.09 -12"></a-entity>
+          <a-entity id="island_2_checkpoint_11" circles-checkpoint position="-21.4 -0.1 6.6"></a-entity>
 
-          <a-entity id="island_2_button_1" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_1;" position="-24 8.0 19.5" rotation="0 155 -55" scale="0.8 0.8 0.8"></a-entity>
-          <a-entity id="island_2_button_2" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_button_1;" position="-24.3 8.3 8.2" rotation="4 167 1.6" scale="0.8 0.8 0.8"></a-entity>
         </a-entity>
 
         <!-- ISLAND 3 -->
