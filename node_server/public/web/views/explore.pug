@@ -73,7 +73,15 @@ block content
           if userCanGenMagicLinks
             input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("/rooms/explore/world/KIN_ShootTheMonkey", "' + userInfo.userType + '")')
           a(href='/rooms/explore/world/KIN_ShootTheMonkey' class="pure-button") Kinematics lab - Shoot the Monkey
-
+    
+    div(class="pure-menu gutter-bottom")
+    <span class="pure-menu-heading">Education - CogSci</span>
+      ul(class="pure-menu-list")
+        li
+          if userCanGenMagicLinks
+            input(type='button' class='pure-button pure-button-primary' value=buttonText onclick='createMagicLinks("/rooms/explore/world/COG_MemoryPalace", "' + userInfo.userType + '")')
+          a(href='/rooms/explore/world/COG_MemoryPalace' class='pure-button') CogSci Memory Palace
+          
     div(class="pure-menu gutter-bottom")
     <span class="pure-menu-heading">For Testing</span>
       ul(class="pure-menu-list")
