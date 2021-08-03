@@ -24,6 +24,8 @@
 
         <!-- Images -->
         <img id="heart1_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/heart_1.png" crossorigin="anonymous">
+        <img id="woman_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/Woman.png" crossorigin="anonymous">
+        <img id="cerberus_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/Cerberus.png" crossorigin="anonymous">
 
         <!-- Multiple island assets -->
         <a-asset-item id="pedestal-gltf" src="/worlds/COG_MemoryPalace/assets/models/general/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -42,6 +44,9 @@
         <a-asset-item id="brain-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/Brain.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="ladder-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="wires-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/wires.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pole-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/pole.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+       
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -61,6 +66,8 @@
           <a-entity id="spine" position="0 1 4" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
           <a-entity id="stem" position="0 0 8.5" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
           <a-entity id="brain" position="0 7 8.5" scale="60 60 60" rotation="0 -90 0" gltf-model="#brain-gltf"></a-entity>
+          
+          
 
           <!-- Teleport to second island -->
           <!-- Weird bug: for some reason, I can't group the following entities in a group since we're going to re-use them on other islands. It resets the spawnpoint to origin. -->
@@ -86,7 +93,16 @@
           <!-- <a-entity id="island_2_placeholder" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
           <a-entity id="island_2" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
+
           <a-image id="heart1" position="22.5 1.6 -2.5" scale="3 3 3" src="#heart1_img" look-at="#Player1"></a-image>
+          <a-image id="woman" position="10.758 10.815 -7.437" scale="3 3 3" src="#woman_img" look-at="#Player1"></a-image>
+          <a-image id="cerberus" position="-5.620 6.604 -2.533" scale="25 20 20" rotation="180 -54.464 180" src="#cerberus_img" look-at="#Player1"></a-image>
+
+          <a-entity id="Electrical_Pole" position="16.696 -6.173 26.131" scale="0.85 0.85 0.85" rotation="0 -70 0">
+            <a-entity id="wires" gltf-model="#wires-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 -90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="pole1" gltf-model="#pole-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 -90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="pole2" gltf-model="#pole-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+          </a-entity>
 
           <!-- Teleport to island 1-->
           <!-- Button -->
