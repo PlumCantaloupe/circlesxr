@@ -34,9 +34,6 @@
         <a-asset-item id="navmesh_gltf" src="/worlds/COG_MemoryPalace/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="island_2_gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/island_2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-        <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
-        <a-asset-item id="navmesh_gltf" src="/worlds/ExampleWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-
         <!-- loading navmesh. Following instructions from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
         <!-- <a-asset-item id="navmesh_gltf" src="/worlds/ExampleWorld/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
 
@@ -54,8 +51,8 @@
       <circles-manager-avatar/>
 
       <!-- ENVIRONMENT -->
-      <a-entity id="env_group" position="0 0 20">
-        <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" nav-mesh visible="true"></a-entity> -->
+      <a-entity id="env_group">
+        <a-entity id="navmesh" gltf-model="#navmesh_gltf" nav-mesh visible="false"></a-entity>
 
         <!-- ISLAND 1 -->
         <a-entity id="island_1_group" position="-21 0.75 35.6" rotation="0 -60 0">
