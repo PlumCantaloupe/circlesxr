@@ -42,13 +42,13 @@
         <a-asset-item id="ladder-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Island 2 props and assets -->
-        <a-asset-item id="pillow-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/Pillow.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="white-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/WhitePawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="black-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/BlackPawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <img id="heart1_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/heart_1.png" crossorigin="anonymous">
         <img id="heart2_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/heart_2.png" crossorigin="anonymous">
         <img id="heart3_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/heart_3.png" crossorigin="anonymous">
         <img id="medusa_img" src="/worlds/COG_MemoryPalace/assets/images/island_2/medusa.png" crossorigin="anonymous">
+        <a-asset-item id="pillow-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/Pillow.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="white-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/WhitePawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="black-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/BlackPawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -93,7 +93,8 @@
           <!-- <a-entity id="island_2_placeholder" position="-30 6 13" rotation="0 0 0" scale="3 3 3" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
           <a-entity id="island_2" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
-          <a-entity id="island_2_scene_1_grp" position="21.6 1.6 -2.6" rotation="0 -90 0">
+          <!-- Scene 2: Medulla Oblongata -->
+          <a-entity id="island_2_scene_2_grp" position="21.6 1.6 -2.6" rotation="0 -90 0">
             <a-image id="heart1" position="-2 0 0" scale="3 3 3" src="#heart1_img" easy-transparency look-at="#Player1"></a-image>
             <a-image id="heart2" position="0 0 0" scale="3 3 3" src="#heart2_img" easy-transparency look-at="#Player1"></a-image>
             <a-image id="heart3" position="2 0 0" scale="3 3 3" src="#heart3_img" easy-transparency look-at="#Player1"></a-image>
