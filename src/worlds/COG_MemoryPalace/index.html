@@ -43,6 +43,11 @@
         <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="ladder-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_1/Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <!-- Island 2 props and assets -->
+        <a-asset-item id="pillow-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/Pillow.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="white-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/WhitePawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="black-pawn-gltf" src="/worlds/COG_MemoryPalace/assets/models/island_2/BlackPawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -88,6 +93,12 @@
 
           <a-image id="heart1" position="22.5 1.6 -2.5" scale="3 3 3" src="#heart1_img" look-at="#Player1"></a-image>
 
+          <!-- Scene 3: Pons -->
+          <a-entity id="pillow" position="-12.44 0.6 7" rotation="-1.7 80 -36" scale="0.2 0.2 0.2" gltf-model="#pillow-gltf"></a-entity>
+          <a-entity id="black-pawn-1" position="-16 -0.1 9.7" scale="1.2 1.2 1.2" gltf-model="#black-pawn-gltf"></a-entity>
+          <a-entity id="black-pawn-2" position="-10.5 -0.1 10.5" scale="1 1 1" gltf-model="#black-pawn-gltf"></a-entity>
+          <a-entity id="white-pawn" position="-13 -0.1 11.4" scale="0.8 0.8 0.8" gltf-model="#white-pawn-gltf"></a-entity>
+
           <!-- Teleport to island 1-->
           <!-- Button -->
           <a-entity id="island_2_button_1" position="-3.4 1 -24.7" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_1_checkpoint_3;"></a-entity>
@@ -98,11 +109,11 @@
 
           <!-- Teleport to island 3 -->
           <!-- Button -->
-          <a-entity id="island_2_button_2" position="-21 1.1 9" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:;"></a-entity>
+          <a-entity id="island_2_button_2" position="-22.7 1.1 5.1" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:;"></a-entity>
           <!-- Text label -->
-          <a-entity text="value: Under Construction; align: center; color: black;" position="-21 1.4 9" scale="2 2 1" look-at="#Player1"></a-entity>
+          <a-entity text="value: Under Construction; align: center; color: black;" position="-22.7 1.4 5.1" scale="2 2 1" look-at="#Player1"></a-entity>
           <!-- Pedestal -->
-          <a-entity id="pedestal2-island2" position="-21 -0.4 9" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+          <a-entity id="pedestal2-island2" position="-22.7 -0.4 5.1" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
 
           <!-- Checkpoints -->
           <a-entity id="island_2_checkpoint_1" circles-checkpoint position="-5.5 -0.3 -23.9"></a-entity>
