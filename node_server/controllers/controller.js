@@ -195,13 +195,54 @@ const modifyServeWorld = (worldName, user, pathStr, req, res) => {
       result = result.replace(/__USERNAME__/g, user.username + specialStatus);
       result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
-      result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
-      result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
-      result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
-      result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
-      result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
-      result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-      result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+      if (req.query.head_type) {
+        //
+      }
+      else {
+        result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
+      }
+
+      if (req.query.hair_type) {
+        //
+      }
+      else {
+        result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
+      }
+
+      if (req.query.body_type) {
+        //
+      }
+      else {
+        result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
+      }
+
+      if (req.query.head_col) {
+        //
+      }
+      else {
+        result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
+      }
+
+      if (req.query.hair_col) {
+        //
+      }
+      else {
+        result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
+      }
+
+      if (req.query.body_col) {
+        //
+      }
+      else {
+        result = result.replace(/__COLOR_BODY__/g,  user.color_body);
+      }
+
+      if (req.query.av_height) {
+        //
+      }
+      else {
+        result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+      }
 
       // Replace room ID with generic explore name too keep the HTML output
       // clean
