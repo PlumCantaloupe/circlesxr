@@ -3,12 +3,12 @@
 require('../../src/core/circles_server');
 const mongoose = require('mongoose');
 const User     = require('../models/user');
-const Room     = require('../models/room');
 const Model3D  = require('../models/model3D');
 const path     = require('path');
 const fs       = require('fs');
 const crypto   = require('crypto');
 const dotenv   = require('dotenv');
+const url      = require('url');
 const dotenvParseVariables = require('dotenv-parse-variables');
 const jwt      = require('jsonwebtoken');
 const { CONSTANTS } = require('../../src/core/circles_research');
@@ -307,15 +307,18 @@ const serveWorld = (req, res, next) => {
   // });
 };
 
-const serveRelativeWorldContent = (req, res, next) => {
-  //just re-directing to correct URL that doesn't have the roomid and the like in it ...
-  //making it easier for devs as absolute paths are a pain to type in ...
-  const worldName = req.params.world_id;
-  const relURL = req.params[0];
-  const newURL = '/worlds/' + worldName + '/' + relURL;
+// const serveRelativeWorldContent = (req, res, next) => {
 
-  return res.redirect(newURL);
-};
+//   console.log(req.url);
+//   console.log(path.extname(req.url));
+
+//   //making it easier for devs as absolute paths are a pain to type in ...
+//   const worldName = req.params.world_id;
+//   const relURL = req.params[0];
+//   const newURL = '/' + worldName + '/' + relURL;
+
+//   return res.redirect(newURL);
+// };
 
 const serveProfile = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
@@ -327,8 +330,7 @@ const serveProfile = (req, res, next) => {
     Model3D.find({type: CIRCLES.MODEL_TYPE.HAIR}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.BODY}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_LEFT}).exec(),
-    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec(),
-    user.getAccessibleRooms()
+    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec()
   ];
 
   const queryChecks = [
@@ -385,8 +387,7 @@ const serveProfile = (req, res, next) => {
     res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
       title: `Welcome ${user.username}`,
       userInfo: userInfo,
-      userOptions: userOptions,
-      userRooms: results[5]
+      userOptions: userOptions
     });
   }).catch(function(err){
     console.log(err);
@@ -874,7 +875,7 @@ module.exports = {
   updateUserInfo,
   modifyServeWorld,
   serveWorld,
-  serveRelativeWorldContent,
+  // serveRelativeWorldContent,
   serveProfile,
   registerUser,
   serveRegister,

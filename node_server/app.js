@@ -221,7 +221,7 @@ let io = require("socket.io")(server, {
     }
 });
 
-//this code is unused when we are using teh janus sever/adapter 
+//this code is unused when we are using the janus sever/adapter 
 const rooms = {};
 io.on("connection", socket => {
   console.log("user connected", socket.id);

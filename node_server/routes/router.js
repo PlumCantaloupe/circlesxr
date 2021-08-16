@@ -3,7 +3,6 @@
 const router     = require('express').Router();
 const path       = require('path');
 const controller = require('../controllers/controller');
-const roomController = require('../controllers/room');
 const User       = require('../models/user');
 const passport   = require('passport');
 
@@ -134,37 +133,11 @@ router.get('/add-all-test-data', controller.addAllTestData);
  * room name of "explore". This will be a public room.
  */
 router
-  .get('/rooms/explore/world/:world_id', authenticated, controller.serveWorld);
-
-// Room related routes
-router
-  .get('/rooms', authenticated, roomController.list)
-  .post('/rooms', authenticated, roomController.processCreateForm);
-
-// Room Editing
-router
-  .get('/rooms/:room_id/edit', authenticated, roomController.editForm)
-  .post('/rooms/:room_id/edit', authenticated, roomController.processEditForm)
-  .get('/rooms/:room_id/delete', authenticated, roomController.deleteConfirmation)
-  .post('/rooms/:room_id/delete', authenticated, roomController.processDeleteConfirmation);
-
-router.get('/invites', authenticated, roomController.serveInvites);
-
-// Room Member Management
-router
-  .get('/rooms/:room_id/members', authenticated, roomController.membersPage)
-  .post('/rooms/:room_id/invite', authenticated, roomController.processInviteForm)
-  .post('/rooms/:room_id/invite/accept', authenticated, roomController.acceptInvite)
-  .post('/rooms/:room_id/invite/reject', authenticated, roomController.rejectInvite)
-  .post('/rooms/:room_id/members', authenticated, roomController.processMemberActions);
-
-// Room Worlds
-router
-  .get('/rooms/:room_id/world/:world_id', authenticated, roomController.serveWorld);
+  .get('/worlds/:world_id', authenticated, controller.serveWorld);
 
 // Serving relative links properly (this also means we can't use index.html) ...
-router
-  .get('/rooms/:room_id/world/:world_id/*', authenticated, controller.serveRelativeWorldContent);
+// router
+//   .get('/worlds/:world_id/*', authenticated, controller.serveRelativeWorldContent);
 
 // Lets Encrypt
 router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);
