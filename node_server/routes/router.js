@@ -139,7 +139,4 @@ router
 // router
 //   .get('/worlds/:world_id/*', authenticated, controller.serveRelativeWorldContent);
 
-// Lets Encrypt
-router.get('/.well-known/acme-challenge/:challengeHash', controller.letsEncrypt);
-
 module.exports = router;
