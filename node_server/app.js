@@ -13,9 +13,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-// Make the parsed environment config globally accessible
-//global.env = env;
-
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
@@ -25,7 +22,6 @@ const fs              = require('fs');
 const url             = require('url');
 const path            = require('path');
 const helmet          = require("helmet");
-//const forceSSL        = require('express-force-ssl');
 const sassMiddleware  = require('node-sass-middleware');
 
 const http            = require('http');
@@ -84,13 +80,9 @@ app.use(
 app.use(bodyParser.json());                                 //set body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-const srcPath = __dirname + '/scss';
-const destPath = __dirname + '/public/web/css';
-
 app.use(sassMiddleware({
-  src: srcPath,
-  dest: destPath,
+  src: __dirname + '/scss',
+  dest: __dirname + '/public/web/css',
   debug: true,
   outputStyle: 'compressed',
   prefix: '/web/css',
@@ -108,9 +100,9 @@ app.use(express.static(__dirname + '/public'));             //set root path of s
 // Set up Passport
 const passport              = require('passport');
 const passportLocalStrategy = require('passport-local').Strategy;
+const JwtStrategy           = require('passport-jwt').Strategy
+const ExtractJwt            = require('passport-jwt').ExtractJwt
 
-const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
 const jwtOptions = {
   secretOrKey: env.JWT_SECRET, //the same one we used for token generation
   algorithms: 'HS256', //the same one we used for token generation
@@ -175,7 +167,6 @@ passport.deserializeUser(function(id, done) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use((req, res, next) => {
   // If the request is authenticated, add user info to the response locals for use in templates
   if (req.isAuthenticated()) {
@@ -188,12 +179,10 @@ app.use((req, res, next) => {
     };
   }
   next();
-})
+});
 
 // Bind the routes to the app
-const routes = require('./routes/router');
-app.use('/', routes);
-
+app.use('/', require('./routes/router'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

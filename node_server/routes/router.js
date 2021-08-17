@@ -53,25 +53,6 @@ router.post('/login',  passport.authenticate('local', {
 //magic links for students
 router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 
-//token login
-// router.get('/magic-login',
-//   (req, res, next) => {
-//     const { incorrectToken, token } = req.query;
-
-//     if (token) {
-//       next();
-//     } else {
-//       res.render('login', {
-//         incorrectToken: incorrectToken === 'true',
-//       })
-//     }
-//   },
-//   passport.authenticate('jwt', {
-//     successRedirect: '/explore',
-//     failureRedirect: '/',
-//   })
-// );
-
 router.get('/magic-login', function(req, res, next) {
   passport.authenticate('jwt', function(err, user, info) {
     if (err) { return next(err); }
@@ -82,8 +63,6 @@ router.get('/magic-login', function(req, res, next) {
     });
   })(req, res, next);
 });
-
-// TODO: Get flash messages to work on login failure
 
 // Ensure a user is authenticated before hitting logout
 router.get('/logout', authenticated, (req, res, next) => {
@@ -98,16 +77,15 @@ router.get('/register', notAuthenticated, controller.serveRegister);
 router.get('/profile', authenticated, controller.serveProfile);
 router.get('/explore', authenticated, controller.serveExplore);
 
-
 //REST API (need to secure one day ... )
 //inspired by https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
-router.route('/users/:username')
-  .get(controller.getUser)
-  .put(controller.updateUser)
-  .delete(controller.deleteUser);
+// router.route('/users/:username')
+//   .get(controller.getUser)
+//   .put(controller.updateUser)
+//   .delete(controller.deleteUser);
 
-router.route('/users')
-  .get(controller.getAllUsers);
+// router.route('/users')
+//   .get(controller.getAllUsers);
 
 router
   .get('/register', notAuthenticated, controller.serveRegister)
@@ -119,6 +97,7 @@ router
       successRedirect: '/explore',
       failureRedirect: '/'
     }));
+    
 router.post('/update-user', controller.updateUserInfo);
 
 //TODO: this is a temporary fix. Sometime will have to add in ability for user to upload ....
@@ -132,11 +111,9 @@ router.get('/add-all-test-data', controller.addAllTestData);
  * This route will look for and load worlds by folder name and use the shared
  * room name of "explore". This will be a public room.
  */
-router
-  .get('/worlds/:world_id', authenticated, controller.serveWorld);
+router.get('/w/:world_id', authenticated, controller.serveWorld);
 
 // Serving relative links properly (this also means we can't use index.html) ...
-// router
-//   .get('/worlds/:world_id/*', authenticated, controller.serveRelativeWorldContent);
+router.get('/w/:world_id/*', authenticated, controller.serveRelativeWorldContent);
 
 module.exports = router;
