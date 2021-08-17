@@ -174,7 +174,7 @@ const updateUserInfo = (req, res, next) => {
   }
 };
 
-const modifyServeWorld = (worldName, user, pathStr, req, res) => {
+const modifyServeWorld = (world_id, group_id, user, pathStr, req, res) => {
   // Ensure the world file exists
   fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
     if (error) {
@@ -190,7 +190,7 @@ const modifyServeWorld = (worldName, user, pathStr, req, res) => {
         specialStatus = '**';
       }
 
-      let result = data.replace(/__WORLDNAME__/g, worldName);
+      let result = data.replace(/__WORLDNAME__/g, world_id);
       result = result.replace(/__USERTYPE__/g, user.usertype);
       result = result.replace(/__USERNAME__/g, user.username + specialStatus);
       result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
@@ -246,7 +246,7 @@ const modifyServeWorld = (worldName, user, pathStr, req, res) => {
 
       // Replace room ID with generic explore name too keep the HTML output
       // clean
-      result = result.replace(/__ROOM_NAME__/g, 'explore');
+      result = result.replace(/__ROOM_NAME__/g, group_id);
 
       res.set('Content-Type', 'text/html');
       res.end(result); //not sure exactly why res.send doesn't work here ...
@@ -257,68 +257,45 @@ const modifyServeWorld = (worldName, user, pathStr, req, res) => {
 const serveWorld = (req, res, next) => {
   //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
   //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
-  if (req.url.charAt(req.url.length - 1) !== '/') {
-    res.writeHead(302, { "Location": req.url + "/" });
+  const splitURL = req.url.split('?');
+  const baseURL = (splitURL.length > 0)?splitURL[0]:'';
+  const urlParamsStr = (splitURL.length > 1)?splitURL[1]:'';
+  if (splitURL.length > 0) {
+    if (baseURL.charAt(baseURL.length - 1) !== '/') {
+      const fixedURL = baseURL + "/"  + ((urlParamsStr === '')?'':'?' + urlParamsStr);
+      console.log('fixing trailing slash: ' + fixedURL);
+      res.writeHead(302, { "Location": fixedURL });
+      res.end();
+      return;
+    }
+  }
+
+  //make sure there are the correct url seatch params available
+  const urlObj = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
+  const searchParamsObj = urlObj.searchParams;
+  //if no group indicated then assume the group 'explore'
+  if (!searchParamsObj.has('group')) {
+    const fixedURL = baseURL + "?" + 'group=explore' + ((urlParamsStr === '')?'':'&' + urlParamsStr);
+    res.writeHead(302, { "Location": fixedURL });
     res.end();
     return;
   }
 
-  const worldName = req.params.world_id;
+  const world_id = req.params.world_id;
+  const group_id = searchParamsObj.get('group');
   const user = req.user;
-  const pathStr = path.resolve(__dirname + '/../public/worlds/' + worldName + '/index.html');
+  const pathStr = path.resolve(__dirname + '/../public/worlds/' + world_id + '/index.html');
 
-  modifyServeWorld(worldName, user, pathStr, req, res);
-
-  // Ensure the world file exists
-  // fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
-  //   if (error) {
-  //     return res.redirect('/profile');
-  //   }
-  //   else {
-  //     let specialStatus = '';
-
-  //     if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
-  //       specialStatus = '*';
-  //     }
-  //     else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
-  //       specialStatus = '**';
-  //     }
-
-  //     let result = data.replace(/__WORLDNAME__/g, worldName);
-  //     result = result.replace(/__USERTYPE__/g, user.usertype);
-  //     result = result.replace(/__USERNAME__/g, user.username + specialStatus);
-
-  //     result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
-  //     result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
-  //     result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
-  //     result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
-  //     result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
-  //     result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-  //     result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
-  //     result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
-
-  //     // Replace room ID with generic explore name too keep the HTML output
-  //     // clean
-  //     result = result.replace(/__ROOM_NAME__/g, 'explore');
-
-  //     res.set('Content-Type', 'text/html');
-  //     res.end(result); //not sure exactly why res.send doesn't work here ...
-  //   }
-  // });
+  modifyServeWorld(world_id, group_id, user, pathStr, req, res);
 };
 
-// const serveRelativeWorldContent = (req, res, next) => {
-
-//   console.log(req.url);
-//   console.log(path.extname(req.url));
-
-//   //making it easier for devs as absolute paths are a pain to type in ...
-//   const worldName = req.params.world_id;
-//   const relURL = req.params[0];
-//   const newURL = '/' + worldName + '/' + relURL;
-
-//   return res.redirect(newURL);
-// };
+const serveRelativeWorldContent = (req, res, next) => {
+  //making it easier for devs as absolute paths are a pain to type in ...
+  const worldID = req.params.world_id;
+  const relURL = req.params[0];
+  const newURL = '/worlds/' + worldID + '/' + relURL;
+  return res.redirect(newURL);
+};
 
 const serveProfile = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
@@ -875,7 +852,7 @@ module.exports = {
   updateUserInfo,
   modifyServeWorld,
   serveWorld,
-  // serveRelativeWorldContent,
+  serveRelativeWorldContent,
   serveProfile,
   registerUser,
   serveRegister,
