@@ -45,15 +45,6 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
-
-      <!-- portal back to campfire -->
-      <a-entity id="campfireLink" class="interactive" position="0.15 1.5 10.3" rotation="0 90 0" scale="1.0 1.0 1.0" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-            material="src:#campfire360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.2;"
-            link="href:/hub; visualAspectEnabled:false;">
-                  <a-entity text="value:The Fire; align:center; width:5.0; shader:custom-sdf;" rotation="0 90 0" position="0.0 1.0 0.0"></a-entity>
-        </a-entity>
         
         <a-entity circles-checkpoint circles-spawnpoint position="1.0 0.0 -1.0"></a-entity>
         
@@ -199,10 +190,7 @@
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             circles-object-label="label_text:Change Body Shape; label_visible:true; label_offset:0.0 2 0.0; arrow_position:down;"></a-sphere> -->
 
-        
-
-      <a-entity light="type:spot; intensity:10.0; color:#d5e4f5; angle:80; penumbra:0.1;" circles-platform-shadows rotation="-90 0 0" position='0.0 5.4 -7.0'></a-entity>
-      <a-entity light="type:hemisphere; color:#d6e1e8; groundColor:#d76e68; intensity:3.0"></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
                 geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
