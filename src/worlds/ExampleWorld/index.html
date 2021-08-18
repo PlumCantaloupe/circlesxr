@@ -18,7 +18,8 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='/worlds/ExampleWorld/assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <img id='screenshot' src='assets/textures/world_screenshot.jpg' crossorigin="anonymous">
 
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -102,6 +103,10 @@
                                   title_back:[~20-25 chars] Title Back;
                                   description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
                                   label_text:Sword;"></a-entity>
+
+      <a-entity id="Portal-Self"
+                position="8.53 -8.9 1.0" rotation="0 180 0" scale="1 1 1"
+                circles-portal="img_src:#screenshot; title_text:Portal to other worlds; link_url:/w/ExampleWorld"></a-entity>
 
       <!-- the environment -->
       <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
