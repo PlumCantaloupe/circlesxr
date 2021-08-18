@@ -29,7 +29,7 @@ AFRAME.registerComponent('circles-portal', {
     //where do we go when this ortal is clicked
     CONTEXT_AF.portalElem.addEventListener('click', (e) => {
       //goto url (but make sure we pass along the url params for group, avatar data etc.)
-      //note that if a queryString is already defined in 'link_url'  we will pass along the existing url params
+      //note that if a queryString is already defined in 'link_url' we will pass along the existing url params
       const urlArr = data.link_url.split('?');
       const queryString = ((urlArr.length > 1) ? urlArr[1] : window.location.search);
       const completeURL = data.link_url + ((queryString) ? window.location.search : '');

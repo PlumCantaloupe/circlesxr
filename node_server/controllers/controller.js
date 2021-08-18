@@ -174,7 +174,7 @@ const updateUserInfo = (req, res, next) => {
   }
 };
 
-const modifyServeWorld = (world_id, group_id, user, pathStr, req, res) => {
+const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) => {
   // Ensure the world file exists
   fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
     if (error) {
@@ -183,70 +183,43 @@ const modifyServeWorld = (world_id, group_id, user, pathStr, req, res) => {
     else {
       let specialStatus = '';
 
+      const u_name = ((searchParamsObj.has('u_name')) ? searchParamsObj.get('u_name') : user.username);
+      const u_height = ((searchParamsObj.has('u_height')) ? searchParamsObj.get('u_height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+      
+      const head_type = ((searchParamsObj.has('head_type')) ? searchParamsObj.get('head_type') : user.gltf_head_url);
+      const hair_type = ((searchParamsObj.has('hair_type')) ? searchParamsObj.get('hair_type') : user.gltf_head_url);
+      const body_type = ((searchParamsObj.has('body_type')) ? searchParamsObj.get('body_type') : user.gltf_body_url);
+
+      const head_col = ((searchParamsObj.has('head_col')) ? searchParamsObj.get('head_col') : user.color_head);
+      const hair_col = ((searchParamsObj.has('hair_col')) ? searchParamsObj.get('hair_col') : user.color_hair);
+      const body_col = ((searchParamsObj.has('body_col')) ? searchParamsObj.get('body_col') : user.color_body);
+
+      // head_tex=0
+      // body_tex=0
+
       if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
-        specialStatus = '*';
+        specialStatus = ' (T)';
       }
       else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
-        specialStatus = '**';
+        specialStatus = ' (R)';
       }
 
       let result = data.replace(/__WORLDNAME__/g, world_id);
       result = result.replace(/__USERTYPE__/g, user.usertype);
-      result = result.replace(/__USERNAME__/g, user.username + specialStatus);
+      result = result.replace(/__USERNAME__/g, u_name + specialStatus);
       result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
-      if (req.query.head_type) {
-        //
-      }
-      else {
-        result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
-      }
-
-      if (req.query.hair_type) {
-        //
-      }
-      else {
-        result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
-      }
-
-      if (req.query.body_type) {
-        //
-      }
-      else {
-        result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
-      }
-
-      if (req.query.head_col) {
-        //
-      }
-      else {
-        result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
-      }
-
-      if (req.query.hair_col) {
-        //
-      }
-      else {
-        result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
-      }
-
-      if (req.query.body_col) {
-        //
-      }
-      else {
-        result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-      }
-
-      if (req.query.av_height) {
-        //
-      }
-      else {
-        result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
-      }
+      result = result.replace(/__USER_HEIGHT__/g, u_height);
+      result = result.replace(/__MODEL_HEAD__/g, head_type);
+      result = result.replace(/__MODEL_HAIR__/g, hair_type);
+      result = result.replace(/__MODEL_BODY__/g, body_type);
+      result = result.replace(/__COLOR_HEAD__/g, head_col);
+      result = result.replace(/__COLOR_HAIR__/g, hair_col);
+      result = result.replace(/__COLOR_BODY__/g, body_col);
 
       // Replace room ID with generic explore name too keep the HTML output
       // clean
-      result = result.replace(/__ROOM_NAME__/g, group_id);
+      result = result.replace(/__ROOM_NAME__/g, searchParamsObj.get('group'));
 
       res.set('Content-Type', 'text/html');
       res.end(result); //not sure exactly why res.send doesn't work here ...
@@ -282,11 +255,10 @@ const serveWorld = (req, res, next) => {
   }
 
   const world_id = req.params.world_id;
-  const group_id = searchParamsObj.get('group');
   const user = req.user;
   const pathStr = path.resolve(__dirname + '/../public/worlds/' + world_id + '/index.html');
 
-  modifyServeWorld(world_id, group_id, user, pathStr, req, res);
+  modifyServeWorld(world_id, searchParamsObj, user, pathStr, req, res);
 };
 
 const serveRelativeWorldContent = (req, res, next) => {
