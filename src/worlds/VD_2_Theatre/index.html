@@ -92,13 +92,9 @@
                                   label_text:Movie Poster;"></a-entity>
 
       <!-- portal back to campfire -->
-      <a-entity id="campfireLink" class="interactive" position="13.2 2.5 0" rotation="0 180 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
-                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#campfire360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
-                link="href:/hub; visualAspectEnabled:false;">
-                <a-entity text="value:The Fire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
-      </a-entity>
+      <a-entity id="hub_link"
+                position="13.2 2.5 0" rotation="0 180 0" scale="1.5 1.5 1.5"
+                circles-portal="img_src:#campfire360; title_text:The Fire; link_url:/w/hub"></a-entity>
 
       <!-- sound -->
       <a-entity position="5 1 -10"  circles-sound="type:ambient; src:#crowd1-snd; autoplay:true; loop:true; volume:0.8;" ></a-entity>

@@ -46,14 +46,9 @@
                 circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256; color:#002920;"></a-entity>
 
       <!-- portal back to campfire -->
-      <a-entity id="campfireLink" class="interactive" position="1.0 1.5 4.2" rotation="0 90 0" scale="0.5 0.5 0.5" visible="true"
-                shadow="receive:true; cast:true;"
-                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"
-                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#campfire360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.2;"
-                link="href:/hub; visualAspectEnabled:false;">
-                <a-entity text="value:The Fire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity>
-      </a-entity>
+      <a-entity id="hub_link"
+                position="1.0 1.5 4.2" rotation="0 90 0" scale="1 1 1"
+                circles-portal="img_src:#campfire360; title_text:The Fire; link_url:/w/hub"></a-entity>
 
       <!-- artefacts (no narrative audio attached) -->
       <a-entity id="Artefact-Picture" 

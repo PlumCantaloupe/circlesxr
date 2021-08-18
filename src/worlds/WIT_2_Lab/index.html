@@ -137,14 +137,10 @@
                                   audio:#Narr_culture-snd; volume:0.4;"></a-entity>
 
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
-      
-    <a-entity id="hub_link" position="6.549 1.347 4.864" rotation="0 143.672 0" scale="0.7 0.7 0.7" visible="true" shadow
-                circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
-                geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                material="src:#link_1_360; shader:flat;"
-                link="href:/hub; visualAspectEnabled:false;">
-                <a-entity text="value:Campfire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity></a-entity>
-    </a-scene>
+    
+    <a-entity id="hub_link"
+                position="6.549 1.347 4.864" rotation="0 143.672 0"  scale="1 1 1"
+                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/hub"></a-entity>
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
