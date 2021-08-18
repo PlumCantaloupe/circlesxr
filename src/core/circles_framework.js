@@ -45,6 +45,32 @@ const USER_TYPE = {
   NONE        : 'NONE',
 };
 
+const MODEL_HEAD_TYPE = {
+  Head_0   : '/global/assets/models/gltf/head/Head_Circle.glb',
+  Head_1   : '/global/assets/models/gltf/head/Head_Jaw.glb',
+  Head_2   : '/global/assets/models/gltf/head/Head_Oval.glb',
+  Head_3   : '/global/assets/models/gltf/head/Head_Square.glb',
+  Head_4   : '/global/assets/models/gltf/head/Head_Thin.glb',
+  Head_NO  : ''
+};
+
+const MODEL_HAIR_TYPE = {
+  Hair_0   : '/global/assets/models/gltf/hair/Hair_Curly.glb',
+  Hair_1   : '/global/assets/models/gltf/hair/Hair_Hat.glb',
+  Hair_2   : '/global/assets/models/gltf/hair/Hair_Long.glb',
+  Hair_3   : '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
+  Hair_NO  : ''
+};
+
+const MODEL_BODY_TYPE = {
+  Body_0  : '/global/assets/models/gltf/body/Body_Belly.glb',
+  Body_1  : '/global/assets/models/gltf/body/Body_Hourglass.glb',
+  Body_2  : '/global/assets/models/gltf/body/Body_Rectangle.glb',
+  Body_3  : '/global/assets/models/gltf/body/Body_Strong.glb',
+  Body_4  : '/global/assets/models/gltf/body/Body_Thin.glb',
+  Body_NO : '',
+};
+
 const EVENTS = {
   CAMERA_ATTACHED           : 'CAMERA_ATTACHED',
   OBJECT_HIGHLIGHT_LOADED   : 'OBJECT_HIGHLIGHT_LOADED',
@@ -167,6 +193,9 @@ module.exports = {
   MODEL_TYPE,
   MODEL_FORMAT,
   USER_TYPE,
+  MODEL_HEAD_TYPE,
+  MODEL_HAIR_TYPE,
+  MODEL_BODY_TYPE,
   EVENTS,
   COLOR_PALETTE,
   getUUID,

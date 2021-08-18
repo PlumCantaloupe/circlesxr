@@ -22,21 +22,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-const letsEncrypt = function (req, res, next) {
-  let key = req.params.challengeHash;
-  let val = null;
-  let challengePath = path.resolve(__dirname + '/../public/certs/webroot/.well_known/acme-challenge/' + key);
-
-  fs.readFileSync(challengePath, 'utf8', (err, data) => {
-    if (err) {
-      console.log(error);
-    }
-    else {
-      res.send( data.toString());
-    }
-  });
-};
-
 const getAllUsers = function(req, res, next) {
   User.find({}, function(error, data) {
     if (error) {
@@ -183,19 +168,57 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
     else {
       let specialStatus = '';
 
-      const u_name = ((searchParamsObj.has('u_name')) ? searchParamsObj.get('u_name') : user.username);
-      const u_height = ((searchParamsObj.has('u_height')) ? searchParamsObj.get('u_height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
-      
-      const head_type = ((searchParamsObj.has('head_type')) ? searchParamsObj.get('head_type') : user.gltf_head_url);
-      const hair_type = ((searchParamsObj.has('hair_type')) ? searchParamsObj.get('hair_type') : user.gltf_head_url);
-      const body_type = ((searchParamsObj.has('body_type')) ? searchParamsObj.get('body_type') : user.gltf_body_url);
+      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.username);
+      const u_height = ((searchParamsObj.has('height')) ? searchParamsObj.get('height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+
+      //need to get types if available in params
+      //if not valid in params set to "nothing". Could be fun to be a floating head l ;)
+      let head_type = ''
+      if (searchParamsObj.has('head')) {
+        head_type = CIRCLES.MODEL_HEAD_TYPE['Head_' + searchParamsObj.get('head')];
+        if (!head_type) {
+          head_type = CIRCLES.MODEL_HEAD_TYPE['Head_NO'];
+        }
+      }
+      else {
+        head_type = user.gltf_head_url;
+      }
+
+      let hair_type = ''
+      if (searchParamsObj.has('hair')) {
+        hair_type = CIRCLES.MODEL_HAIR_TYPE['Hair_' + searchParamsObj.get('hair')];
+        if (!hair_type) {
+          hair_type = CIRCLES.MODEL_HAIR_TYPE['Hair_NO'];
+        }
+      }
+      else {
+        hair_type = user.gltf_hair_url;
+      }
+
+      let body_type = ''
+      if (searchParamsObj.has('body')) {
+        body_type = CIRCLES.MODEL_BODY_TYPE['Body_' + searchParamsObj.get('body')];
+        if (!body_type) {
+          body_type = CIRCLES.MODEL_BODY_TYPE['Hair_NO'];
+        }
+      }
+      else {
+        body_type = user.gltf_body_url;
+      }
 
       const head_col = ((searchParamsObj.has('head_col')) ? searchParamsObj.get('head_col') : user.color_head);
       const hair_col = ((searchParamsObj.has('hair_col')) ? searchParamsObj.get('hair_col') : user.color_hair);
       const body_col = ((searchParamsObj.has('body_col')) ? searchParamsObj.get('body_col') : user.color_body);
 
+      //to be added later
       // head_tex=0
       // body_tex=0
+
+      console.log(CIRCLES.MODEL_HEAD_TYPE['Head_' + searchParamsObj.get('head')]);
+
+      console.log(head_type);
+      console.log(hair_type);
+      console.log(body_type);
 
       if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
         specialStatus = ' (T)';
@@ -777,22 +800,6 @@ const addAvatarModels = () => {
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
-  //left hands
-  modelsToAdd.push({
-    name:           "Hand_L_Basic",
-    url:            '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    type:           CIRCLES.MODEL_TYPE.HAND_LEFT,
-    format3D:       CIRCLES.MODEL_FORMAT.GLTF
-  });
-
-  //right hands
-  modelsToAdd.push({
-    name:           "Hand_R_Basic",
-    url:            '/global/assets/models/gltf/hands/right/Hand_Basic_R.glb',
-    type:           CIRCLES.MODEL_TYPE.HAND_RIGHT,
-    format3D:       CIRCLES.MODEL_FORMAT.GLTF
-  });
-
   for (let i = 0; i < modelsToAdd.length; i++) {
     Model3D.findOne(modelsToAdd[i], function(error, data) {
       if (error) {
@@ -816,7 +823,6 @@ const addAvatarModels = () => {
 };
 
 module.exports = {
-  letsEncrypt,
   getAllUsers,
   getUser,
   updateUser,
