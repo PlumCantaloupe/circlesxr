@@ -31,8 +31,18 @@ AFRAME.registerComponent('circles-portal', {
       //goto url (but make sure we pass along the url params for group, avatar data etc.)
       //note that if a queryString is already defined in 'link_url' we will pass along the existing url params
       const urlArr = data.link_url.split('?');
-      const queryString = ((urlArr.length > 1) ? urlArr[1] : window.location.search);
-      const completeURL = data.link_url + ((queryString) ? window.location.search : '');
+      const baseUrl = ((urlArr.length > 0) ? urlArr[0] : '');
+
+      //make sure we add all urlParams together from provided link and existing url bar
+      const queryString = ((window.location.search) ? window.location.search + '&' : '?') + ((urlArr.length > 1) ? urlArr[1] : window.location.search);
+
+      //we want to know if we have visited a world already during this session ...
+      const urlParams = new URLSearchParams(queryString);
+      if (!urlParams.has('visited')) {
+        urlParams.append('visited', '1');
+      }
+
+      const completeURL = baseUrl + '?' + urlParams.toString();
       window.location.href = completeURL;
     });
   },
