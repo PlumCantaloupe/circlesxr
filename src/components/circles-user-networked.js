@@ -1,7 +1,5 @@
 'use strict';
 
-import { NativeBuffer } from "mongoose";
-
 AFRAME.registerComponent('circles-user-networked', {
   //dependencies: ['networked'],
   schema: {
@@ -10,22 +8,12 @@ AFRAME.registerComponent('circles-user-networked', {
     gltf_hair:                  {type: 'asset',     default: ''},
     gltf_body:                  {type: 'asset',     default: ''},
 
-    original_gltf_head:         {type: 'asset',     default: ''},
-    original_gltf_hair:         {type: 'asset',     default: ''},
-    original_gltf_body:         {type: 'asset',     default: ''},
-
     color_head:                 {type: 'string',    default: ''}, 
     color_hair:                 {type: 'string',    default: ''},
-    color_body:                 {type: 'string',    default: ''},
-    
-    original_color_head:        {type: 'string',    default: ''}, 
-    original_color_hair:        {type: 'string',    default: ''},
-    original_color_body:        {type: 'string',    default: ''},      
+    color_body:                 {type: 'string',    default: ''}, 
 
     username:                   {type: 'string',    default: ''},
-    usertype:                   {type: 'string',    default: ''},
-    networked_data:             {type: 'string',    default: ''},
-    costume:                    {type: 'array',    default: ['', '', '']},
+    usertype:                   {type: 'string',    default: ''}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -47,16 +35,10 @@ AFRAME.registerComponent('circles-user-networked', {
           CONTEXT_AF.el.setAttribute('circles-user-networked', {
             gltf_head:              playerOneNode.getAttribute('circles-head-model'),
             gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
-            gltf_body:              playerOneNode.getAttribute('circles-body-model'),
-            original_gltf_head:     playerOneNode.getAttribute('circles-head-model'),        
-            original_gltf_hair:     playerOneNode.getAttribute('circles-hair-model'),  
-            original_gltf_body:     playerOneNode.getAttribute('circles-body-model'),    
+            gltf_body:              playerOneNode.getAttribute('circles-body-model'), 
             color_head:             playerOneNode.getAttribute('circles-head-color'),
             color_hair:             playerOneNode.getAttribute('circles-hair-color'),
             color_body:             playerOneNode.getAttribute('circles-body-color'),
-            original_color_head:    playerOneNode.getAttribute('circles-head-color'),       
-            original_color_hair:    playerOneNode.getAttribute('circles-hair-color'), 
-            original_color_body:    playerOneNode.getAttribute('circles-body-color'),  
             username:               playerOneNode.getAttribute('circles-username'),
             usertype:               playerOneNode.getAttribute('circles-usertype')
           });
