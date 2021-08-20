@@ -213,13 +213,7 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
       //to be added later
       // head_tex=0
       // body_tex=0
-
-      console.log(CIRCLES.MODEL_HEAD_TYPE['Head_' + searchParamsObj.get('head')]);
-
-      console.log(head_type);
-      console.log(hair_type);
-      console.log(body_type);
-
+      
       if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
         specialStatus = ' (T)';
       }
