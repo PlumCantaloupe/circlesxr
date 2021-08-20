@@ -52,13 +52,11 @@
                     circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
 
       <!-- Body Shape Choices -->
-        <a-entity id="Body_Hourglass" class="interactive body" position="-3.0 0.5 -5.0" rotation="0 40 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Body_Hourglass_Model"  
-            costume
-            circles-object-label="label_text:Hourglass Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
+        <a-entity id="Body_Hourglass" position="-3.0 0.5 -5.0" rotation="0 40 0" scale="3 3 3"
+            circles-costume="body_type:body; color:rgb(255,255,255); model:#Body_Hourglass_Model; label_text:Body - HourGlass; persist:true;">
         </a-entity>
-        <a-entity id="Body_Belly" class="interactive body" position="-3.5 3.0 -4.0" rotation="0 50 0" scale="3 3 3" visible="true" shadow
+
+        <!-- <a-entity id="Body_Belly" class="interactive body" position="-3.5 3.0 -4.0" rotation="0 50 0" scale="3 3 3" visible="true" shadow
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             gltf-model="#Body_Belly_Model"  
             costume
@@ -81,21 +79,21 @@
             gltf-model="#Body_Thin_Model"  
             costume
             circles-object-label="label_text:Thin Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
+        </a-entity> -->
         
         <!-- Body Colour Selection Spheres-->
-         <a-sphere id="red" costume class="interactive color" color="rgb(255, 0, 0)" depth="0.5" height="0.1" width="0.1" position="-9.0 -1.0 0.0" 
+         <!-- <a-sphere id="red" costume class="interactive color" color="rgb(255, 0, 0)" depth="0.5" height="0.1" width="0.1" position="-9.0 -1.0 0.0" 
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere>
 
         <a-sphere id="blue" costume class="interactive color" color="rgb(0, 0, 255)" depth="0.5" height="0.5" width="0.5" position="-9.0 1.5 0.0" 
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere>
 
         <a-sphere id="green" costume class="interactive color" color="rgb(0, 255, 0)" depth="0.5" height="0.5" width="0.5" position="-9.0 4.0 0.0" 
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere>
+            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere> -->
         
         
         <!-- Head Shape Choices -->
-        <a-entity id="Head_Circle" class="interactive head" position="7.0 1.0 -4.0" rotation="0 -60 0" scale="3 3 3" visible="true" shadow
+        <!-- <a-entity id="Head_Circle" class="interactive head" position="7.0 1.0 -4.0" rotation="0 -60 0" scale="3 3 3" visible="true" shadow
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             gltf-model="#Head_Circle_Model"  
             costume
@@ -124,10 +122,10 @@
             gltf-model="#Head_Thin_Model"  
             costume
             circles-object-label="label_text:Head Thin; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
+        </a-entity> -->
 
         <!-- Hair Shape Choices-->
-        <a-entity id="Hair_Curly" class="interactive hair" position="8.0 0.5 -1.5" rotation="0 90 0" scale="3 3 3" visible="true" shadow
+        <!-- <a-entity id="Hair_Curly" class="interactive hair" position="8.0 0.5 -1.5" rotation="0 90 0" scale="3 3 3" visible="true" shadow
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             gltf-model="#Hair_Curly_Model"  
             costume
@@ -162,7 +160,7 @@
             gltf-model="#Hair_PonyTail_Model"  
             costume
             circles-object-label="label_text:Hair PonyTail; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
+        </a-entity> -->
        
             <!-- 
         <a-box id="blue" costume class="interactive" color="blue" depth="1.0" height="1.0" width="0.5" position="1.5 1.0 -5.0" 
