@@ -28,6 +28,8 @@ AFRAME.registerComponent('circles-object-label', {
 
     CONTEXT_AF.createLabelElement();
 
+    CONTEXT_AF.el.classList.add('label_wrapper');
+
     CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', function (evt) {
         CONTEXT_AF.camera = evt.detail.cameraEl; //get reference to camera in scene (assume there is only one)
     });
@@ -91,12 +93,12 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.label = document.createElement('a-entity');
     CONTEXT_AF.label.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    //CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
     CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
-    scene.appendChild(CONTEXT_AF.label);
+    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');
