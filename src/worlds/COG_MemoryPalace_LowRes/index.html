@@ -17,7 +17,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene stats circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -45,9 +45,8 @@
         <a-asset-item id="brain-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Brain.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="ladder-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="wires-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/wires.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="pole-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/pole.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-       
+        <a-asset-item id="telephonePole-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/TelephonePole/TelephonePole.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
 
         <!-- Island 2 props and assets -->
         <img id="heart1_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/heart_1.png" crossorigin="anonymous">
@@ -72,7 +71,7 @@
         <!-- ISLAND 1 -->
         <a-entity id="island_1_group" position="-21 0.75 35.6" rotation="0 -60 0">
           <a-entity id="island_1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-          
+
           <a-entity id="island_1_scene_1_grp" position="0 0 3">
             <a-entity id="spine" position="0 1 0" scale="0.5 0.5 0.5" gltf-model="#spinal-cord-gltf" animation-mixer></a-entity>
             <a-entity id="stem" position="0 0 4.5" scale="0.7 0.7 0.7" rotation="0 180 0" gltf-model="#stem-gltf"></a-entity>
@@ -107,14 +106,10 @@
 
           <!-- Scene 1: Cerebellum-->
           <a-entity id="island_2_scene_1_grp" position="-11.5 1.3 -7" rotation="0 -90 0">
-            <a-image id="woman" position="-1.6 9.1 -12.67" scale="3 3 3" src="#woman_img" look-at="#Player1"></a-image>
+            <a-image id="woman" position="-5.9 6.7 -11.5" scale="3 3 3" src="#woman_img" look-at="#Player1"></a-image>
             <a-image id="cerberus" position="-1.3 5.3 -2.45" scale="19 16 16" rotation="25 -100 0" src="#cerberus_img" look-at="#Player1"></a-image>
 
-            <a-entity id="Electrical_Pole" position="24.4 -9.1 -36.2" scale="0.9 0.9 0.9" rotation="0 50 0">
-              <a-entity id="wires" gltf-model="#wires-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 -90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-              <a-entity id="pole1" gltf-model="#pole-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 -90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-              <a-entity id="pole2" gltf-model="#pole-gltf" position="-40 7 -5" scale="50 50 50" rotation="0 90 0" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-            </a-entity>
+            <a-entity id="TelephonePole" position="-6.6 -1.65 -10.1" rotation="0 -24.6 0" gltf-model="#telephonePole-gltf"></a-entity>
 
             <a-entity id="pedestal-island2-scene1" position="-9.7 -1.4 -12.1" scale="0.2 0.2 0.2" gltf-model="#pedestal-gltf"></a-entity>
           </a-entity>
@@ -187,7 +182,7 @@
         <!-- <a-entity id="island_6_group" position="-6.6 26 -70" rotation="0 80 0">
           <a-entity id="island_6_placeholder" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         </a-entity> -->
-        
+
       </a-entity>
 
       <!-- Artefacts representing the different scenes. These are out of their respective scene entities as they can not have a parent entity that modifies their position. -->
