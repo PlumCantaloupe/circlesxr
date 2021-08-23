@@ -6,6 +6,7 @@ require('./circles-button');
 require('./circles-checkpoint');
 require('./circles-color');
 require('./circles-costume');
+require('./circles-costume-color-selector');
 require('./circles-cube-env-map.js');
 require('./circles-inspect-object');
 require('./circles-interactive-object');

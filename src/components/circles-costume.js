@@ -65,13 +65,7 @@ AFRAME.registerComponent('circles-costume', {
           modelEnum = CIRCLES.MODEL_BODY_TYPE;
         }
 
-        console.log(modelEnum);
-        console.log(modelEnum[modelIndex]);
-
           if (modelEnum[modelIndex]) {
-
-            console.log('yayaya');
-
             CONTEXT_AF.costumeElem.setAttribute("gltf-model", modelEnum[modelIndex]);
 
             //can only persist if a built-in model i.e. set using index

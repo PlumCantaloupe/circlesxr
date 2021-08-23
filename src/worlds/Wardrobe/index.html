@@ -31,14 +31,16 @@
 
       <!-- Body Shape Choices -->
       <a-entity id="body_choices" position="-1.0 0.0 -2">
-        <a-entity id="Body_0" position="0.0 0 0" circles-costume="body_type:body; color:; model:0; label_visible:false; persist:true;"></a-entity>
-        <a-entity id="Body_1" position="0.5 0 0" circles-costume="body_type:body; color:; model:1; label_visible:false; persist:true;"></a-entity>
-        <a-entity id="Body_2" position="1.0 0 0" circles-costume="body_type:body; color:; model:2; label_visible:false; persist:true;"></a-entity>
-        <a-entity id="Body_3" position="1.5 0 0" circles-costume="body_type:body; color:; model:3; label_visible:false; persist:true;"></a-entity>
-        <a-entity id="Body_4" position="2.0 0 0" circles-costume="body_type:body; color:; model:4; label_visible:false; persist:true;"></a-entity>
+        <a-entity class="body_costume" position="0.0 0 0" circles-costume="body_type:body; color:; model:0; label_visible:false; persist:true;"></a-entity>
+        <a-entity class="body_costume" position="0.5 0 0" circles-costume="body_type:body; color:; model:1; label_visible:false; persist:true;"></a-entity>
+        <a-entity class="body_costume" position="1.0 0 0" circles-costume="body_type:body; color:; model:2; label_visible:false; persist:true;"></a-entity>
+        <a-entity class="body_costume" position="1.5 0 0" circles-costume="body_type:body; color:; model:3; label_visible:false; persist:true;"></a-entity>
+        <a-entity class="body_costume" position="2.0 0 0" circles-costume="body_type:body; color:; model:4; label_visible:false; persist:true;"></a-entity>
       </a-entity>
 
-    <a-entity class="color_selector" position="-1.0 0.6 -2.0">
+      <a-entity class="color_selector" circles-costume-color-selector="colors:rgb(255\,0\,0), rgb(0\,255\,0), rgb(0\,0\,255); class_selector:.body_costume;" position="-1.0 0.6 -2.0"></a-entity>
+
+    <!-- <a-entity class="color_selector" position="-1.0 0.6 -2.0">
         <a-entity position="0.00 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(250, 228, 200)"></a-entity>
         <a-entity position="0.15 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(243, 212, 167)"></a-entity>
         <a-entity position="0.30 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(230, 193, 151)"></a-entity>
@@ -52,7 +54,7 @@
         <a-entity position="1.50 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(85, 78, 255)"></a-entity>
         <a-entity position="1.65 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(255, 85, 68)"></a-entity>
         <a-entity position="1.80 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(204, 58, 201)"></a-entity>
-    </a-entity>
+    </a-entity> -->
         
     <!-- Head Shape Choices -->
     <a-entity id="Head_0" position="7.0 1.0 4.0" rotation="0 -60 0" scale="3 3 3"
