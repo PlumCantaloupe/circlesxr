@@ -46,29 +46,28 @@ const USER_TYPE = {
 };
 
 const MODEL_HEAD_TYPE = {
-  Head_0   : '/global/assets/models/gltf/head/Head_Circle.glb',
-  Head_1   : '/global/assets/models/gltf/head/Head_Jaw.glb',
-  Head_2   : '/global/assets/models/gltf/head/Head_Oval.glb',
-  Head_3   : '/global/assets/models/gltf/head/Head_Square.glb',
-  Head_4   : '/global/assets/models/gltf/head/Head_Thin.glb',
-  Head_NO  : ''
+  head_0   : '/global/assets/models/gltf/head/Head_Circle.glb',
+  head_1   : '/global/assets/models/gltf/head/Head_Jaw.glb',
+  head_2   : '/global/assets/models/gltf/head/Head_Oval.glb',
+  head_3   : '/global/assets/models/gltf/head/Head_Square.glb',
+  head_4   : '/global/assets/models/gltf/head/Head_Thin.glb',
 };
 
 const MODEL_HAIR_TYPE = {
-  Hair_0   : '/global/assets/models/gltf/hair/Hair_Curly.glb',
-  Hair_1   : '/global/assets/models/gltf/hair/Hair_Hat.glb',
-  Hair_2   : '/global/assets/models/gltf/hair/Hair_Long.glb',
-  Hair_3   : '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
-  Hair_NO  : ''
+  hair_0   : '/global/assets/models/gltf/hair/Hair_Curly.glb',
+  hair_1   : '/global/assets/models/gltf/hair/Hair_Long.glb',
+  hair_2   : '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
+  hair_3   : '/global/assets/models/gltf/hair/Hair_Hat.glb',
+  hair_4   : '/global/assets/models/gltf/hair/Hair_Hat_OpenXR.glb',
+  hair_5   : '/global/assets/models/gltf/hair/Hair_Hat_Aframe.glb'
 };
 
 const MODEL_BODY_TYPE = {
-  Body_0  : '/global/assets/models/gltf/body/Body_Belly.glb',
-  Body_1  : '/global/assets/models/gltf/body/Body_Hourglass.glb',
-  Body_2  : '/global/assets/models/gltf/body/Body_Rectangle.glb',
-  Body_3  : '/global/assets/models/gltf/body/Body_Strong.glb',
-  Body_4  : '/global/assets/models/gltf/body/Body_Thin.glb',
-  Body_NO : '',
+  body_0  : '/global/assets/models/gltf/body/Body_Belly.glb',
+  body_1  : '/global/assets/models/gltf/body/Body_Hourglass.glb',
+  body_2  : '/global/assets/models/gltf/body/Body_Rectangle.glb',
+  body_3  : '/global/assets/models/gltf/body/Body_Strong.glb',
+  body_4  : '/global/assets/models/gltf/body/Body_Thin.glb',
 };
 
 const EVENTS = {
