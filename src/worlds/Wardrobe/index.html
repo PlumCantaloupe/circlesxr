@@ -5,8 +5,6 @@
 
     <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
-    <script src="/worlds/Wardrobe/scripts/costume.js"></script> 
- 
 </head>
   <body>
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -19,112 +17,65 @@
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
         
-        <!-- Models -->
-        <a-asset-item id="Body_Hourglass_Model" src='/global/assets/models/gltf/body/Body_Hourglass.glb' response-type="arraybuffer" ></a-asset-item>
-        <a-asset-item id="Body_Belly_Model" src='/global/assets/models/gltf/body/Body_Belly.glb' response-type="arraybuffer" ></a-asset-item>
-        <a-asset-item id="Body_Rectangle_Model" src='/global/assets/models/gltf/body/Body_Rectangle.glb' response-type="arraybuffer" ></a-asset-item>
-        <a-asset-item id="Body_Strong_Model" src='/global/assets/models/gltf/body/Body_Strong.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Body_Thin_Model" src='/global/assets/models/gltf/body/Body_Thin.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_Curly_Model" src='/global/assets/models/gltf/hair/Hair_Curly.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_Hat_Aframe_Model" src='/global/assets/models/gltf/hair/Hair_Hat_Aframe.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_Hat_OpenXR_Model" src='/global/assets/models/gltf/hair/Hair_Hat_OpenXR.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_Hat_Model" src='/global/assets/models/gltf/hair/Hair_Hat.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_Long_Model" src='/global/assets/models/gltf/hair/Hair_Long.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Hair_PonyTail_Model" src='/global/assets/models/gltf/hair/Hair_PonyTail.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Head_Circle_Model" src='/global/assets/models/gltf/head/Head_Circle.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Head_Jaw_Model" src='/global/assets/models/gltf/head/Head_Jaw.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Head_Oval_Model" src='/global/assets/models/gltf/head/Head_Oval.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Head_Square_Model" src='/global/assets/models/gltf/head/Head_Square.glb' response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="Head_Thin_Model" src='/global/assets/models/gltf/head/Head_Thin.glb' response-type="arraybuffer"></a-asset-item>
-
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
-
-
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
         
-        <a-entity circles-checkpoint circles-spawnpoint position="1.0 0.0 -1.0"></a-entity>
+        <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.0 0.0"></a-entity>
         
-        <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="1.0 1.5 -2.5" rotation="0 0 0" scale="1.0 1.0 1.0" 
+        <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="0.0 1.5 -2.5" 
                     circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
 
       <!-- Body Shape Choices -->
-        <a-entity id="Body_Hourglass" position="-3.0 0.5 -5.0" rotation="0 40 0" scale="3 3 3"
-            circles-costume="body_type:body; color:rgb(255,255,255); model:#Body_Hourglass_Model; label_text:Body - HourGlass; persist:true;">
-        </a-entity>
+      <a-entity id="body_choices" position="-1.0 0.0 -2">
+        <a-entity id="Body_0" position="0.0 0 0" circles-costume="body_type:body; color:; model:0; label_visible:false; persist:true;"></a-entity>
+        <a-entity id="Body_1" position="0.5 0 0" circles-costume="body_type:body; color:; model:1; label_visible:false; persist:true;"></a-entity>
+        <a-entity id="Body_2" position="1.0 0 0" circles-costume="body_type:body; color:; model:2; label_visible:false; persist:true;"></a-entity>
+        <a-entity id="Body_3" position="1.5 0 0" circles-costume="body_type:body; color:; model:3; label_visible:false; persist:true;"></a-entity>
+        <a-entity id="Body_4" position="2.0 0 0" circles-costume="body_type:body; color:; model:4; label_visible:false; persist:true;"></a-entity>
+      </a-entity>
 
-        <!-- <a-entity id="Body_Belly" class="interactive body" position="-3.5 3.0 -4.0" rotation="0 50 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Body_Belly_Model"  
-            costume
-            circles-object-label="label_text:Belly Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Body_Rectangle" class="interactive body" position="-4.0 3.0 -2.5" rotation="0 70 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Body_Rectangle_Model"  
-            costume
-            circles-object-label="label_text:Rectangle Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Body_Strong" class="interactive body" position="-4.0 0.5 -3.5" rotation="0 60 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Body_Strong_Model"  
-            costume
-            circles-object-label="label_text:Strong Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Body_Thin" class="interactive body" position="-4.5 0.5 -2.0" rotation="0 80 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Body_Thin_Model"  
-            costume
-            circles-object-label="label_text:Thin Body; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity> -->
+    <a-entity class="color_selector" position="-1.0 0.6 -2.0">
+        <a-entity position="0.00 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(250, 228, 200)"></a-entity>
+        <a-entity position="0.15 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(243, 212, 167)"></a-entity>
+        <a-entity position="0.30 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(230, 193, 151)"></a-entity>
+        <a-entity position="0.45 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(204, 159, 127)"></a-entity>
+        <a-entity position="0.60 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(168, 139, 102)"></a-entity>
+        <a-entity position="0.75 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(139, 97, 62)"></a-entity>
+        <a-entity position="0.90 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(119, 71, 41)"></a-entity>
+        <a-entity position="1.05 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(39, 24, 12)"></a-entity>
+        <a-entity position="1.20 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(0, 174, 204)"></a-entity>
+        <a-entity position="1.35 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(57, 202, 137)"></a-entity>
+        <a-entity position="1.50 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(85, 78, 255)"></a-entity>
+        <a-entity position="1.65 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(255, 85, 68)"></a-entity>
+        <a-entity position="1.80 0 0" class="color_swatch" circles-interactive-object geometry="primitive:box; width:0.1; height:0.2; depth:0.05;" material="color:rgb(204, 58, 201)"></a-entity>
+    </a-entity>
         
-        <!-- Body Colour Selection Spheres-->
-         <!-- <a-sphere id="red" costume class="interactive color" color="rgb(255, 0, 0)" depth="0.5" height="0.1" width="0.1" position="-9.0 -1.0 0.0" 
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere>
+    <!-- Head Shape Choices -->
+    <a-entity id="Head_0" position="7.0 1.0 4.0" rotation="0 -60 0" scale="3 3 3"
+        circles-costume="body_type:head; color:; model:0; label_visible:false; persist:true;">
+    </a-entity>
+    <a-entity id="Head_1" position="6.2 2.5 6.0" rotation="0 -40 0"  scale="3 3 3"
+        circles-costume="body_type:head; color:; model:1; label_visible:false; persist:true;">
+    </a-entity>
+    <a-entity id="Head_2" position="5.5 1.0 6.0" rotation="0 -40 0" scale="3 3 3"
+        circles-costume="body_type:head; color:; model:2; label_visible:false; persist:true;">
+    </a-entity>
+    <a-entity id="Head_3" position="7.0 2.5 4.5" rotation="0 -60 0" scale="3 3 3"
+        circles-costume="body_type:head; color:; model:3; label_visible:false; persist:true;">
+    </a-entity>
+    <a-entity id="Head_4" position="6.3 1.0 5.1" rotation="0 -40 0" scale="3 3 3"
+        circles-costume="body_type:head; color:; model:4; label_visible:false; persist:true;">
+    </a-entity>
 
-        <a-sphere id="blue" costume class="interactive color" color="rgb(0, 0, 255)" depth="0.5" height="0.5" width="0.5" position="-9.0 1.5 0.0" 
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere>
+    <!-- Hair Shape Choices-->
+    <a-entity id="Hair_0" position="8.0 0.5 -1.5" rotation="0 90 0" scale="3 3 3"
+        circles-costume="body_type:hair; color:; model:0; label_visible:false; persist:true;">
+    </a-entity>
 
-        <a-sphere id="green" costume class="interactive color" color="rgb(0, 255, 0)" depth="0.5" height="0.5" width="0.5" position="-9.0 4.0 0.0" 
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:1.0; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"></a-sphere> -->
-        
-        
-        <!-- Head Shape Choices -->
-        <!-- <a-entity id="Head_Circle" class="interactive head" position="7.0 1.0 -4.0" rotation="0 -60 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Head_Circle_Model"  
-            costume
-            circles-object-label="label_text:Head Circle; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Head_Jaw" class="interactive head" position="6.2 2.5 -6.0" rotation="0 -40 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Head_Jaw_Model"  
-            costume
-            circles-object-label="label_text:Head Jaw; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Head_Oval" class="interactive head" position="5.5 1.0 -6.0" rotation="0 -40 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Head_Oval_Model"  
-            costume
-            circles-object-label="label_text:Head Oval; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Head_Square" class="interactive head" position="7.0 2.5 -4.5" rotation="0 -60 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Head_Square_Model"  
-            costume
-            circles-object-label="label_text:Head Square; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity>
-        <a-entity id="Head_Thin" class="interactive head" position="6.3 1.0 -5.1" rotation="0 -40 0" scale="3 3 3" visible="true" shadow
-            circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
-            gltf-model="#Head_Thin_Model"  
-            costume
-            circles-object-label="label_text:Head Thin; label_visible:true; label_offset:0.0 1 0.0; arrow_position:down;">
-        </a-entity> -->
-
-        <!-- Hair Shape Choices-->
         <!-- <a-entity id="Hair_Curly" class="interactive hair" position="8.0 0.5 -1.5" rotation="0 90 0" scale="3 3 3" visible="true" shadow
             circles-interactive-object="neutral_opacity:1.0; hovered_opacity:0.8; clicked_opacity:1.0; neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
             gltf-model="#Hair_Curly_Model"  
