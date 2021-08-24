@@ -174,12 +174,15 @@
       <a-entity gltf-model="#ChalkBoard-gltf" position="-3.15306 0.55145 -11.08461" rotation="0 -68.76 0" scale="0.28 0.28 0.28"></a-entity>
 
       <!-- Portal to back to experiment Hub -->
-      <a-entity id="HubLink" class="interactive" position="0 1.5 6.33" rotation="0 90 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
+      <!-- <a-entity id="HubLink" class="interactive" position="0 1.5 6.33" rotation="0 90 0" scale="1.7 1.7 1.7" visible="true" shadow="receive:true; cast:true;"
       circles-interactive-object="neutral_scale:1.1; hovered_scale:1.13; clicked_scale:1.13;"
       geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
       material="src:#hub360; metalness:0.1; roughness:0.25; flatShading:true; emissive:#FFF; emissiveIntensity:0.02;"
       link="href:/KIN_Hub; visualAspectEnabled:false;">
-      </a-entity>
+      </a-entity> -->
+      <a-entity id="HubLink"
+                position="0 1.5 6.33" rotation="0 90 0" scale="1 1 1"
+                circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/KIN_Hub"></a-entity>
 
       <!-- Checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
