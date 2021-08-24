@@ -69,6 +69,11 @@
         <a-entity class="color_selector" circles-costume-color-selector="class_selector:.hair_costume;" position="0.2 0.5 0" rotation="0 0 0"></a-entity>
       </a-entity>
 
+      <!-- by default this portal will point to the "fire"; but we will change to last_visited if there is a world marked as last visisted in url search params (see script at bottm) -->>
+      <a-entity id="portal"
+                position="0.0 1.7 5.0" rotation="0 90 0" scale="1 1 1"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:The Fire; link_url:/w/hub"></a-entity>
+
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
@@ -80,5 +85,17 @@
 
         <!-- Circles' end scripts [REQUIRED] -->
         <circles-end-scripts/>
+
+        <script>
+          //want to add new user parametsr to url so they propagate
+
+          //want to modify portal with 'last_visited' parameter
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.has('last_route')) {
+            const portalElem = document.querySelector('#portal');
+            const urlArr = urlParams.get('last_route').split('/');  //get last bit of this array for the world name
+            portalElem.setAttribute('circles-portal', {title_text:urlArr[urlArr.length-1], link_url:urlParams.get('last_route')})
+          }
+        </script>
     </body>
 </html>

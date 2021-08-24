@@ -29,7 +29,9 @@ AFRAME.registerComponent('circles-costume', {
         });
 
         //set params we will edit and pass later in the portal component
-        window.newURLSearchParams = new URLSearchParams((window.location.search) ? window.location.search : '');
+        if (!window.newURLSearchParams) {
+          window.newURLSearchParams = new URLSearchParams((window.location.search) ? window.location.search : '');
+        }
     },
     update: function(oldData)  {
       const CONTEXT_AF  = this;
@@ -74,7 +76,6 @@ AFRAME.registerComponent('circles-costume', {
             }
           }
           else {
-            console.log('nononono');
             CONTEXT_AF.costumeElem.setAttribute("gltf-model", ((typeof data.model === 'string' || data.model instanceof String) ? data.model : data.model.getAttribute('src') ));
           }
       }
@@ -113,6 +114,18 @@ AFRAME.registerComponent('circles-costume', {
       if (data.model) {
         if (modelEnum[modelIndex]) {
           avatarNode.setAttribute("gltf-model", modelEnum[modelIndex]);
+
+          //only works with built in models for now
+          //will check for window.newURLSearchParams in circles-portal.js
+          if (data.persist) {
+            //need to set url search params somehow ....
+            if (window.newURLSearchParams.has(data.body_type)) {
+              window.newURLSearchParams.set(data.body_type, data.model);
+            }
+            else {
+              window.newURLSearchParams.append(data.body_type, data.model);
+            }
+          }
         }
         else {
           const modelPath = ((typeof data.model === 'string' || data.model instanceof String) ? data.model : data.model.getAttribute('src') );
@@ -122,10 +135,16 @@ AFRAME.registerComponent('circles-costume', {
 
       if (data.color !== '') {
         avatarNode.setAttribute("circles-color", {color:data.color});
-      }
 
-      if (data.persist) {
-        //need to set url search params somehow ....
+        if (data.persist) {
+          //need to set url search params somehow ....
+          if (window.newURLSearchParams.has(data.body_type + '_col')) {
+            window.newURLSearchParams.set(data.body_type + '_col', data.color);
+          }
+          else {
+            window.newURLSearchParams.append(data.body_type + '_col', data.color);
+          }
+        }
       }
     },
 });

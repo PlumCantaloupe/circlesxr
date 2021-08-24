@@ -36,13 +36,39 @@ AFRAME.registerComponent('circles-portal', {
       //make sure we add all urlParams together from provided link and existing url bar
       const queryString = ((window.location.search) ? window.location.search + '&' : '?') + ((urlArr.length > 1) ? urlArr[1] : window.location.search);
 
-      //we want to know if we have visited a world already during this session ...
-      const urlParams = new URLSearchParams(queryString);
-      if (!urlParams.has('visited')) {
-        urlParams.append('visited', '1');
+      //we want to know the last world they visisted (could be useful for some world logic :)
+      const params_orig = new URLSearchParams(window.location.search);
+      const params_new  = new URLSearchParams(((urlArr.length > 1) ? urlArr[1] : ''));
+      for (let [key, val] of params_new.entries()) {
+        if (!params_new.has(key)) {
+          params_orig.append(key, val);
+        }
+        else {
+          params_orig.set(key, val);
+        }
       }
 
-      const completeURL = baseUrl + '?' + urlParams.toString();
+      //check for window.newURLSearchParams. If so we have to combine these new params with existing ones
+      if (window.newURLSearchParams) {
+        for (let [key, val] of window.newURLSearchParams.entries()) {
+          if (!window.newURLSearchParams.has(key)) {
+            params_orig.append(key, val);
+          }
+          else {
+            params_orig.set(key, val);
+          }
+        }
+      }
+
+      //add last_route
+      if (!params_orig.has('last_route')) {
+        params_orig.append('last_route', window.location.pathname);
+      }
+      else {
+        params_orig.set('last_route', window.location.pathname);
+      }
+
+      const completeURL = baseUrl + '?' + params_orig.toString();
       window.location.href = completeURL;
     });
   },
@@ -53,14 +79,7 @@ AFRAME.registerComponent('circles-portal', {
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     if ( (oldData.img_src !== data.img_src) && (data.img_src !== '') ) {
-      let filePath = data.img_src;
-
-      console.log(data.img_src);
-
-      // if (data.img_src.charAt(0) === '#') {
-        filePath = data.img_src.getAttribute('src');
-      // }
-
+      let filePath = ((typeof data.img_src === 'string' || data.img_src instanceof String) ? data.img_src : data.img_src.getAttribute('src'));;
       CONTEXT_AF.portalElem.setAttribute('material', {src:filePath});
     }
 

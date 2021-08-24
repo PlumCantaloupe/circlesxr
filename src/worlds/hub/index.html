@@ -96,6 +96,13 @@
       <a-entity position="-0.884 0.8 -3.975" rotation="0 46.494 0"  text="value:What can we do to make women feel more welcome in tech' work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       <a-entity position="-0.884 0.4 -3.975" rotation="0 46.494 0"  text="value:What can we do when we see someone being excluded at work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
 
+      <a-entity id="link_wardrobe"
+                position="2.0 1.7 -5.5" rotation="0 -90 0" scale="0.0001 0.0001 0.0001"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
+                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
+                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
+                shadow></a-entity>
+
       <!-- environment -->
       <a-entity
         gltf-model="#enviro-gltf"
