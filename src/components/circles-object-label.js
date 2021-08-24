@@ -6,7 +6,8 @@ AFRAME.registerComponent('circles-object-label', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200}
+    updateRate:         {type:'number',     default:200},
+    billboard:          {type:'boolean',    default:true}
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -74,13 +75,15 @@ AFRAME.registerComponent('circles-object-label', {
     }
   },
   tick : function (time, timeDelta) {
-    if ( time - this.prevTime > this.data.updateRate ) {
-        if (this.data.label_visible === true) {
-            this.camera.object3D.getWorldPosition(this.worldPos);
-            this.worldPos.y = this.el.object3D.position.y;
-            this.label.object3D.lookAt(this.worldPos);
+    if (this.data.billboard === true) {
+        if ( time - this.prevTime > this.data.updateRate ) {
+            if (this.data.label_visible === true) {
+                this.camera.object3D.getWorldPosition(this.worldPos);
+                this.worldPos.y = this.el.object3D.position.y;
+                this.label.object3D.lookAt(this.worldPos);
+            }
+            this.prevTime = time;
         }
-        this.prevTime = time;
     }
   },
 //   tock : function (time, timeDelta, camera) {
