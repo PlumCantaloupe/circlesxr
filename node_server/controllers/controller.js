@@ -175,9 +175,9 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
       //if not valid in params set to "nothing". Could be fun to be a floating head l ;)
       let head_type = ''
       if (searchParamsObj.has('head')) {
-        head_type = CIRCLES.MODEL_HEAD_TYPE['Head_' + searchParamsObj.get('head')];
+        head_type = CIRCLES.MODEL_HEAD_TYPE['head_' + searchParamsObj.get('head')];
         if (!head_type) {
-          head_type = CIRCLES.MODEL_HEAD_TYPE['Head_NO'];
+          head_type = '';
         }
       }
       else {
@@ -186,9 +186,9 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
 
       let hair_type = ''
       if (searchParamsObj.has('hair')) {
-        hair_type = CIRCLES.MODEL_HAIR_TYPE['Hair_' + searchParamsObj.get('hair')];
+        hair_type = CIRCLES.MODEL_HAIR_TYPE['hair_' + searchParamsObj.get('hair')];
         if (!hair_type) {
-          hair_type = CIRCLES.MODEL_HAIR_TYPE['Hair_NO'];
+          hair_type = '';
         }
       }
       else {
@@ -197,9 +197,9 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
 
       let body_type = ''
       if (searchParamsObj.has('body')) {
-        body_type = CIRCLES.MODEL_BODY_TYPE['Body_' + searchParamsObj.get('body')];
+        body_type = CIRCLES.MODEL_BODY_TYPE['body_' + searchParamsObj.get('body')];
         if (!body_type) {
-          body_type = CIRCLES.MODEL_BODY_TYPE['Hair_NO'];
+          body_type = '';
         }
       }
       else {
