@@ -259,14 +259,10 @@ AFRAME.registerComponent('aframe-mirror',
 		const cameraRigEl = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
 		let cameraEl = cameraRigEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
 
-		console.log(cameraRigEl);
-		console.log(cameraEl);
-
 		const createMirrorFunc = (e) => { 
 			cameraEl = cameraRigEl.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
 			CONTEXT_AF.reflector = Reflector(mirrorMesh, CONTEXT_AF.el.sceneEl.renderer, CONTEXT_AF.data, cameraEl);
 			cameraRigEl.removeEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, createMirrorFunc);
-			console.log(cameraEl);
 		};
 
 		if (!cameraEl) {
