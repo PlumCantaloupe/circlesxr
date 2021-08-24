@@ -1,5 +1,25 @@
 'use strict';
 
+//documentation of url query params we are expected (better place someday)
+//These params elp us to pass information between pages
+
+//__USER_TRAITS__
+//name        : avatar username
+//height      : avatar height
+
+//__APPEARANCE__
+//head        : head model(GLTF) url
+//hair        : hair model(GLTF) url
+//body        : body model(GLTF) url
+//head_col    : head color in the rgb(255,255,255) format
+//hair_col    : hair color in the rgb(255,255,255) format
+//body_col    : body color in the rgb(255,255,255) format
+
+//__
+//group       : the "group" we belong to. All users with the same group can see each other
+//last_route  : last route that we traversed from using the circles-portal component
+//dressed     : true/false that states whether the user visited "wardrobe" area yet
+
 const CONSTANTS = require('./circles_constants');
 const RESEARCH  = require('./circles_research');
 
