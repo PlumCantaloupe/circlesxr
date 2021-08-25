@@ -70,7 +70,7 @@ div.grid2col {
     width: 116px;
     height: 45px;
     margin: 5px 0 0 0;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    user-select: none;
 }
 .onoffswitch-checkbox {
     display: none;
