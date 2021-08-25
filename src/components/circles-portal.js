@@ -68,6 +68,12 @@ AFRAME.registerComponent('circles-portal', {
         params_orig.set('last_route', window.location.pathname);
       }
 
+      if (!params_orig.has('dressed')) {
+        if (window.location.pathname.match(/wardrobe/i)) {
+          params_orig.append('dressed', 'true');
+        }
+      }
+
       const completeURL = baseUrl + '?' + params_orig.toString();
       window.location.href = completeURL;
     });

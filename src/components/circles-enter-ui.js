@@ -45,6 +45,7 @@ AFRAME.registerComponent('circles-enter-ui', {
             });
         }
 
+        //clicking on enter circles removes Ui and starts sounds (as most web browsers need a user gesture to start sound)
         document.querySelector('#user-gesture-enter').addEventListener('click', function() {
             document.querySelector('#user-gesture-overlay').style.display='none';   //hide user-gesture overlay
             document.querySelector('#ui_wrapper').style.display='block';            //show "extra" controls i.e. microphone toggle
@@ -54,6 +55,21 @@ AFRAME.registerComponent('circles-enter-ui', {
             ambientSounds.forEach(function(soundEntity) {
                 soundEntity.setAttribute('circles-sound', {state:'play'});
             });
+        });
+
+        //clicking on customize avatar brings user to wardobe world
+        document.querySelector('#wardrobe-enter').addEventListener('click', function() {
+            //goto url (but make sure we pass along the url params for group, avatar data etc.)
+            //add last_route
+            const params_orig = new URLSearchParams(window.location.search);
+            if (!params_orig.has('last_route')) {
+                params_orig.append('last_route', window.location.pathname);
+            }
+            else {
+                params_orig.set('last_route', window.location.pathname);
+            }
+
+            window.location.href = '/w/wardrobe?' + params_orig.toString();
         });
     }
     });

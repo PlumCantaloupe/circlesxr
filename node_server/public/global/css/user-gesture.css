@@ -117,7 +117,7 @@ div.grid2col {
 }
 
 /*rest of form*/
-#user-gesture-enter {
+.user-gesture-button {
     display:none;
     width: 280px;
     height: 50px;
@@ -129,8 +129,12 @@ div.grid2col {
     border-radius: 20px;
     cursor: pointer;
 }
-#user-gesture-enter:hover {
+.user-gesture-button:hover {
     background-color: rgb(123, 196, 255);
+}
+
+#wardrobe-enter {
+    background-color: #f3aa21;
 }
 
 #ui_wrapper {
