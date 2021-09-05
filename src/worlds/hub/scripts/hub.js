@@ -12,9 +12,10 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.campfireElem = scene.querySelector('#campfire');     
         CONTEXT_AF.fireOn       = false; //at scene start is false    
 
-        CONTEXT_AF.link_1       = scene.querySelector('#link_1');
-        CONTEXT_AF.link_2       = scene.querySelector('#link_2');
-        CONTEXT_AF.link_3       = scene.querySelector('#link_3'); 
+        CONTEXT_AF.link_1           = scene.querySelector('#link_1');
+        CONTEXT_AF.link_2           = scene.querySelector('#link_2');
+        CONTEXT_AF.link_3           = scene.querySelector('#link_3');
+        CONTEXT_AF.link_wardrobe    = scene.querySelector('#link_wardrobe');
 
         // CONTEXT_AF.salonLink.addEventListener('animationcomplete', function(event) {
 
@@ -83,12 +84,14 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.link_1.setAttribute('class', 'interactive');
         CONTEXT_AF.link_2.setAttribute('class', 'interactive');
         CONTEXT_AF.link_3.setAttribute('class', 'interactive');
+        CONTEXT_AF.link_wardrobe.setAttribute('class', 'interactive');
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
 
         //animate
         CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
         CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
         CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
+        CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
 
         CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
     },
@@ -110,12 +113,14 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.link_1.removeAttribute("class");
         CONTEXT_AF.link_2.removeAttribute("class");
         CONTEXT_AF.link_3.removeAttribute("class");
+        CONTEXT_AF.link_wardrobe.removeAttribute("class");
         //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
         //animate
         CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
         CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
         CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
+        CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
 
         CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
     },

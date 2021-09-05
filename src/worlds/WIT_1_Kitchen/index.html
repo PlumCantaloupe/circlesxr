@@ -65,7 +65,7 @@
 
       <!-- sky and lights -->
       <!-- bad place for narrative manager but :) -->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0" narrative-soundmanager></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
       <!-- sounds -->
       <a-entity position="0 0 -4" circles-sound="type:ambient; src:#Amb_suburb-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
@@ -113,13 +113,10 @@
                                   audio:#Narr_keys-snd; volume:0.4;"></a-entity>
 
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
-                                  
-      <a-entity id="hub_link" position="4.919 1.347 1.291" rotation="0 180 0" scale="0.7 0.7 0.7" visible="true" shadow
-                                  circles-interactive-object="neutral_scale:1.1; hovered_scale:1.15; clicked_scale:1.15;"                
-                                  geometry="primitive:sphere; radius:0.6; segmentsWidth:10; segmentsHeight:10;"
-                                  material="src:#link_1_360; shader:flat;"
-                                  link="href:/rooms/explore/world/hub; visualAspectEnabled:false;">
-                                  <a-entity text="value:Campfire; align:center; width:5.0;" rotation="0 90 0" position="0 1 0"></a-entity></a-entity>
+
+      <a-entity id="hub_link"
+                position="4.919 1.347 1.291" rotation="0 180 0" scale="1 1 1"
+                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/hub"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

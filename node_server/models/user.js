@@ -3,7 +3,6 @@
 //database
 const mongoose = require('mongoose');
 const bcrypt   = require('bcrypt');
-const Room     = require('./room');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -101,11 +100,7 @@ const UserSchema = new mongoose.Schema({
     unique:     false,
     required:   false,
     trim:       true
-  },
-  rooms: [{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Room',
-  }]
+  }
 });
 
 // Verify password for this user
@@ -123,83 +118,6 @@ UserSchema.methods.validatePassword = function (password, callback) {
   })
 };
 
-/**
- * Get this user's rooms
- *
- * This includes rooms they've created and ones they've joined
- */
-UserSchema.methods.getAccessibleRooms = async function () {
-  const ownedRooms = await this.getOwnedRooms();
-  const joinedRooms = await this.getJoinedRooms();
-
-  return ownedRooms.concat(joinedRooms);
-}
-
-UserSchema.methods.getOwnedRooms = function () {
-  return Room.find({'owner': this._id }).sort('name asc').exec();
-}
-
-UserSchema.methods.getJoinedRooms = function () {
-  return Room.find({'members.user': this._id }).sort('name asc').exec();
-}
-
-UserSchema.methods.getRoomsByEmail = function () {
-  return Room.find({'members.email': this.email }).sort('name asc').exec();
-}
-
-UserSchema.methods.getPendingInvites = async function () {
-  const roomsByEmail = await this.getRoomsByEmail();
-
-  let pendingInvites = [];
-  roomsByEmail.forEach(room => {
-    pendingInvites = pendingInvites.concat(
-      room.members
-      .filter(member => (member.email === this.email && member.invite === 'invited'))
-      .map(invite => {
-        invite.room = room
-        return invite;
-      })
-    );
-  });
-
-  return pendingInvites;
-}
-
-UserSchema.methods.getAcceptedInvites = async function () {
-  const roomsByEmail = await this.getRoomsByEmail();
-
-  let acceptedInvites = [];
-  roomsByEmail.forEach(room => {
-    acceptedInvites = acceptedInvites.concat(
-      room.members
-      .filter(member => (member.email === this.email && member.invite === 'accepted'))
-      .map(invite => {
-        invite.room = room
-        return invite;
-      })
-    );
-  });
-
-  return acceptedInvites;
-}
-
-UserSchema.methods.getRejectedInvites = async function () {
-  const roomsByEmail = await this.getRoomsByEmail();
-
-  let rejectedInvites = [];
-  roomsByEmail.forEach(room => {
-    rejectedInvites = rejectedInvites.concat(
-      room.members
-      .filter(member => (member.email === this.email && member.invite === 'rejected'))
-      .map(invite => {
-        invite.room = room
-        return invite;
-      })
-    );
-  });
-
-  return rejectedInvites;
-}
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
   let user = this;
