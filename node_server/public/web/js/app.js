@@ -62,20 +62,25 @@ function startCoundown(numMS, textId) {
   // Update the count down every 1 second
   g_intervalTimer = setInterval(function() {
     // Get today's date and time
-    var now = new Date().getTime();
+    let now = new Date().getTime();
       
     // Find the distance between now and the count down date
-    var distance = countDownDate - now;
+    let time_distance = countDownDate - now;
       
     // Time calculations for days, hours, minutes and seconds
-    var minutes = Math.floor(distance / 60000);
-    var seconds = Math.floor((distance % 60000) / 1000);
+    let seconds = Math.floor(time_distance / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+    let days = Math.floor(hours / 24);
+    hours = hours % 24;
       
     // Output the result in an element with id="demo"
-    document.querySelector('#' + textId).innerHTML = minutes + " minutes and " + seconds + " seconds";
+    document.querySelector('#' + textId).innerHTML = days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
       
     // If the count down is over, write some text 
-    if (distance < 0) {
+    if (time_distance < 0) {
       clearInterval(g_intervalTimer);
       document.querySelector('#' + textId).innerHTML = "EXPIRED";
     }
@@ -84,7 +89,13 @@ function startCoundown(numMS, textId) {
 
 
 //*********** magic links button functionality */
-function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
+//function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
+function createMagicLinks(userTypeAsking) {
+
+  const url = '/w/' + document.querySelector("#MagicLinkWorld").value;
+  //const userTypeAsking = userInfo.userType;
+  const expiryTimeMin = document.querySelector("#MagicLinkExpiry").value * 24 * 60; //convert days to mins
+
   let request = new XMLHttpRequest();
   request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking + '&expiryTimeMin=' + expiryTimeMin);
   request.responseType = 'text';
