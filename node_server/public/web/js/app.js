@@ -92,7 +92,8 @@ function startCoundown(numMS, textId) {
 //function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
 function createMagicLinks(userTypeAsking) {
 
-  const url = '/w/' + document.querySelector("#MagicLinkWorld").value;
+  const magic_world = document.querySelector("#MagicLinkWorld").value;
+  const url = (magic_world === 'explore') ? '/' + magic_world : '/w/' + magic_world;
   //const userTypeAsking = userInfo.userType;
   const expiryTimeMin = document.querySelector("#MagicLinkExpiry").value * 24 * 60; //convert days to mins
 
