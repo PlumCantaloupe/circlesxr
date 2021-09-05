@@ -69,7 +69,7 @@ AFRAME.registerComponent('circles-enter-ui', {
                 params_orig.set('last_route', window.location.pathname);
             }
 
-            window.location.href = '/w/wardrobe?' + params_orig.toString();
+            window.location.href = '/w/Wardrobe?' + params_orig.toString();
         });
     }
     });
