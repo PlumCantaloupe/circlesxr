@@ -30,7 +30,9 @@
         <a-asset-item id="AzrieliPavillionShell-gltf" src="assets/models/AzrieliPavillionShell.glb"></a-asset-item>
         <a-asset-item id="AzrieliPavillionDoors-gltf" src="assets/models/AzrieliPavillionDoors.glb"></a-asset-item>
         <a-asset-item id="AzrieliPavillionInterior-gltf" src="assets/models/AzrieliPavillionInterior.glb"></a-asset-item>
+                <!-- 
         <a-asset-item id="AzrieliPavillionTheatreSign-gltf" src="assets/models/AzrieliPavillionTheatreSign.glb"></a-asset-item>
+                -->
         <a-asset-item id="Picture1-gltf" src="assets/models/Picture1.glb"></a-asset-item>
         <a-asset-item id="Picture2-gltf" src="assets/models/Picture2.glb"></a-asset-item>
         <a-asset-item id="Picture3-gltf" src="assets/models/Picture3.glb"></a-asset-item>
@@ -45,6 +47,11 @@
         <a-asset-item id="ToryBuilding-gltf" src="assets/models/ToryBuilding.glb"></a-asset-item>
         <a-asset-item id="FASS-gltf" src="assets/models/FASS.glb"></a-asset-item>
 
+        <a-asset-item id="QuadSignLibrary-gltf" src="assets/models/QuadSignLibrary.glb"></a-asset-item>
+        <a-asset-item id="QuadSignAzrieli-gltf" src="assets/models/QuadSignAzrieli.glb"></a-asset-item>
+        <a-asset-item id="QuadSignDunton-gltf" src="assets/models/QuadSignDunton.glb"></a-asset-item>
+        <a-asset-item id="QuadSignTheCircle-gltf" src="assets/models/QuadSignTheCircle.glb"></a-asset-item>
+        <a-asset-item id="QuadSignTory-gltf" src="assets/models/QuadSignTory.glb"></a-asset-item>
 
         <!-- templates, mixins etc. -->
 
@@ -102,7 +109,6 @@
       <a-entity id="AzrieliPavillionShell" gltf-model="#AzrieliPavillionShell-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:true;"></a-entity>
       <a-entity id="AzrieliPavillionDoors" gltf-model="#AzrieliPavillionDoors-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:true;"></a-entity>
       <a-entity id="AzrieliPavillionInterior" gltf-model="#AzrieliPavillionInterior-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:true;"></a-entity>
-      <a-entity id="AzrieliPavillionTheatreSign" gltf-model="#AzrieliPavillionTheatreSign-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:true; cast:true;"></a-entity>
       <a-entity id="Picture1" gltf-model="#Picture1-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="Picture2" gltf-model="#Picture2-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="Picture3" gltf-model="#Picture3-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
@@ -116,9 +122,22 @@
 
       <a-entity id="Library" gltf-model="#Library-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="ToryBuilding" gltf-model="#ToryBuilding-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+     <!--
+           <a-entity id="AzrieliPavillionTheatreSign" gltf-model="#AzrieliPavillionTheatreSign-gltf" rotation="0 0 0" scale="1 1 1" shadow="receive:true; cast:true;"></a-entity>
+-->
+     
       <a-entity id="FASS" gltf-model="#FASS-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
     
+      <!-- Signs -->
+      <a-entity id="QuadSignLibrary" gltf-model="#QuadSignLibrary-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="QuadSignAzrieli" gltf-model="#QuadSignAzrieli-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="QuadSignDunton" gltf-model="#QuadSignDunton-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="QuadSignTheCircle" gltf-model="#QuadSignTheCircle-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="QuadSignTory" gltf-model="#QuadSignTory-gltf" rotation="0 0 0" s scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+
     
+
+
       <!-- Spawnpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.1 0.0"></a-entity>
 
@@ -212,10 +231,9 @@
 
 
       <!-- sky and lights -->
-      <a-entity light="type: ambient; color: #fff; intensity:2.0;"></a-entity>
-
-          <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
-          <a-entity light="type: directional; color: #FFF; intensity: 0.2" position="0.5 1 -1"></a-entity>
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="0.5 1 -1"></a-entity>
 
       <a-entity id='skyBox' 
                 geometry='primitive:sphere; radius:150; segments-height:6; segments-width:6;'
