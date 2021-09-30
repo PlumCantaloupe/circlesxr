@@ -6,7 +6,8 @@ AFRAME.registerComponent('circles-object-label', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200}
+    updateRate:         {type:'number',     default:200},
+    billboard:          {type:'boolean',    default:true}
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -27,6 +28,8 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.worldPos             = new THREE.Vector3();
 
     CONTEXT_AF.createLabelElement();
+
+    CONTEXT_AF.el.classList.add('label_wrapper');
 
     CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', function (evt) {
         CONTEXT_AF.camera = evt.detail.cameraEl; //get reference to camera in scene (assume there is only one)
@@ -72,13 +75,15 @@ AFRAME.registerComponent('circles-object-label', {
     }
   },
   tick : function (time, timeDelta) {
-    if ( time - this.prevTime > this.data.updateRate ) {
-        if (this.data.label_visible === true) {
-            this.camera.object3D.getWorldPosition(this.worldPos);
-            this.worldPos.y = this.el.object3D.position.y;
-            this.label.object3D.lookAt(this.worldPos);
+    if (this.data.billboard === true) {
+        if ( time - this.prevTime > this.data.updateRate ) {
+            if (this.data.label_visible === true) {
+                this.camera.object3D.getWorldPosition(this.worldPos);
+                this.worldPos.y = this.el.object3D.position.y;
+                this.label.object3D.lookAt(this.worldPos);
+            }
+            this.prevTime = time;
         }
-        this.prevTime = time;
     }
   },
 //   tock : function (time, timeDelta, camera) {
@@ -91,12 +96,12 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.label = document.createElement('a-entity');
     CONTEXT_AF.label.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    //CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
     CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
-    scene.appendChild(CONTEXT_AF.label);
+    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');

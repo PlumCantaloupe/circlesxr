@@ -2,7 +2,6 @@
 
 AFRAME.registerComponent('circles-interactive-object', {
   schema: {
-    //highlight_color:    {type:'color',      default:'rgb(255,255,255)'},
     type:               {stype:'string',    default:'outline', oneOf:['outline','scale']},
     highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline effect
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect

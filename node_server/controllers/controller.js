@@ -3,12 +3,12 @@
 require('../../src/core/circles_server');
 const mongoose = require('mongoose');
 const User     = require('../models/user');
-const Room     = require('../models/room');
 const Model3D  = require('../models/model3D');
 const path     = require('path');
 const fs       = require('fs');
 const crypto   = require('crypto');
 const dotenv   = require('dotenv');
+const url      = require('url');
 const dotenvParseVariables = require('dotenv-parse-variables');
 const jwt      = require('jsonwebtoken');
 const { CONSTANTS } = require('../../src/core/circles_research');
@@ -22,22 +22,7 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-exports.letsEncrypt = function (req, res, next) {
-  let key = req.params.challengeHash;
-  let val = null;
-  let challengePath = path.resolve(__dirname + '/../public/certs/webroot/.well_known/acme-challenge/' + key);
-
-  fs.readFileSync(challengePath, 'utf8', (err, data) => {
-    if (err) {
-      console.log(error);
-    }
-    else {
-      res.send( data.toString());
-    }
-  });
-};
-
-exports.getAllUsers = function(req, res, next) {
+const getAllUsers = function(req, res, next) {
   User.find({}, function(error, data) {
     if (error) {
       res.send(error);
@@ -46,7 +31,7 @@ exports.getAllUsers = function(req, res, next) {
   });
 };
 
-exports.getUser = (req, res, next) => {
+const getUser = (req, res, next) => {
   User.findOne({username: req.params.username}, function(error, data) {
     if (error) {
       res.send(error);
@@ -56,7 +41,7 @@ exports.getUser = (req, res, next) => {
 };
 
 //!!TODO: look this over
-exports.updateUser = (req, res, next) => {
+const updateUser = (req, res, next) => {
   User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function(error, data) {
     if (error) {
       res.send(error);
@@ -65,7 +50,7 @@ exports.updateUser = (req, res, next) => {
   });
 };
 
-exports.deleteUser = (req, res, next) => {
+const deleteUser = (req, res, next) => {
   User.remove({username: req.params.username}, function(error, data) {
     if (error) {
       res.send(error);
@@ -74,7 +59,7 @@ exports.deleteUser = (req, res, next) => {
   });
 };
 
-exports.updateUser = (req, res, next) => {
+const updateUserInfo = (req, res, next) => {
   if (!req.body) {
     return res.sendStatus(400);
   }
@@ -174,11 +159,7 @@ exports.updateUser = (req, res, next) => {
   }
 };
 
-exports.serveWorld = (req, res, next) => {
-  const worldName = req.params.world_id;
-  const user = req.user;
-  const pathStr = path.resolve(__dirname + '/../public/worlds/' + worldName + '/index.html');
-
+const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) => {
   // Ensure the world file exists
   fs.readFile(pathStr, {encoding: 'utf-8'}, (error, data) => {
     if (error) {
@@ -187,29 +168,75 @@ exports.serveWorld = (req, res, next) => {
     else {
       let specialStatus = '';
 
+      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.username);
+      const u_height = ((searchParamsObj.has('height')) ? searchParamsObj.get('height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+
+      //need to get types if available in params
+      //if not valid in params set to "nothing". Could be fun to be a floating head l ;)
+      let head_type = ''
+      if (searchParamsObj.has('head')) {
+        head_type = CIRCLES.MODEL_HEAD_TYPE['head_' + searchParamsObj.get('head')];
+        if (!head_type) {
+          head_type = '';
+        }
+      }
+      else {
+        head_type = user.gltf_head_url;
+      }
+
+      let hair_type = ''
+      if (searchParamsObj.has('hair')) {
+        hair_type = CIRCLES.MODEL_HAIR_TYPE['hair_' + searchParamsObj.get('hair')];
+        if (!hair_type) {
+          hair_type = '';
+        }
+      }
+      else {
+        hair_type = user.gltf_hair_url;
+      }
+
+      let body_type = ''
+      if (searchParamsObj.has('body')) {
+        body_type = CIRCLES.MODEL_BODY_TYPE['body_' + searchParamsObj.get('body')];
+        if (!body_type) {
+          body_type = '';
+        }
+      }
+      else {
+        body_type = user.gltf_body_url;
+      }
+
+      const head_col = ((searchParamsObj.has('head_col')) ? searchParamsObj.get('head_col') : user.color_head);
+      const hair_col = ((searchParamsObj.has('hair_col')) ? searchParamsObj.get('hair_col') : user.color_hair);
+      const body_col = ((searchParamsObj.has('body_col')) ? searchParamsObj.get('body_col') : user.color_body);
+
+      //to be added later
+      // head_tex=0
+      // body_tex=0
+      
       if (user.usertype === CIRCLES.USER_TYPE.TEACHER) {
-        specialStatus = '*';
+        specialStatus = ' (T)';
       }
       else if (user.usertype === CIRCLES.USER_TYPE.RESEARCHER) {
-        specialStatus = '**';
+        specialStatus = ' (R)';
       }
 
-      let result = data.replace(/__WORLDNAME__/g, worldName);
+      let result = data.replace(/__WORLDNAME__/g, world_id);
       result = result.replace(/__USERTYPE__/g, user.usertype);
-      result = result.replace(/__USERNAME__/g, user.username + specialStatus);
+      result = result.replace(/__USERNAME__/g, u_name + specialStatus);
+      result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
-      result = result.replace(/__MODEL_HEAD__/g,  user.gltf_head_url);
-      result = result.replace(/__MODEL_HAIR__/g,  user.gltf_hair_url);
-      result = result.replace(/__MODEL_BODY__/g,  user.gltf_body_url);
-      result = result.replace(/__COLOR_HEAD__/g,  user.color_head);
-      result = result.replace(/__COLOR_HAIR__/g,  user.color_hair);
-      result = result.replace(/__COLOR_BODY__/g,  user.color_body);
-      result = result.replace(/__FACE_MAP__/g,    CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
-      result = result.replace(/__USER_HEIGHT__/g, CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
+      result = result.replace(/__USER_HEIGHT__/g, u_height);
+      result = result.replace(/__MODEL_HEAD__/g, head_type);
+      result = result.replace(/__MODEL_HAIR__/g, hair_type);
+      result = result.replace(/__MODEL_BODY__/g, body_type);
+      result = result.replace(/__COLOR_HEAD__/g, head_col);
+      result = result.replace(/__COLOR_HAIR__/g, hair_col);
+      result = result.replace(/__COLOR_BODY__/g, body_col);
 
       // Replace room ID with generic explore name too keep the HTML output
       // clean
-      result = result.replace(/__ROOM_NAME__/g, 'explore');
+      result = result.replace(/__ROOM_NAME__/g, searchParamsObj.get('group'));
 
       res.set('Content-Type', 'text/html');
       res.end(result); //not sure exactly why res.send doesn't work here ...
@@ -217,7 +244,49 @@ exports.serveWorld = (req, res, next) => {
   });
 };
 
-exports.serveProfile = (req, res, next) => {
+const serveWorld = (req, res, next) => {
+  //need to make sure we have the trailing slash to signify a folder so that relative links works correctly
+  //https://stackoverflow.com/questions/30373218/handling-relative-urls-in-a-node-js-http-server 
+  const splitURL = req.url.split('?');
+  const baseURL = (splitURL.length > 0)?splitURL[0]:'';
+  const urlParamsStr = (splitURL.length > 1)?splitURL[1]:'';
+  if (splitURL.length > 0) {
+    if (baseURL.charAt(baseURL.length - 1) !== '/') {
+      const fixedURL = baseURL + "/"  + ((urlParamsStr === '')?'':'?' + urlParamsStr);
+      console.log('fixing trailing slash: ' + fixedURL);
+      res.writeHead(302, { "Location": fixedURL });
+      res.end();
+      return;
+    }
+  }
+
+  //make sure there are the correct url seatch params available
+  const urlObj = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
+  const searchParamsObj = urlObj.searchParams;
+  //if no group indicated then assume the group 'explore'
+  if (!searchParamsObj.has('group')) {
+    const fixedURL = baseURL + "?" + 'group=explore' + ((urlParamsStr === '')?'':'&' + urlParamsStr);
+    res.writeHead(302, { "Location": fixedURL });
+    res.end();
+    return;
+  }
+
+  const world_id = req.params.world_id;
+  const user = req.user;
+  const pathStr = path.resolve(__dirname + '/../public/worlds/' + world_id + '/index.html');
+
+  modifyServeWorld(world_id, searchParamsObj, user, pathStr, req, res);
+};
+
+const serveRelativeWorldContent = (req, res, next) => {
+  //making it easier for devs as absolute paths are a pain to type in ...
+  const worldID = req.params.world_id;
+  const relURL = req.params[0];
+  const newURL = '/worlds/' + worldID + '/' + relURL;
+  return res.redirect(newURL);
+};
+
+const serveProfile = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
   let user = req.user;
 
@@ -227,8 +296,7 @@ exports.serveProfile = (req, res, next) => {
     Model3D.find({type: CIRCLES.MODEL_TYPE.HAIR}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.BODY}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_LEFT}).exec(),
-    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec(),
-    user.getAccessibleRooms()
+    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec()
   ];
 
   const queryChecks = [
@@ -285,15 +353,14 @@ exports.serveProfile = (req, res, next) => {
     res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
       title: `Welcome ${user.username}`,
       userInfo: userInfo,
-      userOptions: userOptions,
-      userRooms: results[5]
+      userOptions: userOptions
     });
   }).catch(function(err){
     console.log(err);
   });
 };
 
-exports.registerUser = (req, res, next) => {
+const registerUser = (req, res, next) => {
   //!!
   console.log('disabling register feature for prototype'); 
   return next();
@@ -372,7 +439,7 @@ exports.registerUser = (req, res, next) => {
   */
 };
 
-exports.serveRegister = (req, res, next) => {
+const serveRegister = (req, res, next) => {
   //Mongoose promises http://mongoosejs.com/docs/promises.html
 
   const promises = [
@@ -416,29 +483,28 @@ exports.serveRegister = (req, res, next) => {
   }).catch(function(err){
     console.log(err);
   });
-
 };
 
 
 //test function to add models to dbs
-exports.addModel3Ds = (req, res, next) => {
+const addModel3Ds = (req, res, next) => {
   addAvatarModels();
   return res.redirect('/');
 };
 
 //test function to add test users to dbs
-exports.addUsers = (req, res, next) => {
+const addUsers = (req, res, next) => {
   addTestUsers();
   return res.redirect('/');
 };
 
-exports.addAllTestData = (req, res, next) => {
+const addAllTestData = (req, res, next) => {
   addAvatarModels();
   addTestUsers();
   return res.redirect('/');
 };
 
-exports.serveExplore = (req, res, next) => {
+const serveExplore = (req, res, next) => {
   // Route now authenticates and ensures a user is logged in by this point
   let user = req.user;
 
@@ -474,21 +540,22 @@ exports.serveExplore = (req, res, next) => {
   });
 };
 
-exports.generateAuthLink = (email, baseURL, route) => {
+const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
   const jwtOptions = {
     issuer: 'circlesxr.com',
     audience: 'circlesxr.com',
     algorithm: 'HS256',
-    expiresIn: CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES + 'm',
+    expiresIn: expiryTimeMin + 'm',
   };
 
   const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
   return baseURL + '/magic-login?token=' + token + '&route=' + route;
 };
 
-exports.getMagicLinks = (req, res, next) => {
-  let route = req.query.route;
-  let userTypeAsking = req.query.userTypeAsking;
+const getMagicLinks = (req, res, next) => {
+  const route = req.query.route;
+  const userTypeAsking = req.query.userTypeAsking;
+  const expiryTimeMin = req.query.expiryTimeMin;
   let allAccounts = [];
   const baseURL = req.protocol + '://' + req.get('host');
 
@@ -497,7 +564,7 @@ exports.getMagicLinks = (req, res, next) => {
       res.send(error);
     }
     for (let i = 0; i < data.length; i++) {
-      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:exports.generateAuthLink(data[i].email, baseURL, route)});
+      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:generateAuthLink(data[i].email, baseURL, route, expiryTimeMin)});
 
       if (i === data.length - 1 ) {
         res.json(allAccounts);
@@ -727,22 +794,6 @@ const addAvatarModels = () => {
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
-  //left hands
-  modelsToAdd.push({
-    name:           "Hand_L_Basic",
-    url:            '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    type:           CIRCLES.MODEL_TYPE.HAND_LEFT,
-    format3D:       CIRCLES.MODEL_FORMAT.GLTF
-  });
-
-  //right hands
-  modelsToAdd.push({
-    name:           "Hand_R_Basic",
-    url:            '/global/assets/models/gltf/hands/right/Hand_Basic_R.glb',
-    type:           CIRCLES.MODEL_TYPE.HAND_RIGHT,
-    format3D:       CIRCLES.MODEL_FORMAT.GLTF
-  });
-
   for (let i = 0; i < modelsToAdd.length; i++) {
     Model3D.findOne(modelsToAdd[i], function(error, data) {
       if (error) {
@@ -763,4 +814,24 @@ const addAvatarModels = () => {
   }
 
   console.log('added test models to db');
+};
+
+module.exports = {
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  updateUserInfo,
+  modifyServeWorld,
+  serveWorld,
+  serveRelativeWorldContent,
+  serveProfile,
+  registerUser,
+  serveRegister,
+  addModel3Ds,
+  addUsers,
+  addAllTestData,
+  serveExplore,
+  generateAuthLink,
+  getMagicLinks
 };

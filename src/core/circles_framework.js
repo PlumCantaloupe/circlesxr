@@ -1,5 +1,25 @@
 'use strict';
 
+//documentation of url query params we are expected (better place someday)
+//These params elp us to pass information between pages
+
+//__USER_TRAITS__
+//name        : avatar username
+//height      : avatar height
+
+//__APPEARANCE__
+//head        : head model(GLTF) url
+//hair        : hair model(GLTF) url
+//body        : body model(GLTF) url
+//head_col    : head color in the rgb(255,255,255) format
+//hair_col    : hair color in the rgb(255,255,255) format
+//body_col    : body color in the rgb(255,255,255) format
+
+//__
+//group       : the "group" we belong to. All users with the same group can see each other
+//last_route  : last route that we traversed from using the circles-portal component
+//dressed     : true/false that states whether the user visited "wardrobe" area yet
+
 const CONSTANTS = require('./circles_constants');
 const RESEARCH  = require('./circles_research');
 
@@ -43,6 +63,31 @@ const USER_TYPE = {
   PARTICIPANT : 'Participant',
   TESTER      : 'TESTER',
   NONE        : 'NONE',
+};
+
+const MODEL_HEAD_TYPE = {
+  head_0   : '/global/assets/models/gltf/head/Head_Circle.glb',
+  head_1   : '/global/assets/models/gltf/head/Head_Jaw.glb',
+  head_2   : '/global/assets/models/gltf/head/Head_Oval.glb',
+  head_3   : '/global/assets/models/gltf/head/Head_Square.glb',
+  head_4   : '/global/assets/models/gltf/head/Head_Thin.glb',
+};
+
+const MODEL_HAIR_TYPE = {
+  hair_0   : '/global/assets/models/gltf/hair/Hair_Curly.glb',
+  hair_1   : '/global/assets/models/gltf/hair/Hair_Long.glb',
+  hair_2   : '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
+  hair_3   : '/global/assets/models/gltf/hair/Hair_Hat.glb',
+  hair_4   : '/global/assets/models/gltf/hair/Hair_Hat_OpenXR.glb',
+  hair_5   : '/global/assets/models/gltf/hair/Hair_Hat_Aframe.glb'
+};
+
+const MODEL_BODY_TYPE = {
+  body_0  : '/global/assets/models/gltf/body/Body_Belly.glb',
+  body_1  : '/global/assets/models/gltf/body/Body_Hourglass.glb',
+  body_2  : '/global/assets/models/gltf/body/Body_Rectangle.glb',
+  body_3  : '/global/assets/models/gltf/body/Body_Strong.glb',
+  body_4  : '/global/assets/models/gltf/body/Body_Thin.glb',
 };
 
 const EVENTS = {
@@ -167,6 +212,9 @@ module.exports = {
   MODEL_TYPE,
   MODEL_FORMAT,
   USER_TYPE,
+  MODEL_HEAD_TYPE,
+  MODEL_HAIR_TYPE,
+  MODEL_BODY_TYPE,
   EVENTS,
   COLOR_PALETTE,
   getUUID,
