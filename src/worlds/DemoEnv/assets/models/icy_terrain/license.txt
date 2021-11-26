@@ -1,0 +1,11 @@
+Model Information:
+* title:	Icy Terrain Export
+* source:	https://sketchfab.com/3d-models/icy-terrain-export-463eef961fc643358a1929bec9f0f18f
+* author:	josevega (https://sketchfab.com/josevega)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Icy Terrain Export" (https://sketchfab.com/3d-models/icy-terrain-export-463eef961fc643358a1929bec9f0f18f) by josevega (https://sketchfab.com/josevega) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

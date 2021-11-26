@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pleistocene river system
+* source:	https://sketchfab.com/3d-models/pleistocene-river-system-e6dc2daa5549483a873b1d5b8db8a94d
+* author:	wojtekw (https://sketchfab.com/wojtekw)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pleistocene river system" (https://sketchfab.com/3d-models/pleistocene-river-system-e6dc2daa5549483a873b1d5b8db8a94d) by wojtekw (https://sketchfab.com/wojtekw) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

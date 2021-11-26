@@ -1,0 +1,11 @@
+Model Information:
+* title:	Inuit People
+* source:	https://sketchfab.com/3d-models/inuit-people-c10403375e364849b706f8f62f2e19eb
+* author:	Artbake Graphics (https://sketchfab.com/ismir)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Inuit People" (https://sketchfab.com/3d-models/inuit-people-c10403375e364849b706f8f62f2e19eb) by Artbake Graphics (https://sketchfab.com/ismir) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
