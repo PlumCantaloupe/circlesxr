@@ -8,8 +8,8 @@
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-    <script src="/worlds/COG_MemoryPalace_LowRes/components/look-at.js"></script>
-    <script src="/worlds/COG_MemoryPalace_LowRes/components/easy-transparency.js"></script>
+    <script src="components/look-at.js"></script>
+    <script src="components/easy-transparency.js"></script>
   </head>
   <body>
 
@@ -20,60 +20,60 @@
     <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
-        <img id="skyMap" src="/worlds/COG_MemoryPalace_LowRes/assets/images/Gradient.jpg" crossorigin="anonymous">
+        <img id="skyMap" src="assets/images/Gradient.jpg" crossorigin="anonymous">
 
         <!-- loading navmesh. Following instructions from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
-        <a-asset-item id="navmesh_gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="navmesh_gltf" src="assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Images -->
-        <img id="heart1_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/heart_1.png" crossorigin="anonymous">
-        <img id="woman_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/Woman.png" crossorigin="anonymous">
-        <img id="cerberus_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/Cerberus.png" crossorigin="anonymous">
+        <img id="heart1_img" src="assets/images/island_2/heart_1.png" crossorigin="anonymous">
+        <img id="woman_img" src="assets/images/island_2/Woman.png" crossorigin="anonymous">
+        <img id="cerberus_img" src="assets/images/island_2/Cerberus.png" crossorigin="anonymous">
 
         <!-- Multiple island assets -->
-        <a-asset-item id="pedestal-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/general/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pedestal-gltf" src="assets/models/general/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Islands -->
-        <a-asset-item id="island_1_gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/island_1_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_2_gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/island_2_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_3_gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/island_3_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_gltf" src="assets/models/island_1/island_1_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_2_gltf" src="assets/models/island_2/island_2_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_3_gltf" src="assets/models/island_3/island_3_new.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
         <!-- Island 1 props and assets -->
-        <a-asset-item id="stem-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/TreeStem.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="brainLarge-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/BrainLarge.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="spinal-cord-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="ladder1-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Ladder1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="road1-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Road1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Archway1-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Archway1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="brain-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_1/Brain/Brain.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="stem-gltf" src="assets/models/island_1/TreeStem.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="brainLarge-gltf" src="assets/models/island_1/BrainLarge.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="spinal-cord-gltf" src="assets/models/island_1/SpinalCord.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="ladder1-gltf" src="assets/models/island_1/Ladder1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="road1-gltf" src="assets/models/island_1/Road1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Archway1-gltf" src="assets/models/island_1/Archway1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="brain-gltf" src="assets/models/island_1/Brain/Brain.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
         <!-- Island 2 props and assets -->
-        <img id="heart1_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/heart_1.png" crossorigin="anonymous">
-        <img id="heart2_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/heart_2.png" crossorigin="anonymous">
-        <img id="heart3_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/heart_3.png" crossorigin="anonymous">
-        <img id="medusa_img" src="/worlds/COG_MemoryPalace_LowRes/assets/images/island_2/medusa.png" crossorigin="anonymous">
-        <a-asset-item id="telephonePole-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/TelephonePole/TelephonePole.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="pillow-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/Pillow_pons.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="white-pawn-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/White_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="black-pawn-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/Black_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Island2Ladder-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_2/Island2Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <img id="heart1_img" src="assets/images/island_2/heart_1.png" crossorigin="anonymous">
+        <img id="heart2_img" src="assets/images/island_2/heart_2.png" crossorigin="anonymous">
+        <img id="heart3_img" src="assets/images/island_2/heart_3.png" crossorigin="anonymous">
+        <img id="medusa_img" src="assets/images/island_2/medusa.png" crossorigin="anonymous">
+        <a-asset-item id="telephonePole-gltf" src="assets/models/island_2/TelephonePole/TelephonePole.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pillow-gltf" src="assets/models/island_2/Pillow_pons.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="white-pawn-gltf" src="assets/models/island_2/White_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="black-pawn-gltf" src="assets/models/island_2/Black_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island2Ladder-gltf" src="assets/models/island_2/Island2Ladder.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Island 3 props and assets -->
-        <a-asset-item id="platform-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/Island3Platform.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Island3Ladder1-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/Island3Ladder1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Island3Archway-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/Island3Archway.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Island3Platform-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/Island3Platform.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="Island3Path1-gltf" src="/worlds/COG_MemoryPalace_LowRes/assets/models/island_3/Island3Path1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="platform-gltf" src="assets/models/island_3/Island3Platform.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island3Ladder1-gltf" src="assets/models/island_3/Island3Ladder1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island3Archway-gltf" src="assets/models/island_3/Island3Archway.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island3Platform-gltf" src="assets/models/island_3/Island3Platform.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island3Path1-gltf" src="assets/models/island_3/Island3Path1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- audio -->
         
         <!-- narration -->
-        <audio id="Narr_brainstem-snd" src="/worlds/COG_MemoryPalace_LowRes/assets/audio/brainstem-v02.WAV" preload="true"></audio>
-        <audio id="Narr_cerebellum-snd" src="/worlds/COG_MemoryPalace_LowRes/assets/audio/cerebellum-v01.WAV" preload="true"></audio>
-        <audio id="Narr_medulla-snd" src="/worlds/COG_MemoryPalace_LowRes/assets/audio/medulla-oblongata-v01.WAV" preload="true"></audio>
-        <audio id="Narr_pons-snd" src="/worlds/COG_MemoryPalace_LowRes/assets/audio/pons-v01.WAV" preload="true"></audio>
+        <audio id="Narr_brainstem-snd" src="assets/audio/brainstem-v02.WAV" preload="true"></audio>
+        <audio id="Narr_cerebellum-snd" src="assets/audio/cerebellum-v01.WAV" preload="true"></audio>
+        <audio id="Narr_medulla-snd" src="assets/audio/medulla-oblongata-v01.WAV" preload="true"></audio>
+        <audio id="Narr_pons-snd" src="assets/audio/pons-v01.WAV" preload="true"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
