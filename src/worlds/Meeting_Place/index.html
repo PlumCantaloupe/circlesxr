@@ -17,9 +17,20 @@
 	    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
-	
+        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
+        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
 
+        <a-asset-item id="human_ref_gltf"  src="assets/models/human-ref-model.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!-- human ref model -->
+      <a-entity id="human_ref" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#human_ref_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
       <!-- sky and lights -->
       <a-entity light="type: ambient; color: #BBB"></a-entity>

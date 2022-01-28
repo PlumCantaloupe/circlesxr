@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Meeting Place",
+        "type": "experience",
+        "imgPath": "./profile.jpg",
+        "description_short": "Basic example for testing.",
+        "description_long": "Basic example for testing.",
+        "tags": [ "Indigenous", "Canada", "Meeting"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
