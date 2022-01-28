@@ -33,9 +33,9 @@
       <a-entity id="human_ref" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#human_ref_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
       <!-- sky and lights -->
-      <a-entity light="type: ambient; color: #BBB"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="0.5 1 -1"></a-entity>
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
+                light="type:directional; intensity:4; color:#d5e4f5; castShadow:true;"></a-entity>
+      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
       <a-entity id='skyBox' 
                 geometry='primitive:sphere; radius:150; segments-height:6; segments-width:6;'
