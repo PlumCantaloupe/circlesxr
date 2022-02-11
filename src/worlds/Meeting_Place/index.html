@@ -18,14 +18,31 @@
       <a-assets>
         <!-- add your assets here -->
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <audio id="click_sound" src="assets/audio/click.wav" preload="true"></audio>
+        <audio id="hover_sound" src="assets/audio/hover.wav" preload="true"></audio>
 	
+        </a-assets>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
 
+      <!-- checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
 
       <!-- sky and lights -->
       <a-entity light="type: ambient; color: #BBB"></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
       <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="0.5 1 -1"></a-entity>
-
+            <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="3.305904940681001 0.05 4.682832166759203"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="4.520465233075439 0.05 5.488178163884363"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="4.344989426771491 0.05 -5.155362082135504"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="6.6834997831464555 0.05 2.380999204264945"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="7.618967519355324 0.05 0.22066088724057406"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="7.097920297322295 0.05 -1.716988338696096"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0.10819070461016445 0.05 2.1193249159737837"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.644493348926841 0.05 -1.2374451315182142"></a-entity>
       <a-entity id='skyBox' 
                 geometry='primitive:sphere; radius:150; segments-height:6; segments-width:6;'
                 material='shader:flat; src:#skyMap; side:back;'>

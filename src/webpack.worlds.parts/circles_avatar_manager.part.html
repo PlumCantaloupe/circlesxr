@@ -16,3 +16,12 @@
             circles-usertype="__USERTYPE__"
             >
 </a-entity>
+
+<!-- our temporary sound effects --> 
+<audio id="click-snd" src="/global/assets/sound/click.wav" preload="true"></audio>
+<audio id="hover-snd" src="/global/assets/sound/hover.wav" preload="true"></audio>
+<a-entity   id="system_sounds"
+            circle-click-sound="src#click-snd;positional:false;"
+            circle-hover-sound="src#hover-snd;positional:false;"
+            >
+</a-entity>
