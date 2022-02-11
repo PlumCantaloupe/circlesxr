@@ -32,7 +32,8 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.zoomControl    = scene.querySelector('#zoom_control');
         CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
         
-        
+        CONTEXT_AF.click_sound = document.querySelector('#click_snd');
+        console.log(CONTEXT_AF.click_sound);
 
         CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
           let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
@@ -46,10 +47,9 @@ AFRAME.registerComponent('circles-manager', {
 
           console.log("rotate artefact");
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
-          ///////////////////////////////////////
-          var click_sound = document.querySelector('[click-snd]');
-          console.log(click_sound);
-          click_sound.components.sound.playSound();
+          ///////////////////////////////////////messing around code
+
+          CONTEXT_AF.click_sound.components.sound.playSound();
 
         });
 
