@@ -59,7 +59,7 @@ const GUI = {
   font_header: '/global/assets/fonts/Roboto-msdf.json'
 };
 
-//System Sound
+//System Sound --------------------------Added by Allan
 const CLICK_SOUND = '/global/assets/sound/click.wav';
 const HOVER_SOUND = '/global/assets/sound/hover.wav';
 

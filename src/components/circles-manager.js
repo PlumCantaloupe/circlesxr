@@ -10,8 +10,6 @@ AFRAME.registerComponent('circles-manager', {
   {
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
-    CONTEXT_AF.systemSounds = document.querySelector('#system_sounds');
-    console.log(CONTEXT_AF.systemSounds);
 
     CONTEXT_AF.selectedObject  = null;
     CONTEXT_AF.zoomNear         = false;    //1=normal, 2=near
@@ -34,6 +32,7 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.zoomControl    = scene.querySelector('#zoom_control');
         CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
         
+        
 
         CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
           let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
@@ -47,7 +46,10 @@ AFRAME.registerComponent('circles-manager', {
 
           console.log("rotate artefact");
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
-          CONTEXT_AF.systemSounds.components['circle-click-sound'].playSound();
+          ///////////////////////////////////////
+          var click_sound = document.querySelector('[click-snd]');
+          console.log(click_sound);
+          click_sound.components.sound.playSound();
 
         });
 
@@ -57,7 +59,8 @@ AFRAME.registerComponent('circles-manager', {
             CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
             CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
           }
-          document.querySelector('#system_sounds').components['circle-click-sound'].playSound();
+          
+          //document.querySelector('#system_sounds').components['circle-click-sound'].playSound();
 
         });
 
@@ -66,7 +69,7 @@ AFRAME.registerComponent('circles-manager', {
           let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
           let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
           //CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
-          document.querySelector('#system_sounds').components['circle-click-sound'].playSound();
+
 
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
