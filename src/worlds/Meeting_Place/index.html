@@ -1,39 +1,113 @@
 <html>
-  <head>
-    <meta charset="utf-8">
 
-    <!-- circles_HEADER_SCRIPTS -->
-    <circles-start-scripts/>
+<head>
+  <meta charset="utf-8">
 
-    <!-- add your custom scripts here -->
-    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-  </head>
-  <body>
+  <!-- circles_HEADER_SCRIPTS -->
+  <circles-start-scripts />
 
-    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
-    <circles-start-ui/>
+  <!-- add your custom scripts here -->
+  <script src="/worlds/hub/scripts/fire.js"></script>
+  <script src="/worlds/Meeting_Place/assets/scripts/main.js"></script>
+  <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+</head>
 
-    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-	    <a-scene circles_scene_properties>
-      <a-assets>
-        <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
-        <audio id="click_sound" src="assets/audio/click.wav" preload="true"></audio>
-        <audio id="hover_sound" src="assets/audio/hover.wav" preload="true"></audio>
-	
-        </a-assets>
-      <!-- Circles' built-in manager and avatar [REQUIRED] -->
-      <circles-manager-avatar/>
+<body>
+
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui />
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      <img id='silhouettesMap' src='/worlds/hub/assets/textures/Silhouettes.png' crossorigin="anonymous">
+      <img id='moonMap' src='/worlds/hub/assets/textures/moonmap.jpg' crossorigin="anonymous">
+      <img id='skyMap' src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
+      <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+      <img id='silhouettesMap' src='/worlds/hub/assets/textures/Silhouettes.png' crossorigin="anonymous">
+      <img id='moonMap' src='/worlds/hub/assets/textures/moonmap.jpg' crossorigin="anonymous">
+      <img id='skyMap' src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
+
+      <!-- models -->
+      <a-asset-item id="meeting-place-gltf" src="/worlds/Meeting_Place/assets/models/environment/meeting-place/meeting-place.glb" response-type="arraybuffer"></a-asset-item>
+      <!-- <a-asset-item id="instrument-flute" src="/worlds/Meeting_Place/assets/models/objects/artobjects/instrument-flute/instrument-flute.glb" id="instrument-flute-gltf"></a-asset-item>
+      <a-asset-item id="instrument-great-drum" src="/worlds/Meeting_Place/assets/models/objects/artobjects/instrument-great-drum/instrument-great-drum.glb" id="instrument-great-drum"></a-asset-item>
+      <a-asset-item id="painting-canadian-indians" src="/worlds/Meeting_Place/assets/models/objects/artobjects/instrument-horn-rattle/instrument-horn-rattle.glb" id="instrument-horn-rattle"></a-asset-item>
+      <a-asset-item id="painting-canadian-squaw" src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-canadian-indians/painting-canadian-indians.glb" id="painting-canadian-indians"></a-asset-item>
+      <a-asset-item id="painting-turtle" src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-canadian-squaw/painting-canadian-squaw.glb" id="painting-canadian-squaw"></a-asset-item>
+      <a-asset-item id="sculpture-bear" src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-bear/sculpture-bear.glb" id="sculpture-bear"></a-asset-item>
+      <a-asset-item id="sculpture-owl" src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-owl/sculpture-owl.glb" id="sculpture-owl"></a-asset-item>
+      <a-asset-item id="sculpture-totem" src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-totem/sculpture-totem.glb" id="sculpture-totem"></a-asset-item>
+      <a-asset-item id="painting-canvas" src="/worlds/Meeting_Place/assets/models/objects/baseobjects/painting-canvas/painting-canvas.glb" id="painting-canvas"></a-asset-item>
+      <a-asset-item id="painting-easel" src="/worlds/Meeting_Place/assets/models/objects/baseobjects/painting-easel/painting-easel.glb" id="painting-easel"></a-asset-item>
+      <a-asset-item id="sculpture-stand" src="/worlds/Meeting_Place/assets/models/objects/baseobjects/sculpture-stand/sculpture-stand.glb" id="sculpture-stand"></a-asset-item>
+      <a-asset-item id="meeting-chairs" src="/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-chairs/meeting-chairs.glb" id="meeting-chairs"></a-asset-item>
+      <a-asset-item id="meeting-projector" src="/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-projector/meeting-projector.glb" id="meeting-projector"></a-asset-item>
+      <a-asset-item id="meeting-rock" src="/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-rock/meeting-rock.glb" id="meeting-rock"></a-asset-item>
+
+ -->
+
+
+
+
+      <a-asset-item id="enviro-gltf"    src="/worlds/hub/assets/models/hubenviro.glb" response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="treeline-gltf"  src="/worlds/hub/assets/models/Treeline.glb" response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="moon-gltf"      src="/worlds/hub/assets/models/moon.glb" response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="campfire-gltf"  src="/worlds/hub/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3" preload="true"></audio>
+      <audio id="click_sound" src="assets/audio/click.wav" preload="true"></audio>
+      <audio id="hover_sound" src="assets/audio/hover.wav" preload="true"></audio>
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+    <a-entity id="GameManager" campfire-interactive></a-entity>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar />
+
+    <!-- fire FX -->
+    <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
+      <a-entity
+        id="fireParticlesSound"
+        class="ambient-music"
+        fire="particles:200;"
+        position="0.0 -0.2 0.0"
+        sound="src:#fireCrackling-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
+      </a-entity>
+
+      <a-entity animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
+        <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
+          <a-entity light="type: point; color: #FFA200; intensity: 3.5; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
+                    animation="property:light.intensity; dur:293; dir:alternate; to:3.6; loop:true; easing:easeInOutExpo">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+    </a-entity>
+
+    <a-entity
+    id="campfire"
+    class="interactive"
+    position="0.0 1.0 0.0"
+    scale="1.5 1.5 1.5"
+    gltf-model="#campfire-gltf"
+    shadow="receive: true; cast: true"
+    circles-interactive-object
+    ></a-entity>
+    <a-entity
+      id="meeting-place"
+      gltf-model="#meeting-place-gltf"
+      position="0.0 0.0 0.0"
+      scale="0.5 0.5 0.5"
+      ></a-entity>
+
+    <!-- sky and lights --> <!-- spawn point -->
+      <a-entity id="spawnPoint" position="4.2 4.05 0.0"></a-entity>
 
       <!-- checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
-
-      <!-- sky and lights -->
-      <a-entity light="type: ambient; color: #BBB"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="0.5 1 -1"></a-entity>
-            <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="3.305904940681001 0.05 4.682832166759203"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="4.520465233075439 0.05 5.488178163884363"></a-entity>
@@ -43,13 +117,32 @@
       <a-entity circles-checkpoint circles-spawnpoint position="7.097920297322295 0.05 -1.716988338696096"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="0.10819070461016445 0.05 2.1193249159737837"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="1.644493348926841 0.05 -1.2374451315182142"></a-entity>
-      <a-entity id='skyBox' 
-                geometry='primitive:sphere; radius:150; segments-height:6; segments-width:6;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
-    </a-scene>
 
-    <!-- circles_END_SCRIPTS -->
-    <circles-end-scripts/>
-  </body>
+
+      <!-- sky and lights -->
+      <a-entity light="type: hemisphere; color:#ffffff; groundColor:#1D0A57; intensity: 1.2"></a-entity>
+      <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160" 
+        light="type:directional; color:#0E192B; intensity:15.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;"></a-entity>
+      
+      <a-entity id="moon"
+        position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
+        circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"
+        ></a-entity>
+
+      <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
+              material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+
+
+  </a-scene>
+
+
+  
+  
+
+  <!-- circles_END_SCRIPTS -->
+  <circles-end-scripts />
+</body>
+
 </html>

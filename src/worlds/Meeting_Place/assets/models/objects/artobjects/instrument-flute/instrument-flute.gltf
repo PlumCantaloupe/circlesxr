@@ -1,0 +1,287 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 12696,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 2697,
+      "max": [
+        0.071724995970726,
+        0.0716359913349152,
+        0.79635101556778
+      ],
+      "min": [
+        -0.071724995970726,
+        -0.0716360062360764,
+        -0.79635101556778
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 2697,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 2697,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5125,
+      "count": 1308,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 404,
+      "max": [
+        0.0161789990961552,
+        0.15574599802494,
+        0.581088006496429
+      ],
+      "min": [
+        -0.0161789990961552,
+        0.0687849968671799,
+        0.354784995317459
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 404,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 404,
+      "type": "VEC2"
+    }
+  ],
+  "asset": {
+    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 50784,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 32364,
+      "byteOffset": 50784,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 32364,
+      "byteOffset": 83148,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 21576,
+      "byteOffset": 115512,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5232,
+      "byteOffset": 137088,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4848,
+      "byteOffset": 142320,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4848,
+      "byteOffset": 147168,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3232,
+      "byteOffset": 152016,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 155248,
+      "uri": "instrument-flute.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "lambert2SG_baseColor.png"
+    },
+    {
+      "uri": "lambert2SG_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "lambert2SG_normal.png"
+    },
+    {
+      "uri": "lambert5SG_baseColor.png"
+    },
+    {
+      "uri": "lambert5SG_occlusionRoughnessMetallic.png"
+    },
+    {
+      "uri": "lambert5SG_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "name": "lambert2SG",
+      "normalTexture": {
+        "index": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaMode": "OPAQUE",
+      "name": "lambert5SG",
+      "normalTexture": {
+        "index": 5
+      },
+      "occlusionTexture": {
+        "index": 4
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "instrument_flute",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "instrument_flute",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TEXCOORD_0": 7
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "instrument-flute.obj"
+    },
+    {
+      "children": [
+        2,
+        3
+      ],
+      "name": "instrument_flute"
+    },
+    {
+      "mesh": 0,
+      "name": "instrument_flute"
+    },
+    {
+      "mesh": 1,
+      "name": "instrument_flute"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9985,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}

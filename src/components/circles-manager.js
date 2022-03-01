@@ -49,7 +49,7 @@ AFRAME.registerComponent('circles-manager', {
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
           ///////////////////////////////////////messing around code
 
-          CONTEXT_AF.click_sound.components.sound.playSound();
+          document.querySelector('#system_sounds').components['sound__click_sound'].playSound();
 
         });
 
@@ -60,7 +60,7 @@ AFRAME.registerComponent('circles-manager', {
             CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
           }
           
-          //document.querySelector('#system_sounds').components['circle-click-sound'].playSound();
+          document.querySelector('#system_sounds').components['sound__click_sound'].playSound();
 
         });
 
