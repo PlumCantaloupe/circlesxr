@@ -10,9 +10,11 @@ AFRAME.registerComponent('circles-manager', {
   {
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
+
     CONTEXT_AF.selectedObject  = null;
     CONTEXT_AF.zoomNear         = false;    //1=normal, 2=near
     CONTEXT_AF.camera           = null;
+
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
@@ -29,6 +31,9 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.rotateControl  = scene.querySelector('#rotate_control');
         CONTEXT_AF.zoomControl    = scene.querySelector('#zoom_control');
         CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
+        
+        CONTEXT_AF.click_sound = document.querySelector('#click_snd');
+        console.log(CONTEXT_AF.click_sound);
 
         CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
           let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
@@ -42,6 +47,10 @@ AFRAME.registerComponent('circles-manager', {
 
           console.log("rotate artefact");
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
+          ///////////////////////////////////////messing around code
+
+          document.querySelector('#system_sounds').components['sound__click_sound'].playSound();
+
         });
 
         //release object (can also click on object)
@@ -50,6 +59,9 @@ AFRAME.registerComponent('circles-manager', {
             CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
             CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
           }
+          
+          document.querySelector('#system_sounds').components['sound__click_sound'].playSound();
+
         });
 
         CONTEXT_AF.zoomControl.addEventListener('click', (e) => { 
@@ -57,6 +69,7 @@ AFRAME.registerComponent('circles-manager', {
           let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
           let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
           //CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
+
 
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });

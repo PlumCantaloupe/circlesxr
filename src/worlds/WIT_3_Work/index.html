@@ -55,6 +55,8 @@
         
         <!-- credit: Omar Alvarado @ https://freesound.org/people/Omar%20Alvarado/sounds/251547/ -->
         <audio id="Amb_truck-snd" src="/worlds/WIT_3_Work/assets/audio/Amb_Truck.mp3" preload="true"></audio>
+        <audio id="click-snd" src="/global/assets/sound/click.wav" preload="true"></audio>
+        <audio id="hover-snd" src="/global/assets/sound/hover.wav" preload="true"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -62,10 +64,11 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
-
+      <a-entity   id="click-snd" sound="src: #click-snd;positional:false;autoplay:false"></a-entity>
+      <a-entity   id="hover-snd" sound="src: #hover-snd;positional:false;autoplay:false"></a-entity>
       <!-- sounds -->
-      <a-entity position="-4.308 1.0 11.468" circles-sound="type:ambient; src:#Amb_construction-snd; autoplay:true; loop:true; volume:1.0;" sound="refDistance:10; rolloffFactor:4.0;" ></a-entity>
-      <a-entity position="-8.853 1.0 1.888" circles-sound="type:ambient; src:#Amb_truck-snd; autoplay:true; loop:true; volume:0.2;" ></a-entity>
+      <!-- <a-entity position="-4.308 1.0 11.468" circles-sound="type:ambient; src:#Amb_construction-snd; autoplay:true; loop:true; volume:1.0;" sound="refDistance:10; rolloffFactor:4.0;" ></a-entity>
+      <a-entity position="-8.853 1.0 1.888" circles-sound="type:ambient; src:#Amb_truck-snd; autoplay:true; loop:true; volume:0.2;" ></a-entity> -->
 
       <!-- checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-1.845 0.050 0.329"></a-entity>
@@ -81,10 +84,11 @@
       <!-- the ground -->
       <a-entity id="Worksite_model" gltf-model="#worksite-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
 
-      <!-- artefacts -->
+      <!-- artefacts --> <!-- sound="on:click; src:#click-snd;" -->
       <a-entity id="Artefact-Lunch"
                 position="-7.954 0.536 7.534" rotation="0 0 0" scale="1 1 1"
                 gltf-model="#lunch-gltf"
+                sound="on:click; src:#click-snd;"
                 circles-sphere-env-map="src:#skyMap"
                 circles-artefact="inspectScale:2 2 2; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
                                   label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
@@ -94,6 +98,7 @@
                                   description_back:Being excluded is not always obvious, but even something as simple as eating lunch together can create feelings of isolation in those that don't belong.';
                                   label_text:Lunch;
                                   audio:#Narr_lunch-snd; volume:0.4;"></a-entity>
+                                  <!-- audio:#Narr_lunch-snd; volume:0.4; -->
 
       <a-entity id="Artefact-Steps"
                 position="-8.511 0.016 3.243" rotation="2.347 -138.544 1.202" scale="1 1 1"
