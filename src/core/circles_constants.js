@@ -50,6 +50,7 @@ const CONTROLS_OFFSET_Z         = -1.5;
 const CONTROLS_SNAP_ROTATE      = 90.0;
 const CONTROLS_SNAP_TRANSLATE   = 1.0;
 
+
 const GUI = {
   material_bg_basic : {color:'rgb(255,255,255)', opacity:0.9, shader:'flat', transparent:true, side:'double'},
   rounded_rectangle_radius: 0.15,
@@ -57,6 +58,10 @@ const GUI = {
   font_body: '/global/assets/fonts/Roboto-msdf.json',
   font_header: '/global/assets/fonts/Roboto-msdf.json'
 };
+
+//System Sound --------------------------Added by Allan
+const CLICK_SOUND = '/global/assets/sound/click.wav';
+const HOVER_SOUND = '/global/assets/sound/hover.wav';
 
 module.exports = {
   MAX_USERS,
