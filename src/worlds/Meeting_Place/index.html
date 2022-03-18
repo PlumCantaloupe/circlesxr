@@ -22,14 +22,15 @@
     <a-assets>
       <img id='silhouettesMap' src='/worlds/hub/assets/textures/Silhouettes.png' crossorigin="anonymous">
       <img id='moonMap' src='/worlds/hub/assets/textures/moonmap.jpg' crossorigin="anonymous">
-      <img id='skyMap' src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
-      <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+      <!-- <img id='skyMap' src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
+      <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous"> -->
       <img id='silhouettesMap' src='/worlds/hub/assets/textures/Silhouettes.png' crossorigin="anonymous">
       <img id='moonMap' src='/worlds/hub/assets/textures/moonmap.jpg' crossorigin="anonymous">
-      <img id='skyMap' src='/worlds/hub/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
+      <img id='skyMap' src='/worlds/Meeting_Place/assets/textures/skymap.jpg' crossorigin="anonymous">
 
-      <!-- models -->
+      <!-- models --> <!-- src="/worlds/Meeting_Place/assets/models/environment/meeting-place/meeting-place.glb" -->
       <a-asset-item id="meeting-place-gltf"
+       
         src="/worlds/Meeting_Place/assets/models/environment/meeting-place/meeting-place.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="instrument-flute-gltf"
@@ -98,16 +99,16 @@
     <circles-manager-avatar />
 
     <!-- fire FX -->
-    <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
+    <a-entity id="fireRig" position="0.0 1.3 0.0" visible="false">
       <a-entity id="fireParticlesSound" class="ambient-music" fire="particles:200;" position="0.0 0.6 0.0"
         sound="src:#fireCrackling-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
       </a-entity>
 
       <a-entity animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
-        <a-entity position="0.0 1.5 0.0"
-          animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
+        <a-entity position="0.0 1.3 0.0"
+          animation="property:position; dur:163; to:0.0 2.35 0.0; loop:true; dir:alternate; easing:linear">
           <a-entity
-            light="type: point; color: #FFA200; intensity: 3.5; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
+            light="type: point; color: #FFA200; intensity: 3.5; distance: 40.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
             animation="property:light.intensity; dur:293; dir:alternate; to:3.6; loop:true; easing:easeInOutExpo">
           </a-entity>
         </a-entity>
@@ -115,13 +116,13 @@
 
     </a-entity>
 
-    <a-entity id="campfire" class="interactive" position="0.0 1.0 0.0" scale="1.5 1.5 1.5" gltf-model="#campfire-gltf"
+    <a-entity id="campfire" class="interactive" position="0.0 1.474 0.0" scale="1.5 1.5 1.5" gltf-model="#campfire-gltf"
       shadow="receive: true; cast: true" circles-interactive-object></a-entity>
-    <a-entity id="meeting-place" gltf-model="#meeting-place-gltf" position="0.0 0.0 0.0" scale="0.5 0.5 0.5"></a-entity>
+    <a-entity id="meeting-place" gltf-model="#meeting-place-gltf" position="0.0 0.0 0.0" scale="0.5 0.5 0.5" circles-sphere-env-map="src:#skyMap"></a-entity>
 
     <a-entity id="projector" gltf-model="#meeting-projector-gltf" position="0.0 2.47 33" scale="0.3 0.3 0.3"></a-entity>
-    <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: true"
-      position="0.0 2.25 0.0"></a-entity>
+    <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: false"
+      position="0.0 3.25 0.0"></a-entity>
     <a-entity id="painting-canadian-indians-wall-left" gltf-model="#painting-canadian-indians-gltf"
       position="15.0 2.47 33"></a-entity>
     <a-entity id="painting-canadian-squaw-wall-right" gltf-model="#painting-canadian-squaw-gltf"
@@ -187,16 +188,21 @@
 
 
     <!-- sky and lights -->
-    <a-entity light="type: hemisphere; color:#ffffff; groundColor:#1D0A57; intensity: 1.2"></a-entity>
-    <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160"
-      light="type:directional; color:#0E192B; intensity:15.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;">
-    </a-entity>
-
-    <a-entity id="moon" position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
-      circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"></a-entity>
-
+    <a-entity id="lighting_group">
+    <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
+    light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+<a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
     <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
-      material="shader:flat; src:#skyMap; side:back; height:2048; width:2048"></a-entity>
+    material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
+  </a-entity>
+    <!-- <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160"
+      light="type:hemisphere; color:#FFFFFF; intensity:25.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;">
+    </a-entity> -->
+
+    <!-- <a-entity id="moon" position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
+      circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"></a-entity> -->
+
+
 
     <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
 
