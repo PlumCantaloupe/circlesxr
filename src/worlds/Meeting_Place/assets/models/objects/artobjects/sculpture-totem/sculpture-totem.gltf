@@ -36,7 +36,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -72,13 +72,13 @@
   ],
   "images": [
     {
-      "uri": "totem_baseColor.png"
+      "uri": "totem_baseColor.jpg"
     },
     {
-      "uri": "totem_occlusionRoughnessMetallic.png"
+      "uri": "totem_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "totem_normal.png"
+      "uri": "totem_normal.jpg"
     }
   ],
   "materials": [

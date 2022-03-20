@@ -36,7 +36,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -72,13 +72,13 @@
   ],
   "images": [
     {
-      "uri": "rock_baseColor.png"
+      "uri": "rock_baseColor.jpg"
     },
     {
-      "uri": "rock_occlusionRoughnessMetallic.png"
+      "uri": "rock_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "rock_normal.png"
+      "uri": "rock_normal.jpg"
     }
   ],
   "materials": [

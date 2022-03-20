@@ -70,7 +70,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -130,28 +130,28 @@
   ],
   "images": [
     {
-      "uri": "lambert2SG_baseColor.png"
+      "uri": "flute_baseColor.jpg"
     },
     {
-      "uri": "lambert2SG_occlusionRoughnessMetallic.png"
+      "uri": "flute_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "lambert2SG_normal.png"
+      "uri": "flute_normal.jpg"
     },
     {
-      "uri": "lambert5SG_baseColor.png"
+      "uri": "flute-bird_baseColor.jpg"
     },
     {
-      "uri": "lambert5SG_occlusionRoughnessMetallic.png"
+      "uri": "flute-bird_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "lambert5SG_normal.png"
+      "uri": "flute-bird_normal.jpg"
     }
   ],
   "materials": [
     {
       "alphaMode": "OPAQUE",
-      "name": "lambert2SG",
+      "name": "flute",
       "normalTexture": {
         "index": 2
       },
@@ -169,7 +169,7 @@
     },
     {
       "alphaMode": "OPAQUE",
-      "name": "lambert5SG",
+      "name": "flute-bird",
       "normalTexture": {
         "index": 5
       },
@@ -197,7 +197,7 @@
             "TEXCOORD_0": 3
           },
           "indices": 0,
-          "material": 1,
+          "material": 0,
           "mode": 4
         }
       ]
@@ -212,7 +212,7 @@
             "TEXCOORD_0": 7
           },
           "indices": 4,
-          "material": 0,
+          "material": 1,
           "mode": 4
         }
       ]

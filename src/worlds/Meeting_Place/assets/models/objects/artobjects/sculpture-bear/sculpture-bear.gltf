@@ -36,7 +36,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -72,13 +72,13 @@
   ],
   "images": [
     {
-      "uri": "bear_baseColor.png"
+      "uri": "bear_baseColor.jpg"
     },
     {
-      "uri": "bear_occlusionRoughnessMetallic.png"
+      "uri": "bear_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "bear_normal.png"
+      "uri": "bear_normal.jpg"
     }
   ],
   "materials": [

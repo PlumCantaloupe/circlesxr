@@ -70,7 +70,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -130,22 +130,22 @@
   ],
   "images": [
     {
-      "uri": "canvas_baseColor.png"
+      "uri": "canvas_baseColor.jpg"
     },
     {
-      "uri": "canvas_occlusionRoughnessMetallic.png"
+      "uri": "canvas_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "canvas_normal.png"
+      "uri": "canvas_normal.jpg"
     },
     {
-      "uri": "frame_baseColor.png"
+      "uri": "frame_baseColor.jpg"
     },
     {
-      "uri": "frame_occlusionRoughnessMetallic.png"
+      "uri": "frame_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "frame_normal.png"
+      "uri": "frame_normal.jpg"
     }
   ],
   "materials": [

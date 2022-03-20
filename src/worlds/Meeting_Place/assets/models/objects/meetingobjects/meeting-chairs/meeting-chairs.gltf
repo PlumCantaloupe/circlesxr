@@ -70,7 +70,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -130,22 +130,22 @@
   ],
   "images": [
     {
-      "uri": "chair_baseColor.png"
+      "uri": "chair_baseColor.jpg"
     },
     {
-      "uri": "chair_occlusionRoughnessMetallic.png"
+      "uri": "chair_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "chair_normal.png"
+      "uri": "chair_normal.jpg"
     },
     {
-      "uri": "chair-cushion_baseColor.png"
+      "uri": "chair-cushion_baseColor.jpg"
     },
     {
-      "uri": "chair-cushion_occlusionRoughnessMetallic.png"
+      "uri": "chair-cushion_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "chair-cushion_normal.png"
+      "uri": "chair-cushion_normal.jpg"
     }
   ],
   "materials": [

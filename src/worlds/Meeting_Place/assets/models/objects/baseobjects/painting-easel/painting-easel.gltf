@@ -36,7 +36,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -72,19 +72,19 @@
   ],
   "images": [
     {
-      "uri": "lambert3SG_baseColor.png"
+      "uri": "painting-easel_baseColor.jpg"
     },
     {
-      "uri": "lambert3SG_occlusionRoughnessMetallic.png"
+      "uri": "painting-easel_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "lambert3SG_normal.png"
+      "uri": "painting-easel_normal.jpg"
     }
   ],
   "materials": [
     {
       "alphaMode": "OPAQUE",
-      "name": "lambert3SG",
+      "name": "painting-easel",
       "normalTexture": {
         "index": 2
       },

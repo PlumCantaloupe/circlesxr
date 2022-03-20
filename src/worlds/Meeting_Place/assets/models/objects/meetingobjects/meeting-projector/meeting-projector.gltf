@@ -70,7 +70,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -130,22 +130,22 @@
   ],
   "images": [
     {
-      "uri": "projector_baseColor.png"
+      "uri": "projector_baseColor.jpg"
     },
     {
-      "uri": "projector_occlusionRoughnessMetallic.png"
+      "uri": "projector_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "projector_normal.png"
+      "uri": "projector_normal.jpg"
     },
     {
-      "uri": "projector_screen_baseColor.png"
+      "uri": "projector-screen_baseColor.jpg"
     },
     {
-      "uri": "projector_screen_occlusionRoughnessMetallic.png"
+      "uri": "projector-screen_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "projector_screen_normal.png"
+      "uri": "projector-screen_normal.jpg"
     }
   ],
   "materials": [
@@ -169,7 +169,7 @@
     },
     {
       "alphaMode": "OPAQUE",
-      "name": "projector_screen",
+      "name": "projector-screen",
       "normalTexture": {
         "index": 5
       },

@@ -17,7 +17,7 @@
       ],
       "min": [
         -1.55660104751587,
-        1.93936955928802,
+        1.93936944007874,
         -0.0520379953086376
       ],
       "type": "VEC3"
@@ -70,7 +70,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -130,28 +130,28 @@
   ],
   "images": [
     {
-      "uri": "initialShadingGroup_baseColor.png"
+      "uri": "canvas_baseColor.jpg"
     },
     {
-      "uri": "initialShadingGroup_occlusionRoughnessMetallic.png"
+      "uri": "canvas_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "initialShadingGroup_normal.png"
+      "uri": "canvas_normal.jpg"
     },
     {
-      "uri": "lambert4SG_baseColor.png"
+      "uri": "frame_baseColor.jpg"
     },
     {
-      "uri": "lambert4SG_occlusionRoughnessMetallic.png"
+      "uri": "frame_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "lambert4SG_normal.png"
+      "uri": "frame_normal.jpg"
     }
   ],
   "materials": [
     {
       "alphaMode": "OPAQUE",
-      "name": "initialShadingGroup",
+      "name": "canvas",
       "normalTexture": {
         "index": 2
       },
@@ -169,7 +169,7 @@
     },
     {
       "alphaMode": "OPAQUE",
-      "name": "lambert4SG",
+      "name": "frame",
       "normalTexture": {
         "index": 5
       },

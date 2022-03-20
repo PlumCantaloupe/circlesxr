@@ -3,82 +3,82 @@
     {
       "bufferView": 0,
       "componentType": 5125,
-      "count": 586524,
+      "count": 58644,
       "type": "SCALAR"
     },
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 586488,
+      "count": 58638,
       "max": [
-        0.627453029155731,
-        1.75170886516571,
-        0.626510918140411
+        0.626941919326782,
+        1.75167095661163,
+        0.626487910747528
       ],
       "min": [
-        -0.627453029155731,
-        -0.207282900810242,
-        -0.626510918140411
+        -0.627273917198181,
+        -0.206939935684204,
+        -0.626475989818573
       ],
       "type": "VEC3"
     },
     {
       "bufferView": 2,
       "componentType": 5126,
-      "count": 586488,
+      "count": 58638,
       "type": "VEC3"
     },
     {
       "bufferView": 3,
       "componentType": 5126,
-      "count": 586488,
+      "count": 58638,
       "type": "VEC2"
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
     {
       "buffer": 0,
-      "byteLength": 2346096,
+      "byteLength": 234576,
       "target": 34963
     },
     {
       "buffer": 0,
-      "byteLength": 7037856,
-      "byteOffset": 2346096,
+      "byteLength": 703656,
+      "byteOffset": 234576,
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 7037856,
-      "byteOffset": 9383952,
+      "byteLength": 703656,
+      "byteOffset": 938232,
       "target": 34962
     },
     {
       "buffer": 0,
-      "byteLength": 4691904,
-      "byteOffset": 16421808,
+      "byteLength": 469104,
+      "byteOffset": 1641888,
       "target": 34962
     }
   ],
   "buffers": [
     {
-      "byteLength": 21113712,
+      "byteLength": 2110992,
       "uri": "sculpture-owl.bin"
     }
   ],
   "images": [
     {
-      "uri": "owl_baseColor.png"
+      "uri": "owl_baseColor.jpg"
     },
     {
-      "uri": "owl_occlusionRoughnessMetallic.png"
+      "uri": "owl_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "owl_normal.png"
+      "uri": "owl_normal.jpg"
     }
   ],
   "materials": [

@@ -36,7 +36,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -72,19 +72,19 @@
   ],
   "images": [
     {
-      "uri": "lambert2SG_baseColor.png"
+      "uri": "stand_baseColor.jpg"
     },
     {
-      "uri": "lambert2SG_occlusionRoughnessMetallic.png"
+      "uri": "stand_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "lambert2SG_normal.png"
+      "uri": "stand_normal.jpg"
     }
   ],
   "materials": [
     {
       "alphaMode": "OPAQUE",
-      "name": "lambert2SG",
+      "name": "stand",
       "normalTexture": {
         "index": 2
       },

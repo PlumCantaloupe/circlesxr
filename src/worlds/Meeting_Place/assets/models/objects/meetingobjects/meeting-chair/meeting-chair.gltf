@@ -1,0 +1,287 @@
+{
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 19470,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 6680,
+      "max": [
+        1.75878310203552,
+        3.40407609939575,
+        1.50495195388794
+      ],
+      "min": [
+        -1.64741206169128,
+        -0.0103880167007446,
+        -1.33651602268219
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 6680,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 6680,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5125,
+      "count": 76968,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 20041,
+      "max": [
+        1.33460795879364,
+        2.75525093078613,
+        0.94555002450943
+      ],
+      "min": [
+        -1.22655200958252,
+        2.37366509437561,
+        -1.36672806739807
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 6,
+      "componentType": 5126,
+      "count": 20041,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 7,
+      "componentType": 5126,
+      "count": 20041,
+      "type": "VEC2"
+    }
+  ],
+  "asset": {
+    "generator": "Adobe Substance 3D Painter 7.4.2",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 77880,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 80160,
+      "byteOffset": 77880,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 80160,
+      "byteOffset": 158040,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 53440,
+      "byteOffset": 238200,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 307872,
+      "byteOffset": 291640,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240492,
+      "byteOffset": 599512,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 240492,
+      "byteOffset": 840004,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 160328,
+      "byteOffset": 1080496,
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1240824,
+      "uri": "meeting-chair.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "chair_baseColor.jpg"
+    },
+    {
+      "uri": "chair_occlusionRoughnessMetallic.jpg"
+    },
+    {
+      "uri": "chair_normal.jpg"
+    },
+    {
+      "uri": "chair-cushion_baseColor.jpg"
+    },
+    {
+      "uri": "chair-cushion_occlusionRoughnessMetallic.jpg"
+    },
+    {
+      "uri": "chair-cushion_normal.jpg"
+    }
+  ],
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "name": "chair",
+      "normalTexture": {
+        "index": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaMode": "OPAQUE",
+      "name": "chair-cushion",
+      "normalTexture": {
+        "index": 5
+      },
+      "occlusionTexture": {
+        "index": 4
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "meeting_chair",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 2,
+            "POSITION": 1,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "meeting_chair",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TEXCOORD_0": 7
+          },
+          "indices": 4,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "meeting-chair.obj"
+    },
+    {
+      "children": [
+        2,
+        3
+      ],
+      "name": "meeting_chair"
+    },
+    {
+      "mesh": 0,
+      "name": "meeting_chair"
+    },
+    {
+      "mesh": 1,
+      "name": "meeting_chair"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9985,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}
