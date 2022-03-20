@@ -215,12 +215,12 @@
       "componentType": 5126,
       "count": 858,
       "max": [
-        85.7886962890625,
-        47.6184844970703,
-        85.7987899780273
+        85.8359909057617,
+        47.6373596191406,
+        85.8359527587891
       ],
       "min": [
-        -85.8082885742188,
+        -85.8358840942383,
         18.0914440155029,
         -81.634765625
       ],
@@ -589,14 +589,14 @@
       "componentType": 5126,
       "count": 15842,
       "max": [
-        127.871208190918,
-        0.780309677124023,
-        127.907707214355
+        127.89087677002,
+        0.646385192871094,
+        127.890060424805
       ],
       "min": [
-        -127.869850158691,
-        -0.116985321044922,
-        -127.992164611816
+        -127.890800476074,
+        -0.0153884887695312,
+        -127.951286315918
       ],
       "type": "VEC3"
     },
@@ -614,7 +614,7 @@
     }
   ],
   "asset": {
-    "generator": "Adobe Substance 3D Painter 7.4.1",
+    "generator": "Adobe Substance 3D Painter 7.4.2",
     "version": "2.0"
   },
   "bufferViews": [
@@ -1058,166 +1058,166 @@
   ],
   "images": [
     {
-      "uri": "door_baseColor.png"
+      "uri": "door_baseColor.jpg"
     },
     {
-      "uri": "door_occlusionRoughnessMetallic.png"
+      "uri": "door_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "door_normal.png"
+      "uri": "door_normal.jpg"
     },
     {
-      "uri": "door-metal_baseColor.png"
+      "uri": "door-metal_baseColor.jpg"
     },
     {
-      "uri": "door-metal_occlusionRoughnessMetallic.png"
+      "uri": "door-metal_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "door-metal_normal.png"
+      "uri": "door-metal_normal.jpg"
     },
     {
-      "uri": "fire-pit_baseColor.png"
+      "uri": "fire-pit_baseColor.jpg"
     },
     {
-      "uri": "fire-pit_occlusionRoughnessMetallic.png"
+      "uri": "fire-pit_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "fire-pit_normal.png"
+      "uri": "fire-pit_normal.jpg"
     },
     {
-      "uri": "fire-wood_baseColor.png"
+      "uri": "fire-wood_baseColor.jpg"
     },
     {
-      "uri": "fire-wood_occlusionRoughnessMetallic.png"
+      "uri": "fire-wood_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "fire-wood_normal.png"
+      "uri": "fire-wood_normal.jpg"
     },
     {
-      "uri": "floor-exterior_baseColor.png"
+      "uri": "floor-exterior_baseColor.jpg"
     },
     {
-      "uri": "floor-exterior_occlusionRoughnessMetallic.png"
+      "uri": "floor-exterior_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "floor-exterior_normal.png"
+      "uri": "floor-exterior_normal.jpg"
     },
     {
-      "uri": "floor-interior_baseColor.png"
+      "uri": "floor-interior_baseColor.jpg"
     },
     {
-      "uri": "floor-interior_occlusionRoughnessMetallic.png"
+      "uri": "floor-interior_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "floor-interior_normal.png"
+      "uri": "floor-interior_normal.jpg"
     },
     {
-      "uri": "floor-interior-dirt-path_baseColor.png"
+      "uri": "floor-interior-dirt-path_baseColor.jpg"
     },
     {
-      "uri": "floor-interior-dirt-path_occlusionRoughnessMetallic.png"
+      "uri": "floor-interior-dirt-path_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "floor-interior-dirt-path_normal.png"
+      "uri": "floor-interior-dirt-path_normal.jpg"
     },
     {
-      "uri": "roof-glass-cone_baseColor.png"
+      "uri": "roof-glass-cone_baseColor.jpg"
     },
     {
-      "uri": "roof-glass-cone_occlusionRoughnessMetallic.png"
+      "uri": "roof-glass-cone_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "roof-glass-cone_normal.png"
+      "uri": "roof-glass-cone_normal.jpg"
     },
     {
-      "uri": "roof-inside_baseColor.png"
+      "uri": "roof-inside_baseColor.jpg"
     },
     {
-      "uri": "roof-inside_occlusionRoughnessMetallic.png"
+      "uri": "roof-inside_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "roof-inside_normal.png"
+      "uri": "roof-inside_normal.jpg"
     },
     {
-      "uri": "roof-outside_baseColor.png"
+      "uri": "roof-outside_baseColor.jpg"
     },
     {
-      "uri": "roof-outside_occlusionRoughnessMetallic.png"
+      "uri": "roof-outside_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "roof-outside_normal.png"
+      "uri": "roof-outside_normal.jpg"
     },
     {
-      "uri": "roof-wood-frame_baseColor.png"
+      "uri": "roof-wood-frame_baseColor.jpg"
     },
     {
-      "uri": "roof-wood-frame_occlusionRoughnessMetallic.png"
+      "uri": "roof-wood-frame_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "roof-wood-frame_normal.png"
+      "uri": "roof-wood-frame_normal.jpg"
     },
     {
-      "uri": "spotlight-glass_baseColor.png"
+      "uri": "spotlight-glass_baseColor.jpg"
     },
     {
-      "uri": "spotlight-glass_occlusionRoughnessMetallic.png"
+      "uri": "spotlight-glass_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "spotlight-glass_normal.png"
+      "uri": "spotlight-glass_normal.jpg"
     },
     {
-      "uri": "spotlight-interior-glass_baseColor.png"
+      "uri": "spotlight-interior-glass_baseColor.jpg"
     },
     {
-      "uri": "spotlight-interior-glass_occlusionRoughnessMetallic.png"
+      "uri": "spotlight-interior-glass_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "spotlight-interior-glass_normal.png"
+      "uri": "spotlight-interior-glass_normal.jpg"
     },
     {
-      "uri": "spotlight-interior-metal_baseColor.png"
+      "uri": "spotlight-interior-metal_baseColor.jpg"
     },
     {
-      "uri": "spotlight-interior-metal_occlusionRoughnessMetallic.png"
+      "uri": "spotlight-interior-metal_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "spotlight-interior-metal_normal.png"
+      "uri": "spotlight-interior-metal_normal.jpg"
     },
     {
-      "uri": "spotlight-metal_baseColor.png"
+      "uri": "spotlight-metal_baseColor.jpg"
     },
     {
-      "uri": "spotlight-metal_occlusionRoughnessMetallic.png"
+      "uri": "spotlight-metal_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "spotlight-metal_normal.png"
+      "uri": "spotlight-metal_normal.jpg"
     },
     {
-      "uri": "stone-walkway-exterior_baseColor.png"
+      "uri": "stone-walkway-exterior_baseColor.jpg"
     },
     {
-      "uri": "stone-walkway-exterior_occlusionRoughnessMetallic.png"
+      "uri": "stone-walkway-exterior_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "stone-walkway-exterior_normal.png"
+      "uri": "stone-walkway-exterior_normal.jpg"
     },
     {
-      "uri": "wall_baseColor.png"
+      "uri": "wall_baseColor.jpg"
     },
     {
-      "uri": "wall_occlusionRoughnessMetallic.png"
+      "uri": "wall_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "wall_normal.png"
+      "uri": "wall_normal.jpg"
     },
     {
-      "uri": "wall-wood-panel_baseColor.png"
+      "uri": "wall-wood-panels_baseColor.jpg"
     },
     {
-      "uri": "wall-wood-panel_occlusionRoughnessMetallic.png"
+      "uri": "wall-wood-panels_occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "wall-wood-panel_normal.png"
+      "uri": "wall-wood-panels_normal.jpg"
     }
   ],
   "materials": [
@@ -1529,7 +1529,7 @@
     },
     {
       "alphaMode": "OPAQUE",
-      "name": "wall-wood-panel",
+      "name": "wall-wood-panels",
       "normalTexture": {
         "index": 53
       },
