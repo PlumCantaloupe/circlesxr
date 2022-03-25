@@ -125,3 +125,47 @@ AFRAME.registerComponent('campfire-interactive', {
         //CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
     },
 });
+
+AFRAME.registerComponent('chair-maker', {
+    schema: {
+        chairblock:{type:'int', default:'3'},
+        chairnumber:{type:'int', default:'20'}
+    },
+    init() {
+        const CONTEXT_AF = this;
+        const scene      = document.querySelector('a-scene');
+        CONTEXT_AF.createNewChair();
+    },
+    update(){},
+    createNewChair : function() {
+        const CONTEXT_AF = this;
+        let scene = CONTEXT_AF.el.sceneEl;
+        x = 0;
+        y = 0;
+        ry = 170;
+        px = 3.25;
+        pz = 3.45;
+        while(x < 2)  {
+            
+            while(y<10)
+            {   
+                
+              
+                CONTEXT_AF.newchair = document.createElement('a-entity');
+                CONTEXT_AF.newchair.setAttribute('id','chair0'+x+y);
+                CONTEXT_AF.newchair.setAttribute('gltf-model', '/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-chair/meeting-chair.glb');
+                CONTEXT_AF.newchair.setAttribute('position',{x:-(px), y:0, z:-(pz)});
+                console.log(px);
+                console.log(pz);
+                CONTEXT_AF.newchair.setAttribute('scale',{x:0.4, y:0.4, z:0.4});
+                CONTEXT_AF.newchair.setAttribute('rotation',{x:0, y:-(ry), z:0});
+                scene.appendChild(CONTEXT_AF.newchair);
+                y++;  
+                ry = ry+ 20; 
+                px = px + 1; 
+                pz = pz + 1;
+            }
+            x++;
+        }
+    },
+});
