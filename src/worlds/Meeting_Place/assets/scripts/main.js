@@ -142,29 +142,42 @@ AFRAME.registerComponent('chair-maker', {
         let scene = CONTEXT_AF.el.sceneEl;
         x = 0;
         y = 0;
-        ry = 170;
-        px = 3.25;
-        pz = 3.45;
-        while(x < 2)  {
-            
-            while(y<10)
+        ry = 160;
+        px = 3.0;
+        pz = 3.0;
+        while(x < 4)  {
+            console.log(x);
+            while(y<11)
             {   
-                
-              
+                console.log('Starting x: '+px);
+                console.log('Starting z: '+pz);
                 CONTEXT_AF.newchair = document.createElement('a-entity');
                 CONTEXT_AF.newchair.setAttribute('id','chair0'+x+y);
                 CONTEXT_AF.newchair.setAttribute('gltf-model', '/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-chair/meeting-chair.glb');
                 CONTEXT_AF.newchair.setAttribute('position',{x:-(px), y:0, z:-(pz)});
-                console.log(px);
-                console.log(pz);
                 CONTEXT_AF.newchair.setAttribute('scale',{x:0.4, y:0.4, z:0.4});
                 CONTEXT_AF.newchair.setAttribute('rotation',{x:0, y:-(ry), z:0});
                 scene.appendChild(CONTEXT_AF.newchair);
                 y++;  
-                ry = ry+ 20; 
-                px = px + 1; 
-                pz = pz + 1;
+                //ry = ry+ 20; 
+                px = px + 1.898; 
+                pz = pz + 1.16;
+                console.log('ending x: '+ px);
+                console.log('ending z: '+ pz);
             }
+            ry = 160;
+            px = px-2;
+            if(x == 1 || x == 2)
+            {
+                if(x==1){
+                    pz = -4;
+                }
+                else{
+                    pz= 4;
+                }
+                
+            }
+            px = 3.0;
             x++;
         }
     },
