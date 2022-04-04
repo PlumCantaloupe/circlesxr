@@ -31,7 +31,7 @@
     "pug": "^3.0.2",
     "sanitize-html": "^2.5.1",
     "socket.io": "^4.2.0",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
