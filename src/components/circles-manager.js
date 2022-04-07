@@ -18,7 +18,7 @@ AFRAME.registerComponent('circles-manager', {
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
-      scene.setAttribute('vr-mode-ui', {enabled:false});
+      scene.setAttribute('vr-mode-ui', {enabled:true});
     }
 
     CONTEXT_AF.createFloatingObjectDescriptions();
