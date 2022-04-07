@@ -128,9 +128,9 @@
     <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: false" scale="1.3 1.3 1.3"
       position="0.0 3.75 0.0"></a-entity>
     <a-entity id="painting-canadian-indians-wall-left" gltf-model="#painting-canadian-indians-gltf"
-      position="15.0 2.47 33"></a-entity>
+      position="15.0 2.47 33" rotation="0 180 0"></a-entity>
     <a-entity id="painting-canadian-squaw-wall-right" gltf-model="#painting-canadian-squaw-gltf"
-      position="-15.0 2.47 33"></a-entity>
+      position="-15.0 2.47 33" rotation="0 180 0"></a-entity>
     <!-- <a-entity id="chair_001" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="0 0 -17" rotation="-180 60 -180"></a-entity>
     <a-entity id="chair_002" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="-14.370 0 7.986"></a-entity>
     <a-entity id="chair_003" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="13.115 0 6.481" rotation="0 122 0"></a-entity> -->
@@ -140,7 +140,7 @@
     ></a-entity>
     <a-entity id="sculpture-owl" gltf-model="#sculpture-owl-gltf" position="27.621 1.843 8.542" rotation="0 -50.798 0" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
                                   title:Sculpture - Owl;
                                   description:'Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy.';
                                   title_back:Sculpture - Owl;
@@ -160,7 +160,7 @@
     "></a-entity>
 
     <a-entity id="stand_002" gltf-model="#sculpture-stand-gltf" position="31.170 0 0.439" scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="instrument-flute" gltf-model="#instrument-flute-gltf" position="30.944 1.811 0.579" scale="0.5 0.5 0.5"
+    <a-entity id="instrument-flute" gltf-model="#instrument-flute-gltf" position="30.944 2 0.579" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
                                   label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
                                   title:Instrument - Flute;
@@ -173,7 +173,7 @@
     <a-entity id="stand_003" gltf-model="#sculpture-stand-gltf" position="23.390 -0.004 -18.654" scale="0.4 0.4 0.4"></a-entity>
     <a-entity id="sculpture-totem" gltf-model="#sculpture-totem-gltf" position="23.399 1.916 -18.45" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
                                   title:Sculpture - Totem;
                                   description:'Wood carved totem. Representing a revered guardian or ancentral being tied to cultural lineage.';
                                   title_back:Sculpture - Totem;
@@ -182,7 +182,7 @@
                                   "></a-entity>
 
     <a-entity id="easel_002" gltf-model="#painting-easel-gltf" position="20.228 0 -25.471" rotation="0 -43.421 0" scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="painting-canadian-squaw" gltf-model="painting-canadian-squaw-gltf" position="20.026 -0.017 -25.333" rotation="-5.154 -43.421 0" scale="0.5 0.5 0.5"
+    <a-entity id="painting-canadian-squaw_" gltf-model="#painting-canadian-squaw-gltf" position="20.026 -0.017 -25.333" rotation="-5.154 -43.421 0" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:2 2 2; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
     label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
     title:Painting - Canadian Squaw;
@@ -195,7 +195,7 @@
     <a-entity id="stand_004" gltf-model="#sculpture-stand-gltf" position="13.163 0.000 -24.935" scale="0.4 0.4 0.4"></a-entity>
     <a-entity id="sculpture-bear" gltf-model="#sculpture-bear-gltf" position="13.118 1.819 -24.772" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
                                   title:Sculpture - Bear;
                                   description:'Dark, marbled stone bear. Indigenous symbol representing strength, family, vitality courage, and health.';
                                   title_back:Sculpture - Bear;
@@ -205,9 +205,9 @@
 
     <!-- right side 7 - 12-->
     <a-entity id="stand_005" gltf-model="#sculpture-stand-gltf" position="-8.763 0 -31.306" scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="instrument-great-drum" gltf-model="#instrument-great-drum-gltf" position="-8.743 1.779 -31.207" scale="0.5 0.5 0.5"
-    circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+    <a-entity id="instrument-great-drum" gltf-model="#instrument-great-drum-gltf" position="-8.743 1.779 -31.207" scale="0.2 0.2 0.2"
+    circles-artefact="inspectScale:0.3 0.3 0.3; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:0.3;
+                                  label_offset:2.0 0.5 2.0; label_visible:true; arrow_position:down;
                                   title:Instrument - Great Drum;
                                   description:'Drum and ritual object used in many songs and dances of nations. At times shaped from a single cervid skin stretched over the wooden frame.';
                                   title_back:Instrument - Great Drum;
@@ -229,7 +229,7 @@
     <a-entity id="stand_006" gltf-model="#sculpture-stand-gltf" position="-22.333 0 -25.033" scale="0.4 0.4 0.4"></a-entity>
     <a-entity id="sculpture-bear" gltf-model="#sculpture-bear-gltf" position="-22.367 1.788 -24.877" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
                                   title:Sculpture - Bear;
                                   description:'Dark, marbled stone bear. Indigenous symbol representing strength, family, vitality courage, and health.';
                                   title_back:Sculpture - Bear;
@@ -240,7 +240,7 @@
     <a-entity id="stand_007" gltf-model="#sculpture-stand-gltf" position="-32.458 0.000 3.660" scale="0.4 0.4 0.4"></a-entity>
     <a-entity id="sculpture-totem" gltf-model="#sculpture-totem-gltf" position="-32.465 1.784 3.855" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+    label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
     title:Sculpture - Totem;
     description:'Wood carved totem. Representing a revered guardian or ancentral being tied to cultural lineage.';
     title_back:Sculpture - Totem;
@@ -262,7 +262,7 @@
     <a-entity id="stand_008" gltf-model="#sculpture-stand-gltf" position="-31.229 0 -7.026" scale="0.4 0.4 0.4"></a-entity>
     <a-entity id="instrument-horn-rattle" gltf-model="#instrument-horn-rattle-gltf" position="-31.201 2.395 -6.839" scale="0.5 0.5 0.5"
     circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-    label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+    label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
     title:Instrument - Horn Rattle;
     description:'Horn rattle made from bison or cattle horn. Notably used by the Iroquoians and Abenakis. Filled with pebbles to create a rustling sound when striking the rattle agains the thigh or palm of the hand.';
     title_back:Instrument - Horn Rattle;
@@ -275,10 +275,10 @@
 
     <!-- sky and lights -->
     <!-- spawn point -->
-    <a-entity id="spawnPoint" position="4.2 6.05 0.0"></a-entity>
+    <a-entity id="spawnPoint" position="0.221 0.325 -14.505"></a-entity>
 
     <!-- checkpoints -->
-    <a-entity circles-checkpoint circles-spawnpoint position="-8.773788008561061 0.05 -4.8206161356897833"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="0.221 0.325 -14.505"></a-entity>
     <!-- <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="3.305904940681001 0.05 4.682832166759203"></a-entity>
