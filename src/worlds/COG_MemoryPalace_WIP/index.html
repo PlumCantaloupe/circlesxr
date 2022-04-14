@@ -56,6 +56,10 @@
         <img id="heart2_img" src="assets/images/island_2/heart_2.png" crossorigin="anonymous">
         <img id="heart3_img" src="assets/images/island_2/heart_3.png" crossorigin="anonymous">
         <img id="medusa_img" src="assets/images/island_2/medusa.png" crossorigin="anonymous">
+        <img id="hot_img" src="assets/images/island_3/Hot.png" crossorigin="anonymous">
+        <img id="stomach_img" src="assets/images/island_3/stomach.png" crossorigin="anonymous">
+
+
         <a-asset-item id="telephonePole-gltf" src="assets/models/island_2/TelephonePole/TelephonePole.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="pillow-gltf" src="assets/models/island_2/Pillow_pons.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="white-pawn-gltf" src="assets/models/island_2/White_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -71,6 +75,9 @@
         <a-asset-item id="RedNucleus11-glb" src="assets/models/island_3/RedNucleus11.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Nuclear2-glb" src="assets/models/island_3/Nuclear2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Rubik-Red-glb" src="assets/models/island_3/Rubik-Red.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Rubik-Grey-glb" src="assets/models/island_3/Rubik-Grey.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Pterodactyl-glb" src="assets/models/island_3/Pterodactyl4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Aqueduct-glb" src="assets/models/island_3/Aqueduct3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <a-asset-item id="bowl-glb" src="assets/models/island_3/bowl.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <!-- audio -->
@@ -199,16 +206,21 @@
           <a-entity id="bowl-glb" position="18.074 24.355 -62.147" scale="1.2 1.2 1.2" rotation="0 -49.002 0" gltf-model="#bowl-glb" animation-mixer></a-entity>
           <a-entity id="pedestal-island3-scene2" position="18.842 24.355 -59.263" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
 
-
-  
           <!-- Scene 3: Red Nucleus -->
-          <a-entity id="RedNucleus11-glb" gltf-model="#RedNucleus11-glb" circles-sphere-env-map="src:#skyMap" position="21.849 24.320 -78.406" rotation="0 -60 0" animation-mixer></a-entity>
-          <a-entity id="Nuclear2-glb" gltf-model="#Nuclear2-glb" circles-sphere-env-map="src:#skyMap" position="23.987 26.795 -81.672" scale="1.3 1.3 1.3" rotation="90 -18.890 0" animation-mixer></a-entity>
-          <a-entity id="Rubik-Red-glb" gltf-model="#Rubik-Red-glb" circles-sphere-env-map="src:#skyMap" position="21.058 27.056 -80.678" scale="0.7 0.7 0.7" rotation="0.220 -58.580 -30.400" animation-mixer></a-entity>
-          <a-entity id="pedestal-island3-scene3" position="23.228 24.344 -77.356" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
-              
+          <a-entity id="RedNucleus11-glb" gltf-model="#RedNucleus11-glb" circles-sphere-env-map="src:#skyMap" position="25.082 24.320 -71.920" rotation="0 0 0" animation-mixer></a-entity>
+          <a-entity id="Rubik-Red-glb" gltf-model="#Rubik-Red-glb" circles-sphere-env-map="src:#skyMap" position="25.228 26.919 -70.623" scale="0.25 0.25 0.25" rotation="0.220 -58.580 -30.400"></a-entity>
+          <a-entity id="Nuclear2-glb" gltf-model="#Nuclear2-glb" circles-sphere-env-map="src:#skyMap" position="24.870 26.015 -70.530" scale="0.35 0.35 0.35" rotation="90 120 0"></a-entity>
+          <a-image id="stomach_img" position="21.577 27.542 -62.382" scale="4 4 4" src="#stomach_img" easy-transparency look-at="#Player1"></a-image>
+          <a-entity id="pedestal-island3-scene3" position="22.736 24.344 -68.657" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
           
           
+          <!-- Scene 4: Periaqueductal Grey -->
+          <a-entity id="Rubik-Grey-glb" gltf-model="#Rubik-Grey-glb" circles-sphere-env-map="src:#skyMap" position="13.398 24.950 -84.912" scale="0.7 0.7 0.7" rotation="0.220 -58.580 -30.400"></a-entity>
+          <a-entity id="Pterodactyl-glb" gltf-model="#Pterodactyl-glb" circles-sphere-env-map="src:#skyMap" position="14.590 30.081 -91.688" scale="0.7 0.7 0.7" rotation="0 180 0"></a-entity>
+          <a-entity id="Aqueduct-glb" gltf-model="#Aqueduct-glb" circles-sphere-env-map="src:#skyMap" position="12.902 21.674 -92.897" scale="0.2 0.2 0.2" rotation="0 -90 0"></a-entity>
+          <a-image id="hot_img" position="17.915 25.836 -83.551" scale="4 4 4" src="#hot_img" easy-transparency look-at="#Player1"></a-image>
+          <a-entity id="pedestal-island3-scene4" position="11.687 24.344 -79.384" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
+
           <a-entity text="value: Midbrain Island; align: center; color: white;" position="-5.049 24.892 -54.066" scale="4 4 1" look-at="#Player1"></a-entity>
 
           <!-- Island 3 checkpoints -->
@@ -333,10 +345,10 @@
                         description_back:Name (background): Tech - Tum. A stomach (tum) with electronics (tech) around it helps you remember the name tectum. 
                         Function (foreground): Someone reacting to the auditory and visual stimuli of a can falling demonstrates the function in an example.;
                         label_text:Tectum; audio:#Narr_tectum-snd; volume:0.4;"></a-entity> 
-
+ 
       <!-- Island 3 Scene 3 -->  
       <a-entity id="Artefact-Red-Nucleus" 
-      position="23.228 25.544 -77.356" rotation="0 0 0" scale="1 1 1" 
+      position="22.736 25.544 -68.657" rotation="0 0 0" scale="1 1 1"
       gltf-model="#brain-gltf"
       circles-sphere-env-map="src:#skyMap"
       circles-artefact="inspectScale:1 1 1; textRotationY:90.0; textLookAt:true; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
@@ -350,6 +362,21 @@
 
                         <!-- Need a sound file for red nucleus???? -->
 
+            <!-- Island 3 Scene 4 -->  
+            <a-entity id="Artefact-Periaqueductal-Grey" 
+            position="11.687 25.544 -79.384" rotation="0 0 0" scale="1 1 1" 
+            gltf-model="#brain-gltf"
+            circles-sphere-env-map="src:#skyMap"
+            circles-artefact="inspectScale:1 1 1; textRotationY:90.0; textLookAt:true; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                              label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
+                              title: Periaqueductal Grey;
+                              description:Function: Pain suppression.;
+                              title_back:How to remember;
+                              description_back:Name (background): A pterodactyl dinosaur (peri) on top of an aqueduct (aqueductal) with a completely grey Rubiks
+                              cube (grey) below. These three items make you understand that this must be the periaqueductal grey. 
+                              Function (foreground): A person holding a hot casserole dish suppressing pain so as to not drop it. The periaqueductal grey is in charge of pain suppression.;
+                              label_text:Tegmentum; audio:#Narr_red_nucleus-snd; volume:0.4;"></a-entity> 
+      
       <!-- sky and lights -->
       <a-entity id="lighting_group">
         <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
