@@ -56,10 +56,15 @@
         <img id="heart2_img" src="assets/images/island_2/heart_2.png" crossorigin="anonymous">
         <img id="heart3_img" src="assets/images/island_2/heart_3.png" crossorigin="anonymous">
         <img id="medusa_img" src="assets/images/island_2/medusa.png" crossorigin="anonymous">
+
+        <!-- Island 3 props and assets -->
         <img id="hot_img" src="assets/images/island_3/Hot.png" crossorigin="anonymous">
         <img id="stomach_img" src="assets/images/island_3/stomach.png" crossorigin="anonymous">
-
-
+        <img id="basil_img" src="assets/images/island_3/basil.png" crossorigin="anonymous">
+        <img id="globus_pallidus_img" src="assets/images/island_3/globus_pallidus.png" crossorigin="anonymous">
+        <img id="striatum_img" src="assets/images/island_3/striatum.png" crossorigin="anonymous">
+               
+        
         <a-asset-item id="telephonePole-gltf" src="assets/models/island_2/TelephonePole/TelephonePole.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="pillow-gltf" src="assets/models/island_2/Pillow_pons.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="white-pawn-gltf" src="assets/models/island_2/White_Pawn.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -72,13 +77,13 @@
         <a-asset-item id="Island3Archway-gltf" src="assets/models/island_3/Island3Archway.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Island3Platform-gltf" src="assets/models/island_3/Island3Platform.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Island3Path1-gltf" src="assets/models/island_3/Island3Path1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="Island3Path2-gltf" src="assets/models/island_3/Island3Path2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="RedNucleus11-glb" src="assets/models/island_3/RedNucleus11.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Nuclear2-glb" src="assets/models/island_3/Nuclear2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Rubik-Red-glb" src="assets/models/island_3/Rubik-Red.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Rubik-Grey-glb" src="assets/models/island_3/Rubik-Grey.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Pterodactyl-glb" src="assets/models/island_3/Pterodactyl4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="Aqueduct-glb" src="assets/models/island_3/Aqueduct3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-
         <a-asset-item id="bowl-glb" src="assets/models/island_3/bowl.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <!-- audio -->
         
@@ -193,6 +198,7 @@
           <a-entity id="Island3Ladder1-gltf" gltf-model="#Island3Ladder1-gltf" circles-sphere-env-map="src:#skyMap"></a-entity>
           <a-entity id="Island3Archway-gltf" gltf-model="#Island3Archway-gltf" circles-sphere-env-map="src:#skyMap"></a-entity>
           <a-entity id="Island3Path1-gltf" gltf-model="#Island3Path1-gltf" circles-sphere-env-map="src:#skyMap"></a-entity>
+          <a-entity id="Island3Path2-gltf" gltf-model="#Island3Path2-gltf" circles-sphere-env-map="src:#skyMap"></a-entity>
           
           
           <!-- Scene 1: Tegmentum -->
@@ -227,6 +233,12 @@
           <!-- -->
           <a-entity id="island_3_checkpoint_1" position="-5.839 21.969 -51.469" circles-checkpoint circles-spawnpoint></a-entity>
           
+
+          <!-- Go to Upper Island 3 -->
+          <a-entity id="pedestal1-island3-upper" position="6.037 24.309 -72.440" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+          <a-entity id="island_3_button_2" position="6.037 25.809 -72.440" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_3_checkpoint_12;"></a-entity> 
+          <a-entity text="value: Climb Up" position="6.091 26.113 -73.585" scale="4 4 1" look-at="#Player1"></a-entity>  <!-- add 1.8 to Y of Pedestal -->
+
           <!-- Teleport back to island 2 -->
           <!-- Pedestal / Button / Text label -->
           <a-entity id="pedestal1-island3" position="-8.450 21.576 -54.227" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
@@ -243,7 +255,39 @@
           <a-entity id="island_3_checkpoint_9" circles-checkpoint position="15.327 24.714 -76.797"></a-entity>
           <a-entity id="island_3_checkpoint_10" circles-checkpoint position="11.551 24.714 -71.397"></a-entity>
           <a-entity id="island_3_checkpoint_11" circles-checkpoint position="7.168 24.714 -69.406"></a-entity>
-        </a-entity>
+
+          <!-- Teleport back to lower island 3 -->
+          <!-- Pedestal / Button / Text label -->
+          <a-entity id="pedestal1-island3-lower" position="2.550 32.106 -74.594" scale="0.25 0.25 0.25" gltf-model="#pedestal-gltf"></a-entity>
+          <a-entity id="island_3_button_3" position="2.563 33.656 -74.553" scale="0.8 0.8 0.8" circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#island_3_checkpoint_11;"></a-entity> 
+          <a-entity text="value: Go down" position="3.810 34.244 -73.570" scale="4 4 1" look-at="#Player1"></a-entity>  <!-- add 1.8 to Y of Pedestal -->
+
+          <!-- Upper Island 3-->
+          <a-entity id="island_3_checkpoint_12" circles-checkpoint position="0.232 32.908 -73.126"></a-entity>
+          <a-entity id="island_3_checkpoint_13" circles-checkpoint position="-4.331 33.900 -72.788"></a-entity>
+          <a-entity id="island_3_checkpoint_14" circles-checkpoint position="-9.705 32.900 -67.944"></a-entity>
+          <a-entity id="island_3_checkpoint_15" circles-checkpoint position="-15.485 32.900 -65.638"></a-entity>
+          <a-entity id="island_3_checkpoint_15b" circles-checkpoint position="-20.904 32.900 -66.401"></a-entity>
+          <a-entity id="island_3_checkpoint_16" circles-checkpoint position="-25.070 32.900 -70.752"></a-entity>
+          <a-entity id="island_3_checkpoint_17" circles-checkpoint position="-25.538 32.900 -77.542"></a-entity>
+          <a-entity id="island_3_checkpoint_18" circles-checkpoint position="-22.916 32.900 -83.539"></a-entity>
+          <a-entity id="island_3_checkpoint_19" circles-checkpoint position="-18.762 32.900 -88.165"></a-entity>
+          <a-entity id="island_3_checkpoint_20" circles-checkpoint position="-12.694 32.900 -88.260"></a-entity>
+          <a-entity id="island_3_checkpoint_21" circles-checkpoint position="-6.838 32.900 -87.633"></a-entity>
+          <a-entity id="island_3_checkpoint_22" circles-checkpoint position="-2.307 32.900 -90.713"></a-entity>
+
+          <!-- Scene 5: Basal Ganglia -->
+          <a-entity id="pedestal-island3-scene5" position="-6.079 32.682 -75.084" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
+          <a-image id="basil_img" position="-9.843 34.600 -76.548" scale="4 4 4" src="#basil_img" easy-transparency look-at="#Player1"></a-image>
+
+          <!-- Scene 6: Striatum -->
+          <a-entity id="pedestal-island3-scene6" position="-17.216 32.682 -63.340" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
+          <a-image id="striatum_img" position="-16.015 34.542 -60.348" scale="4 4 4" src="#striatum_img" easy-transparency look-at="#Player1"></a-image>
+
+          <!-- Scene 7: Pituitary Gland -->
+          <a-entity id="pedestal-island3-scene7" position="-10.758 32.682 -90.757" scale="0.2 0.2 0.2" rotation="0 30 0" gltf-model="#pedestal-gltf"></a-entity>
+          <a-image id="globus_pallidus_img" position="-11.314 34.600 -94.753" scale="4 4 4" src="#globus_pallidus_img" easy-transparency look-at="#Player1"></a-image>
+        </a-entity> <!-- Island 3 group -->
 
 
 
@@ -262,7 +306,7 @@
           <a-entity id="island_6_placeholder" scale="2.7 2.7 2.7" gltf-model="#island_placeholder_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
         </a-entity> -->
 
-      </a-entity>
+      </a-entity> 
 
 
       <!-- When positioning artefacts, add 1.2 to Pedastal Y value -->
@@ -377,7 +421,51 @@
                               Function (foreground): A person holding a hot casserole dish suppressing pain so as to not drop it. The periaqueductal grey is in charge of pain suppression.;
                               label_text:Tegmentum; audio:#Narr_red_nucleus-snd; volume:0.4;"></a-entity> 
       
-      <!-- sky and lights -->
+      
+          <a-entity id="Artefact-Basal" 
+          position="-6.079 33.773 -75.084" rotation="0 50 0" scale="1 1 1" 
+          gltf-model="#brain-gltf"
+          circles-sphere-env-map="src:#skyMap"
+          circles-artefact="inspectScale:1 1 1; textRotationY:90.0; textLookAt:true; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                            label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
+                            title: Basal Ganglia;
+                            description:Group of structures in the hemispheres that work with the cerebellum for coordination 
+                            and fine motor movements, initiating voluntary or inhibiting involuntary movements;
+                            title_back:How to remember;
+                            description_back:Name (background): Gang of basil plants in the middle (basal) that looks kinda like a thug ready to beat you up
+                            Function (foreground): tk nun chewing her nails wearing Running shoes (voluntary exercise or no;
+                            label_text:Basal Ganglia;"></a-entity>
+
+
+          <a-entity id="Artefact-Striatum" 
+          position="-17.216 33.773 -63.340" rotation="0 50 0" scale="1 1 1" 
+          gltf-model="#brain-gltf"
+          circles-sphere-env-map="src:#skyMap"
+          circles-artefact="inspectScale:1 1 1; textRotationY:90.0; textLookAt:true; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                            label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
+                            title: Striatum;
+                            description:Regulates motor behaviours, controls the input of the basal ganglia from being activated by the substantia nigra;
+                            title_back:How to remember;
+                            description_back:Name (background): Striped Atom
+                            Function (foreground): Dog gives paw for a treat from sportscoach (movement)(include treat) ;
+                            label_text:Striatum;"></a-entity> 
+
+            <a-entity id="Artefact-Globus-Pallidus" 
+            position="-10.758 33.773 -90.757" rotation="0 30 0" scale="1 1 1" 
+            gltf-model="#brain-gltf"
+            circles-sphere-env-map="src:#skyMap"
+            circles-artefact="inspectScale:1 1 1; textRotationY:90.0; textLookAt:true; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                              label_offset:0.0 0.7 0.0; label_visible:true; arrow_position:down;
+                              title: Globus Pallidus;
+                              description:Key deciding area whether signals inhibit involuntary or initiate voluntary movement;
+                              title_back:How to remember;
+                              description_back:Name (background): Globe on an artist pallet (ask about intuitiveness) Paladin                              
+                              Function (foreground): Initiating motor movement: Race marker, car key turning;
+                              label_text:Globus Pallidus;"></a-entity> 
+                  
+
+
+          <!-- sky and lights -->
       <a-entity id="lighting_group">
         <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
                   light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
