@@ -283,6 +283,8 @@ const serveRelativeWorldContent = (req, res, next) => {
   const worldID = req.params.world_id;
   const relURL = req.params[0];
   const newURL = '/worlds/' + worldID + '/' + relURL;
+  //console.log(res.location(relURL));
+  //console.log('---------------------------------------');
   return res.redirect(newURL);
 };
 

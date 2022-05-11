@@ -8,8 +8,6 @@ AFRAME.registerComponent('circles-manager', {
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function()
   {
-    console.log(window.innerHeight + "!!!!!!!!");
-
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
     CONTEXT_AF.selectedObject  = null;
