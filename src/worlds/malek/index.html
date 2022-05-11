@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts />
+
+  <!-- add your custom scripts here -->
+  <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+  <script src="/worlds/malek/components/look-at.js"></script>
+  <script src="/worlds/malek/components/easy-transparency.js"></script>
+</head>
+
+<body>
+
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui />
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      <!-- add your assets here -->
+      <a-asset-item id="arrow-glb" src="/worlds/malek/assets/models/arrow.glb"></a-asset-item>
+      <a-asset-item id="arrow_1-glb" src="/worlds/malek/assets/models/arrow%201.glb"></a-asset-item>
+      <a-asset-item id="hangerbase-glb" src="/worlds/malek/assets/models/hangerbase.glb"></a-asset-item>
+      <a-asset-item id="coathanger-glb" src="/worlds/malek/assets/models/coathanger.glb"></a-asset-item>
+      <a-asset-item id="FirstAid-glb" src="/worlds/malek/assets/models/FirstAid.glb"></a-asset-item>
+      <a-asset-item id="goggle-glb" src="/worlds/malek/assets/models/goggle.glb"></a-asset-item>
+      <a-asset-item id="maniquin-glb" src="/worlds/malek/assets/models/maniquin.glb"></a-asset-item>
+      <a-asset-item id="oil-glb" src="/worlds/malek/assets/models/oil.glb"></a-asset-item>
+      <a-asset-item id="shoesclosed-glb" src="/worlds/malek/assets/models/shoesclosed.glb"></a-asset-item>
+      <a-asset-item id="sniker-glb" src="/worlds/malek/assets/models/sniker.glb"></a-asset-item>
+      <a-asset-item id="table-glb" src="/worlds/malek/assets/models/table.glb"></a-asset-item>
+      <a-asset-item id="wastebin-glb" src="/worlds/malek/assets/models/wastebin.glb"></a-asset-item>
+      <a-asset-item id="gloves-glb" src="/worlds/malek/assets/models/gloves.glb"></a-asset-item>
+      <a-asset-item id="washstation-glb" src="/worlds/malek/assets/models/washstation.glb"></a-asset-item>
+      <a-asset-item id="telecircle-glb" src="/worlds/malek/assets/models/telecircle.glb"></a-asset-item>
+      <a-asset-item id="roundholder-glb" src="/worlds/malek/assets/models/roundholder.glb"></a-asset-item>
+      <a-asset-item id="eyewasher-glb" src="/worlds/malek/assets/models/eyewasher.glb"></a-asset-item>
+      <a-asset-item id="glass-glb" src="/worlds/malek/assets/models/glass.glb"></a-asset-item>
+      <a-asset-item id="smltable-glb" src="/worlds/malek/assets/models/smltable.glb"></a-asset-item>
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets />
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar />
+
+    <!-- room 1 -->
+    <a-entity>
+      <a-entity position="0 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="0 2.8 0"
+                light="type: point; intensity: 1; distance: 10; decay: 0.5; color:  #FFFFFF; cast-shadow: true; shadowCameraVisible: false; shadowMapHeight: 5120; shadowMapWidth: 5120">
+        <a-cylinder position="0 0.19 0" radius="0.2" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="0 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 0"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 0"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        ,
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <!-- room  -->
+      <a-plane width="10" height="10" color="#BBBAAA" shadow="cast: true; receive: true" position="0 0 0"
+               rotation="-90 0 0"></a-plane>
+      <a-plane material="metalness: 0; roughness: 100" width="10" height="10" color="#FFFFFF"
+               shadow="cast: true; receive: true" position="0 3 0" rotation="90 0 0"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="0 1.5 -5" rotation="0 0 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="0 1.5 5" rotation="0 180 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="5 1.5 0" rotation="0 -90 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="-5 1.5 0" rotation="0 90 0" color="#FFFEEE"></a-plane>
+
+      <!-- wall1  -->
+      <!-- models  -->
+      <a-text value="STATION 1" position="-4.99 2 0.75" width="2" wrap-count="9" rotation="0 90 0">
+        <a-entity position="1 1 0"
+                  light="type: spot; intensity: 2; distance: 5; decay: 1; color:  #FFFF88;  cast-shadow: true; shadowCameraVisible: false; shadowMapHeight: 5120; shadowMapWidth: 5120""
+          angle=" 85" rotation="-90 0 0">
+        </a-entity>
+      </a-text>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-4.5 0 -1.5" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 0 0">
+        <a-sphere radius="0.01" position="0.015 0.073 0.005" color="#FFFFFF"></a-sphere>
+        <a-sphere radius="0.01" position="-0.015 0.073 0.03" color="#BBAA44"></a-sphere>
+        <a-sphere radius="0.01" position="-0.015 0.073 0.055" color="#44BB44"></a-sphere>
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-4.5 0 1" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 0 0">
+      </a-entity>
+      <!-- wall2  -->
+      <!-- models  -->
+      <a-text value="STATION 2" position="-1.5 2 -4.99" width="2" wrap-count="9">
+        <a-entity position="1 1 0"
+                  light="type: spot; intensity: 2; distance: 5; decay: 1; color:  #FFFF88;  cast-shadow: true; shadowCameraVisible: false; shadowMapHeight: 5120; shadowMapWidth: 5120""
+          angle=" 85" rotation="-90 0 0">
+        </a-entity>
+      </a-text>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-3 0 -4.7" gltf-model="#hangerbase-glb"
+                scale="1.5 1.5 1.5">
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.1 0 0" gltf-model="#coathanger-glb"
+                  scale="1 1 1">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.1 0.001 0.06" gltf-model="#sniker-glb"
+                  scale="2 2 2">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.35 0.12 0.05"
+                  gltf-model="#shoesclosed-glb" scale="0.4 0.4 0.4">
+        </a-entity>
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-3.2 1.7 -4.9" gltf-model="#FirstAid-glb"
+                scale="0.015 0.015 0.015">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-0.5 0 -4.5" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 90 0">
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.005 0.059 0.02"
+                  gltf-model="#gloves-glb" scale="0.05 0.05 0.05">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.065 -0.035"
+                  gltf-model="#goggle-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.065 -0.02"
+                  gltf-model="#goggle-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="1 0 -4.75" gltf-model="#wastebin-glb"
+                scale="1 1 1">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="1.75 0 -4.75" gltf-model="#wastebin-glb"
+                scale="1 1 1">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="2.5 0 -4.75" gltf-model="#wastebin-glb"
+                scale="1 1 1">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="4.5 0 -4.95" gltf-model="#eyewasher-glb"
+                scale="1 1 1">
+      </a-entity>
+      <!-- wall3  -->
+      <!-- models  -->
+      <a-text value="STATION 3" position="4.99 2 -0.5" width="2" wrap-count="9" rotation="0 -90 0">
+        <a-entity position="1 1 0"
+                  light="type: spot; intensity: 2; distance: 5; decay: 1; color:  #FFFF88; cast-shadow: true; shadowCameraVisible: false; shadowMapHeight: 5120; shadowMapWidth: 5120""
+          angle=" 85" rotation="-90 0 0">
+        </a-entity>
+      </a-text>
+      <a-entity class="model" shadow="cast: true; receive: false" position="4.95 0 -4" gltf-model="#washstation-glb"
+                rotation="0 -90 0">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="4.95 0 -2" gltf-model="#maniquin-glb"
+                rotation="0 -90 0">
+        <a-plane color="black" width="1.5" height="0.5" position="0 2.3 0" rotation="0 0 0">
+          <!-- title  -->
+          <a-text align="center" color="red" value="ATTENTION!" width="1.4" position="0 0.15 0" x-offset="0.05"
+                  wrap-count="20">
+          </a-text>
+          <!-- content  -->
+          <a-text color="yellow" value="Point at each part of the manequin and remember the safety tip that appears."
+                  width="1.4" position="-0.7 0 0" x-offset="0.05" wrap-count="40"></a-text>
+        </a-plane>
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="4.5 0 0.5" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 0 0">
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.067 -0.055" gltf-model="#oil-glb"
+                  scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.067 0.045"
+                  gltf-model="#roundholder-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+          <a-entity class="model" shadow="cast: true; receive: false" position="0.2 0 0" gltf-model="#glass-glb"
+                    scale="1 1 1" rotation="0 90 0">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+      <a-plane color="grey" width="2" height="0.7" position="4.99 1.6 3.2" rotation="0 -90 0">
+        <a-text value="Good Job!, You have completed the training activity." width="1.9" position="-1 0.2 0.01"
+                x-offset="0.05" wrap-count="40"></a-text>
+        <a-text value="Press NEXT to continue." width="1.9" value="FLOOR PRICE" position="-1 0.05 0.01" x-offset="0.05"
+                wrap-count="40">
+        </a-text>
+        <a-text value="The transition could be slow, please wait for a few seconds after you press the NEXT button."
+                width="1.9" value="FLOOR PRICE" position="-1 -0.15 0.01" x-offset="0.05" wrap-count="40">
+        </a-text>
+      </a-plane>
+      <a-plane color="black" width="0.6" height="0.25" position="4.99 1.1 3.2" rotation="0 -90 0">
+        <a-text align="center" value="NEXT" width="0.5" position="0 0 0.01" wrap-count="6"></a-text>
+      </a-plane>
+
+
+      <a-entity class="model" shadow="cast: true; receive: false" position="-1.5 0.01 -3.5" gltf-model="#arrow_1-glb"
+                scale="2 2 3">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="-0.25 0.01 -3.5"
+                gltf-model="#telecircle-glb">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="1.25 0.01 -3.5" gltf-model="#arrow_1-glb"
+                scale="2 2 3">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="2.5 0.01 -3.5" gltf-model="#telecircle-glb">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="3.5 0.01 -3.25" gltf-model="#arrow_1-glb"
+                scale="2 2 3" rotation="0 -90 0">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="3.5 0.01 -2" gltf-model="#telecircle-glb">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="3.5 0.01 -0.75" gltf-model="#arrow_1-glb"
+                scale="2 2 3" rotation="0 -90 0">
+      </a-entity>
+      <a-entity class="model" shadow="cast: true; receive: false" position="3.5 0.01 0.5" gltf-model="#telecircle-glb">
+      </a-entity>
+    </a-entity>
+
+    <!-- room  2-->
+    <a-entity position="0 0 -10">
+      <a-entity position="0 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="0 2.8 0"
+                light="type: point; intensity: 1; distance: 10; decay: 0.5; color:  #FFFFFF; cast-shadow: true; shadowCameraVisible: false; shadowMapHeight: 5120; shadowMapWidth: 5120">
+        <a-cylinder position="0 0.19 0" radius="0.2" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="0 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 0"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="2.8 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 -2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 0"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        ,
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+      <a-entity position="-2.8 2.8 2.8"
+                light="type: point; intensity: 0.4; distance: 10; decay: 1; color:  #FFFFFF; shadowCameraVisible: false;">
+        <a-cylinder position="0 0.19 0" radius="0.1" height="0.02" material="shader: flat" color="#FFFFFF">
+        </a-cylinder>
+      </a-entity>
+
+      <a-plane width="10" height="8" color="#BBBAAA" shadow="cast: true; receive: true" position="0 0 0"
+               rotation="-90 0 0"></a-plane>
+      <a-plane material="metalness: 0; roughness: 100" width="10" height="8" color="#FFFFFF"
+               shadow="cast: true; receive: true" position="0 3 0" rotation="90 0 0"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="0 1.5 -4" rotation="0 0 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="10" height="3"
+               position="0 1.5 4" rotation="0 180 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="8" height="3"
+               position="5 1.5 0" rotation="0 -90 0" color="#FFFEEE"></a-plane>
+      <a-plane material="metalness: 0; roughness:100" shadow="cast: true; receive: true" width="8" height="3"
+               position="-5 1.5 0" rotation="0 90 0" color="#FFFEEE"></a-plane>
+
+      <a-entity class="model" shadow="cast: true; receive: false" position="1 0 3.5" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 -90 0">
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.005 0.059 0.0" gltf-model="#gloves-glb"
+                  scale="0.05 0.05 0.05">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.005 0.059 0.02"
+                  gltf-model="#gloves-glb" scale="0.05 0.05 0.05">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.005 0.059 0.04"
+                  gltf-model="#gloves-glb" scale="0.05 0.05 0.05">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.065 -0.03"
+                  gltf-model="#goggle-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.065 -0.045"
+                  gltf-model="#goggle-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.015 0.065 -0.06"
+                  gltf-model="#goggle-glb" scale="0.05 0.05 0.05" rotation="0 90 0">
+        </a-entity>
+      </a-entity>
+
+      <a-entity class="model" shadow="cast: true; receive: false" position="-2 0 3.5" gltf-model="#table-glb"
+                scale="15 15 15" rotation="0 -90 0">
+
+        <a-plane text="z-offset: 0.0001; value: YES; wrap-count: 6; align: center" color="black" width="0.04"
+                 height="0.02" position="0.020 0.073 -0.045" rotation="0 -90 0">
+        </a-plane>
+        <a-plane text="z-offset: 0.0001; value: NO; wrap-count: 6; align: center" color="black" width="0.04"
+                 height="0.02" position="0.020 0.073 0.0" rotation="0 -90 0">
+        </a-plane>
+        <a-plane text="z-offset: 0.0001; value: NOT APPLICABLE; wrap-count: 20; align: center" color="black"
+                 width="0.04" height="0.02" position="0.020 0.073 0.045" rotation="0 -90 0"></a-plane>
+
+        <a-plane color="grey" width="0.03" height="0.03" position="0 0.063 -0.045" rotation="-90 0 0"></a-plane>
+        <a-plane color="grey" width="0.03" height="0.03" position="0 0.063 0.0" rotation="-90 0 0"></a-plane>
+        <a-plane color="grey" width="0.03" height="0.03" position="0 0.063 0.045" rotation="-90 0 0">
+        </a-plane>
+
+        <a-plane text="z-offset: 0.0001; value: 1-Do you have a contact lens on?; wrap-count: 20;" color="blue"
+                 width="0.02" height="0.012" position="-0.022 0.063 -0.045" rotation="-90 -90 0"></a-plane>
+        <a-plane text="z-offset: 0.0001; value: 2-If you have long hair, did you tie it?; wrap-count: 20;" color="blue"
+                 width="0.02" height="0.012" position="-0.022 0.063 -0.02" rotation="-90 -90 0">
+        </a-plane>
+        <a-plane text="z-offset: 0.0001; value: 3-Are you wearing any jewelry; wrap-count: 20;" color="blue"
+                 width="0.02" height="0.012" position="-0.022 0.063 0.005" rotation="-90 -90 0"></a-plane>
+        <a-plane text="z-offset: 0.0001; value: 4-Do you have long pants to cover the skin around the ancle; wrap-count: 20;"
+                 color="blue" width="0.02" height="0.012" position="-0.022 0.063 0.03" rotation="-90 -90 0">
+        </a-plane>
+
+      </a-entity>
+
+      <a-entity class="model" shadow="cast: true; receive: false" position="3.5 0 3.5" gltf-model="#hangerbase-glb"
+                scale="1.5 1.5 1.5" rotation="0 180 0">
+        <a-entity class="model" shadow="cast: true; receive: false" position="-0.1 0 0" gltf-model="#coathanger-glb"
+                  scale="1 1 1">
+        </a-entity>
+        <a-entity class="model" shadow="cast: true; receive: false" position="0 0 0" gltf-model="#coathanger-glb"
+                  scale="1 1 1">
+        </a-entity>
+      </a-entity>
+
+      <a-box shadow="cast: true; receive: false" material="color: grey" position="0 2 3.75" width="3" height="0.1"
+             depth="0.5"></a-box>
+      <a-box shadow="cast: true; receive: false" material="color: grey" position="0 1.6 3.75" width="3" height="0.1"
+             depth="0.5"></a-box>
+
+      <a-box shadow="cast: true; receive: false" material="color: #AAAAFF" position="-1 1.3 -3.5" width="5" height="2.6"
+             depth="1"></a-box>
+
+      <a-entity position="4.8 1 2" rotation="0 -90 0">
+        <a-box shadow="cast: true; receive: false" material="color: white" position="0 0  0" width="2" height="0.05"
+               depth="0.4">
+          <a-entity class="model" shadow="cast: true; receive: false" position="0 -0.1 0" gltf-model="#sniker-glb"
+                    scale="3 3 3">
+          </a-entity>
+          <a-entity class="model" shadow="cast: true; receive: false" position="0.5 0.1 0" gltf-model="#shoesclosed-glb"
+                    scale="0.6 0.6 0.6">
+          </a-entity>
+        </a-box>
+        <a-box shadow="cast: true; receive: false" material="color: white" position="0 -0.5 0" width="2" height="0.05"
+               depth="0.4">
+          <a-entity class="model" shadow="cast: true; receive: false" position="-0.3 0.1 0.1" gltf-model="#redshoe-glb"
+                    scale="0.6 0.6 0.6">
+          </a-entity>
+        </a-box>
+      </a-entity>
+      <a-entity obj-model="obj: #door-obj" position="-4.9 1.1 2" scale="0.0005 0.0005 0.0005"></a-entity>
+      <a-plane color="grey" width="2" height="1" position="2 1.6 -1" rotation="0 0 0">
+        <a-text value="Welcome back, this is the TESTING phase." width="1.9" position="-1 0.3 0.01" x-offset="0.05"
+                wrap-count="40"></a-text>
+        <a-text value="Complete the steps and two fume hood experiments exactly as you did during previous training."
+                width="1.9" value="FLOOR PRICE" position="-1 0.05 0.01" x-offset="0.05" wrap-count="40">
+        </a-text>
+        <a-text value="We will record the duration and accuracy of your actions this time. Good luck!" width="1.9"
+                value="FLOOR PRICE" position="-1 -0.25 0.01" x-offset="0.05" wrap-count="40">
+        </a-text>
+      </a-plane>
+
+
+    </a-entity>
+
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts />
+</body>
+
+</html>
