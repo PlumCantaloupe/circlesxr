@@ -123,8 +123,8 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
     - This will build the needed bundles and serve the app for viewing. Check
       out the `scripts` section of `package.json` for more build options and
       details.
-1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` (default is `localhost:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost it may complain about https mismatches. Other browsers may work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https).
-    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongo shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
+1. In a browser (recommend Chrome at this time), go to `127.0.0.1:{SERVER_PORT}/add-all-test-data` (default is `127.0.0.1:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost it may complain about https mismatches so we recommend explicitly using 127.0.0.1 instead of the shorthand domain 'localhost' ([This is to avoid Chrome re-directing localhost to https and causing asset load issues](https://stackoverflow.com/questions/25277457/google-chrome-redirecting-localhost-to-https)). Other browsers may otherwise work, or consider using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https). This is highly recommended tso you can test locally on other devices i.e., a mobile or standalone HMD device.
+    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongo shell (the re-add data with `127.0.0.1:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
 1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
@@ -154,7 +154,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a fully-featured example of how to set up your own.
-- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: http://localhost:{SERVER_PORT}/rooms/explore/world/{YOUR_WORLD_FOLDER}
+- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: http://127.0.0.1:{SERVER_PORT}/rooms/explore/world/{YOUR_WORLD_FOLDER}
 - Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTML entities that are required for your world to properly connect to this framework. These are replaced with the appropriate scripts in [webpack.worlds.parts](https://github.com/PlumCantaloupe/circlesxr/tree/Workshop_Features/src/webpack.worlds.parts) during the build stage so please pay attention to their position within the page.
   ```html  
   <circles-start-scripts/>
