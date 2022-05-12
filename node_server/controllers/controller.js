@@ -309,19 +309,12 @@ const serveProfile = (req, res, next) => {
     //user.gltf_hand_right_url,
   ];
 
-  console.log(queryChecks);
-
   Promise.all(promises).then((results) => {
-
-    //console.log(results);
-
     let optionStrs = [];   //save all option str to replace after ...
 
     for ( let r = 0; r < results.length; r++ ) {
       let optionsStr  = '';
       let models = results[r];
-      console.log('-----');
-      console.log(models);
       for ( let i = 0; i < models.length; i++ ) {
         if (models[i].url === queryChecks[r]) {
           optionsStr += '<option selected>' + models[i].name + '</option>';
@@ -358,9 +351,6 @@ const serveProfile = (req, res, next) => {
       //handLeftOptions: optionStrs[3],
       //handRightOptions: optionStrs[4],
     }
-
-    console.log(userInfo);
-    console.log(userOptions);
 
     res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
       title: `Welcome ${user.username}`,
