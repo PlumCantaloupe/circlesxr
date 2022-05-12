@@ -3,7 +3,7 @@
 AFRAME.registerComponent('circles-manager', {
   schema: {
     world: {type:'string', default:''},    //use __WORLDNAME__ unless you want to control synching in some other fashion
-    user: {type:'string', default:''}     //use __USERNAME__ unless you want to control synching in some other fashion
+    user: {type:'string', default:''}     //use __VISIBLENAME__ unless you want to control synching in some other fashion
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function()
@@ -149,7 +149,7 @@ AFRAME.registerComponent('circles-manager', {
     });
 
     document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
-        console.log("Event: "  + e.detail.components["circles-user-networked"].data.username + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
+        console.log("Event: "  + e.detail.components["circles-user-networked"].data.visiblename + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
       });
 
     CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {

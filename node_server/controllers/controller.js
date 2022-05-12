@@ -168,7 +168,7 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
     else {
       let specialStatus = '';
 
-      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.username);
+      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.firstname);
       const u_height = ((searchParamsObj.has('height')) ? searchParamsObj.get('height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
 
       //need to get types if available in params
@@ -223,7 +223,7 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
 
       let result = data.replace(/__WORLDNAME__/g, world_id);
       result = result.replace(/__USERTYPE__/g, user.usertype);
-      result = result.replace(/__USERNAME__/g, u_name + specialStatus);
+      result = result.replace(/__VISIBLENAME__/g, u_name + specialStatus);
       result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
       result = result.replace(/__USER_HEIGHT__/g, u_height);
