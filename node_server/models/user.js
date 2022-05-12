@@ -59,18 +59,18 @@ const UserSchema = new mongoose.Schema({
     required:   false,
     trim:       true
   },
-  gltf_hand_left_url: {
-    type:       String,
-    unique:     false,
-    required:   false,
-    trim:       true
-  },
-  gltf_hand_right_url: {
-    type:       String,
-    unique:     false,
-    required:   false,
-    trim:       true
-  },
+  // gltf_hand_left_url: {
+  //   type:       String,
+  //   unique:     false,
+  //   required:   false,
+  //   trim:       true
+  // },
+  // gltf_hand_right_url: {
+  //   type:       String,
+  //   unique:     false,
+  //   required:   false,
+  //   trim:       true
+  // },
   color_head: {
     type:       String,
     unique:     false,
