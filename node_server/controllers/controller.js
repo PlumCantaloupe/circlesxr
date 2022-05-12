@@ -312,11 +312,16 @@ const serveProfile = (req, res, next) => {
   console.log(queryChecks);
 
   Promise.all(promises).then((results) => {
+
+    //console.log(results);
+
     let optionStrs = [];   //save all option str to replace after ...
 
-    for ( let r = 0; r < results.length - 1; r++ ) {
+    for ( let r = 0; r < results.length; r++ ) {
       let optionsStr  = '';
       let models = results[r];
+      console.log('-----');
+      console.log(models);
       for ( let i = 0; i < models.length; i++ ) {
         if (models[i].url === queryChecks[r]) {
           optionsStr += '<option selected>' + models[i].name + '</option>';
