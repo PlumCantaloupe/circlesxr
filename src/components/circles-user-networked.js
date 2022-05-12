@@ -12,7 +12,7 @@ AFRAME.registerComponent('circles-user-networked', {
     color_hair:                 {type: 'string',    default: ''},
     color_body:                 {type: 'string',    default: ''}, 
 
-    username:                   {type: 'string',    default: ''},
+    visiblename:                {type: 'string',    default: ''},
     usertype:                   {type: 'string',    default: ''}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
@@ -39,7 +39,7 @@ AFRAME.registerComponent('circles-user-networked', {
             color_head:             playerOneNode.getAttribute('circles-head-color'),
             color_hair:             playerOneNode.getAttribute('circles-hair-color'),
             color_body:             playerOneNode.getAttribute('circles-body-color'),
-            username:               playerOneNode.getAttribute('circles-username'),
+            visiblename:            playerOneNode.getAttribute('circles-visiblename'),
             usertype:               playerOneNode.getAttribute('circles-usertype')
           });
 
@@ -118,13 +118,13 @@ AFRAME.registerComponent('circles-user-networked', {
       //avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
     }
 
-    //username change
-    if ( oldData.username !== CONTEXT_AF.data.username ) {
+    //visiblename change
+    if ( oldData.visiblename !== CONTEXT_AF.data.visiblename ) {
       //get/set nametag nodes
       let avatarNode1 = CONTEXT_AF.el.querySelector('.nametag_front');
       let avatarNode2 = CONTEXT_AF.el.querySelector('.nametag_back');
-      avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.username});
-      avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.username});
+      avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
+      avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
     }
   },
   // tick: function(time, timeDelta) {},
