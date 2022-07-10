@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
 
@@ -9,17 +10,17 @@
   <!-- add your custom scripts here -->
   <script src="/worlds/Meeting_Place/assets/scripts/fire.js"></script>
   <script src="/worlds/Meeting_Place/assets/scripts/main.js"></script>
-  <script src="/worlds/Meeting_Place/assets/scripts/look-at.js"></script> 
+  <script src="/worlds/Meeting_Place/assets/scripts/look-at.js"></script>
   <script>
     AFRAME.registerComponent('navigate-on-click', {
       schema: {
-        url: {default: ''}
+        url: { default: '' }
       },
-  
+
       init: function () {
         var data = this.data;
         var el = this.el;
-  
+
         el.addEventListener('click', function () {
           window.open(data.url);
         });
@@ -53,13 +54,12 @@
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/instrument-flute/instrument-flute.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="instrument-great-drum-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/Instrument-great-drum/instrument-great-drum.glb"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/Instrument-great-drum/instrument-great-drum_dot20.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="instrument-horn-rattle-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/instrument-horn-rattle/intrument-horn-rattle.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="link-gltf"
-        src="/worlds/Meeting_Place/assets/models/environment/link.glb"
+      <a-asset-item id="link-gltf" src="/worlds/Meeting_Place/assets/models/environment/link.glb"
         response-type="arraybuffer"></a-asset-item>
       <!-- <a-asset-item id="painting-canadian-indians-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-canadian-indians/painting-canadian-indians.glb"
@@ -70,29 +70,33 @@
       <a-asset-item id="painting-turtle-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-turtle/painting-turtle.glb"
         response-type="arraybuffer"></a-asset-item> -->
-        <a-asset-item id="painting-c1-gltf"
+      <a-asset-item id="painting-c1-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c1/painting-c1.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="painting-c2-gltf"
+      <a-asset-item id="painting-c2-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c2/painting-c2.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="painting-c3-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c3/painting-c3.glb"
+      <a-asset-item id="painting-c3-gltf"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c3/painting-c3_dot20.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="painting-t1-gltf"
+      <a-asset-item id="painting-t1-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t1/painting-t1.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="painting-t2-gltf"
+      <a-asset-item id="painting-t2-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t2/painting-t2.glb"
         response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="painting-t3-gltf"
+      <a-asset-item id="painting-t3-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t3/painting-t3.glb"
         response-type="arraybuffer"></a-asset-item>
-     
-     
 
-        <img id="sculpture-bear-png" src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-bear/sculpture-bear.jpg" crossorigin="anonymous" />
-        <img id="sculpture-owl-png" src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-owl/sculpture-owl.png" crossorigin="anonymous" />
+
+
+      <img id="sculpture-bear-png"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-bear/sculpture-bear.jpg"
+        crossorigin="anonymous" />
+      <img id="sculpture-owl-png"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-owl/sculpture-owl.png"
+        crossorigin="anonymous" />
 
 
       <a-asset-item id="painting-canvas-gltf"
@@ -117,11 +121,17 @@
         src="/worlds/Meeting_Place/assets/models/objects/meetingobjects/meeting-rock/meeting-rock.glb"
         response-type="arraybuffer"></a-asset-item>
 
-      <a-asset-item id="enviro-gltf" src="/worlds/Meeting_Place/assets/models/environment/hub/hubenviro.glb" response-type="arraybuffer"></a-asset-item>
-      <a-asset-item id="moon-gltf" src="/worlds/Meeting_Place/assets/models/environment/hub/moon.glb" response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="enviro-gltf" src="/worlds/Meeting_Place/assets/models/environment/hub/hubenviro.glb"
+        response-type="arraybuffer"></a-asset-item>
+      <a-asset-item id="moon-gltf" src="/worlds/Meeting_Place/assets/models/environment/hub/moon.glb"
+        response-type="arraybuffer"></a-asset-item>
 
-      <a-asset-item id="campfire-gltf" src="/worlds/Meeting_Place/assets/models/objects/baseobjects/campfire/campfire.glb" response-type="arraybuffer"></a-asset-item>
-      <a-asset-item id="navmesh_gltf" src="/worlds/Meeting_Place/assets/models/objects/baseobjects/campfire/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="campfire-gltf"
+        src="/worlds/Meeting_Place/assets/models/objects/baseobjects/campfire/campfire.glb" response-type="arraybuffer">
+      </a-asset-item>
+      <a-asset-item id="navmesh_gltf"
+        src="/worlds/Meeting_Place/assets/models/objects/baseobjects/campfire/campfire-nav.glb"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
       <audio id="fireCrackling-snd" src="/worlds/Meeting_Place/assets/audio/fire.mp3" preload="true"></audio>
       <audio id="click_sound" src="assets/audio/click.wav" preload="true"></audio>
@@ -154,7 +164,8 @@
 
     </a-entity>
 
-    <a-entity id="campfire" class="interactive" position="0.046 1.360 -0.430" scale="2.74 2.74 2.74" gltf-model="#campfire-gltf" shadow="receive: true; cast: true" circles-interactive-object></a-entity>
+    <a-entity id="campfire" class="interactive" position="0.046 1.360 -0.430" scale="2.74 2.74 2.74"
+      gltf-model="#campfire-gltf" shadow="receive: true; cast: true" circles-interactive-object></a-entity>
 
     <a-entity id="meeting-place" gltf-model="#meeting-place-gltf" position="0.0 0.0 0.0" scale="0.5 0.5 0.5"
       circles-sphere-env-map="src:#nightSkyMap" shadow="cast:true; receive:true;"></a-entity>
@@ -164,11 +175,11 @@
     <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: false" scale="0.5 0.5 0.5"
       position="0.0 1.720 2.240" rotation="-82.274 171.871 -87.583"></a-entity>
 
-    <a-entity id="painting-t2-wall-left" gltf-model="#painting-t2-gltf"
-      position="15.0 2.47 33" rotation="0 180 0"></a-entity>
+    <a-entity id="painting-t2-wall-left" gltf-model="#painting-t2-gltf" position="15.0 2.47 33" rotation="0 180 0">
+    </a-entity>
 
-    <a-entity id="painting-t3-wall-right" gltf-model="#painting-t3-gltf"
-      position="-15.0 2.47 33" rotation="0 180 0"></a-entity>
+    <a-entity id="painting-t3-wall-right" gltf-model="#painting-t3-gltf" position="-15.0 2.47 33" rotation="0 180 0">
+    </a-entity>
 
     <!-- <a-entity id="chair_001" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="0 0 -17" rotation="-180 60 -180"></a-entity>
     <a-entity id="chair_002" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="-14.370 0 7.986"></a-entity>
@@ -176,7 +187,7 @@
     <!-- <a-entity id="chair_001" gltf-model="#meeting-chair-gltf" scale="0.4 0.4 0.4" position="13.115 0 6.481" rotation="0 122 0"></a-entity>  -->
 
     <!-- left side 1 - 6 -->
-    <a-entity id="stand_001" gltf-model="#sculpture-stand-gltf" position="27.610 -0.010 8.466" scale="0.4 0.4 0.4">
+    <!-- <a-entity id="stand_001" gltf-model="#sculpture-stand-gltf" position="27.610 -0.010 8.466" scale="0.4 0.4 0.4">
     </a-entity>
     <a-image id="sculpture-owl" src="#sculpture-owl-png" position="27.621 2.5 8.542" rotation="0 -50.798 0"  easy-transparency look-at="#Player1"
       scale="1.0 1.0 1.0" circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
@@ -255,38 +266,42 @@
       title_back:Sculpture - Owl;
       description_back:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;;
       label_text:Sculpture - Owl;
-      "></a-image>
+      "></a-image> -->
 
 
 
     <!-- right side 7 - 12-->
     <a-entity id="stand_005" gltf-model="#sculpture-stand-gltf" position="-8.763 0 -31.306" scale="0.4 0.4 0.4">
     </a-entity>
-    <a-entity id="instrument-great-drum" gltf-model="#instrument-great-drum-gltf" position="-8.743 2.0 -31.207" 
-      scale="0.3 0.3 0.3" circles-artefact="inspectScale:0.6 0.6 0.6; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:0.3;
-      label_offset:0.0 3.0 0.0; label_visible:true; arrow_position:down;
-      title:Powwow Drum (Mistikwaskihk);
-      description:Drum and ritual object used in many songs and dances of nations. At times shaped from a single cervid skin stretched over the wooden frame.;
-      title_back:Powwow Drum (Mistikwaskihk);
-      description_back: No two drums are the same – each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music.;
-      label_text:Instrument - Great Drum;
+    <a-entity id="instrument-great-drum" gltf-model="#instrument-great-drum-gltf" position="-8.743 2.01 -31.207"
+      scale="1.0 1.0 1.0" circles-artefact="inspectScale:1.3 1.3 1.3; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:0.3;
+      label_offset:0.0 1.2 0.0; label_visible:true; arrow_position:down;
+      title:Powwow Drum;
+      description:No two drums are the same; each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music. (Mistikwaskihk);
+      title_back:Powwow Drum ;
+      description_back: No two drums are the same; each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music. (Mistikwaskihk);
+      label_text:Great Drum;
       "></a-entity>
-      <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-8.743 0.0 -31.306" navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box>
+    <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-8.743 0.0 -31.306"
+      navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box>
 
     <a-entity id="easel_003" gltf-model="#painting-easel-gltf" position="-14.686 0 -26.108" rotation="0 24.435 0"
       scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="painting-c3" gltf-model="#painting-c3-gltf"
-      position="-14.535 0.020 -25.786" rotation="-8.467 24.435 0" scale="0.5 0.5 0.5" circles-artefact="inspectScale:0.4 0.4 0.4; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-1.3;
-      label_offset:0.0 6.0 0.0; label_visible:true; arrow_position:down;
-      title:Painting - Mother Earth;
+    <a-entity id="painting-c3" gltf-model="#painting-c3-gltf" position="-14.535 1.820 -25.786"
+      rotation="-8.467 24.435 0" scale="0.8 0.8 0.8" circles-artefact="inspectScale:1.4 1.4 1.4; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:0.3;
+      label_offset:0.0 1.8 0.0; label_visible:true; arrow_position:down;
+      title:Mother Earth;
       description:a representation that Mother Earth is in everything that is the land - be it in the tallest mountains, in the waters, or on the ground. She is us and we are her.;
-      title_back:Painting - Mother Earth;
+      title_back:Mother Earth;
       description_back:a representation that Mother Earth is in everything that is the land - be it in the tallest mountains, in the waters, or on the ground. She is us and we are her.;
-      label_text:Painting - Mother Earth;
+      label_text:Mother Earth;
       "></a-entity>
-      <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-14.535 -0.020 -25.786" navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box>
-      
-    <a-entity id="stand_006" gltf-model="#sculpture-stand-gltf" position="-22.333 0 -25.033" scale="0.4 0.4 0.4">
+    <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-14.535 -0.020 -25.786"
+      navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box>
+
+
+
+    <!-- <a-entity id="stand_006" gltf-model="#sculpture-stand-gltf" position="-22.333 0 -25.033" scale="0.4 0.4 0.4">
     </a-entity>
     <a-image id="sculpture-bear" src="#sculpture-bear-png" position="-22.367 2.488 -24.877" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1"
       circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
@@ -338,59 +353,60 @@
       description_back:Horn rattle made from bison or cattle horn. Notably used by the Iroquoians and Abenakis. Filled with pebbles to create a rustling sound when striking the rattle agains the thigh or palm of the hand.;
       label_text:Instrument - Horn Rattle;
       "></a-entity>
-      <a-box id="link4" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90"  position="-31.229 -0.02 -7.026" navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box>
-
+      <a-box id="link4" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90"  position="-31.229 -0.02 -7.026" navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box> -->
+     
+    <!---Welcome Tutorial Board-->
+    <a-text position="0.145 2.325 -57.945" >"Welcome to the Meeting Place"</a-text>
 
     <!-- spawn point -->
     <a-entity id="spawnPoint" position="0.221 0.325 -14.505"></a-entity>
 
     <!-- checkpoints -->
-    <a-entity circles-checkpoint circles-spawnpoint position="0.221 0.325 -14.505"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-0.196 0.325 -5.683"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="25.364 0.325 -6.835"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-25.749 0.325 -13.232"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-13.845 0.325 -24.315"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-7.173 0.325 -30.673"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-20.737 0.325 -22.042"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-28.091 0.325 -6.871"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-27.921 0.325 -1.550"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-29.259 0.325 3.450"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="12.124 0.325 -23.270"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="18.707 0.325 -24.218"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="20.900 0.325 -18.057"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="25.005 0.325 3.776"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="29.561 0.325 0.652"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="25.864 0.325 7.887"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="14.907 0.325 15.908"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="0.118 0.325 14.641"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-14.224 0.325 15.908"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="38.778 0.325 23.640"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="27.135 0.325 17.078"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="51.846 0.325 32.005"></a-entity>
+    <a-entity circles-checkpoint position="0.221 0.325 -14.505"></a-entity>
+    <a-entity circles-checkpoint position="-0.196 0.325 -5.683"></a-entity>
+    <a-entity circles-checkpoint position="25.364 0.325 -6.835"></a-entity>
+    <a-entity circles-checkpoint position="-25.749 0.325 -13.232"></a-entity>
+    <a-entity circles-checkpoint position="-13.845 0.325 -24.315"></a-entity>
+    <a-entity circles-checkpoint position="-7.173 0.325 -30.673"></a-entity>
+    <a-entity circles-checkpoint position="-20.737 0.325 -22.042"></a-entity>
+    <a-entity circles-checkpoint position="-28.091 0.325 -6.871"></a-entity>
+    <a-entity circles-checkpoint position="-27.921 0.325 -1.550"></a-entity>
+    <a-entity circles-checkpoint position="-29.259 0.325 3.450"></a-entity>
+    <a-entity circles-checkpoint position="12.124 0.325 -23.270"></a-entity>
+    <a-entity circles-checkpoint position="18.707 0.325 -24.218"></a-entity>
+    <a-entity circles-checkpoint position="20.900 0.325 -18.057"></a-entity>
+    <a-entity circles-checkpoint position="25.005 0.325 3.776"></a-entity>
+    <a-entity circles-checkpoint position="29.561 0.325 0.652"></a-entity>
+    <a-entity circles-checkpoint position="25.864 0.325 7.887"></a-entity>
+    <a-entity circles-checkpoint position="14.907 0.325 15.908"></a-entity>
+    <a-entity circles-checkpoint position="0.118 0.325 14.641"></a-entity>
+    <a-entity circles-checkpoint position="-14.224 0.325 15.908"></a-entity>
+    <a-entity circles-checkpoint position="38.778 0.325 23.640"></a-entity>
+    <a-entity circles-checkpoint position="27.135 0.325 17.078"></a-entity>
+    <a-entity circles-checkpoint position="51.846 0.325 32.005"></a-entity>
     <a-entity circles-checkpoint circles-spawnpoint position="0.145 0.325 -57.945"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="0.327 0.325 -43.313"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-0.601 0.325 -32.725"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-27.449 0.325 17.433"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-52.963 0.325 32.697"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-37.498 0.325 24.246"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="9.057 0.325 3.168"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="-10.583 0.325 3.219"></a-entity>
+    <a-entity circles-checkpoint position="0.327 0.325 -43.313"></a-entity>
+    <a-entity circles-checkpoint position="-0.601 0.325 -32.725"></a-entity>
+    <a-entity circles-checkpoint position="-27.449 0.325 17.433"></a-entity>
+    <a-entity circles-checkpoint position="-52.963 0.325 32.697"></a-entity>
+    <a-entity circles-checkpoint position="-37.498 0.325 24.246"></a-entity>
+    <a-entity circles-checkpoint position="9.057 0.325 3.168"></a-entity>
+    <a-entity circles-checkpoint position="-10.583 0.325 3.219"></a-entity>
 
     <!-- sky and lights -->
     <a-entity id="lighting_group">
-      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0"
+        light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
 
       <a-entity id="hemisphere" light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
-      <a-entity id='skyBox'
-          rotation='0 200 0'
-          scale='5 5 5'
-          geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-          material='shader:flat; src:#skyMap; side:back;'>
-    </a-entity>
+      <a-entity id='skyBox' rotation='0 200 0' scale='5 5 5'
+        geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+        material='shader:flat; src:#skyMap; side:back;'>
+      </a-entity>
 
-    <!-- night lights-->
-    <!-- <a-entity id="lighting_group_night">
+      <!-- night lights-->
+      <!-- <a-entity id="lighting_group_night">
       <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160" light="type:hemisphere; color:#FFFFFF; intensity:0.1;"></a-entity>
 
       <a-entity id="nightSky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18" material="shader:flat; src:#nightSkyMap; side:back; height:2048; width:2048" ></a-entity>
@@ -398,7 +414,7 @@
       <a-entity id="moon" position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
         circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"></a-entity> -->
 
-        <!-- <a-entity id="meetingplace_light1" position="-22.354 13.154 -11.704">
+      <!-- <a-entity id="meetingplace_light1" position="-22.354 13.154 -11.704">
           <a-entity id="meetingPlace_light1_spot" rotation="-26.991 -122.286 90.442"
             light="type:spot; intensity:10; color:#d5e4f5; castShadow:false;"></a-entity>
           <a-entity id="meetingPlace_light1_point" light="type:point; intensity:10; color:#d5e4f5; castShadow:false;">
@@ -419,11 +435,11 @@
           </a-entity>
         </a-entity> -->
 
-        <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
+      <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
     </a-entity>
-    
 
-  
+
+
   </a-scene>
 
   <!-- circles_END_SCRIPTS -->
