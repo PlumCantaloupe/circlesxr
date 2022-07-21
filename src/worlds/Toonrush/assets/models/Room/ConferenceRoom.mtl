@@ -1,0 +1,288 @@
+newmtl Cottage_meeting_table_17SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Wood_Pine_D.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Cottage_meeting_table_17SG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd /T_Wood_Dark_Pine_D1.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Cottage_meeting_table_17SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Wood_Dark_Pine_D1.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Outside_Wall2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_BrickOrange_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Plane_3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Floor_Tile_basecolor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Pot_light_14SG
+illum 4
+Kd 0.81 0.79 0.65
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Pot_light_14SG1
+illum 4
+Kd 0.08 0.08 0.08
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Right_Wall_65SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Wood_A.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Chair_2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Chair_1_BaseColor.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 18.00
+newmtl SM_Chair_15SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Chair_2_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Coffee_table_115SG
+illum 4
+Kd 0.08 0.03 0.01
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Coffee_table_115SG1
+illum 4
+Kd 0.08 0.08 0.08
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Coffee_table_115SG2
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Column_24SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Column_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Door_Frame_68SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Door_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Journal_2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Journals_A.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Left_Wall_2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Luxury_Wood_basecolor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Left_Wall_2SG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Wood_A_v2.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Left_Wall_2SG2
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Left_Wall_2SG3
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Left_Wall_2SG4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_OutDoorSeat_56SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_OutDoorTable_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Picture_135SG
+illum 4
+Kd 0.05 0.05 0.05
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Picture_135SG1
+illum 4
+Kd 1.00 0.93 0.84
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Picture_135SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Art_1.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Sofa_108SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Sofa_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Speaker_140SG
+illum 4
+Kd 0.24 0.24 0.24
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Speaker_140SG1
+illum 4
+Kd 0.05 0.05 0.05
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Speaker_140SG2
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Table_79SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Table_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl SM_Woodfloor_2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Woodfloor2_BaseColor.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl Window_sill_conferenceSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_Concrete_Poured_D.jpg
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl lambert2SG
+illum 4
+Kd 0.12 0.12 0.12
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd T_BrickOrange_BaseColor.jpg
+Ni 1.00
