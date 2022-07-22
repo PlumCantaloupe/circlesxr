@@ -627,12 +627,12 @@ const addTestUsers = () => {
   //add students
   for (let i = 0; i < tenColors.length; i++) {
     usersToAdd.push({
-      username:               'Student' + i,
+      username:               'guest' + i,
       usertype:               CIRCLES.USER_TYPE.STUDENT,
-      firstname:              'Student',
+      firstname:              'Guest',
       lastname:               i,
       email:                  's' + i + '@circlesxr.com',
-      password:               env.DEFAULT_PASSWORD,
+      password:               'guest',
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
       gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,

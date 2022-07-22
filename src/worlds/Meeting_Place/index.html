@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <!-- circles_HEADER_SCRIPTS -->
   <circles-start-scripts />
@@ -12,20 +13,41 @@
   <script src="/worlds/Meeting_Place/assets/scripts/main.js"></script>
   <script src="/worlds/Meeting_Place/assets/scripts/look-at.js"></script>
   <script>
-    AFRAME.registerComponent('navigate-on-click', {
-      schema: {
+    // AFRAME.registerComponent('navigate-on-click', {
+    //   schema: {
+    //     url: { default: '' }
+    //   },
+
+    //   init: function () {
+    //     var data = this.data;
+    //     var el = this.el;
+
+    //     el.addEventListener('click', function () {
+    //       window.open(data.url);
+    //     });
+    //   }
+    // });        
+    AFRAME.registerComponent('play-pause', {
+    schema: {
         url: { default: '' }
       },
-
       init: function () {
-        var data = this.data;
         var el = this.el;
-
-        el.addEventListener('click', function () {
-          window.open(data.url);
+        var myVideo = document.querySelector('#demovideo');
+        var videoControls = document.querySelector('#videoControls');
+        el.addEventListener('click', function(){
+          console.log("something clicked");
+          if(myVideo.paused){
+            myVideo.play();
+           // videoControls.setAttribute('src','#pause');
+          } else{
+            myVideo.pause();
+            //videoControls.setAttribute('src', '#play');
+          }
         });
       }
-    });        
+    }); 
+
   </script>
   <!-- <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
   <script src="/worlds/Meeting_Place/assets/scripts/cameratilt.js"></script>
@@ -43,9 +65,12 @@
     <a-assets>
       <!--<img id='silhouettesMap' src='/worlds/Meeting_Place/assets/textures/Silhouettes.png' crossorigin="anonymous">-->
       <!-- <img id='moonMap' src='/worlds/Meeting_Place/assets/textures/moonmap.jpg' crossorigin="anonymous"> -->
-      <img id='skyMap' src='/worlds/Meeting_Place/assets/textures/skymap.jpg' crossorigin="anonymous">
+      <img id='skyMap' src='/worlds/Meeting_Place/assets/textures/skymap.jpg' crossorigin="anonymous" />
       <!-- <img id='nightSkyMap' src='/worlds/Meeting_Place/assets/textures/nightSkyMap.jpg' crossorigin="anonymous"> -->
-
+      <!---- Video -->
+      <video id="demovideo" loop="true" src="/worlds/Meeting_Place/assets/video/demovideo.mp4"></video>
+      <img id="play" src="/worlds/Meeting_Place/assets/images/media_control/play.png" />
+      <img id="pause" src="/worlds/Meeting_Place/assets/images/media_control/pause.png" />
       <!-- models -->
       <a-asset-item id="meeting-place-gltf"
         src="/worlds/Meeting_Place/assets/models/environment/meeting-place/meeting-place.glb"
@@ -61,35 +86,32 @@
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="link-gltf" src="/worlds/Meeting_Place/assets/models/environment/link.glb"
         response-type="arraybuffer"></a-asset-item>
-      <!-- <a-asset-item id="painting-canadian-indians-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-canadian-indians/painting-canadian-indians.glb"
-        response-type="arraybuffer"></a-asset-item>
-      <a-asset-item id="painting-canadian-squaw-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-canadian-squaw/painting-canadian-squaw.glb"
-        response-type="arraybuffer"></a-asset-item>
-      <a-asset-item id="painting-turtle-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-turtle/painting-turtle.glb"
-        response-type="arraybuffer"></a-asset-item> -->
+
       <a-asset-item id="painting-c1-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c1/painting-c1.glb"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c1/painting-c1_dot40.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="painting-c2-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c2/painting-c2.glb"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c2/painting-c2_dot40.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="painting-c3-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-c3/painting-c3_dot20.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="painting-t1-gltf"
-        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t1/painting-t1.glb"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t1/painting-t1_dot40.glb"
         response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="painting-t2-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t2/painting-t2.glb"
         response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="painting-t2-gltf-dot40"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t2/painting-t2_dot40.glb"
+        response-type="arraybuffer"></a-asset-item>
       <a-asset-item id="painting-t3-gltf"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t3/painting-t3.glb"
         response-type="arraybuffer"></a-asset-item>
-
-
+        <a-asset-item id="painting-t3-gltf-dot40"
+        src="/worlds/Meeting_Place/assets/models/objects/artobjects/painting-t3/painting-t3_dot40.glb"
+        response-type="arraybuffer"></a-asset-item>
+       
 
       <img id="sculpture-bear-png"
         src="/worlds/Meeting_Place/assets/models/objects/artobjects/sculpture-bear/sculpture-bear.jpg"
@@ -168,223 +190,253 @@
       gltf-model="#campfire-gltf" shadow="receive: true; cast: true" circles-interactive-object></a-entity>
 
     <a-entity id="meeting-place" gltf-model="#meeting-place-gltf" position="0.0 0.0 0.0" scale="0.5 0.5 0.5"
-      circles-sphere-env-map="src:#nightSkyMap" shadow="cast:true; receive:true;"></a-entity>
+      circles-sphere-env-map="src:#skyMap" shadow="cast:true; receive:true;"></a-entity>
 
-    <a-entity id="projector" gltf-model="#meeting-projector-gltf" position="0.0 2.47 33" scale="0.3 0.3 0.3"></a-entity>
+    <!-- <a-entity id="projector" gltf-model="#meeting-projector-gltf" position="0.0 2.47 33" scale="0.3 0.3 0.3">
+     
+    </a-entity> -->
+    <a-video id="demoVideo" src="#demovideo" width="16" height="9" position="0.0 5.1 33" rotation="0 180 0">
+       
+    </a-video>
+    <!-- <a-image id="videoControls" src="#play" position="0 0.5 28.104" rotation="90 -180 -180" scale="2 2 2" play-pause onclick="playVideo()"></a-image> -->
+    <a-entity id="videoControls" play-pause circles-button="button_color: rgb(101,199,93); button_color_hover: rgb(66,133,61)" position="0 0.01 28.104" rotation="0 0 0">
+          <a-text id="videobtnIntro"  align="center" value="Press the green button to play or pause the video"  rotation="-54.132 180 0" position="0 0.5 -2.142"></a-text>
+    </a-entity>
 
-    <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: false" scale="0.5 0.5 0.5"
-      position="0.0 1.720 2.240" rotation="-82.274 171.871 -87.583"></a-entity>
 
+    <a-entity id="meeting-rock" gltf-model="#meeting-rock-gltf" shadow="receive: true; cast: false" scale="2 2 2"
+      position="0.271 3 0" rotation="-82.274 171.871 -87.583"></a-entity>
+a
     <a-entity id="painting-t2-wall-left" gltf-model="#painting-t2-gltf" position="15.0 2.47 33" rotation="0 180 0">
     </a-entity>
 
     <a-entity id="painting-t3-wall-right" gltf-model="#painting-t3-gltf" position="-15.0 2.47 33" rotation="0 180 0">
     </a-entity>
 
-    <!-- <a-entity id="chair_001" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="0 0 -17" rotation="-180 60 -180"></a-entity>
-    <a-entity id="chair_002" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="-14.370 0 7.986"></a-entity>
-    <a-entity id="chair_003" gltf-model="#meeting-chairs-gltf" scale="0.4 0.4 0.4" position="13.115 0 6.481" rotation="0 122 0"></a-entity> -->
-    <!-- <a-entity id="chair_001" gltf-model="#meeting-chair-gltf" scale="0.4 0.4 0.4" position="13.115 0 6.481" rotation="0 122 0"></a-entity>  -->
-
     <!-- left side 1 - 6 -->
-    <!-- <a-entity id="stand_001" gltf-model="#sculpture-stand-gltf" position="27.610 -0.010 8.466" scale="0.4 0.4 0.4">
-    </a-entity>
-    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="27.621 2.5 8.542" rotation="0 -50.798 0"  easy-transparency look-at="#Player1"
-      scale="1.0 1.0 1.0" circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:0.0 1.2 0.0; label_visible:true; arrow_position:down;
-      title:Sculpture - Owl;
-      description:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;
-      title_back:Sculpture - Owl;
-      description_back:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;;
-      label_text:Sculpture - Owl;
-      "></a-image>
+    <a-entity id="stand_001" gltf-model="#sculpture-stand-gltf" position="27.610 -0.010 8.466" scale="0.4 0.4 0.4"></a-entity>
+    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="27.610 2.5 8.466" rotation="0 -50.798 0"
+    easy-transparency look-at="#Player1" scale="1.0 1.0 1.0">
+    <a-text position="0 1.5 0" align="center"
+      value="“Owl” by Kenojuak Ashevak \n Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. ">
+    </a-text>
+  </a-image>
 
 
-    <a-entity id="easel_001" gltf-model="#painting-easel-gltf" position="26.455 -0.010 3.956" rotation="0.000 -90.000 0"
+
+     <a-entity id="stand_002" gltf-model="#sculpture-stand-gltf" position="31.603 -0.010 1.623" rotation="0.000 -90.000 0"
       scale="0.4 0.4 0.4"></a-entity>
-      <a-entity id="painting-c1" gltf-model="#painting-c1-gltf" position="25.970 0.043 3.926"
-      rotation="-5.495 -90 0" scale="0.5 0.5 0.5" circles-artefact="inspectScale:0.7 0.7 0.7; textRotationY:120.0; textLookAt:true; inspectRotation:0 -90 0; inspectOffsetY:-0.3;
-      label_offset:0.0 6.0 0.0; label_visible:true; arrow_position:down;
-      title:Painting - MMIWG;
-      description:This is a piece of art to honour the missing and murdered Indigenous women and children. The names and ages of the women and girls are painted on the canvas, with blood seeping down. The blood however, is translucent, signifying that the girls are never gone or forgotten. ;
-      title_back:Painting - MMIWG;
-      description_back:This is a piece of art to honour the missing and murdered Indigenous women and children. The names and ages of the women and girls are painted on the canvas, with blood seeping down. The blood however, is translucent, signifying that the girls are never gone or forgotten. ;
-      label_text:Painting - MMIWG;
-      "></a-entity>
-     
-      <a-box id="link1" scale="0.4 0.4 0.4" gltf-model="#link-gltf" rotation="20 0 90" position="26.455 -0.017 3.956" navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box>
-      <a-entity camera="" look-controls cursor="rayOrigin: mouse"></a-entity>
+      <a-entity id="painting-c1" gltf-model="#painting-c1-gltf" position="31.603 2.5 1.623" rotation="0 -50.798 0"
+      easy-transparency look-at="#Player1" scale="1 1 1">
+      <a-text position="0 2 0" align="center" value="MMIWG by Cosette Deraps \n This is a piece of art to honour the missing and murdered Indigenous women and children.\n The names and ages of the women and girls are painted on the canvas, with blood seeping down. \n https://tinyurl.com/Cosette-Deraps"></a-text>
 
-    <a-entity id="stand_002" gltf-model="#sculpture-stand-gltf" position="31.170 0 0.439" scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="instrument-flute" gltf-model="#instrument-flute-gltf" position="30.944 2 0.579" scale="0.5 0.5 0.5"
-      circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:0.0 2.4 0.0; label_visible:true; arrow_position:down;
-      title:Flute (Pikw8gan);
-      description:Wood carved flute. Melodic instrument made from different materials such as reeds, clay, wood, and bone.;
-      title_back:Flute (Pikw8gan);
-      description_back:Wood carved flute. Melodic instrument made from different materials such as reeds, clay, wood, and bone.;
-      label_text:Instrument - Flute;
-      "></a-entity>
-      <a-box id="link1" scale="0.4 0.4 0.4" gltf-model="#link-gltf" rotation="20 0 90" position="31.170 -0.017 0.439" navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments//"></a-box>
-      <a-entity camera="" look-controls cursor="rayOrigin: mouse"></a-entity>
-      
-
-    <a-entity id="stand_003" gltf-model="#sculpture-stand-gltf" position="23.390 -0.004 -18.654" scale="0.4 0.4 0.4">
     </a-entity>
-    <a-image id="sculpture-bear" src="#sculpture-bear-png" position="23.399 2.5 -18.45" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1"
-      circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:0 0.8 0; label_visible:true; arrow_position:down;
-      title:Sculpture - Totem;
-      description:Wood carved totem. Representing a revered guardian or ancentral being tied to cultural lineage.；
-      title_back:Sculpture - Totem;
-      description_back:Wood carved totem. Representing a revered guardian or ancentral being tied to cultural lineage.;
-      label_text:Sculpture - Totem;
-      "></a-image>
-      <a-box id="link2" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="23.399 -0.017 -18.45" navigate-on-click="url: https://ago.ca/collection/browse?related_artists[30374]=30374"></a-box>
-      
 
-    <a-entity id="easel_002" scale="0.4 0.4 0.4" gltf-model="#painting-easel-gltf" position="20.228 0 -25.471" rotation="0 -43.421 0"
-      scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="painting-c2" gltf-model="#painting-c2-gltf" position="20.026 -0.017 -25.333"
-      rotation="-5.154 -43.421 0" scale="0.5 0.5 0.5" circles-artefact="inspectScale:0.4 0.4 0.4; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-1.3;
-      label_offset:1.0 6.0 1.0; label_visible:true; arrow_position:down;
-      title:Painting - Fire;
-      description:Fire, though seemingly simple, is very complex. It is alive and breathes just like us. It can be used to help create and destroy, just like us. There are many stories and teachings fire can give us.;
-      title_back:Painting - Fire;
-      description_back:Fire, though seemingly simple, is very complex. It is alive and breathes just like us. It can be used to help create and destroy, just like us. There are many stories and teachings fire can give us.;
-      label_text:Painting - Fire;
-      "></a-entity>
-      <a-box id="link2" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="20.026 -0.017 -25.333" navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box>
 
-    <a-entity id="stand_004" gltf-model="#sculpture-stand-gltf" position="13.163 0.000 -24.935" scale="0.4 0.4 0.4">
+    
+      <a-entity id="stand_003" gltf-model="#sculpture-stand-gltf" position="30.425 0 -6.513" scale="0.4 0.4 0.4"></a-entity>
+      <a-entity id="painting-c3" gltf-model="#painting-c3-gltf" position="30.435 2.877 -6.346" rotation="0 -77.703 0" scale="1 1 1" 
+      easy-transparency look-at="#Player1">
+      <a-text position="0 2 0" align="center" value="Mother Earth \n A representation that Mother Earth is in everything that is the land - be it in the tallest mountains, in the waters, or on the ground. \n https://tinyurl.com/Cosette-Deraps"></a-text>
+      ></a-entity> 
+
+
+    <!-- <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-14.535 -0.020 -25.786"
+      navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box> -->
+
+    <a-entity id="stand_004" gltf-model="#sculpture-stand-gltf" position="26.884 -0.004 -18.654" scale="0.4 0.4 0.4">
     </a-entity>
-    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="13.118 2.5 -24.772" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1"
-      circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:0 1.2 0; label_visible:true; arrow_position:down;
-      title:Sculpture - Owl;
-      description:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;
-      title_back:Sculpture - Owl;
-      description_back:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;;
-      label_text:Sculpture - Owl;
-      "></a-image> -->
+    <a-image id="sculpture-bear" src="#sculpture-bear-png" position="26.884 2.7 -18.654" rotation="0 -50.798 0"
+      easy-transparency look-at="#Player1" scale="1.0 1.0 1.0">
+      <a-text position="0 1.5 0" align="center"
+        value="Bear by Quvianatuliak Takpaungai\n Dark, marbled stone.Indigenous symbol representing strength, family, vitality, and health.\n https://tinyurl.com/sculpture-bear">
+      </a-text>
+    </a-image>
 
+
+
+
+    <a-entity id="stand_005" scale="0.4 0.4 0.4" gltf-model="#sculpture-stand-gltf" position="20.228 0 -25.471" rotation="0 -43.421 0" scale="0.4 0.4 0.4"></a-entity>
+    <a-entity id="painting-c2" gltf-model="#painting-c2-gltf" position="20.026 2.5 -25.333" rotation="-5.154 -43.421 0" scale="1 1 1" easy-transparency look-at="#Player1">
+      <a-text position="0 2 0" align="center" value="Fire by Cosette Deraps \n though seemingly simple, is very complex. It is alive and breathes just like us. It can be used to help create and destroy, just like us. There are many stories and teachings fire can give us. \n https://tinyurl.com/Cosette-Deraps"></a-text>
+    </a-entity>
+    
+
+
+    <a-entity id="stand_006" gltf-model="#sculpture-stand-gltf" position="13.193 0.000 -30.369" scale="0.4 0.4 0.4">
+    </a-entity>
+    <a-entity id="painting-t3" gltf-model="#painting-t3-gltf-dot40" position="13.193 2.5 -30.369" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1">
+    <a-text position="0 2 0" align="center"
+      value="Turtle Branches \n The roots represent the culture that is rooted within the land and the Indigenous people of Turtle Island. The tree represents that knowledge being shared online with the branches acting as nodes of digital information. \n https://tinyurl.com/Tyler-Compton ">
+    </a-text>
+  </a-entity>
 
 
     <!-- right side 7 - 12-->
-    <a-entity id="stand_005" gltf-model="#sculpture-stand-gltf" position="-8.763 0 -31.306" scale="0.4 0.4 0.4">
+
+    <a-entity id="stand_007" gltf-model="#sculpture-stand-gltf" position="-8.763 0 -31.306" scale="0.4 0.4 0.4">
     </a-entity>
     <a-entity id="instrument-great-drum" gltf-model="#instrument-great-drum-gltf" position="-8.743 2.01 -31.207"
-      scale="1.0 1.0 1.0" circles-artefact="inspectScale:1.3 1.3 1.3; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:0.3;
-      label_offset:0.0 1.2 0.0; label_visible:true; arrow_position:down;
+      scale="0.8 0.8 0.8" circles-sphere-env-map="src:#skyMap" circles-artefact="inspectScale:1.3 1.3 1.3; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
+      label_offset:0.0 1.2 0.0; 
+      label_visible:true; 
+      arrow_position:down;
       title:Powwow Drum;
-      description:No two drums are the same; each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music. (Mistikwaskihk);
-      title_back:Powwow Drum ;
-      description_back: No two drums are the same; each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music. (Mistikwaskihk);
-      label_text:Great Drum;
-      "></a-entity>
-    <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-8.743 0.0 -31.306"
-      navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box>
+      description:No two drums are the same, each has its own distinctive structure, spirit, and life based on both the culture in which it was made and the hands of the one who made it. The drum is not just a music-maker, but a voice for the soul within the music. (Click the button above this bubble to see credits);
+      title_back:Credits: Mistikwaskihk;
+      description_back:https://tinyurl.com/object-drum;
+      label_text:Click Me;"></a-entity>
 
-    <a-entity id="easel_003" gltf-model="#painting-easel-gltf" position="-14.686 0 -26.108" rotation="0 24.435 0"
+
+     <a-entity id="stand_008" gltf-model="#sculpture-stand-gltf" position="-14.686 0 -26.108" rotation="0 24.435 0"
       scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="painting-c3" gltf-model="#painting-c3-gltf" position="-14.535 1.820 -25.786"
-      rotation="-8.467 24.435 0" scale="0.8 0.8 0.8" circles-artefact="inspectScale:1.4 1.4 1.4; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:0.3;
-      label_offset:0.0 1.8 0.0; label_visible:true; arrow_position:down;
-      title:Mother Earth;
-      description:a representation that Mother Earth is in everything that is the land - be it in the tallest mountains, in the waters, or on the ground. She is us and we are her.;
-      title_back:Mother Earth;
-      description_back:a representation that Mother Earth is in everything that is the land - be it in the tallest mountains, in the waters, or on the ground. She is us and we are her.;
-      label_text:Mother Earth;
-      "></a-entity>
-    <a-box id="link3" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-14.535 -0.020 -25.786"
-      navigate-on-click="url: https://cosetteartistprofile.vercel.app/"></a-box>
+      <a-entity id="instrument-flute" gltf-model="#instrument-flute-gltf" position="-14.535 2.220 -25.786" scale="0.5 0.5 0.5"
+      circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
+      label_offset:0.0 2.0 0.0; 
+      label_visible:true; 
+      arrow_position:down;
+      title:Flute by Pikw8gan ;
+      description: Wood carved flute. Melodic instrument made from different materials such as reeds, clay, wood, and bone.(Click the button above this bubble to see credits);
+      title_back:Flute by Pikw8gan;
+      description_back:http://www.nativelynx.qc.ca/en/music/musical-instruments;
+      label_text: Click Me;
+      "></a-entity> 
 
 
 
-    <!-- <a-entity id="stand_006" gltf-model="#sculpture-stand-gltf" position="-22.333 0 -25.033" scale="0.4 0.4 0.4">
+
+     <a-entity id="stand_009" gltf-model="#sculpture-stand-gltf" position="-22.333 0 -25.033" scale="0.4 0.4 0.4">
     </a-entity>
-    <a-image id="sculpture-bear" src="#sculpture-bear-png" position="-22.367 2.488 -24.877" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1"
-      circles-artefact="inspectScale:1.5 1.5 1.5; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:0.0 1.2 0.0; label_visible:true; arrow_position:down;
-      title:Sculpture - Bear;
-      description:Dark, marbled stone bear. Indigenous symbol representing strength, family, vitality courage, and health.;
-      title_back:Sculpture - Bear;
-      description_back:Dark, marbled stone bear. Indigenous symbol representing strength, family, vitality courage, and health.;
-      label_text:Sculpture - Bear;
-      "></a-image>
-      <a-box id="link2" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90" position="-22.367 -0.017 -24.877" navigate-on-click="url: https://ago.ca/collection/browse?related_artists[30374]=30374"></a-box>
-
-    <a-entity id="stand_007" gltf-model="#sculpture-stand-gltf" position="-32.458 0.000 3.660" scale="0.4 0.4 0.4">
-    </a-entity>
-    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="-32.465 2.5 3.855" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1"
-      circles-artefact="inspectScale:1 1 1; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.3;
-      label_offset:1.0 0.5 1.0; label_visible:true; arrow_position:down;
-      title:Sculpture - Owl;
-      description:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;
-      title_back:Sculpture - Owl;
-      description_back:Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;
-      label_text:Sculpture - Owl;
-      look-at:Player1;
-      "></a-image>
-
-
-    <a-entity id="easel_004" gltf-model="#painting-easel-gltf" position="-29.436 0.000 -1.367" rotation="0 89.096 0"
-      scale="0.4 0.4 0.4"></a-entity>
-    <a-entity id="painting-t1" gltf-model="#painting-t1-gltf" position="-29.176 0.043 -1.347"
-      rotation="-5.495 89.096 0" scale="0.5 0.5 0.5" circles-artefact="inspectScale:0.4 0.4 0.4; textRotationY:120.0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-1.3;
-      label_offset:0.0 6.0 0.0; label_visible:true; arrow_position:down;
-      title:Painting - Motherbear;
-      description:The Motherbear represents the weight of the loss that is carried from unearthing the lost children, while protecting the children of today. The pain that is felt and the protection that is needed for future generation can be felt in the roar of the Motherbear.;
-      title_back:Painting - Motherbear;
-      description_back:The Motherbear represents the weight of the loss that is carried from unearthing the lost children, while protecting the children of today. The pain that is felt and the protection that is needed for future generation can be felt in the roar of the Motherbear.;
-      title_back:Painting - Motherbear;
-      label_text:Painting - Motherbear;
-      "></a-entity>
-      <a-box id="link4" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90"  position="-29.436 -0.02 -1.367" navigate-on-click="url: https://tylerartistprofile.vercel.app/"></a-box>
-
-    <a-entity id="stand_008" gltf-model="#sculpture-stand-gltf" position="-31.229 0 -7.026" scale="0.4 0.4 0.4">
-    </a-entity>
-    <a-entity id="instrument-horn-rattle" gltf-model="#instrument-horn-rattle-gltf" position="-31.201 2.395 -6.839"
+   
+      <a-entity id="instrument-horn-rattle" gltf-model="#instrument-horn-rattle-gltf" position="-22.367 2.488 -24.877"
       scale="0.5 0.5 0.5" circles-artefact="inspectScale:0.8 0.8 0.8; textRotationY:120.0; textLookAt:true; inspectRotation:0 0 0; inspectOffsetY:-0.3;
       label_offset:0 1.2 0; label_visible:true; arrow_position:down;
-      title:Horn Rattle (Halonossis);
-      description:Horn rattle made from bison or cattle horn. Notably used by the Iroquoians and Abenakis. Filled with pebbles to create a rustling sound when striking the rattle agains the thigh or palm of the hand.;
-      title_back:Horn Rattle (Halonossis);
-      description_back:Horn rattle made from bison or cattle horn. Notably used by the Iroquoians and Abenakis. Filled with pebbles to create a rustling sound when striking the rattle agains the thigh or palm of the hand.;
-      label_text:Instrument - Horn Rattle;
+      title:Horn Rattle;
+      description:Horn rattle made from bison or cattle horn. Notably used by the Iroquoians and Abenakis. Filled with pebbles to create a rustling sound when striking the rattle agains the thigh or palm of the hand.(Click the button above this bubble to see credits);
+      title_back:Horn Rattle;
+      description_back: http://www.nativelynx.qc.ca/en/music/musical-instruments/;
+      label_text:Click Me!;
       "></a-entity>
-      <a-box id="link4" gltf-model="#link-gltf" scale="0.4 0.4 0.4" rotation="20 0 90"  position="-31.229 -0.02 -7.026" navigate-on-click="url: http://www.nativelynx.qc.ca/en/music/musical-instruments/ "></a-box> -->
-     
+
+
+    <a-entity id="stand_010" gltf-model="#sculpture-stand-gltf" position="-32.129 0.000 6.730" scale="0.4 0.4 0.4">
+    </a-entity>
+      <a-image id="sculpture-owl" src="#sculpture-owl-png" position="-32.129 2.5 6.730" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1">
+        <a-text position="0 1.5 0" align="center"
+          value="“Owl” by Kenojuak Ashevak \n Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. ">
+        </a-text>
+      </a-image>
+
+
+    <a-entity id="stand_011" gltf-model="#sculpture-stand-gltf" position="-33.004 0.000 -1.016" rotation="0 89.096 0" scale="0.4 0.4 0.4"></a-entity>
+    <a-entity id="painting-t1" gltf-model="#painting-t1-gltf" position="-33.004 2.543 -1.016" rotation="0 89.096 0" scale="1 1 1" easy-transparency look-at="#Player1">
+    <a-text position="0 1.5 0" align="center"
+          value="Motherbear \n This painting represents the weight of the loss that is carried from unearthing the lost children, while protecting the children of today. \n https://tinyurl.com/Tyler-Compton ">
+        </a-text>
+    </a-entity>
+
+    <a-entity id="stand_012" gltf-model="#sculpture-stand-gltf" position="-32.159 0 -9.860" scale="0.4 0.4 0.4">
+    </a-entity>
+    <a-image id="sculpture-bear" src="#sculpture-bear-png" position="-32.159 2.395 -9.860" rotation="0 -50.798 0"
+    easy-transparency look-at="#Player1" scale="1.0 1.0 1.0">
+    <a-text position="0 1.5 0" align="center"
+      value="Bear by Quvianatuliak Takpaungai\n Dark, marbled stone.Indigenous symbol representing strength, family, vitality, and health.\n https://tinyurl.com/sculpture-bear">
+    </a-text>
+  </a-image>
+  <a-entity id="painting-t2" gltf-model="#painting-t2-gltf-dot40" position="-32.159 2.395 -9.860" scale="1.0 1.0 1.0" easy-transparency look-at="#Player1">
+    <a-text position="0 2 0" align="center"
+      value="Northern Deer \n A representation of the Northern part of the medicine wheel with braided sweetgrass and the deer being part of that Northern direction. \n https://tinyurl.com/Tyler-Compton ">
+    </a-text>
+  </a-entity>
+
+    <!---Test Environment-->
+
+    <!-- <a-entity id="stand_022" gltf-model="#sculpture-stand-gltf" position="14.840 -0.010 21.923" scale="0.4 0.4 0.4">
+    </a-entity>
+    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="14.840 2.5 21.923" rotation="0 -50.798 0"
+      easy-transparency look-at="#Player1" scale="1.0 1.0 1.0">
+
+      <a-text position="0 1 0" align="center"
+        value="Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;">
+      </a-text>
+    </a-image>
+
+    <a-entity id="stand_022" gltf-model="#sculpture-stand-gltf" position="14.840 -0.010 21.923" scale="0.4 0.4 0.4">
+    </a-entity>
+    <a-image id="sculpture-owl" src="#sculpture-owl-png" position="14.840 2.5 21.923" rotation="0 -50.798 0"
+      easy-transparency look-at="#Player1" scale="1.0 1.0 1.0">
+
+      <a-text position="0 1 0" align="center"
+        value="Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;">
+      </a-text>
+    </a-image>
+ -->
+
+
+
+
+    <!-- <a-image id="sculpture-owl" src="#sculpture-owl-png" position="14.840 2.5 21.923" rotation="0 -50.798 0"  easy-transparency look-at="#Player1"
+  scale="1.0 1.0 1.0" >
+
+<a-text position="0 1 0" align="center" value="Marbled stone owl. Indigenous symbol representing wisdom, intuition, guidance, and prophecy. “Owl” by Kenojuak Ashevak;">
+</a-text>
+</a-image> -->
+
+
     <!---Welcome Tutorial Board-->
-    <a-text position="0.145 2.325 -57.945" >"Welcome to the Meeting Place"</a-text>
+    <!-- <a-entity id="stand_0223" gltf-model="#sculpture-stand-gltf" position="-6.390 -0.025 -51.419" scale="0.4 0.4 0.4" text="align:center; opacity: 1.0; transparent:false; value: Welcome to the Meeting Place;">
+    
+    </a-entity> -->
+    <a-text position="-4.390 3.514 -39.099" rotation="0 175 0" align="center" value="Welcome to the Meeting Place \n 
+    On Computer: \n 
+    Use W A S D to navigate through the place \n
+    On Mobile: \n
+    Click on the Green Point to move around\n
+    Interact with the Artefacts: \n
+    click on the artefact, and pick it up \n
+    Enjoy your visit!
+    "></a-text>
 
     <!-- spawn point -->
-    <a-entity id="spawnPoint" position="0.221 0.325 -14.505"></a-entity>
-
-    <!-- checkpoints -->
+    <a-entity circles-checkpoint position="-2.197 0.325 -57.945"></a-entity>
+    <a-entity circles-checkpoint position="-14.548 0.325 -7.055"></a-entity>
     <a-entity circles-checkpoint position="0.221 0.325 -14.505"></a-entity>
-    <a-entity circles-checkpoint position="-0.196 0.325 -5.683"></a-entity>
-    <a-entity circles-checkpoint position="25.364 0.325 -6.835"></a-entity>
-    <a-entity circles-checkpoint position="-25.749 0.325 -13.232"></a-entity>
+    <a-entity circles-checkpoint position="-20.110 0.325 3.048"></a-entity>
+    <a-entity circles-checkpoint position="13.057 0.325 -8.754"></a-entity><!-- checkpoints -->
+    <a-entity circles-checkpoint position="0.221 0.325 -22.263"></a-entity>
+    <a-entity circles-checkpoint position="-10.397 0.325 -16.539"></a-entity>
+    <a-entity circles-checkpoint position="0.276 0.325 -7.494"></a-entity>
+    <a-entity circles-checkpoint position="0.276 0.325 7.060"></a-entity>
+    <a-entity circles-checkpoint position="26.709 0.325 -5.604"></a-entity>
+    <a-entity circles-checkpoint position="-18.613 0.325 -13.832"></a-entity>
     <a-entity circles-checkpoint position="-13.845 0.325 -24.315"></a-entity>
-    <a-entity circles-checkpoint position="-7.173 0.325 -30.673"></a-entity>
+    <a-entity circles-checkpoint position="-7.173 0.325 -26.695"></a-entity>
     <a-entity circles-checkpoint position="-20.737 0.325 -22.042"></a-entity>
-    <a-entity circles-checkpoint position="-28.091 0.325 -6.871"></a-entity>
-    <a-entity circles-checkpoint position="-27.921 0.325 -1.550"></a-entity>
-    <a-entity circles-checkpoint position="-29.259 0.325 3.450"></a-entity>
-    <a-entity circles-checkpoint position="12.124 0.325 -23.270"></a-entity>
+    <!-- stand12 -->
+    <a-entity circles-checkpoint position="-27.274 0.325 -9.458"></a-entity>
+  <!-- stand11 -->
+    <a-entity circles-checkpoint position="-30.913 0.325 -0.875"></a-entity>
+    <!-- stand10 -->
+    <a-entity circles-checkpoint position="-30.505 0.325 6.499"></a-entity>
+    <!-- stand006 -->
+    <a-entity circles-checkpoint position="11.819 0.325 -27.632"></a-entity>
+       <!-- stand005 -->
     <a-entity circles-checkpoint position="18.707 0.325 -24.218"></a-entity>
-    <a-entity circles-checkpoint position="20.900 0.325 -18.057"></a-entity>
+    <!-- stand004 -->
+    <a-entity circles-checkpoint position="23.819 0.325 -17.450"></a-entity>
     <a-entity circles-checkpoint position="25.005 0.325 3.776"></a-entity>
-    <a-entity circles-checkpoint position="29.561 0.325 0.652"></a-entity>
+    <a-entity circles-checkpoint position="29.120 0.325 1.436"></a-entity>
     <a-entity circles-checkpoint position="25.864 0.325 7.887"></a-entity>
     <a-entity circles-checkpoint position="14.907 0.325 15.908"></a-entity>
     <a-entity circles-checkpoint position="0.118 0.325 14.641"></a-entity>
+    <a-entity circles-checkpoint position="0.118 0.325 25.311"></a-entity>
+    <a-entity circles-checkpoint position="18.816 0.325 -0.783"></a-entity>
     <a-entity circles-checkpoint position="-14.224 0.325 15.908"></a-entity>
     <a-entity circles-checkpoint position="38.778 0.325 23.640"></a-entity>
     <a-entity circles-checkpoint position="27.135 0.325 17.078"></a-entity>
     <a-entity circles-checkpoint position="51.846 0.325 32.005"></a-entity>
-    <a-entity circles-checkpoint circles-spawnpoint position="0.145 0.325 -57.945"></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="-0.220 0.325 -57.945"></a-entity>
+    <a-entity circles-checkpoint position="0.327 0.325 -50.566"></a-entity>
     <a-entity circles-checkpoint position="0.327 0.325 -43.313"></a-entity>
     <a-entity circles-checkpoint position="-0.601 0.325 -32.725"></a-entity>
     <a-entity circles-checkpoint position="-27.449 0.325 17.433"></a-entity>
@@ -437,8 +489,6 @@
 
       <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
     </a-entity>
-
-
 
   </a-scene>
 
