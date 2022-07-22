@@ -627,12 +627,12 @@ const addTestUsers = () => {
   //add students
   for (let i = 0; i < tenColors.length; i++) {
     usersToAdd.push({
-      username:               'guest' + i,
+      username:               'Student' + i,
       usertype:               CIRCLES.USER_TYPE.STUDENT,
       firstname:              'Guest',
       lastname:               i,
       email:                  's' + i + '@circlesxr.com',
-      password:               'guest',
+      password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
       gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
@@ -654,6 +654,28 @@ const addTestUsers = () => {
       firstname:              'Participant',
       lastname:               i,
       email:                  'p' + i + '@circlesxr.com',
+      password:               env.DEFAULT_PASSWORD,
+      gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
+      gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
+      gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
+      //gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+      //gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+      color_head:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hair:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_body:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hand_right:       'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+      color_hand_left:        'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
+    });
+  }
+
+  //add random guest
+  for (let i = 0; i < 1; i++) {
+    usersToAdd.push({
+      username:               'guest',
+      usertype:               CIRCLES.USER_TYPE.PARTICIPANT,
+      firstname:              'Guest',
+      lastname:               'Welcome',
+      email:                  'guest',
       password:               env.DEFAULT_PASSWORD,
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
