@@ -21,8 +21,8 @@
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <img id='screenshot' src='assets/textures/world_screenshot.jpg' crossorigin="anonymous">
 
-        <a-asset-item id="Room_obj"  src="assets/models/Room/ConferenceRoom.obj"></a-asset-item>
-        <a-asset-item id="Room-mtl" src="assets/models/Room/ConferenceRoom.mtl"></a-asset-item>
+        <!--<a-asset-item id="Room_obj"  src="assets/models/Room/ConferenceRoom.obj"></a-asset-item>
+        <a-asset-item id="Room-mtl" src="assets/models/Room/ConferenceRoom.mtl"></a-asset-item>-->
         <a-asset-item id="Room-gltf" src="assets/models/Room/ConferenceRoom.glb"></a-asset-item>
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -45,12 +45,28 @@
       <a-entity circles-checkpoint circles-spawnpoint position="1.0 0 -1.2" scale="0.8 0.8 0.8"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="2.03 0 -1.2" scale="0.8 0.8 0.8"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="3.03 0 -1.2" scale="0.8 0.8 0.8"></a-entity>
-      
+      <a-entity 
+        id = "Artefact Test"
+        position="0 1.5 0.2" 
+        rotation="0 0 0" 
+        scale="1 1 1"
+        geometry="primitive: box; width: 1" material="color: blue" circles-artefact="
+        inspectScale:     0.5 0.5 0.5;
+        textRotationY:    90;
+        textLookAt:       false; 
+        inspectRotation:  0 0 0;
+        label_offset:     0 1 0;
+        label_visible:    true;
+        arrow_position:   down;
+        title:            Some Title;
+        description:      Some description text.;
+        label_text:       Some Label;"
+      ></a-entity>
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="0.01 0.01 0.01" gltf-model="#Room-gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:true; receive:true;"></a-entity>
       
       <!-- sky and lights -->
-      <a-entity light="type:ambient; color:#FFF; intensity:0.1" position="0 0 0" ></a-entity>
-      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:directional; angle:50; intensity:10.0; color:#d5e4f5; distance:15.0; penumbra:0.1;" circles-platform-shadows></a-entity>
+      <a-entity light="type:ambient; color:#d5e4f5; intensity:3" position="0 2 0" ></a-entity>
+      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:directional; angle:50; intensity:8.0; color:#d5e4f5; distance:15.0; penumbra:0.1;" circles-platform-shadows></a-entity>
 
       <a-entity id='skyBox'
                 rotation='0 200 0'
