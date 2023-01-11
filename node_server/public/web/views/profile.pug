@@ -72,7 +72,7 @@ block content
         input.field-long(type='text', name='usertype', placeholder='SuperFriendlyUser', value=userInfo.userType, disabled='')
       .pure-control-group
         label
-          | Full Name
+          | Full Name (first name will be visible)
           span.required *
         input.field-divided(type='text', name='firstname', placeholder='First', value=userInfo.firstName)
         input.field-divided(type='text', name='lastname', placeholder='Last', value=userInfo.lastName)
@@ -104,12 +104,12 @@ block content
         select.field-select(name='bodyModel')!= userOptions.bodyOptions
         input.colorPicker.field-long(name='color_body', type='text', value=userInfo.bodyColor)
       .pure-control-group
-        label Hand Left Model
-        select.field-select(name='handLeftModel')!= userOptions.handLeftOptions
+        label Hand Left Colour
+        //select.field-select(name='handLeftModel')!= userOptions.handLeftOptions
         input.colorPicker.field-long(name='color_hand_left', type='text', value=userInfo.handLeftColor)
       .pure-control-group
-        label Hand Right Model
-        select.field-select(name='handRightModel')!= userOptions.handRightOptions
+        label Hand Right Colour
+        //select.field-select(name='handRightModel')!= userOptions.handRightOptions
         input.colorPicker.field-long(name='color_hand_right', type='text', value=userInfo.handRightColor)
       .pure-controls
         input(type="submit" value="Update Profile" class="pure-button pure-button-primary")
