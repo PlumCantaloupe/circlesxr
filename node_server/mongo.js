@@ -14,7 +14,7 @@ env = dotenvParseVariables(env.parsed);
 // Make the parsed environment config globally accessible
 //global.env = env;
 
-const cmd = spawn('mongod', ['--bind_ip', env.MONGO_IP, '--dbpath', env.MONGO_DB]);
+const cmd = spawn('mongosh', ['--host', env.DATABASE_HOST]);
 
 cmd.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
