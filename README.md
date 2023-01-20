@@ -113,7 +113,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
     - `cp .env.dist .env` (or just duplicate the .env.dist file and rename it as .env :)
     - Make any changes to your .env file that are specific to your environment
 1. Make sure that a Mongo instance is started and running, either as a service or via command line (see [installation and running instructions for your specific operating system](https://www.mongodb.com/docs/manual/administration/install-community/)).
-1. Server the app so you can view it in your browser
+1. Serve the app so you can view it in your browser
     - `npm run serve`
     - This will build the needed bundles and serve the app for viewing. Check
       out the `scripts` section of `package.json` for more build options and
