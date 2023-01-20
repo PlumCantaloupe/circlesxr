@@ -104,26 +104,22 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 1. Clone repo
     - `git clone https://github.com/PlumCantaloupe/circlesxr.git`
 1. Though not necessary, [Visual Studio Code](https://code.visualstudio.com/) is recommended to develop, run, and modify *Circles*. Additionally, VSCode allows you to easily open [an integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) to execute the terminal commands below. It also has many [built-in Github features](https://code.visualstudio.com/docs/editor/versioncontrol). 
-1. [Install mongo community server](https://www.mongodb.com/try/download/community)
-    - We also recommend installing the [MongoDB command line tool](https://www.mongodb.com/docs/mongodb-shell/) so that you can run and access the Mongo server via command line (i.e., using the _'npm run mongo'_ command from this framework.)
-    - Alternatively, if you choose not to use the command line tools for Mongo you can use the [Compass application](https://www.mongodb.com/docs/compass/current/) (included with mongo community server install) to start the mongo server and visualize the databases.
+1. [Install mongo community server](https://www.mongodb.com/docs/manual/administration/install-community/)
+    - We also _recommend_ installing the [MongoDB command line tool](https://www.mongodb.com/docs/mongodb-shell/) so that you can access the Mongo databases via command line, though you can also use the [Compass application](https://www.mongodb.com/docs/compass/current/). This is usually included with the mongo community server install.
 1. [Install node/npm](https://nodejs.org/en/download/). **NOTE: We recommend installing the "LTS" version of npm/node.** Currently, this framework is running on  *Node version 14.18.0* and *NPM version 8.3.1.* You can check versions after install with the commands `node --version` and `npm --version`. For Windows you may have this additional command after install to downgrade NPM `npm install -g npm@8.3.1`. *Unfortunately many the libraries associated with A-frame and circles may not build correctly if you use other versions.*
 1. Go into project folder and install NPM dependencies
     - `npm install`
 1. Set up the Environment file
     - `cp .env.dist .env` (or just duplicate the .env.dist file and rename it as .env :)
     - Make any changes to your .env file that are specific to your environment
-1. Open another terminal window/session and start Mongo (or use the [Mongo Compass Application](https://www.mongodb.com/docs/compass/current/))
-    - `npm run mongo`
-    - You can also query Mongo using the console by running `mongo` in your
-      terminal (if you also have the mongo db running). Also note that if you are running this on a remote server it is instead [recommended to set up Mongo to run as a process](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#start-mongodb).
+1. Make sure that a Mongo instance is started and running, either as a service or via command line (see [installation and running instructions for your specific operating system](https://www.mongodb.com/docs/manual/administration/install-community/)).
 1. Server the app so you can view it in your browser
     - `npm run serve`
     - This will build the needed bundles and serve the app for viewing. Check
       out the `scripts` section of `package.json` for more build options and
       details.
 1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` (default is `localhost:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost your browser (Chrome at this time) may complain about your site [re-directing assets to load via https and creating https mismatches](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) so you may try other browsers (i.e., Firefox), or consider _[highly recommended]_ using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https). This will also allow you to easily test locally on other devices i.e., a mobile or standalone HMD device, and show your development to other collaborators via a publicly accessible URL.
-    - **NOTE:** If you need to clean up or modify db contents use the `mongo` shell. [see here](https://docs.mongodb.com/manual/reference/mongo-shell/). To drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongo shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
+    - **NOTE:** If you need to clean up or modify db contents use th MongoDB [Compass Application](https://www.mongodb.com/docs/compass/current/?_ga=2.136660531.242864686.1674159088-1142880638.1674159088) or [mongosh](https://www.mongodb.com/docs/mongodb-shell/) shell. For example, to drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongosh shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
 1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
