@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-snap-turning', {
   rotateBody: function(angleDeg) 
   {
     if (this.data.enabled === true) {
-      this.el.object3D.rotation.y += THREE.Math.degToRad(angleDeg);
+      this.el.object3D.rotation.y += THREE.MathUtils.degToRad(angleDeg);
     }
   },
   keyboard_detection: function () {

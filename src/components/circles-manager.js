@@ -346,7 +346,7 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.objectDescriptions.object3D.rotation.z = 0.0;
       } 
       else {
-        CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.Math.degToRad(obj.data.textRotationY);
+        CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.MathUtils.degToRad(obj.data.textRotationY);
       }
     }
 

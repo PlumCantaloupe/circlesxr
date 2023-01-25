@@ -92,7 +92,7 @@ AFRAME.registerComponent('circles-parent-constraint', {
           this.posMat.makeTranslation(this.position_E.x, this.position_E.y, this.position_E.z );
           this.posMat_Off.makeTranslation(this.data.positionOffset.x, this.data.positionOffset.y, this.data.positionOffset.z);
           this.rotMat.makeRotationFromQuaternion(this.rotation_E);
-          this.rotMat_Off.makeRotationFromEuler(new THREE.Euler(THREE.Math.DEG2RAD * this.data.rotationOffset.x, THREE.Math.DEG2RAD * this.data.rotationOffset.y, THREE.Math.DEG2RAD * this.data.rotationOffset.z, "XYZ"));
+          this.rotMat_Off.makeRotationFromEuler(new THREE.Euler(THREE.MathUtils.DEG2RAD * this.data.rotationOffset.x, THREE.MathUtils.DEG2RAD * this.data.rotationOffset.y, THREE.MathUtils.DEG2RAD * this.data.rotationOffset.z, "XYZ"));
 
           //set the offsets first
           if (this.data.rotationOn) { 

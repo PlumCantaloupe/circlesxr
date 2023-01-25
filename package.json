@@ -48,8 +48,7 @@
     "build:dev": "npm run build:dev:client && npm run build:dev:worlds",
     "build": "npm run build:client && npm run build:worlds",
     "serve:dev": "npm run build:dev && nodemon ./node_server/app.js",
-    "serve": "npm run build && node ./node_server/app.js",
-    "mongo": "node ./node_server/mongo.js"
+    "serve": "npm run build && node ./node_server/app.js"
   },
   "repository": {
     "type": "git",
