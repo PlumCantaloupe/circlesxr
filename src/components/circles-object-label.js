@@ -57,19 +57,19 @@ AFRAME.registerComponent('circles-object-label', {
         if (CONTEXT_AF.labelArrow !== null) {
             if ( data.arrow_position == 'up' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(180.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(180.0) );
             }
             else if ( data.arrow_position == 'right' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( CONTEXT_AF.LABEL_WIDTH/2, 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(90.0) );
             }
             else if ( data.arrow_position == 'down' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, -CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(0.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(0.0) );
             }
             else if ( data.arrow_position == 'left' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( -CONTEXT_AF.LABEL_WIDTH/2 , 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(-90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(-90.0) );
             }
         }
     }
