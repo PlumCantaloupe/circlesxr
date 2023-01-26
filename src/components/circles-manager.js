@@ -354,6 +354,7 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', true);
     });
+    CONTEXT_AF.objectControls.setAttribute('visible', true);
   },
   releaseInspectedObject : function ( obj ) {
     const CONTEXT_AF = this;
@@ -379,6 +380,7 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', false);
     });
+    CONTEXT_AF.objectControls.setAttribute('visible', false);
 
     CONTEXT_AF.selectedObject  = null;
   }

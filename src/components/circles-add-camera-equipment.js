@@ -110,18 +110,22 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         objectControls.setAttribute('rotation', {x:0, y:0, z:0});
         avatarCam.appendChild(objectControls);
 
+        //rotate button
         let rotateElem = document.createElement('a-entity');
         rotateElem.setAttribute('id', 'rotate_control');
         rotateElem.setAttribute('class', 'interactive button');
         rotateElem.setAttribute('position', {x:-CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y, z:0.0});
-        rotateElem.setAttribute('geometry',  {  primitive:'plane', 
-                                                width:CONTROL_BUTTON_SIZE,
-                                                height:CONTROL_BUTTON_SIZE
-                                                });
+        rotateElem.setAttribute('geometry',  { primitive:'plane', width:CONTROL_BUTTON_SIZE, height:CONTROL_BUTTON_SIZE });
         rotateElem.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_ROTATE, color:'rgb(255,255,255)', shader:'flat', transparent:true});
-        objectControls.appendChild(rotateElem);
         rotateElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
         rotateElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+        objectControls.appendChild(rotateElem);
+        
+        let rotateElemLabel = document.createElement('a-entity');
+        rotateElemLabel.setAttribute('id', 'rotate_label');
+        rotateElemLabel.setAttribute('position', {x:-CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y - CONTROL_BUTTON_SIZE/1.5, z:0.0});
+        rotateElemLabel.setAttribute('text',  { value:'rotate', color:'rgb(255,255,255)', width:CONTROL_BUTTON_SIZE * 2, wrapCount:10, align:'center', anchor:'center' });
+        objectControls.appendChild(rotateElemLabel);
 
         let releaseElem = document.createElement('a-entity');
         releaseElem.setAttribute('id', 'release_control');
@@ -132,9 +136,15 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
                                                 height:CONTROL_BUTTON_SIZE
                                                 });
         releaseElem.setAttribute('material',  {src:CIRCLES.CONSTANTS.ICON_RELEASE, color:'rgb(255,255,255)', shader:'flat', transparent:true});
-        objectControls.appendChild(releaseElem);
         releaseElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
         releaseElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
+        objectControls.appendChild(releaseElem);
+
+        let releaseElemLabel = document.createElement('a-entity');
+        releaseElemLabel.setAttribute('id', 'release_label');
+        releaseElemLabel.setAttribute('position', {x:0.0, y:-CONTROL_BUTTON_OFFSET_Y - CONTROL_BUTTON_SIZE/1.5, z:0.0});
+        releaseElemLabel.setAttribute('text',  { value:'release', color:'rgb(255,255,255)', width:CONTROL_BUTTON_SIZE * 2, wrapCount:10, align:'center', anchor:'center' });
+        objectControls.appendChild(releaseElemLabel);
 
         let zoomElem = document.createElement('a-entity');
         zoomElem.setAttribute('id', 'zoom_control');
@@ -149,10 +159,17 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         zoomElem.addEventListener('mouseenter', function (evt) { evt.target.setAttribute('scale',{x:1.1, y:1.1, z:1.1}); });
         zoomElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
 
+        let zoomElemLabel = document.createElement('a-entity');
+        zoomElemLabel.setAttribute('id', 'release_label');
+        zoomElemLabel.setAttribute('position', {x:CONTROL_BUTTON_OFFSET_X, y:-CONTROL_BUTTON_OFFSET_Y - CONTROL_BUTTON_SIZE/1.5, z:0.0});
+        zoomElemLabel.setAttribute('text',  { value:'zoom', color:'rgb(255,255,255)', width:CONTROL_BUTTON_SIZE * 2, wrapCount:10, align:'center', anchor:'center' });
+        objectControls.appendChild(zoomElemLabel);
+
         //hide object control buttons
         objectControls.querySelectorAll('.button').forEach( (button) => {
           button.setAttribute('circles-interactive-visible', false);
         });
+        objectControls.setAttribute('visible', false);
 
         //TODO: if a teacher, give extra controls
         if (avatarCam.components["circles-user-networked"].data.usertype === CIRCLES.USER_TYPE.TEACHER) {
