@@ -168,7 +168,6 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //clicked
     CONTEXT_AF.clickListenerFunc = function(e) {
-        console.log('CLICK!!!');
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.click_scale, y:data.click_scale, z:data.click_scale});
         const timeoutObj = setTimeout(() => {
             CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
@@ -178,14 +177,12 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //hovering
     CONTEXT_AF.mouseenterListenerFunc = function(e) {
-        console.log('MOUSEENTER!!!');
         CONTEXT_AF.highlightElem.setAttribute('visible', true);
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
     }
 
     //not hovering
     CONTEXT_AF.mouseleaveListenerFunc = function(e) {
-        console.log('MOUSELEAVE!!!');
         CONTEXT_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON));
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
     }
@@ -223,5 +220,8 @@ AFRAME.registerComponent('circles-interactive-object', {
             rc.components.raycaster.refreshObjects();
         }); 
     }
+  },
+  remove : function () {
+    this.setEnabled(false);
   }
 });
