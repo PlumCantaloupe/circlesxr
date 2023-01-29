@@ -96,12 +96,12 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.label = document.createElement('a-entity');
     CONTEXT_AF.label.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    //CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
     CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
-    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
+    CONTEXT_AF.el.sceneEl.appendChild(CONTEXT_AF.label);
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');
@@ -118,9 +118,9 @@ AFRAME.registerComponent('circles-object-label', {
     bg.addEventListener('loaded', function () {
 
         //want this clicked to also send message to manager (to trigger inspect). Users have asked for this.
-        // bg.addEventListener('click', (e) => {
-        //     CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
-        // });
+        bg.addEventListener('click', (e) => {
+            CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
+        });
 
         bg.addEventListener('mouseenter', (e) => {
             const scaleSize = 1.05;
