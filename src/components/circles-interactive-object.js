@@ -6,7 +6,8 @@ AFRAME.registerComponent('circles-interactive-object', {
     highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline effect
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
     hover_scale:        {type:'number',     default:1.08},
-    click_scale:        {type:'number',     default:1.10}
+    click_scale:        {type:'number',     default:1.10},
+    enabled:            {type:'boolean',    default:true}
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -40,25 +41,25 @@ AFRAME.registerComponent('circles-interactive-object', {
         }
     }
     else {
-        //removing highlight as it doesn't work very well with more complex models. Until we can figure out a better post-processing solution
-        //we will just use scale for now ...
-        //let;s keep this code in case we need it later
-        CONTEXT_AF.el.addEventListener('click', (e) => {
+
+        CONTEXT_AF.clickListenerFunc = function(e) {
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.click_scale);
             CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
-        });
+        };
 
-        CONTEXT_AF.el.addEventListener('mouseenter', (e) => {
+        CONTEXT_AF.mouseenterListenerFunc = function(e) {
             CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
             CONTEXT_AF.el.object3D.scale.set(newScale.x, newScale.y, newScale.z);
-        });
+        };
 
-        CONTEXT_AF.el.addEventListener('mouseleave', (e) => {
+        CONTEXT_AF.mouseleaveListenerFunc = function(e) {
             CONTEXT_AF.el.object3D.scale.set(CONTEXT_AF.origScale.x, CONTEXT_AF.origScale.y, CONTEXT_AF.origScale.z);
-        });
+        };
+
+        CONTEXT_AF.setEnabled(true);
     }
   },
   update: function(oldData) {
@@ -97,6 +98,10 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     if ( (oldData.type !== data.type) && (data.type !== '') ) {
         console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
+    }
+
+    if ( (oldData.enabled !== data.enabled) && (data.enabled !== '') ) {
+        CONTEXT_AF.setEnabled(data.enabled);
     }
   },
   createHighlightElement : function (CONTEXT_AF) {
@@ -162,25 +167,61 @@ AFRAME.registerComponent('circles-interactive-object', {
     modelElem.appendChild(CONTEXT_AF.highlightElem);
 
     //clicked
-    modelElem.addEventListener('click', (e) => {
+    CONTEXT_AF.clickListenerFunc = function(e) {
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.click_scale, y:data.click_scale, z:data.click_scale});
         const timeoutObj = setTimeout(() => {
             CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
             clearTimeout(timeoutObj);
           }, 200);
-    });
+    }
 
     //hovering
-    modelElem.addEventListener('mouseenter', (e) => {
+    CONTEXT_AF.mouseenterListenerFunc = function(e) {
         CONTEXT_AF.highlightElem.setAttribute('visible', true);
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
-    });
+    }
 
     //not hovering
-    modelElem.addEventListener('mouseleave', (e) => {
+    CONTEXT_AF.mouseleaveListenerFunc = function(e) {
         CONTEXT_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON));
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
-    });
+    }
+
+    CONTEXT_AF.setEnabled(true);
   },
-  remove: function () {}
+  remove: function () {},
+  setEnabled : function(enabled) {
+    const CONTEXT_AF    = this;
+
+    if (enabled) {
+        if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.clickListenerFunc); }
+        if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.addEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
+        if (CONTEXT_AF.mouseleaveListenerFunc) { CONTEXT_AF.el.addEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); }
+        if ( !CONTEXT_AF.el.classList.contains('interactive') ) {
+            CONTEXT_AF.el.classList.add('interactive');
+        }
+        const raycasters = AFRAME.scenes[0].querySelectorAll('[raycaster]');
+        raycasters.forEach(rc => {
+            rc.components.raycaster.refreshObjects();
+        }); 
+    }
+    else {
+        if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.removeEventListener('click', CONTEXT_AF.clickListenerFunc); }
+        if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.removeEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
+        if (CONTEXT_AF.mouseleaveListenerFunc) { 
+            CONTEXT_AF.mouseleaveListenerFunc();
+            CONTEXT_AF.el.removeEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); 
+        }
+        if ( CONTEXT_AF.el.classList.contains('interactive') ) {
+            CONTEXT_AF.el.classList.remove('interactive');
+        }
+        const raycasters = AFRAME.scenes[0].querySelectorAll('[raycaster]');
+        raycasters.forEach(rc => {
+            rc.components.raycaster.refreshObjects();
+        }); 
+    }
+  },
+  remove : function () {
+    this.setEnabled(false);
+  }
 });
