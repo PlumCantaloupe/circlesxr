@@ -118,9 +118,9 @@ AFRAME.registerComponent('circles-object-label', {
     bg.addEventListener('loaded', function () {
 
         //want this clicked to also send message to manager (to trigger inspect). Users have asked for this.
-        bg.addEventListener('click', (e) => {
-            CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
-        });
+        // bg.addEventListener('click', (e) => {
+        //     CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
+        // });
 
         bg.addEventListener('mouseenter', (e) => {
             const scaleSize = 1.05;
