@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Hello, WebVR! - A-Frame</title>
+      <meta name="description" content="Hello, WebVR! - A-Frame">
+      <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
+      
+    </head>
+    <body>
+<a-assets timeout="10000">
+  <image id="indexpic1"src="assets/indexpic1.png" crossorigin="anonymous">
+    <!-- -->
+  <image id="indexpic2"src="assets/indexpic2.png" crossorigin="anonymous">
+  <!--   -->
+  <image id="back"src="assets/Back.jpg" crossorigin="anonymous">
+    <!--   -->
+  <a-asset-item id = "spceship_model" response-type="arraybuffer" src="assets/spaceship.gltf"></a-asset-item>
+  <!--https://sketchfab.com/3d-models/sci-fi-space-station-f6b9106fffc64fec93cabc17492cb2e4#download-->
+</a-assets>
+
+<a-scene>
+
+
+  <a-entity camera wasd-controls look-controls position="0 1.6 0">
+    <!-- adding a cursor component so that we can click on objects -->
+    <!-- cursor documentation: https://github.com/aframevr/aframe/blob/master/docs/components/cursor.md -->
+    <1--<a-entity cursor="rayOrigin:mouse;" raycaster="far:20; interval:200; objects:.interactive"></a-entity>
+   <!-- <a-entity light="type:spot; intensity:1.4; castShadow:true; shadowBias:-0.0005; angle:40; penumbra:0.3;" position="0.5 -0.5 0" rotation="0 0 0"></a-entity>-->
+  </a-entity>
+
+
+<a-entity position="0 -1 -2">
+  <a-camera>
+  </a-camera>
+</a-entity><!--  defulat cerma -->
+
+
+<a-entity id="startinterface">
+  <a-image src="#indexpic1" position="-1.10827 1 -3.83195" rotation="0 20 0" scale="2 2 1" material="" geometry=""> </a-image>
+  <a-image src="#indexpic2" position="0.66283 1.01877 -3.82966" rotation="0 -20 0" scale="2 2 1" material="" geometry=""> </a-image>
+  <a-box class="button1" position="-1.33778 0.81295 -4.23604" geometry="width: 3; height: 4" rotation="0 20 0" scale="0.24 0.205 1" material="color: #b1afaf"></a-box>
+ </a-entity>
+
+
+ <a-entity id="spaceship" position="0 0 -3" rotation="0 0 0" scale="1 1 1" gltf-model="#spaceship_model"shadow>
+  <a-animation attribut="ratation" to="0 36 0" repeat="indefinite" dur="5000" easing="linear"></a-animation>
+ </a-entity>
+
+
+ <a-curvedimage src="#back" position="-0.17775 0 -2.82225" rotation="0 45 0" scale="1.82101 8.50834 1.73097" material="" geometry="">
+</a-curvedimage>
+
+<a-entity id="plane" position="0.19199 0 -4.53086" rotation="-90 0 0" scale="10 10 10" geometry="primitive: plane" material="src: #back"></a-entity>
+<a-entity id="plane2" position="0.192 4.43651 -3.87235" rotation="90 0 0" scale="10 10 10" geometry="primitive: plane" material="src:#back"></a-entity>
+<a-entity id="plan3" position="0.192 -0.43927 -0.84927" rotation="0 -179.9998479605043 180" scale="10.08961 10 10" geometry="primitive: plane" material="src:#back"></a-entity>
+
+<a-entity id="buttons"> 
+<a-box class="button1" position="-1.3 1 -4.152" geometry="primitive:box" width=3; height=4; rotation="0 20 0" scale="0.17 0.035 1" material="color: #FF0000"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(255, 0, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(255, 100, 100); startEvents:mouseleave; dur:200"
+                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300" shadow>></a-box>
+<a-box class="button2" position="-1.3 0.8 -4.152" geometry="width: 3; height: 4" rotation="0 20 0" scale="0.17 0.035 1" material="color: #FF0000"></a-box>
+<a-box class="button3" position="-1.3 0.6 -4.152" geometry="width: 3; height: 4" rotation="0 20 0" scale="0.17 0.035 1" material="color: #FF0000"></a-box>
+</a-entity>
+ </a-scene>
+    </body>
+</html>
+
+
+
+
+
+          
+          
+
+
