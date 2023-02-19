@@ -1,6 +1,7 @@
 'use strict';
 
 AFRAME.registerComponent('circles-portal', {
+  dependencies: ['circles-interactive-object'],
   schema: {
     img_src:      {type: 'asset', default:CIRCLES.CONSTANTS.DEFAULT_ENV_MAP},
     title_text:   {type: 'string', default:''},
@@ -15,7 +16,7 @@ AFRAME.registerComponent('circles-portal', {
     CONTEXT_AF.portalElem.classList.add('portal');
     CONTEXT_AF.portalElem.setAttribute('geometry', {primitive:'sphere', radius:0.5, segmentsWidth:10, segmentsHeight:10});
     CONTEXT_AF.portalElem.setAttribute('material', {shader:'flat'});
-    CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
+    CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'outline', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
     CONTEXT_AF.el.appendChild(CONTEXT_AF.portalElem);
 
     //create text component for title

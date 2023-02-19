@@ -1,6 +1,7 @@
 'use strict';
 
 AFRAME.registerComponent('circles-artefact', {
+  dependencies: ['circles-interactive-object', 'circles-inspect-object', 'circles-object-label', 'circles-sound'],
   schema: {
     title:              {type:'string',   default:'No Title Set'},
     description:        {type:'string',   default:'No decription set'},
@@ -33,7 +34,7 @@ AFRAME.registerComponent('circles-artefact', {
     }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
+    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
                                                             title_back:data.title_back,             description_back:data.description_back, inspectScale:data.inspectScale,

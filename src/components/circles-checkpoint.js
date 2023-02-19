@@ -1,6 +1,7 @@
 'use strict';
 
 AFRAME.registerComponent('circles-checkpoint', {
+  dependencies: ['circles-interactive-object'],
   schema: {
     offset: {default: {x: 0, y: 0, z: 0}, type: 'vec3'}
   },
@@ -11,7 +12,7 @@ AFRAME.registerComponent('circles-checkpoint', {
     //add some basic styling
     CONTEXT_AF.el.setAttribute('material', {transparent:false, color:'rgb(57, 187, 130)', emissive:'rgb(7,137,80)'});
     CONTEXT_AF.el.setAttribute('geometry', {primitive:'cylinder', radius:0.5, height:0.04});
-    CONTEXT_AF.el.setAttribute('circles-interactive-object', '');
+    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
     CONTEXT_AF.el.setAttribute('checkpoint', {offset:CONTEXT_AF.data.offset});
 
     //make sure this is interactive
