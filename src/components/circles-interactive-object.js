@@ -1,9 +1,10 @@
 'use strict';
 
 AFRAME.registerComponent('circles-interactive-object', {
+  dependencies: ['circles-material-extend-fresnel'],
   schema: {
-    type:               {stype:'string',    default:'outline', oneOf:['outline','scale']},
-    highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline effect
+    type:               {stype:'string',    default:'highlight', oneOf:['outline','scale','highlight']},
+    highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline and highlight effect
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
     hover_scale:        {type:'number',     default:1.08},
     click_scale:        {type:'number',     default:1.10},
@@ -39,6 +40,23 @@ AFRAME.registerComponent('circles-interactive-object', {
             CONTEXT_AF.createHighlightElement(CONTEXT_AF);
             CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
         }
+    }
+    else if (data.type === 'highlight') {
+        CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelColor:CONTEXT_AF.data.highlight_color, fresnelPow:2.0, fresnelOpacity:0.0});
+
+        CONTEXT_AF.clickListenerFunc = function(e) {
+            //
+        };
+
+        CONTEXT_AF.mouseenterListenerFunc = function(e) {
+            CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelOpacity:1.0});
+        };
+
+        CONTEXT_AF.mouseleaveListenerFunc = function(e) {
+            CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelOpacity:0.0});
+        };
+
+        CONTEXT_AF.setEnabled(true);
     }
     else {
 
