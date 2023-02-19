@@ -16,7 +16,7 @@ AFRAME.registerComponent('circles-costume', {
         //create costume object component for portal
         CONTEXT_AF.costumeElem = document.createElement('a-entity');
         CONTEXT_AF.costumeElem.classList.add('costume');
-        CONTEXT_AF.costumeElem.setAttribute('circles-interactive-object', {neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
+        CONTEXT_AF.costumeElem.setAttribute('circles-interactive-object', {type:'scale', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
         CONTEXT_AF.el.appendChild(CONTEXT_AF.costumeElem);
 
         //create text component for title
