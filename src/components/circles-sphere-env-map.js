@@ -2,7 +2,6 @@
 
 //based on Don's existing component https://github.com/donmccurdy/aframe-extras/blob/99535cd878eb36cb25cdcda4a32a40eb248c990a/src/misc/cube-env-map.js
 AFRAME.registerComponent('circles-sphere-env-map', {
-  //dependencies: ['circles-gltf'],
   schema: {
     src:            {type:'asset',      default:''},
     format:         {type:'string',     default:'RGBFormat'}

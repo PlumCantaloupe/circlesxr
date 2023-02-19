@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-portal', {
-  dependencies: ['circles-interactive-object'],
   schema: {
     img_src:      {type: 'asset', default:CIRCLES.CONSTANTS.DEFAULT_ENV_MAP},
     title_text:   {type: 'string', default:''},

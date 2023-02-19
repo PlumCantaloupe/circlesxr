@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-material-extend-fresnel', {
-  dependencies: ['material'],
   schema: {
     fresnelPow:       {type:'number',   default:1.0},
     fresnelOpacity:   {type:'number',   default:1.0},
@@ -47,7 +46,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     
     if (!mesh) {
       if (CONTEXT_AF.data.debug === true) {
-        console.warn('circles-material-extend-fresnel can only be added to an entity containing a 3D mesh');
+        console.warn('DEBUG ON [circles-material-extend-fresnel]: circles-material-extend-fresnel can only be added to an entity containing a 3D mesh');
       }
       return;
     }
@@ -62,7 +61,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
         }
         else {
           if (CONTEXT_AF.data.debug === true) {
-            console.log('can only extend MeshStandardMaterial, so no fresnel added');
+            console.warn('DEBUG ON [circles-material-extend-fresnel]: can only extend MeshStandardMaterial, so no fresnel added');
           }
         }
       }
@@ -70,7 +69,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     
     if (!foundMatNode) {
       if (CONTEXT_AF.data.debug === true) {
-        console.log('no material (maybe just an a-frame primitive), so trying to add one');
+        console.warn('DEBUG ON [circles-material-extend-fresnel]: no material (maybe just an a-frame primitive), so trying to add one');
       }
       CONTEXT_AF.el.setAttribute('material', {shader:'standard'});
       CONTEXT_AF.extendStandardMat(mesh.material);
@@ -81,7 +80,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     
     if (!material) {
       if (CONTEXT_AF.data.debug === true) {
-        console.warn('add a material first before calling "extendStandardMat"');
+        console.warn('DEBUG ON [circles-material-extend-fresnel]: add a material first before calling "extendStandardMat"');
       }
     }
     

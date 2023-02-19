@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-artefact', {
-  dependencies: ['circles-interactive-object', 'circles-inspect-object', 'circles-object-label', 'circles-sound'],
   schema: {
     title:              {type:'string',   default:'No Title Set'},
     description:        {type:'string',   default:'No decription set'},

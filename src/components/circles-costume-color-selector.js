@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-costume-color-selector', {
-  dependencies: ['circles-interactive-object','circles-color'],
     schema: {
       colors: {
         default: 'rgb(250, 228, 200),rgb(243, 212, 167),rgb(230, 193, 151), rgb(204, 159, 127),rgb(168, 139, 102),rgb(139, 97, 62), rgb(119, 71, 41), rgb(39, 24, 12), rgb(0, 174, 204), rgb(57, 202, 137), rgb(85, 78, 255), rgb(255, 85, 68), rgb(204, 58, 201), rgb(255, 255, 255)',

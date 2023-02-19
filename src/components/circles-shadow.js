@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-shadow', {
-  //dependencies: ['circles-gltf'],
   schema: {
     cast:               {type: 'boolean',    default: true},
     receive:            {type: 'boolean',    default: true},
