@@ -221,11 +221,11 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.clickListenerFunc = function(e) {};
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
-            CONTEXT_AF.el.setAttribute('animation', {property:'circles-material-extend-fresnel.fresnelOpacity', to:1.0, dur:100});
+            CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'circles-material-extend-fresnel.fresnelOpacity', to:1.0, dur:100});
         };
 
         CONTEXT_AF.mouseleaveListenerFunc = function(e) {
-            CONTEXT_AF.el.setAttribute('animation', {property:'circles-material-extend-fresnel.fresnelOpacity', to:0.0, dur:100});
+            CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'circles-material-extend-fresnel.fresnelOpacity', to:0.0, dur:100});
         };
 
         CONTEXT_AF.setEnabled(true);
@@ -234,18 +234,18 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.clickListenerFunc = function(e) {
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.click_scale);
-            CONTEXT_AF.el.setAttribute('animation', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
+            CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
         };
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
             CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
-            CONTEXT_AF.el.setAttribute('animation', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
+            CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
         };
 
         CONTEXT_AF.mouseleaveListenerFunc = function(e) {
-            CONTEXT_AF.el.setAttribute('animation', {property:'scale', to:(CONTEXT_AF.origScale.x + ' ' + CONTEXT_AF.origScale.y + ' ' + CONTEXT_AF.origScale.z), dur:100});
+            CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(CONTEXT_AF.origScale.x + ' ' + CONTEXT_AF.origScale.y + ' ' + CONTEXT_AF.origScale.z), dur:100});
         };
 
         CONTEXT_AF.setEnabled(true);
