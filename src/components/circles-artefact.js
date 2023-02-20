@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200}
+    updateRate:         {type:'number',     default:20}
   },
   init: function() {
     const CONTEXT_AF  = this;
