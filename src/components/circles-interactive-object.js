@@ -189,16 +189,11 @@ AFRAME.registerComponent('circles-interactive-object', {
     const data = CONTEXT_AF.data;
 
     if(CONTEXT_AF.highlightInitialized === true) {
-        console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
+        //console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
         return;
     }
-    
-    console.log(CONTEXT_AF.el);
-    console.log(CONTEXT_AF.data.type);
 
     if (data.type === 'outline') {
-        console.log('adding outline highlight');
-
         CONTEXT_AF.highlightElem = document.createElement('a-entity');
 
         const callbackHighlight = (e) => {
@@ -221,8 +216,6 @@ AFRAME.registerComponent('circles-interactive-object', {
         }
     }
     else if (data.type === 'highlight') {
-        console.log('adding fresnel highlight');
-
         CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelColor:CONTEXT_AF.data.highlight_color, fresnelPow:2.0, fresnelOpacity:0.0});
 
         CONTEXT_AF.clickListenerFunc = function(e) {};
@@ -238,8 +231,6 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.setEnabled(true);
     }
     else if (data.type === 'scale') {
-        console.log('adding scale highlight');
-
         CONTEXT_AF.clickListenerFunc = function(e) {
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.click_scale);

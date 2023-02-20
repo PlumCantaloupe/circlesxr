@@ -5,7 +5,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     fresnelPow:       {type:'number',   default:1.0},
     fresnelOpacity:   {type:'number',   default:1.0},
     fresnelColor:     {type:'color',    default:'rgb(255,255,255)'},
-    debug:            {type:'boolean',  default:true}
+    debug:            {type:'boolean',  default:false}
   },
   init: function() {
     const CONTEXT_AF = this;
