@@ -55,15 +55,61 @@ AFRAME.registerComponent('campfire-interactive', {
             }
         }
 
-        CONTEXT_AF.campfire.addEventListener('click', function () {
-            CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+        CONTEXT_AF.socket     = null;
+        CONTEXT_AF.connected  = false;
+        CONTEXT_AF.campfireEventName = "campfire_event";
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+            CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+            CONTEXT_AF.connected = true;
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesRoom());
 
-            if ( CONTEXT_AF.fireOn === true ) {
-                CONTEXT_AF.turnFireOn();
-            }
-            else {
-                CONTEXT_AF.turnFireOff();
-            }
+            CONTEXT_AF.campfire.addEventListener('click', function () {
+                CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+    
+                if ( CONTEXT_AF.fireOn === true ) {
+                    CONTEXT_AF.turnFireOn();
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {on:true, room:CIRCLES.getCirclesRoom()});
+                }
+                else {
+                    CONTEXT_AF.turnFireOff();
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {on:false, room:CIRCLES.getCirclesRoom()});
+                }
+            });
+
+            //listen for when others turn on campfire
+            CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+                console.log(data);
+                if (data.on === true) {
+                    CONTEXT_AF.turnFireOn();
+                    CONTEXT_AF.fireOn = true;
+                }
+                else {  
+                    CONTEXT_AF.turnFireOff();
+                    CONTEXT_AF.fireOn = false;
+                }
+            });
+
+            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
+            setTimeout(function() {
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom()});
+            }, THREE.MathUtils.randInt(0,1200));
+
+            //if someone else requests our sync data, we send it.
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {on:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom()});
+            });
+
+            //receiving sync data from others (assuming all others is the same for now)
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+                if (data.on === true) {
+                    CONTEXT_AF.turnFireOn();
+                    CONTEXT_AF.fireOn = true;
+                }
+                else {  
+                    CONTEXT_AF.turnFireOff();
+                    CONTEXT_AF.fireOn = false;
+                }
+            });
         });
     },
     update() {},
