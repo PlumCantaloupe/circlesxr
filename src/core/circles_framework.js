@@ -173,7 +173,19 @@ const getCirclesResearchWebsocket = function() {
 };
 
 const getCirclesRoom = function() {
-  return document.querySelector('a-scene').components['networked-scene'].data.room;
+  return getCirclesManager().getRoom();
+}
+
+const getCirclesUser = function() {
+  return getCirclesManager().getUser();
+}
+
+const getCirclesWorld = function() {
+  return getCirclesManager().getWorld();
+}
+
+const getCirclesManager = function() {
+  return document.querySelector('[circles-manager]').components['circles-manager'];
 }
 
 //CIRCLES.log(text);
@@ -224,6 +236,9 @@ module.exports = {
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
   getCirclesRoom,
+  getCirclesUser,
+  getCirclesWorld,
+  getCirclesManager,
   log,
   enableLogs,
   warn,

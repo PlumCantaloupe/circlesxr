@@ -281,7 +281,6 @@ io.on("connection", socket => {
 
   //listen for all events and forward to all other clients
   socket.on("*", function(event, data) {
-
     //ignore reserved event names
     if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
           event === CIRCLES.EVENTS.SEND_DATA_SYNC ) {
