@@ -25,6 +25,11 @@
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
 
+        <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
+
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
         <!-- Emiel @ https://sketchfab.com/3d-models/stylized-assets-7c180198693542a49fb39c8f81af14fd -->
@@ -126,22 +131,22 @@
       <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
 
       <!-- synched lights -->
-      <a-entity id="light_1" position="3.6 -8.1 -1.2"
+      <a-entity id="light_1" position="3.6 -8.1 -1.2" sound="src:#note_c; autoplay:false; volume:0.5;"
               material="color:rgb(101,6,23); opacity:0.8; emissive:rgb(255,4,38); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.4"
               circles-interactive-object="type:highlight" animation="property:position; to:3.6 -8.0 -1.2; loop:true; dur:3000; easing:easeInOutQuad; dir:alternate;">
-      <a-entity light="type:point; color:rgb(255,4,38); intensity:5.0;"></a-entity>
+        <a-entity light="type:point; color:rgb(255,4,38); intensity:5.0;"></a-entity>
       </a-entity>
-      <a-entity id="light_2" position="5.05 -8.9 -0.86"
+      <a-entity id="light_2" position="5.05 -8.9 -0.86" sound="src:#note_d; autoplay:false; volume:0.5;"
                 material="color:rgb(12,19,34); opacity:0.8; emissive:rgb(30,59,118); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.3"
                 circles-interactive-object="type:highlight" animation="property:position; to:5.05 -8.8 -0.86; loop:true; dur:3300; easing:easeInOutQuad; dir:alternate;">
         <a-entity light="type:point; color:rgb(30,59,118); intensity:5.0;"></a-entity>
       </a-entity>
-      <a-entity id="light_3" position="6.67 -9.3 -0.44"
+      <a-entity id="light_3" position="6.67 -9.3 -0.44" sound="src:#note_e; autoplay:false; volume:0.5;"
                 material="color:rgb(56, 41, 56); opacity:0.8; emissive:rgb(148, 46, 148); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.2"
                 circles-interactive-object="type:highlight" animation="property:position; to:6.67 -9.2 -0.44; loop:true; dur:3200; easing:easeInOutQuad; dir:alternate;">
         <a-entity light="type:point; color:rgb(148, 46, 148); intensity:5.0;"></a-entity>
       </a-entity>
-      <a-entity id="light_4" position="7.2 -8.4 0.28" 
+      <a-entity id="light_4" position="7.2 -8.4 0.28" sound="src:#note_f; autoplay:false; volume:0.5;"
                 material="color:rgb(137,85,21); opacity:0.8; emissive:rgb(242,151,39); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.5"
                 circles-interactive-object="type:highlight" animation="property:position; to:7.2 -8.3 0.28; loop:true; dur:3500; easing:easeInOutQuad; dir:alternate;">
         <a-entity light="type:point; color:rgb(242,151,39); intensity:5.0;"></a-entity>
