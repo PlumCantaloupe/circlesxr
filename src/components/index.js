@@ -17,6 +17,7 @@ require('./circles-material-override');
 require('./circles-object-label');
 require('./circles-object-world');
 require('./circles-parent-constraint');
+require('./circles-pdf-loader');
 require('./circles-platform-mirror');
 require('./circles-platform-scene-shadows');
 require('./circles-platform-shadows');
