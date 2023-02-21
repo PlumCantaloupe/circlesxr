@@ -1,3 +1,5 @@
+//NOTE!!: There needs to be a material on the model before we "extend" it with "highlight". A gltf likley has one, but make sure if manually defining that the "material" attribute is listed before this component
+
 'use strict';
 
 AFRAME.registerComponent('circles-interactive-object', {

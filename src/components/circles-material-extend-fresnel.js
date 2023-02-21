@@ -1,3 +1,5 @@
+//NOTE!!: There needs to be a material on the model before we "extend" it. A gltf likley has one, but make sure if manually defining that the "material" attribute is listed before this component
+
 'use strict';
 
 AFRAME.registerComponent('circles-material-extend-fresnel', {
@@ -56,6 +58,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     mesh.traverse(function (node) {
       if (node.material) {
         foundMatNode = true;
+
         if (node.material.isMeshStandardMaterial) {
           CONTEXT_AF.extendStandardMat(node.material); 
         }

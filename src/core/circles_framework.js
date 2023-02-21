@@ -134,15 +134,20 @@ const getUUID = function() {
 };
 
 const setupCirclesWebsocket = function() {
+
+  console.log('setupCirclesWebsocket');
+
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
+      console.log('using NAF socket');
       circlesWebsocket = NAF.connection.adapter.socket;
       document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
     }
     else {
-      let socket = io();
+      console.log('creating socket');
+      circlesWebsocket = io();
       socket.on('connect', (userData) => {
-        circlesWebsocket = socket;
+        //circlesWebsocket = socket;
         document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
       });
     }
