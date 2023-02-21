@@ -295,6 +295,7 @@ io.on("connection", socket => {
     }
 
     if (data.room) {
+      console.log("sending event to: " + data.room);
       socket.to(data.room).emit(event, data);
     }
   });
