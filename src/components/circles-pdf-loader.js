@@ -1,4 +1,6 @@
- //import pdfjs from "pdfjs-dist";
+//code form Mozilla Hubs implementation: https://github.com/mozilla/hubs
+
+//import pdfjs from "pdfjs-dist";
 //import errorImageSrc from "../assets/images/media-error.png";
 
 //const pdfjsLib = window['pdfjs-dist/build/pdf.js'];
