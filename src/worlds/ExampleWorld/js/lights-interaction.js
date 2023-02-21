@@ -60,8 +60,6 @@ AFRAME.registerComponent('lights-interactive', {
 
             //listen for when others turn on campfire
             CONTEXT_AF.socket.on(CONTEXT_AF.synchEventName, function(data) {
-                console.log('CONTEXT_AF.synchEventName');
-
                 //light 1
                 if (CONTEXT_AF.light_1.lightOn !== data.light_1_on) {
                     CONTEXT_AF.toggleLight(CONTEXT_AF.light_1);
@@ -85,13 +83,11 @@ AFRAME.registerComponent('lights-interactive', {
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
             setTimeout(function() {
-                console.log('EMIT - REQUEST_DATA_SYNC');
                 CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
             }, THREE.MathUtils.randInt(0,1200));
 
             //if someone else requests our sync data, we send it.
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-                console.log('CIRCLES.EVENTS.REQUEST_DATA_SYNC');
                 CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                         light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn , 
                                                                         room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
@@ -99,8 +95,6 @@ AFRAME.registerComponent('lights-interactive', {
 
             //receiving sync data from others (assuming all others is the same for now)
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
-                console.log('CIRCLES.EVENTS.SEND_DATA_SYNC');
-
                 //make sure we are receiving data for this world
                 if (data.world === CIRCLES.getCirclesWorld()) {
                     //light 1
