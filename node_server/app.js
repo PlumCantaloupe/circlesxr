@@ -296,8 +296,9 @@ io.on("connection", (socket) => {
 
     if (data.room) {
       console.log("sending event to: " + data.room);
-      // socket.to(data.room).emit(event, data);
-      socket.broadcast.emit(event, data);
+      socket.join(data.room);
+      socket.to(data.room).emit(event, data);
+      //socket.broadcast.emit(event, data);
     }
   });
 
@@ -307,8 +308,9 @@ io.on("connection", (socket) => {
     console.log(data);
 
     if (data.room) {
-      //socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
-      socket.broadcast.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
+      socket.join(data.room);
+      socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
+      //socket.broadcast.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
     }
   });
 
@@ -318,8 +320,9 @@ io.on("connection", (socket) => {
     console.log(data);
 
     if (data.room) {
-      //socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
-      socket.broadcast.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
+      socket.join(data.room);
+      socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
+      //socket.broadcast.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
     }
   });
 });
