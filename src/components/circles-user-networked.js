@@ -1,7 +1,6 @@
 'use strict';
 
 AFRAME.registerComponent('circles-user-networked', {
-  //dependencies: ['networked'],
   schema: {
     // ... Define schema to pass properties from DOM to this component
     gltf_head:                  {type: 'asset',     default: ''},

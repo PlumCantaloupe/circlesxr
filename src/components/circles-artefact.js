@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200}
+    updateRate:         {type:'number',     default:20}
   },
   init: function() {
     const CONTEXT_AF  = this;
@@ -33,7 +33,7 @@ AFRAME.registerComponent('circles-artefact', {
     }
 
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
-    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
+    CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
                                                             title_back:data.title_back,             description_back:data.description_back, inspectScale:data.inspectScale,

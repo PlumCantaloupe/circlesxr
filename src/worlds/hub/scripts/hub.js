@@ -55,73 +55,102 @@ AFRAME.registerComponent('campfire-interactive', {
             }
         }
 
-        CONTEXT_AF.campfire.addEventListener('click', function () {
-            CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+        //connect to web sockets so we can sync the campfire lights between users
+        CONTEXT_AF.socket     = null;
+        CONTEXT_AF.connected  = false;
+        CONTEXT_AF.campfireEventName = "campfire_event";
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+            CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+            CONTEXT_AF.connected = true;
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesRoom() + ' in world:' + CIRCLES.getCirclesWorld());
 
-            if ( CONTEXT_AF.fireOn === true ) {
-                CONTEXT_AF.turnFireOn();
-            }
-            else {
-                CONTEXT_AF.turnFireOff();
-            }
+            CONTEXT_AF.campfire.addEventListener('click', function () {
+                CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+                CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
+                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+            });
+
+            //listen for when others turn on campfire
+            CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+                CONTEXT_AF.turnFire(data.campfireOn);
+                CONTEXT_AF.fireOn = data.campfireOn;
+            });
+
+            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
+            setTimeout(function() {
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+            }, THREE.MathUtils.randInt(0,1200));
+
+            //if someone else requests our sync data, we send it.
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+            });
+
+            //receiving sync data from others (assuming all others is the same for now)
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+                //make sure we are receiving data for this world
+                if (data.world === CIRCLES.getCirclesWorld()) {
+                    CONTEXT_AF.turnFire(data.campfireON );
+                    CONTEXT_AF.fireOn = data.campfireON;
+                }
+            });
         });
     },
     update() {},
-    turnFireOn : function () {
+    turnFire : function (turnOn) {
         const CONTEXT_AF = this;
         const scene      = document.querySelector('a-scene');
 
-        CONTEXT_AF.fireSound.components.sound.playSound();
+        if (turnOn) {
+            CONTEXT_AF.fireSound.components.sound.playSound();
 
-        CONTEXT_AF.moonlight.setAttribute('visible', false);
-        CONTEXT_AF.fireRig.setAttribute('visible', true);
+            CONTEXT_AF.moonlight.setAttribute('visible', false);
+            CONTEXT_AF.fireRig.setAttribute('visible', true);
 
-        // CONTEXT_AF.salonLink.setAttribute('visible', true);
-        // CONTEXT_AF.theatreLink.setAttribute('visible', true);
-        // CONTEXT_AF.phLink.setAttribute('visible', true);
+            // CONTEXT_AF.salonLink.setAttribute('visible', true);
+            // CONTEXT_AF.theatreLink.setAttribute('visible', true);
+            // CONTEXT_AF.phLink.setAttribute('visible', true);
 
-        //raycaster interaction back on
-        CONTEXT_AF.link_1.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_2.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_3.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_wardrobe.setAttribute('class', 'interactive');
-        //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
+            //raycaster interaction back on
+            CONTEXT_AF.link_1.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_2.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_3.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_wardrobe.setAttribute('class', 'interactive');
+            //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
 
-        //animate
-        CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
+            //animate
+            CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
 
-        CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
-    },
-    turnFireOff : function () {
-        const CONTEXT_AF = this;
-        const scene      = document.querySelector('a-scene');
+            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
+        }
+        else {
+            CONTEXT_AF.fireSound.components.sound.stopSound();
 
-        CONTEXT_AF.fireSound.components.sound.stopSound();
+            CONTEXT_AF.moonlight.setAttribute('visible', true);
+            CONTEXT_AF.fireRig.setAttribute('visible', false);
 
-        CONTEXT_AF.moonlight.setAttribute('visible', true);
-        CONTEXT_AF.fireRig.setAttribute('visible', false);
+            // CONTEXT_AF.salonLink.setAttribute('visible', false);
+            // CONTEXT_AF.theatreLink.setAttribute('visible', false);
+            // CONTEXT_AF.phLink.setAttribute('visible', false);
 
-        // CONTEXT_AF.salonLink.setAttribute('visible', false);
-        // CONTEXT_AF.theatreLink.setAttribute('visible', false);
-        // CONTEXT_AF.phLink.setAttribute('visible', false);
+            //don't want raycaster accessing when not visible
+            //TODO: definiotely need to make a portal link component ...
+            CONTEXT_AF.link_1.removeAttribute("class");
+            CONTEXT_AF.link_2.removeAttribute("class");
+            CONTEXT_AF.link_3.removeAttribute("class");
+            CONTEXT_AF.link_wardrobe.removeAttribute("class");
+            //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
-        //don't want raycaster accessing when not visible
-        //TODO: definiotely need to make a portal link component ...
-        CONTEXT_AF.link_1.removeAttribute("class");
-        CONTEXT_AF.link_2.removeAttribute("class");
-        CONTEXT_AF.link_3.removeAttribute("class");
-        CONTEXT_AF.link_wardrobe.removeAttribute("class");
-        //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
+            //animate
+            CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
 
-        //animate
-        CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
-
-        CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
-    },
+            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
+        }
+    }
 });

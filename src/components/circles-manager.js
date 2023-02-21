@@ -124,6 +124,9 @@ AFRAME.registerComponent('circles-manager', {
   getUser: function() {
     return this.data.user;
   },
+  getRoom: function() {
+    return document.querySelector('a-scene').components['networked-scene'].data.room;
+  },
   addEventListeners : function () {
     const CONTEXT_AF  = this;
     
