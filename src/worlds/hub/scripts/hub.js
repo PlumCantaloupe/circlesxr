@@ -66,28 +66,14 @@ AFRAME.registerComponent('campfire-interactive', {
 
             CONTEXT_AF.campfire.addEventListener('click', function () {
                 CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
-    
-                if ( CONTEXT_AF.fireOn === true ) {
-                    CONTEXT_AF.turnFireOn();
-                    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:true, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
-                }
-                else {
-                    CONTEXT_AF.turnFireOff();
-                    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:false, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
-                }
+                CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
+                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
             });
 
             //listen for when others turn on campfire
             CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-                console.log(data);
-                if (data.campfireOn === true) {
-                    CONTEXT_AF.turnFireOn();
-                    CONTEXT_AF.fireOn = true;
-                }
-                else {  
-                    CONTEXT_AF.turnFireOff();
-                    CONTEXT_AF.fireOn = false;
-                }
+                CONTEXT_AF.turnFire(data.campfireOn);
+                CONTEXT_AF.fireOn = data.campfireOn;
             });
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
@@ -104,74 +90,67 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
                 if (data.world === CIRCLES.getCirclesWorld()) {
-                    if (data.campfireON === true) {
-                        CONTEXT_AF.turnFireOn();
-                        CONTEXT_AF.fireOn = true;
-                    }
-                    else {  
-                        CONTEXT_AF.turnFireOff();
-                        CONTEXT_AF.fireOn = false;
-                    }
+                    CONTEXT_AF.turnFire(data.campfireON );
+                    CONTEXT_AF.fireOn = data.campfireON;
                 }
             });
         });
     },
     update() {},
-    turnFireOn : function () {
+    turnFire : function (turnOn) {
         const CONTEXT_AF = this;
         const scene      = document.querySelector('a-scene');
 
-        CONTEXT_AF.fireSound.components.sound.playSound();
+        if (turnOn) {
+            CONTEXT_AF.fireSound.components.sound.playSound();
 
-        CONTEXT_AF.moonlight.setAttribute('visible', false);
-        CONTEXT_AF.fireRig.setAttribute('visible', true);
+            CONTEXT_AF.moonlight.setAttribute('visible', false);
+            CONTEXT_AF.fireRig.setAttribute('visible', true);
 
-        // CONTEXT_AF.salonLink.setAttribute('visible', true);
-        // CONTEXT_AF.theatreLink.setAttribute('visible', true);
-        // CONTEXT_AF.phLink.setAttribute('visible', true);
+            // CONTEXT_AF.salonLink.setAttribute('visible', true);
+            // CONTEXT_AF.theatreLink.setAttribute('visible', true);
+            // CONTEXT_AF.phLink.setAttribute('visible', true);
 
-        //raycaster interaction back on
-        CONTEXT_AF.link_1.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_2.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_3.setAttribute('class', 'interactive');
-        CONTEXT_AF.link_wardrobe.setAttribute('class', 'interactive');
-        //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
+            //raycaster interaction back on
+            CONTEXT_AF.link_1.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_2.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_3.setAttribute('class', 'interactive');
+            CONTEXT_AF.link_wardrobe.setAttribute('class', 'interactive');
+            //scene.querySelector('[raycaster]').components.raycaster.refreshObjects(); //update raycaster
 
-        //animate
-        CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
-        CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
+            //animate
+            CONTEXT_AF.link_1.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_2.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
+            CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
 
-        CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
-    },
-    turnFireOff : function () {
-        const CONTEXT_AF = this;
-        const scene      = document.querySelector('a-scene');
+            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
+        }
+        else {
+            CONTEXT_AF.fireSound.components.sound.stopSound();
 
-        CONTEXT_AF.fireSound.components.sound.stopSound();
+            CONTEXT_AF.moonlight.setAttribute('visible', true);
+            CONTEXT_AF.fireRig.setAttribute('visible', false);
 
-        CONTEXT_AF.moonlight.setAttribute('visible', true);
-        CONTEXT_AF.fireRig.setAttribute('visible', false);
+            // CONTEXT_AF.salonLink.setAttribute('visible', false);
+            // CONTEXT_AF.theatreLink.setAttribute('visible', false);
+            // CONTEXT_AF.phLink.setAttribute('visible', false);
 
-        // CONTEXT_AF.salonLink.setAttribute('visible', false);
-        // CONTEXT_AF.theatreLink.setAttribute('visible', false);
-        // CONTEXT_AF.phLink.setAttribute('visible', false);
+            //don't want raycaster accessing when not visible
+            //TODO: definiotely need to make a portal link component ...
+            CONTEXT_AF.link_1.removeAttribute("class");
+            CONTEXT_AF.link_2.removeAttribute("class");
+            CONTEXT_AF.link_3.removeAttribute("class");
+            CONTEXT_AF.link_wardrobe.removeAttribute("class");
+            //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
 
-        //don't want raycaster accessing when not visible
-        //TODO: definiotely need to make a portal link component ...
-        CONTEXT_AF.link_1.removeAttribute("class");
-        CONTEXT_AF.link_2.removeAttribute("class");
-        CONTEXT_AF.link_3.removeAttribute("class");
-        CONTEXT_AF.link_wardrobe.removeAttribute("class");
-        //scene.querySelector('[raycaster]').components.raycaster.refreshObjects();
+            //animate
+            CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
+            CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
 
-        //animate
-        CONTEXT_AF.link_1.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_2.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
-        CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
-
-        CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
-    },
+            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
+        }
+    }
 });
