@@ -288,6 +288,7 @@ io.on("connection", socket => {
     }
 
     if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
       socket.to(data.room).emit(event, data);
     }
   });
@@ -295,6 +296,7 @@ io.on("connection", socket => {
   //this is a request to ask others for their world state for syncing purposes
   socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
     if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
       socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
     }
   });
@@ -302,6 +304,7 @@ io.on("connection", socket => {
   //this is an event to send world data for syncing to others
   socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
     if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
       socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
     }
   });
