@@ -238,7 +238,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             target.setAttribute('geometry', TARGET_GEO);
             target.setAttribute('material', CONTEXT_COMP.inactiveMatProps);
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
-            target.setAttribute('circles-interactive-object', {hover_scale:1.2, click_scale:1.3, neutral_scale:1.0});
+            target.setAttribute('circles-interactive-object', {type:'outline', hover_scale:1.2, click_scale:1.3, neutral_scale:1.0});
             target.setAttribute('circles-interactive-visible', true);
             target.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true, synchWorldTransforms:true});
             targetConta.appendChild(target);
