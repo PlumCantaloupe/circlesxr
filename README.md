@@ -305,7 +305,7 @@ This is a core component in our framework that explores learning around tools an
     <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
     ```
 
-- [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): A component to load in PDFs with basic next page annd previous page controls.
+- [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[Experimental - may not work on mobile and VR]_** A component to load in PDFs with basic next page annd previous page controls.
 
   | Property           | Type            | Description                                               | Default Value        |
   |--------------------|-----------------|-----------------------------------------------------------|----------------------|
