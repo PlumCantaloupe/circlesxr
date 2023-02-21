@@ -206,9 +206,6 @@ let io = require("socket.io")(server, {
             "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
             "Access-Control-Allow-Credentials": true
         };
-
-        console.log('socket created');
-
         res.writeHead(200, headers);
         res.end();
     }
@@ -270,7 +267,7 @@ io.on("connection", socket => {
 ///
 
 //trying to create a system for easy communication here.
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   console.log('connection test for general circles messaging system');
 
   //to catch all events: https://stackoverflow.com/questions/10405070/socket-io-client-respond-to-all-events-with-one-handler
@@ -284,45 +281,28 @@ io.on("connection", (socket) => {
 
   //listen for all events and forward to all other clients
   socket.on("*", function(event, data) {
-    console.log(event);
-    console.log(data);
-
     //ignore reserved event names
     if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
           event === CIRCLES.EVENTS.SEND_DATA_SYNC ) {
-
       return; //exit
     }
 
     if (data.room) {
-      console.log("sending event to: " + data.room);
-      socket.join(data.room);
       socket.to(data.room).emit(event, data);
-      //socket.broadcast.emit(event, data);
     }
   });
 
   //this is a request to ask others for their world state for syncing purposes
   socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-    console.log('CIRCLES.EVENTS.REQUEST_DATA_SYNC');
-    console.log(data);
-
     if (data.room) {
-      socket.join(data.room);
       socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
-      //socket.broadcast.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
     }
   });
 
   //this is an event to send world data for syncing to others
   socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
-    console.log('CIRCLES.EVENTS.SEND_DATA_SYNC');
-    console.log(data);
-
     if (data.room) {
-      socket.join(data.room);
       socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
-      //socket.broadcast.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
     }
   });
 });
