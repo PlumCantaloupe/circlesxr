@@ -270,7 +270,7 @@ io.on("connection", socket => {
 ///
 
 //trying to create a system for easy communication here.
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log('connection test for general circles messaging system');
 
   //to catch all events: https://stackoverflow.com/questions/10405070/socket-io-client-respond-to-all-events-with-one-handler
