@@ -17,6 +17,7 @@
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
 - [Circles Components](#circles-components)
+- [Circles Networking](#circles-networking)
 - [Learning More About AFrame and Javascript Development](#learning-more-about-aframe-and-javascript-development)
 - [Contributing to Circles](#contributing-to-circles)
 - [Early Contributors](#early-contributors)
@@ -260,6 +261,18 @@ This is a core component in our framework that explores learning around tools an
   </a-entity>
   ```
 
+- [circles-button](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-button.js): This is a general purpose button that we can use to listen for click events on and trigger our own code or use in combination with another Circles' component i.e., '[circles-sendpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sendpoint.js), see next below'.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | type               | string, oneOf:['box', 'cylinder']            | Set whether the button pedastal is a cylinder or box shape.                                             | 'box'                  |
+  | button_color       | color           | colour of button                                          | 'rgb(255, 100, 100)'                  |
+  | button_color_hover | color           | colour of button on mouseover/hover.                      | 'rgb(255, 0, 0)'                      |
+  | pedastal_color     | color           | colour of button pedestal                                 | 'rgb(255, 255, 255)'                  |
+  | diameter           | number          | set the size of the button                                | 0.5                                   |
+
+  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
+
 - [circles-checkpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-checkpoint.js): Attach to to an entity that you wish to act as a navigation checkpoint. Appearance is automatically set.
 
   | Property        | Type            | Description                                               | Default Value        |
@@ -271,6 +284,53 @@ This is a core component in our framework that explores learning around tools an
   ```html
   <a-entity circles-checkpoint position="10 0 9.5"></a-entity>
   ```
+- [circles-interactive-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-object.js): Attach to an entity that you wish to be interactive, and add some visual feedback to the object i.e., hover effects like scale, highlight, or an outline.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | type               | string, oneOf:['outline', 'scale', 'highlight']    | set the hover effect type  | ''               |
+  | highlight_color    | color           | colour of highlight                                       | 'rgb(255, 255, 255)' |
+  | neutral_scale      | number          | scale of outline highlight with no interaction (not visible)    | 1.0                  |
+  | hover_scale        | number          | scale of outline highlight with a "hover" i.e., mouseover | 1.08                 |
+  | click_scale        | number          | scale of outline highlight with a "click"                 | 1.10                 |
+  | enabled            | boolean         | to turn on/off interactivity                              | true                 |
+
+  *Example 'circles-interactive-object'*
+
+  ```html
+  <!-- allows us to interact with this element and listen for events i.e., "click", "mouseover", and "mouseleave" -->
+  <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
+  ```
+- [circles-portal](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-portal.js): A simple component that creates a sphere that can be used as clickable hyperlinks to jump between virtual environments.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | img_src            | asset           | a equirectangular texture map                             | CIRCLES.CONSTANTS.DEFAULT_ENV_MAP               |
+  | title_text         | string          | an optional label                                         | '' |
+  | link_url           | string          | hyperlink of url users will travel to on click            | ''                   |
+
+  *Example 'circles-portal'*
+
+  ```html
+  <!-- allows us enter the wardrobe "world" to change avatar appearance. Note that it is using a built-in equirectangular texture "WhiteBlue.jpg" -->
+  <a-entity id="Portal-Wardrobe" circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"></a-entity>
+  ```
+
+- [circles-sendpoint](): Attach to to a circles-button entity when you want that button to send them to any checkpoint (with an id that we can point to).
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | target          | selector        | The id of the checkpoint you want to send the player to.  | null                 |
+
+  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
+
+  ```html
+  <a-entity id="checkpoint_far" circles-checkpoint position="30 0 0"></a-entity>
+
+  <!-- click on this button to be sent to the checkpoint above -->
+  <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
+  ```
+
 - [circles-spawnpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-spawnpoint.js): Attach to to a circles-checkpoint entity that you wish to act as a spawn point when entering the world. If there are multiple spawnpoints in a single world one is chosen randomly to position the player on.
 
   | Property        | Type            | Description                                               | Default Value        |
@@ -282,31 +342,6 @@ This is a core component in our framework that explores learning around tools an
   ```html
   <a-entity circles-checkpoint circles-spawnpoint position="10 0 9.5"></a-entity>
   ```
-- [circles-button](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-button.js): This is a general purpose button that we can use to listen for click events on and trigger our own code or use in combination with another Circles' component i.e., '[circles-sendpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-sendpoint.js), see next below'.
-
-  | Property           | Type            | Description                                               | Default Value        |
-  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
-  | type               | string, oneOf:['box', 'cylinder']            | Set whether the button pedastal is a cylinder or box shape.                                             | 'box'                  |
-  | button_color       | color           | colour of button                                          | 'rgb(255, 100, 100)'                  |
-  | button_color_hover | color           | colour of button on mouseover/hover.                      | 'rgb(255, 0, 0)'                      |
-  | pedastal_color     | color           | colour of button pedsatal                                 | 'rgb(255, 255, 255)'                  |
-  | diameter           | number          | set the size of the button                                | 0.5                                   |
-
-  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
-
-  ```html
-  <a-entity id="checkpoint_far" circles-checkpoint position="30 0 0"></a-entity>
-
-  <!-- click on this button to be sent to the checkpoint above -->
-  <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
-  ```
-- [circles-sendpoint](): Attach to to a circles-button entity when you want that button to send them to any checkpoint (with an id that we can point to).
-
-  | Property        | Type            | Description                                               | Default Value        |
-  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
-  | target          | selector        | The id of the checkpoint you want to send the player to.  | null                 |
-
-  *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
 
   ```html
   <a-entity id="checkpoint_far" circles-checkpoint position="30 0 0"></a-entity>
@@ -336,6 +371,80 @@ This is a core component in our framework that explores learning around tools an
 
   <!-- a gltf model with the spherical-env-map applied -->
   <a-entity gltf-model="#model_gltf" circles-sphere-env-map="src:#sphericalEnvMap"></a-entity>
+  ```
+
+----------------
+
+## Circles Networking
+##### *[back to top](#circles-vr-learning-framework)*
+
+<br>
+
+Circles uses [Networked-Aframe](https://github.com/networked-aframe/networked-aframe) to sync avatars and various networked objects i.e., circles-artefacts. For voice or vother large bandwidth items like video, you will have to run a janus server and use the [naf-janus-adapter](https://github.com/networked-aframe/naf-janus-adapter). For local development, it defaults to a fast and reliable [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) communication. To make things a bit easier to send quick messages and synch events some functions have been added to Circles API. Hopefully, in the future, we can also explore persistent worlds that save their states even when no one is currently within them. However, for now, the world will match between users while they are within.
+
+You will find an example of synching simple switches in the "hub"/campfire world and the "ExampleWorld". The process for synching actions i.e., a light being turned off and on for all connected users follows (abridged from the "hub"/campfire example):
+
+_First, some useful commands:_
+```js
+//get communication socket
+CIRCLES.getCirclesWebsocket();
+
+//get the room we are in (users are usually grouped into "rooms")
+CIRCLES.getCirclesRoom();
+
+//get the name of the Circles' world the user is in
+CIRCLES.getCirclesWorld();
+
+//get the name of the current user
+CIRCLES.getCirclesUser();
+```
+
+```js
+//get the webcocket we will use to communicate between all users via the server (which will forward all events to all other users)
+
+//connect to web sockets so we can sync the campfire lights between users
+CONTEXT_AF.socket = null;
+CONTEXT_AF.campfireEventName = "campfire_event";
+
+//this is the event to listen to befre trying to get a reference to the communication socket
+CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+    CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
+
+    CONTEXT_AF.campfire.addEventListener('click', function () {
+        CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+
+        //change (this) client current world
+        CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
+
+        //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
+        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:trCONTEXT_AF.fireOnue, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        }
+    });
+
+    //listen for when others turn on campfire
+    CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+        CONTEXT_AF.turnFire(data.campfireOn);
+        CONTEXT_AF.fireOn = data.campfireOn;
+    });
+
+    //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time (not perfect) ...
+    setTimeout(function() {
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+    }, THREE.MathUtils.randInt(0,1200));
+
+    //if someone else requests our sync data, we send it.
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+    });
+
+    //receiving sync data from others (assuming all others is the same for now)
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+        //make sure we are receiving data for this world (as others may be visiting other worlds simultaneously)
+        if (data.world === CIRCLES.getCirclesWorld()) {
+          CONTEXT_AF.turnFire(data.campfireON);
+          CONTEXT_AF.fireOn = data.campfireON;
+        }
+    });
   ```
 
 ----------------
