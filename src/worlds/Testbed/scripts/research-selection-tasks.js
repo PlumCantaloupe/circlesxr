@@ -114,11 +114,11 @@ AFRAME.registerComponent('research-selection-tasks', {
             const Y_VEC     = new THREE.Vector3(0.0, 1.0, 0.0);
 
             //rotate around "imaginary sphere"
-            pointerVec.applyAxisAngle(X_VEC, THREE.Math.degToRad(data.targets_XY_rot.x));
-            pointerVec.applyAxisAngle(Y_VEC, THREE.Math.degToRad(data.targets_XY_rot.y));
+            pointerVec.applyAxisAngle(X_VEC, THREE.MathUtils.degToRad(data.targets_XY_rot.x));
+            pointerVec.applyAxisAngle(Y_VEC, THREE.MathUtils.degToRad(data.targets_XY_rot.y));
 
             //now make sure all targets perpendicular to look vector. Order very important here since we are deadling with Euler angles
-            CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.Math.degToRad(data.targets_XY_rot.x), THREE.Math.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
+            CONTEXT_COMP.targetContainer.object3D.rotation.set(THREE.MathUtils.degToRad(data.targets_XY_rot.x), THREE.MathUtils.degToRad(data.targets_XY_rot.y), 0.0, 'YXZ');
         }
 
         if (oldData.targets_width !== data.targets_width) {
@@ -221,7 +221,7 @@ AFRAME.registerComponent('research-selection-tasks', {
         const CONTEXT_COMP = this;
 
         //create fitt's law "spheres"
-        const ANGLE_BETWEEN = THREE.Math.degToRad(360.0/CONTEXT_COMP.data.num_targets);
+        const ANGLE_BETWEEN = THREE.MathUtils.degToRad(360.0/CONTEXT_COMP.data.num_targets);
         const TARGET_GEO    = {primitive:'sphere', radius:1.0, segmentsWidth:20, segmentsHeight:20};
 
         let pointerVec  = new THREE.Vector3(0.0, 1.0, 0.0); //we only want normalized direction here so we can adjust "radius" of each element later

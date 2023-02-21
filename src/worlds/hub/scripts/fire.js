@@ -82,9 +82,9 @@
 
         const geometry = new THREE.BufferGeometry();
 
-        geometry.addAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-        geometry.addAttribute('direction', new THREE.Float32BufferAttribute(directions, 3));
-        geometry.addAttribute('offset', new THREE.Float32BufferAttribute(offsets, 1));
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('direction', new THREE.Float32BufferAttribute(directions, 3));
+        geometry.setAttribute('offset', new THREE.Float32BufferAttribute(offsets, 1));
 
         return geometry;
     };

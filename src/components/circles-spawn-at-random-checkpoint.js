@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-spawn-at-random-checkpoint', {
     CONTEXT_AF.el.setAttribute('position',{x:randElemPos.x, y:randElemPos.y, z:randElemPos.z});
 
     //set rotation toward centre of scene (assume origin)
-    const yRotation = THREE.Math.radToDeg(Math.atan2( CONTEXT_AF.el.object3D.position.x, CONTEXT_AF.el.object3D.position.z ));
+    const yRotation = THREE.MathUtils.radToDeg(Math.atan2( CONTEXT_AF.el.object3D.position.x, CONTEXT_AF.el.object3D.position.z ));
     CONTEXT_AF.el.setAttribute('rotation',{x:0.0, y:yRotation, z:0.0});
   }
 });

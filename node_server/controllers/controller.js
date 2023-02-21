@@ -116,13 +116,13 @@ const updateUserInfo = (req, res, next) => {
         userData.gltf_body_url = results[2].url;
       }
 
-      if ( results[3].url !== results[5].gltf_hand_left_url ) {
-        userData.gltf_hand_left_url = results[3].url;
-      }
+      // if ( results[3].url !== results[5].gltf_hand_left_url ) {
+      //   userData.gltf_hand_left_url = results[3].url;
+      // }
 
-      if ( results[4].url !== results[5].gltf_hand_right_url ) {
-        userData.gltf_hand_right_url = results[4].url;
-      }
+      // if ( results[4].url !== results[5].gltf_hand_right_url ) {
+      //   userData.gltf_hand_right_url = results[4].url;
+      // }
 
       //colors
       if ( req.body.color_head !== results[5].color_head ) {
@@ -168,7 +168,7 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
     else {
       let specialStatus = '';
 
-      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.username);
+      const u_name = ((searchParamsObj.has('name')) ? searchParamsObj.get('name') : user.firstname);
       const u_height = ((searchParamsObj.has('height')) ? searchParamsObj.get('height') : CIRCLES.CONSTANTS.DEFAULT_USER_HEIGHT);
 
       //need to get types if available in params
@@ -223,7 +223,7 @@ const modifyServeWorld = (world_id, searchParamsObj, user, pathStr, req, res) =>
 
       let result = data.replace(/__WORLDNAME__/g, world_id);
       result = result.replace(/__USERTYPE__/g, user.usertype);
-      result = result.replace(/__USERNAME__/g, u_name + specialStatus);
+      result = result.replace(/__VISIBLENAME__/g, u_name + specialStatus);
       result = result.replace(/__FACE_MAP__/g, CIRCLES.CONSTANTS.DEFAULT_FACE_HAPPY_MAP);
 
       result = result.replace(/__USER_HEIGHT__/g, u_height);
@@ -297,22 +297,22 @@ const serveProfile = (req, res, next) => {
     Model3D.find({type: CIRCLES.MODEL_TYPE.HEAD}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.HAIR}).exec(),
     Model3D.find({type: CIRCLES.MODEL_TYPE.BODY}).exec(),
-    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_LEFT}).exec(),
-    Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec()
+    //Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_LEFT}).exec(),
+    //Model3D.find({type: CIRCLES.MODEL_TYPE.HAND_RIGHT}).exec()
   ];
 
   const queryChecks = [
     user.gltf_head_url,
     user.gltf_hair_url,
     user.gltf_body_url,
-    user.gltf_hand_left_url,
-    user.gltf_hand_right_url,
+    //user.gltf_hand_left_url,
+    //user.gltf_hand_right_url,
   ];
 
   Promise.all(promises).then((results) => {
     let optionStrs = [];   //save all option str to replace after ...
 
-    for ( let r = 0; r < results.length - 1; r++ ) {
+    for ( let r = 0; r < results.length; r++ ) {
       let optionsStr  = '';
       let models = results[r];
       for ( let i = 0; i < models.length; i++ ) {
@@ -335,8 +335,8 @@ const serveProfile = (req, res, next) => {
       headUrl: user.gltf_head_url,
       hairUrl: user.gltf_hair_url,
       bodyUrl: user.gltf_body_url,
-      handLeftUrl: user.gltf_hand_left_url,
-      handRightUrl: user.gltf_hand_right_url,
+      //handLeftUrl: user.gltf_hand_left_url,
+      //handRightUrl: user.gltf_hand_right_url,
       headColor: user.color_head,
       hairColor: user.color_hair,
       bodyColor: user.color_body,
@@ -348,8 +348,8 @@ const serveProfile = (req, res, next) => {
       headOptions: optionStrs[0],
       hairOptions: optionStrs[1],
       bodyOptions: optionStrs[2],
-      handLeftOptions: optionStrs[3],
-      handRightOptions: optionStrs[4],
+      //handLeftOptions: optionStrs[3],
+      //handRightOptions: optionStrs[4],
     }
 
     res.render(path.resolve(__dirname + '/../public/web/views/profile'), {
@@ -591,8 +591,8 @@ const addTestUsers = () => {
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
     gltf_body_url:          '/global/assets/models/gltf/body/Body_Hourglass.glb',
-    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    //gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    //gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(59, 45, 37)',
     color_hair:             'rgb(10, 7, 5)',
     color_body:             'rgb(101, 255, 101)',
@@ -610,8 +610,8 @@ const addTestUsers = () => {
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Circle.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_Hat.glb',
     gltf_body_url:          '/global/assets/models/gltf/body/Body_Thin.glb',
-    gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
-    gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
+    //gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    //gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(237, 194, 122)',
     color_hair:             'rgb(23, 22, 21)',
     color_body:             'rgb(242, 246, 252)',
@@ -631,8 +631,8 @@ const addTestUsers = () => {
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
       gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
-      gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
-      gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+      //gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+      //gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
       color_head:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
       color_hair:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
       color_body:             'rgb(' + tenColors[i].r + ',' + tenColors[i].g + ',' + tenColors[i].b + ')',
@@ -653,8 +653,8 @@ const addTestUsers = () => {
       gltf_head_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HEAD,
       gltf_hair_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_HAIR,
       gltf_body_url:          CIRCLES.CONSTANTS.DEFAULT_GLTF_BODY,
-      gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
-      gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
+      //gltf_hand_left_url:     CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_LEFT,
+      //gltf_hand_right_url:    CIRCLES.CONSTANTS.DEFAULT_GLTF_HAND_RIGHT,
       color_head:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
       color_hair:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',
       color_body:             'rgb(' + threeColors[i].r + ',' + threeColors[i].g + ',' + threeColors[i].b + ')',

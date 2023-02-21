@@ -5,8 +5,8 @@ AFRAME.registerComponent('circles-object-label', {
     label_text:         {type:'string',     default:'label_text'},
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
-    arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200},
+    arrow_position:     {type:'string',     default:'up', oneOf: ['up', 'down', 'left', 'right']},
+    updateRate:         {type:'number',     default:20},
     billboard:          {type:'boolean',    default:true}
   },
   init: function() {
@@ -57,19 +57,19 @@ AFRAME.registerComponent('circles-object-label', {
         if (CONTEXT_AF.labelArrow !== null) {
             if ( data.arrow_position == 'up' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(180.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(180.0) );
             }
             else if ( data.arrow_position == 'right' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( CONTEXT_AF.LABEL_WIDTH/2, 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(90.0) );
             }
             else if ( data.arrow_position == 'down' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, -CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(0.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(0.0) );
             }
             else if ( data.arrow_position == 'left' ) {
                 CONTEXT_AF.labelArrow.object3D.position.set( -CONTEXT_AF.LABEL_WIDTH/2 , 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.Math.degToRad(-90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(-90.0) );
             }
         }
     }
@@ -96,12 +96,12 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.label = document.createElement('a-entity');
     CONTEXT_AF.label.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    //CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
     CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
-    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
+    CONTEXT_AF.el.sceneEl.appendChild(CONTEXT_AF.label);
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');

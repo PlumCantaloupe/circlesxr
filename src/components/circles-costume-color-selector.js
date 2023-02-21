@@ -34,7 +34,7 @@ AFRAME.registerComponent('circles-costume-color-selector', {
         colElem.setAttribute('position', {x:x_step, y:0, z:0});
         colElem.setAttribute('geometry', {primitive:'box', width:0.1, height:0.2, depth:0.05});
         colElem.setAttribute('circles-color', {color:data.colors[i]});
-        colElem.setAttribute('circles-interactive-object', '');
+        colElem.setAttribute('circles-interactive-object', {type:'scale', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
         colElem.addEventListener('click', click_func);
         CONTEXT_AF.el.append(colElem);
 
