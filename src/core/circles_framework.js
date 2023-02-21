@@ -145,9 +145,9 @@ const setupCirclesWebsocket = function() {
     }
     else {
       console.log('creating socket');
-      circlesWebsocket = io();
+      let socket = io();
       socket.on('connect', (userData) => {
-        //circlesWebsocket = socket;
+        circlesWebsocket = socket;
         document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
       });
     }

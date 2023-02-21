@@ -162,9 +162,12 @@ AFRAME.registerComponent('circles-interactive-object', {
         if ( !CONTEXT_AF.el.classList.contains('interactive') ) {
             CONTEXT_AF.el.classList.add('interactive');
         }
-        const raycasters = AFRAME.scenes[0].querySelectorAll('[raycaster]');
+        const raycasters = CONTEXT_AF.el.sceneEl.querySelectorAll('[raycaster]');
         raycasters.forEach(rc => {
-            rc.components.raycaster.refreshObjects();
+            console.log(rc.components.raycaster);
+            if (rc.components.raycaster.data) {
+                rc.components.raycaster.refreshObjects();
+            }
         }); 
     }
     else {
