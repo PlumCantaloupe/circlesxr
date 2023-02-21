@@ -286,6 +286,8 @@ This is a core component in our framework that explores learning around tools an
   ```
 - [circles-interactive-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-object.js): Attach to an entity that you wish to be interactive, and add some visual feedback to the object i.e., hover effects like scale, highlight, or an outline.
 
+_NOTE!!: There needs to be a material on the model before we "extend" it with a "highlight" using the "circles-material-extend-fresnel" component. A gltf likely already has one, but make sure if manually defining a metrial that the "material" attribute is listed **before** this component is added._
+
   | Property           | Type            | Description                                               | Default Value        |
   |--------------------|-----------------|-----------------------------------------------------------|----------------------|
   | type               | string, oneOf:['outline', 'scale', 'highlight']    | set the hover effect type  | ''               |
@@ -299,6 +301,7 @@ This is a core component in our framework that explores learning around tools an
 
   ```html
   <!-- allows us to interact with this element and listen for events i.e., "click", "mouseover", and "mouseleave" -->
+  <!-- Important: note that "material" is listed before "circles-interactive-object" because it uses "circles-material-extend-fresnel" -->
   <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
   ```
 - [circles-portal](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-portal.js): A simple component that creates a sphere that can be used as clickable hyperlinks to jump between virtual environments.
