@@ -1,9 +1,9 @@
-//code form Mozilla Hubs implementation: https://github.com/mozilla/hubs
+//some code from older Mozilla Hubs implementation: https://github.com/mozilla/hubs
 
 //import pdfjs from "pdfjs-dist";
 //import errorImageSrc from "../assets/images/media-error.png";
 
-//const pdfjsLib = window['pdfjs-dist/build/pdf.js'];
+//const = window['pdfjs-dist/build/pdf.js'];
 //pdfjs.GlobalWorkerOptions.workerSrc = '!!file-loader?outputPath=assets/js&name=[name]-[hash].js!pdfjs-dist/build/pdf.worker.js';
 
 // const pdfjs = import('pdfjs-dist/build/pdf');
@@ -124,7 +124,7 @@ AFRAME.registerComponent("circles-pdf-loader", {
         CONTEXT_AF.pageNum = pageNum;
 
         CONTEXT_AF.pdf.getPage(pageNum).then(function(page) {
-            var scale = 3.0;
+            var scale = 1.5;
             var viewport = page.getViewport({scale: scale});
         
             // Prepare canvas using PDF page dimensions
