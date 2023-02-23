@@ -1,15 +1,89 @@
-//code form Mozilla Hubs implementation: https://github.com/mozilla/hubs
+//some code from older Mozilla Hubs implementation: https://github.com/mozilla/hubs
 
 //import pdfjs from "pdfjs-dist";
 //import errorImageSrc from "../assets/images/media-error.png";
 
-//const pdfjsLib = window['pdfjs-dist/build/pdf.js'];
+//const = window['pdfjs-dist/build/pdf.js'];
 //pdfjs.GlobalWorkerOptions.workerSrc = '!!file-loader?outputPath=assets/js&name=[name]-[hash].js!pdfjs-dist/build/pdf.worker.js';
 
 // const pdfjs = import('pdfjs-dist/build/pdf');
 // const pdfjsWorker = import('pdfjs-dist/build/pdf.worker.entry');
 
 // pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+
+/*
+  PDFjs which is used to render pdfs depends on the window.requestAnimationFrame function.
+  This is not called when in mobileVR.
+  This system replaces the function with the requestAnimationFrame of the xrSession.
+  It also adds a listener to ensure it is reset and call not called callbacks after the user leaves xr.
+*/
+
+//fix [modified] from here for vr systems: https://github.com/mozilla/hubs/pull/5427
+//Related to: https://github.com/mozilla/hubs/issues/4951#issuecomment-1125019842
+class MediaPDFOculusFix {
+    constructor() {
+        this.requestAnimationFramePrev = this.requestAnimationFramePrev || window.requestAnimationFrame;
+        this.cbList = new Set();
+        this.wasVR = false;
+        this.sceneEl = document.querySelector('a-scene');
+
+        const CONTEXT_AF = this;
+        CONTEXT_AF.inImmersiveVR = false;
+
+        this.sceneEl.addEventListener('enter-vr', function () {
+            CONTEXT_AF.inImmersiveVR = true;
+        });
+
+        this.sceneEl.addEventListener('exit-vr', function () {
+            CONTEXT_AF.inImmersiveVR = false;
+        });
+    }
+
+    tick() {
+        const isMobileVR = AFRAME.utils.device.isMobileVR();
+        let isVR = this.inImmersiveVR && isMobileVR;
+
+        if (isVR !== this.wasVR) {
+            if (isVR) {
+                this.onEnterVR(this.sceneEl);
+            } else if (this.wasVR) {
+                this.onExitVR();
+            }
+        }
+        this.wasVR = isVR;
+    }
+
+    onEnterVR() {
+        const { xrSession } = this.sceneEl;
+        window.requestAnimationFrame = cb => {
+            let myCb = () => {
+                this.cbList.delete(myCb);
+                cb();
+            };
+            this.cbList.add(myCb);
+            return xrSession.requestAnimationFrame.call(xrSession, myCb);
+        };
+
+        console.log(window.requestAnimationFrame);
+
+        //Make sure tick is called
+        if (!this.interval)
+            this.interval = setInterval(() => {
+                this.tick();
+            }, 500);
+    }
+
+    async onExitVR() {
+        if (this.interval) {
+            clearInterval(this.interval);
+            this.interval = undefined;
+        }
+        window.requestAnimationFrame = cb => this.requestAnimationFramePrev.call(window, cb);
+        this.cbList.forEach(cb => {
+            window.requestAnimationFrame(cb);
+        });
+    }
+}
 
 function scaleToAspectRatio(el, ratio) {
     const width = Math.min(1.0, 1.0 / ratio);
@@ -21,6 +95,7 @@ function scaleToAspectRatio(el, ratio) {
 AFRAME.registerComponent("circles-pdf-loader", {
     schema: {
         src: { type: "string" },
+        scale: {type:'number', default:1.5},
         projection: { type: "string", default: "flat" },
         contentType: { type: "string" },
         index: { default: 0 },
@@ -28,6 +103,8 @@ AFRAME.registerComponent("circles-pdf-loader", {
     },
     multiple: false,
     init: function() {
+        this.mediaPDFOculusFix = new MediaPDFOculusFix();
+
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
         this.pdfjs = window['pdfjs-dist/build/pdf'];
 
@@ -40,6 +117,9 @@ AFRAME.registerComponent("circles-pdf-loader", {
         this.texture = new THREE.CanvasTexture(this.canvas);
         this.texture.encoding = THREE.sRGBEncoding;
         this.texture.minFilter = THREE.LinearFilter;
+
+        this.pageRendering = false; // Check conflict
+
         this.createControls();
     },
     createControls: function() {
@@ -83,6 +163,9 @@ AFRAME.registerComponent("circles-pdf-loader", {
             CONTEXT_AF.changePage(CONTEXT_AF.pageNum - 1);
         });
     },
+    tick : function(time, timeDelta) {
+        this.mediaPDFOculusFix.tick(this.el);
+    },
     async update(oldData) {
         const CONTEXT_AF = this;
         const CONTROL_BUTTON_SIZE = 0.25;
@@ -95,10 +178,9 @@ AFRAME.registerComponent("circles-pdf-loader", {
             const loadingTask = CONTEXT_AF.pdfjs.getDocument(data.src);
             loadingTask.promise.then(function(pdf) {
                 /* following simpler example from here: https://jsfiddle.net/pdfjs/cq0asLqz/ */
-                
                 CONTEXT_AF.pdf = pdf;
                 CONTEXT_AF.el.setAttribute("media-pager", { maxIndex: CONTEXT_AF.pdf.numPages - 1 });
-                var pageNumber = 1;
+                let pageNumber = 1; //starting page
                 CONTEXT_AF.changePage(pageNumber);
                 
             }, function (reason) {
@@ -120,41 +202,58 @@ AFRAME.registerComponent("circles-pdf-loader", {
             return;
         }
 
-        //let's save which page we are at so we can save it for later
-        CONTEXT_AF.pageNum = pageNum;
+        if (CONTEXT_AF.pageRendering) { // Check if other page is rendering
+            //probably shoudl have loading image here
+        } 
+        else {
+            //let's save which page we are at so we can save it for later
+            CONTEXT_AF.pageNum = pageNum;
 
-        CONTEXT_AF.pdf.getPage(pageNum).then(function(page) {
-            var scale = 3.0;
-            var viewport = page.getViewport({scale: scale});
-        
-            // Prepare canvas using PDF page dimensions
-            CONTEXT_AF.canvas.height = viewport.height;
-            CONTEXT_AF.canvas.width = viewport.width;
-            ratio = CONTEXT_AF.canvas.height / CONTEXT_AF.canvas.width;
-        
-            // Render PDF page into canvas context
-            var renderContext = {
-                canvasContext: CONTEXT_AF.canvasContext,
-                viewport: viewport
-            };
-            var renderTask = page.render(renderContext);
-            renderTask.promise.then(function () {
-                if (!CONTEXT_AF.mesh) {
-                    const material = new THREE.MeshBasicMaterial();
-                    const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
-                    material.side = THREE.DoubleSide;
+            CONTEXT_AF.pdf.getPage(pageNum).then(function(page) {
+                let viewport = page.getViewport({scale: CONTEXT_AF.data.scale});
+            
+                // Prepare canvas using PDF page dimensions
+                CONTEXT_AF.canvas.height = viewport.height;
+                CONTEXT_AF.canvas.width = viewport.width;
+                ratio = CONTEXT_AF.canvas.height / CONTEXT_AF.canvas.width;
+            
+                // Render PDF page into canvas context
+                let renderContext = {
+                    canvasContext: CONTEXT_AF.canvasContext,
+                    viewport: viewport
+                };
 
-                    CONTEXT_AF.mesh = new THREE.Mesh(geometry, material);
-                    CONTEXT_AF.el.setObject3D("mesh", CONTEXT_AF.mesh);
-                }
+                CONTEXT_AF.renderTask = page.render(renderContext);
 
-                CONTEXT_AF.mesh.material.transparent        = false;
-                CONTEXT_AF.mesh.material.map                = CONTEXT_AF.texture;
-                CONTEXT_AF.mesh.material.map.needsUpdate    = true;
-                CONTEXT_AF.mesh.material.needsUpdate        = true;
+                //wait for rendering to finish
+                CONTEXT_AF.renderTask.promise.then(function () {
+                    CONTEXT_AF.pageRendering = true;
+                    CONTEXT_AF.renderTask = null;
 
-                scaleToAspectRatio(CONTEXT_AF.el, ratio);
+                    if (!CONTEXT_AF.mesh) {
+                        const material = new THREE.MeshBasicMaterial();
+                        const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
+                        material.side = THREE.DoubleSide;
+
+                        CONTEXT_AF.mesh = new THREE.Mesh(geometry, material);
+                        CONTEXT_AF.el.setObject3D("mesh", CONTEXT_AF.mesh);
+                    }
+
+                    CONTEXT_AF.mesh.material.transparent        = false;
+                    CONTEXT_AF.mesh.material.map                = CONTEXT_AF.texture;
+                    CONTEXT_AF.mesh.material.map.needsUpdate    = true;
+                    CONTEXT_AF.mesh.material.needsUpdate        = true;
+
+                    scaleToAspectRatio(CONTEXT_AF.el, ratio);
+
+                    // if (this.canvasContext) {
+                    //     this.canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+                    // }
+                }).finally(function() {
+                    //reset page rendering bit
+                    CONTEXT_AF.pageRendering = false;
+                });
             });
-        });
+        }
     }
 });
