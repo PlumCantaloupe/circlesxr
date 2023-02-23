@@ -28,7 +28,7 @@ AFRAME.registerComponent('lights-interactive', {
 
             //light 1
             CONTEXT_AF.light_1.addEventListener('click', function () {
-                CONTEXT_AF.toggleLight(CONTEXT_AF.light_1);
+                CONTEXT_AF.toggleLight(CONTEXT_AF.light_1, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
                                                                     room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
@@ -36,7 +36,7 @@ AFRAME.registerComponent('lights-interactive', {
             
             //light 2
             CONTEXT_AF.light_2.addEventListener('click', function () {
-                CONTEXT_AF.toggleLight(CONTEXT_AF.light_2);
+                CONTEXT_AF.toggleLight(CONTEXT_AF.light_2, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
                                                                     room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
@@ -44,7 +44,7 @@ AFRAME.registerComponent('lights-interactive', {
 
             //light 3
             CONTEXT_AF.light_3.addEventListener('click', function () {
-                CONTEXT_AF.toggleLight(CONTEXT_AF.light_3);
+                CONTEXT_AF.toggleLight(CONTEXT_AF.light_3, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
                                                                     room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
@@ -52,7 +52,7 @@ AFRAME.registerComponent('lights-interactive', {
 
             //light 4
             CONTEXT_AF.light_4.addEventListener('click', function () {
-                CONTEXT_AF.toggleLight(CONTEXT_AF.light_4);
+                CONTEXT_AF.toggleLight(CONTEXT_AF.light_4, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
                                                                     room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
@@ -62,22 +62,22 @@ AFRAME.registerComponent('lights-interactive', {
             CONTEXT_AF.socket.on(CONTEXT_AF.synchEventName, function(data) {
                 //light 1
                 if (CONTEXT_AF.light_1.lightOn !== data.light_1_on) {
-                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_1);
+                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_1, true);
                 }
 
                 //light 2
                 if (CONTEXT_AF.light_2.lightOn !== data.light_2_on) {
-                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_2);
+                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_2, true);
                 }
 
                 //light 3
                 if (CONTEXT_AF.light_3.lightOn !== data.light_3_on) {
-                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_3);
+                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_3, true);
                 }
 
                 //light 4
                 if (CONTEXT_AF.light_4.lightOn !== data.light_4_on) {
-                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_4);
+                    CONTEXT_AF.toggleLight(CONTEXT_AF.light_4, true);
                 }
             });
 
@@ -99,29 +99,29 @@ AFRAME.registerComponent('lights-interactive', {
                 if (data.world === CIRCLES.getCirclesWorld()) {
                     //light 1
                     if (CONTEXT_AF.light_1.lightOn !== data.light_1_on) {
-                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_1);
+                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_1, false);
                     }
 
                     //light 2
                     if (CONTEXT_AF.light_2.lightOn !== data.light_2_on) {
-                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_2);
+                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_2, false);
                     }
 
                     //light 3
                     if (CONTEXT_AF.light_3.lightOn !== data.light_3_on) {
-                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_3);
+                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_3, false);
                     }
 
                     //light 4
                     if (CONTEXT_AF.light_4.lightOn !== data.light_4_on) {
-                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_4);
+                        CONTEXT_AF.toggleLight(CONTEXT_AF.light_4, false);
                     }
                 }
             });
         });
     },
     update() {},
-    toggleLight : function (lightElem) {
+    toggleLight : function (lightElem, playSound) {
         lightElem.lightOn = !lightElem.lightOn;
 
         let emissiveIntensity = (lightElem.lightOn ) ? 6.0 : 0.0;
@@ -130,8 +130,10 @@ AFRAME.registerComponent('lights-interactive', {
         lightElem.setAttribute('material', {emissiveIntensity:emissiveIntensity});
         lightElem.querySelector('[light]').setAttribute('light', {intensity:lightIntensity});
 
-        //play sound
-        lightElem.components['sound'].stopSound();
-        lightElem.components['sound'].playSound();
+        //play sound (if another client turned on so we can make music together :)
+        if (lightElem.components['circles-interactive-object'].sound && playSound === true) {
+            lightElem.components['circles-interactive-object'].sound.stopSound();
+            lightElem.components['circles-interactive-object'].sound.playSound();
+        }
     }
 });
