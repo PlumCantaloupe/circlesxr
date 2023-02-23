@@ -9,12 +9,15 @@ AFRAME.registerComponent('circles-interactive-object', {
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
     hover_scale:        {type:'number',     default:1.08},
     click_scale:        {type:'number',     default:1.10},
+    click_sound:        {type:'audio',      default:''},
+    sound_volume:       {type:'number',     default:0.5},               
     enabled:            {type:'boolean',    default:true}
   },
   init: function() {
     const CONTEXT_AF = this;
     const data = this.data;
     CONTEXT_AF.highlightInitialized = false; 
+    CONTEXT_AF.sound = null;
 
     //make sure this is interactive
     if (!CONTEXT_AF.el.classList.contains('interactive')) {
@@ -59,6 +62,16 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     if ( (oldData.type !== data.type) && (data.type !== '') ) {
         CONTEXT_AF.initHighlight();
+    }
+
+    if ( (oldData.click_sound !== data.click_sound) && (data.click_sound !== '') ) {
+        let soundAsset  = (typeof CONTEXT_AF.data.click_sound === 'string') ? CONTEXT_AF.data.click_sound : CONTEXT_AF.data.click_sound.getAttribute('src');
+        CONTEXT_AF.el.setAttribute('sound', {src:soundAsset, autoplay:false, volume:CONTEXT_AF.data.sound_volume});
+        CONTEXT_AF.sound = CONTEXT_AF.el.components['sound'];
+    }
+
+    if ( (oldData.sound_volume !== data.sound_volume) && (data.sound_volume !== '') ) {
+        CONTEXT_AF.el.setAttribute('sound', {volume:CONTEXT_AF.data.sound_volume});
     }
 
     if ( (oldData.enabled !== data.enabled) && (data.enabled !== '') ) {
@@ -135,6 +148,11 @@ AFRAME.registerComponent('circles-interactive-object', {
             CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
             clearTimeout(timeoutObj);
           }, 200);
+
+        if (CONTEXT_AF.sound) {
+            CONTEXT_AF.sound.stopSound();
+            CONTEXT_AF.sound.playSound();
+        }
     }
 
     //hovering
@@ -162,9 +180,12 @@ AFRAME.registerComponent('circles-interactive-object', {
         if ( !CONTEXT_AF.el.classList.contains('interactive') ) {
             CONTEXT_AF.el.classList.add('interactive');
         }
-        const raycasters = AFRAME.scenes[0].querySelectorAll('[raycaster]');
+        const raycasters = CONTEXT_AF.el.sceneEl.querySelectorAll('[raycaster]');
         raycasters.forEach(rc => {
-            rc.components.raycaster.refreshObjects();
+            console.log(rc.components.raycaster);
+            if (rc.components.raycaster.data) {
+                rc.components.raycaster.refreshObjects();
+            }
         }); 
     }
     else {
@@ -220,7 +241,12 @@ AFRAME.registerComponent('circles-interactive-object', {
     else if (data.type === 'highlight') {
         CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelColor:CONTEXT_AF.data.highlight_color, fresnelPow:2.0, fresnelOpacity:0.0});
 
-        CONTEXT_AF.clickListenerFunc = function(e) {};
+        CONTEXT_AF.clickListenerFunc = function(e) {
+            if (CONTEXT_AF.sound) {
+                CONTEXT_AF.sound.stopSound();
+                CONTEXT_AF.sound.playSound();
+            }
+        };
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'circles-material-extend-fresnel.fresnelOpacity', to:1.0, dur:100});
@@ -237,6 +263,11 @@ AFRAME.registerComponent('circles-interactive-object', {
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.click_scale);
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
+
+            if (CONTEXT_AF.sound) {
+                CONTEXT_AF.sound.stopSound();
+                CONTEXT_AF.sound.playSound();
+            }
         };
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
