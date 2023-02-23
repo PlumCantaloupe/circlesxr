@@ -1,4 +1,4 @@
-# CIRCLES VR Learning Framework
+# CIRCLES XR Learning Framework
 
 ![Screenshot of 3D avatars around the campfire in CIRCLES](node_server/public/global/images/Circles_MultiPlatform.jpg?raw=true)
 
