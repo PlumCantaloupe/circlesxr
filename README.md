@@ -425,10 +425,11 @@ CIRCLES.getCirclesUser();
 CONTEXT_AF.socket = null;
 CONTEXT_AF.campfireEventName = "campfire_event";
 
-//this is the event to listen to befre trying to get a reference to the communication socket
+//this is the event to listen to before trying to get a reference to the communication socket
 CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
     CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
-
+    
+    //let the user click on eth campfire to turn it on/off, and then after let all other clients know it has been toggled
     CONTEXT_AF.campfire.addEventListener('click', function () {
         CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
 
