@@ -67,10 +67,10 @@ router.get('/magic-login', function(req, res, next) {
 // Ensure a user is authenticated before hitting logout
 router.get('/logout', authenticated, (req, res, next) => {
   // Logout of Passport
-  req.logout();
-
-  // Redirect to home page
-  res.redirect('/');
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/'); // Redirect to home page
+  });
 });
 
 router.get('/register', notAuthenticated, controller.serveRegister);
