@@ -108,7 +108,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 1. [Install mongo community server](https://www.mongodb.com/docs/manual/administration/install-community/)
     - We also _recommend_ installing the [MongoDB command line tool](https://www.mongodb.com/docs/mongodb-shell/) so that you can access the Mongo databases via command line, though you can also use the [Compass application](https://www.mongodb.com/docs/compass/current/). This is usually included with the mongo community server install.
 1. [Install node/npm](https://nodejs.org/en/download/). **NOTE: We recommend installing the "LTS" version of npm/node.** Currently, this framework is running on  *Node version 14.18.0* and *NPM version 8.3.1.* You can check versions after install with the commands `node --version` and `npm --version`. For Windows you may have this additional command after install to downgrade NPM `npm install -g npm@8.3.1`. *Unfortunately many the libraries associated with A-frame and circles may not build correctly if you use other versions.*
-1. Make sure you have [Python installed](https://www.python.org/downloads/) (as some libraries amy require Python to build this project with NPM)
+1. Make sure you have [Python installed](https://www.python.org/downloads/) (as some libraries may require Python to build this project with NPM)
 1. Go into project folder and install NPM dependencies 
     - `npm install`
 1. Set up the Environment file
