@@ -1,12 +1,6 @@
 # CIRCLES XR Learning Framework
 
-![Screenshot of 3D avatars around the campfire in CIRCLES](node_server/public/global/images/Circles_MultiPlatform.jpg?raw=true)
-
-![Screenshot of CIRCLES' world that highlights the challenges women face in the trades](node_server/public/global/images/Circles_WomenInTrades.jpg?raw=true)
-
-![Screenshot of CIRCLES' hub world for showcasing basic kinematics](node_server/public/global/images/Circles_KinematicsHub.jpg?raw=true)
-
-![Screenshot of CIRCLES' example world for showing Circles' features to developers](node_server/public/global/images/Circles_ExampleWorld.jpg?raw=true)
+<img src="node_server/public/global/images/Circles_MultiPlatform.jpg?raw=true" width="49.8%" alt="Screenshot of 3D avatars around the campfire in CIRCLES" />  <img src="node_server/public/global/images/Circles_WomenInTrades.jpg?raw=true" width="49.8%" alt="Screenshot of CIRCLES' world that highlights the challenges women face in the trades" /><img src="node_server/public/global/images/Circles_KinematicsHub.jpg?raw=true" width="49.8%" alt="Screenshot of CIRCLES' hub world for showcasing basic kinematics" /> <img src="node_server/public/global/images/Circles_ExampleWorld.jpg?raw=true" width="49.8%" alt="Screenshot of CIRCLES' example world for showing Circles' features to developers" />
 
 ## Table of Contents
 ##### *[back to top](#circles-xr-learning-framework)*
