@@ -22,7 +22,7 @@
 - [Circles Structure](#circles-structure)
 - [Circles Components](#circles-components)
 - [Circles Networking](#circles-networking)
-- [Learning More About AFrame and Javascript Development](#learning-more-about-aframe-and-javascript-development)
+- [Learning More About A-Frame and Javascript Development](#learning-more-about-aframe-and-javascript-development)
 - [Contributing to Circles](#contributing-to-circles)
 - [Early Contributors](#early-contributors)
 
@@ -170,7 +170,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
   <circles-end-scripts/>
   ```
-  Below is the most basic example, with only a Circles' avatar networked into a scene. Feel free to use [A-Frame](https://aframe.io) components to add [geometry](https://github.com/aframevr/aframe/blob/master/docs/components/geometry.md), [3D models](https://aframe.io/docs/1.2.0/introduction/models.html), [animations](https://github.com/aframevr/aframe/blob/master/docs/components/animation.md), [lights](https://github.com/aframevr/aframe/blob/master/docs/components/light.md), and [load assets](https://aframe.io/docs/1.2.0/core/asset-management-system.html). You may also want to add some [Circles specific components](#circles-components) for navigation, artefacts, buttons etc. 
+  Below is the most basic example, with only a Circles' avatar networked into a scene. Feel free to use [A-Frame](https://aframe.io) components to add [geometry](https://github.com/aframevr/aframe/blob/master/docs/components/geometry.md), [3D models](https://aframe.io/docs/1.4.0/introduction/models.html), [animations](https://github.com/aframevr/aframe/blob/master/docs/components/animation.md), [lights](https://github.com/aframevr/aframe/blob/master/docs/components/light.md), and [load assets](https://aframe.io/docs/1.4.0/core/asset-management-system.html). You may also want to add some [Circles specific components](#circles-components) for navigation, artefacts, buttons etc. 
 
   ```html
   <html>
@@ -208,7 +208,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 <br>
 
-Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, likely be familiar to [Unity](https://unity.com) Developers.
+Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.4.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, likely be familiar to [Unity](https://unity.com) Developers.
 
 The general structure of the framework (and the Github repository) follows:
 
@@ -473,7 +473,7 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
 
 ----------------
 
-## Learning More About AFrame and Javascript Development
+## Learning More About A-Frame and Javascript Development
 ##### *[back to top](#circles-vr-learning-framework)*
 
 <br>
