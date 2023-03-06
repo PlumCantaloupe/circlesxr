@@ -22,7 +22,7 @@
 - [Circles Structure](#circles-structure)
 - [Circles Components](#circles-components)
 - [Circles Networking](#circles-networking)
-- [Learning More About A-Frame and Javascript Development](#learning-more-about-aframe-and-javascript-development)
+- [Learning More About A-Frame and Javascript Development](#learning-more-about-a-frame-and-javascript-development)
 - [Contributing to Circles](#contributing-to-circles)
 - [Early Contributors](#early-contributors)
 
