@@ -9,7 +9,7 @@
 ![Screenshot of CIRCLES' example world for showing Circles' features to developers](node_server/public/global/images/Circles_ExampleWorld.jpg?raw=true)
 
 ## Table of Contents
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -29,7 +29,7 @@
 ----------------
 
 ## Circles Overview
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -43,7 +43,7 @@ CIRCLES is the practical Work-In-Progress (WIP) implementation of a research pro
 <br>
 
 ### **Why use VR in Learning?**
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -54,7 +54,7 @@ Post-Secondary Education in many industrialized countries such as Canada is curr
 <br>
 
 ### **Why Circles?**
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -79,7 +79,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 ----------------
 
 ## Circles Controls
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -102,7 +102,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 ----------------
 
 ## Running Circles Locally
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -150,7 +150,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 ----------------
 
 ## Creating A New Circles World
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -204,7 +204,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 ----------------
 
 ## Circles Structure
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -221,7 +221,7 @@ The general structure of the framework (and the Github repository) follows:
 ----------------
 
 ## Circles Components
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -399,7 +399,7 @@ This is a core component in our framework that explores learning around tools an
 ----------------
 
 ## Circles Networking
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -474,7 +474,7 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
 ----------------
 
 ## Learning More About A-Frame and Javascript Development
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -484,7 +484,7 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
 ----------------
 
 ## Contributing to Circles
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
@@ -497,7 +497,7 @@ Also, of course, if you have any formal or informal bugs, feedback, or suggestio
 ----------------
 
 ## Early Contributors
-##### *[back to top](#circles-vr-learning-framework)*
+##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
