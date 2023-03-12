@@ -107,7 +107,9 @@ const EVENTS = {
   OBJECT_NETWORKED_ATTACHED : 'OBJECT_NETWORKED_ATTACHED',
   OBJECT_NETWORKED_DETACHED : 'OBJECT_NETWORKED_DETACHED',
   WS_CONNECTED              : 'WS_CONNECTED',
-  WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED'
+  WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED',
+  REQUEST_DATA_SYNC         : 'REQUEST_DATA_SYNC',
+  SEND_DATA_SYNC            : 'SEND_DATA_SYNC'
 };
 
 //!!DEPRE 8 color
@@ -132,12 +134,17 @@ const getUUID = function() {
 };
 
 const setupCirclesWebsocket = function() {
+
+  console.log('setupCirclesWebsocket');
+
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
+      console.log('using NAF socket');
       circlesWebsocket = NAF.connection.adapter.socket;
       document.querySelector('a-scene').emit(CIRCLES.EVENTS.WS_CONNECTED);
     }
     else {
+      console.log('creating socket');
       let socket = io();
       socket.on('connect', (userData) => {
         circlesWebsocket = socket;
@@ -171,7 +178,19 @@ const getCirclesResearchWebsocket = function() {
 };
 
 const getCirclesRoom = function() {
-  return document.querySelector('a-scene').components['networked-scene'].data.room;
+  return getCirclesManager().getRoom();
+}
+
+const getCirclesUser = function() {
+  return getCirclesManager().getUser();
+}
+
+const getCirclesWorld = function() {
+  return getCirclesManager().getWorld();
+}
+
+const getCirclesManager = function() {
+  return document.querySelector('[circles-manager]').components['circles-manager'];
 }
 
 //CIRCLES.log(text);
@@ -222,6 +241,9 @@ module.exports = {
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
   getCirclesRoom,
+  getCirclesUser,
+  getCirclesWorld,
+  getCirclesManager,
   log,
   enableLogs,
   warn,

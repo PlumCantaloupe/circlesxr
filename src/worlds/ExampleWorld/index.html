@@ -7,6 +7,7 @@
 
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+    <script src="js/lights-interaction.js"></script>
   </head>
   <body>
 
@@ -19,10 +20,14 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <img id='screenshot' src='assets/textures/world_screenshot.jpg' crossorigin="anonymous">
 
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
 
         <!-- gltf models -->
         <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
@@ -30,13 +35,13 @@
         <!-- Glezova @ https://sketchfab.com/3d-models/stylized-bridge-dea55cb580e44d458e84d4455eda5de8 -->
         <!-- Sereda @ https://sketchfab.com/3d-models/stylized-stones-minipack-719d8ee393db4b218ace19ce9124918d -->
         <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
-        <a-asset-item id="island_1_gltf"  src="assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_2_gltf"  src="assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_3_gltf"  src="assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_leaves_gltf"  src="assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_1_gltf"      src="assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_2_gltf"      src="assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="island_3_gltf"      src="assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <!-- <a-asset-item id="island_leaves_gltf" src="assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
 
         <!-- credit: Raystani E. de Oliveira @ https://sketchfab.com/3d-models/stylized-sword-and-shield-lowpoly-e076a1a9fae84c97b8a6cdd5c9162ca2 [editted]-->
-        <a-asset-item id="sword_gltf"    src="assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <!-- <a-asset-item id="sword_gltf"    src="assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
 
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
         <a-asset-item id="navmesh_gltf" src="assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -47,6 +52,9 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
+
+      <!-- just creating an entity that connects many elements together -->
+      <a-entity id="game_manager" lights-interactive></a-entity>
 
       <!-- island 1, with some spawnpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-9.404 0.592 9.588"></a-entity>
@@ -92,7 +100,7 @@
                                   description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
                                   label_text:Gem;"></a-entity>
 
-      <a-entity id="Artefact-Sword"
+      <!-- <a-entity id="Artefact-Sword"
                 position="-13.171 0.899 9.197" rotation="-18.718 42.756 2.641" scale="1 1 1"
                 gltf-model="#sword_gltf"
                 circles-sphere-env-map="src:#skyMap"
@@ -102,17 +110,43 @@
                                   description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                   title_back:[~20-25 chars] Title Back;
                                   description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  label_text:Sword;"></a-entity>
+                                  label_text:Sword;"></a-entity> -->
 
-      <a-entity id="Portal-Self"
-                position="8.53 -8.9 1.0" rotation="0 180 0" scale="1 1 1"
-                circles-portal="img_src:#screenshot; title_text:Portal to other worlds; link_url:/w/ExampleWorld"></a-entity>
+      <a-entity id="Portal-Wardrobe"
+                position="-13.0 1.7 11.4" rotation="0 50 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
+                shadow></a-entity>
+
+      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
+      <a-entity id="pdf-test" position="-14.4 2.2 6.4" rotation="0 62 0" scale="2.0 2.0 2.0" circles-pdf-loader="src:/global/assets/pdfs/Scavarelli2020_Article_VirtualRealityAndAugmentedReal.pdf;"></a-entity>
 
       <!-- the environment -->
       <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_3_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <!-- <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
+
+      <!-- synched lights -->
+      <a-entity id="light_1" position="3.6 -8.1 -1.2"
+              material="color:rgb(101,6,23); opacity:0.8; emissive:rgb(255,4,38); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.4;"
+              circles-interactive-object="type:highlight; click_sound:#note_c;" animation="property:position; to:3.6 -8.0 -1.2; loop:true; dur:3000; easing:easeInOutQuad; dir:alternate;">
+        <a-entity light="type:point; color:rgb(255,4,38); intensity:5.0;"></a-entity>
+      </a-entity>
+      <a-entity id="light_2" position="5.05 -8.9 -0.86"
+                material="color:rgb(12,19,34); opacity:0.8; emissive:rgb(30,59,118); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.3;"
+                circles-interactive-object="type:highlight; click_sound:#note_d;" animation="property:position; to:5.05 -8.8 -0.86; loop:true; dur:3300; easing:easeInOutQuad; dir:alternate;">
+        <a-entity light="type:point; color:rgb(30,59,118); intensity:5.0;"></a-entity>
+      </a-entity>
+      <a-entity id="light_3" position="6.67 -9.3 -0.44" 
+                material="color:rgb(56, 41, 56); opacity:0.8; emissive:rgb(148, 46, 148); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.2;"
+                circles-interactive-object="type:highlight; click_sound:#note_e;" animation="property:position; to:6.67 -9.2 -0.44; loop:true; dur:3200; easing:easeInOutQuad; dir:alternate;">
+        <a-entity light="type:point; color:rgb(148, 46, 148); intensity:5.0;"></a-entity>
+      </a-entity>
+      <a-entity id="light_4" position="7.2 -8.4 0.28" 
+                material="color:rgb(137,85,21); opacity:0.8; emissive:rgb(242,151,39); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.5;"
+                circles-interactive-object="type:highlight; click_sound:#note_f;" animation="property:position; to:7.2 -8.3 0.28; loop:true; dur:3500; easing:easeInOutQuad; dir:alternate;">
+        <a-entity light="type:point; color:rgb(242,151,39); intensity:5.0;"></a-entity>
+      </a-entity>
 
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 

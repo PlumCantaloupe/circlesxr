@@ -5,8 +5,8 @@ AFRAME.registerComponent('circles-object-label', {
     label_text:         {type:'string',     default:'label_text'},
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
-    arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:200},
+    arrow_position:     {type:'string',     default:'up', oneOf: ['up', 'down', 'left', 'right']},
+    updateRate:         {type:'number',     default:20},
     billboard:          {type:'boolean',    default:true}
   },
   init: function() {

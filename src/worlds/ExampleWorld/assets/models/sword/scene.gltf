@@ -26,10 +26,7 @@
                 "baseColorTexture" : {
                     "index" : 0
                 },
-                "metallicFactor" : 0.30000001192092896,
-                "metallicRoughnessTexture" : {
-                    "index" : 1
-                }
+                "metallicFactor" : 0.30000001192092896
             }
         }
     ],
@@ -64,11 +61,6 @@
             "mimeType" : "image/jpeg",
             "name" : "Sword_color",
             "uri" : "textures/Sword_color.jpg"
-        },
-        {
-            "mimeType" : "image/png",
-            "name" : "Sword_Roughness",
-            "uri" : "textures/Sword_Roughness.png"
         }
     ],
     "accessors" : [

@@ -264,6 +264,51 @@ io.on("connection", socket => {
     }
   });
 });
+///
+
+//trying to create a system for easy communication here.
+io.on("connection", socket => {
+  console.log('connection test for general circles messaging system');
+
+  //to catch all events: https://stackoverflow.com/questions/10405070/socket-io-client-respond-to-all-events-with-one-handler
+  let onevent = socket.onevent;
+  socket.onevent = function (packet) {
+      let args = packet.data || [];
+      onevent.call (this, packet);    // original call
+      packet.data = ["*"].concat(args);
+      onevent.call(this, packet);      // additional call to catch-all
+  };
+
+  //listen for all events and forward to all other clients
+  socket.on("*", function(event, data) {
+    //ignore reserved event names
+    if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+          event === CIRCLES.EVENTS.SEND_DATA_SYNC ) {
+      return; //exit
+    }
+
+    if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+      socket.to(data.room).emit(event, data);
+    }
+  });
+
+  //this is a request to ask others for their world state for syncing purposes
+  socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+    if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+      socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
+    }
+  });
+
+  //this is an event to send world data for syncing to others
+  socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+    if (data.room) {
+      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+      socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
+    }
+  });
+});
 
 //let's create a research namespace.
 //This will definitely need to be redone if we run more than one experiemnet on this server at a time in the future
