@@ -115,12 +115,8 @@ AFRAME.registerComponent('circles-portal', {
   setImg : function(imgSrc) {
     const CONTEXT_AF = this;
 
-    console.log(imgSrc);
-
     if (imgSrc) {
       let filePath = ((typeof imgSrc === 'string' || imgSrc instanceof String) ? imgSrc : imgSrc.getAttribute('src'));
-
-      console.log(filePath);
 
       CONTEXT_AF.portalElem.setAttribute('material', {src:filePath});
     }
