@@ -1,4 +1,6 @@
-//NOTE!!: There needs to be a material on the model before we "extend" it. A gltf likley has one, but make sure if manually defining that the "material" attribute is listed before this component
+// NOTE!!: There needs to be a material on the model before we "extend" it. 
+// A gltf likely has one, but make sure if manually defining that the "material" attribute is listed before this component
+// also note that this component will probably not work with materials that are not MeshStandardMaterial ...
 
 'use strict';
 
@@ -76,6 +78,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
       if (CONTEXT_AF.data.debug === true) {
         console.warn('DEBUG ON [circles-material-extend-fresnel]: no material (maybe just an a-frame primitive), so trying to add one');
       }
+
       CONTEXT_AF.el.setAttribute('material', {shader:'standard'});
       CONTEXT_AF.extendStandardMat(mesh.material);
     }
@@ -93,8 +96,6 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
       shader.uniforms.fresnelPow      = CONTEXT_AF.uniforms.fresnelPow;
       shader.uniforms.fresnelOpacity  = CONTEXT_AF.uniforms.fresnelOpacity;
       shader.uniforms.fresnelColor    = CONTEXT_AF.uniforms.fresnelColor;
-
-      console.log(shader);
 
       CONTEXT_AF.originalVertShader = shader.vertexShader;
       CONTEXT_AF.originalFragShader = shader.fragmentShader;
@@ -133,12 +134,8 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
            gl_FragColor.rgb +=  ((fresnelTerm * fresnelColor) * fresnelOpacity);
          }
       `);
-
-      //save this for later so we can change ...
-      //material.userData.shader = shader;
-
-      //console.log(shader.vertexShader);
-      //console.log(shader.fragmentShader);
+      // console.log(shader.vertexShader);
+      // console.log(shader.fragmentShader);
     }
     
     material.needsUpdate = true;  //need to force a re-compile of shader to take in new fresnel code
@@ -153,36 +150,32 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
       }
       return;
     }
-    
-    if (!mesh.material) {
-      if (CONTEXT_AF.data.debug === true) {
-        console.warn('DEBUG ON [circles-material-extend-fresnel]: no extended material to remove');
-      }
-    }
-    else {
-      mesh.traverse(function (node) {
-        if (node.material) {
-          node.material.onBeforeCompile = (shader, renderer) => {
-            if (shader.uniforms.fresnelPow) {
-              shader.uniforms.fresnelPow      = null;
-            }
 
-            if (shader.uniforms.fresnelOpacity ) {
-              shader.uniforms.fresnelOpacity  = null;
-            }
-
-            if (shader.uniforms.fresnelColor ) {
-              shader.uniforms.fresnelColor  = null;
-            }
-      
-            shader.vertexShader = CONTEXT_AF.originalVertShader;
-            shader.fragmentShader = CONTEXT_AF.originalFragShader;
+    mesh.traverse(function (node) {
+      if (node.material) {
+        node.material.onBeforeCompile = (shader, renderer) => {
+          if (shader.uniforms.fresnelPow) {
+            shader.uniforms.fresnelPow      = null;
           }
-          
-          material.needsUpdate = true;  //need to force a re-compile of shader to take in new (original) shader code
+
+          if (shader.uniforms.fresnelOpacity ) {
+            shader.uniforms.fresnelOpacity  = null;
+          }
+
+          if (shader.uniforms.fresnelColor ) {
+            shader.uniforms.fresnelColor  = null;
+          }
+    
+          shader.vertexShader = CONTEXT_AF.originalVertShader;
+          shader.fragmentShader = CONTEXT_AF.originalFragShader;
+
+          // console.log(shader.vertexShader);
+          // console.log(shader.fragmentShader);
         }
-      });
-    }
+        
+        node.material.needsUpdate = true;  //need to force a re-compile of shader to take in new (original) shader code
+      }
+    });
   },
   remove : function() {
     this.resetExtendedMaterial();

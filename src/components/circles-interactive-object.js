@@ -16,7 +16,6 @@ AFRAME.registerComponent('circles-interactive-object', {
   init: function() {
     const CONTEXT_AF = this;
     const data = this.data;
-    CONTEXT_AF.highlightInitialized = false; 
     CONTEXT_AF.sound = null;
     CONTEXT_AF.origScale = CONTEXT_AF.el.object3D.scale.clone();
     CONTEXT_AF.enabled = false;
@@ -100,12 +99,16 @@ AFRAME.registerComponent('circles-interactive-object', {
     CONTEXT_AF.el.setAttribute('scale', {x:CONTEXT_AF.origScale.x, y:CONTEXT_AF.origScale.y, z:CONTEXT_AF.origScale.z});
 
     //remove animation
-    CONTEXT_AF.el.removeAttribute('animation__highlightanim');
-
-    //remove material extension
-    if (CONTEXT_AF.el.hasAttribute('circles-material-extend-fresnel')) {
-        CONTEXT_AF.el.removeAttribute('circles-material-extend-fresnel');
+    if (CONTEXT_AF.el.hasAttribute('animation__highlightanim')) {
+        CONTEXT_AF.el.removeAttribute('animation__highlightanim');
     }
+
+    //removing it causes issues as we cannot keep updating so we will keep but just make it invisible
+    // if (CONTEXT_AF.el.hasAttribute('circles-material-extend-fresnel')) {
+    //     console.log("circles-material-extend-fresnel");
+    //     CONTEXT_AF.el.removeAttribute('circles-material-extend-fresnel');
+    // }
+    CONTEXT_AF.el.setAttribute('circles-material-extend-fresnel', {fresnelOpacity:0.0});
   },
   createHighlightElement : function (CONTEXT_AF) {
     const data = CONTEXT_AF.data;
@@ -136,7 +139,8 @@ AFRAME.registerComponent('circles-interactive-object', {
     const keys      = Object.keys(modelElem.components);
     const values    = Object.values(modelElem.components);
 
-    //loop through existing components and copy over as efforts to clone just geo is a deadend currently with gltfs
+    //This is studpid :_| but ...
+    // loop through existing components and copy over as efforts to clone just geo is a deadend currently with gltfs
     for(let i = keys.length - 1; i >= 0; i--) {
         if (    keys[i] !== 'id' && 
                 keys[i] !== 'class' && 
@@ -262,11 +266,12 @@ AFRAME.registerComponent('circles-interactive-object', {
 
             CONTEXT_AF.createHighlightElement(CONTEXT_AF);
         };
-        CONTEXT_AF.el.addEventListener('object3dset', callbackHighlight);
 
         if (CONTEXT_AF.el.getObject3D('mesh')) {
             CONTEXT_AF.createHighlightElement(CONTEXT_AF);
             CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
+        } else {
+            CONTEXT_AF.el.addEventListener('object3dset', callbackHighlight);
         }
     }
     else if (data.type === 'highlight') {
@@ -302,7 +307,6 @@ AFRAME.registerComponent('circles-interactive-object', {
         };
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
-            //CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
@@ -323,6 +327,5 @@ AFRAME.registerComponent('circles-interactive-object', {
     if (CONTEXT_AF.enabled === true) {
         CONTEXT_AF.addEventListeners();
     }
-    CONTEXT_AF.highlightInitialized = true;
   }
 });
