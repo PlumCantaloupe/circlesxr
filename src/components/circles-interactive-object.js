@@ -18,13 +18,15 @@ AFRAME.registerComponent('circles-interactive-object', {
     const data = this.data;
     CONTEXT_AF.highlightInitialized = false; 
     CONTEXT_AF.sound = null;
+    CONTEXT_AF.origScale = CONTEXT_AF.el.object3D.scale.clone();
+    CONTEXT_AF.enabled = false;
 
     //make sure this is interactive
     if (!CONTEXT_AF.el.classList.contains('interactive')) {
         CONTEXT_AF.el.classList.add('interactive');
     }
     
-    CONTEXT_AF.initHighlight();
+    //CONTEXT_AF.initHighlight();
   },
   update: function(oldData) {
     const CONTEXT_AF = this;
@@ -34,7 +36,7 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //highlight color change
     if ( (oldData.highlight_color !== data.highlight_color) && (data.highlight_color !== '') ) {
-        if (data.type === 'outline') {
+        if (data.type === 'outline' && CONTEXT_AF.highlightElem) {
             CONTEXT_AF.highlightElem.highlight_color = data.highlight_color;
             CONTEXT_AF.highlightElem.setAttribute('material', {color:data.highlight_color});
         }
@@ -42,19 +44,19 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //size changes
     if ( (oldData.hover_scale !== data.hover_scale) && (data.hover_scale !== '') ) {
-        if (data.type === 'outline') {
+        if (data.type === 'outline' && CONTEXT_AF.highlightElem) {
             CONTEXT_AF.highlightElem.hover_scale = data.hover_scale;
         }
     }
 
     if ( (oldData.click_scale !== data.click_scale) && (data.click_scale !== '') ) {
-        if (data.type === 'outline') {
+        if (data.type === 'outline' && CONTEXT_AF.highlightElem) {
             CONTEXT_AF.highlightElem.click_scale = data.click_scale;
         }
     }
 
     if ( (oldData.neutral_scale !== data.neutral_scale) && (data.neutral_scale !== '') ) {
-        if (data.type === 'outline') {
+        if (data.type === 'outline' && CONTEXT_AF.highlightElem) {
             CONTEXT_AF.highlightElem.neutral_scale = data.neutral_scale;
             CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
         }
@@ -76,6 +78,33 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     if ( (oldData.enabled !== data.enabled) && (data.enabled !== '') ) {
         CONTEXT_AF.setEnabled(data.enabled);
+    }
+  },
+  resetHighlight : function () {
+    const CONTEXT_AF = this;
+    const data = this.data;
+
+    //remove outline
+    if (CONTEXT_AF.highlightElem) {
+        CONTEXT_AF.highlightElem.parentNode.removeChild(CONTEXT_AF.highlightElem);
+        CONTEXT_AF.highlightElem = null;
+    }
+
+    //remove listener functions
+    CONTEXT_AF.removeEventListeners();
+    CONTEXT_AF.clickListenerFunc = null;
+    CONTEXT_AF.mouseenterListenerFunc = null;
+    CONTEXT_AF.mouseleaveListenerFunc = null;
+
+    //reset scale
+    CONTEXT_AF.el.setAttribute('scale', {x:CONTEXT_AF.origScale.x, y:CONTEXT_AF.origScale.y, z:CONTEXT_AF.origScale.z});
+
+    //remove animation
+    CONTEXT_AF.el.removeAttribute('animation__highlightanim');
+
+    //remove material extension
+    if (CONTEXT_AF.el.hasAttribute('circles-material-extend-fresnel')) {
+        CONTEXT_AF.el.removeAttribute('circles-material-extend-fresnel');
     }
   },
   createHighlightElement : function (CONTEXT_AF) {
@@ -153,30 +182,43 @@ AFRAME.registerComponent('circles-interactive-object', {
             CONTEXT_AF.sound.stopSound();
             CONTEXT_AF.sound.playSound();
         }
-    }
+    };
 
     //hovering
     CONTEXT_AF.mouseenterListenerFunc = function(e) {
         CONTEXT_AF.highlightElem.setAttribute('visible', true);
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.hover_scale, y:data.hover_scale, z:data.hover_scale});
-    }
+    };
 
     //not hovering
     CONTEXT_AF.mouseleaveListenerFunc = function(e) {
         CONTEXT_AF.highlightElem.setAttribute('visible', (Math.abs(data.neutral_scale - 1.0) > Number.EPSILON));
         CONTEXT_AF.highlightElem.setAttribute('scale', {x:data.neutral_scale, y:data.neutral_scale, z:data.neutral_scale});
-    }
+    };
 
     CONTEXT_AF.setEnabled(true);
   },
-  remove: function () {},
+  addEventListeners : function() {
+    const CONTEXT_AF    = this;
+    if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.clickListenerFunc); }
+    if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.addEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
+    if (CONTEXT_AF.mouseleaveListenerFunc) { CONTEXT_AF.el.addEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); }
+  },
+  removeEventListeners : function() {
+    const CONTEXT_AF    = this;
+    if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.removeEventListener('click', CONTEXT_AF.clickListenerFunc); }
+    if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.removeEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
+    if (CONTEXT_AF.mouseleaveListenerFunc) { 
+        CONTEXT_AF.mouseleaveListenerFunc();
+        CONTEXT_AF.el.removeEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); 
+    }
+  },
   setEnabled : function(enabled) {
     const CONTEXT_AF    = this;
+    CONTEXT_AF.enabled  = enabled;
 
     if (enabled) {
-        if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.clickListenerFunc); }
-        if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.addEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
-        if (CONTEXT_AF.mouseleaveListenerFunc) { CONTEXT_AF.el.addEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); }
+        CONTEXT_AF.addEventListeners();
         if ( !CONTEXT_AF.el.classList.contains('interactive') ) {
             CONTEXT_AF.el.classList.add('interactive');
         }
@@ -189,12 +231,7 @@ AFRAME.registerComponent('circles-interactive-object', {
         }); 
     }
     else {
-        if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.removeEventListener('click', CONTEXT_AF.clickListenerFunc); }
-        if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.removeEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
-        if (CONTEXT_AF.mouseleaveListenerFunc) { 
-            CONTEXT_AF.mouseleaveListenerFunc();
-            CONTEXT_AF.el.removeEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); 
-        }
+        CONTEXT_AF.removeEventListeners();
         if ( CONTEXT_AF.el.classList.contains('interactive') ) {
             CONTEXT_AF.el.classList.remove('interactive');
         }
@@ -205,16 +242,19 @@ AFRAME.registerComponent('circles-interactive-object', {
     }
   },
   remove : function () {
+    this.resetHighlight();
     this.setEnabled(false);
   },
   initHighlight : function() {
     const CONTEXT_AF = this;
     const data = CONTEXT_AF.data;
 
-    if(CONTEXT_AF.highlightInitialized === true) {
-        //console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
-        return;
-    }
+    CONTEXT_AF.resetHighlight(); //reset before we set again
+
+    // if(CONTEXT_AF.highlightInitialized === true) {
+    //     console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
+    //     return;
+    // }
 
     if (data.type === 'outline') {
         CONTEXT_AF.highlightElem = document.createElement('a-entity');
@@ -222,7 +262,7 @@ AFRAME.registerComponent('circles-interactive-object', {
         const callbackHighlight = (e) => {
             //have to make sure there is geo to copy for highlight first
             if (CONTEXT_AF.el.getObject3D('mesh')) {
-                //MUST remove thos when created else an infinite loop will trigger as child highlight elem bubbles object3dset event
+                //MUST remove those when created else an infinite loop will trigger as child highlight elem bubbles object3dset event
                 CONTEXT_AF.el.removeEventListener('object3dset', callbackHighlight);
             }
             else {
@@ -271,7 +311,7 @@ AFRAME.registerComponent('circles-interactive-object', {
         };
 
         CONTEXT_AF.mouseenterListenerFunc = function(e) {
-            CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
+            //CONTEXT_AF.origScale = (CONTEXT_AF.el.hasAttribute('circles-inspect-object')) ? CONTEXT_AF.el.components['circles-inspect-object'].getOrigScaleThree() : CONTEXT_AF.el.object3D.scale.clone();
             const newScale = CONTEXT_AF.origScale.clone();
             newScale.multiplyScalar(CONTEXT_AF.data.hover_scale);
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(newScale.x + ' ' + newScale.y + ' ' + newScale.z), dur:100});
@@ -280,14 +320,15 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.mouseleaveListenerFunc = function(e) {
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(CONTEXT_AF.origScale.x + ' ' + CONTEXT_AF.origScale.y + ' ' + CONTEXT_AF.origScale.z), dur:100});
         };
-
-        CONTEXT_AF.setEnabled(true);
     }
     else {
         console.warn('[circles-interactive-object] No highlight type chosen.');
         return;
     }
 
+    if (CONTEXT_AF.enabled === true) {
+        CONTEXT_AF.addEventListeners();
+    }
     CONTEXT_AF.highlightInitialized = true;
   }
 });
