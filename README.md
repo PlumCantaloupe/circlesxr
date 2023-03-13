@@ -278,7 +278,7 @@ This is a core component in our framework that explores learning around tools an
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
   | offset          | vec3            | Adjust where the player is positioned, relative to checkpoint position.               | 0 0 0                |
-  | modelOn         | boolean         | Whether the default "green cylinder" used (set false to use your own model).          | true               |
+  | useDefaultModel | boolean         | Whether the default "green cylinder" used (set false to use your own model).          | true               |
 
   *Example 'circles-checkpoint' code: Note we are setting position of the checkpoint to also denote where the player is placed after clicking on this checkpoint.*
 
@@ -328,6 +328,7 @@ This is a core component in our framework that explores learning around tools an
   | img_src            | asset           | a equirectangular texture map                             | CIRCLES.CONSTANTS.DEFAULT_ENV_MAP               |
   | title_text         | string          | an optional label                                         | '' |
   | link_url           | string          | hyperlink of url users will travel to on click            | ''                   |
+  | useDefaultModel    | boolean         | Whether the default sphere with outline is used (set false to use your own model).          | true               |
 
   *Example 'circles-portal'*
 

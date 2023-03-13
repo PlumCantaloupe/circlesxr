@@ -4,7 +4,7 @@
 
 AFRAME.registerComponent('circles-interactive-object', {
   schema: {
-    type:               {stype:'string',    default:'', oneOf:['outline','scale','highlight']},
+    type:               {stype:'string',    default:'none', oneOf:['outline','scale','highlight','none']},
     highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline and highlight effect
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
     hover_scale:        {type:'number',     default:1.08},
@@ -92,9 +92,9 @@ AFRAME.registerComponent('circles-interactive-object', {
 
     //remove listener functions
     CONTEXT_AF.removeEventListeners();
-    CONTEXT_AF.clickListenerFunc = null;
-    CONTEXT_AF.mouseenterListenerFunc = null;
-    CONTEXT_AF.mouseleaveListenerFunc = null;
+    CONTEXT_AF.clickListenerFunc = function(e){};
+    CONTEXT_AF.mouseenterListenerFunc = function(e){};
+    CONTEXT_AF.mouseleaveListenerFunc = function(e){};
 
     //reset scale
     CONTEXT_AF.el.setAttribute('scale', {x:CONTEXT_AF.origScale.x, y:CONTEXT_AF.origScale.y, z:CONTEXT_AF.origScale.z});
@@ -208,10 +208,7 @@ AFRAME.registerComponent('circles-interactive-object', {
     const CONTEXT_AF    = this;
     if (CONTEXT_AF.clickListenerFunc) { CONTEXT_AF.el.removeEventListener('click', CONTEXT_AF.clickListenerFunc); }
     if (CONTEXT_AF.mouseenterListenerFunc) { CONTEXT_AF.el.removeEventListener('mouseenter', CONTEXT_AF.mouseenterListenerFunc); }
-    if (CONTEXT_AF.mouseleaveListenerFunc) { 
-        CONTEXT_AF.mouseleaveListenerFunc();
-        CONTEXT_AF.el.removeEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); 
-    }
+    if (CONTEXT_AF.mouseleaveListenerFunc) { CONTEXT_AF.el.removeEventListener('mouseleave', CONTEXT_AF.mouseleaveListenerFunc); }
   },
   setEnabled : function(enabled) {
     const CONTEXT_AF    = this;
@@ -224,7 +221,6 @@ AFRAME.registerComponent('circles-interactive-object', {
         }
         const raycasters = CONTEXT_AF.el.sceneEl.querySelectorAll('[raycaster]');
         raycasters.forEach(rc => {
-            console.log(rc.components.raycaster);
             if (rc.components.raycaster.data) {
                 rc.components.raycaster.refreshObjects();
             }
@@ -250,11 +246,6 @@ AFRAME.registerComponent('circles-interactive-object', {
     const data = CONTEXT_AF.data;
 
     CONTEXT_AF.resetHighlight(); //reset before we set again
-
-    // if(CONTEXT_AF.highlightInitialized === true) {
-    //     console.warn('circles-interactive-object: Should not change \'type\' after initialization (for now).');
-    //     return;
-    // }
 
     if (data.type === 'outline') {
         CONTEXT_AF.highlightElem = document.createElement('a-entity');
@@ -320,6 +311,9 @@ AFRAME.registerComponent('circles-interactive-object', {
         CONTEXT_AF.mouseleaveListenerFunc = function(e) {
             CONTEXT_AF.el.setAttribute('animation__highlightanim', {property:'scale', to:(CONTEXT_AF.origScale.x + ' ' + CONTEXT_AF.origScale.y + ' ' + CONTEXT_AF.origScale.z), dur:100});
         };
+    }
+    else if (data.type === 'none') {
+        //don't do anything :)
     }
     else {
         console.warn('[circles-interactive-object] No highlight type chosen.');
