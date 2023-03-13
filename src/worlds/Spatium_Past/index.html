@@ -1,1 +1,78 @@
+<html>
+  <head>
+    <meta charset="utf-8">
 
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+  </head>
+  <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <!-- add your assets here -->
+        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+
+        <!-- physical environment -->
+        <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
+        <!-- added additional geometry, optimized, re-UV'd and re-textured (WIP) 
+        <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Kitchen/scene.gltf"></a-asset-item>
+        <a-asset-item id="homework-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Homework/scene.gltf"></a-asset-item>
+        <a-asset-item id="acceptance-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Acceptance/scene.gltf"></a-asset-item>
+        <a-asset-item id="keys-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Keys/scene.gltf"></a-asset-item>-->
+
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
+
+       <!-- <a-asset-item id="navmesh_gltf" src="/worlds/WIT_1_Kitchen/assets/models/wit-1-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>-->
+
+        <!-- artefact models -->
+        <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
+
+        <!-- audio -->
+        
+        <!-- narration -->
+
+
+        <!-- ambience -->
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!-- checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="-1.44 0.05 2.6"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.8 0.05 -1.0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.3 0.05 1.3"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.956 0.05 4.779"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="3.374 0.05 1.289"></a-entity>
+
+      <!-- sky and lights -->
+      <!-- bad place for narrative manager but :) -->
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
+
+      <!-- sounds -->
+      <a-entity position="0 0 -4" circles-sound="type:ambient; src:#Amb_suburb-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="-2.895 1 1.164" circles-sound="type:ambient; src:#Amb_kitchen-snd; autoplay:true; loop:true; volume:0.7;" ></a-entity>
+
+      <!--<a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>-->
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+
+      <a-entity id="hub_link"
+                position="4.919 1.347 1.291" rotation="0 180 0" scale="1 1 1"
+                circles-portal="img_src:#link_1_360; title_text:Spatium Hub; link_url:/w/Spatium_Hub"></a-entity>
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
