@@ -550,7 +550,7 @@ const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
     expiresIn: expiryTimeMin + 'm',
   };
 
-  const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
+  const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as expiration
   return baseURL + '/magic-login?token=' + token + '&route=' + route;
 };
 
