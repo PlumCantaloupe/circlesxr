@@ -125,7 +125,7 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
     - **NOTE:** If you need to clean up or modify db contents use th MongoDB [Compass Application](https://www.mongodb.com/docs/compass/current/?_ga=2.136660531.242864686.1674159088-1142880638.1674159088) or [mongosh](https://www.mongodb.com/docs/mongodb-shell/) shell. For example, to drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongosh shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
-1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
+1. Login with one of the 3 test users when you enter `localhost:{SERVER_PORT}/`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/`(there are also others i.e., t1, r1, p1, p2, p3)
     - `{username}:{password}`
     - `s1@circlesxr.com:password`
     - `s2@circlesxr.com:password`
@@ -137,10 +137,10 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 ### Instance Routes
 
+- */explore* (this is to see the list of worlds included here)
 - */register* (has been disabled for now)
 - */profile*
 - */campfire*
-- */explore* (this is to see the list of worlds included here)
 - */add-all-test-data* (only do this once, or if you have deleted/dropped the database and need to re-populate test data )
 
 ----------------
@@ -152,7 +152,8 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a fully-featured example of how to set up your own.
-- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}, though note we should be using a tool like ngrok to serve ssl content. Like this: https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}.
+- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}`.
+- Note that when you enter that `?group=explore` is added to your URL. `explore` is the default group (everyone in that same group can see each other). If you wish to add your own group so that only others within teh same group can see each other, set that last poart of teh URL yourself i.e., `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`. 
 - Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTML entities that are required for your world to properly connect to this framework. These are replaced with the appropriate scripts in [webpack.worlds.parts](https://github.com/PlumCantaloupe/circlesxr/tree/Workshop_Features/src/webpack.worlds.parts) during the build stage so please pay attention to their position within the page.
   ```html  
   <circles-start-scripts/>
@@ -206,11 +207,18 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.2.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, likely be familiar to [Unity](https://unity.com) Developers.
 
+Also note that Circle sis built on several libraries, giving you additional functionality. They follow:
+- [A-Frame](https://aframe.io/docs/1.4.0/introduction/), which is built on [Three.js](https://aframe.io/docs/1.4.0/introduction/developing-with-threejs.html): This gives us a 3D engine specifically created for building multi-platform WebXR content using [HTML](https://www.w3schools.com/whatis/whatis_html.asp) and [Javascript](https://www.w3schools.com/js/).
+- [Networked-Aframe](https://github.com/networked-aframe/networked-aframe): For quickly networking objects. To send simple message, and synching client states, see [Circles Networking](https://github.com/PlumCantaloupe/circlesxr#circles-networking).
+- [Aframe-extras (controls and pathfinding)](https://github.com/c-frame/aframe-extras). This library gives us additional multi-platform controls, including the ability to use [nav meshes](https://medium.com/@donmccurdy/creating-a-nav-mesh-for-a-webvr-scene-b3fdb6bed918) to limit movement within Circles' worlds.
+- [Aframe-Physics](https://github.com/c-frame/aframe-physics-system): Available for those that wish to include physics into their Circles worlds (see the "KIN_" worlds included as an example).
+
 The general structure of the framework (and the Github repository) follows:
 
 - [The Server](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server): Circles uses a javscript server [node.js] and all associated code relevant to the delivery of all HTML and JS content is can be found in this folder. [app.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/app.js) is the main file that connects to a javascript databse [MongoDB](https://www.mongodb.com/) for saving user information, and serves up Circles' html and javascript pages. Note that [router.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/routes/router.js) is reponsible for creating appropriate paths to content, and [controller.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/controllers/controller.js) is reponsible for connecting with the mongo database, and that much of the 2D html content (e.g., login and explore pages) are rendered with [pug](https://pugjs.org/), which allows us to generate HTML and CSS via javascript. All files related to 2D HTML and CSS are found within the [web folder](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server/public/web).
 - [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including any constants or global functions, we would like to be able to access on both the server and client sides. This will be invisible to most developers. To simplify development for content we also modify code during the [webpack](https://webpack.js.org) project build before we serve it.
 - [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds): All Circles' worlds are placed here. From here they are modified to include Circles specific functionality and copied into an untracked folder on the server.
+- _Circles Groups_: All Circles' users are connected to others within the same "group", no matter which Circles world they are within. You can set this manually by adding `?group=YOUR_GROUP_NAME` manually to the end of your Circles URL e.g., `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`.
 
 *Also note, that a [TestBed](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) is currently in development for testing selection and find performance using [Fitt's Law](https://www.yorku.ca/mack/hhci2018.html). At this time the TestBed, and the associated [research-manager](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) components are local to the ["TestBed" world](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed). After more extensive testing it will likely be moved to the Circles core.*
 
@@ -337,7 +345,7 @@ This is a core component in our framework that explores learning around tools an
   <a-entity id="Portal-Wardrobe" circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"></a-entity>
   ```
 
-- [circles-sendpoint](): Attach to to a circles-button entity when you want that button to send them to any checkpoint (with an id that we can point to).
+- [circles-sendpoint](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sendpoint.js): Attach to to a circles-button or circles-interactive-object entity when you want that button to send them to any checkpoint (with an id that we can point to).
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -401,23 +409,48 @@ This is a core component in our framework that explores learning around tools an
 
 <br>
 
-Circles uses [Networked-Aframe](https://github.com/networked-aframe/networked-aframe) to sync avatars and various networked objects i.e., circles-artefacts. For voice or vother large bandwidth items like video, you will have to run a janus server and use the [naf-janus-adapter](https://github.com/networked-aframe/naf-janus-adapter). For local development, it defaults to a fast and reliable [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) communication. To make things a bit easier to send quick messages and synch events some functions have been added to Circles API. Hopefully, in the future, we can also explore persistent worlds that save their states even when no one is currently within them. However, for now, the world will match between users while they are within.
+Circles uses [Networked-Aframe](https://github.com/networked-aframe/networked-aframe) to sync avatars and various networked objects i.e., circles-artefacts. Please consult the [Networked-Aframe documentation](https://github.com/networked-aframe/networked-aframe/blob/master/README.md) if you wish to add your own _networked_ objects. However, for sending basic messages and smaller javascript objects to other clients, messages and synch events some functions have been added to Circles API. Hopefully, in the future, we can also explore persistent worlds that save their states even when no one is currently within them. However, for now, the world will match between users while they are within if you follow the example structure below.
+
+_For voice or vother large bandwidth items like video, you will have to run a janus server and use the [naf-janus-adapter](https://github.com/networked-aframe/naf-janus-adapter). For local development, it defaults to fast and reliable [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) communication._ that do not support voice and video.
 
 You will find an example of synching simple switches in the "hub"/campfire world and the "ExampleWorld". The process for synching actions i.e., a light being turned off and on for all connected users follows (abridged from the "hub"/campfire example):
 
 _First, some useful commands:_
+
 ```js
 //get communication socket
 CIRCLES.getCirclesWebsocket();
 
-//get the room we are in (users are usually grouped into "rooms")
-CIRCLES.getCirclesRoom();
+//get the name of the group we are in (users in a group can only see each other)
+CIRCLES.getCirclesGroupName();
 
 //get the name of the Circles' world the user is in
-CIRCLES.getCirclesWorld();
+CIRCLES.getCirclesWorldName();
 
 //get the name of the current user
-CIRCLES.getCirclesUser();
+CIRCLES.getCirclesUserName();
+
+/*** some other useful commands ***/
+
+//find out if Circles is ready i.e., your avatar is constructed.
+CIRCLES.isReady();
+//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready (and you can add things to the camera e.g., adding UIs)
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() { console.log('Circles is ready!') });
+
+//return the avatar element
+CIRCLES.getAvatarElement();
+
+//return the rig of the avatar (what we move, rather than teh avatar or camera itself)
+CIRCLES.getAvatarRigElement();
+
+//return the camera element (from the avatar's point of view)
+CIRCLES.getMainCameraElement();
+
+//return all avatars in the scene. Yourself and other networked-aframe avatar entities
+CIRCLES.getNAFAvatarElements();
+
+//return all networked-aframe networked entities (includes avatars and any other objects). You may have to dig into children for the geometry, materials etc.
+CIRCLES.getAllNAFElements();
 ```
 
 ```js
@@ -439,7 +472,7 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
         CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
 
         //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
-        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:trCONTEXT_AF.fireOnue, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
         }
     });
 
@@ -451,18 +484,18 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
 
     //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time (not perfect) ...
     setTimeout(function() {
-        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     }, THREE.MathUtils.randInt(0,1200));
 
     //if someone else requests our sync data, we send it.
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     });
 
     //receiving sync data from others (assuming all others is the same for now)
-    CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
         //make sure we are receiving data for this world (as others may be visiting other worlds simultaneously)
-        if (data.world === CIRCLES.getCirclesWorld()) {
+        if (data.world === CIRCLES.getCirclesWorldName()) {
           CONTEXT_AF.turnFire(data.campfireON);
           CONTEXT_AF.fireOn = data.campfireON;
         }
