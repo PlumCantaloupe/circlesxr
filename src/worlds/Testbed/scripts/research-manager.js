@@ -42,7 +42,7 @@ AFRAME.registerSystem('research-manager', {
 
         CONTEXT_COMP.el.addEventListener(CIRCLES.EVENTS.WS_RESEARCH_CONNECTED, function (event) {
             CONTEXT_COMP.socket = CIRCLES.getCirclesResearchWebsocket();
-            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, room:CIRCLES.getCirclesRoom()});
+            CONTEXT_COMP.socket.emit(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, {event_type:CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED, room:CIRCLES.getCirclesGroupName()});
             CONTEXT_COMP.connected = true;
             CONTEXT_COMP.addResearchEventListeners();
             console.warn("research-manager: messaging system connected at socket: " + CONTEXT_COMP.socket.id);

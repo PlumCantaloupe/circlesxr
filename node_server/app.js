@@ -283,7 +283,8 @@ io.on("connection", socket => {
   socket.on("*", function(event, data) {
     //ignore reserved event names
     if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.SEND_DATA_SYNC ) {
+          event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+          event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
       return; //exit
     }
 
@@ -305,7 +306,7 @@ io.on("connection", socket => {
   socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
     if (data.room) {
       socket.join(data.room); //hacky solution for janus adapter which doesn't set room
-      socket.to(data.room).emit(CIRCLES.EVENTS.SEND_DATA_SYNC, data);
+      socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
     }
   });
 });
