@@ -12,7 +12,7 @@
 - [Circles Overview](#circles-overview)
   - [Why Use VR in Learning?](#why-use-vr-in-learning)
   - [Why Circles?](#why-circles)
-- [Circles Controls](#circles-controls)
+- [Circles Interactions](#circles-interactions)
 - [Running Circles Locally](#running-circles-locally)
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
@@ -74,7 +74,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ----------------
 
-## Circles Controls
+## Circles Interactions
 ##### *[back to top](#circles-vr-learning-framework)*
 
 <br>
