@@ -81,6 +81,8 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 In navigating within the 3D spaces of Circles all interactions aim toward single-click as an exploration into how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD). This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework is meant for use within classrooms and museums it is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired to reduce interactions to a form that *could* be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
 
+_NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/aframe-extras) "[movement-controls](https://github.com/c-frame/aframe-extras/tree/master/src/controls)" that support [nav-meshes](https://github.com/c-frame/aframe-extras/tree/master/src/pathfinding)._
+
 ![Illustration of the three different control schemes for Circles. From left to right, Desktop with mouse, Mobile with finger tap, and raycast with HMD VR controller](node_server/public/global/images/Circles_PlatformInteractions.jpg?raw=true)
 
 ### Interaction Controls
