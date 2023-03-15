@@ -72,7 +72,7 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ----------------
 
-## Circles Controls
+## Circles Interactions
 ##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
@@ -230,6 +230,35 @@ The general structure of the framework (and the Github repository) follows:
 <br>
 
 There are dozens of components created for use within this framework that you can find in the [components folder of this repo](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/components); but the following will likely be the most used, and thus the most significant.
+
+First, some useful functions that may be useful for the creation of your own components:
+
+```js
+//get the name of the group we are in (users in a group can only see each other)
+CIRCLES.getCirclesGroupName();
+
+//get the name of the Circles' world the user is in
+CIRCLES.getCirclesWorldName();
+
+//get the name of the current user
+CIRCLES.getCirclesUserName();
+
+//find out if Circles is ready i.e., your avatar is constructed.
+CIRCLES.isReady();
+//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() { console.log('Circles is ready!') });
+
+//return the avatar element (perhaps we want to add something to the avatar or query for body elements to change their colour).
+CIRCLES.getAvatarElement();
+
+//return the rig of the avatar (when we want to move our avatar i.e., teleport them somewhere else, rather than the avatar or camera itself)
+CIRCLES.getAvatarRigElement();
+
+//return the camera element (from the avatar's point of view, if you want parent things to the camera e.g., adding UIs))
+CIRCLES.getMainCameraElement();
+```
+
+And now the components available for you.
 
 - [circles-artefact](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-artefact.js):
 This is a core component in our framework that explores learning around tools and objects. The circles-artefact allows you to create an object that has textual (and audio) descriptions and narratives, that can be picked up by an user's avatar and manipulated.
@@ -415,36 +444,11 @@ _For voice or vother large bandwidth items like video, you will have to run a ja
 
 You will find an example of synching simple switches in the "hub"/campfire world and the "ExampleWorld". The process for synching actions i.e., a light being turned off and on for all connected users follows (abridged from the "hub"/campfire example):
 
-_First, some useful commands:_
+_First, some useful functions (please note there are others noted in the [Circles Componenets](#circle-components) section:_
 
 ```js
 //get communication socket
 CIRCLES.getCirclesWebsocket();
-
-//get the name of the group we are in (users in a group can only see each other)
-CIRCLES.getCirclesGroupName();
-
-//get the name of the Circles' world the user is in
-CIRCLES.getCirclesWorldName();
-
-//get the name of the current user
-CIRCLES.getCirclesUserName();
-
-/*** some other useful commands ***/
-
-//find out if Circles is ready i.e., your avatar is constructed.
-CIRCLES.isReady();
-//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready (and you can add things to the camera e.g., adding UIs)
-CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() { console.log('Circles is ready!') });
-
-//return the avatar element
-CIRCLES.getAvatarElement();
-
-//return the rig of the avatar (what we move, rather than teh avatar or camera itself)
-CIRCLES.getAvatarRigElement();
-
-//return the camera element (from the avatar's point of view)
-CIRCLES.getMainCameraElement();
 
 //return all avatars in the scene. Yourself and other networked-aframe avatar entities
 CIRCLES.getNAFAvatarElements();
