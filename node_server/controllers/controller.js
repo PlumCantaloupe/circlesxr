@@ -568,7 +568,9 @@ const getMagicLinks = (req, res, next) => {
   const userTypeAsking = req.query.userTypeAsking;
   const expiryTimeMin = req.query.expiryTimeMin;
   let allAccounts = [];
-  const baseURL = req.protocol + '://' + req.get('host');
+
+  //ignore req.protocol as it will try and re-direct to https anyhow.
+  const baseURL = req.get('host');
 
   let users = null;
   let error = null;
