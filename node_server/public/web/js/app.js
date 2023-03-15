@@ -113,21 +113,15 @@ function createMagicLinks(userTypeAsking) {
   request.send();
 }
 
-function copyText(copyText, username) {
-  //https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 
-  copyText.select();                      //select fields
-  copyText.setSelectionRange(0, 99999);   //For mobile devices
+function copyText(copyTextElem, username) {
+  // Select the text field
+  copyTextElem.select(); 
+  copyTextElem.setSelectionRange(0, 99999); // For mobile devices
 
-  const copyToClipboard = str => {
-    if (navigator && navigator.clipboard && navigator.clipboard.writeText)
-      return navigator.clipboard.writeText(str);
-    return Promise.reject('The Clipboard API is not available.');
-  };
-
-  navigator.clipboard.writeText(copyText.value);  //copy text inside input       
-
-  //!!
-  alert('Copied magic link for ' + username  + ' to clipboard!');
+   // Copy the text inside the text field (need to use promises so this actually copies)
+  navigator.clipboard.writeText(copyTextElem.value).then(function() {
+    alert("Copied the magic link!");
+  });
 }
 
 const YEATS_WORD_LIST = [  'had', 'i', 'the', 'heavens', 'embroidered', 'cloths',

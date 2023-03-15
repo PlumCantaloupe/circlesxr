@@ -259,10 +259,10 @@ const serveWorld = (req, res, next) => {
   const splitURL = req.url.split('?');
   const baseURL = (splitURL.length > 0)?splitURL[0]:'';
   const urlParamsStr = (splitURL.length > 1)?splitURL[1]:'';
+
   if (splitURL.length > 0) {
     if (baseURL.charAt(baseURL.length - 1) !== '/') {
       const fixedURL = baseURL + "/"  + ((urlParamsStr === '')?'':'?' + urlParamsStr);
-      console.log('fixing trailing slash: ' + fixedURL);
       res.writeHead(302, { "Location": fixedURL });
       res.end();
       return;
@@ -292,8 +292,6 @@ const serveRelativeWorldContent = (req, res, next) => {
   const worldID = req.params.world_id;
   const relURL = req.params[0];
   const newURL = '/worlds/' + worldID + '/' + relURL;
-  //console.log(res.location(relURL));
-  //console.log('---------------------------------------');
   return res.redirect(newURL);
 };
 
@@ -568,7 +566,9 @@ const getMagicLinks = (req, res, next) => {
   const userTypeAsking = req.query.userTypeAsking;
   const expiryTimeMin = req.query.expiryTimeMin;
   let allAccounts = [];
-  const baseURL = req.protocol + '://' + req.get('host');
+
+  //ignore req.protocol as it will try and re-direct to https anyhow.
+  const baseURL = req.get('host');
 
   let users = null;
   let error = null;
