@@ -251,7 +251,7 @@ CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function
 //return the avatar element (perhaps we want to add something to the avatar or query for body elements to change their colour).
 CIRCLES.getAvatarElement();
 
-//return the rig of the avatar (when we want to move our avatar i.e., teleport them somewhere else, rather than the avatar or camera itself)
+//return the rig of the avatar (when we want to move our avatar i.e., teleport them somewhere. or access things like aframe-extra's "movement-controls" to adjust speed, enable/disble etc.)
 CIRCLES.getAvatarRigElement();
 
 //return the camera element (from the avatar's point of view, if you want parent things to the camera e.g., adding UIs))
