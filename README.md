@@ -245,8 +245,6 @@ CIRCLES.getCirclesUserName();
 
 //find out if Circles is ready i.e., your avatar is constructed.
 CIRCLES.isReady();
-//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready
-CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() { console.log('Circles is ready!') });
 
 //return the avatar element (perhaps we want to add something to the avatar or query for body elements to change their colour).
 CIRCLES.getAvatarElement();
@@ -256,6 +254,13 @@ CIRCLES.getAvatarRigElement();
 
 //return the camera element (from the avatar's point of view, if you want parent things to the camera e.g., adding UIs))
 CIRCLES.getMainCameraElement();
+
+//Example
+//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
+    //to change speed of character movement
+    CIRCLES.getAvatarRigElement().setAttribute('movement-controls', {speed:0.3});
+});
 ```
 
 And now the components available for you.
