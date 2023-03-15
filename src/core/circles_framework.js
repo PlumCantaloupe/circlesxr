@@ -91,9 +91,10 @@ const MODEL_BODY_TYPE = {
 };
 
 const EVENTS = {
+  READY                     : 'CIRCLES_READY',
   CAMERA_ATTACHED           : 'CAMERA_ATTACHED',
   OBJECT_HIGHLIGHT_LOADED   : 'OBJECT_HIGHLIGHT_LOADED',
-  AVATAR_LOADED             : 'AVATAR_LOADED',  
+  AVATAR_LOADED             : 'AVATAR_LOADED',
   AVATAR_RIG_LOADED         : 'AVATAR_RIG_LOADED',
   AVATAR_COSTUME_CHANGED    : 'AVATAR_COSTUME_CHANGED',
   CUSTOM_MAT_SET            : 'CUSTOM_MAT_SET',
@@ -109,7 +110,8 @@ const EVENTS = {
   WS_CONNECTED              : 'WS_CONNECTED',
   WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED',
   REQUEST_DATA_SYNC         : 'REQUEST_DATA_SYNC',
-  SEND_DATA_SYNC            : 'SEND_DATA_SYNC'
+  SEND_DATA_SYNC            : 'SEND_DATA_SYNC',
+  RECEIVE_DATA_SYNC         : 'RECEIVE_DATA_SYNC'
 };
 
 //!!DEPRE 8 color
@@ -134,8 +136,7 @@ const getUUID = function() {
 };
 
 const setupCirclesWebsocket = function() {
-
-  console.log('setupCirclesWebsocket');
+  // console.log('setupCirclesWebsocket');
 
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
@@ -172,25 +173,65 @@ const getCirclesWebsocket = function() {
 
 const getCirclesResearchWebsocket = function() {
   if ( !circlesResearchWebsocket ) {
-    console.warn('CIRCLES: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_RESEARCH_CONNECTED to flag ready');
+    console.warn('[circles_framework]: web socket not set up. Use CIRCLES.setupCirclesWebSocket() to set up and listen for CIRCLES.EVENTS.WS_RESEARCH_CONNECTED to flag ready');
   }
   return circlesResearchWebsocket;
 };
 
-const getCirclesRoom = function() {
+const getCirclesGroupName = function() {
   return getCirclesManager().getRoom();
 }
 
-const getCirclesUser = function() {
+const getCirclesUserName = function() {
   return getCirclesManager().getUser();
 }
 
-const getCirclesWorld = function() {
+const getCirclesWorldName = function() {
   return getCirclesManager().getWorld();
 }
 
 const getCirclesManager = function() {
   return document.querySelector('[circles-manager]').components['circles-manager'];
+}
+
+const isReady = function() {
+  return getCirclesManager().isCirclesReady();
+}
+
+const getAvatarElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
+  }
+  return elem;
+}
+
+const getAvatarRigElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.avatar');
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
+  }
+  return elem;
+}
+
+const getMainCameraElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the camera after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
+  }
+  return elem;
+}
+
+const getCirclesSceneElement = function() {
+  return document.querySelector('a-scene');
+}
+
+const getNAFAvatarElements = function() {
+  return document.querySelectorAll('[circles-user-networked]');  //return all avatars being networked by NAF
+}
+
+const getAllNAFElements = function() {
+  return document.querySelectorAll('[networked]');              //returns all NAF networked objects. You may have to dig into children for more detail.             
 }
 
 //CIRCLES.log(text);
@@ -240,10 +281,17 @@ module.exports = {
   setupCirclesWebsocket,
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
-  getCirclesRoom,
-  getCirclesUser,
-  getCirclesWorld,
+  getCirclesGroupName,
+  getCirclesUserName,
+  getCirclesWorldName,
   getCirclesManager,
+  isReady,
+  getAvatarElement,
+  getAvatarRigElement,
+  getMainCameraElement,
+  getCirclesSceneElement,
+  getNAFAvatarElements,
+  getAllNAFElements,
   log,
   enableLogs,
   warn,
