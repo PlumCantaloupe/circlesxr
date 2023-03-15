@@ -114,11 +114,6 @@ function createMagicLinks(userTypeAsking) {
 }
 
 function copyText(copyTextElem, username) {
-  console.log(copyTextElem);
-
-  // Get the text field
-  //var copyText = document.getElementById("myInput");
-
   // Select the text field
   copyTextElem.select(); 
   copyTextElem.setSelectionRange(0, 99999); // For mobile devices
