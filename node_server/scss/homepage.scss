@@ -21,7 +21,7 @@ $homepage-bg: rgba(255, 255, 255, 0.85);
 }
 
 .homepage__right {
-  padding: $gutter * 2;
+  padding: calc($gutter * 2);
   width: 100vw;
   height: 100vh;
   background-color: $homepage-bg;
