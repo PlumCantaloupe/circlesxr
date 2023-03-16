@@ -1,86 +1,91 @@
 
 class partsInfo {
-    constructor(partID, holding, whoHolding){
-        this.partID = partID; 
-        this.holding = holding; 
+    constructor(partID, holding, whoHolding, roverPos, infoMessage){
+        this.partID     = partID; 
+        this.holding    = holding; 
         this.whoHolding = whoHolding;
+        this.roverPos   = roverPos;
+        this.infoMessage = infoMessage;
     }
 }
 
-//list of parts
-const camera = new partsInfo("camera", false, null);
-const wheel = new partsInfo("wheel", false, null);
+//list of soj parts
+const soj_camera = new partsInfo("camera", false, null, {x:0, y:0, z:0}, "You found my camera");
+const soj_wheel = new partsInfo("wheels", false, null, {x:0.4404, y:0.14935, z:0.31451}, "You found my wheel");
 
-let parts = [camera, wheel];
+//let parts = [camera, wheel];
 
-AFRAME.registerComponent('pickupable',{
+AFRAME.registerComponent('holdable', {
     init: function(){
-        
         this.el.addEventListener("click", function(){
-            
-            let myPlayer = document.getElementById("Player1Cam"); //get the player's camera
-            
-            //use circles parent constraint to constrain it to the camera
-            this.setAttribute("circles-parent-constraint", {parent: myPlayer, position:true, rotation:true, positionOffset: {x: -1.5, y: -0.5, z:-1}, smoothingOn: false, updateRate: 10});
 
-            for(let i=0; i < parts.length; i++){
-                if(parts[i].partID == this.getAttribute("id")){
-                    parts[i].holding = true; 
-                    //parts[i].whoHolding = socket.id;
+            let myPlayer = document.getElementById("Player1Cam");    //find player camera
+            let holdingPart = this.cloneNode(true);         //creating clone of itself
 
-                    console.log("updated part status");
-                }
-            }
+            myPlayer.appendChild(holdingPart);              //add clone as a child of the player's camera
+            holdingPart.setAttribute('position', {x:-0.5, y:-0.5, z:-0.5});
+            //holdingPart.removeAttribute('circles-interactive-object');  //this has issues as once it's removed it permanently highlights the object
+            
+            console.log("item picked up");
+            
+            this.remove();                                  //remove this from the world
 
         });
-        
     }
 });
 
 
-AFRAME.registerComponent('rover', {
+AFRAME.registerComponent('soj', {
     init:function(){
-        this.el.addEventListener('click', function(){
+        this.el.addEventListener("click", function(){
 
-            let myPlayer = document.getElementById("Player1Cam");
+            let myPlayer = document.getElementById('Player1Cam');   //player camera
+            let inHand = null;                                      //variable to determine if a part is in a player's hand
+            let parts = ["#wheel", "#camera", "#thing"];
 
+            //loop through all potential parts in the player's hand
             for(let i=0; i < parts.length; i++){
-                if(parts[i].holding){
-                    let roverPart = document.getElementById(parts[i].partID).cloneNode(true);
-                    roverPart.setAttribute("position", {x:1, y:-0.5, z:2});
-                    this.appendChild(roverPart);
-
-                    document.getElementById(parts[i].partID).remove();
-                    break;
-                }
-            }
-
-            /*
-            let parts = ["#wheel", "#camera", "#suspension", "#lazer", "#chases"];
-            let inHand = null;
-
-            //keep looping through potential parts
-            for(let i=0; i < parts.length; i++){
-                
                 inHand = myPlayer.querySelector(parts[i]);
+
                 console.log(inHand);
+
                 if(inHand){
                     
                     console.log("found matching object");
 
                     let roverPart = inHand.cloneNode(true);
                     this.appendChild(roverPart);
-                    roverPart.setAttribute("position", {x:1, y:-0.5, z:2});
-                    
+                    roverPart.setAttribute("position", {x:0.4404, y:0.14935, z:0.31451});
+                    roverPart.setAttribute("rotation", {x: 0, y:180, z:0});
+
                     inHand.remove();
                     break; //stop searching if something has been found
                 }
-            }
-    
-            console.log("running function");
 
-            */
+            }
 
         });
     }
 });
+
+//finds part based off of given parts array in player1cam. When found the part is removed from the cam and place onto the rover
+function findPart(parts, rover){
+
+    let myPlayer = document.getElementById('Player1Cam');   //player camera
+    let inHand = null;                                      //variable to determine if a part is in a player's hand
+
+    for(let i = 0; i < parts.length; i++){
+        inHand = myPlayer.querySelector("#" + parts[i].partID);
+        
+        if(inHand){
+            //add part to rover model in it's predetermined position
+            let roverPart = inHand.cloneNode(true);
+            rover.setAttribute("position", parts[i].roverPos);
+            rover.appendChild(roverPart);
+
+            inHand.remove();
+        }
+    }
+
+
+}

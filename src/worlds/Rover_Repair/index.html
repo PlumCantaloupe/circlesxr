@@ -23,6 +23,9 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- Circles' built-in assets [REQUIRED] -->
+        <a-asset-item id="soju_body_gltf"      src="assets/models/soju/soju_body/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="soju_wheel_gltf"     src="assets/models/soju/soju_wheel/scene.gltf" crossorigin="anonymous"></a-asset-item>
+
         <circles-assets/>
       </a-assets>
 
@@ -37,8 +40,8 @@
       <a-entity environment="preset:yavapai"></a-entity>
 
       <!-- interactive objects -->
-      <a-box id="wheel" color="red" position="1 1 0" pickupable circles-interactive-object="type:outline"></a-box>
-      <a-box rover id="rover" color="green" position="3 1 0" circles-interactive-object="type:outline"></a-box>
+      <!--<a-box holdable id="wheel" scale="0.5 0.5 0.5" color="yellow" position="1 1 0" circles-interactive-object="type:outline"></a-box>
+      <a-box soj id="rover" color="green" position="3 1 0" circles-interactive-object="type:outline"></a-box> -->
 
       <!-- temp building -->
       <a-box position="-13 0 0"></a-box>
@@ -50,6 +53,12 @@
       
       <a-box id="backwall-1" position="12.71563 1.42839 0" scale="0.241 4.418 9.339"></a-box>
       <a-box id="backwall-2" position="-7.125 1.42839 0" scale="0.241 4.418 9.339"></a-box>
+
+      <a-entity soj id="rover" position="0 0.02 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:outline">
+        <!--<a-entity position="0.4404 0.14935 0.31451" rotation="0 180 0" gltf-model="#soju_wheel_gltf"></a-entity>-->
+      </a-entity>
+      <a-entity id="wheel" holdable position="1 1 2" rotation="0 0 0" gltf-model="#soju_wheel_gltf" circles-interactive-object="type:outline"></a-entity>
+      
 
       <!--<a-box id="window-bar" position="0 1.19437 4.71784" rotation="0 0 90" scale="2.543 0.224 0.147"></a-box>-->
     </a-scene>
@@ -76,5 +85,9 @@ queryselect player
 Current notes: 
 - need to find dynamic way of knowing who clicked on object (Player one seems to be linked to the user in their world)
 - need to know what objects a player is holding
+
+git issue tickets
+- issues with spawnpoints
+- issues with circles-object-label
 
 -->
