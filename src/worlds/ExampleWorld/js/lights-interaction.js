@@ -4,7 +4,7 @@ AFRAME.registerComponent('lights-interactive', {
         const CONTEXT_AF = this;
         const scene      = CIRCLES.getCirclesSceneElement();
 
-        scene.addEventListener(CIRCLES.READY, function() {
+        scene.addEventListener(CIRCLES.EVENTS.READY, function() {
             console.log('Circles is ready: ' + CIRCLES.isReady());
 
             //this is the camera that is now also ready, if we want to parent elements to it i.e., a user interface or 2D buttons
