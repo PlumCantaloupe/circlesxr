@@ -8,12 +8,12 @@ AFRAME.registerComponent('circles-artefact', {
     description_back:   {type:'string',   default:''},
     audio:              {type:'audio',    default:''},
     volume:             {type:'number',   default:1.0},
+    inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
-    inspectOffsetY:     {type:'number',   default:0.0},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    origPos:            {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
-    origRot:            {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
-    origScale:          {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
+    origPosition:       {type:'vec3',     default:{}},
+    origRotation:       {type:'vec3',     default:{}},
+    origScale:          {type:'vec3',     default:{}},
     textRotationY:      {type:'number',   default:0.0},               
     textLookAt:         {type:'boolean',  default:false},
     
@@ -36,10 +36,13 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
-                                                            title_back:data.title_back,             description_back:data.description_back, inspectScale:data.inspectScale,
-                                                            inspectRotation:data.inspectRotation,   origPos:data.origPos,                   origRot:data.origRot,
-                                                            origScale:data.origScale,               textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
-                                                            inspectOffsetY:data.inspectOffsetY  
+                                                            title_back:data.title_back,             description_back:data.description_back, 
+                                                            inspectPosition:data.inspectPosition,   inspectRotation:data.inspectRotation,   inspectScale:data.inspectScale,
+                                                            origPosition: ((CIRCLES.UTILS.isEmptyObj(data.origPosition)) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
+                                                            origRotation: ((CIRCLES.UTILS.isEmptyObj(data.origRotation)) ? CONTEXT_AF.el.object3D.rotation.clone() : data.origRotation),              
+                                                            origScale:    ((CIRCLES.UTILS.isEmptyObj(data.origScale)) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
+                                                            textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
+                                                             
                                                         });
 
     CONTEXT_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 

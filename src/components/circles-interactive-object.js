@@ -161,6 +161,7 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'networked' &&
                 keys[i] !== 'circles-inspect-object' &&
                 keys[i] !== 'circles-object-world' && 
+                keys[i] !== 'circles-pickup-object' && 
                 keys[i] !== 'circles-artefact' ) {
 
                 CONTEXT_AF.highlightElem.setAttribute(keys[i], values[i].data);

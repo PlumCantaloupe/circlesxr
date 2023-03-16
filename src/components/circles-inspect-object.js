@@ -6,12 +6,12 @@ AFRAME.registerComponent('circles-inspect-object', {
     description:      {type:'string',   default:'No decription set'},
     title_back:       {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
     description_back: {type:'string',   default:''},
-    inspectScale:     {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
-    inspectOffsetY:   {type:'number',   default:0.0},
+    inspectPosition:  {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
     inspectRotation:  {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    origPos:          {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
-    origRot:          {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
-    origScale:        {type:'vec3',     default:{x:10001.0, y:0.0, z:0.0}},
+    inspectScale:     {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
+    origPosition:     {type:'vec3',     default:{}},
+    origRotation:     {type:'vec3',     default:{}},
+    origScale:        {type:'vec3',     default:{}},
     textRotationY:    {type:'number',   default:0.0},                 //rotation of textual info
     textLookAt:       {type:'boolean',  default:false},               //will we do a look at to rotate to where user is at first?
     networkedEnabled: {type:'boolean',  default:false},
@@ -20,17 +20,14 @@ AFRAME.registerComponent('circles-inspect-object', {
     const CONTEXT_AF = this;
     const data = this.data;
 
-    if (data.origPos.x > 10000) {
-      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origPos:{x:CONTEXT_AF.el.object3D.position.x, y:CONTEXT_AF.el.object3D.position.y, z:CONTEXT_AF.el.object3D.position.z}}); //save it so network syncs this
-    }
+    console.log(data.origPosition);
 
-    if (data.origRot.x > 10000) {
-      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origRot:{x:CONTEXT_AF.el.object3D.rotation.x, y:CONTEXT_AF.el.object3D.rotation.y, z:CONTEXT_AF.el.object3D.rotation.z}}); //save it so network syncs this
-    }
+    //want to set manually if none set
+    data.origPosition = (CIRCLES.UTILS.isEmptyObj(data.origPosition)) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition;
+    data.origRotation = (CIRCLES.UTILS.isEmptyObj(data.origRotation)) ? CONTEXT_AF.el.object3D.rotation.clone() : data.origRotation;
+    data.origScale    = (CIRCLES.UTILS.isEmptyObj(data.origScale)) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale;
 
-    if (data.origScale.x > 10000) {
-      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origScale:{x:CONTEXT_AF.el.object3D.scale.x, y:CONTEXT_AF.el.object3D.scale.y, z:CONTEXT_AF.el.object3D.scale.z}}); //save it so network syncs this
-    }
+    console.log(data.origPosition);
 
     const ownership_gained_Func = (e) => {
       console.log("ownership-gained");
@@ -83,7 +80,22 @@ AFRAME.registerComponent('circles-inspect-object', {
     //send click event to manager
     CONTEXT_AF.el.addEventListener('click', (e) => {
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
-     });
+
+      //take over networked membership
+      if (CONTEXT_AF.el.hasAttribute('networked') === true) {
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
+          console.log("is this mine?");
+          if (!NAF.utils.isMine(el)) {
+            console.log("No but ... ")
+            NAF.utils.takeOwnership(el);
+            console.log("it is mine now");
+          } 
+          else {
+            console.log("Yes, it is mine already");
+          }
+        });
+      }
+    });
   },
   update : function(oldData) {
     const CONTEXT_AF = this;
@@ -91,9 +103,33 @@ AFRAME.registerComponent('circles-inspect-object', {
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
+    if ( (oldData.inspectPosition !== data.inspectPosition) && (data.inspectPosition !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupPosition: data.inspectPosition });
+    }
+
+    if ( (oldData.inspectRotation !== data.inspectRotation) && (data.inspectRotation !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupRotation: data.inspectRotation });
+    }
+
+    if ( (oldData.inspectScale !== data.inspectScale) && (data.inspectScale !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupScale: data.inspectScale });
+    }
+
+    if ( (oldData.origPosition !== data.origPosition) && (data.origPosition !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition: data.origPosition });
+    }
+
+    if ( (oldData.origRotation !== data.origRotation) && (data.origRotation !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation: data.origRotation });
+    }
+
+    if ( (oldData.origScale !== data.origScale) && (data.origScale !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropScale: data.origScale });
+    }
+
     if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
       if (data.networkedEnabled === true) {
-        CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true});
+        CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true, synchWorldTransforms:true});
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
       }
       else {
