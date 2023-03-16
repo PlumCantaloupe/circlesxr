@@ -20,6 +20,8 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: Shutterstock @ https://www.shutterstock.com/image-illustration/360-degree-space-background-stars-panorama-1301723365 -->
         <img id='skyMap' src="assets/textures/1301723365-small.jpg" crossorigin="anonymous">
+        <!-- credit: texture used can be found on https://www.solarsystemscope.com/textures/, though it is modified afer being used by a lesson in the IMD 3901 class at Algonquin College -->
+        <img id="earth_tex" src="assets/textures/2k_earth_daymap.jpg" crossorigin="anonymous">
 
         <!---------------------- GLTF MODELS ---------------------->
         <!-- credit: "Asteroid" (https://skfb.ly/6SzzJ) by kayra23 is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/). -->
@@ -38,21 +40,30 @@
       <!---------------------- SOUND ---------------------->
 
       <!---------------------- SCENE MODELS ---------------------->
-      <!-- Earth Model (color is placeholder) -->
-      <a-entity geometry="primitive: sphere; radius: 2;"
-      material="shader: standard; color: rgb(0, 0, 255)"
+      <!-- Earth Model -->
+      <a-entity geometry="primitive: sphere; radius: 4;"
+      material="shader: standard; src: #earth_tex; metalness: 0; roughness: 1"
       shadow="cast: true; recieve: true;"
-      position="0 2 -4">
+      position="0 5.527 -14.808">
       </a-entity>
       <!-- Asteroid -->
-      <a-entity id="asteroid" position="-1.891 4.058 -6.768" rotation="0 0 0" scale="0.5 0.5 0.5" gltf-model="#asteroid_gltf" shadow="cast:true; receive:true;"></a-entity>
+      <a-entity id="asteroid" position="-2.891 4.058 -9.768" rotation="0 0 0" scale="1 1 1" gltf-model="#asteroid_gltf" shadow="cast:true; receive:true;"></a-entity>
+      <!-- Control panel 1 (Button animation) -->
+      <!-- Control panel 2 (Dial) -->
+      <!-- Physics objects (Garbage can)-->
       <!---------------------- SCENE MODELS ---------------------->
 
+      <!---------------------- PORTALS ---------------------->
       <a-entity id="Portal-Wardrobe"
-         position="5 0 0" rotation="0 0 0"
+         position="10 0.8 0" rotation="0 0 0"
          circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
           shadow>
       </a-entity>
+      <!---------------------- PORTALS ---------------------->
+
+      <!---------------------- CHECKPOINTS ---------------------->
+
+      <!---------------------- CHECKPOINTS ---------------------->
 
       <!---------------------- ENVIRONMENT ---------------------->
       <!-- Ground -->
@@ -61,10 +72,10 @@
       <a-entity id='skyBox'
           rotation='0 200 0'
           geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-          material='shader:flat; src:#skyMap; side:back;'>
+          material='shader:flat; src:#skyMap; side:back; flatShading: true;'>
       </a-entity>
       <!-- Hemisphere light -->
-      <a-entity light="type: hemisphere; color: #5e035b; groundColor: #141214;"></a-entity>
+      <a-entity light="type: hemisphere; color: #5e035b; groundColor: #141214;" position="0 3 0"></a-entity>
       <!---------------------- ENVIRONMENT ---------------------->
     </a-scene>
 
