@@ -25,7 +25,7 @@
 
         <!---------------------- GLTF MODELS ---------------------->
         <!-- credit: "Asteroid" (https://skfb.ly/6SzzJ) by kayra23 is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/). -->
-        <a-asset-item id="asteroid_gltf" src="assets/models/asteroid/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="asteroid_gltf" src="assets/models/asteroid/asteroid_1k.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <!---------------------- GLTF MODELS ---------------------->
 
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -67,15 +67,21 @@
 
       <!---------------------- ENVIRONMENT ---------------------->
       <!-- Ground -->
-      <a-entity environment="ground: canyon; groundYScale: 4; groundTexture: walkernoise; groundColor: #b3b3b3;"></a-entity>
+      <a-entity environment="ground: canyon; groundYScale: 4; groundTexture: walkernoise; groundColor: #b3b3b3; skyColor: #1e143e; horizonColor: #ecbbbb; shadow: true; fog: 0.49" 
+      visible="">          <a-entity class="environment" position="0 50 0" light="type: hemisphere; color: #8e899e; intensity: 0.6; groundColor: #b3b3b3" visible=""></a-entity>
+        <a-entity class="environment" position="-0.11 1 0.33" light="intensity: 0.6; castShadow: true; shadowCameraLeft: -10; shadowCameraBottom: -10; shadowCameraRight: 10; shadowCameraTop: 10" visible=""></a-entity>
+        <a-entity rotation="-90 0 0" class="environmentGround environment" visible="" scale="1 1 4" shadow="cast: false"></a-entity>
+        <a-entity class="environmentDressing environment" visible="false"></a-entity>
+        <a-sky radius="200" theta-length="110" class="environment" material="color: #1e143e; fog: false" visible="" geometry=""></a-sky>
+        <a-entity id="stars" visible="false"></a-entity>
+    </a-entity>
       <!-- Skybox -->
-      <a-entity id='skyBox'
-          rotation='0 200 0'
-          geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-          material='shader:flat; src:#skyMap; side:back; flatShading: true;'>
+      <a-entity id="skyBox" 
+      rotation="0 200 0" 
+      geometry="primitive: sphere; radius: 90; segmentsHeight: 24; segmentsWidth: 24" 
+      material="shader: flat; src: #skyMap; side: back; flatShading: true" 
+      visible="">
       </a-entity>
-      <!-- Hemisphere light -->
-      <a-entity light="type: hemisphere; color: #5e035b; groundColor: #141214;" position="0 3 0"></a-entity>
       <!---------------------- ENVIRONMENT ---------------------->
     </a-scene>
 
