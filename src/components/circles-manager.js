@@ -32,7 +32,8 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
 
         CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
-          let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
+          //!!let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
+          let rotationOffset = CONTEXT_AF.selectedObject.object3D.rotation.clone();
           let rotationOffsetY =  rotationOffset.y;
           rotationOffsetY += 90.0;
           //now round to 90 increments so that if a user presses quickly it doesn't end on a strange angle
@@ -42,7 +43,7 @@ AFRAME.registerComponent('circles-manager', {
           rotationOffsetY += diff;
 
           console.log("rotate artefact");
-          CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
+          //!!CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
         });
 
         //release object (can also click on object)
@@ -55,16 +56,16 @@ AFRAME.registerComponent('circles-manager', {
 
         CONTEXT_AF.zoomControl.addEventListener('click', (e) => { 
           CONTEXT_AF.zoomNear = !CONTEXT_AF.zoomNear;
-          let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
-          let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
-          //CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {positionOffset:positionOffset});
-
-          CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
+          
+          console.log("zoom artefact");
+          //!!let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
+          //!!let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
+          //!!CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
 
         //let everyone know that circles is ready
         CONTEXT_AF.isCirclesReadyVar = true;
-        CIRCLES.getCirclesSceneElement().emit(CIRCLES.READY);
+        CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.READY);
     });
   },
   update: function() {
@@ -311,21 +312,6 @@ AFRAME.registerComponent('circles-manager', {
     //reset rotation of description
     CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0, y:0, z:0});
     CONTEXT_AF.rotationDesc = 0.0;
-    
-    //take over networked membership
-    if (CONTEXT_AF.selectedObject.hasAttribute('networked') === true) {
-      NAF.utils.getNetworkedEntity(CONTEXT_AF.selectedObject).then((el) => {
-        console.log("is this mine?");
-        if (!NAF.utils.isMine(el)) {
-          console.log("No but ... ")
-          NAF.utils.takeOwnership(el);
-          console.log("it is mine now");
-        } 
-        else {
-          console.log("Yes, it is mine already");
-        }
-      });
-    }
 
     // let avatarHead = CONTEXT_AF.el.sceneEl.querySelector('#player1');
     // avatarHead = avatarHead.querySelector('.user_head');
@@ -333,9 +319,9 @@ AFRAME.registerComponent('circles-manager', {
     //set new transform
     //CONTEXT_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
 
-    CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
-    CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:obj.data.inspectOffsetY, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
+    //CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
+    //CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
+    //!!CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:obj.data.inspectOffsetY, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
 
     if ( showDescription )  {
       //show description text with appropriate values
@@ -346,11 +332,11 @@ AFRAME.registerComponent('circles-manager', {
       CONTEXT_AF.objectDescriptions.setAttribute('visible', true);
 
       //display element at position 
-      CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y + 1.5, obj.data.origPos.z);
+      CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPosition.x, obj.data.origPosition.y + 1.5, obj.data.origPosition.z);
       if ( obj.data.textLookAt === true ) {
         let worldPos = new THREE.Vector3();
         CONTEXT_AF.camera.object3D.getWorldPosition(worldPos);
-        worldPos.y = obj.data.origPos.y + 1.3;
+        worldPos.y = obj.data.origPosition.y + 1.3;
 
         CONTEXT_AF.objectDescriptions.object3D.lookAt(CONTEXT_AF.camera.object3D.getWorldPosition()); //rotate to face user
         CONTEXT_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
@@ -380,11 +366,11 @@ AFRAME.registerComponent('circles-manager', {
       CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:true});
     }
 
-    CONTEXT_AF.selectedObject.removeAttribute('circles-parent-constraint');
+    //!!CONTEXT_AF.selectedObject.removeAttribute('circles-parent-constraint');
 
-    CONTEXT_AF.selectedObject.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y, obj.data.origPos.z);
-    CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.origRot.x, obj.data.origRot.y, obj.data.origRot.z);
-    CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.origScale.x, obj.data.origScale.y, obj.data.origScale.z);
+    // CONTEXT_AF.selectedObject.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y, obj.data.origPos.z);
+    // CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.origRot.x, obj.data.origRot.y, obj.data.origRot.z);
+    // CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.origScale.x, obj.data.origScale.y, obj.data.origScale.z);
 
     //hide floating descriptions
     CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
