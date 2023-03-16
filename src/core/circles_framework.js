@@ -21,6 +21,7 @@
 //dressed     : true/false that states whether the user visited "wardrobe" area yet
 
 const CONSTANTS = require('./circles_constants');
+const UTILS     = require('./circles_utils');
 const RESEARCH  = require('./circles_research');
 
 let circlesWebsocket = null;
@@ -199,7 +200,8 @@ const isReady = function() {
 }
 
 const getAvatarElement = function() {
-  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+
   if (!elem) {
     console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
   }
@@ -266,6 +268,7 @@ const enableErrors = function(enable) {
 
 module.exports = {
   CONSTANTS,
+  UTILS,
   RESEARCH,
   DISPLAY_MODES,
   USER_COLLISION_STATE,
