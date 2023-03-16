@@ -312,16 +312,6 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0, y:0, z:0});
     CONTEXT_AF.rotationDesc = 0.0;
 
-    // let avatarHead = CONTEXT_AF.el.sceneEl.querySelector('#player1');
-    // avatarHead = avatarHead.querySelector('.user_head');
-
-    //set new transform
-    //CONTEXT_AF.selectedObject.object3D.position.set(0.0, 0.0, 0.0);
-
-    //CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.inspectRotation.x, obj.data.inspectRotation.y, obj.data.inspectRotation.z);
-    //CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.inspectScale.x, obj.data.inspectScale.y, obj.data.inspectScale.z);
-    //!!CONTEXT_AF.selectedObject.setAttribute('circles-parent-constraint', {parent:this.camera, positionOffset:{x:0.0, y:obj.data.inspectOffsetY, z:-2.0}, rotationOffset:{x:obj.data.inspectRotation.x, y:obj.data.inspectRotation.y, z:obj.data.inspectRotation.z}});
-
     if ( showDescription )  {
       //show description text with appropriate values
       CONTEXT_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
@@ -350,10 +340,6 @@ AFRAME.registerComponent('circles-manager', {
       button.setAttribute('circles-interactive-visible', true);
     });
     CONTEXT_AF.objectControls.setAttribute('visible', true);
-
-    //remove interaction
-    CONTEXT_AF.selectedObject.setAttribute('circles-interactive-object', {enabled:false});
-
   },
   releaseInspectedObject : function ( obj ) {
     const CONTEXT_AF = this;
@@ -365,12 +351,6 @@ AFRAME.registerComponent('circles-manager', {
       CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:true});
     }
 
-    //!!CONTEXT_AF.selectedObject.removeAttribute('circles-parent-constraint');
-
-    // CONTEXT_AF.selectedObject.object3D.position.set(obj.data.origPos.x, obj.data.origPos.y, obj.data.origPos.z);
-    // CONTEXT_AF.selectedObject.object3D.rotation.set(obj.data.origRot.x, obj.data.origRot.y, obj.data.origRot.z);
-    // CONTEXT_AF.selectedObject.object3D.scale.set(obj.data.origScale.x, obj.data.origScale.y, obj.data.origScale.z);
-
     //hide floating descriptions
     CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
 
@@ -380,8 +360,6 @@ AFRAME.registerComponent('circles-manager', {
     });
     CONTEXT_AF.objectControls.setAttribute('visible', false);
 
-    //add back interaction
-    CONTEXT_AF.selectedObject.setAttribute('circles-interactive-object', {enabled:true});
     CONTEXT_AF.selectedObject  = null;
   }
 });
