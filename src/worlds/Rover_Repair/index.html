@@ -37,7 +37,8 @@
       <a-entity environment="preset:yavapai"></a-entity>
 
       <!-- interactive objects -->
-      <a-box color="red" position="1 1 0" pickupable circles-interactive-object="type:outline"></a-box>
+      <a-box id="wheel" color="red" position="1 1 0" pickupable circles-interactive-object="type:outline"></a-box>
+      <a-box rover id="rover" color="green" position="3 1 0" circles-interactive-object="type:outline"></a-box>
 
       <!-- temp building -->
       <a-box position="-13 0 0"></a-box>
@@ -60,8 +61,9 @@
 
 <!--
 TODO
-Picking up object
-placing it on rover
+Picking up object - done
+make sure only one object can be picked up
+create dynamic system of placing object on rover
 
 Extra
 notifying text notifying players what the part does
@@ -71,10 +73,8 @@ Places to look
 src/components
 queryselect player
 
-
 Current notes: 
 - need to find dynamic way of knowing who clicked on object (Player one seems to be linked to the user in their world)
 - need to know what objects a player is holding
-
 
 -->
