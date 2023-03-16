@@ -11,9 +11,10 @@ AFRAME.registerComponent('circles-manager', {
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
     CONTEXT_AF.selectedObject     = null;
-    CONTEXT_AF.zoomNear           = false;    //1=normal, 2=near
     CONTEXT_AF.camera             = null;
     CONTEXT_AF.isCirclesReadyVar  = false;
+    CONTEXT_AF.artefactZoomSteps    = [-2.0, -1.0];
+    CONTEXT_AF.artefactRotSteps     = [360.0, 90.0, 180.0, 270.0];
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
@@ -31,19 +32,18 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.zoomControl    = scene.querySelector('#zoom_control');
         CONTEXT_AF.releaseControl = scene.querySelector('#release_control');
 
-        CONTEXT_AF.rotateControl.addEventListener('click', (e) => { 
-          //!!let rotationOffset = CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset;
-          let rotationOffset = CONTEXT_AF.selectedObject.object3D.rotation.clone();
-          let rotationOffsetY =  rotationOffset.y;
-          rotationOffsetY += 90.0;
-          //now round to 90 increments so that if a user presses quickly it doesn't end on a strange angle
-          rotationOffsetY = Math.round(rotationOffsetY);                      //round so we have whole numbers
-          let remainder   = rotationOffsetY % 90;                             //find remainder
-          let diff        = ( remainder < 90/2 ) ? -remainder : 90-remainder; //if too small round down to "0" else round up to "90" increment
-          rotationOffsetY += diff;
+        //artefact rotation
+        CONTEXT_AF.rotateControl.addEventListener('click', (e) => {
+          //want the artefact only spinning one way in 90 deg increments.
+          if (CONTEXT_AF.artefactRotIndexTarget === 0) {
+            if (Math.abs(Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y) < Math.PI/2) {
+              CONTEXT_AF.selectedObject.object3D.rotation.y = Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y;
+            }
+          }
 
-          console.log("rotate artefact");
-          //!!CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.rotationOffset.y = rotationOffsetY;
+          CONTEXT_AF.artefactRotIndexTarget = ((++CONTEXT_AF.artefactRotIndexTarget) > CONTEXT_AF.artefactRotSteps.length - 1) ? 0 : CONTEXT_AF.artefactRotIndexTarget;
+          const targetRot = CONTEXT_AF.artefactRotSteps[CONTEXT_AF.artefactRotIndexTarget];
+          CONTEXT_AF.selectedObject.setAttribute('animation__rotate', {property:'rotation.y', dur:400, to:targetRot, easing:'easeInOutBack'});
         });
 
         //release object (can also click on object)
@@ -54,13 +54,11 @@ AFRAME.registerComponent('circles-manager', {
           }
         });
 
+        //artefact zoom
         CONTEXT_AF.zoomControl.addEventListener('click', (e) => { 
-          CONTEXT_AF.zoomNear = !CONTEXT_AF.zoomNear;
-          
-          console.log("zoom artefact");
-          //!!let positionOffset =  CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset;
-          //!!let positionOffsetZ = (CONTEXT_AF.zoomNear) ? -1.0 : -2.0;
-          //!!CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
+          CONTEXT_AF.artefactZoomIndexTarget = ((++CONTEXT_AF.artefactZoomIndexTarget) > CONTEXT_AF.artefactZoomSteps.length - 1) ? 0 : CONTEXT_AF.artefactZoomIndexTarget;
+          const targetPos = CONTEXT_AF.artefactZoomSteps[CONTEXT_AF.artefactZoomIndexTarget];
+          CONTEXT_AF.selectedObject.setAttribute('animation__zoom', {property:'position.z', dur:400, to:targetPos, easing:'easeInOutBack'});
         });
 
         //let everyone know that circles is ready
@@ -297,7 +295,8 @@ AFRAME.registerComponent('circles-manager', {
   pickupInspectedObject : function ( obj, showDescription ) {
     const CONTEXT_AF = this;
     CONTEXT_AF.selectedObject = obj.el;
-    CONTEXT_AF.zoomNear       = false;
+    CONTEXT_AF.artefactZoomIndexTarget   = 0;
+    CONTEXT_AF.artefactRotIndexTarget    = 0;
 
     CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true});
 
