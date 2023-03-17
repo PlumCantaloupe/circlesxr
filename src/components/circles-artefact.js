@@ -11,9 +11,9 @@ AFRAME.registerComponent('circles-artefact', {
     inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    origPosition:       {type:'vec3',     default:{}},
-    origRotation:       {type:'vec3',     default:{}},
-    origScale:          {type:'vec3',     default:{}},
+    origPosition:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origRotation:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origScale:          {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
     textRotationY:      {type:'number',   default:0.0},               
     textLookAt:         {type:'boolean',  default:false},
     
@@ -38,9 +38,12 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
                                                             title_back:data.title_back,             description_back:data.description_back, 
                                                             inspectPosition:data.inspectPosition,   inspectRotation:data.inspectRotation,   inspectScale:data.inspectScale,
-                                                            origPosition: ((CIRCLES.UTILS.isEmptyObj(data.origPosition)) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
-                                                            origRotation: ((CIRCLES.UTILS.isEmptyObj(data.origRotation)) ? CONTEXT_AF.el.object3D.rotation.clone() : data.origRotation),              
-                                                            origScale:    ((CIRCLES.UTILS.isEmptyObj(data.origScale)) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
+                                                            origPosition: ((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
+                                                            origRotation: ((data.origPosition.x > 100000.0) ? { x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), 
+                                                                                                                y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), 
+                                                                                                                z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)
+                                                                                                              } : data.origRotation),              
+                                                            origScale:    ((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
                                                             textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
                                                              
                                                         });

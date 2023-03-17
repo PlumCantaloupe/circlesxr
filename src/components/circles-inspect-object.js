@@ -9,9 +9,9 @@ AFRAME.registerComponent('circles-inspect-object', {
     inspectPosition:  {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
     inspectRotation:  {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     inspectScale:     {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
-    origPosition:     {type:'vec3',     default:{}},
-    origRotation:     {type:'vec3',     default:{}},
-    origScale:        {type:'vec3',     default:{}},
+    origPosition:     {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origRotation:     {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origScale:        {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
     textRotationY:    {type:'number',   default:0.0},                 //rotation of textual info
     textLookAt:       {type:'boolean',  default:false},               //will we do a look at to rotate to where user is at first?
     networkedEnabled: {type:'boolean',  default:false},
@@ -20,27 +20,31 @@ AFRAME.registerComponent('circles-inspect-object', {
     const CONTEXT_AF = this;
     const data = this.data;
 
-    console.log(data.origPosition);
+    CONTEXT_AF.el.setAttribute('circles-pickup-object', {animate:true});
 
-    //want to set manually if none set
-    data.origPosition = (CIRCLES.UTILS.isEmptyObj(data.origPosition)) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition;
-    data.origRotation = (CIRCLES.UTILS.isEmptyObj(data.origRotation)) ? CONTEXT_AF.el.object3D.rotation.clone() : data.origRotation;
-    data.origScale    = (CIRCLES.UTILS.isEmptyObj(data.origScale)) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale;
-
-    console.log(data.origPosition);
+    //want to set to whatever their initial position is when initialized, if none set.
+    if (data.origPosition.x > 100000.0) {
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origPosition: CONTEXT_AF.el.object3D.position.clone()});
+    }
+    if (data.origRotation.x > 100000.0) {
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origRotation: {x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)}});
+    }
+    if (data.origScale.x > 100000.0) {
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origScale: CONTEXT_AF.el.object3D.scale.clone()});
+    }
 
     const ownership_gained_Func = (e) => {
-      console.log("ownership-gained");
+      //console.log("ownership-gained");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
     };
 
     const ownership_lost_Func = (e) => {
-      console.log("ownership-lost");
+      //console.log("ownership-lost");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
     };
 
     const ownership_changed_Func = (e) => {
-      console.log("ownership-changed");
+      //console.log("ownership-changed");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
     };
 
@@ -84,14 +88,14 @@ AFRAME.registerComponent('circles-inspect-object', {
       //take over networked membership
       if (CONTEXT_AF.el.hasAttribute('networked') === true) {
         NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          console.log("is this mine?");
+          //console.log("is this mine?");
           if (!NAF.utils.isMine(el)) {
-            console.log("No but ... ")
+            //console.log("No but ... ")
             NAF.utils.takeOwnership(el);
-            console.log("it is mine now");
+            //console.log("it is mine now");
           } 
           else {
-            console.log("Yes, it is mine already");
+            //console.log("Yes, it is mine already");
           }
         });
       }

@@ -49,8 +49,7 @@ AFRAME.registerComponent('circles-manager', {
         //release object (can also click on object)
         CONTEXT_AF.releaseControl.addEventListener('click', (e) => { 
           if ( CONTEXT_AF.selectedObject !== null ) {
-            CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-            CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
+            CONTEXT_AF.selectedObject.click();  //forward click to artefact
           }
         });
 
@@ -142,11 +141,11 @@ AFRAME.registerComponent('circles-manager', {
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, (e) => {
-      console.log("Event: "  + e.detail.getAttribute('id') + " ownership-gained");
+      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-gained");
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, (e) => {
-      console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
+      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
 
       if ( CONTEXT_AF.selectedObject !== null ) {
         CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
@@ -155,12 +154,12 @@ AFRAME.registerComponent('circles-manager', {
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, (e) => {
-      console.log("Event: "  + e.detail.getAttribute('id') + " ownership-changed");
+      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-changed");
     });
 
     document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
-        console.log("Event: "  + e.detail.components["circles-user-networked"].data.visiblename + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
-      });
+      //console.log("Event: "  + e.detail.components["circles-user-networked"].data.visiblename + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
+    });
 
     CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {
       CONTEXT_AF.camera = e.detail.cameraEl; //get reference to camera in scene (assume there is only one)
