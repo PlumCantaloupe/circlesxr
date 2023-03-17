@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- Script for A-Frame enviornments -->
+    <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
+    <!-- Custom script for future room specifically -->
+    <script src="js/SC_future_script.js"></script>
+  </head>
+  <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
+        <!-- credit: Shutterstock @ https://www.shutterstock.com/image-illustration/360-degree-space-background-stars-panorama-1301723365 -->
+        <img id='skyMap' src="assets/textures/1301723365-small.jpg" crossorigin="anonymous">
+        <!-- credit: texture used can be found on https://www.solarsystemscope.com/textures/, though it is modified afer being used by a lesson in the IMD 3901 class at Algonquin College -->
+        <img id="earth_tex" src="assets/textures/2k_earth_daymap.jpg" crossorigin="anonymous">
+
+        <!---------------------- GLTF MODELS ---------------------->
+        <!-- credit: "Asteroid" (https://skfb.ly/6SzzJ) by kayra23 is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/). -->
+        <a-asset-item id="asteroid_gltf" src="assets/models/asteroid/asteroid_1k.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <!-- credit: "Red Button" (https://skfb.ly/6vCxt) by Wolf is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). -->
+        <a-asset-item id="red_button_bottom_gltf" src="assets/models/red_button/bottom/red_button_bottom.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="red_button_button_gltf" src="assets/models/red_button/button/red_button_button.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <!---------------------- GLTF MODELS ---------------------->
+
+        <!---------------------- SOUND ---------------------->
+        <!-- credit: Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=38129">Pixabay</a> -->
+        <audio id="asteroidButtonPress" src="assets/sounds/button-pressed-38129.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <!---------------------- SOUND ---------------------->
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!---------------------- INTERFACE ---------------------->
+
+      <!---------------------- INTERFACE ---------------------->
+
+      <!---------------------- SCENE MODELS ---------------------->
+      <!-- Earth Model -->
+      <a-entity geometry="primitive: sphere; radius: 6;"
+      material="shader: standard; src: #earth_tex; metalness: 0.37; roughness: 0.72"
+      shadow="cast: true; receive: true;"
+      position="0 7 -14.808">
+      </a-entity>
+      <!-- Asteroid -->
+      <a-entity id="asteroid" 
+      position="-2.891 4.058 -9.768" 
+      rotation="0 0 0" scale="1 1 1" 
+      gltf-model="#asteroid_gltf" 
+      shadow="cast:true; receive:true;">
+      </a-entity>
+      <!-- Control panel 1 (Button animation) -->
+      <a-entity class="control_panel_1" position="0 0 -3">
+        <a-entity geometry="primitive: box; height: 0.15; width: 0.9; depth: 0.8"
+        material="shader: standard; metalness: 0.87; roughness: 0.18; color: #5c5c5c;"
+        shadow="cast: false; receive: false">
+          <a-entity geometry="primitive: box; height: 0.33; width: 0.8; depth: 0.7;"
+          material="shader: standard; metalness: 0.87; roughness: 0.18; color: #5c5c5c;"
+          shadow="cast: false; receive: false;">
+            <a-entity geometry="primitive: box; height: 1; width: 0.65; depth: 0.55;"
+            material="shader: standard; metalness: 0.87: roughness: 0.18; color: #5c5c5c"
+            shadow="cast: false; receive: false;"
+            position="0 0.662 0">
+              <a-entity geometry="primitive: box; height: 0.820; width: 1.100; depth: 0.260"
+              material="shader: standard; metalness: 0.87; roughness: 0.18; color: #d4a200"
+              shadow="cast: false; receive: false;"
+              position="0 0.529 0"
+              rotation="-64.645 0 0">
+                <a-entity rotation="-88.513 0 180" 
+                position="0 0.001 0.313"
+                gltf-model="#red_button_bottom_gltf">
+                  <a-entity id="asteroidButton"
+                  position="0 0 0"
+                  gltf-model="#red_button_button_gltf"
+                  circles-sphere-env-map="src: #skyMap"
+                  circles-interactive-object="type: outline; highlight_color: rgb(255, 255, 255); click_sound: #asteroidButtonPress"
+                  animation__interact="property: position.y; from: -0.05; to: 0; startEvents: click; dur: 300;">
+                  </a-entity>
+                </a-entity>
+              </a-entity>
+            </a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+      <!-- Control panel 2 (Dial) -->
+      <!-- Physics objects (Garbage can)-->
+      <!---------------------- SCENE MODELS ---------------------->
+
+      <!---------------------- PORTALS ---------------------->
+      <a-entity id="Portal-Wardrobe"
+         position="10 0.8 0" rotation="0 0 0"
+         circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
+          shadow>
+      </a-entity>
+      <!---------------------- PORTALS ---------------------->
+
+      <!---------------------- CHECKPOINTS ---------------------->
+
+      <!---------------------- CHECKPOINTS ---------------------->
+
+      <!---------------------- ENVIRONMENT ---------------------->
+      <!-- Ground -->
+      <a-entity environment="ground: canyon; groundYScale: 4; groundTexture: walkernoise; groundColor: #b3b3b3; skyColor: #1e143e; horizonColor: #ecbbbb; shadow: true; fog: 0.49" 
+      visible="">          <a-entity class="environment" position="0 50 0" light="type: hemisphere; color: #8e899e; intensity: 0.6; groundColor: #b3b3b3" visible=""></a-entity>
+        <a-entity class="environment" position="-0.11 1 0.33" light="intensity: 0.6; castShadow: true; shadowCameraLeft: -10; shadowCameraBottom: -10; shadowCameraRight: 10; shadowCameraTop: 10" visible=""></a-entity>
+        <a-entity rotation="-90 0 0" class="environmentGround environment" visible="" scale="1 1 4" shadow="cast: false"></a-entity>
+        <a-entity class="environmentDressing environment" visible="false"></a-entity>
+        <a-sky radius="200" theta-length="110" class="environment" material="color: #1e143e; fog: false" visible="" geometry=""></a-sky>
+        <a-entity id="stars" visible="false"></a-entity>
+    </a-entity>
+      <!-- Skybox -->
+      <a-entity id="skyBox" 
+      rotation="0 200 0" 
+      geometry="primitive: sphere; radius: 90; segmentsHeight: 24; segmentsWidth: 24" 
+      material="shader: flat; src: #skyMap; side: back; flatShading: true" 
+      visible="">
+      </a-entity>
+      <!---------------------- ENVIRONMENT ---------------------->
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
