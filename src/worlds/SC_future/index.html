@@ -26,7 +26,15 @@
         <!---------------------- GLTF MODELS ---------------------->
         <!-- credit: "Asteroid" (https://skfb.ly/6SzzJ) by kayra23 is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/). -->
         <a-asset-item id="asteroid_gltf" src="assets/models/asteroid/asteroid_1k.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <!-- credit: "Red Button" (https://skfb.ly/6vCxt) by Wolf is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). -->
+        <a-asset-item id="red_button_bottom_gltf" src="assets/models/red_button/bottom/red_button_bottom.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="red_button_button_gltf" src="assets/models/red_button/button/red_button_button.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <!---------------------- GLTF MODELS ---------------------->
+
+        <!---------------------- SOUND ---------------------->
+        <!-- credit: Sound Effect from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=38129">Pixabay</a> -->
+        <audio id="asteroidButtonPress" src="assets/sounds/button-pressed-38129.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <!---------------------- SOUND ---------------------->
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -35,20 +43,57 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!---------------------- SOUND ---------------------->
+      <!---------------------- INTERFACE ---------------------->
 
-      <!---------------------- SOUND ---------------------->
+      <!---------------------- INTERFACE ---------------------->
 
       <!---------------------- SCENE MODELS ---------------------->
       <!-- Earth Model -->
-      <a-entity geometry="primitive: sphere; radius: 4;"
-      material="shader: standard; src: #earth_tex; metalness: 0; roughness: 1"
-      shadow="cast: true; recieve: true;"
-      position="0 5.527 -14.808">
+      <a-entity geometry="primitive: sphere; radius: 6;"
+      material="shader: standard; src: #earth_tex; metalness: 0.37; roughness: 0.72"
+      shadow="cast: true; receive: true;"
+      position="0 7 -14.808">
       </a-entity>
       <!-- Asteroid -->
-      <a-entity id="asteroid" position="-2.891 4.058 -9.768" rotation="0 0 0" scale="1 1 1" gltf-model="#asteroid_gltf" shadow="cast:true; receive:true;"></a-entity>
+      <a-entity id="asteroid" 
+      position="-2.891 4.058 -9.768" 
+      rotation="0 0 0" scale="1 1 1" 
+      gltf-model="#asteroid_gltf" 
+      shadow="cast:true; receive:true;">
+      </a-entity>
       <!-- Control panel 1 (Button animation) -->
+      <a-entity class="control_panel_1" position="0 0 -3">
+        <a-entity geometry="primitive: box; height: 0.15; width: 0.9; depth: 0.8"
+        material="shader: standard; metalness: 0.87; roughness: 0.18; color: #5c5c5c;"
+        shadow="cast: false; receive: false">
+          <a-entity geometry="primitive: box; height: 0.33; width: 0.8; depth: 0.7;"
+          material="shader: standard; metalness: 0.87; roughness: 0.18; color: #5c5c5c;"
+          shadow="cast: false; receive: false;">
+            <a-entity geometry="primitive: box; height: 1; width: 0.65; depth: 0.55;"
+            material="shader: standard; metalness: 0.87: roughness: 0.18; color: #5c5c5c"
+            shadow="cast: false; receive: false;"
+            position="0 0.662 0">
+              <a-entity geometry="primitive: box; height: 0.820; width: 1.100; depth: 0.260"
+              material="shader: standard; metalness: 0.87; roughness: 0.18; color: #d4a200"
+              shadow="cast: false; receive: false;"
+              position="0 0.529 0"
+              rotation="-64.645 0 0">
+                <a-entity rotation="-88.513 0 180" 
+                position="0 0.001 0.313"
+                gltf-model="#red_button_bottom_gltf">
+                  <a-entity id="asteroidButton"
+                  position="0 0 0"
+                  gltf-model="#red_button_button_gltf"
+                  circles-sphere-env-map="src: #skyMap"
+                  circles-interactive-object="type: outline; highlight_color: rgb(255, 255, 255); click_sound: #asteroidButtonPress"
+                  animation__interact="property: position.y; from: -0.05; to: 0; startEvents: click; dur: 300;">
+                  </a-entity>
+                </a-entity>
+              </a-entity>
+            </a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
       <!-- Control panel 2 (Dial) -->
       <!-- Physics objects (Garbage can)-->
       <!---------------------- SCENE MODELS ---------------------->
