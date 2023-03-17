@@ -368,7 +368,7 @@ This is a core component in our framework that explores learning around tools an
     | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
     | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
 
-    *Example 'circles-interactive-object'*
+    *Example 'circles-sound'*
 
     ```html
     <!-- ambient music/sound -->
