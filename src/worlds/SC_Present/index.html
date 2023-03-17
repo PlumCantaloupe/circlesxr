@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+  </head>
+  <body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets timeout="10000">
+        <!-- add your assets here -->
+
+        <!-- audio -->
+        
+        <!-- narration -->
+        <audio id="Narr_tools-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_WIT_2_Drill.mp3" preload="true"></audio>
+        <audio id="Narr_safety-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_WIT_2_Gloves.mp3" preload="true"></audio>
+        <audio id="Narr_culture-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_WIT_2_Clipboard.mp3" preload="true"></audio>
+
+        <audio id="rocket_launch-snd" src="/worlds/SC_Present/assets/audio/rocketLaunch.mp3" preload="true"></audio>
+        <audio id="printing-snd" src="/worlds/SC_Present/assets/audio/3dPrinting.mp3" preload="true"></audio>
+
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
+
+        <a-asset-item id="navmesh_gltf" src="/worlds/WIT_2_Lab/assets/models/wit-2-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <!-- ambience -->
+        <!-- 
+          ATTRIBUTION:
+          Amb_fan-snd: https://freesound.org/people/Gremsongs/sounds/130745/ 
+          Amb_voices-snd: https://freesound.org/people/dobroide/sounds/35039/ 
+          Amb_extractor-snd: https://freesound.org/people/zigzagzen/sounds/168073/
+        -->
+        <audio id="Amb_fan-snd" src="/worlds/WIT_2_Lab/assets/audio/Amb_Fan.ogg" preload="true"></audio>
+        <audio id="Amb_voices-snd" src="/worlds/WIT_2_Lab/assets/audio/Amb_Voices.ogg" preload="true"></audio>
+        <audio id="Amb_extractor-snd" src="/worlds/WIT_2_Lab/assets/audio/Amb_Extractor.ogg" preload="true"></audio>
+
+        <!-- textures -->
+        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+
+        <!-- physical environment -->
+
+        <a-asset-item id="Room-gltf" response-type="arraybuffer" src="/worlds/WIT_2_Lab/assets/models/room/scene.gltf"></a-asset-item>
+
+
+        <!-- objects models -->
+        <a-asset-item id="rocket-glb" src="/worlds/SC_Present/assets/models/spaceship/rocket.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="3dprinter-glb" src="/worlds/SC_Present/assets/models/3d-printer/printer.glb" response-type="arraybuffer"></a-asset-item>
+
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!-- checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.446 0.050 2.249"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="4.729 0.05 -1.719"></a-entity>
+
+
+
+      <!-- sky and lights -->
+      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
+
+      <!-- sounds -->
+      <a-entity position="7.5 1.0 4.7" circles-sound="type:ambient; src:#Amb_fan-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="7.5 1.0 -4.7" circles-sound="type:ambient; src:#Amb_voices-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
+      <a-entity position="-4.3 2.3 -3.7" circles-sound="type:ambient; src:#Amb_extractor-snd; autoplay:true; loop:true; volume:0.4;" ></a-entity>
+
+      <!-- environment / models -->
+      <a-entity id="Room_Model" gltf-model="#Room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+
+      <!-- objects -->
+      <a-entity id="obj-Rocket"
+                position="5.822 0 -1.071" rotation="0 30 0" scale=".0009 .0009 .0009"
+                gltf-model="#rocket-glb" 
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:.001 .001 .001; textRotationY:0; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.9;
+                                  label_visible:true; label_offset:0 0.4 0; arrow_position:down;
+                                  title:Falcon 9; 
+                                  description:'Falcon 9 is a reusable, two-stage rocket designed and manufactured by SpaceX for the reliable and safe transport of people and payloads into Earth orbit and beyond. Reusability allows SpaceX to refly the most expensive parts of the rocket, which in turn drives down the cost of space access.';
+                                  title_back:SpaceX;
+                                  description_back:Space Exploration Technologies Corp(SpaceX) is an American spacecraft manufacturer headquartered in California. It was founded in 2002 by Elon Musk with the stated goal of reducing space transportation costs to enable the colonization of Mars. ;
+                                  label_text:SpaceX Rocket;
+                                  audio:#rocket_launch-snd; volume:0.4;"></a-entity>
+
+
+    
+    <a-entity id="3dPrinter" gltf-model="/worlds/SC_Present/assets/models/3d-printer/printer.glb" 
+              circles-sphere-env-map="src: /global/assets/textures/equirectangular/WhiteBlue.jpg" 
+              postion="-4.597 0 -1.405" rotation="0 0 0" scale="2.75338 2.75338 2.75338" shadow="receive:True; cast: false"></a-entity>
+    <a-entity id="obj-3dPrinter"
+                position="-1.459 0.8 1.330" rotation="0 0 0.0" scale="2 2 2"
+                shadow="receive:true; cast:true;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="
+                                  label_visible:true; label_offset:0 1 0; arrow_position:down;
+                                  title:3D-Printed Rockets; 
+                                  description:By using 3D printing to create crucial engine parts, rocket manufacturers can dramatically reduce the overall costs of a spacecraft. 3D printing allows engineers to streamline the production of rocket engine components, bypassing a number of production steps.;
+                                  label_text:3D Metal Printer;
+                                  audio:#printing-snd; volume:0.4;"></a-entity>
+    
+    <!-- Circles' end scripts [REQUIRED]    
+    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+    --> 
+    <a-entity id="hub_link"
+                position="6.549 1.347 4.864" rotation="0 143.672 0"  scale="1 1 1"
+                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/hub"></a-entity>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
