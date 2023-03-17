@@ -280,6 +280,11 @@ This is a core component in our framework that explores learning around tools an
   | title           | string          | Title of description.                                     | 'No Title Set'       |
   | description     | string          | Description text.                                         | 'No decription set'  |
   | label_text      | string          | Label text.                                               | 'label_text'         |
+  | audio           | audio           | Narration audio that can be added to play when artefact picked up.        | ''         |
+  | volume          | number          | If there is narration audio attached to this, this controls volume.       | '1.0'         |
+  
+  audio:              {type:'audio',    default:''},
+    volume:             {type:'number',   default:1.0},
 
   *Example 'circles-artefact' code: Note we are loading in a gltf model sing A-Frame's [gltf-model loader](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md), setting position, rotation, scale, and then setting several properties for the 'circles-artefact.'*
 
