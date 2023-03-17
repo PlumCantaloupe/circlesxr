@@ -18,26 +18,30 @@
         <!-- add your assets here -->
         <img id="sky" src="/worlds/Spatium_Past/stars.jpg">
 
+
+        <!-- Structural Environment Assests -->
         <a-asset-item id="untitled-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/moon_-_petavius_crater.glb"></a-asset-item>
+        <a-asset-item id="past_room-gltf" src="/worlds/Spatium_Past/assets/models/sci_fi_room.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
 
         <!-- physical environment -->
-        <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
-        <!-- added additional geometry, optimized, re-UV'd and re-textured (WIP) 
-        <a-asset-item id="room-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Kitchen/scene.gltf"></a-asset-item>
-        <a-asset-item id="homework-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Homework/scene.gltf"></a-asset-item>
-        <a-asset-item id="acceptance-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Acceptance/scene.gltf"></a-asset-item>
-        <a-asset-item id="keys-gltf" response-type="arraybuffer" src="/worlds/WIT_1_Kitchen/assets/models/Keys/scene.gltf"></a-asset-item>-->
-
+        
+     
         <!-- 360 -->
         <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
 
        <!-- <a-asset-item id="navmesh_gltf" src="/worlds/WIT_1_Kitchen/assets/models/wit-1-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>-->
 
         <!-- artefact models -->
+        <a-asset-item id="telescope-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/assets/models/telescope.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="old_guy-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/assets/models/LP_old_man.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <video id="moon_landing-vid" src="/worlds/Spatium_Past/assets/moon_landing.mp4"></video>
+
         <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
 
         <!-- audio -->
-        
+        <audio id="hub_music-snd" src="/worlds/Spatium_Hub/assets/the_past_music.mp3" preload="true"></audio>
         <!-- narration -->
 
 
@@ -46,6 +50,10 @@
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
+
+      <!-- ////////////////////// END OF ASSETS ////////////////////////////////   -->
+
+
 
       <a-sky src="#sky"></a-sky>
 
@@ -65,11 +73,12 @@
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
       <!-- sounds -->
-      <a-entity position="0 0 -4" circles-sound="type:ambient; src:#Amb_suburb-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
-      <a-entity position="-2.895 1 1.164" circles-sound="type:ambient; src:#Amb_kitchen-snd; autoplay:true; loop:true; volume:0.7;" ></a-entity>
 
-      <!--<a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>-->
-
+      <a-entity position=" 5 1 -10" circles-sound="type:ambient; src:#hub_music-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
+      
+      <!-- environment / models -->
+      <a-entity id="Room_Model" gltf-model="#past_room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="old_man" gltf-model="#old_guy-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion= "1.4 0.15 -3.65 " rotation="0 30 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <a-entity id="hub_link"
@@ -78,6 +87,26 @@
                 circles-portal="img_src:#link_1_360; title_text:Spatium Hub; link_url:/w/Spatium_Hub"></a-entity>
 
       <a-entity id="room" gltf-model="#untitled-gltf" position="1 -3 0" scale="80 80 80"></a-entity>
+
+
+      <!-- Artefacts -->
+
+      <a-entity id="Artefact-moon_landing" geometry="primitive: plane" position="-1.2 4 -3" rotation="13 0 0" material=" side:double src:#moon_landing-vid" ></a-entity>
+
+      <a-entity id="Artefact-Telescope"
+                position="2.8 0 -3.2" rotation="0 30 0" scale="1 1 1"
+                gltf-model="#telescope-gltf" 
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale: 0.8 0.8 0.8; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
+                                  label_visible:true; label_offset:0 2 0; arrow_position:down;
+                                  title:Craters on the Moon; 
+                                  description:Galileo enhanced the telescope and allowed the machine to view the Moon’s craters and the moons surrounding Jupiter! During his time, many people believed that the Earth was the center of the universe and everything revolved around the planet.';
+                                  title_back:Understanding Space;
+                                  description_back: By viewing the moons surrounding Jupiter and Venus’ phases, Galileo was able to explain that the planets are indeed moving around the sun, not the Earth. This created a massive discovery for the science and space exploration world and provided a better understanding on how the universe works.;
+                                  label_text:Telescope;
+                                  "></a-entity>
+
       
     </a-scene>
 
