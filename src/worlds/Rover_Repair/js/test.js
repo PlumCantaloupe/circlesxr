@@ -1,19 +1,35 @@
 
 class partsInfo {
-    constructor(partID, holding, whoHolding, roverPos, infoMessage){
+    constructor(partID, holding, whoHolding, roverPos, holdPos, infoMessage){
         this.partID     = partID; 
         this.holding    = holding; 
         this.whoHolding = whoHolding;
         this.roverPos   = roverPos;
-        this.infoMessage = infoMessage;
+        this.holdPos    = holdPos;
     }
 }
 
 //list of soj parts
-const soj_camera = new partsInfo("camera", false, null, {x:0, y:0, z:0}, "You found my camera");
-const soj_wheel = new partsInfo("wheels", false, null, {x:0.4404, y:0.14935, z:0.31451}, "You found my wheel");
+const soj_camera = new partsInfo("camera", false, null, {x:0, y:0, z:0});
+const soj_wheel = new partsInfo("wheels", false, null, {x:0.4404, y:0.14935, z:0.31451});
 
 //let parts = [camera, wheel];
+
+function editText(){
+    let text = document.getElementById("proj_text");
+    text.setAttribute("value", "You found the wheel\n\nThe Sojourner Rover traveled a\ntotal of about 330 feet (100m)");
+
+    let img = document.getElementById("proj_img");
+    img.setAttribute("opacity", 0.8);
+} 
+
+AFRAME.registerComponent('adjustPlayer', {
+    init: function(){
+        let myPlayer = document.getElementById("Player1");
+        myPlayer.setAttribute("scale", {});
+
+    }
+});
 
 AFRAME.registerComponent('holdable', {
     init: function(){
@@ -23,7 +39,7 @@ AFRAME.registerComponent('holdable', {
             let holdingPart = this.cloneNode(true);         //creating clone of itself
 
             myPlayer.appendChild(holdingPart);              //add clone as a child of the player's camera
-            holdingPart.setAttribute('position', {x:-0.5, y:-0.5, z:-0.5});
+            holdingPart.setAttribute('position', {x:-0.65, y:-0.2, z:-0.5});
             //holdingPart.removeAttribute('circles-interactive-object');  //this has issues as once it's removed it permanently highlights the object
             
             console.log("item picked up");
@@ -58,6 +74,8 @@ AFRAME.registerComponent('soj', {
                     roverPart.setAttribute("position", {x:0.4404, y:0.14935, z:0.31451});
                     roverPart.setAttribute("rotation", {x: 0, y:180, z:0});
 
+                    editText(); //edit
+
                     inHand.remove();
                     break; //stop searching if something has been found
                 }
@@ -86,6 +104,5 @@ function findPart(parts, rover){
             inHand.remove();
         }
     }
-
 
 }
