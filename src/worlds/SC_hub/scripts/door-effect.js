@@ -28,16 +28,16 @@ AFRAME.registerComponent('door-effect', {
        // Context_AF.venus.setAttribute("visible",false);
         
         console.log('door close')
-        Context_AF.door1.setAttribute('animation', {property:'position', to: "0 5  0",  dur:1000 , easing:'linear', enabled:true});
-        Context_AF.door2.setAttribute('animation', {property:'position', to: "0 2  0",  dur:1000, easing:'linear', enabled:true});
+        Context_AF.door1.setAttribute('animation', {property:'position', to: "0 5  -0.763",  dur:1000 , easing:'linear', enabled:true});
+        Context_AF.door2.setAttribute('animation', {property:'position', to: "0 5  -0.763",  dur:1000, easing:'linear', enabled:true});
         Context_AF.isSpinning = false;
       }
       else {
         
         
         console.log('Door open')
-        Context_AF.door1.setAttribute('animation', {property:'position', to: "0 7  0",  dur:1000, easing:'linear', enabled:true});
-    Context_AF.door2.setAttribute('animation', {property:'position', to: "0 -5  0",  dur:1000, easing:'linear', enabled:true});
+        Context_AF.door1.setAttribute('animation', {property:'position', to: "0 10  -0.763",  dur:1000, easing:'linear', enabled:true});
+        Context_AF.door2.setAttribute('animation', {property:'position', to: "0 -7  -0.763",  dur:1000, easing:'linear', enabled:true});
         Context_AF.isSpinning = true;
         //Context_AF.venus.setAttribute("visible",true);
       }
