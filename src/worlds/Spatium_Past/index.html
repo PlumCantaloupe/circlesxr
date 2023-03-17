@@ -16,7 +16,9 @@
     <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
-        <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
+        <img id="sky" src="/worlds/Spatium_Past/stars.jpg">
+
+        <a-asset-item id="untitled-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/moon_-_petavius_crater.glb"></a-asset-item>
 
         <!-- physical environment -->
         <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
@@ -45,6 +47,9 @@
         <circles-assets/>
       </a-assets>
 
+      <a-sky src="#sky"></a-sky>
+
+
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
@@ -69,8 +74,14 @@
 
       <a-entity id="hub_link"
                 position="4.919 1.347 1.291" rotation="0 180 0" scale="1 1 1"
+                
                 circles-portal="img_src:#link_1_360; title_text:Spatium Hub; link_url:/w/Spatium_Hub"></a-entity>
+
+      <a-entity id="room" gltf-model="#untitled-gltf" position="1 -3 0" scale="80 80 80"></a-entity>
+      
     </a-scene>
+
+
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
