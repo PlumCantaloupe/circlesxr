@@ -37,9 +37,9 @@
         <a-asset-item id="room_gltf" src="/worlds/Spatium_Hub/meeting.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
-
+        <!-- AUDIO -->
         <!--<audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3" preload="true"></audio>-->
-     
+        <audio id="hub_music-snd" src="/worlds/Spatium_Hub/assets/the_past_music.mp3" preload="true"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -72,35 +72,35 @@
 
       <!-- links to other worlds -->
       <a-entity id="link_1"
-                position="5 4 -26" rotation="0 56.215 0" scale="0.0001 0.0001 0.0001"
+                position="5 3 -13" rotation="0 56.215 0" scale="0.0001 0.0001 0.0001"
                 circles-portal="img_src:#link_1_360; title_text:The Past; link_url:/w/Spatium_Past"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
                 shadow></a-entity>
-      <a-entity position="5 3 -26" rotation="0 146.215 0" text="value: Navigate through past milestones of space travel; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
-      <a-entity position="5 2.6 -26" rotation="0 146.215 0" text="value: Galileo building a telescope, first satelite, first man in space, first space walk, first man on the moon, first Canadian to walk in space, Mars exploration rover; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="5 2 -13" rotation="0 146.215 0" text="value: Navigate through past milestones of space travel; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="5 1.6 -13" rotation="0 146.215 0" text="value: Galileo building a telescope, first satelite, first man in space, first space walk, first man on the moon, first Canadian to walk in space, Mars exploration rover; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
 
       <a-entity id="link_2"
-                position="-4 4 -26" rotation="0 0 0" scale="0.0001 0.0001 0.0001"
+                position="-2.8 3 -13" rotation="0 0 0" scale="0.0001 0.0001 0.0001"
                 circles-portal="img_src:#link_2_360; title_text:The Present; link_url:/w/Spatium_Present"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
                 shadow></a-entity>
-      <a-entity position="-4 3 -26" rotation="0 90 0"  text="value: Learn about where space travel is right now ; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
-      <a-entity position="-4 2.6 -26" rotation="0 90 0"  text="value: MOXIE; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-4 2 -13" rotation="0 90 0"  text="value: Learn about where space travel is right now ; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-4 1.6 -13" rotation="0 90 0"  text="value: MOXIE; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
       
 
       <a-entity id="link_3"
-                position="2 4 -22" rotation="0 -40 0" scale="0.0001 0.0001 0.0001"
+                position="2 3 -9" rotation="0 -40 0" scale="0.0001 0.0001 0.0001"
                 circles-portal="img_src:#link_3_360; title_text:The Future; link_url:/w/Spatium_Future"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
                 shadow></a-entity>
-      <a-entity position="2 3 -22" rotation="0 10 0"  text="value: See where Spatium thinks the future of space travel may end up; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
-      <a-entity position="2 2.6 -22" rotation="0 10 0"  text="value: Back to the moon in 2024, going to Mars, space elevator, Dyson sphere; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="2 2 -9" rotation="0 10 0"  text="value: See where Spatium thinks the future of space travel may end up; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="2 1.6 -9" rotation="0 10 0"  text="value: Back to the moon in 2024, going to Mars, space elevator, Dyson sphere; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
 
       <a-entity id="link_wardrobe"
-                position="2 4 -31" rotation="0 -90 0" scale="0.0001 0.0001 0.0001"
+                position="2 4 -18" rotation="0 -90 0" scale="0.0001 0.0001 0.0001"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
                 animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
                 animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
@@ -115,7 +115,7 @@
         id="campfire"
         class="interactive"
         gltf-model="#campfire-gltf"
-        position="1.7 0.8 -26"
+        position="2 1.6 -13.49"
         shadow="receive: true; cast: true"
         circles-interactive-object="type:highlight"
         circles-object-label="label_text:click fire to start; label_visible:true; label_offset:1.1 0.2 0; arrow_position:left;"
@@ -130,22 +130,31 @@
       <a-entity circles-checkpoint circles-spawnpoint position="0.10819070461016445 0.05 2.1193249159737837"></a-entity>
       <a-entity circles-checkpoint circles-spawnpoint position="1.644493348926841 0.05 -1.2374451315182142"></a-entity>
 
+      <!-- sound -->
+
+      <a-entity position=" 5 1 -10" circles-sound="type:ambient; src:#hub_music-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
 
       <!-- sky and lights -->
       <a-entity light="type: hemisphere; color:#0E192B; groundColor:#1D0A57; intensity: 1.2"></a-entity>
       <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160" 
         light="type:directional; color:#0E192B; intensity:15.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;"></a-entity>
       
+      <!--
+
       <a-entity id="moon"
         position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
         circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"
         ></a-entity>
 
+      -->
+
       <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
               material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
 
+      <!-- brightening up scene -->
+      <a-entity light='type:ambient; intensity:2;'></a-entity>
 
-      <a-entity gltf-model="#room_gltf" position="2.0 0.5 0" scale="50 50 50"></a-entity>
+      <a-entity gltf-model="#room_gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"  position="2.0 0.5 0" scale="25 25 25"></a-entity>
 
 
       <!-- sounds -->
@@ -156,3 +165,4 @@
     <circles-end-scripts/>
   </body>
 </html>
+
