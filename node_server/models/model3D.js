@@ -13,7 +13,7 @@ const Model3DSchema = new mongoose.Schema({
   url: {
     type:       String,
     unique:     false,
-    required:   true,
+    required:   false,
     trim:       true
   },
   type: {

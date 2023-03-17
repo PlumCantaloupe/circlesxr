@@ -2,20 +2,17 @@
 
 AFRAME.registerComponent('circles-portal', {
   schema: {
-    img_src:      {type: 'asset', default:CIRCLES.CONSTANTS.DEFAULT_ENV_MAP},
-    title_text:   {type: 'string', default:''},
-    link_url:     {type: 'string', default:''}
+    img_src:              {type:'asset', default:CIRCLES.CONSTANTS.DEFAULT_ENV_MAP},
+    title_text:           {type:'string', default:''},
+    link_url:             {type:'string', default:''},
+    useDefaultModel:      {type:'boolean', default:true}
   },
   init: function () {
     const CONTEXT_AF = this;
     const data = CONTEXT_AF.data;
-    
-    //create sphere component for portal
+
     CONTEXT_AF.portalElem = document.createElement('a-entity');
     CONTEXT_AF.portalElem.classList.add('portal');
-    CONTEXT_AF.portalElem.setAttribute('geometry', {primitive:'sphere', radius:0.5, segmentsWidth:10, segmentsHeight:10});
-    CONTEXT_AF.portalElem.setAttribute('material', {shader:'flat'});
-    CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'outline', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
     CONTEXT_AF.el.appendChild(CONTEXT_AF.portalElem);
 
     //create text component for title
@@ -26,7 +23,7 @@ AFRAME.registerComponent('circles-portal', {
     CONTEXT_AF.titleElem.setAttribute('text', {value:data.title_text, align:'center', width:5.0});
     CONTEXT_AF.el.appendChild(CONTEXT_AF.titleElem);
 
-    //where do we go when this ortal is clicked
+    //where do we go when this portal is clicked
     CONTEXT_AF.portalElem.addEventListener('click', (e) => {
       //goto url (but make sure we pass along the url params for group, avatar data etc.)
       //note that if a queryString is already defined in 'link_url' we will pass along the existing url params
@@ -85,14 +82,46 @@ AFRAME.registerComponent('circles-portal', {
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
     if ( (oldData.img_src !== data.img_src) && (data.img_src !== '') ) {
-      let filePath = ((typeof data.img_src === 'string' || data.img_src instanceof String) ? data.img_src : data.img_src.getAttribute('src'));;
-      CONTEXT_AF.portalElem.setAttribute('material', {src:filePath});
+      CONTEXT_AF.setImg(data.img_src);
     }
 
     if ( (oldData.title_text !== data.title_text) && (data.title_text !== '') ) {
       if (CONTEXT_AF.titleElem) {
         CONTEXT_AF.titleElem.setAttribute('text', {value:data.title_text});
       }
+    }
+
+    if ( (oldData.useDefaultModel !== data.useDefaultModel) && (data.useDefaultModel !== '') ) {
+      CONTEXT_AF.setDefaultModel(data.useDefaultModel);
+    }
+  },
+  setDefaultModel : function(useDefaultModel) {
+    const CONTEXT_AF = this;
+    const data = CONTEXT_AF.data;
+    
+    if (useDefaultModel) {
+      //create sphere component for portal
+      CONTEXT_AF.portalElem.setAttribute('geometry', {primitive:'sphere', radius:0.5, segmentsWidth:10, segmentsHeight:10});
+      CONTEXT_AF.portalElem.setAttribute('material', {shader:'flat'});
+      CONTEXT_AF.setImg(data.img_src);
+      CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'outline', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
+    }
+    else {
+      CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'none'});
+      CONTEXT_AF.portalElem.removeAttribute('geometry');
+      CONTEXT_AF.portalElem.removeAttribute('material');
+    }
+  },
+  setImg : function(imgSrc) {
+    const CONTEXT_AF = this;
+
+    if (imgSrc) {
+      let filePath = ((typeof imgSrc === 'string' || imgSrc instanceof String) ? imgSrc : imgSrc.getAttribute('src'));
+
+      CONTEXT_AF.portalElem.setAttribute('material', {src:filePath});
+    }
+    else {
+      console.log('[circles-portal]: invalid circles-portal "img_src" value')
     }
   }
 });

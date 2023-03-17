@@ -62,12 +62,12 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
-            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesRoom() + ' in world:' + CIRCLES.getCirclesWorld());
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
             CONTEXT_AF.campfire.addEventListener('click', function () {
                 CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
                 CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
-                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //listen for when others turn on campfire
@@ -78,18 +78,18 @@ AFRAME.registerComponent('campfire-interactive', {
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
             setTimeout(function() {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }, THREE.MathUtils.randInt(0,1200));
 
             //if someone else requests our sync data, we send it.
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //receiving sync data from others (assuming all others is the same for now)
-            CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
-                if (data.world === CIRCLES.getCirclesWorld()) {
+                if (data.world === CIRCLES.getCirclesWorldName()) {
                     CONTEXT_AF.turnFire(data.campfireON );
                     CONTEXT_AF.fireOn = data.campfireON;
                 }

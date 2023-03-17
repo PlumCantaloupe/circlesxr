@@ -10,9 +10,10 @@ AFRAME.registerComponent('circles-manager', {
   {
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
-    CONTEXT_AF.selectedObject  = null;
-    CONTEXT_AF.zoomNear         = false;    //1=normal, 2=near
-    CONTEXT_AF.camera           = null;
+    CONTEXT_AF.selectedObject     = null;
+    CONTEXT_AF.zoomNear           = false;    //1=normal, 2=near
+    CONTEXT_AF.camera             = null;
+    CONTEXT_AF.isCirclesReadyVar  = false;
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
@@ -60,6 +61,10 @@ AFRAME.registerComponent('circles-manager', {
 
           CONTEXT_AF.selectedObject.components['circles-parent-constraint'].data.positionOffset.z = positionOffsetZ;
         });
+
+        //let everyone know that circles is ready
+        CONTEXT_AF.isCirclesReadyVar = true;
+        CIRCLES.getCirclesSceneElement().emit(CIRCLES.READY);
     });
   },
   update: function() {
@@ -126,6 +131,9 @@ AFRAME.registerComponent('circles-manager', {
   },
   getRoom: function() {
     return document.querySelector('a-scene').components['networked-scene'].data.room;
+  },
+  isCirclesReady : function() {
+    return this.isCirclesReadyVar;
   },
   addEventListeners : function () {
     const CONTEXT_AF  = this;
