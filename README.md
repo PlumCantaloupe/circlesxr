@@ -304,7 +304,9 @@ This is a core component in our framework that explores learning around tools an
                 arrow_position:   down;
                 title:            Some Title;
                 description:      Some description text.;
-                label_text:       Some Label;">
+                label_text:       Some Label;
+                audio:#some-snd; 
+                volume:0.4;" >
   </a-entity>
   ```
 
