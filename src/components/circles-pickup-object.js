@@ -21,9 +21,11 @@ AFRAME.registerComponent('circles-pickup-object', {
       CONTEXT_AF.player = CIRCLES.getAvatarElement();  //this is our player/camera
     }
     else {
-      CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
+      const readyFunc = function() {
         CONTEXT_AF.player = CIRCLES.getAvatarElement();  //this is our player/camera
-      });
+        CIRCLES.getCirclesSceneElement().removeEventListener(CIRCLES.EVENTS.READY, readyFunc);
+      };
+      CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, readyFunc);
     }
 
     CONTEXT_AF.el.addEventListener('click', (e) => {
