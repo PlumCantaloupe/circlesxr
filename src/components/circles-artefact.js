@@ -35,15 +35,16 @@ AFRAME.registerComponent('circles-artefact', {
     //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
     CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
+    const currRot = CONTEXT_AF.el.object3D.rotation.clone();
     CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
                                                             title_back:data.title_back,             description_back:data.description_back, 
                                                             inspectPosition:data.inspectPosition,   inspectRotation:data.inspectRotation,   inspectScale:data.inspectScale,
                                                             origPosition: ((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
-                                                            origRotation: ((data.origPosition.x > 100000.0) ? { x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), 
-                                                                                                                y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), 
-                                                                                                                z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)
+                                                            origRotation: ((data.origRotation.x > 100000.0) ? { x:THREE.MathUtils.radToDeg(currRot.x), 
+                                                                                                                y:THREE.MathUtils.radToDeg(currRot.y), 
+                                                                                                                z:THREE.MathUtils.radToDeg(currRot.z)
                                                                                                               } : data.origRotation),              
-                                                            origScale:    ((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
+                                                            origScale:    ((data.origScale.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
                                                             textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
                                                              
                                                         });

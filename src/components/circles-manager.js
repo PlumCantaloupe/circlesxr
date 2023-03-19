@@ -257,7 +257,7 @@ AFRAME.registerComponent('circles-manager', {
     rotateElem.addEventListener('mouseleave', function (evt) { evt.target.setAttribute('scale',{x:1.0, y:1.0, z:1.0}); });
     rotateElem.addEventListener('click', function (evt) {
       CONTEXT_AF.rotationDesc += 180;
-      CONTEXT_AF.rotateDescElem.setAttribute('animation', {property:'rotation.y', dur:500, dir:'normal', to:CONTEXT_AF.rotationDesc, easing:'easeInQuad'});
+      CONTEXT_AF.rotateDescElem.setAttribute('animation__desc', {property:'rotation.y', dur:500, dir:'normal', to:CONTEXT_AF.rotationDesc, easing:'easeInQuad'});
     });
 
     let triangle_point = document.createElement('a-entity');

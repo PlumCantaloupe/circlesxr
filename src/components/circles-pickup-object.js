@@ -29,78 +29,84 @@ AFRAME.registerComponent('circles-pickup-object', {
     }
 
     CONTEXT_AF.el.addEventListener('click', (e) => {
-        if (CONTEXT_AF.pickedUp === true) {
-            //release
-            CONTEXT_AF.el.sceneEl.object3D.attach(CONTEXT_AF.el.object3D); //using three's "attach" allows us to retain world transforms during pickup/release
+      if (CONTEXT_AF.pickedUp === true) {
+          //release
+          CONTEXT_AF.el.sceneEl.object3D.attach(CONTEXT_AF.el.object3D); //using three's "attach" allows us to retain world transforms during pickup/release
 
-            //set drop transforms, if any
-            if (data.dropPosition.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_position', {property:'position', dur:data.animateDurationMS, to:data.dropPosition, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.position.set(data.dropPosition.x, data.dropPosition.y, data.dropPosition.z);
-              }
+          //set drop transforms, if any
+          if (data.dropPosition.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_position', {property:'position', dur:data.animateDurationMS, to:{x:data.dropPosition.x, y:data.dropPosition.y, z:data.dropPosition.z}, easing:'easeInOutQuad'});
             }
-            if (data.dropRotation.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_rotation', {property:'rotation', dur:data.animateDurationMS, to:data.dropRotation, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.rotation.set(
-                  THREE.MathUtils.degToRad(data.dropRotation.x),
-                  THREE.MathUtils.degToRad(data.dropRotation.y),
-                  THREE.MathUtils.degToRad(data.dropRotation.z)
-                );
-              }
+            else {
+              CONTEXT_AF.el.object3D.position.set(data.dropPosition.x, data.dropPosition.y, data.dropPosition.z);
             }
-            if (data.dropScale.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_scale', {property:'scale', dur:data.animateDurationMS, to:data.dropScale, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.scale.set(data.dropScale.x, data.dropScale.y, data.dropScale.z);
-              }
-            }
+          }
 
-            CONTEXT_AF.pickedUp = false;
-        }
-        else {
-            //pick-up
-            CONTEXT_AF.player.object3D.attach(CONTEXT_AF.el.object3D);
+          if (data.dropRotation.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_rotation', {property:'rotation', dur:data.animateDurationMS, to:{x:data.dropRotation.x, y:data.dropRotation.y, z:data.dropRotation.z}, easing:'easeInOutQuad'});
+            }
+            else {
+              CONTEXT_AF.el.object3D.rotation.set(
+                THREE.MathUtils.degToRad(data.dropRotation.x),
+                THREE.MathUtils.degToRad(data.dropRotation.y),
+                THREE.MathUtils.degToRad(data.dropRotation.z)
+              );
+            }
+          }
 
-            //set pickup transforms, if any
-            if (data.pickupPosition.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_position', {property:'position', dur:data.animateDurationMS, to:data.pickupPosition, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.position.set(data.pickupPosition.x, data.pickupPosition.y, data.pickupPosition.z);
-              }
+          if (data.dropScale.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_scale', {property:'scale', dur:data.animateDurationMS, to:{x:data.dropScale.x, y:data.dropScale.y, z:data.dropScale.z}, easing:'easeInOutQuad'});
             }
-            if (data.pickupRotation.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_rotation', {property:'rotation', dur:data.animateDurationMS, to:data.pickupRotation, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.rotation.set(
-                  THREE.MathUtils.degToRad(data.pickupRotation.x),
-                  THREE.MathUtils.degToRad(data.pickupRotation.y),
-                  THREE.MathUtils.degToRad(data.pickupRotation.z)
-                );
-              }
+            else {
+              CONTEXT_AF.el.object3D.scale.set(data.dropScale.x, data.dropScale.y, data.dropScale.z);
             }
-            if (data.pickupScale.x < 100000.0) {
-              if (data.animate === true) {
-                CONTEXT_AF.el.setAttribute('animation__cpo_scale', {property:'scale', dur:data.animateDurationMS, to:data.pickupScale, easing:'easeInOutQuad'});
-              }
-              else {
-                CONTEXT_AF.el.object3D.scale.set(data.pickupScale.x, data.pickupScale.y, data.pickupScale.z);
-              }
-            }
+          }
 
-            CONTEXT_AF.pickedUp = true;
+          CONTEXT_AF.pickedUp = false;
+      }
+      else {
+          //pick-up
+          CONTEXT_AF.player.object3D.attach(CONTEXT_AF.el.object3D);
+
+          //set pickup transforms, if any
+          if (data.pickupPosition.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_position', {property:'position', dur:data.animateDurationMS, to:{x:data.pickupPosition.x, y:data.pickupPosition.y, z:data.pickupPosition.z}, easing:'easeInOutQuad'});
+            }
+            else {
+              CONTEXT_AF.el.object3D.position.set(data.pickupPosition.x, data.pickupPosition.y, data.pickupPosition.z);
+            }
+          }
+          if (data.pickupRotation.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_rotation', {property:'rotation', dur:data.animateDurationMS, to:{x:data.pickupRotation.x, y:data.pickupRotation.y, z:data.pickupRotation.z}, easing:'easeInOutQuad'});
+            }
+            else {
+              CONTEXT_AF.el.object3D.rotation.set(
+                THREE.MathUtils.degToRad(data.pickupRotation.x),
+                THREE.MathUtils.degToRad(data.pickupRotation.y),
+                THREE.MathUtils.degToRad(data.pickupRotation.z)
+              );
+            }
+          }
+          if (data.pickupScale.x < 100000.0) {
+            if (data.animate === true) {
+              CONTEXT_AF.el.setAttribute('animation__cpo_scale', {property:'scale', dur:data.animateDurationMS, to:{x:data.pickupScale.x, y:data.pickupScale.y, z:data.pickupScale.z}, easing:'easeInOutQuad'});
+            }
+            else {
+              CONTEXT_AF.el.object3D.scale.set(data.pickupScale.x, data.pickupScale.y, data.pickupScale.z);
+            }
+          }
+
+          CONTEXT_AF.pickedUp = true;
         }
     });
+  },
+  update(oldData) {
+    console.log(oldData);
+    console.log(this.data);
   }
 });

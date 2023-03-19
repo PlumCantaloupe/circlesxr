@@ -27,7 +27,8 @@ AFRAME.registerComponent('circles-inspect-object', {
       CONTEXT_AF.el.setAttribute('circles-inspect-object', {origPosition: CONTEXT_AF.el.object3D.position.clone()});
     }
     if (data.origRotation.x > 100000.0) {
-      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origRotation: {x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)}});
+      const currRot = CONTEXT_AF.el.object3D.rotation.clone();
+      CONTEXT_AF.el.setAttribute('circles-inspect-object', {origRotation: {x:THREE.MathUtils.radToDeg(currRot.x), y:THREE.MathUtils.radToDeg(currRot.y), z:THREE.MathUtils.radToDeg(currRot.z)}});
     }
     if (data.origScale.x > 100000.0) {
       CONTEXT_AF.el.setAttribute('circles-inspect-object', {origScale: CONTEXT_AF.el.object3D.scale.clone()});
