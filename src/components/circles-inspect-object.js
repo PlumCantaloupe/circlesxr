@@ -142,8 +142,5 @@ AFRAME.registerComponent('circles-inspect-object', {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED);
       }
     }
-  },
-  getOrigScaleThree : function() {
-    return new THREE.Vector3(this.data.origScale.x, this.data.origScale.y, this.data.origScale.z);
   }
 });
