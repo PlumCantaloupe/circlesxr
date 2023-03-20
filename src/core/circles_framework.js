@@ -206,8 +206,16 @@ const isReady = function() {
   return getCirclesManager().isCirclesReady();
 }
 
-const getAvatarElement = function() {
+const getMainCameraElement = function() {
   const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the camera after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
+  }
+  return elem;
+}
+
+const getAvatarElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.avatar');
 
   if (!elem) {
     console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
@@ -216,18 +224,7 @@ const getAvatarElement = function() {
 }
 
 const getAvatarRigElement = function() {
-  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.avatar');
-  if (!elem) {
-    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
-  }
-  return elem;
-}
-
-const getMainCameraElement = function() {
-  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
-  if (!elem) {
-    console.warn("[circles_framework]: make sure to access the camera after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
-  }
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
   return elem;
 }
 
