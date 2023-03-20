@@ -3,10 +3,20 @@
 AFRAME.registerComponent('circles-object-world', {
 schema: {
     world:      {type: 'string', default:''},
-    pickedup:   {type: 'bool', default:false}
-    },
+    id:         {type: 'string', default:''},
+    pickedup:   {type: 'bool',   default:false}
+  },
   init: function() {
     const CONTEXT_AF    = this;
+
+    //set default id and world
+    if (CONTEXT_AF.data.world === '') {
+        CONTEXT_AF.el.setAttribute('circles-object-world', {world:CIRCLES.getCirclesWorldName()});
+    }
+    if (CONTEXT_AF.data.id === '') {
+        console.log(CONTEXT_AF.el);
+        CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
+    }
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.INSPECT_THIS_OBJECT, function (evt) {
         console.log("Event: CIRCLES.EVENTS.INSPECT_THIS_OBJECT");
