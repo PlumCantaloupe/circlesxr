@@ -31,8 +31,8 @@ AFRAME.registerComponent('circles-object-label', {
 
     CONTEXT_AF.el.classList.add('label_wrapper');
 
-    CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', function (evt) {
-        CONTEXT_AF.camera = evt.detail.cameraEl; //get reference to camera in scene (assume there is only one)
+    CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.READY, function (e) {
+        CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
     });
   },
   update: function(oldData) {
@@ -77,7 +77,7 @@ AFRAME.registerComponent('circles-object-label', {
   tick : function (time, timeDelta) {
     if (this.data.billboard === true) {
         if ( time - this.prevTime > this.data.updateRate ) {
-            if (this.data.label_visible === true) {
+            if (this.data.label_visible === true && this.camera) {
                 this.camera.object3D.getWorldPosition(this.worldPos);
                 this.worldPos.y = this.el.object3D.position.y;
                 this.label.object3D.lookAt(this.worldPos);
