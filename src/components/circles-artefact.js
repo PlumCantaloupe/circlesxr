@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:20}
+    updateRate:         {type:'number',     default:20},
   },
   init: function() {
     const CONTEXT_AF  = this;
@@ -54,11 +54,52 @@ AFRAME.registerComponent('circles-artefact', {
                                                         });
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
-    //CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
+    CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
     }
+
+    //need to make sure we don't have duplicate artefacts ... and that we trigger descriptions for all ...
+    // CONTEXT_AF.socket     = null;
+    //     CONTEXT_AF.connected  = false;
+    //     CONTEXT_AF.campfireEventName = "campfire_event";
+    //     CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+    //         CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+    //         CONTEXT_AF.connected = true;
+    //         console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
+
+    //         CONTEXT_AF.campfire.addEventListener('click', function () {
+    //             CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+    //             CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
+    //             CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    //         });
+
+    //         //listen for when others turn on campfire
+    //         CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+    //             CONTEXT_AF.turnFire(data.campfireOn);
+    //             CONTEXT_AF.fireOn = data.campfireOn;
+    //         });
+
+    //         //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
+    //         setTimeout(function() {
+    //             CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    //         }, THREE.MathUtils.randInt(0,1200));
+
+    //         //if someone else requests our sync data, we send it.
+    //         CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+    //             CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    //         });
+
+    //         //receiving sync data from others (assuming all others is the same for now)
+    //         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
+    //             //make sure we are receiving data for this world
+    //             if (data.world === CIRCLES.getCirclesWorldName()) {
+    //                 CONTEXT_AF.turnFire(data.campfireON );
+    //                 CONTEXT_AF.fireOn = data.campfireON;
+    //             }
+    //         });
+    //     });
   },
   //!!TODO should probably make this component dynamic ...
   update : function(oldData) {

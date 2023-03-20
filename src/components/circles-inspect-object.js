@@ -15,6 +15,7 @@ AFRAME.registerComponent('circles-inspect-object', {
     textRotationY:    {type:'number',   default:0.0},                 //rotation of textual info
     textLookAt:       {type:'boolean',  default:false},               //will we do a look at to rotate to where user is at first?
     networkedEnabled: {type:'boolean',  default:false},
+    networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT},               
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -134,7 +135,7 @@ AFRAME.registerComponent('circles-inspect-object', {
 
     if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
       if (data.networkedEnabled === true) {
-        CONTEXT_AF.el.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true, synchWorldTransforms:true});
+        CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
       }
       else {
