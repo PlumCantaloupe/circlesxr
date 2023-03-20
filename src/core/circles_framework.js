@@ -115,6 +115,13 @@ const EVENTS = {
   RECEIVE_DATA_SYNC         : 'RECEIVE_DATA_SYNC'
 };
 
+const NETWORKED_TEMPLATES = {
+  AVATAR              : 'circles-user-template',
+  INTERACTIVE_OBJECT  : 'circles-interactive-object-template',
+  ARTEFACT            : 'circles-artefact-template',
+  TEXT                : 'circles-text-template'
+};
+
 //!!DEPRE 8 color
 const COLOR_PALETTE = {
   PEARL     : {r:255,  g:252,  b:250},
@@ -279,6 +286,7 @@ module.exports = {
   MODEL_HAIR_TYPE,
   MODEL_BODY_TYPE,
   EVENTS,
+  NETWORKED_TEMPLATES,
   COLOR_PALETTE,
   getUUID,
   setupCirclesWebsocket,
