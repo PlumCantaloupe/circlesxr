@@ -31,9 +31,16 @@ AFRAME.registerComponent('circles-object-label', {
 
     CONTEXT_AF.el.classList.add('label_wrapper');
 
-    CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.READY, function (e) {
-        CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
-    });
+    if (CIRCLES.isReady()) {
+        CONTEXT_AF.camera = CIRCLES.getMainCameraElement();
+    }
+    else {
+        const readyFunc = function (e) {
+            CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.READY, readyFunc);
+        };
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.READY, readyFunc);
+    }
   },
   update: function(oldData) {
     const CONTEXT_AF = this;
