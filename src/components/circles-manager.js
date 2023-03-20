@@ -60,6 +60,9 @@ AFRAME.registerComponent('circles-manager', {
           CONTEXT_AF.selectedObject.setAttribute('animation__zoom', {property:'position.z', dur:400, to:targetPos, easing:'easeInOutBack'});
         });
 
+        //attach networkedcomponent to avatar
+        CIRCLES.getAvatarElement().setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR, attachTemplateToLocal:true});
+
         //let everyone know that circles is ready
         CONTEXT_AF.isCirclesReadyVar = true;
         CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.READY);
@@ -149,7 +152,7 @@ AFRAME.registerComponent('circles-manager', {
 
       if ( CONTEXT_AF.selectedObject !== null ) {
         CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-        CONTEXT_AF.releaseInspectedObject(CONTEXT_AF.selectedObject.components['circles-inspect-object']);
+        CONTEXT_AF.releaseInspectedObject();
       }
     });
 
@@ -283,7 +286,7 @@ AFRAME.registerComponent('circles-manager', {
       //release currently selected object
       const isSameObject = CONTEXT_AF.selectedObject.isSameNode( obj.el );
       CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-      CONTEXT_AF.releaseInspectedObject( CONTEXT_AF.selectedObject.components['circles-inspect-object'] );
+      CONTEXT_AF.releaseInspectedObject();
 
       //pick up another object if not the same object that was released
       if ( !isSameObject ) {
@@ -297,7 +300,8 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.artefactZoomIndexTarget   = 0;
     CONTEXT_AF.artefactRotIndexTarget    = 0;
 
-    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true});
+    //!!
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
 
     //hide label
     if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
@@ -340,10 +344,11 @@ AFRAME.registerComponent('circles-manager', {
     });
     CONTEXT_AF.objectControls.setAttribute('visible', true);
   },
-  releaseInspectedObject : function ( obj ) {
+  releaseInspectedObject : function () {
     const CONTEXT_AF = this;
 
-    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false});
+    //!!
+    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
 
     //show label
     if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
