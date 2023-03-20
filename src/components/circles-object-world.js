@@ -14,7 +14,6 @@ schema: {
         CONTEXT_AF.el.setAttribute('circles-object-world', {world:CIRCLES.getCirclesWorldName()});
     }
     if (CONTEXT_AF.data.id === '') {
-        console.log(CONTEXT_AF.el);
         CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
     }
 

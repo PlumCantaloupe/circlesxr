@@ -105,8 +105,5 @@ AFRAME.registerComponent('circles-pickup-object', {
         }
     });
   },
-  update(oldData) {
-    console.log(oldData);
-    console.log(this.data);
-  }
+  //update(oldData) {}
 });
