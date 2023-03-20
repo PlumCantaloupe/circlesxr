@@ -25,6 +25,9 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.addEventListeners(); //want after everything loaded in via network
     CONTEXT_AF.addArtefactNarrationController();
 
+    //attach networkedcomponent (to create avatar) to player rig
+    CIRCLES.getAvatarRigElement().setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR, attachTemplateToLocal:true});
+
     scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e) => {
         CONTEXT_AF.objectControls = scene.querySelector('#object_controls');
 
@@ -59,9 +62,6 @@ AFRAME.registerComponent('circles-manager', {
           const targetPos = CONTEXT_AF.artefactZoomSteps[CONTEXT_AF.artefactZoomIndexTarget];
           CONTEXT_AF.selectedObject.setAttribute('animation__zoom', {property:'position.z', dur:400, to:targetPos, easing:'easeInOutBack'});
         });
-
-        //attach networkedcomponent to avatar
-        CIRCLES.getAvatarElement().setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR, attachTemplateToLocal:true});
 
         //let everyone know that circles is ready
         CONTEXT_AF.isCirclesReadyVar = true;
