@@ -27,7 +27,7 @@
 
   //naf schemas
   NAF.schemas.add({
-    template: '#user-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR,
     components: [
       'position',
       'rotation',
@@ -127,7 +127,7 @@
   });
 
   NAF.schemas.add({
-    template: '#interactive-object-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT,
     components: [
       'position',
       'rotation',
@@ -137,9 +137,9 @@
       'material',
       'obj-model',
       //'circles-object-world',
-      //'circles-interactive-object',
-      //'circles-interactive-visible',
-      //'circles-inspect-object',
+      'circles-interactive-object',
+      'circles-interactive-visible',
+      'circles-inspect-object',
       'shadow',
       //'class'
       // {
@@ -150,7 +150,25 @@
   });
 
   NAF.schemas.add({
-    template: '#text-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT,
+    components: [
+      'position',
+      'rotation',
+      'scale',
+      'gltf-model',
+      'geometry',
+      'material',
+      'obj-model',
+      'circles-artefact',
+      //'circles-interactive-object',
+      //'circles-interactive-visible',
+      //'circles-inspect-object',
+      'shadow',
+    ]
+  });
+
+  NAF.schemas.add({
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.TEXT,
     components: [
       'position',
       'rotation',

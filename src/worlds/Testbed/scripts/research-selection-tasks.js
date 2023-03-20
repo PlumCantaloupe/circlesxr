@@ -240,7 +240,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             target.setAttribute('position', {x:0.0, y:0.0, z:0.0});
             target.setAttribute('circles-interactive-object', {type:'outline', hover_scale:1.2, click_scale:1.3, neutral_scale:1.0});
             target.setAttribute('circles-interactive-visible', true);
-            target.setAttribute('networked', {template:'#interactive-object-template', attachTemplateToLocal:true, synchWorldTransforms:true});
+            target.setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT, attachTemplateToLocal:true, synchWorldTransforms:true});
             targetConta.appendChild(target);
 
             //save direction vector so we can adjust later
@@ -257,7 +257,7 @@ AFRAME.registerComponent('research-selection-tasks', {
             label.setAttribute('class', 'label');
             label.setAttribute('text', {value:unique_id, font:'roboto', width:TARGET_GEO.radius * 20.0, color:'#FFFFFF', align:'center'});
             label.setAttribute('position', {x:0.0, y:0.0 + (TARGET_GEO.radius * 2.0), z:0.0});
-            label.setAttribute('networked', {template:'#text-template', attachTemplateToLocal:true, synchWorldTransforms:true});
+            label.setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.TEXT, attachTemplateToLocal:true, synchWorldTransforms:true});
             targetConta.appendChild(label);
         };
 
