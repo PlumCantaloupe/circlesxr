@@ -136,7 +136,7 @@
       'geometry',
       'material',
       'obj-model',
-      //'circles-object-world',
+      'circles-object-world',
       'circles-interactive-object',
       'circles-interactive-visible',
       'circles-inspect-object',
@@ -150,7 +150,7 @@
   });
 
   NAF.schemas.add({
-    template: '#' + CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT,
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.ARTEFACT,
     components: [
       'position',
       'rotation',
@@ -159,7 +159,11 @@
       'geometry',
       'material',
       'obj-model',
-      'circles-artefact',
+      'circles-object-world',
+      'circles-interactive-object',
+      'circles-interactive-visible',
+      'circles-inspect-object',
+      'shadow',
       //'circles-interactive-object',
       //'circles-interactive-visible',
       //'circles-inspect-object',
