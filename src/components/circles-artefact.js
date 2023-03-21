@@ -26,10 +26,10 @@ AFRAME.registerComponent('circles-artefact', {
     smoothingOn:        {type:'boolean',  default:true},
     smoothingAlpha:     {type:'float',    default:0.05},
     
-    label_text:         {type:'string',    default:'label_text'},
-    label_on:           {type:'boolean',   default:true},
-    label_offset:       {type:'vec3',      default:{x:0.0, y:0.0, z:0.0}},
-    arrow_position:     {type:'string',    default: 'up', oneOf: ['up', 'down', 'left', 'right']},
+    label_text:         {type:'string',   default:'label_text'},
+    label_on:           {type:'boolean',  default:true},
+    label_offset:       {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
+    arrow_position:     {type:'string',   default: 'up', oneOf: ['up', 'down', 'left', 'right']},
 
     networkedEnabled: {type:'boolean',  default:false},
     networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
