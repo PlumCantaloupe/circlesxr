@@ -157,7 +157,8 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'circles-checkpoint' &&
                 keys[i] !== 'circles-sendpoint' &&
                 keys[i] !== 'circles-spawnpoint' &&
-                keys[i] !== 'circles-object-label' &&
+                keys[i] !== 'circles-label' &&
+                keys[i] !== 'circles-lookat' &&
                 keys[i] !== 'networked' &&
                 keys[i] !== 'circles-inspect-object' &&
                 keys[i] !== 'circles-object-world' && 
