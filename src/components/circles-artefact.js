@@ -6,23 +6,33 @@ AFRAME.registerComponent('circles-artefact', {
     description:        {type:'string',   default:'No decription set'},
     title_back:         {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
     description_back:   {type:'string',   default:''},
+    description_on:     {type:'boolean',  default:true},
+    description_offset: {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     audio:              {type:'audio',    default:''},
     volume:             {type:'number',   default:1.0},
+
     inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     origPosition:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
     origRotation:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
     origScale:          {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+
     textRotationY:      {type:'number',   default:0.0},               
-    textLookAt:         {type:'boolean',  default:false},
+    descriptionLookAt:  {type:'boolean',  default:false},
+    labelLookAt:        {type:'boolean',  default:true},
+    constrainYAxis:     {type:'boolean',  default:true},
+    updateRate:         {type:'number',   default:200},   //in ms
+    smoothingOn:        {type:'boolean',  default:true},
+    smoothingAlpha:     {type:'float',    default:0.05},
     
-    label_text:         {type:'string',     default:'label_text'},
-    label_visible:      {type:'boolean',    default:true},
-    label_offset:       {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
-    description_offset: {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
-    arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:20}
+    label_text:         {type:'string',    default:'label_text'},
+    label_on:           {type:'boolean',   default:true},
+    label_offset:       {type:'vec3',      default:{x:0.0, y:0.0, z:0.0}},
+    arrow_position:     {type:'string',    default: 'up', oneOf: ['up', 'down', 'left', 'right']},
+
+    networkedEnabled: {type:'boolean',  default:false},
+    networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
   },
   init: function() {
     const CONTEXT_AF  = this;
@@ -46,8 +56,6 @@ AFRAME.registerComponent('circles-artefact', {
                                                                                                                 z:THREE.MathUtils.radToDeg(currRot.z)
                                                                                                               } : data.origRotation),              
                                                             origScale:    ((data.origScale.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
-                                                            textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
-                                                             
                                                         });
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
@@ -57,10 +65,16 @@ AFRAME.registerComponent('circles-artefact', {
     const tempPos = CONTEXT_AF.el.getAttribute('position');
     CONTEXT_AF.labelEl = document.createElement('a-entity');
     CONTEXT_AF.labelEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
+    CONTEXT_AF.labelEl.setAttribute('visible', data.label_on);
     CONTEXT_AF.labelEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
-    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {
-      label_text:data.label_text, label_visible:data.label_visible, label_offset:data.label_offset, arrow_position:data.arrow_position, updateRate:data.updateRate
-    });
+    CONTEXT_AF.labelEl.setAttribute('circles-label', {  text:           data.label_text, 
+                                                        offset:         data.label_offset, 
+                                                        arrow_position: data.arrow_position, 
+                                                        lookAtCamera:   data.labelLookAt,
+                                                        constrainYAxis: data.constrainYAxis, 
+                                                        updateRate:     data.updateRate, 
+                                                        smoothingOn:    data.smoothingOn, 
+                                                        smoothingAlpha: data.smoothingAlpha });
     CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.labelEl);
 
     CONTEXT_AF.labelEl.addEventListener('click', function(e) {
@@ -73,17 +87,88 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.descEl.setAttribute('visible', false);
     CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x + data.description_offset, y:tempPos.y + data.description_offset, z:tempPos.z + data.description_offset});
     CONTEXT_AF.descEl.setAttribute('rotation', {x:0.0, y:data.textRotationY, z:0.0});
-    CONTEXT_AF.descEl.setAttribute('circles-description', {
-      title_text_front:       data.title,
-      title_text_back:        data.title_back,
-      description_text_front: data.description,
-      description_text_back:  data.description_back
-    });
+    CONTEXT_AF.descEl.setAttribute('circles-description', { title_text_front:       data.title,
+                                                            title_text_back:        data.title_back,
+                                                            description_text_front: data.description,
+                                                            description_text_back:  data.description_back,
+                                                            lookAtCamera:           data.descriptionLookAt,
+                                                            constrainYAxis:         data.constrainYAxis, 
+                                                            updateRate:             data.updateRate, 
+                                                            smoothingOn:            data.smoothingOn, 
+                                                            smoothingAlpha:         data.smoothingAlpha });
     CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.descEl);
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
     }
+
+    //Network stuff
+    const ownership_gained_Func = (e) => {
+      //console.log("ownership-gained");
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
+    };
+
+    const ownership_lost_Func = (e) => {
+      //console.log("ownership-lost");
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
+    };
+
+    const ownership_changed_Func = (e) => {
+      //console.log("ownership-changed");
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
+    };
+
+    let eventsAttached = false;
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, function (event) {
+      if (eventsAttached === false) {
+        eventsAttached = true;
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
+          el.addEventListener('ownership-gained', ownership_gained_Func);
+          el.addEventListener('ownership-lost', ownership_lost_Func);
+          el.addEventListener('ownership-changed', ownership_changed_Func);
+        });
+      }
+    });
+
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, function (event) {
+        eventsAttached = false;
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
+          el.removeEventListener('ownership-gained', ownership_gained_Func);
+          el.removeEventListener('ownership-lost', ownership_lost_Func);
+          el.removeEventListener('ownership-changed', ownership_changed_Func);
+        });
+    });
+
+    if (CONTEXT_AF.el.hasAttribute('networked') === true) {
+      if (eventsAttached === false) {
+        eventsAttached = true;
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
+          el.addEventListener('ownership-gained', ownership_gained_Func);
+          el.addEventListener('ownership-lost', ownership_lost_Func);
+          el.addEventListener('ownership-changed', ownership_changed_Func);
+        });
+      }
+    }
+    
+    //send click event to manager
+    CONTEXT_AF.el.addEventListener('click', (e) => {
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
+
+      //take over networked membership
+      if (CONTEXT_AF.el.hasAttribute('networked') === true) {
+        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
+          //console.log("is this mine?");
+          if (!NAF.utils.isMine(el)) {
+            //console.log("No but ... ")
+            NAF.utils.takeOwnership(el);
+            //console.log("it is mine now");
+          } 
+          else {
+            //console.log("Yes, it is mine already");
+          }
+        });
+      }
+    });
 
     //need to make sure we don't have duplicate artefacts ... and that we trigger descriptions for all ...
     // CONTEXT_AF.socket     = null;
@@ -128,23 +213,45 @@ AFRAME.registerComponent('circles-artefact', {
   },
   //!!TODO should probably make this component dynamic ...
   update : function(oldData) {
-    // const CONTEXT_AF = this;
-    // const data = this.data;
+    const CONTEXT_AF = this;
+    const data = this.data;
 
-    // if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+    if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+
+    if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
+      if (data.networkedEnabled === true) {
+        CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
+        CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
+      }
+      else {
+        CONTEXT_AF.el.removeAttribute('networked');
+        CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED);
+      }
+    }
+
+    if ( (oldData.networkedTemplate !== data.networkedTemplate) && (data.networkedTemplate !== '') ) {
+      if (data.networkedEnabled === true && (CONTEXT_AF.el.getAttribute('networked').template !== '#' + data.networkedTemplate)) {
+        CONTEXT_AF.el.removeAttribute('networked');
+        CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
+      }
+    }
   },
   pickup : function() {
     const CONTEXT_AF = this;
     CONTEXT_AF.isPickedUp = true;
     
     //turn on networking
-    CONTEXT_AF.el.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+    CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
 
     //hide label
-    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:false});
+    if (CONTEXT_AF.data.label_on === true) {
+      CONTEXT_AF.labelEl.setAttribute('visible', false);
+    }
 
     //show description
-    CONTEXT_AF.descEl.setAttribute('visible', true);
+    if (CONTEXT_AF.data.description_on === true) {
+      CONTEXT_AF.descEl.setAttribute('visible', true);
+    }
 
     //let others know
     CONTEXT_AF.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, null, false );
@@ -154,13 +261,17 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.isPickedUp = false;
 
     //turn off networking
-    CONTEXT_AF.el.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+    CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
 
     //show label
-    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:true});
+    if (CONTEXT_AF.data.label_on === true) {
+      CONTEXT_AF.labelEl.setAttribute('visible', true);
+    }
 
     //hide description
-    CONTEXT_AF.descEl.setAttribute('visible', false);
+    if (CONTEXT_AF.data.description_on === true) {
+      CONTEXT_AF.descEl.setAttribute('visible', false);
+    }
 
     //send off event for others
     CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
