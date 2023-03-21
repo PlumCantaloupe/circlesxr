@@ -270,16 +270,20 @@ This is a core component in our framework that explores learning around tools an
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | inspectPosition | Vec3            | Adjust the position of artefact when picked up.           | 0 0 0                |
+  | inspectRotation | vec3, degrees   | Adjust rotation of artefact when picked up.               | 0 0 0                |
   | inspectScale    | Vec3            | Adjust the size of artefact when picked up.               | 1 1 1                |
   | textRotationY   | number, degrees | Adjust the rotation of the description text. Degrees.     | 0                    |
-  | textLookAt      | boolean         | Whether to generate a default environment                 | false                |
-  | inspectRotation | vec3, degrees   | Adjust rotation of artefact when picked up.               | 0 0 0                |
-  | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
-  | label_visible   | booelan         | Whether label is visible.                                 | true                 |
-  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
-  | title           | string          | Title of description.                                     | 'No Title Set'       |
-  | description     | string          | Description text.                                         | 'No decription set'  |
+  | label_on        | boolean         | Whether label is visible/used.                            | true                 |
   | label_text      | string          | Label text.                                               | 'label_text'         |
+  | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
+  | description_on  | boolean         | Whether description is visible/used.                            | true                 |
+  | descriptionLookAt  | boolean         | Whether description rotates to follow avatar.                            | false                 |
+  | title           | string          | Title of description.                                     | 'No Title Set'       |
+  | title_back      | string          | Title of description on back.                                     | ''       |
+  | description     | string          | Description text.                                         | 'No decription set'  |
+  | description_back | string          | Description text on back.                                         | ''  |
   | audio           | audio           | Narration audio that can be added to play when artefact picked up.        | ''         |
   | volume          | number          | If there is narration audio attached to this, this controls volume.       | '1.0'         |
   
@@ -295,10 +299,10 @@ This is a core component in our framework that explores learning around tools an
             scale="1 1 1"
             gltf-model="#model_gltf"
             circles-artefact="
+                inspectPosition:  0.0 0.0 0.0;
                 inspectScale:     0.5 0.5 0.5;
-                textRotationY:    90;
-                textLookAt:       false; 
                 inspectRotation:  0 0 0;
+                textRotationY:    90;
                 label_offset:     0 1 0;
                 label_visible:    true;
                 arrow_position:   down;
@@ -334,6 +338,27 @@ This is a core component in our framework that explores learning around tools an
   ```html
   <a-entity circles-checkpoint position="10 0 9.5"></a-entity>
   ```
+- [circles-description](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-description.js): Used to create a large two-sided element to have textual descriptions.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | title_text_front       | string         | Front title text.                                         | '[~20-25 chars] title_front'                |
+  | title_text_back        | string         | Back title text.                                          | ''                |
+  | description_text_front | string         | Front title text.                                         | '[~240-280 chars] description_front'                |
+  | description_text_back  | string         | Front title text.                                         | ''                |
+  | lookAtCamera    | boolean            | Whether the description rotates to face the camera.               | true               |
+  | updateRate      | number            | How often the lookAtCamera rotates the label, in ms.               | 20                |
+
+  *Example 'circles-description' code: Note that if no back title and description provided the rotate button above is not shown.*
+
+  ```html
+  <a-entity id="description_box" position="1.0 2.0 3.0" rotation="0 90 0"
+            circles-description=" title_text_front:Hello!;
+                                  description_text_front:I am saying hello.;
+                                  title_text_back:Good-bye!;
+                                  description_text_back:I am saying godo-bye.;
+                                  lookAtCamera:true; "></a-entity>
+  ```
 - [circles-interactive-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-object.js): Attach to an entity that you wish to be interactive, and add some visual feedback to the object i.e., hover effects like scale, highlight, or an outline. Also have teh ability to quickly add a sound effect to be played during click here.
 
   _NOTE!!: There needs to be a material on the model before we "extend" it with a "highlight" using the "circles-material-extend-fresnel" component. A gltf likely already has one, but make sure if manually defining a metrial that the "material" attribute is listed **before** this component is added._
@@ -356,24 +381,37 @@ This is a core component in our framework that explores learning around tools an
     <!-- Important: note that "material" is listed before "circles-interactive-object" because it uses "circles-material-extend-fresnel" -->
     <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
     ```
-- [circles-sound](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sound.js): This is a component that extends A-Frame's [sound component](https://github.com/aframevr/aframe/blob/master/docs/components/sound.md), and connects to enter experience events, so that autoplay sounds do play after enter a Circles world.
+- [circles-label](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-label.js): Used to create a small visual label.
 
-    | Property           | Type            | Description                                               | Default Value        |
-    |--------------------|-----------------|-----------------------------------------------------------|----------------------|
-    | src                | audio          | audio asset                               | ''                  |
-    | autoplay           | boolean        | will it play when the app starts.         | false               |
-    | type               | string, oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']           | By changing type it changes how sound is played i.e., whthere it is spatial (in the world, diegetic) or not spatial (not in the world, a UI element, non-diegetic)                                       | 'basic' |
-    | loop                | boolean          | does this sound loop           | false                  |
-    | volume              | number          | how loud the sound is | 1.0                 |
-    | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
-    | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | text            | string          | Label test [20-24 characters].               | 'label_text'               |
+  | offset          | vec3            | Adjust where the label is positioned, relative to rotation origin.               | 0 0 0                |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']            | Adjust where the player is positioned, relative to checkpoint position.               | 'up'               |
+  | lookAtCamera    | boolean            | Whether the label rotates to face the camera.               | true               |
+  | updateRate      | number            | How often the lookAtCamera rotates the label, in ms.               | 20                |
 
-    *Example 'circles-sound'*
+  *Example 'circles-label' code.*
 
-    ```html
-    <!-- ambient music/sound -->
-    <a-entity circles-sound="type:music; src:#ambient_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
-    ```
+  ```html
+  <a-entity circles-label="text:click here; visible:true; offset:1.1 0.2 0; arrow_position:left;"></a-entity>
+  ```
+  - [circles-lookat](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-lookat.js): Attch to an object to have it always facing another element.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | targetElement   | selector        | The element you "this" element to always point towards.                         | null, reverts to player camera  |
+  | enabled         | boolean         | Are we still rotating this element towards the target element.                  | 0 0 0                |
+  | constrainYAxis  | boolean         | Do we only want the roptation to happen on the y-axis.                          | 0 0 0                |
+  | updateRate      | number          | How often the new position is upfdated (in milliseconds).                       | 200               |
+  | smoothingOn     | boolean         | Are we smoothing motion between updates.                                        | true                |
+  | smoothingAlpha  | number          | How aggressively are we smoothing. Range [0.0, 1.0]. Smaller is more smoothing. | 0.05                |
+
+  *Example 'circles-lookat' code:*
+
+  ```html
+  <a-entity id="lookyElement" circles-lookat="targetElement:#myCam; constrainYAxis:true;"></a-entity>
+  ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
 
@@ -418,7 +456,24 @@ This is a core component in our framework that explores learning around tools an
   <!-- click on this button to be sent to the checkpoint above -->
   <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
   ```
+- [circles-sound](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sound.js): This is a component that extends A-Frame's [sound component](https://github.com/aframevr/aframe/blob/master/docs/components/sound.md), and connects to enter experience events, so that autoplay sounds do play after enter a Circles world.
 
+    | Property           | Type            | Description                                               | Default Value        |
+    |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+    | src                | audio          | audio asset                               | ''                  |
+    | autoplay           | boolean        | will it play when the app starts.         | false               |
+    | type               | string, oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']           | By changing type it changes how sound is played i.e., whthere it is spatial (in the world, diegetic) or not spatial (not in the world, a UI element, non-diegetic)                                       | 'basic' |
+    | loop                | boolean          | does this sound loop           | false                  |
+    | volume              | number          | how loud the sound is | 1.0                 |
+    | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
+    | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
+
+    *Example 'circles-sound'*
+
+    ```html
+    <!-- ambient music/sound -->
+    <a-entity circles-sound="type:music; src:#ambient_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+    ```
 - [circles-spawnpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-spawnpoint.js): Attach to to a circles-checkpoint entity that you wish to act as a spawn point when entering the world. If there are multiple spawnpoints in a single world one is chosen randomly to position the player on.
 
   | Property        | Type            | Description                                               | Default Value        |
