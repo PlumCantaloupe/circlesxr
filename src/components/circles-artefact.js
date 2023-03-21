@@ -70,6 +70,7 @@ AFRAME.registerComponent('circles-artefact', {
     //create associated description
     CONTEXT_AF.descEl = document.createElement('a-entity');
     CONTEXT_AF.descEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_description');
+    CONTEXT_AF.descEl.setAttribute('visible', false);
     CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x + data.description_offset, y:tempPos.y + data.description_offset, z:tempPos.z + data.description_offset});
     CONTEXT_AF.descEl.setAttribute('rotation', {x:0.0, y:data.textRotationY, z:0.0});
     CONTEXT_AF.descEl.setAttribute('circles-description', {
@@ -143,7 +144,7 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:false});
 
     //show description
-    //
+    CONTEXT_AF.descEl.setAttribute('visible', true);
 
     //let others know
     CONTEXT_AF.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, null, false );
@@ -159,7 +160,7 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:true});
 
     //hide description
-    //
+    CONTEXT_AF.descEl.setAttribute('visible', false);
 
     //send off event for others
     CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
