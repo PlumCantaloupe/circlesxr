@@ -124,7 +124,7 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
             CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
 
-            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to stop'});
+            CONTEXT_AF.campfireElem.setAttribute('circles-label',{text:'click fire to stop'});
         }
         else {
             CONTEXT_AF.fireSound.components.sound.stopSound();
@@ -150,7 +150,7 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
             CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
 
-            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click fire to start'});
+            CONTEXT_AF.campfireElem.setAttribute('circles-label',{text:'click fire to start'});
         }
     }
 });
