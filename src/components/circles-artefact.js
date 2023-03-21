@@ -19,7 +19,8 @@ AFRAME.registerComponent('circles-artefact', {
     
     label_text:         {type:'string',     default:'label_text'},
     label_visible:      {type:'boolean',    default:true},
-    label_offset:       {type:'vec3'},
+    label_offset:       {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
+    description_offset: {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
     updateRate:         {type:'number',     default:20}
   },
@@ -53,9 +54,10 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
     //create associated label
+    const tempPos = CONTEXT_AF.el.getAttribute('position');
     CONTEXT_AF.labelEl = document.createElement('a-entity');
     CONTEXT_AF.labelEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
-    CONTEXT_AF.labelEl.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    CONTEXT_AF.labelEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
     CONTEXT_AF.labelEl.setAttribute('circles-object-label', {
       label_text:data.label_text, label_visible:data.label_visible, label_offset:data.label_offset, arrow_position:data.arrow_position, updateRate:data.updateRate
     });
@@ -64,6 +66,19 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.labelEl.addEventListener('click', function(e) {
       CONTEXT_AF.el.click();  //also want to forward label clicks to the artefact itself
     });
+
+    //create associated description
+    CONTEXT_AF.descEl = document.createElement('a-entity');
+    CONTEXT_AF.descEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_description');
+    CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x + data.description_offset, y:tempPos.y + data.description_offset, z:tempPos.z + data.description_offset});
+    CONTEXT_AF.descEl.setAttribute('rotation', {x:0.0, y:data.textRotationY, z:0.0});
+    CONTEXT_AF.descEl.setAttribute('circles-description', {
+      title_text_front:       data.title,
+      title_text_back:        data.title_back,
+      description_text_front: data.description,
+      description_text_back:  data.description_back
+    });
+    CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.descEl);
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
