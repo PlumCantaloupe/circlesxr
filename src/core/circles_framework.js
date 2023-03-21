@@ -223,6 +223,15 @@ const getAvatarElement = function() {
   return elem;
 }
 
+const getAvatarHolderElementBody = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.head_holder');
+
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
+  }
+  return elem;
+}
+
 const getAvatarRigElement = function() {
   const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
   return elem;
@@ -295,6 +304,7 @@ module.exports = {
   getCirclesManager,
   isReady,
   getAvatarElement,
+  getAvatarHolderElementBody,
   getAvatarRigElement,
   getMainCameraElement,
   getCirclesSceneElement,
