@@ -88,7 +88,6 @@ AFRAME.registerComponent('circles-label', {
     }
 
     if ( (oldData.lookAtCamera !== data.lookAtCamera) && (data.lookAtCamera !== '') ) {
-        console.log(data.lookAtCamera);
         CONTEXT_AF.label.setAttribute('circles-lookat', {enabled:data.lookAtCamera});
 
         //set back to original rotation
@@ -97,20 +96,6 @@ AFRAME.registerComponent('circles-label', {
         }
     }
   },
-//   tick : function (time, timeDelta) {
-//     if (this.data.lookAtCamera === true) {
-//         if ( time - this.prevTime > this.data.updateRate ) {
-//             if (this.camera) {
-//                 this.camera.object3D.getWorldPosition(this.worldPos);
-//                 this.worldPos.y = this.el.object3D.position.y;
-//                 this.label.object3D.lookAt(this.worldPos);
-//             }
-//             this.prevTime = time;
-//         }
-//     }
-//   },
-//   tock : function (time, timeDelta, camera) {
-//   },
   createLabelElement : function () {
     const CONTEXT_AF = this;
     const data = this.data;
