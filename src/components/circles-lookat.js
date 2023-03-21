@@ -25,9 +25,12 @@ AFRAME.registerComponent('circles-lookat', {
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
-    // if ( (oldData.enabled !== data.enabled) && (data.enabled !== '') ) {
-    //   console.log(data.enabled);
-    // }
+    if (oldData.targetElement !== data.targetElement) {
+      //if no target, use camera by default
+      if (!data.targetElement) {
+        CONTEXT_AF.setForNullTarget();
+      }
+    }
   },
   tick : function (time, timeDelta) {
     if (this.data.enabled === true && this.data.targetElement) {
@@ -53,4 +56,18 @@ AFRAME.registerComponent('circles-lookat', {
       }
     }
   },
+  setForNullTarget : function() {
+    const CONTEXT_AF = this;
+
+    if (CIRCLES.isReady()) {
+      CONTEXT_AF.el.setAttribute('circles-lookat', {targetElement:CIRCLES.getMainCameraElement()});
+    }
+    else {
+      const readyFunc = function (e) {
+        CONTEXT_AF.el.setAttribute('circles-lookat', {targetElement:CIRCLES.getMainCameraElement()});
+        CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.READY, readyFunc);
+      };
+      CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.READY, readyFunc);
+    }
+  }
 });
