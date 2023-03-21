@@ -16,6 +16,8 @@ AFRAME.registerComponent('circles-lookat', {
     CONTEXT_AF.captureTime    = false;    
     CONTEXT_AF.worldPos       = new THREE.Vector3();
     CONTEXT_AF.targetWorldPos = new THREE.Vector3();
+    CONTEXT_AF.originalPos    = new THREE.Vector3();
+    CONTEXT_AF.el.object3D.getWorldPosition(CONTEXT_AF.originalPos);
   },
   update : function(oldData) {
     const CONTEXT_AF = this;
@@ -35,7 +37,7 @@ AFRAME.registerComponent('circles-lookat', {
         if (this.data.smoothingOn !== true) {
           this.worldPos.set(this.targetWorldPos.x, this.targetWorldPos.y, this.targetWorldPos.z);
           if (this.data.constrainYAxis === true) {
-            this.worldPos.y = this.el.object3D.position.y;
+            this.worldPos.y = this.originalPos.y;
           }
           this.el.object3D.lookAt(this.worldPos);
         }
@@ -45,7 +47,7 @@ AFRAME.registerComponent('circles-lookat', {
       else if (this.data.smoothingOn === true) {
         this.worldPos.lerp(this.targetWorldPos, this.data.smoothingAlpha);
         if (this.data.constrainYAxis === true) {
-          this.worldPos.y = this.el.object3D.position.y;
+          this.worldPos.y = this.originalPos.y;
         }
         this.el.object3D.lookAt(this.worldPos);
       }
