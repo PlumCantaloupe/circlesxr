@@ -1,13 +1,15 @@
 'use strict';
 
-AFRAME.registerComponent('circles-object-label', {
+AFRAME.registerComponent('circles-label', {
   schema: {
-    label_text:         {type:'string',     default:'label_text'},
-    label_visible:      {type:'boolean',    default:true},
-    label_offset:       {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
+    text:               {type:'string',     default:'label_text'},
+    offset:             {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
     arrow_position:     {type:'string',     default:'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:20},
-    billboard:          {type:'boolean',    default:true}
+    lookAtCamera:       {type:'boolean',    default:true},
+    constrainYAxis:     {type:'boolean',    default:true},
+    updateRate:         {type:'number',     default:200},   //in ms
+    smoothingOn:        {type:'boolean',    default:true},
+    smoothingAlpha:     {type:'float',      default:0.05}
   },
   init: function() {
     const CONTEXT_AF = this;
@@ -29,11 +31,22 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.createLabelElement();
 
     if (CIRCLES.isReady()) {
-        CONTEXT_AF.camera = CIRCLES.getMainCameraElement();
+        CONTEXT_AF.label.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
+                                                            enabled:CONTEXT_AF.data.lookAtCamera, 
+                                                            constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
+                                                            updateRate:CONTEXT_AF.data.updateRate, 
+                                                            smoothingOn:CONTEXT_AF.data.smoothingOn, 
+                                                            smoothingAlpha:CONTEXT_AF.data.smoothingAlpha} );
     }
     else {
         const readyFunc = function (e) {
             CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
+            CONTEXT_AF.label.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
+                                                                enabled:CONTEXT_AF.data.lookAtCamera, 
+                                                                constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
+                                                                updateRate:CONTEXT_AF.data.updateRate, 
+                                                                smoothingOn:CONTEXT_AF.data.smoothingOn, 
+                                                                smoothingAlpha:CONTEXT_AF.data.smoothingAlpha} );
             CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.READY, readyFunc);
         };
         CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.READY, readyFunc);
@@ -45,16 +58,12 @@ AFRAME.registerComponent('circles-object-label', {
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
 
-    if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
-        CONTEXT_AF.labelText.setAttribute('text', {value:data.label_text});
+    if ( (oldData.text !== data.text) && (data.text !== '') ) {
+        CONTEXT_AF.labelText.setAttribute('text', {value:data.text});
     }
 
-    if ( (oldData.label_visible !== data.label_visible) && (data.label_visible !== '') ) {
-        CONTEXT_AF.label.setAttribute('visible', data.label_visible);
-    }
-
-    if ( (oldData.label_offset !== data.label_offset) && (data.label_offset !== '') ) {
-        CONTEXT_AF.labelWrapper.object3D.position.set(data.label_offset.x, data.label_offset.y, data.label_offset.z);
+    if ( (oldData.offset !== data.offset) && (data.offset !== '') ) {
+        CONTEXT_AF.labelWrapper.object3D.position.set(data.offset.x, data.offset.y, data.offset.z);
     }
 
     if ( (oldData.arrow_position !== data.arrow_position) && (data.arrow_position !== '') ) {
@@ -77,19 +86,29 @@ AFRAME.registerComponent('circles-object-label', {
             }
         }
     }
-  },
-  tick : function (time, timeDelta) {
-    if (this.data.billboard === true) {
-        if ( time - this.prevTime > this.data.updateRate ) {
-            if (this.data.label_visible === true && this.camera) {
-                this.camera.object3D.getWorldPosition(this.worldPos);
-                this.worldPos.y = this.el.object3D.position.y;
-                this.label.object3D.lookAt(this.worldPos);
-            }
-            this.prevTime = time;
+
+    if ( (oldData.lookAtCamera !== data.lookAtCamera) && (data.lookAtCamera !== '') ) {
+        console.log(data.lookAtCamera);
+        CONTEXT_AF.label.setAttribute('circles-lookat', {enabled:data.lookAtCamera});
+
+        //set back to original rotation
+        if (data.lookAtCamera === false) {
+            CONTEXT_AF.label.setAttribute('rotation', {x:0, y:0, z:0});
         }
     }
   },
+//   tick : function (time, timeDelta) {
+//     if (this.data.lookAtCamera === true) {
+//         if ( time - this.prevTime > this.data.updateRate ) {
+//             if (this.camera) {
+//                 this.camera.object3D.getWorldPosition(this.worldPos);
+//                 this.worldPos.y = this.el.object3D.position.y;
+//                 this.label.object3D.lookAt(this.worldPos);
+//             }
+//             this.prevTime = time;
+//         }
+//     }
+//   },
 //   tock : function (time, timeDelta, camera) {
 //   },
   createLabelElement : function () {
@@ -98,7 +117,6 @@ AFRAME.registerComponent('circles-object-label', {
 
     CONTEXT_AF.label = document.createElement('a-entity');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
@@ -106,7 +124,7 @@ AFRAME.registerComponent('circles-object-label', {
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');
-    CONTEXT_AF.labelWrapper.object3D.position.set(data.label_offset.x, data.label_offset.y, data.label_offset.z);
+    CONTEXT_AF.labelWrapper.object3D.position.set(data.offset.x, data.offset.y, data.offset.z);
     CONTEXT_AF.label.appendChild(CONTEXT_AF.labelWrapper);
 
     //create white bg for text legibility
@@ -133,7 +151,7 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.labelText.setAttribute('text', {  align:'center', baseline:'center', wrapCount:20,
                                       color:'rgb(0,0,0)', width:CONTEXT_AF.TEXT_WIDTH, height:CONTEXT_AF.TEXT_HEIGHT, 
                                       font: CIRCLES.CONSTANTS.GUI.font_header,
-                                      value:data.label_text});
+                                      value:data.text});
     CONTEXT_AF.labelText.setAttribute('position', {x:0, y:0.0, z:0.05});
     CONTEXT_AF.labelWrapper.appendChild(CONTEXT_AF.labelText);
  
