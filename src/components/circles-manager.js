@@ -12,6 +12,7 @@ AFRAME.registerComponent('circles-manager', {
     const scene = document.querySelector('a-scene');
     CONTEXT_AF.selectedObject     = null;
     CONTEXT_AF.camera             = null;
+    CONTEXT_AF.playerHolder       = null;
     CONTEXT_AF.isCirclesReadyVar  = false;
     CONTEXT_AF.artefactZoomSteps    = [-2.0, -1.0];
     CONTEXT_AF.artefactRotSteps     = [360.0, 90.0, 180.0, 270.0];
@@ -29,6 +30,7 @@ AFRAME.registerComponent('circles-manager', {
     CIRCLES.getAvatarRigElement().setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR, attachTemplateToLocal:true});
 
     scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e) => {
+        CONTEXT_AF.playerHolder = CIRCLES.getAvatarHolderElementBody();  //this is our player holder
         CONTEXT_AF.objectControls = scene.querySelector('#object_controls');
 
         CONTEXT_AF.rotateControl  = scene.querySelector('#rotate_control');
@@ -46,7 +48,7 @@ AFRAME.registerComponent('circles-manager', {
 
           CONTEXT_AF.artefactRotIndexTarget = ((++CONTEXT_AF.artefactRotIndexTarget) > CONTEXT_AF.artefactRotSteps.length - 1) ? 0 : CONTEXT_AF.artefactRotIndexTarget;
           const targetRot = CONTEXT_AF.artefactRotSteps[CONTEXT_AF.artefactRotIndexTarget];
-          CONTEXT_AF.selectedObject.setAttribute('animation__rotate', {property:'rotation.y', dur:400, to:targetRot, easing:'easeInOutBack'});
+          CONTEXT_AF.playerHolder.setAttribute('animation__rotate', {property:'rotation.y', dur:400, to:targetRot, easing:'easeInOutBack'});
         });
 
         //release object (can also click on object)
@@ -60,7 +62,7 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.zoomControl.addEventListener('click', (e) => { 
           CONTEXT_AF.artefactZoomIndexTarget = ((++CONTEXT_AF.artefactZoomIndexTarget) > CONTEXT_AF.artefactZoomSteps.length - 1) ? 0 : CONTEXT_AF.artefactZoomIndexTarget;
           const targetPos = CONTEXT_AF.artefactZoomSteps[CONTEXT_AF.artefactZoomIndexTarget];
-          CONTEXT_AF.selectedObject.setAttribute('animation__zoom', {property:'position.z', dur:400, to:targetPos, easing:'easeInOutBack'});
+          CONTEXT_AF.playerHolder.setAttribute('animation__zoom', {property:'position.z', dur:400, to:targetPos, easing:'easeInOutBack'});
         });
 
         //let everyone know that circles is ready
@@ -313,45 +315,12 @@ AFRAME.registerComponent('circles-manager', {
       //handle if same world
     }
 
-    // //!!
-    // CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-
-    // //hide label
-    // const labelEl = document.querySelector('#' + CONTEXT_AF.selectedObject.id + '_label');
-    // if (labelEl && labelEl.hasAttribute('circles-object-label') === true) {
-    //   labelEl.setAttribute('circles-object-label', {label_visible:false});
-    // }
-
     //reset control position
     CONTEXT_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
 
     //reset rotation of description
     CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0, y:0, z:0});
     CONTEXT_AF.rotationDesc = 0.0;
-
-    // if ( showDescription )  {
-    //   //show description text with appropriate values
-    //   CONTEXT_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
-    //   CONTEXT_AF.objectDescriptionText.setAttribute('text', {value:obj.data.description});
-    //   CONTEXT_AF.objectTitleBack.setAttribute('text', {value:(obj.data.title_back === '') ? obj.data.title : obj.data.title_back});
-    //   CONTEXT_AF.objectDescriptionBack.setAttribute('text', {value:(obj.data.description_back === '') ? obj.data.description : obj.data.description_back});
-    //   CONTEXT_AF.objectDescriptions.setAttribute('visible', true);
-
-    //   //display element at position 
-    //   CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPosition.x, obj.data.origPosition.y + 1.5, obj.data.origPosition.z);
-    //   if ( obj.data.textLookAt === true ) {
-    //     let worldPos = new THREE.Vector3();
-    //     CONTEXT_AF.camera.object3D.getWorldPosition(worldPos);
-    //     worldPos.y = obj.data.origPosition.y + 1.3;
-
-    //     CONTEXT_AF.objectDescriptions.object3D.lookAt(CONTEXT_AF.camera.object3D.getWorldPosition()); //rotate to face user
-    //     CONTEXT_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
-    //     CONTEXT_AF.objectDescriptions.object3D.rotation.z = 0.0;
-    //   } 
-    //   else {
-    //     CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.MathUtils.degToRad(obj.data.textRotationY);
-    //   }
-    // }
 
     //show inspect controls
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
@@ -373,23 +342,15 @@ AFRAME.registerComponent('circles-manager', {
       //handle if same world
     }
 
-    //!!
-    // CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-
-    // //show label
-    // const labelEl = document.querySelector('#' + CONTEXT_AF.selectedObject.id + '_label');
-    // if (labelEl && labelEl.hasAttribute('circles-object-label') === true) {
-    //   labelEl.setAttribute('circles-object-label', {label_visible:true});
-    // }
-
-    // //hide floating descriptions
-    // CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
-
     //turn off object controls
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', false);
     });
     CONTEXT_AF.objectControls.setAttribute('visible', false);
+
+    //reset rotation of "holder" from zooming and rotation effects
+    CONTEXT_AF.playerHolder.setAttribute('position', {x:0, y:0, z:-2.0});
+    CONTEXT_AF.playerHolder.setAttribute('rotation', {x:0, y:0, z:0});
 
     CONTEXT_AF.selectedObject  = null;
   }
