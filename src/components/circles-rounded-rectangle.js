@@ -72,7 +72,7 @@ AFRAME.registerComponent('circles-rounded-rectangle', {
       if (this.data.bottomRightRadius != -1) { corners[3] = this.data.bottomRightRadius; }
   
       roundedRect( roundedRectShape, 0, 0, this.data.width, this.data.height, corners[0], corners[1], corners[2], corners[3] );
-      let geo = new THREE.ShapeBufferGeometry( roundedRectShape );
+      let geo = new THREE.ShapeGeometry( roundedRectShape );
       geo.center(); //center pivot
       return geo;
     },
