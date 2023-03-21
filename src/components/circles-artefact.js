@@ -11,7 +11,7 @@ AFRAME.registerComponent('circles-artefact', {
     audio:              {type:'audio',    default:''},
     volume:             {type:'number',   default:1.0},
 
-    inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:-2.0}},
+    inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
     inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     origPosition:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
