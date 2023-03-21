@@ -2,15 +2,41 @@
 
 AFRAME.registerComponent('circles-description', {
   schema: {
-    title_text_front:       {type:'string', default:'[~20-25 chars] title_back'},
-    title_text_back:        {type:'string', default:'[~20-25 chars] title_back'},
-    description_text_front: {type:'string', default:'[~240-280 chars] description_front'},
-    description_text_back:  {type:'string', default:'[~240-280 chars] description_back'}
+    title_text_front:       {type:'string',   default:'[~20-25 chars] title_front'},
+    title_text_back:        {type:'string',   default:''},
+    description_text_front: {type:'string',   default:'[~240-280 chars] description_front'},
+    description_text_back:  {type:'string',   default:''},
+    lookAtCamera:           {type:'boolean',  default:true},
+    constrainYAxis:         {type:'boolean',  default:true},
+    updateRate:             {type:'number',   default:200},   //in ms
+    smoothingOn:            {type:'boolean',  default:true},
+    smoothingAlpha:         {type:'float',    default:0.05}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init : function() {
     const CONTEXT_AF  = this;
-    let scene = CIRCLES.getCirclesSceneElement();
+
+    if (CIRCLES.isReady()) {
+      CONTEXT_AF.el.setAttribute('circles-lookat', {  targetElement:CIRCLES.getMainCameraElement(), 
+                                                      enabled:CONTEXT_AF.data.lookAtCamera, 
+                                                      constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
+                                                      updateRate:CONTEXT_AF.data.updateRate, 
+                                                      smoothingOn:CONTEXT_AF.data.smoothingOn, 
+                                                      smoothingAlpha:CONTEXT_AF.data.smoothingAlpha} );
+    }
+    else {
+        const readyFunc = function (e) {
+            CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
+            CONTEXT_AF.el.setAttribute('circles-lookat', {  targetElement:CIRCLES.getMainCameraElement(), 
+                                                            enabled:CONTEXT_AF.data.lookAtCamera, 
+                                                            constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
+                                                            updateRate:CONTEXT_AF.data.updateRate, 
+                                                            smoothingOn:CONTEXT_AF.data.smoothingOn, 
+                                                            smoothingAlpha:CONTEXT_AF.data.smoothingAlpha} );
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.READY, readyFunc);
+        };
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.READY, readyFunc);
+    }
 
     //elements
     CONTEXT_AF.rotateDescElem             = null;  //wrapper to rotate everything
@@ -87,6 +113,7 @@ AFRAME.registerComponent('circles-description', {
     CONTEXT_AF.rotateElem.setAttribute('id', 'rotate_desc_control');
     CONTEXT_AF.rotateElem.setAttribute('class', 'interactive button');
     CONTEXT_AF.rotateElem.setAttribute('position', {x:0.0, y:1.6, z:0});
+    CONTEXT_AF.rotateElem.setAttribute('circles-interactive-visible', true);
     CONTEXT_AF.rotateElem.setAttribute('geometry',  {  primitive:'plane', 
                                             width:0.3,
                                             height:0.3 
@@ -123,6 +150,9 @@ AFRAME.registerComponent('circles-description', {
 
     if (oldData.title_text_back !== data.title_text_back) {
       CONTEXT_AF.objectTitleTextBack.setAttribute('text', {value:data.title_text_back});
+
+      //don't show rotate button if both back title and back description are blank
+      CONTEXT_AF.rotateElem.setAttribute('circles-interactive-visible', !(data.title_text_back === '' && data.description_text_back === ''));
     }
 
     if (oldData.description_text_front !== data.description_text_front) {
@@ -131,6 +161,9 @@ AFRAME.registerComponent('circles-description', {
 
     if (oldData.description_text_back !== data.description_text_back) {
       CONTEXT_AF.objectDescriptionTextBack.setAttribute('text', {value:data.description_text_back});
+
+      //don't show rotate button if both back title and back description are blank
+      CONTEXT_AF.rotateElem.setAttribute('circles-interactive-visible', !(data.title_text_back === '' && data.description_text_back === ''));
     }
   }
 });
