@@ -4,14 +4,13 @@ AFRAME.registerComponent('circles-object-label', {
   schema: {
     label_text:         {type:'string',     default:'label_text'},
     label_visible:      {type:'boolean',    default:true},
-    label_offset:       {type:'vec3'},
+    label_offset:       {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
     arrow_position:     {type:'string',     default:'up', oneOf: ['up', 'down', 'left', 'right']},
     updateRate:         {type:'number',     default:20},
     billboard:          {type:'boolean',    default:true}
   },
   init: function() {
     const CONTEXT_AF = this;
-    const data = this.data;
 
     CONTEXT_AF.label            = null;
     CONTEXT_AF.labelWrapper     = null;
@@ -28,8 +27,6 @@ AFRAME.registerComponent('circles-object-label', {
     CONTEXT_AF.worldPos             = new THREE.Vector3();
 
     CONTEXT_AF.createLabelElement();
-
-    CONTEXT_AF.el.classList.add('label_wrapper');
 
     if (CIRCLES.isReady()) {
         CONTEXT_AF.camera = CIRCLES.getMainCameraElement();
@@ -98,17 +95,14 @@ AFRAME.registerComponent('circles-object-label', {
   createLabelElement : function () {
     const CONTEXT_AF = this;
     const data = this.data;
-    const scene = document.querySelector('a-scene');
 
     CONTEXT_AF.label = document.createElement('a-entity');
-    CONTEXT_AF.label.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
     CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    CONTEXT_AF.label.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
     CONTEXT_AF.label.setAttribute('visible', data.label_visible);
     CONTEXT_AF.label.addEventListener('loaded', function () {
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
     });
-    CONTEXT_AF.el.sceneEl.appendChild(CONTEXT_AF.label);
+    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
 
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');
@@ -123,12 +117,6 @@ AFRAME.registerComponent('circles-object-label', {
     bg.setAttribute('position',  {x:0.0, y:0.0, z:0.0});
     bg.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
     bg.addEventListener('loaded', function () {
-
-        //want this clicked to also send message to manager (to trigger inspect). Users have asked for this.
-        bg.addEventListener('click', (e) => {
-            CONTEXT_AF.el.click();  //easiest to make sure all click functionality happens
-        });
-
         bg.addEventListener('mouseenter', (e) => {
             const scaleSize = 1.05;
             bg.setAttribute('scale', {x:scaleSize, y:scaleSize, z:scaleSize});
@@ -137,7 +125,6 @@ AFRAME.registerComponent('circles-object-label', {
         bg.addEventListener('mouseleave', (e) => {
             bg.setAttribute('scale', {x:1.0, y:1.0, z:1.0});
         });
-
     });
     CONTEXT_AF.labelWrapper.appendChild(bg);
 

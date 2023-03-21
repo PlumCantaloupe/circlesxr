@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-artefact', {
     label_visible:      {type:'boolean',    default:true},
     label_offset:       {type:'vec3'},
     arrow_position:     {type:'string',     default: 'up', oneOf: ['up', 'down', 'left', 'right']},
-    updateRate:         {type:'number',     default:20},
+    updateRate:         {type:'number',     default:20}
   },
   init: function() {
     const CONTEXT_AF  = this;
@@ -48,13 +48,22 @@ AFRAME.registerComponent('circles-artefact', {
                                                             textRotationY:data.textRotationY,       textLookAt:data.textLookAt,
                                                              
                                                         });
-
-    CONTEXT_AF.el.setAttribute('circles-object-label', {    label_text:data.label_text,             label_visible:data.label_visible,   label_offset:data.label_offset, 
-                                                            arrow_position:data.arrow_position,     updateRate:data.updateRate
-                                                        });
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
     CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
+
+    //create associated label
+    CONTEXT_AF.labelEl = document.createElement('a-entity');
+    CONTEXT_AF.labelEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
+    CONTEXT_AF.labelEl.setAttribute('position', CONTEXT_AF.el.getAttribute('position'));
+    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {
+      label_text:data.label_text, label_visible:data.label_visible, label_offset:data.label_offset, arrow_position:data.arrow_position, updateRate:data.updateRate
+    });
+    CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.labelEl);
+
+    CONTEXT_AF.labelEl.addEventListener('click', function(e) {
+      CONTEXT_AF.el.click();  //also want to forward label clicks to the artefact itself
+    });
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
@@ -107,5 +116,37 @@ AFRAME.registerComponent('circles-artefact', {
     // const data = this.data;
 
     // if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+  },
+  pickup : function() {
+    const CONTEXT_AF = this;
+    CONTEXT_AF.isPickedUp = true;
+    
+    //turn on networking
+    CONTEXT_AF.el.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+
+    //hide label
+    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:false});
+
+    //show description
+    //
+
+    //let others know
+    CONTEXT_AF.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, null, false );
+  },
+  release : function() {
+    const CONTEXT_AF = this;
+    CONTEXT_AF.isPickedUp = false;
+
+    //turn off networking
+    CONTEXT_AF.el.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+
+    //show label
+    CONTEXT_AF.labelEl.setAttribute('circles-object-label', {label_visible:true});
+
+    //hide description
+    //
+
+    //send off event for others
+    CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
   }
 });

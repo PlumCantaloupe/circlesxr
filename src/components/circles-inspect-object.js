@@ -19,7 +19,8 @@ AFRAME.registerComponent('circles-inspect-object', {
   },
   init: function() {
     const CONTEXT_AF = this;
-    const data = this.data;
+    const data = CONTEXT_AF.data;
+    CONTEXT_AF.isHiding = false;
 
     CONTEXT_AF.el.setAttribute('circles-pickup-object', {animate:true});
 
@@ -150,5 +151,19 @@ AFRAME.registerComponent('circles-inspect-object', {
         CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
       }
     }
+  },
+  hideObject : function(toHide) {
+    //need this to hide object if we are networking, with NAF artefact template (and don't want doubles)
+    CONTEXT_AF.isHiding = toHide;
+
+    if (CONTEXT_AF.isHiding) {
+      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
+    }
+    else {
+      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
+    }
+  },
+  isHiding : function() {
+    return CONTEXT_AF.isHiding;
   }
 });

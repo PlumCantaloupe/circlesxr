@@ -18,12 +18,12 @@ schema: {
     }
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.INSPECT_THIS_OBJECT, function (evt) {
-        console.log("Event: CIRCLES.EVENTS.INSPECT_THIS_OBJECT");
+        //console.log("Event: CIRCLES.EVENTS.INSPECT_THIS_OBJECT");
         CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:true}); //want visible in all worlds so we can "share" what we are lookinhg at
     });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function (evt) {
-        console.log("Event: CIRCLES.EVENTS.RELEASE_THIS_OBJECT");
+        //console.log("Event: CIRCLES.EVENTS.RELEASE_THIS_OBJECT");
         CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:false});
     });
   },

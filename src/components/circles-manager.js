@@ -140,7 +140,7 @@ AFRAME.registerComponent('circles-manager', {
     const CONTEXT_AF  = this;
     
     document.addEventListener(CIRCLES.EVENTS.SELECT_THIS_OBJECT, (e) => {
-      CONTEXT_AF.selectObject( e.detail );
+      CONTEXT_AF.selectArtefact( e.detail );
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, (e) => {
@@ -151,8 +151,8 @@ AFRAME.registerComponent('circles-manager', {
       //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
 
       if ( CONTEXT_AF.selectedObject !== null ) {
-        CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-        CONTEXT_AF.releaseInspectedObject();
+        //CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
+        CONTEXT_AF.releaseArtefact();
       }
     });
 
@@ -272,41 +272,55 @@ AFRAME.registerComponent('circles-manager', {
     triangle_point.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
     infoOffsetElem.appendChild(triangle_point);
   },
-  selectObject : function ( obj ) {
+  selectArtefact : function (obj) {
     const CONTEXT_AF = this;
 
     if ( CONTEXT_AF.selectedObject === null) {
-      let regex = /(naf)/i;
-      let nafMatch  = regex.test(obj.el.getAttribute('id')); //don't want description if being taken from someone else
-
-      CONTEXT_AF.pickupInspectedObject(obj, !nafMatch);
-      obj.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, {}, true );
+      CONTEXT_AF.pickupArtefact(obj);
     }
     else {
-      //release currently selected object
+      //check if same object is being selected
       const isSameObject = CONTEXT_AF.selectedObject.isSameNode( obj.el );
-      CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-      CONTEXT_AF.releaseInspectedObject();
+
+      if (isSameObject === false) {
+        //need to click artefact also
+        obj.el.components['circles-pickup-object'].release(CONTEXT_AF.selectedObject.components['circles-pickup-object']);
+      }
+
+      //release currently held object
+      CONTEXT_AF.releaseArtefact();
 
       //pick up another object if not the same object that was released
-      if ( !isSameObject ) {
-        this.pickupInspectedObject(obj, true);
+      if (isSameObject === false) {
+        CONTEXT_AF.pickupArtefact(obj);
       }
     }
   },
-  pickupInspectedObject : function ( obj, showDescription ) {
+  pickupArtefact : function (obj) {
     const CONTEXT_AF = this;
     CONTEXT_AF.selectedObject = obj.el;
     CONTEXT_AF.artefactZoomIndexTarget   = 0;
     CONTEXT_AF.artefactRotIndexTarget    = 0;
 
-    //!!
-    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-
-    //hide label
-    if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
-      CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:false});
+    //if not a networked clone then tell artefact it is being picked up
+    let regex = /(naf)/i;
+    let nafMatch  = regex.test(CONTEXT_AF.selectedObject.getAttribute('id')); //don't want description if being taken from someone else
+    if (nafMatch === false) {
+      CONTEXT_AF.selectedObject.components['circles-artefact'].pickup();
     }
+    else {
+      //handle descriptions/labels
+      //handle if same world
+    }
+
+    // //!!
+    // CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+
+    // //hide label
+    // const labelEl = document.querySelector('#' + CONTEXT_AF.selectedObject.id + '_label');
+    // if (labelEl && labelEl.hasAttribute('circles-object-label') === true) {
+    //   labelEl.setAttribute('circles-object-label', {label_visible:false});
+    // }
 
     //reset control position
     CONTEXT_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
@@ -315,48 +329,61 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0, y:0, z:0});
     CONTEXT_AF.rotationDesc = 0.0;
 
-    if ( showDescription )  {
-      //show description text with appropriate values
-      CONTEXT_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
-      CONTEXT_AF.objectDescriptionText.setAttribute('text', {value:obj.data.description});
-      CONTEXT_AF.objectTitleBack.setAttribute('text', {value:(obj.data.title_back === '') ? obj.data.title : obj.data.title_back});
-      CONTEXT_AF.objectDescriptionBack.setAttribute('text', {value:(obj.data.description_back === '') ? obj.data.description : obj.data.description_back});
-      CONTEXT_AF.objectDescriptions.setAttribute('visible', true);
+    // if ( showDescription )  {
+    //   //show description text with appropriate values
+    //   CONTEXT_AF.objectTitleText.setAttribute('text', {value:obj.data.title});
+    //   CONTEXT_AF.objectDescriptionText.setAttribute('text', {value:obj.data.description});
+    //   CONTEXT_AF.objectTitleBack.setAttribute('text', {value:(obj.data.title_back === '') ? obj.data.title : obj.data.title_back});
+    //   CONTEXT_AF.objectDescriptionBack.setAttribute('text', {value:(obj.data.description_back === '') ? obj.data.description : obj.data.description_back});
+    //   CONTEXT_AF.objectDescriptions.setAttribute('visible', true);
 
-      //display element at position 
-      CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPosition.x, obj.data.origPosition.y + 1.5, obj.data.origPosition.z);
-      if ( obj.data.textLookAt === true ) {
-        let worldPos = new THREE.Vector3();
-        CONTEXT_AF.camera.object3D.getWorldPosition(worldPos);
-        worldPos.y = obj.data.origPosition.y + 1.3;
+    //   //display element at position 
+    //   CONTEXT_AF.objectDescriptions.object3D.position.set(obj.data.origPosition.x, obj.data.origPosition.y + 1.5, obj.data.origPosition.z);
+    //   if ( obj.data.textLookAt === true ) {
+    //     let worldPos = new THREE.Vector3();
+    //     CONTEXT_AF.camera.object3D.getWorldPosition(worldPos);
+    //     worldPos.y = obj.data.origPosition.y + 1.3;
 
-        CONTEXT_AF.objectDescriptions.object3D.lookAt(CONTEXT_AF.camera.object3D.getWorldPosition()); //rotate to face user
-        CONTEXT_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
-        CONTEXT_AF.objectDescriptions.object3D.rotation.z = 0.0;
-      } 
-      else {
-        CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.MathUtils.degToRad(obj.data.textRotationY);
-      }
-    }
+    //     CONTEXT_AF.objectDescriptions.object3D.lookAt(CONTEXT_AF.camera.object3D.getWorldPosition()); //rotate to face user
+    //     CONTEXT_AF.objectDescriptions.object3D.rotation.x = 0.0; //only rotate on y axis
+    //     CONTEXT_AF.objectDescriptions.object3D.rotation.z = 0.0;
+    //   } 
+    //   else {
+    //     CONTEXT_AF.objectDescriptions.object3D.rotation.y = THREE.MathUtils.degToRad(obj.data.textRotationY);
+    //   }
+    // }
 
+    //show inspect controls
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
       button.setAttribute('circles-interactive-visible', true);
     });
     CONTEXT_AF.objectControls.setAttribute('visible', true);
   },
-  releaseInspectedObject : function () {
+  releaseArtefact : function () {
     const CONTEXT_AF = this;
 
-    //!!
-    CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-
-    //show label
-    if (CONTEXT_AF.selectedObject.hasAttribute('circles-object-label') === true) {
-      CONTEXT_AF.selectedObject.setAttribute('circles-object-label', {label_visible:true});
+    //if not a networked clone then tell artefact it is being released
+    let regex = /(naf)/i;
+    let nafMatch  = regex.test(CONTEXT_AF.selectedObject.getAttribute('id')); //don't want description if being taken from someone else
+    if (nafMatch === false) {
+      CONTEXT_AF.selectedObject.components['circles-artefact'].release();
+    }
+    else {
+      //handle descriptions/labels
+      //handle if same world
     }
 
-    //hide floating descriptions
-    CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
+    //!!
+    // CONTEXT_AF.selectedObject.setAttribute('circles-inspect-object', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+
+    // //show label
+    // const labelEl = document.querySelector('#' + CONTEXT_AF.selectedObject.id + '_label');
+    // if (labelEl && labelEl.hasAttribute('circles-object-label') === true) {
+    //   labelEl.setAttribute('circles-object-label', {label_visible:true});
+    // }
+
+    // //hide floating descriptions
+    // CONTEXT_AF.objectDescriptions.setAttribute('visible', false);
 
     //turn off object controls
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {
