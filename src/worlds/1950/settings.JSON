@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Sensorama",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Sensorama Exhibit.",
+        "description_long": "Participants view 1950s VR technology: the Sensorama.",
+        "tags": [ "hub", "sensorama", "1950s"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
