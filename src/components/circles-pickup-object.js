@@ -135,6 +135,6 @@ AFRAME.registerComponent('circles-pickup-object', {
     }
   },
   remove : function() {
-    CONTEXT_AF.el.removeEventListener('click', CONTEXT_AF.clickFunc);
+    this.el.removeEventListener('click', this.clickFunc);
   }
 });
