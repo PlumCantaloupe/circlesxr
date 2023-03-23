@@ -295,8 +295,18 @@ AFRAME.registerComponent('circles-artefact', {
     const CONTEXT_AF = this;
     CONTEXT_AF.isPickedUp = false;
 
-    //turn off networking
-    CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+    const stopNetworking = function() {
+      CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+      CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', stopNetworking);
+    };
+
+    //turn off networking. If there is animation, wait until the animation is complete
+    if (CONTEXT_AF.el.hasAttribute('animation__cpo_position')) {
+      CONTEXT_AF.el.addEventListener('animationcomplete__cpo_position', stopNetworking);
+    }
+    else {
+      CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+    }
 
     //show label
     if (CONTEXT_AF.data.label_on === true) {
