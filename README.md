@@ -438,7 +438,8 @@ pickupPosition:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //wh
   *Example 'circles-pickup-object'*
 
   ```html
-  <a-entity circles-pickup-object="animate:false;"></a-entity>
+  <!-- make sure teh object is also interactive -->
+  <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;"></a-entity>
   ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
