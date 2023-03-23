@@ -563,8 +563,10 @@ const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
 
 const getMagicLinks = (req, res, next) => {
   const route = req.query.route;
-  const userTypeAsking = req.query.userTypeAsking;
-  const expiryTimeMin = req.query.expiryTimeMin;
+  const usernameAsking  = req.query.usernameAsking;
+  const emailAsking     = req.query.emailAsking;
+  const userTypeAsking  = req.query.userTypeAsking;
+  const expiryTimeMin   = req.query.expiryTimeMin;
   let allAccounts = [];
 
   //ignore req.protocol as it will try and re-direct to https anyhow.
@@ -574,7 +576,7 @@ const getMagicLinks = (req, res, next) => {
   let error = null;
   async function getItems() {
     try {
-      users = await User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }).exec();
+      users = await User.find({usertype: (userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }).exec();
     } catch(err) {
       error = err;
     }
@@ -584,6 +586,10 @@ const getMagicLinks = (req, res, next) => {
     if (error) {
       res.send(error);
     }
+
+    //add "self" first
+    allAccounts.push({username:usernameAsking, email:emailAsking, magicLink:generateAuthLink(emailAsking, baseURL, route, expiryTimeMin)});
+
     for (let i = 0; i < users.length; i++) {
       allAccounts.push({username:users[i].username, email:users[i].email, magicLink:generateAuthLink(users[i].email, baseURL, route, expiryTimeMin)});
 

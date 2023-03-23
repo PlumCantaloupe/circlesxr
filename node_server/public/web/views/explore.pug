@@ -43,7 +43,7 @@ block content
             //-   each val, index in window.all_circles_worlds 
             //-     option=val
           div(class='pure-controls')
-            input(type='button', class="pure-button pure-button-primary", value=buttonText, onclick='createMagicLinks("' + userInfo.userType + '")')
+            input(type='button', class="pure-button pure-button-primary", value=buttonText, onclick='createMagicLinks("' + userInfo.userName + '","' + userInfo.email + '","' + userInfo.userType + '")')
 
       p Selection the expiry and world, then click on the blue <span style='color:#0078e7; font-weight:bold;'>[#{buttonText}]</span> button above to generate "magic links" to the selected world for each #{targetUsersText}. Just copy and send each link to each #{targetUsersText} to automatically log them in. Ask them to save the link so they can login repeatedly. 
       p <em>Note these links expire in <span id='countdownElem' style='color:#0078e7; font-weight:bold;'>15 minutes</span></em>.

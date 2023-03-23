@@ -96,17 +96,19 @@ function startCoundown(numMS, textId) {
 
 
 //*********** magic links button functionality */
-//function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
-function createMagicLinks(userTypeAsking) {
+function createMagicLinks(username, email, userTypeAsking) {
   const magic_world = document.querySelector("#MagicLinkWorld").value;
   const magic_group = document.querySelector("#MagicLinkGroup").value;
   const url = 'w/' + magic_world + '?group=' + ((magic_group === '') ? 'explore' : magic_group);
 
-  //const userTypeAsking = userInfo.userType;
   const expiryTimeMin = document.querySelector("#MagicLinkExpiry").value * 24 * 60; //convert days to mins
 
   let request = new XMLHttpRequest();
-  request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking + '&expiryTimeMin=' + expiryTimeMin);
+  request.open('GET', '/get-magic-links?route=' + url 
+                                                + '&usernameAsking='  + username 
+                                                + '&emailAsking='     + email 
+                                                + '&userTypeAsking='  + userTypeAsking 
+                                                + '&expiryTimeMin='   + expiryTimeMin);
   request.responseType = 'text';
 
   request.onload = function() {
@@ -153,7 +155,7 @@ function showMagicLinks(data, expiryTimeMin) {
 
   const jsonData = JSON.parse(data);
   const menuElem = document.querySelector('#MagicLinksContent');
-  let tableStr        = '<table class=\'pure-table\'>'        
+  let tableStr   = '<table class=\'pure-table\'>'        
   menuElem.setAttribute('class', 'pure-menu gutter-bottom');
 
   tableStr += '<thead>';
@@ -166,11 +168,16 @@ function showMagicLinks(data, expiryTimeMin) {
   tableStr += '<tbody>';
 
   for (let i = 0; i < jsonData.length; i++) {
+    let isYou     = (i === 0);
+    let username  = ((isYou) ? ' <strong>' : '') + jsonData[i].username + ((isYou) ? ' (you) </strong>' : '');
+    let email     = ((isYou) ? ' <strong>' : '') + jsonData[i].email + ((isYou) ? '</strong>' : '');
+    let magicLink = jsonData[i].magicLink ;
+
     tableStr += '<tr>';
-    tableStr += '<td>' + jsonData[i].username +  '</td>';
-    tableStr += '<td>' + jsonData[i].email +  '</td>';
-    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText(linkCopy' + i + ',"' + jsonData[i].username + '")\'>';
-    tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + jsonData[i].magicLink + '\' size=\'50\' readonly></td>';
+    tableStr += '<td>' + username +  '</td>';
+    tableStr += '<td>' + email +  '</td>';
+    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText(linkCopy' + i + ',"' + username + '")\'>';
+    tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + magicLink + '\' size=\'50\' readonly></td>';
     tableStr += '</tr>';
   }
 
