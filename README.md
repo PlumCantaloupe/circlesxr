@@ -413,6 +413,34 @@ This is a core component in our framework that explores learning around tools an
   <a-entity id="lookyElement" circles-lookat="targetElement:#myCam; constrainYAxis:true;"></a-entity>
   ```
 
+- [circles-pickup-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): This component allows you to pickup and drop objects on click.
+
+pickupPosition:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this relative to the camera
+    pickupRotation:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what orientation relative to teh camera
+    pickupScale:        { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale relative to the camera
+    dropPosition:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to end up after it is released
+    dropRotation:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to orient as after it is released
+    dropScale:          { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale after it is released
+    animate:            { type: "boolean", default:false },                     //whether we animate
+    animateDurationMS:  { type: "number", default:400 },
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | pickupPosition     | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep position relative to camera_ |
+  | pickupScale        | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep rotation relative to camera_ |
+  | dropPosition       | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep scale relative to camera_    |
+  | dropPosition       | vec3            | position of object, relative to original parent node, when released      | _if unset, will keep position relative to camera_ |
+  | dropRotation       | vec3            | rotation(deg) of object, relative to original parent node, when released | _if unset, will keep rotation relative to camera_ |
+  | dropScale          | vec3            | scale of object, relative to original parent node, when released         | _if unset, will keep scale relative to camera_    |
+  | animate            | boolean         | increasing scale increases the resolution of rendered pdf                | false                        |
+  | scale              | number          | increasing scale increases the resolution of rendered pdf                | 400                          |
+
+  *Example 'circles-pickup-object'*
+
+  ```html
+  <a-entity circles-pickup-object="animate:false;"></a-entity>
+  ```
+
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
 
   | Property           | Type            | Description                                               | Default Value        |

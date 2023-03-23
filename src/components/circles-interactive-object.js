@@ -160,7 +160,6 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'circles-label' &&
                 keys[i] !== 'circles-lookat' &&
                 keys[i] !== 'networked' &&
-                keys[i] !== 'circles-inspect-object' &&
                 keys[i] !== 'circles-object-world' && 
                 keys[i] !== 'circles-pickup-object' && 
                 keys[i] !== 'circles-artefact' ) {

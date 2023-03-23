@@ -39,24 +39,23 @@ AFRAME.registerComponent('circles-artefact', {
     const data        = this.data;
     const world       = document.querySelector('[circles-manager]').components['circles-manager'].getWorld();
 
+    //need to save this for later (before it is moved)
+    CONTEXT_AF.origPos = CONTEXT_AF.el.object3D.position.clone();
+    CONTEXT_AF.origRot = CONTEXT_AF.el.object3D.rotation.clone();
+    CONTEXT_AF.origRot.x = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.x);    //convert
+    CONTEXT_AF.origRot.y = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.y);
+    CONTEXT_AF.origRot.z = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.z);
+    CONTEXT_AF.origSca = CONTEXT_AF.el.object3D.scale.clone();
+
+
     if (!CONTEXT_AF.el.classList.contains('narrative')) {
       CONTEXT_AF.el.classList.add('narrative');
     }
 
-    //add all additional elements needed for these artefacts. Note that we are using teh update function so these cannot be modified in real-time ...
+    //add all additional elements needed for these artefacts. Note that we are using the update function so these cannot be modified in real-time ...
     CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
-    const currRot = CONTEXT_AF.el.object3D.rotation.clone();
-    CONTEXT_AF.el.setAttribute('circles-inspect-object', {  title:data.title,                       description:data.description,       
-                                                            title_back:data.title_back,             description_back:data.description_back, 
-                                                            inspectPosition:data.inspectPosition,   inspectRotation:data.inspectRotation,   inspectScale:data.inspectScale,
-                                                            origPosition: ((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
-                                                            origRotation: ((data.origRotation.x > 100000.0) ? { x:THREE.MathUtils.radToDeg(currRot.x), 
-                                                                                                                y:THREE.MathUtils.radToDeg(currRot.y), 
-                                                                                                                z:THREE.MathUtils.radToDeg(currRot.z)
-                                                                                                              } : data.origRotation),              
-                                                            origScale:    ((data.origScale.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
-                                                        });
+    CONTEXT_AF.el.setAttribute('circles-pickup-object', {animate:true});
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
     CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
@@ -104,17 +103,17 @@ AFRAME.registerComponent('circles-artefact', {
 
     //Network stuff
     const ownership_gained_Func = (e) => {
-      //console.log("ownership-gained");
+      console.log("ownership-gained");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
     };
 
     const ownership_lost_Func = (e) => {
-      //console.log("ownership-lost");
+      console.log("ownership-lost");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
     };
 
     const ownership_changed_Func = (e) => {
-      //console.log("ownership-changed");
+      console.log("ownership-changed");
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
     };
 
@@ -157,14 +156,14 @@ AFRAME.registerComponent('circles-artefact', {
       //take over networked membership
       if (CONTEXT_AF.el.hasAttribute('networked') === true) {
         NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          //console.log("is this mine?");
+          console.log("is this mine?");
           if (!NAF.utils.isMine(el)) {
-            //console.log("No but ... ")
+            console.log("No but ... ");
             NAF.utils.takeOwnership(el);
-            //console.log("it is mine now");
+            console.log("it is mine now");
           } 
           else {
-            //console.log("Yes, it is mine already");
+            console.log("Yes, it is mine already");
           }
         });
       }
@@ -234,6 +233,42 @@ AFRAME.registerComponent('circles-artefact', {
         CONTEXT_AF.el.removeAttribute('networked');
         CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
       }
+    }
+
+    // const currRot = CONTEXT_AF.el.object3D.rotation.clone();
+    // CONTEXT_AF.el.setAttribute('circles-pickup-object', { pickupPosition:data.inspectPosition, pickupRotation:data.inspectRotation, pickupScale:data.inspectScale,
+    //                                                       dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
+    //                                                       dropRotation:((data.origRotation.x > 100000.0) ? {  x:THREE.MathUtils.radToDeg(currRot.x), 
+    //                                                                                                           y:THREE.MathUtils.radToDeg(currRot.y), 
+    //                                                                                                           z:THREE.MathUtils.radToDeg(currRot.z)
+    //                                                                                                         } : data.origRotation),              
+    //                                                       dropScale:((data.origScale.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
+    //                                                       animate:true
+    //                                                     });
+
+    if ( (oldData.inspectPosition !== data.inspectPosition) && (data.inspectPosition !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupPosition: data.inspectPosition });
+    }
+
+    if ( (oldData.inspectRotation !== data.inspectRotation) && (data.inspectRotation !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupRotation: data.inspectRotation });
+    }
+
+    if ( (oldData.inspectScale !== data.inspectScale) && (data.inspectScale !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupScale: data.inspectScale });
+    }
+
+    if ( (oldData.origPosition !== data.origPosition) && (data.origPosition !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.origPos : data.origPosition)});
+    }
+
+    if ( (oldData.origRotation !== data.origRotation) && (data.origRotation !== '') ) {
+      const currRot = CONTEXT_AF.el.object3D.rotation.clone();
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:((data.origRotation.x > 100000.0) ? CONTEXT_AF.origRot : data.origRotation)});
+    }
+
+    if ( (oldData.origScale !== data.origScale) && (data.origScale !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropScale:((data.origScale.x > 100000.0) ? CONTEXT_AF.origSca : data.origScale)});
     }
   },
   pickup : function() {

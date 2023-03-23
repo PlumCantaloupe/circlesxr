@@ -8,7 +8,6 @@ require('./circles-color');
 require('./circles-costume');
 require('./circles-costume-color-selector');
 require('./circles-cube-env-map.js');
-require('./circles-inspect-object');
 require('./circles-description');
 require('./circles-interactive-object');
 require('./circles-interactive-visible');

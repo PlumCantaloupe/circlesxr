@@ -15,10 +15,12 @@ AFRAME.registerComponent('circles-pickup-object', {
     const CONTEXT_AF          = this;
     const data                = CONTEXT_AF.data;
     CONTEXT_AF.pickedUp       = false;
+    CONTEXT_AF.isHiding       = false;
     CONTEXT_AF.rotationFudge  = 0.1;   //seems to be required to have some rotation on inspect so that it animates properly back to orig/dropRotation
 
     CONTEXT_AF.playerHolder   = null;
     CONTEXT_AF.origParent     = null;
+
     if (CIRCLES.isReady()) {
       CONTEXT_AF.playerHolder = CIRCLES.getAvatarHolderElementBody();  //this is our player holder
       CONTEXT_AF.origParent = CONTEXT_AF.el.parentNode;
@@ -31,8 +33,10 @@ AFRAME.registerComponent('circles-pickup-object', {
       };
       CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, readyFunc);
     }
-
     CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.clickFunc);
+  },
+  remove : function() {
+    this.el.removeEventListener('click', this.clickFunc);
   },
   pickup : function(passedContext) {
     let CONTEXT_AF = null;
@@ -79,14 +83,8 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.pickedUp = true;
   },
   release : function(passedContext) {
-    let CONTEXT_AF = null;
-    if (passedContext) {
-      CONTEXT_AF = passedContext;
-    }
-    else {
-      CONTEXT_AF = this;
-    }
-    const data          = CONTEXT_AF.data;
+    const CONTEXT_AF = (passedContext) ? passedContext : this;
+    const data = CONTEXT_AF.data;
 
     //release
     CONTEXT_AF.origParent.object3D.attach(CONTEXT_AF.el.object3D); //using three's "attach" allows us to retain world transforms during pickup/release
@@ -128,13 +126,26 @@ AFRAME.registerComponent('circles-pickup-object', {
   clickFunc : function(e) {
     const CONTEXT_AF = e.srcElement.components['circles-pickup-object'];
     if (CONTEXT_AF.pickedUp === true) {
+      console.log('release');
       CONTEXT_AF.release(CONTEXT_AF);
     }
     else {
+      console.log('pickup');
       CONTEXT_AF.pickup(CONTEXT_AF);
     }
   },
-  remove : function() {
-    this.el.removeEventListener('click', this.clickFunc);
+  hideObject : function(toHide) {
+    //need this to hide object if we are networking, with NAF artefact template (and don't want doubles)
+    CONTEXT_AF.isHiding = toHide;
+
+    if (CONTEXT_AF.isHiding) {
+      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
+    }
+    else {
+      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
+    }
+  },
+  isHiding : function() {
+    return CONTEXT_AF.isHiding;
   }
 });
