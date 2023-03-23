@@ -29,13 +29,13 @@ block content
             select(name='MagicLinkExpiry', id='MagicLinkExpiry', class="pure-input-1-3")
               while n < 365
                 - val = n++;
-                - selected = (val === 30)
+                - selected = (val === 7)
                 option(value!= val, selected!= selected)!= val
                 - selected = false
           div(class='pure-control-group')
             label(for='MagicLinkGroup') Create Group Name
-            input(name='MagicLinkGroup', id='MagicLinkGroup', type="text", placeholder="type group name", class="pure-input-1-3")
-            button(type="button", class="pure-button pure-button", onclick='autogenerateGroupName(MagicLinkGroup, 4)') autogenerate
+            input(name='MagicLinkGroup', id='MagicLinkGroup', type="text", placeholder="explore", class="pure-input-1-3")
+            button(type="button", class="pure-button pure-button", onclick='autogenerateGroupName(MagicLinkGroup, 4)') create new group
           div(class='pure-control-group')
             label(for='MagicLinkWorld') Select Entry World
             select(name='MagicLinkWorld', id='MagicLinkWorld', , class="pure-input-1-3")

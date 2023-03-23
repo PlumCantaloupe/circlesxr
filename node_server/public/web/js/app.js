@@ -1,8 +1,9 @@
 window.onload = function () {
   //have something in the group field when opening page
-  if (typeof MagicLinkGroup !== 'undefined') {
-    autogenerateGroupName(MagicLinkGroup, 4);
-  }
+  //let's not as "explore" will be used if field is blank
+  // if (typeof MagicLinkGroup !== 'undefined') {
+  //   autogenerateGroupName(MagicLinkGroup, 4);
+  // }
 
   //get worlds available from server
   getWorldsList();
