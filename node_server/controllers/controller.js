@@ -594,6 +594,47 @@ const getMagicLinks = (req, res, next) => {
   });
 };
 
+const loopAndGetFolderNames =  async (folderPath) => {
+  let allSubFolderNames = [];
+  // Get the files as an array
+  let files = null;
+  try{
+    files = await fs.promises.readdir(folderPath);
+  }
+  catch(e) {
+    console.log(e.message);
+    return allSubFolderNames;
+  }
+
+  // Loop them all with the new for...of
+  let worldName = "";
+  for( const file of files ) {
+      // Get the full paths
+      const fullPath = path.join( folderPath, file );
+
+      // Stat the file to see if we have a file or dir
+      const stat = await fs.promises.stat( fullPath );
+
+      if( stat.isDirectory() ) {
+          //console.log( fullPath + " is a directory.");
+          worldName = file;
+          worldName.replace(folderPath, "");
+          allSubFolderNames.push(file);
+      }
+  }
+  allSubFolderNames.sort();
+
+  return allSubFolderNames;
+};
+
+const getWorldsList = async (req, res, next) => {
+  const folderPath = __dirname + '/../../src/worlds';
+  loopAndGetFolderNames(folderPath).then(function(data) {
+    res.json(data);
+  });
+}
+
+
 const addTestUsers = () => {
   let usersToAdd  = [];
   let tenColors   = [ CIRCLES.COLOR_PALETTE.PEARL, CIRCLES.COLOR_PALETTE.TURQUOISE, CIRCLES.COLOR_PALETTE.EMERALD, CIRCLES.COLOR_PALETTE.RIVER, CIRCLES.COLOR_PALETTE.AMETHYST,
@@ -894,5 +935,6 @@ module.exports = {
   addAllTestData,
   serveExplore,
   generateAuthLink,
-  getMagicLinks
+  getMagicLinks,
+  getWorldsList,
 };

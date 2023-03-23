@@ -4,6 +4,9 @@ window.onload = function () {
     autogenerateGroupName(MagicLinkGroup, 4);
   }
 
+  //get worlds available from server
+  getWorldsList();
+
   let popover = new Popover();
   const cps = document.querySelectorAll('.colorPicker'); //from here - https://github.com/tovic/color-picker 
 
@@ -174,4 +177,39 @@ function showMagicLinks(data, expiryTimeMin) {
   tableStr += '</tbody>';
   tableStr += '</table>';
   menuElem.innerHTML = tableStr;
+}
+
+function getWorldsList() {
+  let request = new XMLHttpRequest();
+  request.open('GET', '/get-worlds-list');
+  request.responseType = 'text';
+  request.onload = function() {
+    showWorldList(request.response); //show copy button
+  };
+  request.send();
+}
+
+function showWorldList(data) {
+  const jsonData                = JSON.parse(data);
+  const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
+  const worldsSelectElem        = document.querySelector('#MagicLinkWorld');
+
+  let htmlStr_list    = '<ul class="pure-menu-list">';
+  let htmlStr_select  = '';
+  let urlLink = '';
+  let worldName = ';'
+  for (let i = 0; i < jsonData.length; i++) {
+    worldName = jsonData[i];
+    urlLink = '/w/' + worldName;
+
+    htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
+    htmlStr_list += worldName;
+    htmlStr_list += '</a></li>';
+
+    htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
+  }
+  htmlStr_list += '</ul>';
+
+  worldsWrapperElem.innerHTML = htmlStr_list;
+  worldsSelectElem.innerHTML = htmlStr_select;
 }
