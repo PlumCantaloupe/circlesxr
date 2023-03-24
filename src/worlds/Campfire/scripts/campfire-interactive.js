@@ -67,7 +67,7 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.campfire.addEventListener('click', function () {
                 CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
                 CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
-                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //listen for when others turn on campfire
