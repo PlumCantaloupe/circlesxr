@@ -95,9 +95,12 @@ AFRAME.registerComponent('lights-interactive', {
 
             //if someone else requests our sync data, we send it.
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
-                                                                        light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn , 
-                                                                        room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                //if the same world as the one requesting
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
+                                                                            light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn , 
+                                                                            room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                }
             });
 
             //receiving sync data from others (assuming all others is the same for now)
