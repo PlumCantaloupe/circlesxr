@@ -20,7 +20,11 @@ AFRAME.registerComponent('circles-sphere-env-map', {
     if ( CONTEXT_AF.data.src === '' ) {
       console.warn('No src defined in component');
     }
-    else {
+    else 
+      if (CIRCLES.UTILS.isEmptyObj(CONTEXT_AF.data.src)) {
+        console.warn('circles-sphere-env-map : CONTEXT_AF.data.src is empty ' + CONTEXT_AF.data.src);
+        return;
+      }
       const imagePath = (typeof CONTEXT_AF.data.src === 'string') ? CONTEXT_AF.data.src : CONTEXT_AF.data.src.getAttribute('src');
 
       CONTEXT_AF.loader.load( imagePath,
