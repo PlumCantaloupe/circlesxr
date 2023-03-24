@@ -17,6 +17,8 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.artefactZoomSteps    = [-2.0, -1.0];
     CONTEXT_AF.artefactRotSteps     = [360.0, 90.0, 180.0, 270.0];
 
+    CONTEXT_AF.setupArtefactNetworkingSync();
+
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {
       scene.setAttribute('vr-mode-ui', {enabled:false});
@@ -152,10 +154,10 @@ AFRAME.registerComponent('circles-manager', {
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, (e) => {
       //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
 
-      if ( CONTEXT_AF.selectedObject !== null ) {
+      //if ( CONTEXT_AF.selectedObject !== null ) {
         //CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-        CONTEXT_AF.releaseArtefact();
-      }
+      //  CONTEXT_AF.releaseArtefact();
+      //}
     });
 
     document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, (e) => {
@@ -273,6 +275,84 @@ AFRAME.registerComponent('circles-manager', {
                                               });
     triangle_point.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
     infoOffsetElem.appendChild(triangle_point);
+  },
+  setupArtefactNetworkingSync: function() {
+    const CONTEXT_AF = this;
+
+    CONTEXT_AF.socket     = null;
+    CONTEXT_AF.connected  = false;
+    CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        CONTEXT_AF.connected = true;
+        console.warn("circles-manager: messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
+
+        const arteElems = document.querySelectorAll('.circles_artefact');
+
+        arteElems.forEach(artefact => {
+          artefact.addEventListener(CIRCLES.EVENTS.INSPECT_THIS_OBJECT, function() {
+            console.log('sending - CIRCLES.EVENTS.SYNC_ARTEFACT_PICKUP');
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SYNC_ARTEFACT_PICKUP, {artefactID:artefact.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            CONTEXT_AF.socket.emit('jajajajaja', {campfireOn:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          });
+
+          artefact.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function() {
+            console.log('sending - CIRCLES.EVENTS.RELEASE_THIS_OBJECT');
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SYNC_ARTEFACT_RELEASE, {artefactID:artefact.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          });
+
+          //NAF events for when someone else takes/loses control of an object
+          artefact.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, function() {
+            console.log('receiving - CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED');
+            //CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          });
+
+          artefact.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, function() {
+            console.log('receiving - CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST');
+            //CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          });
+        });
+
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_ARTEFACT_PICKUP, function(data) {
+          console.log('receiving - CIRCLES.EVENTS.SYNC_ARTEFACT_PICKUP for ' + data.artefactID);
+          //hide this artefact
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            document.querySelector('#' + data.artefactID).setAttribute('circles-interactive-visible', false);
+            document.querySelector('#' + data.artefactID + '_label').setAttribute('circles-interactive-visible', false);
+            document.querySelector('#' + data.artefactID + '_description').setAttribute('circles-interactive-visible', true);
+          }
+        });
+
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_ARTEFACT_RELEASE, function(data) {
+          console.log('receiving - CIRCLES.EVENTS.RELEASE_THIS_OBJECT for ' + data.artefactID);
+          //show this artefact
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            document.querySelector('#' + data.artefactID).setAttribute('circles-interactive-visible', true);
+            document.querySelector('#' + data.artefactID + '_label').setAttribute('circles-interactive-visible', true);
+            document.querySelector('#' + data.artefactID + '_description').setAttribute('circles-interactive-visible', false);
+          }
+        });
+
+        //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
+        setTimeout(function() {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+        }, THREE.MathUtils.randInt(0,1200));
+
+        //if someone else requests our sync data, we send it.
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+          //if the same world as the one requesting
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          }
+        });
+
+        //receiving sync data from others (assuming all others is the same for now)
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
+            //make sure we are receiving data for this world
+            if (data.world === CIRCLES.getCirclesWorldName()) {
+                
+            }
+        });
+    });
   },
   selectArtefact : function (obj) {
     const CONTEXT_AF = this;

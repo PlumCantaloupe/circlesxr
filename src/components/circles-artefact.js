@@ -52,6 +52,10 @@ AFRAME.registerComponent('circles-artefact', {
       CONTEXT_AF.el.classList.add('narrative');
     }
 
+    if (!CONTEXT_AF.el.classList.contains('circles_artefact')) {
+      CONTEXT_AF.el.classList.add('circles_artefact');
+    }
+
     //add all additional elements needed for these artefacts. Note that we are using the update function so these cannot be modified in real-time ...
     CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'highlight'});
 
@@ -64,7 +68,7 @@ AFRAME.registerComponent('circles-artefact', {
     const tempPos = CONTEXT_AF.el.getAttribute('position');
     CONTEXT_AF.labelEl = document.createElement('a-entity');
     CONTEXT_AF.labelEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_label');
-    CONTEXT_AF.labelEl.setAttribute('visible', data.label_on);
+    CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', data.label_on);
     CONTEXT_AF.labelEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
     CONTEXT_AF.labelEl.setAttribute('circles-label', {  text:           data.label_text, 
                                                         offset:         data.label_offset, 
@@ -83,7 +87,7 @@ AFRAME.registerComponent('circles-artefact', {
     //create associated description
     CONTEXT_AF.descEl = document.createElement('a-entity');
     CONTEXT_AF.descEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_description');
-    CONTEXT_AF.descEl.setAttribute('visible', false);
+    CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
     CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x + data.description_offset, y:tempPos.y + data.description_offset, z:tempPos.z + data.description_offset});
     CONTEXT_AF.descEl.setAttribute('rotation', {x:0.0, y:data.textRotationY, z:0.0});
     CONTEXT_AF.descEl.setAttribute('circles-description', { title_text_front:       data.title,
@@ -168,47 +172,6 @@ AFRAME.registerComponent('circles-artefact', {
         });
       }
     });
-
-    //need to make sure we don't have duplicate artefacts ... and that we trigger descriptions for all ...
-    // CONTEXT_AF.socket     = null;
-    //     CONTEXT_AF.connected  = false;
-    //     CONTEXT_AF.campfireEventName = "campfire_event";
-    //     CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-    //         CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
-    //         CONTEXT_AF.connected = true;
-    //         console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
-
-    //         CONTEXT_AF.campfire.addEventListener('click', function () {
-    //             CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
-    //             CONTEXT_AF.turnFire(CONTEXT_AF.fireOn );
-    //             CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOn , room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-    //         });
-
-    //         //listen for when others turn on campfire
-    //         CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-    //             CONTEXT_AF.turnFire(data.campfireOn);
-    //             CONTEXT_AF.fireOn = data.campfireOn;
-    //         });
-
-    //         //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
-    //         setTimeout(function() {
-    //             CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-    //         }, THREE.MathUtils.randInt(0,1200));
-
-    //         //if someone else requests our sync data, we send it.
-    //         CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-    //             CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-    //         });
-
-    //         //receiving sync data from others (assuming all others is the same for now)
-    //         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
-    //             //make sure we are receiving data for this world
-    //             if (data.world === CIRCLES.getCirclesWorldName()) {
-    //                 CONTEXT_AF.turnFire(data.campfireON );
-    //                 CONTEXT_AF.fireOn = data.campfireON;
-    //             }
-    //         });
-    //     });
   },
   //!!TODO should probably make this component dynamic ...
   update : function(oldData) {
@@ -269,12 +232,12 @@ AFRAME.registerComponent('circles-artefact', {
 
     //hide label
     if (CONTEXT_AF.data.label_on === true) {
-      CONTEXT_AF.labelEl.setAttribute('visible', false);
+      CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', false);
     }
 
     //show description
     if (CONTEXT_AF.data.description_on === true) {
-      CONTEXT_AF.descEl.setAttribute('visible', true);
+      CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', true);
     }
 
     //let others know
@@ -284,9 +247,25 @@ AFRAME.registerComponent('circles-artefact', {
     const CONTEXT_AF = this;
     CONTEXT_AF.isPickedUp = false;
 
+    const endReleaseFunc = function() {
+      //show label
+      if (CONTEXT_AF.data.label_on === true) {
+        CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', true);
+      }
+
+      //hide description
+      if (CONTEXT_AF.data.description_on === true) {
+        CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
+      }
+
+      //send off event for others
+      CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
+    };
+
     const stopNetworking = function() {
       CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
       CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', stopNetworking);
+      endReleaseFunc();
     };
 
     //turn off networking. If there is animation, wait until the animation is complete
@@ -295,19 +274,7 @@ AFRAME.registerComponent('circles-artefact', {
     }
     else {
       CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+      endReleaseFunc();
     }
-
-    //show label
-    if (CONTEXT_AF.data.label_on === true) {
-      CONTEXT_AF.labelEl.setAttribute('visible', true);
-    }
-
-    //hide description
-    if (CONTEXT_AF.data.description_on === true) {
-      CONTEXT_AF.descEl.setAttribute('visible', false);
-    }
-
-    //send off event for others
-    CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
   }
 });
