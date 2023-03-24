@@ -15,7 +15,6 @@ AFRAME.registerComponent('circles-pickup-object', {
     const CONTEXT_AF          = this;
     const data                = CONTEXT_AF.data;
     CONTEXT_AF.pickedUp       = false;
-    CONTEXT_AF.isHiding       = false;
     CONTEXT_AF.rotationFudge  = 0.1;   //seems to be required to have some rotation on inspect so that it animates properly back to orig/dropRotation
 
     CONTEXT_AF.playerHolder   = null;
@@ -133,19 +132,5 @@ AFRAME.registerComponent('circles-pickup-object', {
       console.log('pickup');
       CONTEXT_AF.pickup(CONTEXT_AF);
     }
-  },
-  hideObject : function(toHide) {
-    //need this to hide object if we are networking, with NAF artefact template (and don't want doubles)
-    CONTEXT_AF.isHiding = toHide;
-
-    if (CONTEXT_AF.isHiding) {
-      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
-    }
-    else {
-      CONTEXT_AF.el.setAttribute('circles-interactive-visible', false);
-    }
-  },
-  isHiding : function() {
-    return CONTEXT_AF.isHiding;
   }
 });
