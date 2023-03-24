@@ -235,17 +235,6 @@ AFRAME.registerComponent('circles-artefact', {
       }
     }
 
-    // const currRot = CONTEXT_AF.el.object3D.rotation.clone();
-    // CONTEXT_AF.el.setAttribute('circles-pickup-object', { pickupPosition:data.inspectPosition, pickupRotation:data.inspectRotation, pickupScale:data.inspectScale,
-    //                                                       dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.el.object3D.position.clone() : data.origPosition),              
-    //                                                       dropRotation:((data.origRotation.x > 100000.0) ? {  x:THREE.MathUtils.radToDeg(currRot.x), 
-    //                                                                                                           y:THREE.MathUtils.radToDeg(currRot.y), 
-    //                                                                                                           z:THREE.MathUtils.radToDeg(currRot.z)
-    //                                                                                                         } : data.origRotation),              
-    //                                                       dropScale:((data.origScale.x > 100000.0) ? CONTEXT_AF.el.object3D.scale.clone() : data.origScale),
-    //                                                       animate:true
-    //                                                     });
-
     if ( (oldData.inspectPosition !== data.inspectPosition) && (data.inspectPosition !== '') ) {
       CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupPosition: data.inspectPosition });
     }
