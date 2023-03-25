@@ -10,6 +10,7 @@ AFRAME.registerComponent('circles-pickup-object', {
     dropScale:          { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale after it is released
     animate:            { type: "boolean", default:false },                     //whether we animate
     animateDurationMS:  { type: "number", default:400 },                        //how long animation is
+    enabled:            { type: "boolean", default:true },                      //whethere this works
   },
   init: function() {
     const CONTEXT_AF          = this;
@@ -19,6 +20,10 @@ AFRAME.registerComponent('circles-pickup-object', {
 
     CONTEXT_AF.playerHolder   = null;
     CONTEXT_AF.origParent     = null;
+
+    if (CONTEXT_AF.el.hasAttribute('circles-interactive-object') === false) {
+      CONTEXT_AF.el.setAttribute('circles-interactive-object', {});
+    }
 
     if (CIRCLES.isReady()) {
       CONTEXT_AF.playerHolder = CIRCLES.getAvatarHolderElementBody();  //this is our player holder
@@ -34,17 +39,21 @@ AFRAME.registerComponent('circles-pickup-object', {
     }
     CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.clickFunc);
   },
+  update: function(oldData) {
+    const CONTEXT_AF = this;
+    const data = this.data;
+
+    if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
+
+    if ( (oldData.enabled !== data.enabled) && (data.enabled !== '') ) {
+      CONTEXT_AF.el.setAttribute('circles-interactive-object', {enabled:data.enabled});
+    }
+  },
   remove : function() {
     this.el.removeEventListener('click', this.clickFunc);
   },
   pickup : function(passedContext) {
-    let CONTEXT_AF = null;
-    if (passedContext) {
-      CONTEXT_AF = passedContext;
-    }
-    else {
-      CONTEXT_AF = this;
-    }
+    const CONTEXT_AF = (passedContext) ? passedContext : this;
     const data          = CONTEXT_AF.data;
 
     CONTEXT_AF.playerHolder.object3D.attach(CONTEXT_AF.el.object3D);
@@ -80,6 +89,9 @@ AFRAME.registerComponent('circles-pickup-object', {
     }
 
     CONTEXT_AF.pickedUp = true;
+
+    //let others know
+    CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, null, false);
   },
   release : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
@@ -121,6 +133,22 @@ AFRAME.registerComponent('circles-pickup-object', {
     }
 
     CONTEXT_AF.pickedUp = false;
+
+    const releaseEventFunc = function() {
+      //send off event for others
+      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
+      if (data.animate === true) {
+        CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
+      }
+    };
+
+    //let others know
+    if (data.animate === true) {
+      CONTEXT_AF.el.addEventListener('animationcomplete__cpo_position', releaseEventFunc);
+    }
+    else {
+      releaseEventFunc();
+    }
   },
   clickFunc : function(e) {
     const CONTEXT_AF = e.srcElement.components['circles-pickup-object'];

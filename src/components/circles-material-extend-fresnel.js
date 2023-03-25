@@ -17,8 +17,11 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
     CONTEXT_AF.originalVertShader = null;
     CONTEXT_AF.originalFragShader = null;
 
-    CONTEXT_AF.applyShader();
-    CONTEXT_AF.el.addEventListener('object3dset', this.applyShader.bind(this));
+    //ugh, a hacky way to try and wait until the material is set to a standard one (as basic shapes start with a BasicMaterial)
+    setTimeout(function() {
+      CONTEXT_AF.applyShader();
+      CONTEXT_AF.el.addEventListener('object3dset', CONTEXT_AF.applyShader.bind(CONTEXT_AF));
+    }, 1000);
     
     //fresnel shader: https://codepen.io/Fyrestar/pen/WNjXqXv
     //extending MeshStandardMaterial: https://stackoverflow.com/questions/64560154/applying-color-gradient-to-material-by-extending-three-js-material-class-with-on
@@ -63,7 +66,7 @@ AFRAME.registerComponent('circles-material-extend-fresnel', {
       if (node.material) {
         foundMatNode = true;
 
-        if (node.material.isMeshStandardMaterial) {
+        if (node.material.isMeshStandardMaterial === true) {
           CONTEXT_AF.extendStandardMat(node.material); 
         }
         else {

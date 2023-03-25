@@ -31,8 +31,8 @@ AFRAME.registerComponent('circles-artefact', {
     label_offset:       {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
     arrow_position:     {type:'string',   default: 'up', oneOf: ['up', 'down', 'left', 'right']},
 
-    networkedEnabled: {type:'boolean',  default:false},
-    networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
+    // networkedEnabled: {type:'boolean',  default:false},
+    // networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
   },
   init: function() {
     const CONTEXT_AF  = this;
@@ -105,98 +105,24 @@ AFRAME.registerComponent('circles-artefact', {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
     }
 
-    //Network stuff
-    const ownership_gained_Func = (e) => {
-      console.log("ownership-gained");
-      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, CONTEXT_AF.el, true );
-    };
-
-    const ownership_lost_Func = (e) => {
-      console.log("ownership-lost");
-      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, CONTEXT_AF.el, true );
-    };
-
-    const ownership_changed_Func = (e) => {
-      console.log("ownership-changed");
-      CONTEXT_AF.el.emit( CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, CONTEXT_AF.el, true );
-    };
-
-    let eventsAttached = false;
-    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, function (event) {
-      if (eventsAttached === false) {
-        eventsAttached = true;
-        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          el.addEventListener('ownership-gained', ownership_gained_Func);
-          el.addEventListener('ownership-lost', ownership_lost_Func);
-          el.addEventListener('ownership-changed', ownership_changed_Func);
-        });
-      }
-    });
-
-    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, function (event) {
-        eventsAttached = false;
-        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          el.removeEventListener('ownership-gained', ownership_gained_Func);
-          el.removeEventListener('ownership-lost', ownership_lost_Func);
-          el.removeEventListener('ownership-changed', ownership_changed_Func);
-        });
-    });
-
-    if (CONTEXT_AF.el.hasAttribute('networked') === true) {
-      if (eventsAttached === false) {
-        eventsAttached = true;
-        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          el.addEventListener('ownership-gained', ownership_gained_Func);
-          el.addEventListener('ownership-lost', ownership_lost_Func);
-          el.addEventListener('ownership-changed', ownership_changed_Func);
-        });
-      }
-    }
-    
     //send click event to manager
     CONTEXT_AF.el.addEventListener('click', (e) => {
       CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
+    });
 
-      //take over networked membership
-      if (CONTEXT_AF.el.hasAttribute('networked') === true) {
-        NAF.utils.getNetworkedEntity(CONTEXT_AF.el).then((el) => {
-          console.log("is this mine?");
-          if (!NAF.utils.isMine(el)) {
-            console.log("No but ... ");
-            NAF.utils.takeOwnership(el);
-            console.log("it is mine now");
-          } 
-          else {
-            console.log("Yes, it is mine already");
-          }
-        });
-      }
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
+      CONTEXT_AF.pickup(CONTEXT_AF);
+    });
+
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
+      CONTEXT_AF.release(CONTEXT_AF);
     });
   },
-  //!!TODO should probably make this component dynamic ...
   update : function(oldData) {
     const CONTEXT_AF = this;
     const data = this.data;
 
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
-
-    if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
-      if (data.networkedEnabled === true) {
-        CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
-        CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
-      }
-      else {
-        CONTEXT_AF.el.removeAttribute('networked');
-        CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED);
-      }
-    }
-
-    if ( (oldData.networkedTemplate !== data.networkedTemplate) && (data.networkedTemplate !== '') ) {
-      if (data.networkedEnabled === true && (CONTEXT_AF.el.getAttribute('networked').template !== '#' + data.networkedTemplate)) {
-        CONTEXT_AF.el.removeAttribute('networked');
-        CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
-      }
-    }
 
     if ( (oldData.inspectPosition !== data.inspectPosition) && (data.inspectPosition !== '') ) {
       CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupPosition: data.inspectPosition });
@@ -222,13 +148,28 @@ AFRAME.registerComponent('circles-artefact', {
     if ( (oldData.origScale !== data.origScale) && (data.origScale !== '') ) {
       CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropScale:((data.origScale.x > 100000.0) ? CONTEXT_AF.origSca : data.origScale)});
     }
+
+    // if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
+    //   if (data.networkedEnabled === true) {
+    //     CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
+    //     CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
+    //   }
+    //   else {
+    //     CONTEXT_AF.el.removeAttribute('networked');
+    //     CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED);
+    //   }
+    // }
+
+    // if ( (oldData.networkedTemplate !== data.networkedTemplate) && (data.networkedTemplate !== '') ) {
+    //   if (data.networkedEnabled === true && (CONTEXT_AF.el.getAttribute('networked').template !== '#' + data.networkedTemplate)) {
+    //     CONTEXT_AF.el.removeAttribute('networked');
+    //     CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
+    //   }
+    // }
   },
-  pickup : function() {
-    const CONTEXT_AF = this;
+  pickup : function(passedContext) {
+    const CONTEXT_AF = (passedContext) ? passedContext : this;
     CONTEXT_AF.isPickedUp = true;
-    
-    //turn on networking
-    CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:true, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
 
     //hide label
     if (CONTEXT_AF.data.label_on === true) {
@@ -239,42 +180,19 @@ AFRAME.registerComponent('circles-artefact', {
     if (CONTEXT_AF.data.description_on === true) {
       CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', true);
     }
-
-    //let others know
-    CONTEXT_AF.el.emit( CIRCLES.EVENTS.INSPECT_THIS_OBJECT, null, false );
   },
-  release : function() {
-    const CONTEXT_AF = this;
+  release : function(passedContext) {
+    const CONTEXT_AF = (passedContext) ? passedContext : this;
     CONTEXT_AF.isPickedUp = false;
 
-    const endReleaseFunc = function() {
-      //show label
-      if (CONTEXT_AF.data.label_on === true) {
-        CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', true);
-      }
-
-      //hide description
-      if (CONTEXT_AF.data.description_on === true) {
-        CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
-      }
-
-      //send off event for others
-      CONTEXT_AF.el.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
-    };
-
-    const stopNetworking = function() {
-      CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-      CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', stopNetworking);
-      endReleaseFunc();
-    };
-
-    //turn off networking. If there is animation, wait until the animation is complete
-    if (CONTEXT_AF.el.hasAttribute('animation__cpo_position')) {
-      CONTEXT_AF.el.addEventListener('animationcomplete__cpo_position', stopNetworking);
+    //show label
+    if (CONTEXT_AF.data.label_on === true) {
+      CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', true);
     }
-    else {
-      CONTEXT_AF.el.setAttribute('circles-artefact', {networkedEnabled:false, networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
-      endReleaseFunc();
+
+    //hide description
+    if (CONTEXT_AF.data.description_on === true) {
+      CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
     }
   }
 });
