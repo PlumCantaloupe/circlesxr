@@ -23,7 +23,7 @@
     <a-entity light="type:directional; color:#FFF; intensity:0.6" circles-platform-shadows position="-0.5 1 1"></a-entity>
 
     <!-- object to play with -->
-    <a-entity id="ball" geometry="primitive:sphere; radius:1.0;" circles-pickup-object material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" shadow="cast:true; receive:true;"></a-entity>
+    <a-entity id="torus_knot" position="0 1 -2" geometry="primitive:torusKnot; radius:0.5; radiusTubular:0.07; segmentsTubular:128; segmentsRadial:16;" circles-pickup-object="pickupScale:0.5 0.5 0.5;" circles-pickup-networked material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" shadow="cast:true; receive:true;"></a-entity>
 
     <!-- ground & sky -->
     <a-entity id="ground" rotation="-90 0 0" geometry="primitive:circle; radius:10.0;" material="color:rgb(190,140,210);" shadow="cast:false; receive:true;"></a-entity>
