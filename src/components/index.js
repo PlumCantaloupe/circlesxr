@@ -19,6 +19,7 @@ require('./circles-lookat');
 require('./circles-object-world');
 require('./circles-parent-constraint');
 require('./circles-pdf-loader');
+require('./circles-pickup-networked');
 require('./circles-pickup-object');
 require('./circles-platform-mirror');
 require('./circles-platform-scene-shadows');
