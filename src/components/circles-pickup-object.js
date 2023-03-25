@@ -91,7 +91,7 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.pickedUp = true;
 
     //let others know
-    CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, null, false);
+    CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, null, true);
   },
   release : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
@@ -136,7 +136,7 @@ AFRAME.registerComponent('circles-pickup-object', {
 
     const releaseEventFunc = function() {
       //send off event for others
-      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, false);
+      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, true);
       if (data.animate === true) {
         CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
       }
@@ -153,11 +153,9 @@ AFRAME.registerComponent('circles-pickup-object', {
   clickFunc : function(e) {
     const CONTEXT_AF = e.srcElement.components['circles-pickup-object'];
     if (CONTEXT_AF.pickedUp === true) {
-      console.log('release');
       CONTEXT_AF.release(CONTEXT_AF);
     }
     else {
-      console.log('pickup');
       CONTEXT_AF.pickup(CONTEXT_AF);
     }
   }

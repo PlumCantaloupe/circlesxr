@@ -17,8 +17,6 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.artefactZoomSteps    = [-2.0, -1.0];
     CONTEXT_AF.artefactRotSteps     = [360.0, 90.0, 180.0, 270.0];
 
-    CONTEXT_AF.setupArtefactNetworkingSync();
-
     CONTEXT_AF.arteElems          = [];
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
@@ -27,7 +25,7 @@ AFRAME.registerComponent('circles-manager', {
     }
 
     CONTEXT_AF.createFloatingObjectDescriptions();
-    CONTEXT_AF.addEventListeners(); //want after everything loaded in via network
+    CONTEXT_AF.addEventListeners();
     CONTEXT_AF.addArtefactNarrationController();
 
     //attach networkedcomponent (to create avatar) to player rig
@@ -144,26 +142,13 @@ AFRAME.registerComponent('circles-manager', {
   },
   addEventListeners : function () {
     const CONTEXT_AF  = this;
-    
-    document.addEventListener(CIRCLES.EVENTS.SELECT_THIS_OBJECT, (e) => {
-      CONTEXT_AF.selectArtefact( e.detail );
+
+    document.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
+      CONTEXT_AF.pickupArtefact( e.srcElement );
     });
 
-    document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_GAINED, (e) => {
-      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-gained");
-    });
-
-    document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_LOST, (e) => {
-      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-lost");
-
-      //if ( CONTEXT_AF.selectedObject !== null ) {
-        //CONTEXT_AF.selectedObject.emit( CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {}, true );
-      //  CONTEXT_AF.releaseArtefact();
-      //}
-    });
-
-    document.addEventListener(CIRCLES.EVENTS.OBJECT_OWNERSHIP_CHANGED, (e) => {
-      //console.log("Event: "  + e.detail.getAttribute('id') + " ownership-changed");
+    document.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
+      CONTEXT_AF.releaseArtefact();
     });
 
     document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
@@ -278,73 +263,26 @@ AFRAME.registerComponent('circles-manager', {
     triangle_point.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
     infoOffsetElem.appendChild(triangle_point);
   },
-  setupArtefactNetworkingSync: function() {
-    // const CONTEXT_AF = this;
-
-    // CONTEXT_AF.socket     = null;
-    // CONTEXT_AF.connected  = false;
-    // CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-    //     CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
-    //     CONTEXT_AF.connected = true;
-    //     console.warn("circles-manager: messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
-
-    //     //get artefacts in secene (add networked elements later)
-    //     CONTEXT_AF.arteElems = document.querySelectorAll('.circles_artefact');
-
-    //     CONTEXT_AF.arteElems.forEach(artefact => {
-    //       //CONTEXT_AF.attachNetworkEventsToArtefact(artefact);
-    //     });
-
-    //     document.body.addEventListener('entityCreated', function (evt) {
-    //       // console.error('clientConnected event. clientId =', evt.detail.clientId);
-
-    //     });
-
-    //     document.body.addEventListener('entityRemoved', function (evt) {
-    //       // console.error('clientConnected event. clientId =', evt.detail.clientId);
-    //     });
-    // });
-  },
-  selectArtefact : function (obj) {
+  pickupArtefact : function (elem) {
     const CONTEXT_AF = this;
 
-    if ( CONTEXT_AF.selectedObject === null) {
-      CONTEXT_AF.pickupArtefact(obj);
-    }
-    else {
+    //if already holding an artefact ...
+    if ( CONTEXT_AF.selectedObject !== null) {
       //check if same object is being selected
-      const isSameObject = CONTEXT_AF.selectedObject.isSameNode( obj.el );
+      const isSameObject = CONTEXT_AF.selectedObject.isSameNode( elem );
 
       if (isSameObject === false) {
-        //need to click artefact also
-        obj.el.components['circles-pickup-object'].release(CONTEXT_AF.selectedObject.components['circles-pickup-object']);
+        //need to release held artefact
+        elem.components['circles-pickup-object'].release(CONTEXT_AF.selectedObject.components['circles-pickup-object']);
       }
 
-      //release currently held object
+      //release currently held object before we pick up another
       CONTEXT_AF.releaseArtefact();
-
-      //pick up another object if not the same object that was released
-      if (isSameObject === false) {
-        CONTEXT_AF.pickupArtefact(obj);
-      }
     }
-  },
-  pickupArtefact : function (obj) {
-    const CONTEXT_AF = this;
-    CONTEXT_AF.selectedObject = obj.el;
+
+    CONTEXT_AF.selectedObject = elem;
     CONTEXT_AF.artefactZoomIndexTarget   = 0;
     CONTEXT_AF.artefactRotIndexTarget    = 0;
-
-    //if not a networked clone then tell artefact it is being picked up
-    let regex = /(naf)/i;
-    let nafMatch  = regex.test(CONTEXT_AF.selectedObject.getAttribute('id')); //don't want description if being taken from someone else
-    if (nafMatch === false) {
-      //CONTEXT_AF.selectedObject.components['circles-artefact'].pickup();
-    }
-    else {
-      //handle descriptions/labels
-      //handle if same world
-    }
 
     //reset control position
     CONTEXT_AF.objectControls.object3D.position.z = CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z;
@@ -361,17 +299,6 @@ AFRAME.registerComponent('circles-manager', {
   },
   releaseArtefact : function () {
     const CONTEXT_AF = this;
-
-    //if not a networked clone then tell artefact it is being released
-    let regex = /(naf)/i;
-    let nafMatch  = regex.test(CONTEXT_AF.selectedObject.getAttribute('id')); //don't want description if being taken from someone else
-    if (nafMatch === false) {
-      //CONTEXT_AF.selectedObject.components['circles-artefact'].release();
-    }
-    else {
-      //handle descriptions/labels
-      //handle if same world
-    }
 
     //turn off object controls
     CONTEXT_AF.objectControls.querySelectorAll('.button').forEach( (button) => {

@@ -106,9 +106,9 @@ AFRAME.registerComponent('circles-artefact', {
     }
 
     //send click event to manager
-    CONTEXT_AF.el.addEventListener('click', (e) => {
-      CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
-    });
+    // CONTEXT_AF.el.addEventListener('click', (e) => {
+    //   CONTEXT_AF.el.emit( CIRCLES.EVENTS.SELECT_THIS_OBJECT, this, true );
+    // });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
       CONTEXT_AF.pickup(CONTEXT_AF);
