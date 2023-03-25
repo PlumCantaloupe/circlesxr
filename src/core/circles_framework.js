@@ -102,6 +102,7 @@ const EVENTS = {
   SELECT_THIS_OBJECT        : 'SELECT_THIS_OBJECT',
   PICKUP_THIS_OBJECT        : 'PICKUP_THIS_OBJECT',
   RELEASE_THIS_OBJECT       : 'RELEASE_THIS_OBJECT',
+  RELEASE_THIS_OBJECT_PRE   : 'RELEASE_THIS_OBJECT_PRE',
   OBJECT_LABEL_LOADED       : 'OBJECT_LABEL_LOADED',
   OBJECT_OWNERSHIP_GAINED   : 'OBJECT_OWNERSHIP_GAINED',
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
@@ -113,8 +114,10 @@ const EVENTS = {
   REQUEST_DATA_SYNC         : 'REQUEST_DATA_SYNC',
   SEND_DATA_SYNC            : 'SEND_DATA_SYNC',
   RECEIVE_DATA_SYNC         : 'RECEIVE_DATA_SYNC',
-  SYNC_ARTEFACT_RELEASE     : 'CIRCLES_SYNC_ARTEFACT_RELEASE',
-  SYNC_ARTEFACT_PICKUP      : 'CIRCLES_SYNC_ARTEFACT_PICKUP',
+  SYNC_OBJECT_RELEASE       : 'CIRCLES_SYNC_OBJECT_RELEASE',
+  SYNC_OBJECT_PICKUP        : 'CIRCLES_SYNC_OBJECT_PICKUP',
+  QUESTION_OBJECT_STATE     : 'CIRCLES_QUESTION_OBJECT_STATE',
+  ANSWER_OBJECT_STATE       : 'CIRCLES_ANSWER_OBJECT_STATE',
 };
 
 const NETWORKED_TEMPLATES = {
@@ -206,6 +209,10 @@ const getCirclesManager = function() {
 
 const isReady = function() {
   return getCirclesManager().isCirclesReady();
+}
+
+const isCirclesWebsocketReady = function() {
+  return (circlesResearchWebsocket) ? true : false;
 }
 
 const getMainCameraElement = function() {
@@ -305,6 +312,7 @@ module.exports = {
   getCirclesWorldName,
   getCirclesManager,
   isReady,
+  isCirclesWebsocketReady,
   getAvatarElement,
   getAvatarHolderElementBody,
   getAvatarRigElement,
