@@ -1,0 +1,37 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties circles-platform-scene-shadows="updateInterval:10;">
+    <a-assets>
+      <img id='skyMap' src='/global/assets/textures/equirectangular/PurpleBlue.jpg' crossorigin="anonymous">
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <a-entity light="type:ambient; color:rgb(190,140,210)"></a-entity>
+    <a-entity light="type:directional; color:#FFF; intensity:0.6" circles-platform-shadows position="-0.5 1 1"></a-entity>
+
+    <!-- object to play with -->
+    <a-entity id="ball" geometry="primitive:sphere; radius:1.0;" circles-pickup-object material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" shadow="cast:true; receive:true;"></a-entity>
+
+    <!-- ground & sky -->
+    <a-entity id="ground" rotation="-90 0 0" geometry="primitive:circle; radius:10.0;" material="color:rgb(190,140,210);" shadow="cast:false; receive:true;"></a-entity>
+    <a-entity id="sky" geometry="primitive:sphere; radius:100.0;"  material="src:#skyMap; shader:flat; flatShading:true; side:back;"></a-entity>
+
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
