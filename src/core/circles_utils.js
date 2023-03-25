@@ -25,7 +25,15 @@ function generateRandomString(numWords = 1) {
   return autoStr;
 }
 
+function isTheSameXYZ(xyz_1, xyz_2, diff = Number.EPSILON) {
+  return (  (Math.abs(xyz_1.x - xyz_2.x) < diff) &&
+            (Math.abs(xyz_1.y - xyz_2.y) < diff) &&
+            (Math.abs(xyz_1.z - xyz_2.z) < diff)
+         );
+}
+
 module.exports = {
   isEmptyObj,
-  generateRandomString
+  generateRandomString,
+  isTheSameXYZ
 };
