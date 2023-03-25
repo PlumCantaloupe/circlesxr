@@ -169,7 +169,6 @@ AFRAME.registerComponent('circles-artefact', {
   },
   pickup : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
-    CONTEXT_AF.isPickedUp = true;
 
     //hide label
     if (CONTEXT_AF.data.label_on === true) {
@@ -183,7 +182,6 @@ AFRAME.registerComponent('circles-artefact', {
   },
   release : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
-    CONTEXT_AF.isPickedUp = false;
 
     //show label
     if (CONTEXT_AF.data.label_on === true) {
