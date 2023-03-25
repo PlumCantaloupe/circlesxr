@@ -30,10 +30,9 @@
         <img id='link_3_360'        src='/global/images/WIT_3_Screen.jpg' crossorigin="anonymous">
 
   
-        <a-asset-item id="campfire-gltf"  src="/worlds/hub/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="campfire-gltf"  src="/worlds/Spatium_Hub/button.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="room_gltf" src="/worlds/Spatium_Hub/meeting.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-
 
         <!-- AUDIO -->
         <!--<audio id="fireCrackling-snd" src="/worlds/hub/assets/audio/fire.mp3" preload="true"></audio>-->
@@ -114,9 +113,10 @@
         class="interactive"
         gltf-model="#campfire-gltf"
         position="2 1.6 -13.49"
+        scale="0.5 0.5 0.5"
         shadow="receive: true; cast: true"
         circles-interactive-object="type:highlight"
-        circles-object-label="label_text:click fire to start; label_visible:true; label_offset:1.1 0.2 0; arrow_position:left;"
+        circles-object-label="label_text:click button to start; label_visible:true; label_offset:1.1 0.2 0; arrow_position:left;"
         ></a-entity>
 
       <!-- spawn point -->
