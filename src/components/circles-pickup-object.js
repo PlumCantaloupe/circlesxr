@@ -18,6 +18,8 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.pickedUp       = false;
     CONTEXT_AF.rotationFudge  = 0.1;   //seems to be required to have some rotation on inspect so that it animates properly back to orig/dropRotation
 
+    console.log('circles-pickup-object init');
+
     CONTEXT_AF.playerHolder   = null;
     CONTEXT_AF.origParent     = null;
 
@@ -138,12 +140,14 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT_PRE, null, true);
   },
   clickFunc : function(e) {
-    const CONTEXT_AF = e.srcElement.components['circles-pickup-object'];
+    const CONTEXT_AF = (e) ? e.srcElement.components['circles-pickup-object'] : this;
     if (CONTEXT_AF.pickedUp === true) {
       CONTEXT_AF.release(CONTEXT_AF);
+      console.log('circles-pickup-object release');
     }
     else {
       CONTEXT_AF.pickup(CONTEXT_AF);
+      console.log('circles-pickup-object pickup');
     }
   }
 });
