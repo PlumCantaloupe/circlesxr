@@ -62,7 +62,7 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.el.setAttribute('circles-pickup-object', {animate:true});
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
-    CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
+    //CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
 
     //create associated label
     const tempPos = CONTEXT_AF.el.getAttribute('position');
