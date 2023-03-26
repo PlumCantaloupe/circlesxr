@@ -1,26 +1,10 @@
-class Popover {
-  constructor() {
-    this.activator = document.querySelector('.topbar-header__popover-activator');
-    this.popover = document.querySelector('.topbar-popover');
-    this.wrapper = document.querySelector('.topbar-header__popover-wrapper');
-    this.activator.addEventListener('click', this.togglePopover.bind(this));
-    document.addEventListener('click', this.closePopover.bind(this));
-  }
-
-  togglePopover() {
-    this.popover.classList.toggle('topbar-popover--is-visible');
-  }
-
-  closePopover(evt) {
-    if (!this.wrapper.contains(evt.target) ) {
-      this.popover.classList.remove('topbar-popover--is-visible');
-    }
-  }
-}
-
 window.onload = function () {
-  let popover = new Popover();
+  //have something in the group field when opening page
+  if (typeof MagicLinkGroup !== 'undefined') {
+    autogenerateGroupName(MagicLinkGroup, 4);
+  }
 
+  let popover = new Popover();
   const cps = document.querySelectorAll('.colorPicker'); //from here - https://github.com/tovic/color-picker 
 
   if (!cps.length) {
@@ -47,6 +31,26 @@ window.onload = function () {
     picker.target.onpaste = update;
     picker.target.onkeyup = update;
     picker.target.oninput = update;
+  }
+}
+
+class Popover {
+  constructor() {
+    this.activator = document.querySelector('.topbar-header__popover-activator');
+    this.popover = document.querySelector('.topbar-popover');
+    this.wrapper = document.querySelector('.topbar-header__popover-wrapper');
+    this.activator.addEventListener('click', this.togglePopover.bind(this));
+    document.addEventListener('click', this.closePopover.bind(this));
+  }
+
+  togglePopover() {
+    this.popover.classList.toggle('topbar-popover--is-visible');
+  }
+
+  closePopover(evt) {
+    if (!this.wrapper.contains(evt.target) ) {
+      this.popover.classList.remove('topbar-popover--is-visible');
+    }
   }
 }
 
@@ -91,9 +95,10 @@ function startCoundown(numMS, textId) {
 //*********** magic links button functionality */
 //function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
 function createMagicLinks(userTypeAsking) {
-
   const magic_world = document.querySelector("#MagicLinkWorld").value;
-  const url = (magic_world === 'explore') ? '/' + magic_world : '/w/' + magic_world;
+  const magic_group = document.querySelector("#MagicLinkGroup").value;
+  const url = 'w/' + magic_world + '?group=' + ((magic_group === '') ? 'explore' : magic_group);
+
   //const userTypeAsking = userInfo.userType;
   const expiryTimeMin = document.querySelector("#MagicLinkExpiry").value * 24 * 60; //convert days to mins
 
@@ -108,17 +113,36 @@ function createMagicLinks(userTypeAsking) {
   request.send();
 }
 
-function copyText(inputId, username) {
-  //https://www.w3schools.com/howto/howto_js_copy_clipboard.asp 
-  const copyText = document.querySelector("#" + inputId);
+function copyText(copyTextElem, username) {
+  // Select the text field
+  copyTextElem.select(); 
+  copyTextElem.setSelectionRange(0, 99999); // For mobile devices
 
-  copyText.select();                      //select fields
-  copyText.setSelectionRange(0, 99999);   //For mobile devices
+   // Copy the text inside the text field (need to use promises so this actually copies)
+  navigator.clipboard.writeText(copyTextElem.value).then(function() {
+    alert("Copied the magic link!");
+  });
+}
 
-  document.execCommand("copy");           //copy text inside input
+const YEATS_WORD_LIST = [  'had', 'i', 'the', 'heavens', 'embroidered', 'cloths',
+                            'enwrought', 'with', 'golden', 'and', 'silver', 'light',
+                            'the', 'blue', 'and', 'the', 'dim', 'and', 'the', 'dark', 'cloths',
+                            'of', 'night', 'and', 'light', 'and', 'the', 'half', 'light',
+                            'i', 'would', 'spread', 'the', 'cloths', 'under', 'your', 'feet'];
+function autogenerateGroupName(inputElem, numWords = 1) {
+  //const textInput = document.querySelector("#" + inputID);
+  const arrLength = YEATS_WORD_LIST.length;
 
-  //!!
-  alert('Copied magic link for ' + username  + ' to clipboard!');
+  const getRandomWord = () => {
+    return YEATS_WORD_LIST[Math.floor(Math.random() * arrLength)];
+  };
+
+  let autoStr     = getRandomWord();
+  for (let i = 0; i < numWords; i++) {
+    autoStr += '-' + getRandomWord();
+  }
+
+  inputElem.value = autoStr;
 }
 
 function showMagicLinks(data, expiryTimeMin) {
@@ -142,7 +166,7 @@ function showMagicLinks(data, expiryTimeMin) {
     tableStr += '<tr>';
     tableStr += '<td>' + jsonData[i].username +  '</td>';
     tableStr += '<td>' + jsonData[i].email +  '</td>';
-    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText("linkCopy' + i + '","' + jsonData[i].username + '")\'>';
+    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText(linkCopy' + i + ',"' + jsonData[i].username + '")\'>';
     tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + jsonData[i].magicLink + '\' size=\'50\' readonly></td>';
     tableStr += '</tr>';
   }
