@@ -212,7 +212,7 @@ const isReady = function() {
 }
 
 const isCirclesWebsocketReady = function() {
-  return (circlesResearchWebsocket) ? true : false;
+  return (circlesWebsocket) ? true : false;
 }
 
 const getMainCameraElement = function() {
