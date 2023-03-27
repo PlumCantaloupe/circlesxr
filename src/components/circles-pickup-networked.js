@@ -60,7 +60,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
     if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
       //don't want to touch the networked component if a clone
       if (CONTEXT_AF.isClone === false) {
-        console.log('networkedEnabled ' + data.networkedEnabled);
         if (data.networkedEnabled === true) {
           CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true}); //broken in NAF - persistent:true});
           CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
