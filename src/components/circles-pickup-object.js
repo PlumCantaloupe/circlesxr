@@ -18,8 +18,6 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.pickedUp       = false;
     CONTEXT_AF.rotationFudge  = 0.1;   //seems to be required to have some rotation on inspect so that it animates properly back to orig/dropRotation
 
-    console.log('circles-pickup-object init');
-
     CONTEXT_AF.playerHolder   = null;
     CONTEXT_AF.origParent     = null;
 
