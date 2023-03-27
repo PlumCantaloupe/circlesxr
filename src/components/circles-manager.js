@@ -28,6 +28,7 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.addArtefactNarrationController();
 
     //attach networkedcomponent (to create avatar) to player rig
+    console.log('circles-manager: attaching networked component to avatar');
     CIRCLES.getAvatarRigElement().setAttribute('networked', {template:'#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR, attachTemplateToLocal:true});
 
     scene.addEventListener(CIRCLES.EVENTS.CAMERA_ATTACHED, (e) => {
