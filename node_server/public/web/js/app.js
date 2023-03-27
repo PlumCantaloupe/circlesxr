@@ -182,8 +182,6 @@ function getWorldsList() {
 
 function showWorldList(data) {
   const jsonData                = JSON.parse(data);
-  const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
-  const worldsSelectElem        = document.querySelector('#MagicLinkWorld');
 
   let htmlStr_list    = '<ul class="pure-menu-list">';
   let htmlStr_select  = '';
@@ -201,6 +199,11 @@ function showWorldList(data) {
   }
   htmlStr_list += '</ul>';
 
+  const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
   worldsWrapperElem.innerHTML = htmlStr_list;
-  worldsSelectElem.innerHTML = htmlStr_select;
+
+  const worldsSelectElem        = document.querySelector('#MagicLinkWorld');
+  if(worldsSelectElem) {
+    worldsSelectElem.innerHTML = htmlStr_select;
+  }
 }
