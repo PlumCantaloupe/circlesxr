@@ -223,11 +223,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         else if (numSimilarNetObjs === 1) {
           //this is the element that is hosting this object across the network
           CONTEXT_AF.isOwner = true;
-
-          //add event to window so we can fire event later if need be
-          window.addEventListener('beforeunload', (e) => {
-            CONTEXT_AF.letOthersKnowsYouAreLeaving(CONTEXT_AF.el.id, CONTEXT_AF.origId, CIRCLES.getCirclesGroupName(), CIRCLES.getCirclesWorldName());
-          });
         }
       }
     });
