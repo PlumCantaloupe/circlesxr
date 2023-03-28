@@ -31,6 +31,7 @@
 
   
         <a-asset-item id="campfire-gltf"  src="/worlds/Spatium_Hub/button.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="gate-gltf" src="/worlds/Spatium_Hub/gate.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="navmesh_gltf" src="/worlds/hub/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="room_gltf" src="/worlds/Spatium_Hub/meeting.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
@@ -153,6 +154,8 @@
       <a-entity light='type:ambient; intensity:2;'></a-entity>
 
       <a-entity gltf-model="#room_gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"  position="2.0 0.5 0" scale="25 25 25"></a-entity>
+      <a-entity gltf-model="#gate-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"  position="2.0 0.5 0" scale="25 25 25"></a-entity>
+
 
 
       <!-- sounds -->
