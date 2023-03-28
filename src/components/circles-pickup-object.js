@@ -52,7 +52,7 @@ AFRAME.registerComponent('circles-pickup-object', {
   remove : function() {
     this.el.removeEventListener('click', this.clickFunc);
   },
-  pickup : function(passedContext) {
+  pickup : function(sendNetworkEvent, passedContext) {
     const CONTEXT_AF    = (passedContext) ? passedContext : this;
     const data          = CONTEXT_AF.data;
     const SAME_DIFF     = 0.001;
@@ -85,9 +85,9 @@ AFRAME.registerComponent('circles-pickup-object', {
     CONTEXT_AF.pickedUp = true;
 
     //let others know
-    CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, null, true);
+    CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
   },
-  release : function(passedContext) {
+  release : function(sendNetworkEvent, passedContext) {
     const CONTEXT_AF  = (passedContext) ? passedContext : this;
     const data        = CONTEXT_AF.data;
     const SAME_DIFF   = 0.001;
@@ -97,7 +97,7 @@ AFRAME.registerComponent('circles-pickup-object', {
 
     const releaseEventFunc = function() {
       //send off event for others
-      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, null, true);
+      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
       if (data.animate === true) {
         CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
       }
@@ -140,12 +140,10 @@ AFRAME.registerComponent('circles-pickup-object', {
   clickFunc : function(e) {
     const CONTEXT_AF = (e) ? e.srcElement.components['circles-pickup-object'] : this;
     if (CONTEXT_AF.pickedUp === true) {
-      CONTEXT_AF.release(CONTEXT_AF);
-      console.log('circles-pickup-object release');
+      CONTEXT_AF.release(true, CONTEXT_AF);
     }
     else {
-      CONTEXT_AF.pickup(CONTEXT_AF);
-      console.log('circles-pickup-object pickup');
+      CONTEXT_AF.pickup(true, CONTEXT_AF);
     }
   }
 });

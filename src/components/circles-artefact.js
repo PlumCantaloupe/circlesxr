@@ -113,11 +113,15 @@ AFRAME.registerComponent('circles-artefact', {
     // });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
-      CONTEXT_AF.pickup(CONTEXT_AF);
+      if (e.detail.sendNetworkEvent === true) {
+        CONTEXT_AF.pickup(CONTEXT_AF);
+      }
     });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
-      CONTEXT_AF.release(CONTEXT_AF);
+      if (e.detail.sendNetworkEvent === true) {
+        CONTEXT_AF.release(CONTEXT_AF);
+      }
     });
   },
   update : function(oldData) {
