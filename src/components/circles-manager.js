@@ -92,10 +92,18 @@ AFRAME.registerComponent('circles-manager', {
           artefact.setAttribute('circles-sound', {state:'stop'});
         }
       });
-    };    
+    }; 
+    
+    const stopCurrNarrativeFunc = () => {
+      narrativePlayingID = '';
+      //narrativeElems.forEach( artefact => {
+        if (CONTEXT_AF.selectedObject.components['circles-sound']) {
+          CONTEXT_AF.selectedObject.setAttribute('circles-sound', {state:'stop'});
+        }
+      //});
+    }; 
 
     narrativeElems.forEach( artefact => {
-      
       const start_sound_func = (e) => {
         if (artefact.components['circles-sound']) {
           if ( artefact.getAttribute('id') !== narrativePlayingID ) {
@@ -104,14 +112,15 @@ AFRAME.registerComponent('circles-manager', {
             narrativePlayingID = artefact.getAttribute('id');
             artefact.setAttribute('circles-sound', {state:'play'});
           }
-          else {
-            //if you click on the same artefact stop the narrative playing
-            stopAllNarrativesFunc();
-          }
+          // else {
+          //   //if you click on the same artefact stop the narrative playing
+          //   stopAllNarrativesFunc();
+          // }
         }
       };
 
-      artefact.addEventListener('click', start_sound_func);
+      artefact.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, start_sound_func);
+      artefact.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT_PRE, stopCurrNarrativeFunc);
     });
 
     //need to also stop sound when "release" button clicked on camera during inspect
