@@ -147,9 +147,10 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     //question for twin object state
     if (CONTEXT_AF.data.networkedEnabled === true) {
-      setTimeout(function() {
-          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:CONTEXT_AF.el.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-      }, THREE.MathUtils.randInt(0,2000));
+      // setTimeout(function() {
+      //     CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:CONTEXT_AF.el.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+      // }, THREE.MathUtils.randInt(0,2000));
+      CONTEXT_AF.triggerNetworkSync();
     }
 
     //answer for twin object state
@@ -370,11 +371,12 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.questionObjectStateFunc = function(data) {
-      console.log('questionObjectStateFunc');
+      console.log('questionObjectStateFunc', data.origId, CONTEXT_AF.origId);
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-        if (isSameWorld) {
-          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, {id:thisElem.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName(), state:'n/a'});
+        const isSameElem  = (data.origId === CONTEXT_AF.origId);
+        if (isSameWorld && isSameElem) {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, {id:thisElem.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName(), state:'n/a'});
         }
       }
     };
@@ -384,7 +386,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
-
         if (isSameWorld && isSameElem) {
           //restart init sync process
 
@@ -392,9 +393,10 @@ AFRAME.registerComponent('circles-pickup-networked', {
           CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedEnabled:false});
           CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedEnabled:true});
 
-          setTimeout(function() {
-            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:thisElem.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-          }, THREE.MathUtils.randInt(0,1200));
+          // setTimeout(function() {
+          //   CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:thisElem.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+          // }, THREE.MathUtils.randInt(0,1200));
+          CONTEXT_AF.triggerNetworkSync();
         }
       }
     };
@@ -404,7 +406,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
-
         if (isSameWorld && isSameElem) {
           //console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
           CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
@@ -441,7 +442,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     console.log('removeEventListeners')
 
-
     CONTEXT_AF.el.removeEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, CONTEXT_AF.pickupObjFunc);
     CONTEXT_AF.el.removeEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, CONTEXT_AF.releaseObjFunc);
 
@@ -456,5 +456,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_OWNER_GONE, CONTEXT_AF.objectOwnerGoneFunc);
 
     CONTEXT_AF.socket.off('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
+  },
+  triggerNetworkSync: function() {
+    const CONTEXT_AF = this;
+    setTimeout(function() {
+      CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:CONTEXT_AF.el.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+  }, THREE.MathUtils.randInt(0,2000));
   }
 });
