@@ -227,7 +227,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
           //make sure label click works on networked elements (if artefact)
           const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
           if (labelEl && CONTEXT_AF.isClone) {
-            labelEl.addEventListener('click', function(e) {
+            labelEl.querySelector('.label_bg').addEventListener('click', function(e) {
               if (CONTEXT_AF.data.networkedEnabled === true) {
                 CONTEXT_AF.takeNetworkOwnership(thisElem);
                 thisElem.components['circles-pickup-object'].pickup(true, thisElem.components['circles-pickup-object']);
