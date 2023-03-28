@@ -11,7 +11,9 @@
     
     <!--Environment Script-->
     <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
-    <script src="js/test.js"></script>
+    <script src="js/manager.js"></script>
+    <!--<script src="js/test.js"></script>-->
+    <script src="js/hold.js"></script>
   </head>
   <body>
 
@@ -37,7 +39,10 @@
       </a-assets>
 
       <!-- spawnpoint (guessing that it needs to be placed before the circles avatar manager) -->
-      <a-entity circles-checkpoint circles-spawnpoint position="7.5 0.159 0"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1 1.25 1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1 1.25 -1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1 1.25 1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1 1.25 -1"></a-entity>
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
@@ -45,72 +50,60 @@
       <!-- the environment -->
       <a-entity environment="preset:yavapai"></a-entity>
 
+      <!-- socket connector -->
+      <a-entity multi-interactions id="worldManager"></a-entity>
+
       <!-- temp building -->
-      <a-box position="13 0 0"></a-box>
-      <a-box id="floor" position="2.75863 0 0" scale="19.92 0.245 9.525"></a-box>
-      
-      <a-box id="mid-ceiling" position="2.908 3.761 0" scale="19.885 0.258 5"></a-box>
-      <a-box id="left-ceiling" position="2.58259 3.126 3.5904" rotation="30 0 0" scale="20.482 0.186 2.696"></a-box>
-      <a-box id="right-ceiling" position="2.58259 3.126 -3.5904" rotation="-30 0 0" scale="20.482 0.186 2.696"></a-box>
-      
-      <a-box id="backwall-1" position="12.71563 1.42839 0" scale="0.241 4.418 9.339"></a-box>
-      <a-box id="backwall-2" position="-7.125 1.42839 0" scale="0.241 4.418 9.339"></a-box>
+      <a-entity id="b_hub" position="0 1 0">
+        <!--wall (straight)-->
+        <a-box position="0 1.75 12" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="0 1.75 -12" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="12 1.75 0"  rotation="0 90 0" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="-12 1.75 0" rotation="0 90 0" height="3" width="10" depth="0.25"></a-box>
+        <!--wall (corner)-->
+        <a-box position="8.5 1.75 8.5"  rotation="0 45 0" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="8.5 1.75 -8.5"  rotation="0 -45 0" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="-8.5 1.75 8.5"  rotation="0 -45 0" height="3" width="10" depth="0.25"></a-box>
+        <a-box position="-8.5 1.75 -8.5"  rotation="0 45 0" height="3" width="10" depth="0.25"></a-box>
+        <!--floor-->
+        <a-box height="0.5" width="24" depth="10"></a-box>
+        <a-box height="0.5" width="24" depth="10" rotation="0 135 0"></a-box>
+        <a-box height="0.5" width="24" depth="10" rotation="0 270 0"></a-box>
+        <a-box height="0.5" width="24" depth="10" rotation="0 405 0"></a-box>
+      </a-entity>
 
       <!-- Temp building details -->
 
       <!--sojuourner area-->
-      <a-entity soj id="rover" position="-1 0.118 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:outline"></a-entity>
-      
-      <!--sand-->
-      <a-box position="-0.96469 0.10729 0" scale="1.7 0.055 1.7" color="#D5737A"></a-box>
+      <a-entity position="0.955 1.163 0">
+        <!--sand-->
+        <a-box position="-0.96469 0.10729 0" scale="1.7 0.055 1.7" color="#D5737A"></a-box>
+        <!-- border -->
+        <a-entity position="0 0 0">
+          <a-cylinder position="-1.8 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
+          <a-box position="-0.92 0.097 0.85606" scale="1.71 0.1 0.075" color="black"></a-box>
+          <a-cylinder position="-1.8 0.124 -0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
+          <a-box position="-0.92 0.097 -0.82" scale="1.71 0.1 0.075" color="black"></a-box>
+          <a-cylinder position="-0.12 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
+          <a-box position="-0.11 0.097 0.012" scale="1.71117 0.1 0.07508" color="black" rotation="0 90 0"></a-box>
+          <a-cylinder position="-0.12 0.124 -0.83" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
+          <a-box position="-1.8 0.097 0.012" scale="1.71 0.1 0.075" color="black" rotation="0 90 0"></a-box>
+        </a-entity>
+      </a-entity>
 
-      <!-- border -->
-      <a-cylinder position="-1.8 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-      <a-box position="-0.92 0.097 0.85606" scale="1.71 0.1 0.075" color="black"></a-box>
-      <a-cylinder position="-1.8 0.124 -0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-      <a-box position="-0.92 0.097 -0.82" scale="1.71 0.1 0.075" color="black"></a-box>
-      <a-cylinder position="-0.12 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-      <a-box position="-0.11 0.097 0.012" scale="1.71117 0.1 0.07508" color="black" rotation="0 90 0"></a-box>
-      <a-cylinder position="-0.12 0.124 -0.83" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-      <a-box position="-1.8 0.097 0.012" scale="1.71 0.1 0.075" color="black" rotation="0 90 0"></a-box>
+      <a-entity soj id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:outline"></a-entity>
       
-      <!--windows-->
-      <a-box position="2.82675 1.20499 4.738" scale="19.935 2.479 0.259" material="color:blue; opacity:0.3;"></a-box>
-      <a-box position="2.82675 1.20499 -4.798" scale="19.935 2.479 0.259" material="color:blue; opacity:0.3;"></a-box>
-      
-      <!--tabels-->
-      <a-entity id="tabel1" position="-1.357 0 -3.024" scale="1.4 1 1">
+      <!--tabel placeholder-->
+      <a-entity id="tabel1" position="0 1 11" scale="1.4 1 1">
         <a-box position="0 1 0" scale="2.109 0.244 1"></a-box>
         <a-box position="0.82 0.6148 0" scale="0.467 1 1"></a-box>
         <a-box position="-0.82 0.6148 0" scale="0.467 1 1"></a-box>
       </a-entity>
 
-      <a-entity id="tabel2" position="-1.357 0 3.389" scale="1.4 1 1">
-        <a-box position="0 1 0" scale="2.109 0.244 1"></a-box>
-        <a-box position="0.82 0.6148 0" scale="0.467 1 1"></a-box>
-        <a-box position="-0.82 0.6148 0" scale="0.467 1 1"></a-box>
-      </a-entity>
-      <a-box position="0.742 1.02 3.389" scale="1 1.8 1"></a-box>
-      <a-entity id="tabel2" position="2.869 0 3.389" scale="1.4 1 1">
-        <a-box position="0 1 0" scale="2.109 0.244 1"></a-box>
-        <a-box position="0.82 0.6148 0" scale="0.467 1 1"></a-box>
-        <a-box position="-0.82 0.6148 0" scale="0.467 1 1"></a-box>
-      </a-entity>
-
-      <a-box position="-4.21451 0.34392 1.79979" scale="1.2205 0.8484 2.62086"></a-box>
-      <a-box position="-4.21451 0.34392 -0.93037" scale="1.2205 0.8484 2.62086"></a-box>
-      <a-box position="-4.21451 0.79896 -3.08514" scale="1.2205 1.63012 1.19212"></a-box>
-
-      <!--projector-->
-      <a-image id="proj_img" src="#wheel_img" opacity="0" position="2.275 2.146 -2.932" ></a-image>
-      <a-text id="proj_text" value="" align="center" side="double" scale="0.5 0.5 0.5" position="2.275 1.3 -2.932"></a-text>
-      <a-entity id="projector" position="2.265 0 -2.9">
-        <a-box position="0 0.46335 0" scale="0.616 0.219 0.19" color="grey"></a-box>
-        <a-box position="0 0.2683 0" scale="1.22 0.37 0.53" color="black"></a-box>
-      </a-entity>
-
-      <a-entity id="wheel" holdable position="4 1.278 3.3" rotation="0 0 0" gltf-model="#soju_wheel_gltf" circles-interactive-object="type:outline"></a-entity>
+      <a-entity wield id="wheel" position="4 2 3.3" gltf-model="#soju_wheel_gltf" circles-interactive-object="type:highlight"></a-entity>
       
+      <a-box position="20 1 0" id="testBox" circles-interactive-object></a-box>
+
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
@@ -119,22 +112,6 @@
 </html>
 
 <!--
-TODO
-Picking up object - done
-make sure only one object can be picked up
-create dynamic system of placing object on rover
-
-Extra
-notifying text notifying players what the part does
-pannel showing parts to look for
-
-Places to look
-src/components
-queryselect player
-
-Current notes: 
-- need to find dynamic way of knowing who clicked on object (Player one seems to be linked to the user in their world)
-- need to know what objects a player is holding
 
 git issue tickets
 - issues with spawnpoints

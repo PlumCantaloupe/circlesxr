@@ -1,38 +1,29 @@
-
-class partsInfo {
-    constructor(partID, holding, whoHolding, roverPos, holdPos, infoMessage){
-        this.partID     = partID; 
-        this.holding    = holding; 
-        this.whoHolding = whoHolding;
-        this.roverPos   = roverPos;
-        this.holdPos    = holdPos;
-    }
-}
-
-//list of soj parts
-const soj_camera = new partsInfo("camera", false, null, {x:0, y:0, z:0});
-const soj_wheel = new partsInfo("wheels", false, null, {x:0.4404, y:0.14935, z:0.31451});
-
-//let parts = [camera, wheel];
-
-function editText(){
-    let text = document.getElementById("proj_text");
-    text.setAttribute("value", "You found the wheel\n\nThe Sojourner Rover traveled a\ntotal of about 330 feet (100m)");
-
-    let img = document.getElementById("proj_img");
-    img.setAttribute("opacity", 0.8);
-} 
-
-AFRAME.registerComponent('adjustPlayer', {
-    init: function(){
-        let myPlayer = document.getElementById("Player1");
-        myPlayer.setAttribute("scale", {});
-
-    }
-});
-
 AFRAME.registerComponent('holdable', {
     init: function(){
+        const CONTEXT_AF = this;
+        const scene      = document.querySelector('a-scene');
+
+        CONTEXT_AF.socket     = null;
+        CONTEXT_AF.connected  = false;
+        CONTEXT_AF.partEventName = "part_event";
+
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+            CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+            CONTEXT_AF.connected = true;
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesRoom() + ' in world:' + CIRCLES.getCirclesWorld());
+
+            let part = scene.querySelector("#wheel");
+
+            CONTEXT_AF.socket.on(CONTEXT_AF.partEventName, function(data){
+                console.log(CONTEXT_AF.socket.id);
+                //let holdPlayer = scene.querySelector()
+            });
+
+            part.addEventListener("click", function(){
+                CONTEXT_AF.socket.emit(CONTEXT_AF.partEventName, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+            });
+        });
+
         this.el.addEventListener("click", function(){
 
             let myPlayer = document.getElementById("Player1Cam");    //find player camera
@@ -40,16 +31,13 @@ AFRAME.registerComponent('holdable', {
 
             myPlayer.appendChild(holdingPart);              //add clone as a child of the player's camera
             holdingPart.setAttribute('position', {x:-0.65, y:-0.2, z:-0.5});
-            //holdingPart.removeAttribute('circles-interactive-object');  //this has issues as once it's removed it permanently highlights the object
-            
-            console.log("item picked up");
-            
-            this.remove();                                  //remove this from the world
+            //holdingPart.removeAttribute('circles-interactive-object'); //this has issues as once it's removed it permanently highlights the object
+
+            this.remove();//remove this from the world
 
         });
     }
 });
-
 
 AFRAME.registerComponent('soj', {
     init:function(){
@@ -104,5 +92,4 @@ function findPart(parts, rover){
             inHand.remove();
         }
     }
-
 }
