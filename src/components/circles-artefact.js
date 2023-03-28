@@ -61,7 +61,8 @@ AFRAME.registerComponent('circles-artefact', {
 
     CONTEXT_AF.el.setAttribute('circles-pickup-object', {animate:true});
 
-    CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
+    //networking is a bit buggy so let's not force it for now ...
+    //CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedTemplate:CIRCLES.NETWORKED_TEMPLATES.ARTEFACT});
     
     //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
     //CONTEXT_AF.el.setAttribute('circles-object-world', {world:world});
