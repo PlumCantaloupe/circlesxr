@@ -170,12 +170,7 @@ AFRAME.registerComponent('circles-manager', {
       //check if same object is being selected
       const isSameObject = CONTEXT_AF.selectedObject.isSameNode( elem );
 
-      console.log(isSameObject);
-      console.log(CONTEXT_AF.selectedObject);
-      console.log(elem);
-
       if (isSameObject === false) {
-        console.log('trying to release');
         //need to release held artefact
         CONTEXT_AF.selectedObject.components['circles-pickup-object'].release(true, CONTEXT_AF.selectedObject.components['circles-pickup-object']);
       }
