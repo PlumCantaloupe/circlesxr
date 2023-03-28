@@ -19,5 +19,12 @@ AFRAME.registerComponent('circles-interactive-visible', {
         this.el.classList.remove("interactive");
       }
     }
+
+    const raycasters = this.el.sceneEl.querySelectorAll('[raycaster]');
+    raycasters.forEach(rc => {
+        //if (rc.components.raycaster.data) {
+            rc.components.raycaster.refreshObjects();
+       // }
+    }); 
   }
 });
