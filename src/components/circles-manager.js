@@ -43,13 +43,15 @@ AFRAME.registerComponent('circles-manager', {
         CONTEXT_AF.rotateControl.addEventListener('click', (e) => {
           //want the artefact only spinning one way in 90 deg increments.
           if (CONTEXT_AF.artefactRotIndexTarget === 0) {
-            if (Math.abs(Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y) < Math.PI/2) {
-              CONTEXT_AF.selectedObject.object3D.rotation.y = Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y;
-            }
+            // if (Math.abs(Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y) < Math.PI/2) {
+            //   CONTEXT_AF.selectedObject.object3D.rotation.y = Math.PI * 2.0 - CONTEXT_AF.selectedObject.object3D.rotation.y;
+            // }
+            CONTEXT_AF.playerHolder.setAttribute('rotation', {y:0.0});
           }
 
           CONTEXT_AF.artefactRotIndexTarget = ((++CONTEXT_AF.artefactRotIndexTarget) > CONTEXT_AF.artefactRotSteps.length - 1) ? 0 : CONTEXT_AF.artefactRotIndexTarget;
           const targetRot = CONTEXT_AF.artefactRotSteps[CONTEXT_AF.artefactRotIndexTarget];
+
           CONTEXT_AF.playerHolder.setAttribute('animation__rotate', {property:'rotation.y', dur:400, to:targetRot, easing:'easeInOutBack'});
         });
 
@@ -79,6 +81,7 @@ AFRAME.registerComponent('circles-manager', {
     if (Object.keys(data).length === 0) { return; } // No need to update. as nothing here yet
   },
   addArtefactNarrationController: function() {
+    const CONTEXT_AF = this;
     const scene = document.querySelector('a-scene');
     const player1 = document.querySelector('#Player1');
 
