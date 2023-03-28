@@ -205,10 +205,8 @@ AFRAME.registerComponent('circles-artefact', {
     this.labelEl.removeEventListener('click', this.labelClickFunc);
   },
   labelClickFunc: function(e) {
-    console.log(e);
     let elementID = e.currentTarget.id;  //copy string
     elementID = '#' + elementID.replace(/_label/g, '');
-    console.log(elementID);
     document.querySelector(elementID).click();  //also want to forward label clicks to the artefact itself
   }
 });
