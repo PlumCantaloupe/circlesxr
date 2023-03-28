@@ -224,6 +224,17 @@ AFRAME.registerComponent('circles-pickup-networked', {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         if (isSameWorld) {
 
+          //make sure label click works on networked elements (if artefact)
+          const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
+          if (labelEl && CONTEXT_AF.isClone) {
+            labelEl.addEventListener('click', function(e) {
+              if (CONTEXT_AF.data.networkedEnabled === true) {
+                CONTEXT_AF.takeNetworkOwnership(thisElem);
+                thisElem.components['circles-pickup-object'].pickup(true, thisElem.components['circles-pickup-object']);
+              }
+            });
+          }
+
           //get list of the "same" objects, and remove the one that is duplicate ...
           const allNetworkObjects = document.querySelectorAll('[circles-object-world]');
           let numSimilarNetObjs = 0;
@@ -309,5 +320,12 @@ AFRAME.registerComponent('circles-pickup-networked', {
     this.isShowing = isShowing;
     this.el.setAttribute('circles-pickup-networked', {networkedEnabled:isShowing});
     this.el.setAttribute('circles-interactive-visible', isShowing);
+
+    if (this.el.components['circles-artefact']) {
+      this.el.components['circles-artefact'].removeLabelEventListener();
+      if (isShowing) {
+        this.el.components['circles-artefact'].addLabelEventListener();
+      }
+    }
   }
 });

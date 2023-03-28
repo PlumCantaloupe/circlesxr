@@ -83,9 +83,7 @@ AFRAME.registerComponent('circles-artefact', {
                                                         smoothingAlpha: data.smoothingAlpha });
     CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.labelEl);
 
-    CONTEXT_AF.labelEl.addEventListener('click', function(e) {
-      CONTEXT_AF.el.click();  //also want to forward label clicks to the artefact itself
-    });
+    CONTEXT_AF.addLabelEventListener();
 
     //create associated description
     CONTEXT_AF.descEl = document.createElement('a-entity');
@@ -199,5 +197,18 @@ AFRAME.registerComponent('circles-artefact', {
     if (CONTEXT_AF.data.description_on === true) {
       CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
     }
+  },
+  addLabelEventListener: function() {
+    this.labelEl.addEventListener('click', this.labelClickFunc);
+  },
+  removeLabelEventListener: function() {
+    this.labelEl.removeEventListener('click', this.labelClickFunc);
+  },
+  labelClickFunc: function(e) {
+    console.log(e);
+    let elementID = e.currentTarget.id;  //copy string
+    elementID = '#' + elementID.replace(/_label/g, '');
+    console.log(elementID);
+    document.querySelector(elementID).click();  //also want to forward label clicks to the artefact itself
   }
 });
