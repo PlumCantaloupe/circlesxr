@@ -100,7 +100,7 @@ AFRAME.registerComponent('circles-manager', {
     const stopCurrNarrativeFunc = () => {
       narrativePlayingID = '';
       //narrativeElems.forEach( artefact => {
-        if (CONTEXT_AF.selectedObject.components['circles-sound']) {
+        if (CONTEXT_AF.selectedObject && CONTEXT_AF.selectedObject.components['circles-sound']) {
           CONTEXT_AF.selectedObject.setAttribute('circles-sound', {state:'stop'});
         }
       //});
