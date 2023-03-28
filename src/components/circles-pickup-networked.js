@@ -216,6 +216,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.hackySyncDropPositionFunc  = null;
 
     CONTEXT_AF.pickupObjFunc = function(e) {
+      console.log('pickupObjFunc');
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         CONTEXT_AF.takeNetworkOwnership(thisElem);
 
@@ -238,6 +240,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc = function(e) {
+      console.log('releaseObjFunc');
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         if (e.detail.sendNetworkEvent === true) {
           CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SYNC_OBJECT_RELEASE, {  id:thisElem.id,
@@ -260,12 +264,14 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.ownerGainedFunc  = function(e) {
-      if (CONTEXT_AF.data.networkedEnabled === true) {
+      // if (CONTEXT_AF.data.networkedEnabled === true) {
         //console.log("object ownership gained");
-      }
+      // }
     };
 
     CONTEXT_AF.ownerLostFunc = function(e) {
+      console.log('ownerLostFunc');
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         //console.log("object ownership lost");
         //release artefact
@@ -274,6 +280,9 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.pickupObjFunc_Sync = function(data) {
+      console.log('pickupObjFunc_Sync');
+
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -295,6 +304,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
+      console.log('releaseObjFunc_Sync');
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -313,6 +324,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.answerObjectStateFunc = function(data) {
+      console.log('answerObjectStateFunc');
+
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         if (isSameWorld) {
@@ -357,6 +370,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.questionObjectStateFunc = function(data) {
+      console.log('questionObjectStateFunc');
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         if (isSameWorld) {
@@ -366,12 +380,18 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.objectOwnerGoneFunc = function(data) {
+      console.log('objectOwnerGoneFunc');
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
 
         if (isSameWorld && isSameElem) {
           //restart init sync process
+
+          //reset all entities
+          CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedEnabled:false});
+          CONTEXT_AF.el.setAttribute('circles-pickup-networked', {networkedEnabled:true});
+
           setTimeout(function() {
             CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:thisElem.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
           }, THREE.MathUtils.randInt(0,1200));
@@ -380,6 +400,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
+      console.log('hackySyncDropPositionFunc');
       if (CONTEXT_AF.data.networkedEnabled === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
