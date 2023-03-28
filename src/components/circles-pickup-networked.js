@@ -240,7 +240,26 @@ AFRAME.registerComponent('circles-pickup-networked', {
           else if (numSimilarNetObjs === 1) {
             //this is the element that is hosting this object across the network
             CONTEXT_AF.isOwner = true;
+
+            //hacky send as the network dupes don't copy this over for some reason ...
+            CONTEXT_AF.socket.emit('hacky_drop_position', { id:thisElem.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName(), 
+                                                            dropRotation:{  x:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.x,
+                                                                            y:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.y,
+                                                                            z:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.z
+                                                                        }});
           }
+        }
+      }
+    });
+
+    CONTEXT_AF.socket.on('hacky_drop_position', function(data) {
+      if (CONTEXT_AF.data.networkedEnabled === true) {
+        const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
+        const isSameElem  = (data.origId === CONTEXT_AF.origId);
+
+        if (isSameWorld && isSameElem) {
+          //console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
+          CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
         }
       }
     });
