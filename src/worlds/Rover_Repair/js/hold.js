@@ -1,36 +1,51 @@
+//class for each part's info
+class partInfo {
+    constructor(partID, holding, roverPos, holdingPos){
+        this.partID     = partID;
+        this.holding    = holding; 
+        this.roverPos   = roverPos; 
+        this.holdingPos = holdingPos;
+    }
+}
+
+//sojourner part info
+const soj_wheel = new partInfo("sj_part_wheel_00", false, {x:1, y:1, z:1}, {x:-0.6, y:-0.2, z:-0.5});
+
+//array of parts
+let roverParts = [soj_wheel];
+
+//component that should be on all parts that a player can hold
 AFRAME.registerComponent('wield', {
-    schema:{
-        wieldStatus:    {type:"boolean", default: false},
-        thisPos:        {type: "vec3"}
-    },
     init:function(){
-        const CONTEXT_AF = this;
 
-        //setting up variables on init
-        thisPos     = this.el.getAttribute("position");
-        wieldStatus = false;
-
-        //add event listener to object for when it's clicked (may want to use schema)
+        //add event listener to object for when it's clicked
         this.el.addEventListener('click', function(){
             
-            //select the player's camera and constrain object to the camera
-            let wielder = document.getElementById("Player1Cam");
-            this.setAttribute("circles-parent-constraint", {parent: wielder, positionOffset: {x:-0.75, y:-0.5, z:-1}});
+            let partIdx = Number(this.id.slice(-2));            //getting part info index based off of id
+            let pCam    = document.getElementById("Player1Cam");//getting player's camera
+            adoptPart(pCam, partIdx);                   //making the object a child of the player camera
             
-            this.emit('test', null, false);
-
-            //when the player is holding the object set the wield status to true
-            wieldStatus = true;
+            this.emit('update', null, false);    //call update for other players
         });
 
-    },
-
-    //every tick check if the item is being held
-    tick: function(time, timeDelta){
-
-        if(wieldStatus){
-            //this.el.emit('test', null, false);
-        }
     }
 });
 
+//makes a given element a parent of a given rover part
+function adoptPart(parent, objIdx){
+    
+    //get part information
+    let childInfo = roverParts[objIdx];
+
+    //find part, clone it, then delete it
+    let child   = document.getElementById(childInfo.partID);
+    let newChild = child.cloneNode(true);
+    child.remove();
+
+    //apply offset position and append to the parent
+    newChild.setAttribute("position", childInfo.holdingPos);
+    parent.appendChild(newChild);
+
+    console.log("adopted");
+
+}
