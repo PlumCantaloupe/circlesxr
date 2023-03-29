@@ -153,24 +153,6 @@ AFRAME.registerComponent('circles-artefact', {
     if ( (oldData.origScale !== data.origScale) && (data.origScale !== '') ) {
       CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropScale:((data.origScale.x > 100000.0) ? CONTEXT_AF.origSca : data.origScale)});
     }
-
-    // if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
-    //   if (data.networkedEnabled === true) {
-    //     CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
-    //     CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED);
-    //   }
-    //   else {
-    //     CONTEXT_AF.el.removeAttribute('networked');
-    //     CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED);
-    //   }
-    // }
-
-    // if ( (oldData.networkedTemplate !== data.networkedTemplate) && (data.networkedTemplate !== '') ) {
-    //   if (data.networkedEnabled === true && (CONTEXT_AF.el.getAttribute('networked').template !== '#' + data.networkedTemplate)) {
-    //     CONTEXT_AF.el.removeAttribute('networked');
-    //     CONTEXT_AF.el.setAttribute('networked', {template:'#' + data.networkedTemplate, attachTemplateToLocal:true, synchWorldTransforms:true});
-    //   }
-    // }
   },
   pickup : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;

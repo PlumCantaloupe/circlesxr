@@ -18,12 +18,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
     const CONTEXT_AF      = this;
     const data            = CONTEXT_AF.data;
     CONTEXT_AF.socket     = null;
-    CONTEXT_AF.isOwner    = false;  //if this entity is the sole networked object of all duplicates
     CONTEXT_AF.isShowing  = true;
     CONTEXT_AF.listenersAttached = false;
 
     let regex = /(naf)/i;
-    CONTEXT_AF.isClone  = regex.test(CONTEXT_AF.el.id);
+    CONTEXT_AF.isClone  = regex.test(CONTEXT_AF.el.id); //if false, this entity is the sole networked object of all duplicates
 
     if (CIRCLES.isCirclesWebsocketReady()) {
       CONTEXT_AF.createEventFunctions();    //will only do this once at beginning of program
@@ -81,12 +80,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
     }
   },
   remove : function() {
-    if (this.isOwner === true) {
-      if (CIRCLES.isCirclesWebsocketReady()) {
-        this.letOthersKnowsYouAreLeaving(this.el.id, this.origId, CIRCLES.getCirclesGroupName(), CIRCLES.getCirclesWorldName());
-      }
-    }
-    else {
+    // if (this.isClone === false) {
+    //   this.letOthersKnowsYouAreLeaving(this.el.id, this.origId, CIRCLES.getCirclesGroupName(), CIRCLES.getCirclesWorldName());
+    // }
+    // else {
+    if (this.isClone === true) {
       const origElem = document.querySelector('#' + this.origId);
       
       //show original if owner leaves
@@ -99,11 +97,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
       this.removeEventListeners();
     }
   },
-  letOthersKnowsYouAreLeaving: function(id, origId, room, world) {
-    if (this.isOwner === true) {
-      this.socket.emit(CIRCLES.EVENTS.OBJECT_OWNER_GONE, { id:this.el.id, origId:this.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName() });
-    }
-  },
+  // letOthersKnowsYouAreLeaving: function(id, origId, room, world) {
+  //   if (this.isOwner === true && CIRCLES.isCirclesWebsocketReady()) {
+  //     this.socket.emit(CIRCLES.EVENTS.OBJECT_OWNER_GONE, { id:this.el.id, origId:this.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName() });
+  //   }
+  // },
   setupNetworking : function () {
     const CONTEXT_AF  = this;
     //const thisElem    = CONTEXT_AF.el;
@@ -114,55 +112,12 @@ AFRAME.registerComponent('circles-pickup-networked', {
       CONTEXT_AF.addEventListeners();
     }
 
-    //when object picked up
-    //thisElem.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, );
-
-    //when object released
-    //thisElem.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, );
-
-    //NAF events for when someone else takes/loses control of an object
-    //thisElem.addEventListener('ownership-gained', );
-
-    //thisElem.addEventListener('ownership-lost', });
-
-    // document.body.addEventListener('clientConnected', function (e) {
-    //   console.error('clientConnected event =', e.detail);
-    // });
-
-    // document.body.addEventListener('clientDisconnected', function (e) {
-    //   console.error('clientDisconnected event =', e.detail);
-    // });
-
-    // document.body.addEventListener('entityCreated', function (e) {
-    //   console.error('entityCreated event =', e.detail);
-    // });
-
-    // document.body.addEventListener('entityRemoved', function (e) {
-    //   console.error('entityRemoved event =', e.detail );
-    // });
-
-    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_OBJECT_PICKUP, );
-
-    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_OBJECT_RELEASE, );
-
     //question for twin object state
     if (CONTEXT_AF.data.networkedEnabled === true) {
-      // setTimeout(function() {
-      //     CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:CONTEXT_AF.el.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-      // }, THREE.MathUtils.randInt(0,2000));
-      CONTEXT_AF.triggerNetworkSync();
+      //lete everyone know you exist!!! <3 <3 <3
+
+      //CONTEXT_AF.triggerNetworkSync();
     }
-
-    //answer for twin object state
-    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, );
-
-    // CONTEXT_AF.socket.on('hacky_drop_position', );
-
-    //if someone else requests our object data, we send it.
-    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, );
-
-    //listen for when the "owner of all networked entities" is removed so we can restart teh process of finding the one true
-    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_OWNER_GONE, );
   },
   takeNetworkOwnership : function(elem) {
     //take over networked membership
@@ -358,7 +313,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
             }
             else if (numSimilarNetObjs === 1) {
               //this is the element that is hosting this object across the network
-              CONTEXT_AF.isOwner = true;
+              CONTEXT_AF.isClone = false;
 
               //hacky send as the network dupes don't copy this over for some reason ...
               CONTEXT_AF.socket.emit('hacky_drop_position', { id:thisElem.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName(), 
@@ -390,10 +345,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
         if (isSameWorld && isSameElem) {
           //restart init sync process
-
-          // setTimeout(function() {
-          //   CONTEXT_AF.socket.emit(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, {id:thisElem.id, origId:CONTEXT_AF.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-          // }, THREE.MathUtils.randInt(0,1200));
           CONTEXT_AF.triggerNetworkSync();
         }
       }
@@ -427,9 +378,9 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_OBJECT_PICKUP, CONTEXT_AF.pickupObjFunc_Sync);
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.SYNC_OBJECT_RELEASE, CONTEXT_AF.releaseObjFunc_Sync);
 
-    CONTEXT_AF.socket.on(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, CONTEXT_AF.answerObjectStateFunc);
-    CONTEXT_AF.socket.on(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, CONTEXT_AF.questionObjectStateFunc);
-    CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_OWNER_GONE, CONTEXT_AF.objectOwnerGoneFunc);
+    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, CONTEXT_AF.answerObjectStateFunc);
+    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, CONTEXT_AF.questionObjectStateFunc);
+    // CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_OWNER_GONE, CONTEXT_AF.objectOwnerGoneFunc);
 
     CONTEXT_AF.socket.on('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
   },
@@ -449,9 +400,9 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.SYNC_OBJECT_PICKUP, CONTEXT_AF.pickupObjFunc_Sync);
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.SYNC_OBJECT_RELEASE, CONTEXT_AF.releaseObjFunc_Sync);
 
-    CONTEXT_AF.socket.off(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, CONTEXT_AF.answerObjectStateFunc);
-    CONTEXT_AF.socket.off(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, CONTEXT_AF.questionObjectStateFunc);
-    CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_OWNER_GONE, CONTEXT_AF.objectOwnerGoneFunc);
+    // CONTEXT_AF.socket.off(CIRCLES.EVENTS.ANSWER_OBJECT_STATE, CONTEXT_AF.answerObjectStateFunc);
+    // CONTEXT_AF.socket.off(CIRCLES.EVENTS.QUESTION_OBJECT_STATE, CONTEXT_AF.questionObjectStateFunc);
+    // CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_OWNER_GONE, CONTEXT_AF.objectOwnerGoneFunc);
 
     CONTEXT_AF.socket.off('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
   },
