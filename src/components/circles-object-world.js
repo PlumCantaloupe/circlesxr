@@ -4,7 +4,7 @@ AFRAME.registerComponent('circles-object-world', {
 schema: {
     world:      {type: 'string', default:''},
     id:         {type: 'string', default:''},
-    // pickedup:   {type: 'bool',   default:false}
+    //isClone:    {type: 'bool',   default:true}
   },
   init: function() {
     const CONTEXT_AF    = this;
