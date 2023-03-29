@@ -43,5 +43,5 @@
   display: inline-block;
   width: 40px;
   border-radius: 20px;
-  margin-right: $gutter / 2;
+  margin-right: calc($gutter / 2);
 }

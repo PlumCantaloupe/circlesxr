@@ -14,8 +14,8 @@ const angleMin = 0;
 const angleIncrementAmount = 30;
 const force = 8;
 let forceToApply = {
-  x = 8,
-  y = 0
+  x : 8,
+  y : 0
 }
 
 // to be called once the scene is loaded to perform setup tasks

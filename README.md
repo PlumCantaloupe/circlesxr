@@ -10,7 +10,7 @@
 - [Circles Overview](#circles-overview)
   - [Why Use VR in Learning?](#why-use-vr-in-learning)
   - [Why Circles?](#why-circles)
-- [Circles Controls](#circles-controls)
+- [Circles Interactions](#circles-interactions)
 - [Running Circles Locally](#running-circles-locally)
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
@@ -72,12 +72,14 @@ There is some work looking at how the virtual work can affect our reality, in ho
 
 ----------------
 
-## Circles Controls
+## Circles Interactions
 ##### *[back to top](#circles-xr-learning-framework)*
 
 <br>
 
-In navigating within the 3D spaces of Circles all interactions aim toward single-click as an exploration into how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD). This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework is meant for use within classrooms and museums it is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired to reduce interactions to a form that *could* be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
+Within the 3D worlds of Circles all interactions aim towards single-click selections where possible as an exploration into how to make controls symmetric across all three supported platforms (Desktop, Mobile, and HMD). This may change as our user studies and user feedback propose more significant differences between the three platforms. As this is a learning framework is meant for use within social learnig spaces like classrooms and museums it is important that advanced functionality is hidden by default (i.e., hiding joystick movement in HMD VR so that unexpected users do not get [motion sickness](https://en.wikipedia.org/wiki/Virtual_reality_sickness)) and that the interactions are [simple and intuitive](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/#p3). We are also inspired to reduce interactions to a form that *could* be controlled by [a single user input](https://blog.prototypr.io/accessible-locomotion-and-interaction-in-webxr-e4d87c512e51) for more extreme but significant use-cases.
+
+_NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/aframe-extras) "[movement-controls](https://github.com/c-frame/aframe-extras/tree/master/src/controls)" that support [nav-meshes](https://github.com/c-frame/aframe-extras/tree/master/src/pathfinding)._
 
 ![Illustration of the three different control schemes for Circles. From left to right, Desktop with mouse, Mobile with finger tap, and raycast with HMD VR controller](node_server/public/global/images/Circles_PlatformInteractions.jpg?raw=true)
 
@@ -119,11 +121,11 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
       out the `scripts` section of `package.json` for more build options and
       details.
 1. Please note that due some insecurities around running WebXR (and this library) that we need to [serve webXR content using https](https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Startup_and_shutdown). Any easy way to do so using localhost is to use a port-forwarding tool like [ngrok](https://ngrok.com/) to run everything properly across all supported WebXR platforms.
-1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` (default is `localhost:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost your browser (Chrome at this time) may complain about your site [re-directing assets to load via https and creating https mismatches](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) so you may try other browsers (i.e., Firefox), or consider _[highly recommended]_ using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https). This will also allow you to easily test locally on other devices i.e., a mobile or standalone HMD device, and show your development to other collaborators via a publicly accessible URL.
+1. In a browser (recommend Chrome at this time), go to `localhost:{SERVER_PORT}/add-all-test-data` (default is `localhost:1111/add-all-test-data`) to add both models to mongo db and test users. Note that if you are using localhost your browser (Chrome at this time) may complain about your site [re-directing assets to load via https and creating https mismatches](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) so you may try other browsers (i.e., Firefox), or consider _[highly recommended]_ using [ngrok](https://ngrok.com/) to serve up localhost as a remote https endpoint (note for WebXR to properly function on reality-based devices i.e. tablets or HMDs the content must served via https). Though ngrok works very well, [please see here for ngrok alternatives](https://github.com/anderspitman/awesome-tunneling). This will also allow you to easily test locally on other devices i.e., a mobile or standalone HMD device, and show your development to other collaborators via a publicly accessible URL.
     - **NOTE:** If you need to clean up or modify db contents use th MongoDB [Compass Application](https://www.mongodb.com/docs/compass/current/?_ga=2.136660531.242864686.1674159088-1142880638.1674159088) or [mongosh](https://www.mongodb.com/docs/mongodb-shell/) shell. For example, to drop the entire _circles_ db (which you will have to do when we make changes to the db structure) use the following commands within the mongosh shell (the re-add data with `localhost:{SERVER_PORT}/add-all-test-data` url):
         - `use circles`
         - `db.dropDatabase()`
-1. Login with one of the 3 test users (there are also others i.e., t1, r1, p1, p2, p3)
+1. Login with one of the 3 test users when you enter `localhost:{SERVER_PORT}/`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/`(there are also others i.e., t1, r1, p1, p2, p3)
     - `{username}:{password}`
     - `s1@circlesxr.com:password`
     - `s2@circlesxr.com:password`
@@ -135,10 +137,10 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 ### Instance Routes
 
+- */explore* (this is to see the list of worlds included here)
 - */register* (has been disabled for now)
 - */profile*
 - */campfire*
-- */explore* (this is to see the list of worlds included here)
 - */add-all-test-data* (only do this once, or if you have deleted/dropped the database and need to re-populate test data )
 
 ----------------
@@ -150,7 +152,8 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 - Go to src/worlds and see that each world has its own folder and associated index.html
 - See [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) for a fully-featured example of how to set up your own.
-- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}, though note we should be using a tool like ngrok to serve ssl content. Like this: https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}.
+- Currently, routes are not automatically created for each world (in progress); but you can type in the URL in the following format: `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}`.
+- Note that when you enter that `?group=explore` is added to your URL. `explore` is the default group (everyone in that same group can see each other). If you wish to add your own group so that only others within teh same group can see each other, set that last poart of teh URL yourself i.e., `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`. 
 - Note that in [ExampleWorld](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ExampleWorld) you can see a few HTML entities that are required for your world to properly connect to this framework. These are replaced with the appropriate scripts in [webpack.worlds.parts](https://github.com/PlumCantaloupe/circlesxr/tree/Workshop_Features/src/webpack.worlds.parts) during the build stage so please pay attention to their position within the page.
   ```html  
   <circles-start-scripts/>
@@ -204,11 +207,18 @@ In navigating within the 3D spaces of Circles all interactions aim toward single
 
 Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.4.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, likely be familiar to [Unity](https://unity.com) Developers.
 
+Also note that Circle sis built on several libraries, giving you additional functionality. They follow:
+- [A-Frame](https://aframe.io/docs/1.4.0/introduction/), which is built on [Three.js](https://aframe.io/docs/1.4.0/introduction/developing-with-threejs.html): This gives us a 3D engine specifically created for building multi-platform WebXR content using [HTML](https://www.w3schools.com/whatis/whatis_html.asp) and [Javascript](https://www.w3schools.com/js/).
+- [Networked-Aframe](https://github.com/networked-aframe/networked-aframe): For quickly networking objects. To send simple message, and synching client states, see [Circles Networking](https://github.com/PlumCantaloupe/circlesxr#circles-networking).
+- [Aframe-extras (controls and pathfinding)](https://github.com/c-frame/aframe-extras). This library gives us additional multi-platform controls, including the ability to use [nav meshes](https://medium.com/@donmccurdy/creating-a-nav-mesh-for-a-webvr-scene-b3fdb6bed918) to limit movement within Circles' worlds.
+- [Aframe-Physics](https://github.com/c-frame/aframe-physics-system): Available for those that wish to include physics into their Circles worlds (see the "KIN_" worlds included as an example).
+
 The general structure of the framework (and the Github repository) follows:
 
 - [The Server](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server): Circles uses a javscript server [node.js] and all associated code relevant to the delivery of all HTML and JS content is can be found in this folder. [app.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/app.js) is the main file that connects to a javascript databse [MongoDB](https://www.mongodb.com/) for saving user information, and serves up Circles' html and javascript pages. Note that [router.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/routes/router.js) is reponsible for creating appropriate paths to content, and [controller.js](https://github.com/PlumCantaloupe/circlesxr/blob/master/node_server/controllers/controller.js) is reponsible for connecting with the mongo database, and that much of the 2D html content (e.g., login and explore pages) are rendered with [pug](https://pugjs.org/), which allows us to generate HTML and CSS via javascript. All files related to 2D HTML and CSS are found within the [web folder](https://github.com/PlumCantaloupe/circlesxr/tree/master/node_server/public/web).
 - [Circles Core](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/core): All core functionality of the Circles can be found here, including any constants or global functions, we would like to be able to access on both the server and client sides. This will be invisible to most developers. To simplify development for content we also modify code during the [webpack](https://webpack.js.org) project build before we serve it.
 - [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds): All Circles' worlds are placed here. From here they are modified to include Circles specific functionality and copied into an untracked folder on the server.
+- [Circles Groups](https://github.com/networked-aframe/networked-aframe#scene-component): All Circles' users are connected to others within the same "group" (or "room"), no matter which Circles world they are within. You can set this manually by adding `?group=YOUR_GROUP_NAME` manually to the end of your Circles URL e.g., `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`. This group is then passed to the [networked-aframe](https://github.com/networked-aframe/networked-aframe) room property to connect users only to users within the same group..
 
 *Also note, that a [TestBed](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) is currently in development for testing selection and find performance using [Fitt's Law](https://www.yorku.ca/mack/hhci2018.html). At this time the TestBed, and the associated [research-manager](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) components are local to the ["TestBed" world](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed). After more extensive testing it will likely be moved to the Circles core.*
 
@@ -220,6 +230,40 @@ The general structure of the framework (and the Github repository) follows:
 <br>
 
 There are dozens of components created for use within this framework that you can find in the [components folder of this repo](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/components); but the following will likely be the most used, and thus the most significant.
+
+First, some useful functions that may be useful for the creation of your own components:
+
+```js
+//get the name of the group we are in (users in a group can only see each other)
+CIRCLES.getCirclesGroupName();
+
+//get the name of the Circles' world the user is in
+CIRCLES.getCirclesWorldName();
+
+//get the name of the current user
+CIRCLES.getCirclesUserName();
+
+//find out if Circles is ready i.e., your avatar is constructed.
+CIRCLES.isReady();
+
+//return the avatar element (perhaps we want to add something to the avatar or query for body elements to change their colour).
+CIRCLES.getAvatarElement();
+
+//return the rig of the avatar (when we want to move our avatar i.e., teleport them somewhere. or access things like aframe-extra's "movement-controls" to adjust speed, enable/disble etc.)
+CIRCLES.getAvatarRigElement();
+
+//return the camera element (from the avatar's point of view, if you want parent things to the camera e.g., adding UIs))
+CIRCLES.getMainCameraElement();
+
+//Example
+//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
+    //to change speed of character movement
+    CIRCLES.getAvatarRigElement().setAttribute('movement-controls', {speed:0.3});
+});
+```
+
+And now the components available for you.
 
 - [circles-artefact](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-artefact.js):
 This is a core component in our framework that explores learning around tools and objects. The circles-artefact allows you to create an object that has textual (and audio) descriptions and narratives, that can be picked up by an user's avatar and manipulated.
@@ -236,6 +280,11 @@ This is a core component in our framework that explores learning around tools an
   | title           | string          | Title of description.                                     | 'No Title Set'       |
   | description     | string          | Description text.                                         | 'No decription set'  |
   | label_text      | string          | Label text.                                               | 'label_text'         |
+  | audio           | audio           | Narration audio that can be added to play when artefact picked up.        | ''         |
+  | volume          | number          | If there is narration audio attached to this, this controls volume.       | '1.0'         |
+  
+  audio:              {type:'audio',    default:''},
+    volume:             {type:'number',   default:1.0},
 
   *Example 'circles-artefact' code: Note we are loading in a gltf model sing A-Frame's [gltf-model loader](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md), setting position, rotation, scale, and then setting several properties for the 'circles-artefact.'*
 
@@ -255,7 +304,9 @@ This is a core component in our framework that explores learning around tools an
                 arrow_position:   down;
                 title:            Some Title;
                 description:      Some description text.;
-                label_text:       Some Label;">
+                label_text:       Some Label;
+                audio:#some-snd; 
+                volume:0.4;" >
   </a-entity>
   ```
 
@@ -276,6 +327,7 @@ This is a core component in our framework that explores learning around tools an
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
   | offset          | vec3            | Adjust where the player is positioned, relative to checkpoint position.               | 0 0 0                |
+  | useDefaultModel | boolean         | Whether the default "green cylinder" used (set false to use your own model).          | true               |
 
   *Example 'circles-checkpoint' code: Note we are setting position of the checkpoint to also denote where the player is placed after clicking on this checkpoint.*
 
@@ -304,6 +356,24 @@ This is a core component in our framework that explores learning around tools an
     <!-- Important: note that "material" is listed before "circles-interactive-object" because it uses "circles-material-extend-fresnel" -->
     <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
     ```
+- [circles-sound](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sound.js): This is a component that extends A-Frame's [sound component](https://github.com/aframevr/aframe/blob/master/docs/components/sound.md), and connects to enter experience events, so that autoplay sounds do play after enter a Circles world.
+
+    | Property           | Type            | Description                                               | Default Value        |
+    |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+    | src                | audio          | audio asset                               | ''                  |
+    | autoplay           | boolean        | will it play when the app starts.         | false               |
+    | type               | string, oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']           | By changing type it changes how sound is played i.e., whthere it is spatial (in the world, diegetic) or not spatial (not in the world, a UI element, non-diegetic)                                       | 'basic' |
+    | loop                | boolean          | does this sound loop           | false                  |
+    | volume              | number          | how loud the sound is | 1.0                 |
+    | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
+    | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
+
+    *Example 'circles-sound'*
+
+    ```html
+    <!-- ambient music/sound -->
+    <a-entity circles-sound="type:music; src:#ambient_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+    ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
 
@@ -325,6 +395,7 @@ This is a core component in our framework that explores learning around tools an
   | img_src            | asset           | a equirectangular texture map                             | CIRCLES.CONSTANTS.DEFAULT_ENV_MAP               |
   | title_text         | string          | an optional label                                         | '' |
   | link_url           | string          | hyperlink of url users will travel to on click            | ''                   |
+  | useDefaultModel    | boolean         | Whether the default sphere with outline is used (set false to use your own model).          | true               |
 
   *Example 'circles-portal'*
 
@@ -333,7 +404,7 @@ This is a core component in our framework that explores learning around tools an
   <a-entity id="Portal-Wardrobe" circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"></a-entity>
   ```
 
-- [circles-sendpoint](): Attach to to a circles-button entity when you want that button to send them to any checkpoint (with an id that we can point to).
+- [circles-sendpoint](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sendpoint.js): Attach to to a circles-button or circles-interactive-object entity when you want that button to send them to any checkpoint (with an id that we can point to).
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -397,23 +468,23 @@ This is a core component in our framework that explores learning around tools an
 
 <br>
 
-Circles uses [Networked-Aframe](https://github.com/networked-aframe/networked-aframe) to sync avatars and various networked objects i.e., circles-artefacts. For voice or vother large bandwidth items like video, you will have to run a janus server and use the [naf-janus-adapter](https://github.com/networked-aframe/naf-janus-adapter). For local development, it defaults to a fast and reliable [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) communication. To make things a bit easier to send quick messages and synch events some functions have been added to Circles API. Hopefully, in the future, we can also explore persistent worlds that save their states even when no one is currently within them. However, for now, the world will match between users while they are within.
+Circles uses [Networked-Aframe](https://github.com/networked-aframe/networked-aframe) to sync avatars and various networked objects i.e., circles-artefacts. Please consult the [Networked-Aframe documentation](https://github.com/networked-aframe/networked-aframe/blob/master/README.md) if you wish to add your own _networked_ objects. However, for sending basic messages and smaller javascript objects to other clients, messages and synch events some functions have been added to Circles API. Hopefully, in the future, we can also explore persistent worlds that save their states even when no one is currently within them. However, for now, the world will match between users while they are within if you follow the example structure below.
+
+_For voice or vother large bandwidth items like video, you will have to run a janus server and use the [naf-janus-adapter](https://github.com/networked-aframe/naf-janus-adapter). For local development, it defaults to fast and reliable [websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) communication._ that do not support voice and video.
 
 You will find an example of synching simple switches in the "hub"/campfire world and the "ExampleWorld". The process for synching actions i.e., a light being turned off and on for all connected users follows (abridged from the "hub"/campfire example):
 
-_First, some useful commands:_
+_First, some useful functions (please note there are others noted in the [Circles Componenets](#circle-components) section:_
+
 ```js
 //get communication socket
 CIRCLES.getCirclesWebsocket();
 
-//get the room we are in (users are usually grouped into "rooms")
-CIRCLES.getCirclesRoom();
+//return all avatars in the scene. Yourself and other networked-aframe avatar entities
+CIRCLES.getNAFAvatarElements();
 
-//get the name of the Circles' world the user is in
-CIRCLES.getCirclesWorld();
-
-//get the name of the current user
-CIRCLES.getCirclesUser();
+//return all networked-aframe networked entities (includes avatars and any other objects). You may have to dig into children for the geometry, materials etc.
+CIRCLES.getAllNAFElements();
 ```
 
 ```js
@@ -435,7 +506,7 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
         CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
 
         //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
-        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:trCONTEXT_AF.fireOnue, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
         }
     });
 
@@ -447,18 +518,18 @@ CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (da
 
     //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time (not perfect) ...
     setTimeout(function() {
-        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     }, THREE.MathUtils.randInt(0,1200));
 
     //if someone else requests our sync data, we send it.
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     });
 
     //receiving sync data from others (assuming all others is the same for now)
-    CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
         //make sure we are receiving data for this world (as others may be visiting other worlds simultaneously)
-        if (data.world === CIRCLES.getCirclesWorld()) {
+        if (data.world === CIRCLES.getCirclesWorldName()) {
           CONTEXT_AF.turnFire(data.campfireON);
           CONTEXT_AF.fireOn = data.campfireON;
         }

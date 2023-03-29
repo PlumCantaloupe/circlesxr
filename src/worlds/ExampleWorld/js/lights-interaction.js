@@ -2,7 +2,14 @@ AFRAME.registerComponent('lights-interactive', {
     schema: {},
     init() {
         const CONTEXT_AF = this;
-        const scene      = document.querySelector('a-scene');
+        const scene      = CIRCLES.getCirclesSceneElement();
+
+        scene.addEventListener(CIRCLES.READY, function() {
+            console.log('Circles is ready: ' + CIRCLES.isReady());
+
+            //this is the camera that is now also ready, if we want to parent elements to it i.e., a user interface or 2D buttons
+            console.log("Circles camera ID: " + CIRCLES.getMainCameraElement().id);
+        });
 
         //have to capture all components we need to play with here
         CONTEXT_AF.light_1    = scene.querySelector('#light_1');
@@ -24,14 +31,14 @@ AFRAME.registerComponent('lights-interactive', {
         CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
-            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesRoom() + ' in world:' + CIRCLES.getCirclesWorld());
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
             //light 1
             CONTEXT_AF.light_1.addEventListener('click', function () {
                 CONTEXT_AF.toggleLight(CONTEXT_AF.light_1, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
-                                                                    room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                                                                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
             
             //light 2
@@ -39,7 +46,7 @@ AFRAME.registerComponent('lights-interactive', {
                 CONTEXT_AF.toggleLight(CONTEXT_AF.light_2, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
-                                                                    room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                                                                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //light 3
@@ -47,7 +54,7 @@ AFRAME.registerComponent('lights-interactive', {
                 CONTEXT_AF.toggleLight(CONTEXT_AF.light_3, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
-                                                                    room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                                                                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //light 4
@@ -55,7 +62,7 @@ AFRAME.registerComponent('lights-interactive', {
                 CONTEXT_AF.toggleLight(CONTEXT_AF.light_4, false);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.synchEventName, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                     light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn ,
-                                                                    room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                                                                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //listen for when others turn on campfire
@@ -83,20 +90,20 @@ AFRAME.registerComponent('lights-interactive', {
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
             setTimeout(function() {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }, THREE.MathUtils.randInt(0,1200));
 
             //if someone else requests our sync data, we send it.
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
                 CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, { light_1_on:CONTEXT_AF.light_1.lightOn , light_2_on:CONTEXT_AF.light_2.lightOn , 
                                                                         light_3_on:CONTEXT_AF.light_3.lightOn , light_4_on:CONTEXT_AF.light_4.lightOn , 
-                                                                        room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                                                                        room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //receiving sync data from others (assuming all others is the same for now)
-            CONTEXT_AF.socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
-                if (data.world === CIRCLES.getCirclesWorld()) {
+                if (data.world === CIRCLES.getCirclesWorldName()) {
                     //light 1
                     if (CONTEXT_AF.light_1.lightOn !== data.light_1_on) {
                         CONTEXT_AF.toggleLight(CONTEXT_AF.light_1, false);
