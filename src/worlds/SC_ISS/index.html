@@ -20,8 +20,8 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="issModel"   src="/worlds/SC_ISS/assets/models/ISS-Interior/ISS_Interior_USOnly_TexturesPacked.gltf" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="issModel"   src="/worlds/SC_ISS/assets/models/navMeshISS.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="issModel"   src="/worlds/SC_ISS/assets/models/ISS-Interior-V2/ISS-Interior.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="issMesh"   src="/worlds/SC_ISS/assets/models/navMeshISS.glb" response-type="arraybuffer"></a-asset-item>
         
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -98,7 +98,7 @@
       <a-entity id="pdf-test" position="-14.4 2.2 6.4" rotation="0 62 0" scale="2.0 2.0 2.0" circles-pdf-loader="src:/global/assets/pdfs/Scavarelli2020_Article_VirtualRealityAndAugmentedReal.pdf;"></a-entity>
 
       <!-- the environment -->
-      <a-entity id="iss" position="0 0 0" rotation="0 0 0" gltf-model="#issModel" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <a-entity id="iss" position="0 2 0" rotation="0 0 0" scale="0.1 0.1 0.1" gltf-model="#issModel" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <!-- <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
 
       <!-- synched lights -->
@@ -123,18 +123,12 @@
         <a-entity light="type:point; color:rgb(242,151,39); intensity:5.0;"></a-entity>
       </a-entity>
 
-      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+      <!-- <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity> -->
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
-
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
