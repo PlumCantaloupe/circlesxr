@@ -28,11 +28,11 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         rigElem.setAttribute('movement-controls',{controls:'gamepad,keyboard,checkpoint', constrainToNavMesh:true, speed:0.2});
         rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
-        console.log('Attached camera controls to rig');
+        //console.log('Attached camera controls to rig');
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {
-          console.log('Adding pointer/cursor controls');
+          //console.log('Adding pointer/cursor controls');
 
           let entity_Pointer = document.createElement('a-entity');
           entity_Pointer.setAttribute('id', 'primary_pointer');
@@ -181,7 +181,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           console.log('I am a researcher.');
         }
 
-        console.log('Attached camera controls to avatar');
+        //console.log('Attached camera controls to avatar');
         CONTEXT_AF.el.emit(CIRCLES.EVENTS.CAMERA_ATTACHED, {element:CONTEXT_AF.el}, true);
       });
     // }

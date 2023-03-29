@@ -22,42 +22,42 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-const getAllUsers = function(req, res, next) {
-  User.find({}, function(error, data) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(data);
-  });
-};
+// const getAllUsers = function(req, res, next) {
+//   User.find({}, function(error, data) {
+//     if (error) {
+//       res.send(error);
+//     }
+//     res.json(data);
+//   });
+// };
 
-const getUser = (req, res, next) => {
-  User.findOne({username: req.params.username}, function(error, data) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(data);
-  });
-};
+// const getUser = (req, res, next) => {
+//   User.findOne({username: req.params.username}, function(error, data) {
+//     if (error) {
+//       res.send(error);
+//     }
+//     res.json(data);
+//   });
+// };
 
-//!!TODO: look this over
-const updateUser = (req, res, next) => {
-  User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function(error, data) {
-    if (error) {
-      res.send(error);
-    }
-    res.json(data);
-  });
-};
+// //!!TODO: look this over
+// const updateUser = (req, res, next) => {
+//   User.findOneAndUpdate({username: req.params.username}, req.body, {new: true}, function(error, data) {
+//     if (error) {
+//       res.send(error);
+//     }
+//     res.json(data);
+//   });
+// };
 
-const deleteUser = (req, res, next) => {
-  User.remove({username: req.params.username}, function(error, data) {
-    if (error) {
-      res.send(error);
-    }
-    res.json({ message: 'User successfully deleted' });
-  });
-};
+// const deleteUser = (req, res, next) => {
+//   User.remove({username: req.params.username}, function(error, data) {
+//     if (error) {
+//       res.send(error);
+//     }
+//     res.json({ message: 'User successfully deleted' });
+//   });
+// };
 
 const updateUserInfo = (req, res, next) => {
   if (!req.body) {
@@ -145,8 +145,17 @@ const updateUserInfo = (req, res, next) => {
         userData.color_hand_right = req.body.color_hand_right;
       }
 
-      User.findOneAndUpdate({_id:req.user._id}, userData, {new:true}, function (error, user) {
-        //User.create(userData, function (error, user) {
+      let doc   = null;
+      let error = null;
+      async function updateItems() {
+        try {
+          doc = await User.findOneAndUpdate({_id:req.user._id}, userData, {new:true});
+        } catch(err) {
+          error = err;
+        }
+      }
+
+      updateItems().then(function() {
         if (error) {
           return next(error);
         } else {
@@ -250,10 +259,10 @@ const serveWorld = (req, res, next) => {
   const splitURL = req.url.split('?');
   const baseURL = (splitURL.length > 0)?splitURL[0]:'';
   const urlParamsStr = (splitURL.length > 1)?splitURL[1]:'';
+
   if (splitURL.length > 0) {
     if (baseURL.charAt(baseURL.length - 1) !== '/') {
       const fixedURL = baseURL + "/"  + ((urlParamsStr === '')?'':'?' + urlParamsStr);
-      console.log('fixing trailing slash: ' + fixedURL);
       res.writeHead(302, { "Location": fixedURL });
       res.end();
       return;
@@ -283,8 +292,6 @@ const serveRelativeWorldContent = (req, res, next) => {
   const worldID = req.params.world_id;
   const relURL = req.params[0];
   const newURL = '/worlds/' + worldID + '/' + relURL;
-  //console.log(res.location(relURL));
-  //console.log('---------------------------------------');
   return res.redirect(newURL);
 };
 
@@ -550,7 +557,7 @@ const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
     expiresIn: expiryTimeMin + 'm',
   };
 
-  const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as "exp"iration
+  const token = jwt.sign({data:email}, env.JWT_SECRET, jwtOptions); //expects seconds as expiration
   return baseURL + '/magic-login?token=' + token + '&route=' + route;
 };
 
@@ -559,16 +566,28 @@ const getMagicLinks = (req, res, next) => {
   const userTypeAsking = req.query.userTypeAsking;
   const expiryTimeMin = req.query.expiryTimeMin;
   let allAccounts = [];
-  const baseURL = req.protocol + '://' + req.get('host');
 
-  User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }, function(error, data) {
+  //ignore req.protocol as it will try and re-direct to https anyhow.
+  const baseURL = req.get('host');
+
+  let users = null;
+  let error = null;
+  async function getItems() {
+    try {
+      users = await User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }).exec();
+    } catch(err) {
+      error = err;
+    }
+  }
+
+  getItems().then(function() {
     if (error) {
       res.send(error);
     }
-    for (let i = 0; i < data.length; i++) {
-      allAccounts.push({username:data[i].username, email:data[i].email, magicLink:generateAuthLink(data[i].email, baseURL, route, expiryTimeMin)});
+    for (let i = 0; i < users.length; i++) {
+      allAccounts.push({username:users[i].username, email:users[i].email, magicLink:generateAuthLink(users[i].email, baseURL, route, expiryTimeMin)});
 
-      if (i === data.length - 1 ) {
+      if (i === users.length - 1 ) {
         res.json(allAccounts);
       }
     }
@@ -663,26 +682,50 @@ const addTestUsers = () => {
     });
   }
 
+  let user   = null;
+  let error   = null;
+  async function findUser(userToAdd) {
+    try {
+      user = await User.findOne(userToAdd).exec();
+    } catch(err) {
+      error = err;
+    }
+
+    error = null;
+  }
+  async function createUser(userToAdd) {
+    try {
+      user = await User.create(userToAdd);
+    } catch(err) {
+      error = err;
+    }
+
+    error = null;
+  }
+
   for (let i = 0; i < usersToAdd.length; i++) {
-    User.findOne(usersToAdd[i], function(error, data) {
+    findUser(usersToAdd[i]).then(function() {
       if (error) {
-        //res.send(error);
-        console.log(error.message);
+        console.log("findUser error on [" + usersToAdd[i].username + "]: " + error.message);
       }
       else {
         //add model
-        User.create(usersToAdd[i], function (error, user) {
+        createUser(usersToAdd[i]).then(function() {
           if (error) {
-            console.log(error.message);
+            console.log("createUser error on [" + usersToAdd[i].username + "]: " + error.message);
           } else {
             console.log("successfully added test user: " + user.username);
           }
+
+          error = null;
         });
       }
+
+      error = null;
     });
   }
 
-  console.log('added test models to db');
+  console.log('added test users to database');
 };
 
 const addAvatarModels = () => {
@@ -796,33 +839,49 @@ const addAvatarModels = () => {
     format3D:       CIRCLES.MODEL_FORMAT.GLTF
   });
 
+  let model   = null;
+  let error   = null;
+  async function findModel(modelToAdd) {
+    try {
+      model = await Model3D.findOne(modelToAdd).exec();
+    } catch(err) {
+      error = err;
+    }
+  }
+  async function createModel(modelToAdd) {
+    try {
+      model = await Model3D.create(modelToAdd);
+    } catch(err) {
+      error = err;
+    }
+  }
+
   for (let i = 0; i < modelsToAdd.length; i++) {
-    Model3D.findOne(modelsToAdd[i], function(error, data) {
+    findModel(modelsToAdd[i]).then(function() {
       if (error) {
-        //res.send(error);
-        console.log(error.message);
+        console.log("findModel error on [" + modelsToAdd[i].name + "]: " + error.message);
       }
       else {
         //add model
-        Model3D.create(modelsToAdd[i], function (error, model3D) {
+        createModel(modelsToAdd[i]).then(function() {
           if (error) {
-            console.log(error.message);
+            console.log("createModel error on [" + modelsToAdd[i].name + "]: " + error.message);
           } else {
-            console.log("successfully added model: " + model3D.name);
+            console.log("successfully added model: " + model.name);
           }
         });
       }
     });
   }
 
-  console.log('added test models to db');
+  console.log('added test models to database');
 };
 
 module.exports = {
-  getAllUsers,
-  getUser,
-  updateUser,
-  deleteUser,
+  // getAllUsers,
+  // getUser,
+  // updateUser,
+  // deleteUser,
   updateUserInfo,
   modifyServeWorld,
   serveWorld,
