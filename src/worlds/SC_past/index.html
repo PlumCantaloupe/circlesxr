@@ -21,31 +21,6 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
 
-        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-        <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
-
-        <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
-
-        <!-- gltf models -->
-        <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
-        <!-- Emiel @ https://sketchfab.com/3d-models/stylized-assets-7c180198693542a49fb39c8f81af14fd -->
-        <!-- Glezova @ https://sketchfab.com/3d-models/stylized-bridge-dea55cb580e44d458e84d4455eda5de8 -->
-        <!-- Sereda @ https://sketchfab.com/3d-models/stylized-stones-minipack-719d8ee393db4b218ace19ce9124918d -->
-        <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
-        <a-asset-item id="island_1_gltf"      src="assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_2_gltf"      src="assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_3_gltf"      src="assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <!-- <a-asset-item id="island_leaves_gltf" src="assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
-
-        <!-- credit: Raystani E. de Oliveira @ https://sketchfab.com/3d-models/stylized-sword-and-shield-lowpoly-e076a1a9fae84c97b8a6cdd5c9162ca2 [editted]-->
-        <!-- <a-asset-item id="sword_gltf"    src="assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
-
-        <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
-        <a-asset-item id="navmesh_gltf" src="assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -85,7 +60,7 @@
       <a-entity circles-button="pedastal_color:rgb(80, 91, 100);" circles-sendpoint="target:#door_island_3" position="-11.503 -5.121 -0.803" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
 
       <!-- ambient music/sound -->
-      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+      <!-- <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity> -->
 
       <!-- example "artefact" -->
       <a-entity id="Artefact-Gem"
