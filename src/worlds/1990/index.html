@@ -31,6 +31,8 @@
         <img id="sensorama1_img" src="assets/models/sensorama-patent.png" crossorigin="anonymous">
         <img id="sensorama2_img" src="assets/models/sensorama2.jpg" crossorigin="anonymous">
         <img id="sensorama3_img" src="assets/models/sensoramaBodyCam.jpg" crossorigin="anonymous">
+
+        <img id='room2' src='/worlds/1950/assets/models/room2.png' crossorigin="anonymous">
       </a-assets>
 
       <!-- Circles' built-in assets [REQUIRED] -->
@@ -42,7 +44,8 @@
       <!-- Handle the Nav mesh (movment limitations) here-->
       <a-entity id="walKMesh" class="navMesh" gltf-model="#floor_model" position="0 0 -3" scale="1 1 1" nav-mesh></a-entity>
 
-      <a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.5; constrainToNavMesh: true;">
+      <!--Conflict with artefact component!!!!!!!
+        <a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.5; constrainToNavMesh: true;">
           <a-entity id="player" position="0 1.6 0" camera look-controls>
               <a-entity id="cursor" cursor="rayOrigin:mouse" raycaster="far:20; interval:200; objects:.interactive;"></a-entity>
               <a-entity id="light" position="0.5 -0.5 0" light="type:spot; intensity:0.8; castShadow:true; shadowBias:-0.005; penumbra:0.3;"></a-entity>
@@ -50,7 +53,7 @@
       </a-entity>
 
       <a-entity oculus-touch-controls="hand: left"></a-entity>
-      <a-entity oculus-touch-controls="hand: right" laser-controls></a-entity>
+      <a-entity oculus-touch-controls="hand: right" laser-controls></a-entity>-->
 
 
       <!-- Images -->
@@ -105,13 +108,15 @@
                     animation__enter="startEvents: mouseenter; property: scale; to: 0.75 0.75 0.75; dur: 100" 
                     animation__leave="startEvents: mouseleave; property: scale; to: 0.5 0.5 0.5; dur: 100"
                     animation__click="property:color; from: #FFC65D; to: #fc8403; startEvents:click; dur:300;">
+
             <!-- Environment objects-->
             <a-entity id="roof" scale="0.9 0.7 0.9" position="0 3.9 -3" gltf-model="#roof_model"></a-entity>
             <a-entity id="roomPos" position="0 0.1 -3">
                 <a-entity id="roomRot" rotation="0 0 0">
-                    <a-entity  id="walls" scale="0.225 -0.225 0.225" gltf-model="#walls_model"></a-entity>
+                    <a-entity  id="walls" scale="0.3 0.5 0.3" gltf-model="#walls_model"></a-entity>
                 </a-entity>
             </a-entity>
+            
 
       <!-- ambient music/sound -->
       <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
@@ -126,6 +131,14 @@
                 geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
+
+      <a-entity id="1980_link"
+                position="-3.25 1.5 0" rotation="0 0 0" scale="1 1 1"
+                circles-portal="img_src:#room2; title_text:Go to 1980; link_url:/w/1980"></a-entity>
+
+        <a-entity id="modern_link"
+                position="3.25 1.5 0" rotation="0 180 0" scale="1 1 1"
+                circles-portal="img_src:#room2; title_text:Go to modern; link_url:/w/Modern"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

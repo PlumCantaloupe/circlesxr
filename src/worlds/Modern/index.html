@@ -23,6 +23,8 @@
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
 
+        <img id='room2' src='/worlds/1950/assets/models/room2.png' crossorigin="anonymous">
+
         <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
           
       </a-assets>
@@ -36,7 +38,8 @@
       <!-- Handle the Nav mesh (movment limitations) here-->
       <a-entity id="walKMesh" class="navMesh" gltf-model="#floor_model" position="0 0 -3" scale="1 1 1" nav-mesh></a-entity>
 
-      <a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.5; constrainToNavMesh: true;">
+      <!--Conflict with artefact component!!!!!!! lighting?
+        <a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.5; constrainToNavMesh: true;">
           <a-entity id="player" position="0 1.6 0" camera look-controls>
               <a-entity id="cursor" cursor="rayOrigin:mouse" raycaster="far:20; interval:200; objects:.interactive;"></a-entity>
               <a-entity id="light" position="0.5 -0.5 0" light="type:spot; intensity:0.8; castShadow:true; shadowBias:-0.005; penumbra:0.3;"></a-entity>
@@ -44,7 +47,7 @@
       </a-entity>
 
       <a-entity oculus-touch-controls="hand: left"></a-entity>
-      <a-entity oculus-touch-controls="hand: right" laser-controls></a-entity>
+      <a-entity oculus-touch-controls="hand: right" laser-controls></a-entity>-->
 
 
       <a-box class="interactive cube" id="cube" position="0 1 -5" scale="2 2 2" material="color: #FFC65D;" shadow
@@ -77,6 +80,11 @@
                 geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
+
+      <a-entity id="1990_link"
+                position="-3.25 1.5 0" rotation="0 0 0" scale="1 1 1"
+                circles-portal="img_src:#room2; title_text:Go to 1980; link_url:/w/1990"></a-entity>
+
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
