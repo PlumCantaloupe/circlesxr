@@ -1,10 +1,12 @@
+//this is a component that only exists to allow us to track synching data between similar 'circles-pickup-networked' objects
 'use strict';
 
 AFRAME.registerComponent('circles-object-world', {
 schema: {
-    world:      {type: 'string', default:''},
-    id:         {type: 'string', default:''},
-    timeCreated:{type: 'number', default:-1}
+    world:        {type: 'string', default:''},
+    id:           {type: 'string', default:''},
+    pickedup:     {type: 'boolean', default:false},
+    timeCreated:  {type: 'number', default:-1}
   },
   init: function() {
     const CONTEXT_AF    = this;
@@ -32,15 +34,15 @@ schema: {
       CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
     }
 
-    // CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, function (evt) {
-    //     //console.log("Event: CIRCLES.EVENTS.PICKUP_THIS_OBJECT");
-    //     CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:true}); //want visible in all worlds so we can "share" what we are lookinhg at
-    // });
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, function (evt) {
+        //console.log("Event: CIRCLES.EVENTS.PICKUP_THIS_OBJECT");
+        CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:true}); //want visible in all worlds so we can "share" what we are lookinhg at
+    });
 
-    // CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function (evt) {
-    //     //console.log("Event: CIRCLES.EVENTS.RELEASE_THIS_OBJECT");
-    //     CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:false});
-    // });
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function (evt) {
+        //console.log("Event: CIRCLES.EVENTS.RELEASE_THIS_OBJECT");
+        CONTEXT_AF.el.setAttribute('circles-object-world', {pickedup:false});
+    });
   },
   update: function(oldData) {
     const CONTEXT_AF    = this;
