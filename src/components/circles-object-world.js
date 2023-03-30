@@ -4,7 +4,7 @@ AFRAME.registerComponent('circles-object-world', {
 schema: {
     world:      {type: 'string', default:''},
     id:         {type: 'string', default:''},
-    //isClone:    {type: 'bool',   default:true}
+    timeCreated:{type: 'number', default:-1}
   },
   init: function() {
     const CONTEXT_AF    = this;
@@ -15,6 +15,21 @@ schema: {
     }
     if (CONTEXT_AF.data.id === '') {
         CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
+    }
+
+    if (CIRCLES.isCirclesWebsocketReady()) {
+      if (CONTEXT_AF.data.timeCreated < 0) {
+        CONTEXT_AF.el.setAttribute('circles-object-world',   {timeCreated:CIRCLES.getCirclesConnectTime().getTime()});
+      }
+    }
+    else {
+      const wsReadyFunc = function() {
+        if (CONTEXT_AF.data.timeCreated < 0) {
+          CONTEXT_AF.el.setAttribute('circles-object-world',   {timeCreated:CIRCLES.getCirclesConnectTime().getTime()});
+        }
+        CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      };
+      CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
     }
 
     // CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, function (evt) {

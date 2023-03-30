@@ -29,6 +29,7 @@ let circlesResearchWebsocket = null;
 let warningLogsEnabled = true;
 let basicLogsEnabled = true;
 let errorLogsEnabled = true;
+let circlesWebsocketConnectTime = 0;
 
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
@@ -151,8 +152,16 @@ const getUUID = function() {
   );
 };
 
+//time that the socket connected
+const getCirclesConnectTime = function() {
+  return circlesWebsocketConnectTime;
+}
+
 const setupCirclesWebsocket = function() {
   // console.log('setupCirclesWebsocket');
+
+  circlesWebsocketConnectTime = new Date();
+  console.log(circlesWebsocketConnectTime);
 
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
@@ -307,6 +316,7 @@ module.exports = {
   NETWORKED_TEMPLATES,
   COLOR_PALETTE,
   getUUID,
+  getCirclesConnectTime,
   setupCirclesWebsocket,
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
