@@ -26,16 +26,10 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     if (CIRCLES.isCirclesWebsocketReady()) {
       CONTEXT_AF.createEventFunctions();    //will only do this once at beginning of program
-      // if (CONTEXT_AF.isClone === false) {
-      //   CONTEXT_AF.initSyncObjects();
-      // }
     }
     else {
       const wsReadyFunc = function() {
         CONTEXT_AF.createEventFunctions();  //will only do this once at beginning of program
-        // if (CONTEXT_AF.isClone === false) {
-        //   CONTEXT_AF.initSyncObjects();
-        // }
         CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
       };
       CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
@@ -64,12 +58,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     }
 
     if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
-      console.log('update data.networkedEnabled', CONTEXT_AF.el.id, data.networkedEnabled);
       CONTEXT_AF.enableNetworking(data.networkedEnabled, !CONTEXT_AF.isClone);
-
-      // if (CONTEXT_AF.isClone === true && data.networkedEnabled === true) {
-      //   CONTEXT_AF.initSyncObjects();
-      // }
     }
   },
   remove : function() {
@@ -77,14 +66,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
       //let everyone know (maybe helpful in future)
       CIRCLES.getCirclesWebsocket().emit(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, {id:this.el.id, origId:this.origId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     }
-      
-    // if (this.isClone === true) {
-    //   const origElem = document.querySelector('#' + this.origId);
-    //   //show original if owner leaves
-    //   if (origElem.components['circles-pickup-networked'].isShowing === false) {
-    //     document.querySelector('#' + this.origId).components['circles-pickup-networked'].showThisElement(true, false);
-    //   }
-    // }
 
     if (CIRCLES.isCirclesWebsocketReady()) {
       this.removeEventListeners();
@@ -131,7 +112,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.hackySyncDropPositionFunc  = null;
 
     CONTEXT_AF.pickupObjFunc = function(e) {
-      console.log('pickupObjFunc', CONTEXT_AF.el.id);
+      //console.log('pickupObjFunc', CONTEXT_AF.el.id);
 
       CONTEXT_AF.takeNetworkOwnership(CONTEXT_AF.el);
 
@@ -152,7 +133,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc = function(e) {
-      console.log('releaseObjFunc', CONTEXT_AF.el.id);
+      //console.log('releaseObjFunc', CONTEXT_AF.el.id);
 
       if (e.detail.sendNetworkEvent === true) {
         CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SYNC_OBJECT_RELEASE, CONTEXT_AF.getNetworkDataObject());
@@ -171,22 +152,17 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.ownerGainedFunc  = function(e) {
-      console.log('ownerGainedFunc', CONTEXT_AF.el.id);
-      // if (CONTEXT_AF.data.networkedEnabled === true) {
-        //console.log("object ownership gained");
-      // }
+      //console.log('ownerGainedFunc', CONTEXT_AF.el.id);
     };
 
     CONTEXT_AF.ownerLostFunc = function(e) {
-      console.log('ownerLostFunc', CONTEXT_AF.el.id);
-
-        //console.log("object ownership lost");
-        //release artefact
+      //console.log('ownerLostFunc', CONTEXT_AF.el.id);
+      //release artefact
       CONTEXT_AF.el.components['circles-pickup-object'].release(false);
     };
 
     CONTEXT_AF.pickupObjFunc_Sync = function(data) {
-      console.log('pickupObjFunc_Sync', CONTEXT_AF.el.id);
+      //console.log('pickupObjFunc_Sync', CONTEXT_AF.el.id);
 
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -207,7 +183,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
-      console.log('releaseObjFunc_Sync', CONTEXT_AF.el.id);
+      //console.log('releaseObjFunc_Sync', CONTEXT_AF.el.id);
 
       const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
       const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -230,35 +206,23 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.networkAttachedFunc = function(data) {
-      console.log('networkAttachedFunc', CONTEXT_AF.el.id);
+      //console.log('networkAttachedFunc', CONTEXT_AF.el.id);
 
       const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
       const isSameElem  = (data.origId === CONTEXT_AF.origId);
       if (isSameWorld && isSameElem) {
-
-        //if message from a remote clone, ignore
-        // if (data.id !== data.origId) {
-        //   console.log(CONTEXT_AF.el.id, data.id, data.origId);
-        //   return;
-        // }
-
         if (CONTEXT_AF.isClone === true) {
           //make sure label click works on networked elements (if artefact)
           const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
-          console.log('ooooooo');
           if (labelEl) {
-            console.log('kkkkkkk')
             labelEl.querySelector('.label_bg').addEventListener('click', CONTEXT_AF.clickLabelFunc);
           }
-        }
-        else {
-          //CONTEXT_AF.initSyncObjects();
         }
       }
     };
 
     CONTEXT_AF.networkDetachedFunc = function(data) {
-      console.log('networkDetachedFunc', CONTEXT_AF.el.id);
+      //console.log('networkDetachedFunc', CONTEXT_AF.el.id);
 
       const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
       const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -269,7 +233,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
-      console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
+      //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
       if (CONTEXT_AF.isClone === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
@@ -283,15 +247,15 @@ AFRAME.registerComponent('circles-pickup-networked', {
     //need this be always listening so that "hidden" objects can come back
     if (CONTEXT_AF.isClone === false) {
       document.body.addEventListener('clientConnected', function(e) {
-        console.log('NAF clientConnected', e.detail.clientId);
+        //console.log('NAF clientConnected', e.detail.clientId);
       });
   
       document.body.addEventListener('clientDisconnected', function(e) {
-        console.log('NAF clientDisconnected', e.detail.clientId);
+        //console.log('NAF clientDisconnected', e.detail.clientId);
       });
   
       document.body.addEventListener('entityCreated', function(e) {
-        console.log('NAF entityCreated', e.detail.el.getAttribute('circles-object-world'));
+        //console.log('NAF entityCreated', e.detail.el.getAttribute('circles-object-world'));
   
         if (CONTEXT_AF.isClone === false) {
           CONTEXT_AF.initSyncObjects();
@@ -299,7 +263,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
       });
   
       document.body.addEventListener('entityRemoved', function(e) {
-        console.log('NAF entityRemoved', e.detail.networkId);
+        //console.log('NAF entityRemoved', e.detail.networkId);
 
         if (CONTEXT_AF.isClone === false) {
           CONTEXT_AF.initSyncObjects();
@@ -312,7 +276,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.listenersAttached = true;
     CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
 
-    console.log('addEventListeners', CONTEXT_AF.el.id);
+    //console.log('addEventListeners', CONTEXT_AF.el.id);
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, CONTEXT_AF.pickupObjFunc);
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, CONTEXT_AF.releaseObjFunc);
@@ -333,7 +297,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.listenersAttached = false;
     CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
 
-    console.log('removeEventListeners', this.el.id);
+    //console.log('removeEventListeners', this.el.id);
 
     CONTEXT_AF.el.removeEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, CONTEXT_AF.pickupObjFunc);
     CONTEXT_AF.el.removeEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, CONTEXT_AF.releaseObjFunc);
@@ -355,7 +319,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
   initSyncObjects: function() {
     const CONTEXT_AF = this;
 
-    console.log('initSyncObjects', this.el.id);
+    //console.log('initSyncObjects', this.el.id);
     //if there already exists "the same element" then hide this and turn off networking (if this is not a clone)
     //get list of the "same" objects, and remove the one that is duplicate ...
     let numSimilarNetObjs = 0;
@@ -366,12 +330,10 @@ AFRAME.registerComponent('circles-pickup-networked', {
     let isSameElem  = false;
     const allNetworkObjects = document.querySelectorAll('[circles-pickup-networked]');
     allNetworkObjects.forEach(function(netObj) {
-      console.log(CONTEXT_AF.el.id, CONTEXT_AF.origId, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-pickup-networked'].isShowing);
+      //console.log(CONTEXT_AF.el.id, CONTEXT_AF.origId, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-pickup-networked'].isShowing);
 
       isSameWorld = (netObj.components['circles-object-world'].data.world === CIRCLES.getCirclesWorldName());
       isSameElem  = (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId);
-
-      console.log(isSameWorld, isSameElem);
 
       if (isSameWorld && isSameElem) {
         currAgeMS = netObj.components['circles-object-world'].data.timeCreated; 
@@ -381,7 +343,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         }    
 
         if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-pickup-networked'].isShowing === true) {
-        //if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId) {
           numSimilarNetObjs++;
         }
       }
@@ -389,19 +350,14 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     //if more than one, hide this one, if it is the oldest ...
     if (oldestElem) {
-      console.log(oldestElem, oldestTime, numSimilarNetObjs);
-
       if (numSimilarNetObjs > 1) {
         if (CONTEXT_AF.isShowing === true && oldestElem.id === CONTEXT_AF.el.id) {
-          console.log('HIDE element');
           CONTEXT_AF.showThisElement(false, true);
         }
       }
       else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
         //am owner
-        console.log('THIS OWNER, who dat');
         if (CONTEXT_AF.isShowing === false) {
-          console.log('OWNER, SHOW element');
           CONTEXT_AF.showThisElement(true, true);
         }
   
@@ -415,17 +371,9 @@ AFRAME.registerComponent('circles-pickup-networked', {
         CONTEXT_AF.socket.emit('hacky_drop_position', netObj);
       }
     }
-    
-    // else if (numSimilarNetObjs === 0) {
-    //   console.log('ZZZZZZZZZZZZZZZZZ');
-    //   if (CONTEXT_AF.isShowing === false) {
-    //     console.log('ZZZ, SHOW element');
-    //     CONTEXT_AF.showThisElement(true, true);
-    //   }
-    // }
   },
   enableNetworking: function(enable, alertNetwork) {
-    console.log('enableNetworking', this.el.id, enable, alertNetwork);
+    //console.log('enableNetworking', this.el.id, enable, alertNetwork);
 
     const CONTEXT_AF = this;
 
@@ -445,7 +393,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
     const networkReadyFunc = function() {
       if (enable === true) {
         if (alertNetwork === true) {
-          console.log('sending event');
           CIRCLES.getCirclesWebsocket().emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.getNetworkDataObject() );
         }
         if (CONTEXT_AF.listenersAttached === false) {
@@ -454,7 +401,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
       }
       else {
         if (alertNetwork === true) {
-          console.log('sending event');
           CIRCLES.getCirclesWebsocket().emit(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.getNetworkDataObject() );
         }
         CONTEXT_AF.removeEventListeners();
@@ -472,7 +418,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.data.networkedEnabled = enable;
   },
   showThisElement: function (isShowing, alertNetwork) {
-    console.log('showThisElement', this.el.id, isShowing, alertNetwork);
+    //console.log('showThisElement', this.el.id, isShowing, alertNetwork);
     
     this.isShowing = isShowing;
 
