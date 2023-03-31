@@ -396,7 +396,7 @@ This is a core component in our framework that explores learning around tools an
   ```html
   <a-entity circles-label="text:click here; visible:true; offset:1.1 0.2 0; arrow_position:left;"></a-entity>
   ```
-  - [circles-lookat](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-lookat.js): Attch to an object to have it always facing another element.
+- [circles-lookat](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-lookat.js): Attch to an object to have it always facing another element.
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -415,15 +415,6 @@ This is a core component in our framework that explores learning around tools an
 
 - [circles-pickup-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): This component allows you to pickup and drop objects on click.
 
-pickupPosition:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this relative to the camera
-    pickupRotation:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what orientation relative to teh camera
-    pickupScale:        { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale relative to the camera
-    dropPosition:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to end up after it is released
-    dropRotation:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to orient as after it is released
-    dropScale:          { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale after it is released
-    animate:            { type: "boolean", default:false },                     //whether we animate
-    animateDurationMS:  { type: "number", default:400 },
-
   | Property           | Type            | Description                                               | Default Value        |
   |--------------------|-----------------|-----------------------------------------------------------|----------------------|
   | pickupPosition     | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep position relative to camera_ |
@@ -432,14 +423,27 @@ pickupPosition:     { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //wh
   | dropPosition       | vec3            | position of object, relative to original parent node, when released      | _if unset, will keep position relative to camera_ |
   | dropRotation       | vec3            | rotation(deg) of object, relative to original parent node, when released | _if unset, will keep rotation relative to camera_ |
   | dropScale          | vec3            | scale of object, relative to original parent node, when released         | _if unset, will keep scale relative to camera_    |
-  | animate            | boolean         | increasing scale increases the resolution of rendered pdf                | false                        |
-  | scale              | number          | increasing scale increases the resolution of rendered pdf                | 400                          |
+  | animate            | boolean         | whether the object animates between different positions                  | false                        |
+  | animateDurationMS  | number          | how long animations take if animate=true               | 400                          |
 
   *Example 'circles-pickup-object'*
 
   ```html
-  <!-- make sure teh object is also interactive -->
+  <!-- make sure the object is also interactive -->
   <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;"></a-entity>
+  ```
+- [circles-pickup-networked](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): **_[ Experimental ]_** This component allows the _circles-pickup-object_ to be shared with other connected clients. It also attempts to handle cases of when clients disconnecting.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | networkedEnabled   | boolean         | turn off and on networking of this object to others       | true |
+  | networkedTemplate  | string          | Name of networked template                                | CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT |
+
+  *Example 'circles-pickup-networked'*
+
+  ```html
+  <!-- make sure the object is also interactive and has the circles-pickup-object component -->
+  <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
   ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
