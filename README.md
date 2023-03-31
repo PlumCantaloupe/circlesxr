@@ -325,6 +325,10 @@ This is a core component in our framework that explores learning around tools an
   | diameter           | number          | set the size of the button                                | 0.5                                   |
 
   *Example 'circles-button' used in combination with 'circles-sendpoint' to send the player to a far-off checkpoint elsewhere in the world.*
+  
+  ```html
+  <a-entity circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door;" position="0 0 0" rotation="90 0 0" scale="0.8 0.8 0.8"></a-entity>
+  ```
 
 - [circles-checkpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-checkpoint.js): Attach to to an entity that you wish to act as a navigation checkpoint. Appearance is automatically set.
 
