@@ -37,7 +37,6 @@ AFRAME.registerComponent('circles-artefact', {
   init: function() {
     const CONTEXT_AF  = this;
     const data        = this.data;
-    const world       = document.querySelector('[circles-manager]').components['circles-manager'].getWorld();
 
     //need to save this for later (before it is moved)
     CONTEXT_AF.origPos = CONTEXT_AF.el.object3D.position.clone();
