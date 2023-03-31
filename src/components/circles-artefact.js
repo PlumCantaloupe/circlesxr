@@ -81,7 +81,7 @@ AFRAME.registerComponent('circles-artefact', {
                                                         updateRate:     data.updateRate, 
                                                         smoothingOn:    data.smoothingOn, 
                                                         smoothingAlpha: data.smoothingAlpha });
-    CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.labelEl);
+    CONTEXT_AF.el.parentNode.appendChild(CONTEXT_AF.labelEl);
 
     CONTEXT_AF.addLabelEventListener();
 
@@ -99,8 +99,8 @@ AFRAME.registerComponent('circles-artefact', {
                                                             constrainYAxis:         data.constrainYAxis, 
                                                             updateRate:             data.updateRate, 
                                                             smoothingOn:            data.smoothingOn, 
-                                                            smoothingAlpha:         data.smoothingAlpha });
-    CIRCLES.getCirclesSceneElement().appendChild(CONTEXT_AF.descEl);
+                                                              smoothingAlpha:         data.smoothingAlpha });
+    CONTEXT_AF.el.parentNode.appendChild(CONTEXT_AF.descEl);
 
     if (data.audio) {
       CONTEXT_AF.el.setAttribute('circles-sound', {type:'artefact', src:data.audio, volume:data.volume});
