@@ -270,16 +270,20 @@ This is a core component in our framework that explores learning around tools an
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | inspectPosition | Vec3            | Adjust the position of artefact when picked up.           | 0 0 0                |
+  | inspectRotation | vec3, degrees   | Adjust rotation of artefact when picked up.               | 0 0 0                |
   | inspectScale    | Vec3            | Adjust the size of artefact when picked up.               | 1 1 1                |
   | textRotationY   | number, degrees | Adjust the rotation of the description text. Degrees.     | 0                    |
-  | textLookAt      | boolean         | Whether to generate a default environment                 | false                |
-  | inspectRotation | vec3, degrees   | Adjust rotation of artefact when picked up.               | 0 0 0                |
-  | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
-  | label_visible   | booelan         | Whether label is visible.                                 | true                 |
-  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
-  | title           | string          | Title of description.                                     | 'No Title Set'       |
-  | description     | string          | Description text.                                         | 'No decription set'  |
+  | label_on        | boolean         | Whether label is visible/used.                            | true                 |
   | label_text      | string          | Label text.                                               | 'label_text'         |
+  | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
+  | description_on  | boolean         | Whether description is visible/used.                            | true                 |
+  | descriptionLookAt  | boolean         | Whether description rotates to follow avatar.                            | false                 |
+  | title           | string          | Title of description.                                     | 'No Title Set'       |
+  | title_back      | string          | Title of description on back.                                     | ''       |
+  | description     | string          | Description text.                                         | 'No decription set'  |
+  | description_back | string          | Description text on back.                                         | ''  |
   | audio           | audio           | Narration audio that can be added to play when artefact picked up.        | ''         |
   | volume          | number          | If there is narration audio attached to this, this controls volume.       | '1.0'         |
   
@@ -295,10 +299,10 @@ This is a core component in our framework that explores learning around tools an
             scale="1 1 1"
             gltf-model="#model_gltf"
             circles-artefact="
+                inspectPosition:  0.0 0.0 0.0;
                 inspectScale:     0.5 0.5 0.5;
-                textRotationY:    90;
-                textLookAt:       false; 
                 inspectRotation:  0 0 0;
+                textRotationY:    90;
                 label_offset:     0 1 0;
                 label_visible:    true;
                 arrow_position:   down;
@@ -334,6 +338,27 @@ This is a core component in our framework that explores learning around tools an
   ```html
   <a-entity circles-checkpoint position="10 0 9.5"></a-entity>
   ```
+- [circles-description](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-description.js): Used to create a large two-sided element to have textual descriptions.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | title_text_front       | string         | Front title text.                                         | '[~20-25 chars] title_front'                |
+  | title_text_back        | string         | Back title text.                                          | ''                |
+  | description_text_front | string         | Front title text.                                         | '[~240-280 chars] description_front'                |
+  | description_text_back  | string         | Front title text.                                         | ''                |
+  | lookAtCamera    | boolean            | Whether the description rotates to face the camera.               | true               |
+  | updateRate      | number            | How often the lookAtCamera rotates the label, in ms.               | 20                |
+
+  *Example 'circles-description' code: Note that if no back title and description provided the rotate button above is not shown.*
+
+  ```html
+  <a-entity id="description_box" position="1.0 2.0 3.0" rotation="0 90 0"
+            circles-description=" title_text_front:Hello!;
+                                  description_text_front:I am saying hello.;
+                                  title_text_back:Good-bye!;
+                                  description_text_back:I am saying godo-bye.;
+                                  lookAtCamera:true; "></a-entity>
+  ```
 - [circles-interactive-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-object.js): Attach to an entity that you wish to be interactive, and add some visual feedback to the object i.e., hover effects like scale, highlight, or an outline. Also have teh ability to quickly add a sound effect to be played during click here.
 
   _NOTE!!: There needs to be a material on the model before we "extend" it with a "highlight" using the "circles-material-extend-fresnel" component. A gltf likely already has one, but make sure if manually defining a metrial that the "material" attribute is listed **before** this component is added._
@@ -356,24 +381,70 @@ This is a core component in our framework that explores learning around tools an
     <!-- Important: note that "material" is listed before "circles-interactive-object" because it uses "circles-material-extend-fresnel" -->
     <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
     ```
-- [circles-sound](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sound.js): This is a component that extends A-Frame's [sound component](https://github.com/aframevr/aframe/blob/master/docs/components/sound.md), and connects to enter experience events, so that autoplay sounds do play after enter a Circles world.
+- [circles-label](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-label.js): Used to create a small visual label.
 
-    | Property           | Type            | Description                                               | Default Value        |
-    |--------------------|-----------------|-----------------------------------------------------------|----------------------|
-    | src                | audio          | audio asset                               | ''                  |
-    | autoplay           | boolean        | will it play when the app starts.         | false               |
-    | type               | string, oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']           | By changing type it changes how sound is played i.e., whthere it is spatial (in the world, diegetic) or not spatial (not in the world, a UI element, non-diegetic)                                       | 'basic' |
-    | loop                | boolean          | does this sound loop           | false                  |
-    | volume              | number          | how loud the sound is | 1.0                 |
-    | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
-    | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | text            | string          | Label test [20-24 characters].               | 'label_text'               |
+  | offset          | vec3            | Adjust where the label is positioned, relative to rotation origin.               | 0 0 0                |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']            | Adjust where the player is positioned, relative to checkpoint position.               | 'up'               |
+  | lookAtCamera    | boolean            | Whether the label rotates to face the camera.               | true               |
+  | updateRate      | number            | How often the lookAtCamera rotates the label, in ms.               | 20                |
 
-    *Example 'circles-sound'*
+  *Example 'circles-label' code.*
 
-    ```html
-    <!-- ambient music/sound -->
-    <a-entity circles-sound="type:music; src:#ambient_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
-    ```
+  ```html
+  <a-entity circles-label="text:click here; visible:true; offset:1.1 0.2 0; arrow_position:left;"></a-entity>
+  ```
+- [circles-lookat](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-lookat.js): Attch to an object to have it always facing another element.
+
+  | Property        | Type            | Description                                               | Default Value        |
+  |-----------------|-----------------|-----------------------------------------------------------|----------------------|
+  | targetElement   | selector        | The element you "this" element to always point towards.                         | null, reverts to player camera  |
+  | enabled         | boolean         | Are we still rotating this element towards the target element.                  | 0 0 0                |
+  | constrainYAxis  | boolean         | Do we only want the roptation to happen on the y-axis.                          | 0 0 0                |
+  | updateRate      | number          | How often the new position is upfdated (in milliseconds).                       | 200               |
+  | smoothingOn     | boolean         | Are we smoothing motion between updates.                                        | true                |
+  | smoothingAlpha  | number          | How aggressively are we smoothing. Range [0.0, 1.0]. Smaller is more smoothing. | 0.05                |
+
+  *Example 'circles-lookat' code:*
+
+  ```html
+  <a-entity id="lookyElement" circles-lookat="targetElement:#myCam; constrainYAxis:true;"></a-entity>
+  ```
+
+- [circles-pickup-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): This component allows you to pickup and drop objects on click.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | pickupPosition     | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep position relative to camera_ |
+  | pickupScale        | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep rotation relative to camera_ |
+  | dropPosition       | vec3            | position of object, relative to camera, when picked up                   | _if unset, will keep scale relative to camera_    |
+  | dropPosition       | vec3            | position of object, relative to original parent node, when released      | _if unset, will keep position relative to camera_ |
+  | dropRotation       | vec3            | rotation(deg) of object, relative to original parent node, when released | _if unset, will keep rotation relative to camera_ |
+  | dropScale          | vec3            | scale of object, relative to original parent node, when released         | _if unset, will keep scale relative to camera_    |
+  | animate            | boolean         | whether the object animates between different positions                  | false                        |
+  | animateDurationMS  | number          | how long animations take if animate=true               | 400                          |
+
+  *Example 'circles-pickup-object'*
+
+  ```html
+  <!-- make sure the object is also interactive -->
+  <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;"></a-entity>
+  ```
+- [circles-pickup-networked](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): **_[ Experimental ]_** This component allows the _circles-pickup-object_ to be shared with other connected clients. It also attempts to handle cases of when clients disconnecting.
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | networkedEnabled   | boolean         | turn off and on networking of this object to others       | true |
+  | networkedTemplate  | string          | Name of networked template                                | CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT |
+
+  *Example 'circles-pickup-networked'*
+
+  ```html
+  <!-- make sure the object is also interactive and has the circles-pickup-object component -->
+  <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
+  ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
 
@@ -418,7 +489,24 @@ This is a core component in our framework that explores learning around tools an
   <!-- click on this button to be sent to the checkpoint above -->
   <a-entity circles-button circles-sendpoint="target:#checkpoint_far;" position="0 0 0" rotation="0 0 0" scale="1 1 1"></a-entity>
   ```
+- [circles-sound](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-sound.js): This is a component that extends A-Frame's [sound component](https://github.com/aframevr/aframe/blob/master/docs/components/sound.md), and connects to enter experience events, so that autoplay sounds do play after enter a Circles world.
 
+    | Property           | Type            | Description                                               | Default Value        |
+    |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+    | src                | audio          | audio asset                               | ''                  |
+    | autoplay           | boolean        | will it play when the app starts.         | false               |
+    | type               | string, oneOf: ['basic', 'basic-diegetic', 'basic-nondiegetic', 'dialogue', 'music', 'soundeffect', 'foley', 'ambience', 'artefact']           | By changing type it changes how sound is played i.e., whthere it is spatial (in the world, diegetic) or not spatial (not in the world, a UI element, non-diegetic)                                       | 'basic' |
+    | loop                | boolean          | does this sound loop           | false                  |
+    | volume              | number          | how loud the sound is | 1.0                 |
+    | state               | string, oneOf: ['play', 'stop', 'pause']          | Whether the sound is playing, stopped, or paused                 | 'stop                 |
+    | poolSize            | number          | number of simultaneous instances of _this_ sound that can be playing at the same time                | 1                   |
+
+    *Example 'circles-sound'*
+
+    ```html
+    <!-- ambient music/sound -->
+    <a-entity circles-sound="type:music; src:#ambient_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+    ```
 - [circles-spawnpoint](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-spawnpoint.js): Attach to to a circles-checkpoint entity that you wish to act as a spawn point when entering the world. If there are multiple spawnpoints in a single world one is chosen randomly to position the player on.
 
   | Property        | Type            | Description                                               | Default Value        |
@@ -496,43 +584,46 @@ CONTEXT_AF.campfireEventName = "campfire_event";
 
 //this is the event to listen to before trying to get a reference to the communication socket
 CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-    CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
-    
-    //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
-    CONTEXT_AF.campfire.addEventListener('click', function () {
-        CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+  CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
+  
+  //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
+  CONTEXT_AF.campfire.addEventListener('click', function () {
+    CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
 
-        //change (this) client current world
-        CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
+    //change (this) client current world
+    CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
 
-        //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
-        CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-        }
-    });
+    //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
+    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+  }
+});
 
     //listen for when others turn on campfire
     CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-        CONTEXT_AF.turnFire(data.campfireOn);
-        CONTEXT_AF.fireOn = data.campfireOn;
+      CONTEXT_AF.turnFire(data.campfireOn);
+      CONTEXT_AF.fireOn = data.campfireOn;
     });
 
     //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time (not perfect) ...
     setTimeout(function() {
-        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+      CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
     }, THREE.MathUtils.randInt(0,1200));
 
     //if someone else requests our sync data, we send it.
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+      //if the same world as the one requesting (remember, in Circles you can connect with others in different worlds)
+      if (data.world === CIRCLES.getCirclesWorldName()) {
         CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {campfireON:CONTEXT_AF.fireOn, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+      }
     });
 
     //receiving sync data from others (assuming all others is the same for now)
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
-        //make sure we are receiving data for this world (as others may be visiting other worlds simultaneously)
-        if (data.world === CIRCLES.getCirclesWorldName()) {
-          CONTEXT_AF.turnFire(data.campfireON);
-          CONTEXT_AF.fireOn = data.campfireON;
-        }
+      //make sure we are receiving data for this world (as others may be visiting other worlds simultaneously)
+      if (data.world === CIRCLES.getCirclesWorldName()) {
+        CONTEXT_AF.turnFire(data.campfireON);
+        CONTEXT_AF.fireOn = data.campfireON;
+      }
     });
   ```
 

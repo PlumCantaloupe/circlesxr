@@ -48,8 +48,9 @@
                 position="-2.23 1.245 -5.53" rotation="-75.5 -150 -5" scale="0.009 0.009 0.009"
                 gltf-model="#desmondDoc" 
                 shadow="receive:true; cast:true;"
-                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0; textLookAt:true; inspectRotation:0 0 0; 
-                                  label_visible:true; label_offset:0 0.5 0; arrow_position:down;
+                circles-artefact="inspectScale:0.02 0.02 0.02;
+                                  label_offset:0 0.5 0; arrow_position:down;
+                                  descriptionLookAt:true;
                                   title:Viola Desmond;  
                                   description:The story of Viola Desmond is now known because her sister, Wanda Robson, decided to seek justice and prompt Canada to hear Viola's story.;
                                   label_text:Viola Desmond;"></a-entity>
@@ -59,8 +60,9 @@
                 position="0.264 0.889 -6.706" rotation="-90 191.871 0" scale="0.01 0.01 0.01"
                 gltf-model="#freePardonDoc" 
                 shadow="receive:true; cast:true;"
-                circles-artefact="inspectScale:0.02 0.02 0.02; textRotationY:0; textLookAt:true; inspectRotation:0 0 0; 
-                                  label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                circles-artefact="inspectScale:0.02 0.02 0.02;
+                                  label_offset:0.0 0.5 0.0; arrow_position:down;
+                                  descriptionLookAt:true;
                                   title:Free Pardon;
                                   description:The 'free pardon' of Viola Desmond in 2010 marked Nova Scotia's formal apology for the racially-motivated injustice of charging Viola for tax evasion in 1946.; 
                                   label_text:Free Pardon;"></a-entity>
@@ -70,8 +72,9 @@
                 position="2.160 0.540 -1.876" rotation="-90 200 0" scale="0.02 0.02 0.02" 
                 gltf-model="#desmondBill"
                 shadow="receive:true; cast:true;"
-                circles-artefact="inspectScale:0.06 0.06 0.06; textRotationY:0.0; textLookAt:false; inspectRotation:0 0 0;  
-                                  label_visible:true; label_offset:0.0 0.7 0.0; arrow_position:down;
+                circles-artefact="inspectScale:0.06 0.06 0.06;
+                                  label_offset:0.0 0.7 0.0; arrow_position:down;
+                                  descriptionLookAt:true;
                                   title:Currency;
                                   description:In 2018 Canada circulated a $10 bill that marked the first time a non-royal solo woman has appeared on Canadian Currency. It is also the first vertically printed note in Canadian history.;
                                   label_text:Currency;"></a-entity>
@@ -81,8 +84,8 @@
                 position="4.865 0.840 -3.01" rotation="-90 280 0" scale="0.04 0.04 0.04" scale="0.01 0.01 0.01"
                 gltf-model="#desmondStamp"
                 shadow="receive:true; cast:true;"
-                circles-artefact="inspectScale:0.15 0.15 0.15; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
-                                  label_visible:true; label_offset:0.0 0.5 0.0; arrow_position:down;
+                circles-artefact="inspectScale:0.15 0.15 0.15; textRotationY:-90.0;
+                                  label_offset:0.0 0.5 0.0; arrow_position:down;
                                   title:Stamp;
                                   description:In 2012 Viola Desmond was recognized as a Canadian civil rights pioneer with an official Canada Post stamp during black history month.;
                                   label_text:Stamp;"></a-entity>
@@ -91,9 +94,9 @@
       <a-entity id="Microphone" class="interactive" gltf-model="#microphone" position="-2.032 1.328 -5.587" rotation="-13.711 63.860 -8.963" scale="0.01 0.01 0.01"></a-entity>
 
       <!-- portal back to campfire -->
-      <a-entity id="hub_link"
+      <a-entity id="campfire_link"
                 position="0.15 1.5 10.3" rotation="0 90 0"  scale="1 1 1"
-                circles-portal="img_src:#campfire360; title_text:The Fire; link_url:/w/hub"></a-entity>
+                circles-portal="img_src:#campfire360; title_text:The Fire; link_url:/w/Campfire"></a-entity>
 
       <!-- audio -->
       <a-entity position="-2.2 1.5 4.3" circles-sound="type:ambient; src:#crowd-snd; autoplay:true; loop:true; volume:0.8;" ></a-entity>

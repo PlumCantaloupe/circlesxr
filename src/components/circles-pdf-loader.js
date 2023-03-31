@@ -232,7 +232,7 @@ AFRAME.registerComponent("circles-pdf-loader", {
 
                     if (!CONTEXT_AF.mesh) {
                         const material = new THREE.MeshBasicMaterial();
-                        const geometry = new THREE.PlaneBufferGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
+                        const geometry = new THREE.PlaneGeometry(1, 1, 1, 1, CONTEXT_AF.texture.flipY);
                         material.side = THREE.DoubleSide;
 
                         CONTEXT_AF.mesh = new THREE.Mesh(geometry, material);

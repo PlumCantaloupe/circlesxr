@@ -21,6 +21,7 @@
 //dressed     : true/false that states whether the user visited "wardrobe" area yet
 
 const CONSTANTS = require('./circles_constants');
+const UTILS     = require('./circles_utils');
 const RESEARCH  = require('./circles_research');
 
 let circlesWebsocket = null;
@@ -28,6 +29,7 @@ let circlesResearchWebsocket = null;
 let warningLogsEnabled = true;
 let basicLogsEnabled = true;
 let errorLogsEnabled = true;
+let circlesWebsocketConnectTime = 0;
 
 const DISPLAY_MODES = {
   MODE_AVATAR       : 0,
@@ -99,8 +101,9 @@ const EVENTS = {
   AVATAR_COSTUME_CHANGED    : 'AVATAR_COSTUME_CHANGED',
   CUSTOM_MAT_SET            : 'CUSTOM_MAT_SET',
   SELECT_THIS_OBJECT        : 'SELECT_THIS_OBJECT',
-  INSPECT_THIS_OBJECT       : 'INSPECT_THIS_OBJECT',
+  PICKUP_THIS_OBJECT        : 'PICKUP_THIS_OBJECT',
   RELEASE_THIS_OBJECT       : 'RELEASE_THIS_OBJECT',
+  RELEASE_THIS_OBJECT_PRE   : 'RELEASE_THIS_OBJECT_PRE',
   OBJECT_LABEL_LOADED       : 'OBJECT_LABEL_LOADED',
   OBJECT_OWNERSHIP_GAINED   : 'OBJECT_OWNERSHIP_GAINED',
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
@@ -111,7 +114,21 @@ const EVENTS = {
   WS_RESEARCH_CONNECTED     : 'WS_RESEARCH_CONNECTED',
   REQUEST_DATA_SYNC         : 'REQUEST_DATA_SYNC',
   SEND_DATA_SYNC            : 'SEND_DATA_SYNC',
-  RECEIVE_DATA_SYNC         : 'RECEIVE_DATA_SYNC'
+  RECEIVE_DATA_SYNC         : 'RECEIVE_DATA_SYNC',
+  SYNC_OBJECT_RELEASE       : 'CIRCLES_SYNC_OBJECT_RELEASE',
+  SYNC_OBJECT_PICKUP        : 'CIRCLES_SYNC_OBJECT_PICKUP',
+  QUESTION_OBJECT_STATE     : 'CIRCLES_QUESTION_OBJECT_STATE',
+  ANSWER_OBJECT_STATE       : 'CIRCLES_ANSWER_OBJECT_STATE',
+  OBJECT_OWNER_GONE         : 'CIRCLES_OBJECT_OWNER_GONE',
+  // OBJECT_CREATED            : 'CIRCLES_OBJECT_CREATED',
+  // OBJECT_DESTROYED          : 'CIRCLES_OBJECT_DESTROYED',
+};
+
+const NETWORKED_TEMPLATES = {
+  AVATAR              : 'circles-user-template',
+  INTERACTIVE_OBJECT  : 'circles-interactive-object-template',
+  ARTEFACT            : 'circles-artefact-template',
+  TEXT                : 'circles-text-template'
 };
 
 //!!DEPRE 8 color
@@ -135,8 +152,16 @@ const getUUID = function() {
   );
 };
 
+//time that the socket connected
+const getCirclesConnectTime = function() {
+  return circlesWebsocketConnectTime;
+}
+
 const setupCirclesWebsocket = function() {
   // console.log('setupCirclesWebsocket');
+
+  circlesWebsocketConnectTime = new Date();
+  console.log(circlesWebsocketConnectTime);
 
   if (!circlesWebsocket) {
     if (NAF.connection.adapter.socket) {
@@ -198,20 +223,8 @@ const isReady = function() {
   return getCirclesManager().isCirclesReady();
 }
 
-const getAvatarElement = function() {
-  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
-  if (!elem) {
-    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
-  }
-  return elem;
-}
-
-const getAvatarRigElement = function() {
-  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.avatar');
-  if (!elem) {
-    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
-  }
-  return elem;
+const isCirclesWebsocketReady = function() {
+  return (circlesWebsocket) ? true : false;
 }
 
 const getMainCameraElement = function() {
@@ -219,6 +232,29 @@ const getMainCameraElement = function() {
   if (!elem) {
     console.warn("[circles_framework]: make sure to access the camera after the CIRCLES.READY event has fired on the scene (or CIRCLES.isReady() is true).");
   }
+  return elem;
+}
+
+const getAvatarElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.avatar');
+
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
+  }
+  return elem;
+}
+
+const getAvatarHolderElementBody = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID).querySelector('.head_holder');
+
+  if (!elem) {
+    console.warn("[circles_framework]: make sure to access the avatar after the CIRCLES.READY has fired on the scene.");
+  }
+  return elem;
+}
+
+const getAvatarRigElement = function() {
+  const elem = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
   return elem;
 }
 
@@ -266,6 +302,7 @@ const enableErrors = function(enable) {
 
 module.exports = {
   CONSTANTS,
+  UTILS,
   RESEARCH,
   DISPLAY_MODES,
   USER_COLLISION_STATE,
@@ -276,8 +313,10 @@ module.exports = {
   MODEL_HAIR_TYPE,
   MODEL_BODY_TYPE,
   EVENTS,
+  NETWORKED_TEMPLATES,
   COLOR_PALETTE,
   getUUID,
+  getCirclesConnectTime,
   setupCirclesWebsocket,
   getCirclesWebsocket,
   getCirclesResearchWebsocket,
@@ -286,7 +325,9 @@ module.exports = {
   getCirclesWorldName,
   getCirclesManager,
   isReady,
+  isCirclesWebsocketReady,
   getAvatarElement,
+  getAvatarHolderElementBody,
   getAvatarRigElement,
   getMainCameraElement,
   getCirclesSceneElement,

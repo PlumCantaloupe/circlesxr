@@ -72,8 +72,8 @@ app.use(
       "media-src":        ["*"],
       "frame-src":        ["*"],
       "style-src":        ["*", "'unsafe-inline'"],
-      "script-src":       ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
-      "script-src-attr":  ["'unsafe-inline'"],
+      "script-src":       ["*", "'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
+      "script-src-attr":  ["*", "'unsafe-inline'"],
       "object-src":       ["'none'"],
     },
   })
@@ -303,6 +303,8 @@ io.on("connection", socket => {
 
   //listen for all events and forward to all other clients
   socket.on("*", function(event, data) {
+    //console.log('socket event fired: ' + event);
+
     //ignore reserved event names
     if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
           event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||

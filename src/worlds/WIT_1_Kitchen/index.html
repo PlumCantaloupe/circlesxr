@@ -71,14 +71,14 @@
       <a-entity position="0 0 -4" circles-sound="type:ambient; src:#Amb_suburb-snd; autoplay:true; loop:true; volume:0.1;" ></a-entity>
       <a-entity position="-2.895 1 1.164" circles-sound="type:ambient; src:#Amb_kitchen-snd; autoplay:true; loop:true; volume:0.7;" ></a-entity>
 
-      <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
+      <a-entity id="room_model" gltf-model="#room-gltf" circles-sphere-env-map="src:#skyMap" postion="0 0 0" rotation="0 0 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
 
       <a-entity id="Artefact-Homework"
                 position="0.658 0.853 -0.443" rotation="-90 0 0" scale="1 1 1"
                 gltf-model="#homework-gltf"
                 circles-sphere-env-map="src:#skyMap"
-                circles-artefact="inspectScale:2 2 2; textRotationY:0.0; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                circles-artefact="inspectScale:2 2 2; textRotationY:0.0; inspectRotation:0 0 0;
+                                  label_offset:0.0 0.5 0.0; arrow_position:down;
                                   title:Math Homework;
                                   description:'The idea of taking classes to become an accountant is not what I want. Sure, numbers come easily to me and I'm good at solving equations. But I'm also good at other things, being proficient in math doesn't define me.';
                                   title_back:Math for Women;
@@ -90,8 +90,8 @@
                                   position="1.008 1.049 3.238" rotation="-90 200 0" scale="1 1 1"
                                   gltf-model="#acceptance-gltf"
                                   circles-sphere-env-map="src:#skyMap"
-                                  circles-artefact="inspectScale:3 3 3; textRotationY:0.0; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  circles-artefact="inspectScale:3 3 3; textRotationY:0.0; inspectRotation:0 0 0;
+                                  label_offset:0.0 0.5 0.0; arrow_position:down;
                                   title:Acceptance;
                                   description:'Despite their concerns about me getting this diploma in tech., I know it will open doors for me. My parents might not approve at first, but I'll show them it’s worth it.';
                                   title_back:College Diploma;
@@ -103,8 +103,8 @@
                                   position="-2.56 0.978 -1.09" rotation="-90 45.000 0" scale="1.3 1.3 1.3"
                                   gltf-model="#keys-gltf"
                                   circles-sphere-env-map="src:#skyMap"
-                                  circles-artefact="inspectScale:5 5 5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
-                                  label_offset:0.0 0.5 0.0; label_visible:true; arrow_position:down;
+                                  circles-artefact="inspectScale:5 5 5; textRotationY:90.0; inspectRotation:0 0 0;
+                                  label_offset:0.0 0.5 0.0; arrow_position:down;
                                   title:Keys to the Future;
                                   description:'When I was young, the options my parents had were limited. They needed to work long hours for this shop, but I need to find my own path. Maybe my love of working with my hands and building could help automate areas in the shop.';
                                   title_back:Not Her Future;
@@ -114,9 +114,9 @@
 
       <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
-      <a-entity id="hub_link"
+      <a-entity id="campfire_link"
                 position="4.919 1.347 1.291" rotation="0 180 0" scale="1 1 1"
-                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/hub"></a-entity>
+                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/Campfire"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

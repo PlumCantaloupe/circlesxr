@@ -1,8 +1,12 @@
 window.onload = function () {
   //have something in the group field when opening page
-  if (typeof MagicLinkGroup !== 'undefined') {
-    autogenerateGroupName(MagicLinkGroup, 4);
-  }
+  //let's not as "explore" will be used if field is blank
+  // if (typeof MagicLinkGroup !== 'undefined') {
+  //   autogenerateGroupName(MagicLinkGroup, 4);
+  // }
+
+  //get worlds available from server
+  getWorldsList();
 
   let popover = new Popover();
   const cps = document.querySelectorAll('.colorPicker'); //from here - https://github.com/tovic/color-picker 
@@ -93,17 +97,19 @@ function startCoundown(numMS, textId) {
 
 
 //*********** magic links button functionality */
-//function createMagicLinks(url, userTypeAsking, expiryTimeMin = CIRCLES.CONSTANTS.AUTH_TOKEN_EXPIRATION_MINUTES) {
-function createMagicLinks(userTypeAsking) {
+function createMagicLinks(username, email, userTypeAsking) {
   const magic_world = document.querySelector("#MagicLinkWorld").value;
   const magic_group = document.querySelector("#MagicLinkGroup").value;
   const url = 'w/' + magic_world + '?group=' + ((magic_group === '') ? 'explore' : magic_group);
 
-  //const userTypeAsking = userInfo.userType;
   const expiryTimeMin = document.querySelector("#MagicLinkExpiry").value * 24 * 60; //convert days to mins
 
   let request = new XMLHttpRequest();
-  request.open('GET', '/get-magic-links?route=' + url + '&userTypeAsking=' + userTypeAsking + '&expiryTimeMin=' + expiryTimeMin);
+  request.open('GET', '/get-magic-links?route=' + url 
+                                                + '&usernameAsking='  + username 
+                                                + '&emailAsking='     + email 
+                                                + '&userTypeAsking='  + userTypeAsking 
+                                                + '&expiryTimeMin='   + expiryTimeMin);
   request.responseType = 'text';
 
   request.onload = function() {
@@ -124,25 +130,8 @@ function copyText(copyTextElem, username) {
   });
 }
 
-const YEATS_WORD_LIST = [  'had', 'i', 'the', 'heavens', 'embroidered', 'cloths',
-                            'enwrought', 'with', 'golden', 'and', 'silver', 'light',
-                            'the', 'blue', 'and', 'the', 'dim', 'and', 'the', 'dark', 'cloths',
-                            'of', 'night', 'and', 'light', 'and', 'the', 'half', 'light',
-                            'i', 'would', 'spread', 'the', 'cloths', 'under', 'your', 'feet'];
 function autogenerateGroupName(inputElem, numWords = 1) {
-  //const textInput = document.querySelector("#" + inputID);
-  const arrLength = YEATS_WORD_LIST.length;
-
-  const getRandomWord = () => {
-    return YEATS_WORD_LIST[Math.floor(Math.random() * arrLength)];
-  };
-
-  let autoStr     = getRandomWord();
-  for (let i = 0; i < numWords; i++) {
-    autoStr += '-' + getRandomWord();
-  }
-
-  inputElem.value = autoStr;
+  inputElem.value = CIRCLES.UTILS.generateRandomString(numWords);
 }
 
 function showMagicLinks(data, expiryTimeMin) {
@@ -150,7 +139,7 @@ function showMagicLinks(data, expiryTimeMin) {
 
   const jsonData = JSON.parse(data);
   const menuElem = document.querySelector('#MagicLinksContent');
-  let tableStr        = '<table class=\'pure-table\'>'        
+  let tableStr   = '<table class=\'pure-table\'>'        
   menuElem.setAttribute('class', 'pure-menu gutter-bottom');
 
   tableStr += '<thead>';
@@ -163,15 +152,58 @@ function showMagicLinks(data, expiryTimeMin) {
   tableStr += '<tbody>';
 
   for (let i = 0; i < jsonData.length; i++) {
+    let isYou     = (i === 0);
+    let username  = ((isYou) ? ' <strong>' : '') + jsonData[i].username + ((isYou) ? ' (you) </strong>' : '');
+    let email     = ((isYou) ? ' <strong>' : '') + jsonData[i].email + ((isYou) ? '</strong>' : '');
+    let magicLink = jsonData[i].magicLink ;
+
     tableStr += '<tr>';
-    tableStr += '<td>' + jsonData[i].username +  '</td>';
-    tableStr += '<td>' + jsonData[i].email +  '</td>';
-    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText(linkCopy' + i + ',"' + jsonData[i].username + '")\'>';
-    tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + jsonData[i].magicLink + '\' size=\'50\' readonly></td>';
+    tableStr += '<td>' + username +  '</td>';
+    tableStr += '<td>' + email +  '</td>';
+    tableStr += '<td><input type=\'button\' class=\'pure-button pure-button-primary\' value=\'copy\' onclick=\'copyText(linkCopy' + i + ',"' + username + '")\'>';
+    tableStr += '<input id=linkCopy' + i + ' type=\'text\' class=\'\' value=\'' + magicLink + '\' size=\'50\' readonly></td>';
     tableStr += '</tr>';
   }
 
   tableStr += '</tbody>';
   tableStr += '</table>';
   menuElem.innerHTML = tableStr;
+}
+
+function getWorldsList() {
+  let request = new XMLHttpRequest();
+  request.open('GET', '/get-worlds-list');
+  request.responseType = 'text';
+  request.onload = function() {
+    showWorldList(request.response); //show copy button
+  };
+  request.send();
+}
+
+function showWorldList(data) {
+  const jsonData                = JSON.parse(data);
+
+  let htmlStr_list    = '<ul class="pure-menu-list">';
+  let htmlStr_select  = '';
+  let urlLink = '';
+  let worldName = ';'
+  for (let i = 0; i < jsonData.length; i++) {
+    worldName = jsonData[i];
+    urlLink = '/w/' + worldName;
+
+    htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
+    htmlStr_list += worldName;
+    htmlStr_list += '</a></li>';
+
+    htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
+  }
+  htmlStr_list += '</ul>';
+
+  const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
+  worldsWrapperElem.innerHTML = htmlStr_list;
+
+  const worldsSelectElem        = document.querySelector('#MagicLinkWorld');
+  if(worldsSelectElem) {
+    worldsSelectElem.innerHTML = htmlStr_select;
+  }
 }

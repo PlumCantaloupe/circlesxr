@@ -27,7 +27,7 @@
 
   //naf schemas
   NAF.schemas.add({
-    template: '#user-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.AVATAR,
     components: [
       'position',
       'rotation',
@@ -127,8 +127,9 @@
   });
 
   NAF.schemas.add({
-    template: '#interactive-object-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT,
     components: [
+      'class',
       'position',
       'rotation',
       'scale',
@@ -136,10 +137,11 @@
       'geometry',
       'material',
       'obj-model',
-      //'circles-object-world',
-      //'circles-interactive-object',
-      //'circles-interactive-visible',
-      //'circles-inspect-object',
+      'circles-object-world',
+      'circles-interactive-object',
+      //'circles-interactive-visible',  //want this hideen if released in another world ...
+      'circles-pickup-object',
+      'circles-pickup-networked',
       'shadow',
       //'class'
       // {
@@ -150,7 +152,29 @@
   });
 
   NAF.schemas.add({
-    template: '#text-template',
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.ARTEFACT,
+    components: [
+      'class',
+      'position',
+      'rotation',
+      'scale',
+      'gltf-model',
+      'geometry',
+      'material',
+      'obj-model',
+      'circles-object-world',
+      //'circles-sphere-env-map',
+      'circles-interactive-object',
+      //'circles-interactive-visible',
+      //'circles-artefact',
+      'circles-pickup-networked',
+      'circles-pickup-object',
+      'shadow',
+    ]
+  });
+
+  NAF.schemas.add({
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.TEXT,
     components: [
       'position',
       'rotation',

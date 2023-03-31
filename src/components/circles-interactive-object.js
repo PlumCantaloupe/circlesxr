@@ -4,7 +4,7 @@
 
 AFRAME.registerComponent('circles-interactive-object', {
   schema: {
-    type:               {stype:'string',    default:'none', oneOf:['outline','scale','highlight','none']},
+    type:               {type:'string',     default:'highlight', oneOf:['outline','scale','highlight','none']},
     highlight_color:    {type:'color',      default:'rgb(255,255,255)'}, //only for outline and highlight effect
     neutral_scale:      {type:'number',     default:1.00},    //only for outline effect
     hover_scale:        {type:'number',     default:1.08},
@@ -157,10 +157,11 @@ AFRAME.registerComponent('circles-interactive-object', {
                 keys[i] !== 'circles-checkpoint' &&
                 keys[i] !== 'circles-sendpoint' &&
                 keys[i] !== 'circles-spawnpoint' &&
-                keys[i] !== 'circles-object-label' &&
+                keys[i] !== 'circles-label' &&
+                keys[i] !== 'circles-lookat' &&
                 keys[i] !== 'networked' &&
-                keys[i] !== 'circles-inspect-object' &&
                 keys[i] !== 'circles-object-world' && 
+                keys[i] !== 'circles-pickup-object' && 
                 keys[i] !== 'circles-artefact' ) {
 
                 CONTEXT_AF.highlightElem.setAttribute(keys[i], values[i].data);

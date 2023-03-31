@@ -33,9 +33,9 @@ AFRAME.registerComponent('physics-object', {
 
 
     // let labelElement = document.createElement('a-entity');
-    // labelElement.setAttribute('circles-object-label', {
-    //   label_text: CONTEXT_AF.data.mass + " kg",
-    //   label_offset: "0 0 0",
+    // labelElement.setAttribute('circles-label', {
+    //   text: CONTEXT_AF.data.mass + " kg",
+    //   offset: "0 0 0",
     //   arrow_position: "down"
     // });
     // labelElement.setAttribute('position', "0 3 0");

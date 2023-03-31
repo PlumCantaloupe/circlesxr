@@ -563,8 +563,10 @@ const generateAuthLink = (email, baseURL, route, expiryTimeMin) => {
 
 const getMagicLinks = (req, res, next) => {
   const route = req.query.route;
-  const userTypeAsking = req.query.userTypeAsking;
-  const expiryTimeMin = req.query.expiryTimeMin;
+  const usernameAsking  = req.query.usernameAsking;
+  const emailAsking     = req.query.emailAsking;
+  const userTypeAsking  = req.query.userTypeAsking;
+  const expiryTimeMin   = req.query.expiryTimeMin;
   let allAccounts = [];
 
   //ignore req.protocol as it will try and re-direct to https anyhow.
@@ -574,7 +576,7 @@ const getMagicLinks = (req, res, next) => {
   let error = null;
   async function getItems() {
     try {
-      users = await User.find({usertype: (req.query.userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }).exec();
+      users = await User.find({usertype: (userTypeAsking === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT }).exec();
     } catch(err) {
       error = err;
     }
@@ -584,6 +586,10 @@ const getMagicLinks = (req, res, next) => {
     if (error) {
       res.send(error);
     }
+
+    //add "self" first
+    allAccounts.push({username:usernameAsking, email:emailAsking, magicLink:generateAuthLink(emailAsking, baseURL, route, expiryTimeMin)});
+
     for (let i = 0; i < users.length; i++) {
       allAccounts.push({username:users[i].username, email:users[i].email, magicLink:generateAuthLink(users[i].email, baseURL, route, expiryTimeMin)});
 
@@ -593,6 +599,47 @@ const getMagicLinks = (req, res, next) => {
     }
   });
 };
+
+const loopAndGetFolderNames =  async (folderPath) => {
+  let allSubFolderNames = [];
+  // Get the files as an array
+  let files = null;
+  try{
+    files = await fs.promises.readdir(folderPath);
+  }
+  catch(e) {
+    console.log(e.message);
+    return allSubFolderNames;
+  }
+
+  // Loop them all with the new for...of
+  let worldName = "";
+  for( const file of files ) {
+      // Get the full paths
+      const fullPath = path.join( folderPath, file );
+
+      // Stat the file to see if we have a file or dir
+      const stat = await fs.promises.stat( fullPath );
+
+      if( stat.isDirectory() ) {
+          //console.log( fullPath + " is a directory.");
+          worldName = file;
+          worldName.replace(folderPath, "");
+          allSubFolderNames.push(file);
+      }
+  }
+  allSubFolderNames.sort();
+
+  return allSubFolderNames;
+};
+
+const getWorldsList = async (req, res, next) => {
+  const folderPath = __dirname + '/../../src/worlds';
+  loopAndGetFolderNames(folderPath).then(function(data) {
+    res.json(data);
+  });
+}
+
 
 const addTestUsers = () => {
   let usersToAdd  = [];
@@ -894,5 +941,6 @@ module.exports = {
   addAllTestData,
   serveExplore,
   generateAuthLink,
-  getMagicLinks
+  getMagicLinks,
+  getWorldsList,
 };

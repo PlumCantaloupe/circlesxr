@@ -1,4 +1,4 @@
-<template id="user-template">
+<template id="circles-user-template">
   <a-entity>
     <!-- user_cam_rig => movement-controls="speed:0.1;" -->
     <!-- avatar => camera look-controls="pointerLockEnabled:false;"  spawn-in-circle="radius:3" -->
@@ -19,6 +19,7 @@
                     gltf-model
                     circles-color
                     circles-shadow="cast:true; receive:true; applyToChildren:false;">
+          <a-entity class="head_holder" position="0 0 -2.0"></a-entity> <!-- this is where things are held. Will have another for hands -->
           <a-entity   class="user_face_express"
                       geometry="primitive:plane; width:0.3; height:0.3;"
                       material="shader:flat; src:__FACE_MAP__; transparent:true; side:back; color:#000;"
@@ -46,12 +47,17 @@
   </a-entity>
 </template>
 
-<template id="interactive-object-template">
+<template id="circles-interactive-object-template">
   <a-entity>
   </a-entity>
 </template>
 
-<template id="text-template">
+<template id="circles-artefact-template">
+  <a-entity>
+  </a-entity>
+</template>
+
+<template id="circles-text-template">
   <a-entity>
   </a-entity>
 </template>

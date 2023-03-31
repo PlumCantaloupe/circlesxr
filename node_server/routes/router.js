@@ -53,6 +53,9 @@ router.post('/login',  passport.authenticate('local', {
 //magic links for students
 router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 
+//get list of worlds
+router.get('/get-worlds-list', authenticated, controller.getWorldsList);
+
 router.get('/magic-login', function(req, res, next) {
   passport.authenticate('jwt', function(err, user, info) {
     if (err) { return next(err); }
