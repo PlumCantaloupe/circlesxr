@@ -4,7 +4,7 @@ AFRAME.registerComponent('circles-label', {
   schema: {
     text:               {type:'string',     default:'label_text'},
     offset:             {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
-    arrow_position:     {type:'string',     default:'down', oneOf: ['up', 'down', 'left', 'right', 'none']},
+    arrow_position:     {type:'string',     default:'down', oneOf: ['up', 'down', 'left', 'right']},
     arrow_visible:      {type:'boolean',    default:true},
     lookAtCamera:       {type:'boolean',    default:true},
     constrainYAxis:     {type:'boolean',    default:true},
