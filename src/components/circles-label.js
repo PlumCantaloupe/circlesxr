@@ -4,7 +4,8 @@ AFRAME.registerComponent('circles-label', {
   schema: {
     text:               {type:'string',     default:'label_text'},
     offset:             {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
-    arrow_position:     {type:'string',     default:'up', oneOf: ['up', 'down', 'left', 'right']},
+    arrow_position:     {type:'string',     default:'down', oneOf: ['up', 'down', 'left', 'right']},
+    arrow_visible:      {type:'boolean',    default:true},
     lookAtCamera:       {type:'boolean',    default:true},
     constrainYAxis:     {type:'boolean',    default:true},
     updateRate:         {type:'number',     default:200},   //in ms
@@ -14,7 +15,7 @@ AFRAME.registerComponent('circles-label', {
   init: function() {
     const CONTEXT_AF = this;
 
-    CONTEXT_AF.label            = null;
+    //CONTEXT_AF.label            = null;
     CONTEXT_AF.labelWrapper     = null;
     CONTEXT_AF.labelText        = null;
     CONTEXT_AF.labelArrow       = null;
@@ -41,7 +42,7 @@ AFRAME.registerComponent('circles-label', {
     else {
         const readyFunc = function (e) {
             CONTEXT_AF.camera = CIRCLES.getMainCameraElement(); //get reference to camera in scene (assume there is only one)
-            CONTEXT_AF.label.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
+            CONTEXT_AF.el.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
                                                                 enabled:CONTEXT_AF.data.lookAtCamera, 
                                                                 constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
                                                                 updateRate:CONTEXT_AF.data.updateRate, 
@@ -69,48 +70,52 @@ AFRAME.registerComponent('circles-label', {
     if ( (oldData.arrow_position !== data.arrow_position) && (data.arrow_position !== '') ) {
         if (CONTEXT_AF.labelArrow !== null) {
             if ( data.arrow_position == 'up' ) {
+                CONTEXT_AF.labelArrow.object3D.visible = true;
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(180.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, Math.PI );
             }
             else if ( data.arrow_position == 'right' ) {
+                CONTEXT_AF.labelArrow.object3D.visible = true;
                 CONTEXT_AF.labelArrow.object3D.position.set( CONTEXT_AF.LABEL_WIDTH/2, 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, Math.PI/2.0 );
             }
             else if ( data.arrow_position == 'down' ) {
+                CONTEXT_AF.labelArrow.object3D.visible = true;
                 CONTEXT_AF.labelArrow.object3D.position.set( 0.0, -CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(0.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, 0.0 );
             }
             else if ( data.arrow_position == 'left' ) {
+                CONTEXT_AF.labelArrow.object3D.visible = true;
                 CONTEXT_AF.labelArrow.object3D.position.set( -CONTEXT_AF.LABEL_WIDTH/2 , 0.0, 0.0 );
-                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, THREE.MathUtils.degToRad(-90.0) );
+                CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, -Math.PI/2.0 );
+            }
+            else if ( data.arrow_position == 'none' ) {
+                CONTEXT_AF.labelArrow.object3D.visible = false;
             }
         }
     }
 
     if ( (oldData.lookAtCamera !== data.lookAtCamera) && (data.lookAtCamera !== '') ) {
-        CONTEXT_AF.label.setAttribute('circles-lookat', {enabled:data.lookAtCamera});
+        CONTEXT_AF.el.setAttribute('circles-lookat', {enabled:data.lookAtCamera});
 
         //set back to original rotation
         if (data.lookAtCamera === false) {
-            CONTEXT_AF.label.setAttribute('rotation', {x:0, y:0, z:0});
+            CONTEXT_AF.el.setAttribute('rotation', {x:0, y:0, z:0});
         }
     }
+
+    if (oldData.arrow_visible !== data.arrow_visible && (data.arrow_visible !== '')) {
+        CONTEXT_AF.labelArrow.object3D.visible = data.arrow_visible;
+      }
   },
   createLabelElement : function () {
     const CONTEXT_AF = this;
     const data = this.data;
 
-    CONTEXT_AF.label = document.createElement('a-entity');
-    CONTEXT_AF.label.setAttribute('class', 'label interactive');
-    CONTEXT_AF.label.addEventListener('loaded', function () {
-        CONTEXT_AF.el.emit(CIRCLES.EVENTS.OBJECT_LABEL_LOADED, CONTEXT_AF.label);
-    });
-    CONTEXT_AF.el.appendChild(CONTEXT_AF.label);
-
     //how we will position offset
     CONTEXT_AF.labelWrapper = document.createElement('a-entity');
     CONTEXT_AF.labelWrapper.object3D.position.set(data.offset.x, data.offset.y, data.offset.z);
-    CONTEXT_AF.label.appendChild(CONTEXT_AF.labelWrapper);
+    CONTEXT_AF.el.appendChild(CONTEXT_AF.labelWrapper);
 
     //create white bg for text legibility
     let bg = document.createElement('a-entity');
@@ -142,7 +147,7 @@ AFRAME.registerComponent('circles-label', {
  
     //createpointer
     CONTEXT_AF.labelArrow = document.createElement('a-entity');
-    CONTEXT_AF.labelArrow.setAttribute('geometry',  {  primitive:'triangle', 
+    CONTEXT_AF.labelArrow.setAttribute('geometry',  {   primitive:'triangle', 
                                                         vertexA:{x:CONTEXT_AF.ARROW_SIZE, y:0.0, z:0}, 
                                                         vertexB:{x:-CONTEXT_AF.ARROW_SIZE, y:0.0, z:0}, 
                                                         vertexC:{x:0.0, y:-CONTEXT_AF.ARROW_SIZE, z:0}

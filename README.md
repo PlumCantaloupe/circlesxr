@@ -277,9 +277,11 @@ This is a core component in our framework that explores learning around tools an
   | label_on        | boolean         | Whether label is visible/used.                            | true                 |
   | label_text      | string          | Label text.                                               | 'label_text'         |
   | label_offset    | vec3            | Position relative to artefact it is attached to.          | 0 0 0                |
-  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
+  | label_arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
   | description_on  | boolean         | Whether description is visible/used.                            | true                 |
   | descriptionLookAt  | boolean         | Whether description rotates to follow avatar.                            | false                 |
+  | description_offset    | vec3            | Position relative to artefact it is attached to.          | 0 1.22 0                |
+  | desc_arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']         | Which way the labels points.                 | 'up'         |
   | title           | string          | Title of description.                                     | 'No Title Set'       |
   | title_back      | string          | Title of description on back.                                     | ''       |
   | description     | string          | Description text.                                         | 'No decription set'  |
@@ -296,18 +298,23 @@ This is a core component in our framework that explores learning around tools an
             scale="1 1 1"
             gltf-model="#model_gltf"
             circles-artefact="
-                inspectPosition:  0.0 0.0 0.0;
-                inspectScale:     0.5 0.5 0.5;
-                inspectRotation:  0 0 0;
-                textRotationY:    90;
-                label_offset:     0 1 0;
-                label_visible:    true;
-                arrow_position:   down;
-                title:            Some Title;
-                description:      Some description text.;
-                label_text:       Some Label;
-                audio:#some-snd; 
-                volume:0.4;" >
+                inspectPosition:      0.0 0.0 0.0;
+                inspectScale:         0.5 0.5 0.5;
+                inspectRotation:      0 0 0;
+                textRotationY:        90;
+                descrption_offset:    0 1 0;
+                description_on:       true;
+                desc_arrow_position:  down;
+                label_text:           Some Label;
+                label_offset:         0 1 0;
+                label_on:             true;
+                label_arrow_position: down;
+                title:                Some Title;
+                description:          Some description text.;
+                title_back:           Some Title;
+                description_back:     Some description text.;
+                audio:                #some-snd; 
+                volume:               0.4;" >
   </a-entity>
   ```
 
@@ -347,18 +354,22 @@ This is a core component in our framework that explores learning around tools an
   | title_text_back        | string         | Back title text.                                          | ''                |
   | description_text_front | string         | Front title text.                                         | '[~240-280 chars] description_front'                |
   | description_text_back  | string         | Front title text.                                         | ''                |
-  | lookAtCamera    | boolean            | Whether the description rotates to face the camera.               | true               |
+  | offset          | vec3            | Adjust where the label is positioned, relative to rotation origin.               | 0 0 0                |
+  | arrow_position  | string, oneOf: ['up', 'down', 'left', 'right']            | Adjust where the player is positioned, relative to checkpoint position.               | 'up'               |
+  | lookAtCamera    | boolean            | Whether the label rotates to face the camera.               | true               |
   | updateRate      | number            | How often the lookAtCamera rotates the label, in ms.               | 20                |
 
   *Example 'circles-description' code: Note that if no back title and description provided the rotate button above is not shown.*
 
   ```html
   <a-entity id="description_box" position="1.0 2.0 3.0" rotation="0 90 0"
-            circles-description=" title_text_front:Hello!;
-                                  description_text_front:I am saying hello.;
-                                  title_text_back:Good-bye!;
-                                  description_text_back:I am saying godo-bye.;
-                                  lookAtCamera:true; "></a-entity>
+            circles-description=" title_text_front:       Hello!;
+                                  description_text_front: I am saying hello.;
+                                  title_text_back:        Good-bye!;
+                                  description_text_back:  I am saying good-bye.;
+                                  offset:                 2 0 0;
+                                  arrow_position:         left;
+                                  lookAtCamera            :true; "></a-entity>
   ```
 - [circles-interactive-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-object.js): Attach to an entity that you wish to be interactive, and add some visual feedback to the object i.e., hover effects like scale, highlight, or an outline. Also have teh ability to quickly add a sound effect to be played during click here.
 
@@ -381,6 +392,28 @@ This is a core component in our framework that explores learning around tools an
     <!-- allows us to interact with this element and listen for events i.e., "click", "mouseover", and "mouseleave" -->
     <!-- Important: note that "material" is listed before "circles-interactive-object" because it uses "circles-material-extend-fresnel" -->
     <a-entity material="color:rgb(101,6,23);" geometry="primitive:sphere; radius:0.4" circles-interactive-object="type:highlight"></a-entity>
+    ```
+- [circles-interactive-visible](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-interactive-visible.js): Attach to an entity that (or one or more of its child nodes) is interactive already, using _circles-interactive-object_, so that when we make it visible/non-visible, all interaction are enabled/disabled also. Otherwise, if you just use A-frame's ['visible' component](https://github.com/aframevr/aframe/blob/master/docs/components/visible.md), you can still click on invisible entities.
+
+  _NOTE: This component attempts to look through all child elements also, o toggle interactive components._  
+
+    | Value              | Description                                                                       |
+    |--------------------|-----------------------------------------------------------------------------------|
+    | true               | The entity will be rendered and visible (and interactive); the default value.     |
+    | false              | The entity will not be rendered and visible (and not interactive).                |
+
+    *Example 'circles-interactive-visible'*
+
+    ```html
+    <!-- allows us to hide/show and interactuve object without it being stil interactuve when invisible -->
+    <a-entity geometry="primitive:sphere; radius:0.4" circles-interactive-object circles-interactive-visible="false"></a-entity>
+
+    <!-- child node example -->
+    <a-entity id="controls" circles-interactive-visible="false">
+      <a-entity geometry="primitive:sphere; radius:0.4" circles-interactive-object></a-entity>
+      <a-entity geometry="primitive:sphere; radius:0.4" circles-interactive-object></a-entity>
+      <a-entity geometry="primitive:sphere; radius:0.4" circles-interactive-object></a-entity>
+    </a-entity>
     ```
 - [circles-label](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-label.js): Used to create a small visual label.
 
