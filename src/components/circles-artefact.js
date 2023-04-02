@@ -2,34 +2,35 @@
 
 AFRAME.registerComponent('circles-artefact', {
   schema: {
-    title:              {type:'string',   default:'No Title Set'},
-    description:        {type:'string',   default:'No decription set'},
-    title_back:         {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
-    description_back:   {type:'string',   default:''},
-    description_on:     {type:'boolean',  default:true},
-    description_offset: {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    audio:              {type:'audio',    default:''},
-    volume:             {type:'number',   default:1.0},
+    title:                {type:'string',   default:'no_title_set'},
+    description:          {type:'string',   default:'no_decription_set'},
+    title_back:           {type:'string',   default:''},                  //For other side of description. if left blank we will just duplicate "text_1"
+    description_back:     {type:'string',   default:''},
+    description_on:       {type:'boolean',  default:true},
+    description_offset:   {type:'vec3',     default:{x:0.0, y:1.22, z:0.0}},
+    desc_arrow_position:  {type:'string',   default: 'down', oneOf: ['up', 'down', 'left', 'right']},
+    audio:                {type:'audio',    default:''},
+    volume:               {type:'number',   default:1.0},
 
-    inspectPosition:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    inspectScale:       {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
-    inspectRotation:    {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    origPosition:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
-    origRotation:       {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
-    origScale:          {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    inspectPosition:      {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
+    inspectScale:         {type:'vec3',     default:{x:1.0, y:1.0, z:1.0}},
+    inspectRotation:      {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
+    origPosition:         {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origRotation:         {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
+    origScale:            {type:'vec3',     default:{x:100001.0, y:0.0, z:0.0}},
 
-    textRotationY:      {type:'number',   default:0.0},               
-    descriptionLookAt:  {type:'boolean',  default:false},
-    labelLookAt:        {type:'boolean',  default:true},
-    constrainYAxis:     {type:'boolean',  default:true},
-    updateRate:         {type:'number',   default:200},   //in ms
-    smoothingOn:        {type:'boolean',  default:true},
-    smoothingAlpha:     {type:'float',    default:0.05},
+    textRotationY:        {type:'number',   default:0.0},               
+    descriptionLookAt:    {type:'boolean',  default:false},
+    labelLookAt:          {type:'boolean',  default:true},
+    constrainYAxis:       {type:'boolean',  default:true},
+    updateRate:           {type:'number',   default:200},   //in ms
+    smoothingOn:          {type:'boolean',  default:true},
+    smoothingAlpha:       {type:'float',    default:0.05},
     
-    label_text:         {type:'string',   default:'label_text'},
-    label_on:           {type:'boolean',  default:true},
-    label_offset:       {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
-    arrow_position:     {type:'string',   default: 'up', oneOf: ['up', 'down', 'left', 'right']},
+    label_text:           {type:'string',   default:'label_text'},
+    label_on:             {type:'boolean',  default:true},
+    label_offset:         {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},
+    label_arrow_position: {type:'string',   default: 'down', oneOf: ['up', 'down', 'left', 'right']},
 
     // networkedEnabled: {type:'boolean',  default:false},
     // networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
@@ -74,7 +75,7 @@ AFRAME.registerComponent('circles-artefact', {
     CONTEXT_AF.labelEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
     CONTEXT_AF.labelEl.setAttribute('circles-label', {  text:           data.label_text, 
                                                         offset:         data.label_offset, 
-                                                        arrow_position: data.arrow_position, 
+                                                        arrow_position: data.label_arrow_position, 
                                                         lookAtCamera:   data.labelLookAt,
                                                         constrainYAxis: data.constrainYAxis, 
                                                         updateRate:     data.updateRate, 
@@ -87,18 +88,20 @@ AFRAME.registerComponent('circles-artefact', {
     //create associated description
     CONTEXT_AF.descEl = document.createElement('a-entity');
     CONTEXT_AF.descEl.setAttribute('id', CONTEXT_AF.el.getAttribute('id') + '_description');
-    CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
-    CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x + data.description_offset, y:tempPos.y + data.description_offset, z:tempPos.z + data.description_offset});
+    CONTEXT_AF.descEl.setAttribute('visible', false);
+    CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
     CONTEXT_AF.descEl.setAttribute('rotation', {x:0.0, y:data.textRotationY, z:0.0});
     CONTEXT_AF.descEl.setAttribute('circles-description', { title_text_front:       data.title,
                                                             title_text_back:        data.title_back,
                                                             description_text_front: data.description,
                                                             description_text_back:  data.description_back,
+                                                            offset:                 data.description_offset,
+                                                            arrow_position:         data.desc_arrow_position, 
                                                             lookAtCamera:           data.descriptionLookAt,
                                                             constrainYAxis:         data.constrainYAxis, 
                                                             updateRate:             data.updateRate, 
                                                             smoothingOn:            data.smoothingOn, 
-                                                              smoothingAlpha:         data.smoothingAlpha });
+                                                            smoothingAlpha:         data.smoothingAlpha });
     CONTEXT_AF.el.parentNode.appendChild(CONTEXT_AF.descEl);
 
     if (data.audio) {
