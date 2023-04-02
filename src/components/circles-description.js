@@ -6,7 +6,7 @@ AFRAME.registerComponent('circles-description', {
     title_text_back:        {type:'string',   default:''},
     description_text_front: {type:'string',   default:'[~240-280 chars] description_front'},
     description_text_back:  {type:'string',   default:''},
-    offset:                 {type:'vec3',     default:{x:0.0, y:1.22, z:0.0}},    //this is the height at which the description is poining at the at the original original
+    offset:                 {type:'vec3',     default:{x:0.0, y:0.0, z:0.0}},    //this is the height at which the description is poining at the at the original original
     arrow_position:         {type:'string',   default:'down', oneOf: ['up', 'down', 'left', 'right']},
     arrow_visible:          {type:'boolean',  default:true},
     lookAtCamera:           {type:'boolean',  default:true},
@@ -154,7 +154,6 @@ AFRAME.registerComponent('circles-description', {
 
     //how we will position offset
     CONTEXT_AF.descWrapper = document.createElement('a-entity');
-    //CONTEXT_AF.descWrapper.setAttribute('position', {x:data.offset.x, y:data.offset.y, z:data.offset.z});
     CONTEXT_AF.el.appendChild(CONTEXT_AF.descWrapper);
 
     CONTEXT_AF.rotateDescElem = document.createElement('a-entity');
@@ -163,10 +162,8 @@ AFRAME.registerComponent('circles-description', {
 
     //add bg for desc
     CONTEXT_AF.desc_BG = document.createElement('a-entity');
-    // desc_BG.setAttribute('geometry',  {primitive:'plane', width:TEXT_WINDOW_WIDTH, height:TEXT_DESC_WINDOW_HEIGHT});
     CONTEXT_AF.desc_BG.setAttribute('circles-rounded-rectangle',  {width:CONTEXT_AF.TEXT_WINDOW_WIDTH, height:CONTEXT_AF.TEXT_WINDOW_HEIGHT, radius:CIRCLES.CONSTANTS.GUI.rounded_rectangle_radius});
     CONTEXT_AF.desc_BG.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
-    //CONTEXT_AF.desc_BG.setAttribute('position',  {x:CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:-CONTEXT_AF.TEXT_DESC_WINDOW_HEIGHT/2 + CONTEXT_AF.ARROW_SIZE, z:0});
     CONTEXT_AF.rotateDescElem.appendChild(CONTEXT_AF.desc_BG);
 
     //add title text (15 char limit for now)
