@@ -7,7 +7,7 @@ AFRAME.registerComponent('circles-description', {
     description_text_front: {type:'string',   default:'[~240-280 chars] description_front'},
     description_text_back:  {type:'string',   default:''},
     offset:                 {type:'vec3',     default:{x:0.0, y:1.22, z:0.0}},    //this is the height at which the description is poining at the at the original original
-    arrow_position:         {type:'string',   default:'down', oneOf: ['up', 'down', 'left', 'right', 'none']},
+    arrow_position:         {type:'string',   default:'down', oneOf: ['up', 'down', 'left', 'right']},
     arrow_visible:          {type:'boolean',  default:true},
     lookAtCamera:           {type:'boolean',  default:true},
     constrainYAxis:         {type:'boolean',  default:true},
@@ -102,43 +102,43 @@ AFRAME.registerComponent('circles-description', {
     if ( (oldData.arrow_position !== data.arrow_position) && (data.arrow_position !== '') ) {
       if (CONTEXT_AF.descArrow !== null) {
         if ( data.arrow_position == 'up' ) {
-          CONTEXT_AF.descArrow.object3D.visible = true;
-          CONTEXT_AF.descArrow.object3D.position.set( 0.0, CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, 0.0 );
-          CONTEXT_AF.descArrow.object3D.rotation.set( 0.0, 0.0, Math.PI );
+          CONTEXT_AF.descArrow.setAttribute('visible', true);
+          CONTEXT_AF.descArrow.setAttribute('position', {x:0.0, y:CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:0.0});
+          CONTEXT_AF.descArrow.setAttribute('rotation', {x:0.0, y:0.0, z:180});
           CONTEXT_AF.rotateElem.setAttribute('position', {x:0.0, y:-CONTEXT_AF.TEXT_WINDOW_HEIGHT/2 - CONTEXT_AF.ROTATION_PADDING, z:0});
-          CONTEXT_AF.textBack.object3D.rotation.z = 0.0;
-          CONTEXT_AF.textBack.object3D.position.set(CONTEXT_AF.TEXT_WINDOW_WIDTH/2, CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, -CIRCLES.CONSTANTS.GUI.text_z_pos);
-          CONTEXT_AF.rotateDescElem.object3D.rotation.set(0.0, 0.0, 0.0);
+          CONTEXT_AF.textBack.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
+          CONTEXT_AF.textBack.setAttribute('position', {x:CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+          CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
           CONTEXT_AF.isRotatingAroundY = true;
         }
         else if ( data.arrow_position == 'right' ) {
-          CONTEXT_AF.descArrow.object3D.visible = true;
-          CONTEXT_AF.descArrow.object3D.position.set( CONTEXT_AF.TEXT_WINDOW_WIDTH/2, 0.0, 0.0 );
-          CONTEXT_AF.descArrow.object3D.rotation.set( 0.0, 0.0, Math.PI/2.0 );
+          CONTEXT_AF.descArrow.setAttribute('visible', true);
+          CONTEXT_AF.descArrow.setAttribute('position', {x:CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:0.0, z:0.0});
+          CONTEXT_AF.descArrow.setAttribute('rotation', {x:0.0, y:0.0, z:90});
           CONTEXT_AF.rotateElem.setAttribute('position', {x:-CONTEXT_AF.TEXT_WINDOW_WIDTH/2 - CONTEXT_AF.ROTATION_PADDING, y:0.0, z:0});
-          CONTEXT_AF.textBack.object3D.rotation.z = Math.PI;
-          CONTEXT_AF.textBack.object3D.position.set(-CONTEXT_AF.TEXT_WINDOW_WIDTH/2, -CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, -CIRCLES.CONSTANTS.GUI.text_z_pos);
-          CONTEXT_AF.rotateDescElem.object3D.rotation.set(0.0, 0.0, 0.0);
+          CONTEXT_AF.textBack.setAttribute('rotation', {x:0.0, y:0.0, z:180.0});
+          CONTEXT_AF.textBack.setAttribute('position', {x:-CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:-CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+          CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
           CONTEXT_AF.isRotatingAroundY = false;
         }
         else if ( data.arrow_position == 'down' ) {
-          CONTEXT_AF.descArrow.object3D.visible = true;
-          CONTEXT_AF.descArrow.object3D.position.set( 0.0, -CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, 0.0 );
-          CONTEXT_AF.descArrow.object3D.rotation.set( 0.0, 0.0, 0.0 );
+          CONTEXT_AF.descArrow.setAttribute('visible', true);
+          CONTEXT_AF.descArrow.setAttribute('position', {x:0.0, y:-CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:0.0});
+          CONTEXT_AF.descArrow.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
           CONTEXT_AF.rotateElem.setAttribute('position', {x:0.0, y:CONTEXT_AF.TEXT_WINDOW_HEIGHT/2 + CONTEXT_AF.ROTATION_PADDING, z:0});
-          CONTEXT_AF.textBack.object3D.rotation.z = 0.0;
-          CONTEXT_AF.textBack.object3D.position.set(CONTEXT_AF.TEXT_WINDOW_WIDTH/2, CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, -CIRCLES.CONSTANTS.GUI.text_z_pos);
-          CONTEXT_AF.rotateDescElem.object3D.rotation.set(0.0, 0.0, 0.0);
+          CONTEXT_AF.textBack.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
+          CONTEXT_AF.textBack.setAttribute('position', {x:CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+          CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
           CONTEXT_AF.isRotatingAroundY = true;
         }
         else if ( data.arrow_position == 'left' ) {
-          CONTEXT_AF.descArrow.object3D.visible = true;
-          CONTEXT_AF.descArrow.object3D.position.set( -CONTEXT_AF.TEXT_WINDOW_WIDTH/2 , 0.0, 0.0 );
-          CONTEXT_AF.descArrow.object3D.rotation.set( 0.0, 0.0, -Math.PI/2.0 );
+          CONTEXT_AF.descArrow.setAttribute('visible', true);
+          CONTEXT_AF.descArrow.setAttribute('position', {x:-CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:0.0, z:0.0});
+          CONTEXT_AF.descArrow.setAttribute('rotation', {x:0.0, y:0.0, z:-90});
           CONTEXT_AF.rotateElem.setAttribute('position', {x:CONTEXT_AF.TEXT_WINDOW_WIDTH/2 + CONTEXT_AF.ROTATION_PADDING, y:0.0, z:0});
-          CONTEXT_AF.textBack.object3D.rotation.z = Math.PI;
-          CONTEXT_AF.textBack.object3D.position.set(-CONTEXT_AF.TEXT_WINDOW_WIDTH/2, -CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, -CIRCLES.CONSTANTS.GUI.text_z_pos);
-          CONTEXT_AF.rotateDescElem.object3D.rotation.set(0.0, 0.0, 0.0);
+          CONTEXT_AF.textBack.setAttribute('rotation', {x:0.0, y:0.0, z:180.0});
+          CONTEXT_AF.textBack.setAttribute('position', {x:-CONTEXT_AF.TEXT_WINDOW_WIDTH/2, y:-CONTEXT_AF.TEXT_WINDOW_HEIGHT/2, z:-CIRCLES.CONSTANTS.GUI.text_z_pos});
+          CONTEXT_AF.rotateDescElem.setAttribute('rotation', {x:0.0, y:0.0, z:0.0});
           CONTEXT_AF.isRotatingAroundY = false;
         }
       }
