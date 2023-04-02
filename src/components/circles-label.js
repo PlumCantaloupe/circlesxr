@@ -5,6 +5,7 @@ AFRAME.registerComponent('circles-label', {
     text:               {type:'string',     default:'label_text'},
     offset:             {type:'vec3',       default:{x:0.0, y:0.0, z:0.0}},
     arrow_position:     {type:'string',     default:'down', oneOf: ['up', 'down', 'left', 'right', 'none']},
+    arrow_visible:      {type:'boolean',    default:true},
     lookAtCamera:       {type:'boolean',    default:true},
     constrainYAxis:     {type:'boolean',    default:true},
     updateRate:         {type:'number',     default:200},   //in ms
@@ -102,6 +103,10 @@ AFRAME.registerComponent('circles-label', {
             CONTEXT_AF.el.setAttribute('rotation', {x:0, y:0, z:0});
         }
     }
+
+    if (oldData.arrow_visible !== data.arrow_visible && (data.arrow_visible !== '')) {
+        CONTEXT_AF.labelArrow.object3D.visible = data.arrow_visible;
+      }
   },
   createLabelElement : function () {
     const CONTEXT_AF = this;

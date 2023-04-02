@@ -8,6 +8,7 @@ AFRAME.registerComponent('circles-description', {
     description_text_back:  {type:'string',   default:''},
     offset:                 {type:'vec3',     default:{x:0.0, y:1.22, z:0.0}},    //this is the height at which the description is poining at the at the original original
     arrow_position:         {type:'string',   default:'down', oneOf: ['up', 'down', 'left', 'right', 'none']},
+    arrow_visible:          {type:'boolean',  default:true},
     lookAtCamera:           {type:'boolean',  default:true},
     constrainYAxis:         {type:'boolean',  default:true},
     updateRate:             {type:'number',   default:200},   //in ms
@@ -140,11 +141,11 @@ AFRAME.registerComponent('circles-description', {
           CONTEXT_AF.rotateDescElem.object3D.rotation.set(0.0, 0.0, 0.0);
           CONTEXT_AF.isRotatingAroundY = false;
         }
-        else if ( data.arrow_position == 'none' ) {
-          CONTEXT_AF.descArrow.object3D.visible = false;
-          CONTEXT_AF.isRotatingAroundY = true;
-        }
       }
+    }
+
+    if (oldData.arrow_visible !== data.arrow_visible && (data.arrow_visible !== '')) {
+      CONTEXT_AF.descArrow.object3D.visible = data.arrow_visible;
     }
   },
   createDescElement: function() {
