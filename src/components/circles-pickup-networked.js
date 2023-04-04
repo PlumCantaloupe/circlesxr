@@ -46,6 +46,16 @@ AFRAME.registerComponent('circles-pickup-networked', {
     }
 
     CONTEXT_AF.origId = CONTEXT_AF.el.components['circles-object-world'].data.id
+
+    //want to make sure clone's label clicks into artefact
+    if (CONTEXT_AF.isClone === true) {
+      //make sure label click works on networked elements (if artefact)
+      const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
+
+      if (labelEl) {
+        labelEl.querySelector('.label_bg').addEventListener('click', CONTEXT_AF.clickLabelFunc);
+      }
+    }
   },
   update : function(oldData) {
     const CONTEXT_AF = this;
@@ -230,19 +240,21 @@ AFRAME.registerComponent('circles-pickup-networked', {
     }
 
     CONTEXT_AF.networkAttachedFunc = function(data) {
-      //console.log('networkAttachedFunc', CONTEXT_AF.el.id);
+      console.log('networkAttachedFunc', CONTEXT_AF.el.id);
 
-      const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-      const isSameElem  = (data.origId === CONTEXT_AF.origId);
-      if (isSameWorld && isSameElem) {
-        if (CONTEXT_AF.isClone === true) {
-          //make sure label click works on networked elements (if artefact)
-          const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
-          if (labelEl) {
-            labelEl.querySelector('.label_bg').addEventListener('click', CONTEXT_AF.clickLabelFunc);
-          }
-        }
-      }
+      // const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
+      // const isSameElem  = (data.origId === CONTEXT_AF.origId);
+
+      // if (isSameWorld && isSameElem) {
+      //   if (CONTEXT_AF.isClone === true) {
+      //     //make sure label click works on networked elements (if artefact)
+      //     const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
+
+      //     if (labelEl) {
+      //       labelEl.querySelector('.label_bg').addEventListener('click', CONTEXT_AF.clickLabelFunc);
+      //     }
+      //   }
+      // }
     };
 
     CONTEXT_AF.networkDetachedFunc = function(data) {
@@ -280,7 +292,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
   
       document.body.addEventListener('entityCreated', function(e) {
         //console.log('NAF entityCreated', e.detail.el);
-        if (CONTEXT_AF.isClone === false) {
+        if (!e.detail.el.components['circles-object-world']) {
+          return;
+        }
+
+        if (CONTEXT_AF.isClone === false && e.detail.el.components['circles-object-world'].data.id === CONTEXT_AF.origId) {
           CONTEXT_AF.initSyncObjects();
         }
       });
@@ -402,12 +418,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
           //you are now the host/owner of this networked object
           CONTEXT_AF.showThisElement(true, true);
 
-          console.log(CONTEXT_AF.lastKnowObjectData);
-
           if (CONTEXT_AF.lastKnowObjectData) {
             //determine last state and set this new one to a similar one
-            console.log(CONTEXT_AF.lastKnowObjectData.circlesObjectWorld.pickedup);
-
             if (CONTEXT_AF.lastKnowObjectData.circlesObjectWorld.pickedup === true) {
               //pick up
               CONTEXT_AF.el.components['circles-pickup-object'].pickup(true, CONTEXT_AF.el.components['circles-pickup-object']);
