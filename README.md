@@ -616,21 +616,35 @@ CIRCLES.getAllNAFElements();
 CONTEXT_AF.socket = null;
 CONTEXT_AF.campfireEventName = "campfire_event";
 
-//this is the event to listen to before trying to get a reference to the communication socket
-CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-  CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
-  
-  //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
-  CONTEXT_AF.campfire.addEventListener('click', function () {
-    CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+  //create a function we can call to get all our networked stuff connected
+  CONTEXT_AF.createNetworkingSystem = function () {
+    CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
+    
+    //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
+    CONTEXT_AF.campfire.addEventListener('click', function () {
+      CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
 
-    //change (this) client current world
-    CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
+      //change (this) client current world
+      CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
 
-    //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
-    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-  }
-});
+      //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
+      CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    }
+  };
+
+    //check if circle networking is ready. If not, listen for network event to call out network setup function
+    if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+    }
+    else {
+        const wsReadyFunc = function() {
+            CONTEXT_AF.createNetworkingSystem();
+
+            //always good practise to remove eventlisteners we are not using
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        };
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+    }
 
     //listen for when others turn on campfire
     CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
