@@ -53,8 +53,8 @@ AFRAME.registerComponent('robot-controls', {
             rightButton:    CONTEXT_AF.robot_controls.querySelector('.elbow > .right')
         };
 
-        CONTEXT_AF.shoulderDisplayElem  = CONTEXT_AF.robot_controls.querySelector('.display_shoulder');
-        CONTEXT_AF.elbowDisplayElem     = CONTEXT_AF.robot_controls.querySelector('.display_elbow');
+        CONTEXT_AF.shoulderDisplayElem  = CONTEXT_AF.robot_controls.querySelector('#display_shoulder');
+        CONTEXT_AF.elbowDisplayElem     = CONTEXT_AF.robot_controls.querySelector('#display_elbow');
 
         CONTEXT_AF.ROT_TYPE = {
             OVER_BACK:  'overback',

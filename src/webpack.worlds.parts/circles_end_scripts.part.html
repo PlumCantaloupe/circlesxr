@@ -152,6 +152,32 @@
   });
 
   NAF.schemas.add({
+    template: '#' + CIRCLES.NETWORKED_TEMPLATES.BASIC_OBJECT,
+    components: [
+      'class',
+      'position',
+      'rotation',
+      'scale',
+      'gltf-model',
+      'geometry',
+      'material',
+      'obj-model',
+      'text',
+      'circles-object-world',
+      'circles-interactive-object',
+      //'circles-interactive-visible',  //want this hideen if released in another world ...
+      //'circles-pickup-object',
+      'circles-networked-basic',
+      'shadow',
+      //'class'
+      // {
+      //   selector: '.interactive',
+      //   component: 'gltf-model',
+      // },
+    ]
+  });
+
+  NAF.schemas.add({
     template: '#' + CIRCLES.NETWORKED_TEMPLATES.ARTEFACT,
     components: [
       'class',
