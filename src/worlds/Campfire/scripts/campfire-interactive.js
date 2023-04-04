@@ -59,7 +59,8 @@ AFRAME.registerComponent('campfire-interactive', {
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.campfireEventName = "campfire_event";
-        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+
+        CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
@@ -97,7 +98,19 @@ AFRAME.registerComponent('campfire-interactive', {
                     CONTEXT_AF.fireOn = data.campfireON;
                 }
             });
-        });
+        };
+
+        //check if circle networking is ready. If not, add an eent to listen for when it is ...
+        if (CIRCLES.isCirclesWebsocketReady()) {
+            CONTEXT_AF.createNetworkingSystem();
+        }
+        else {
+            const wsReadyFunc = function() {
+                CONTEXT_AF.createNetworkingSystem();
+                CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+            };
+            CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        }
     },
     update() {},
     turnFire : function (turnOn) {
