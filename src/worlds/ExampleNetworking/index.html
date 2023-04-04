@@ -1,0 +1,102 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+
+  <!-- my scripts -->
+  <script src="scripts/robot-controls.js"></script>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties circles-platform-scene-shadows="updateInterval:10;">
+    <a-assets>
+      <img id='skyMap' src='/global/assets/textures/equirectangular/PurpleBlue.jpg' crossorigin="anonymous">
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <a-entity light="type:ambient; color:rgb(190,140,210)"></a-entity>
+    <a-entity light="type:directional; color:#FFF; intensity:0.6" circles-platform-shadows position="-0.5 1 1"></a-entity>
+
+    <!-- object to play with -->
+    <a-entity id="torus_knot" position="3 1 -3"
+              geometry="primitive:torusKnot; radius:0.5; radiusTubular:0.07; segmentsTubular:128; segmentsRadial:16;"
+              material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+              circles-pickup-object="pickupScale:0.5 0.5 0.5;"
+              circles-pickup-networked 
+              shadow="cast:true; receive:true;"></a-entity>
+    
+    <!-- artefact to play with -->
+    <a-entity id="artefact-gem"
+                position="-3 1 -3" rotation="0 0 0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
+                material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                  title:[~20-25 chars] Title Front;
+                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                  title_back:[~20-25 chars] Title Back;
+                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  label_text:Gem;"
+                circles-pickup-networked></a-entity>
+
+    <!-- robot arm test -->
+    <a-entity id="robot_arm" position="0 0 -6">
+      <a-entity class="pivot shoulder left right" position="0 0 0">
+        <a-entity class="pivot shoulder over back" position="0 0 0">
+          <a-entity id="robot_shoulder" circles-networked-basic geometry="primitive:sphere; radius:0.3;" material="color:orange;"></a-entity>
+            <a-entity class="arm_upper" position="0 1 0">
+              <a-entity id="robot_arm_upper" circles-networked-basic geometry="primitive:box; width:0.3; depth:0.3; height:2.0;" material="color:orange;"></a-entity>
+              <a-entity class="pivot elbow left right" position="0 1 0">
+                <a-entity class="pivot elbow over back" position="0 0 0">
+                  <a-entity id="robot_elbow" circles-networked-basic geometry="primitive:sphere; radius:0.25;" material="color:orange;"></a-entity>
+                    <a-entity class="arm_lower" position="0 0.75 0">
+                      <a-entity id="robot_arm_lower" circles-networked-basic geometry="primitive:box; width:0.3; depth:0.3; height:1.5;" material="color:orange;"></a-entity>
+                        <a-entity class="hand" position="0 0.75 0">
+                          <a-entity id="robot_hand" circles-networked-basic geometry="primitive:dodecahedron; radius:0.5;" material="color:orange;"></a-entity>
+                          </a-entity>
+                        </a-entity>
+                      </a-entity>
+                    </a-entity>
+                  </a-entity>
+                </a-entity>
+              </a-entity>
+            </a-entity>
+
+    <a-entity id="robot_controls" robot-controls position="0 0 -2">
+      <a-entity class="control_box" position="0 0.1 0" rotation="30 0 0" geometry="primitive:box; height:1.0; width:2.0; depth:1.0;" material="color:rgb(200,200,200);"></a-entity>
+      <a-entity position="-0.4 0.64 -0.25" geometry="primitive:box; height:1.2; width:0.6; depth:0.3;" material="color:rgb(200,200,200);"></a-entity>
+      <a-entity position="0.4 0.64 -0.25" geometry="primitive:box; height:1.2; width:0.6; depth:0.3;" material="color:rgb(200,200,200);"></a-entity>
+      <a-entity id="display_shoulder" circles-networked-basic position="-0.4 1.0 -0.09" geometry="primitive:plane; width:0.4; height:0.285;" material="color:rgb(32, 72, 41);" text="value:Initializing ...\n\n\n; color:rgb(146, 229, 161); wrapCount:10;;"></a-entity>
+      <a-entity id="display_elbow" circles-networked-basic position="0.4 1.0 -0.09" geometry="primitive:plane; width:0.4; height:0.285;" material="color:rgb(32, 72, 41);" text="value:Initializing ...\n\n\n; color:rgb(146, 229, 161); wrapCount:10;;"></a-entity>
+      <a-entity class="shoulder controls" position="-0.4 0.5 0.2" rotation="30 0 0">
+        <a-entity class="shoulder over button"  position="0 0 0.2"  scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="shoulder back button"  position="0 0 -0.2" scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="shoulder left button"  position="-0.2 0 0" scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="shoulder right button" position="0.2 0 0"  scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+      </a-entity>
+      <a-entity class="elbow controls" position="0.4 0.5 0.2" rotation="30 0 0">
+        <a-entity class="elbow over button"  position="0 0 0.2"  scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="elbow back button"  position="0 0 -0.2" scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="elbow left button"  position="-0.2 0 0" scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+        <a-entity class="elbow right button" position="0.2 0 0"  scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!-- ground & sky -->
+    <a-entity id="ground" rotation="-90 0 0" geometry="primitive:circle; radius:10.0;" material="color:rgb(190,140,210);" shadow="cast:false; receive:true;"></a-entity>
+    <a-entity id="sky" geometry="primitive:sphere; radius:100.0;"  material="src:#skyMap; shader:flat; flatShading:true; side:back;"></a-entity>
+
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>

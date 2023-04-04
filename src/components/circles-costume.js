@@ -21,7 +21,8 @@ AFRAME.registerComponent('circles-costume', {
 
         //create text component for title
         CONTEXT_AF.labelElem = document.createElement('a-entity');
-        CONTEXT_AF.labelElem.setAttribute('circles-object-label', {label_text:data.label_text, label_visible:true, label_offset:{x:0, y:1, z:0}, arrow_position:'down'});
+        CONTEXT_AF.labelElem.setAttribute('visible', false);
+        CONTEXT_AF.labelElem.setAttribute('circles-label', {text:data.label_text, offset:{x:0, y:1, z:0}, arrow_position:'down'});
         CONTEXT_AF.el.appendChild(CONTEXT_AF.labelElem);
 
         CONTEXT_AF.costumeElem.addEventListener('click', (e) => {
@@ -81,11 +82,11 @@ AFRAME.registerComponent('circles-costume', {
       }
 
       if ( (oldData.label_text !== data.label_text) && (data.label_text !== '') ) {
-        CONTEXT_AF.labelElem.setAttribute('circles-object-label', {label_text:data.label_text});
+        CONTEXT_AF.labelElem.setAttribute('circles-label', {text:data.label_text});
       }
 
       if ( (oldData.label_visible !== data.label_visible) && (data.label_visible !== '') ) {
-        CONTEXT_AF.labelElem.setAttribute('circles-object-label', {label_visible:data.label_visible});
+        CONTEXT_AF.labelElem.setAttribute('visible', data.label_visible);
       }
     },
     applyChanges: function(){

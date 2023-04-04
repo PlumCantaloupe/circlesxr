@@ -20,35 +20,38 @@ AFRAME.registerComponent('circles-sphere-env-map', {
     if ( CONTEXT_AF.data.src === '' ) {
       console.warn('No src defined in component');
     }
-    else {
-      const imagePath = (typeof CONTEXT_AF.data.src === 'string') ? CONTEXT_AF.data.src : CONTEXT_AF.data.src.getAttribute('src');
-
-      CONTEXT_AF.loader.load( imagePath,
-        function onLoad(texture) {
-          texture.mapping    = THREE.EquirectangularReflectionMapping;
-          texture.magFilter  = THREE.LinearFilter;
-          texture.minFilter  = THREE.LinearMipMapLinearFilter;
-          texture.format     = THREE[CONTEXT_AF.data.format];
-
-          if (mesh) {
-            mesh.traverse(function (node) {
-              if (node.material && 'envMap' in node.material) {
-                node.material.envMap = texture;
-                node.material.needsUpdate = true;
-              }
-            });
-          }
-        },
-        function onProgress(xmlHttpRequest) {
-          //xmlHttpRequest.total (bytes), xmlHttpRequest.loaded (bytes)
-        },
-        function onError(message) {
-          var message = (error && error.message) ? error.message : 'Failed to load spherical env map';
-          console.log(message);
-        }
-      );
+    
+    if (CIRCLES.UTILS.isEmptyObj(CONTEXT_AF.data.src)) {
+      console.warn('circles-sphere-env-map : CONTEXT_AF.data.src is empty ' + CONTEXT_AF.data.src);
+      return;
     }
-  },
+    const imagePath = (typeof CONTEXT_AF.data.src === 'string') ? CONTEXT_AF.data.src : CONTEXT_AF.data.src.getAttribute('src');
+
+    CONTEXT_AF.loader.load( imagePath,
+      function onLoad(texture) {
+        texture.mapping    = THREE.EquirectangularReflectionMapping;
+        texture.magFilter  = THREE.LinearFilter;
+        texture.minFilter  = THREE.LinearMipMapLinearFilter;
+        texture.format     = THREE[CONTEXT_AF.data.format];
+
+        if (mesh) {
+          mesh.traverse(function (node) {
+            if (node.material && 'envMap' in node.material) {
+              node.material.envMap = texture;
+              node.material.needsUpdate = true;
+            }
+          });
+        }
+      },
+      function onProgress(xmlHttpRequest) {
+        //xmlHttpRequest.total (bytes), xmlHttpRequest.loaded (bytes)
+      },
+      function onError(message) {
+        var message = (error && error.message) ? error.message : 'Failed to load spherical env map';
+        console.log(message);
+      }
+    );
+  }
   // update: function () {},
   // tick: function(time, timeDelta) {},
   // tock: function(time, timeDelta) {},

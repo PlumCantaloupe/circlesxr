@@ -2,11 +2,12 @@
 
 AFRAME.registerComponent('circles-button', {
   schema: {
-    type: {type:'string', default:'box', oneOf:['box', 'cylinder']},
-    button_color: {type:'color', default:'rgb(255, 100, 100)'},
+    type:               {type:'string', default:'box', oneOf:['box', 'cylinder']},
+    button_color:       {type:'color', default:'rgb(255, 100, 100)'},
     button_color_hover: {type:'color', default:'rgb(255, 0, 0)'},
-    pedastal_color: {type:'color', default:'rgb(255, 255, 255)'},
-    diameter: {type:'number', default:0.5}
+    pedastal_color:     {type:'color', default:'rgb(255, 255, 255)'},
+    diameter:           {type:'number', default:0.5},
+    pedastal_visible:   {type:'boolean', default:true}
   },
   init: function () {
     const CONTEXT_AF = this;
@@ -70,6 +71,10 @@ AFRAME.registerComponent('circles-button', {
     if ( (oldData.diameter !== data.diameter) && (data.diameter !== '') ) {
       CONTEXT_AF.button.setAttribute('scale', {x:data.diameter, y:1, z:data.diameter});
       CONTEXT_AF.button_pedastal.setAttribute('scale', {x:data.diameter, y:1, z:data.diameter});
+    }
+
+    if ( (oldData.pedastal_visible !== data.pedastal_visible) && (data.pedastal_visible !== '') ) {
+      CONTEXT_AF.button_pedastal.setAttribute('visible', data.pedastal_visible);
     }
   }
 });

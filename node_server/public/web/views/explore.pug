@@ -8,67 +8,17 @@ block content
   - var targetUsersText       = (userInfo.userType === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT;
   - var buttonText            = 'Create ' + targetUsersText + ' Links';
 
-  //this should be dynaically created one day from 'worlds' folders ...
-  - const wit_worlds          = [ 'hub', 'WIT_1_Kitchen', 'WIT_2_Lab', 'WIT_3_Work'];
-  - const wit_worlds_txt      = [ 'Campfire Hub', 'Growing Up', 'In The Classroom', 'On The Job'];
-
-  - const desmond_worlds      = [ 'VD_1_Salon', 'VD_2_Theatre', 'VD_3_ProvinceHouse'];
-  - const desmond_worlds_txt  = [ 'The Salon', 'The Roseland Theatre', 'The Province House'];
-
-  - const kin_worlds          = [ 'KIN_Hub', 'KIN_FreeFall', 'KIN_ShootAndDrop', 'KIN_ShootTheMonkey' ];
-  - const kin_worlds_txt      = [ 'Kinematics Hub', 'Freefall', 'Shoot and Drop', 'Shoot the Monkey' ];
-
-  - const cog_worlds          = [ 'COG_MemoryPalace', 'COG_MemoryPalace_WIP' ];
-  - const cog_worlds_txt      = [ 'Memory Palace', 'Memory Palace (WIP)' ];
-
-  - const test_worlds         = [ 'explore', 'ExampleWorld', 'Wardrobe', 'Carleton_University', 'Testbed' ];
-  - const test_worlds_txt     = [ 'This "Circles\' Worlds" Page (explore)', 'Circles\' Example', 'Wardrobe', 'Carleton University WIP', 'Research Room' ];
-
-  - const all_circles_worlds      = [].concat(wit_worlds, desmond_worlds, kin_worlds, cog_worlds, test_worlds);
-  - const all_circles_worlds_txt  = [].concat(wit_worlds_txt, desmond_worlds_txt, kin_worlds_txt, cog_worlds_txt, test_worlds_txt);
-
   h2 Circles' Worlds
   div(class="gutter-bottom-doubled")
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
-      ul(class="pure-menu-list")
-        each val, index in wit_worlds
-          li!= '<a class="pure-button" href="' + '/w/' + wit_worlds[index] + '">' + wit_worlds_txt[index] + '</a>'
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Viola Desmond, Canadian Civil Rights Pioneer</span>
-      ul(class="pure-menu-list")
-        each val, index in desmond_worlds
-          li!= '<a class="pure-button" href="' + '/w/' + desmond_worlds[index] + '">' + desmond_worlds_txt[index] + '</a>'
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Education - Kinematics</span>
-      ul(class="pure-menu-list")
-        each val, index in kin_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + kin_worlds[index])!= kin_worlds_txt[index]
-    
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Education - CogSci</span>
-      ul(class="pure-menu-list")
-        each val, index in cog_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + cog_worlds[index])!= cog_worlds_txt[index]
-          
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">For Testing</span>
-      ul(class="pure-menu-list")
-        each val, index in test_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + test_worlds[index])!= test_worlds_txt[index]
+    div(id="worlds_list_wrapper" class="pure-menu gutter-bottom")
+    //will ask for worlds list from server and populate here
 
   if userCanGenMagicLinks
 
     div(id="MagicLinksWrapper" class="gutter-bottom-doubled")
       h3 #{targetUsersText} Links for "Magic" Automatic Login 
 
-      form(class='pure-form pure-form-stacked')
+      form(class='pure-form pure-form-aligned')
         fieldset
           legend Create Magic Links
           div(class='pure-control-group')
@@ -76,19 +26,24 @@ block content
             - let selected = false;
             - let val = 0;
             label(for='MagicLinkExpiry') Select Expiry in Days
-            select(name='MagicLinkExpiry', id='MagicLinkExpiry')
+            select(name='MagicLinkExpiry', id='MagicLinkExpiry', class="pure-input-1-3")
               while n < 365
                 - val = n++;
-                - selected = (val === 30)
+                - selected = (val === 7)
                 option(value!= val, selected!= selected)!= val
                 - selected = false
           div(class='pure-control-group')
-            label(for='MagicLinkWorld') Select Entry World
-            select(name='MagicLinkWorld', id='MagicLinkWorld')
-              each val, index in all_circles_worlds
-                option=val
+            label(for='MagicLinkGroup') Create Group Name
+            input(name='MagicLinkGroup', id='MagicLinkGroup', type="text", placeholder="explore", class="pure-input-1-3")
+            button(type="button", class="pure-button pure-button", onclick='autogenerateGroupName(MagicLinkGroup, 4)') create new group
           div(class='pure-control-group')
-            input(type='button' class="pure-button pure-button-primary" value=buttonText onclick='createMagicLinks("' + userInfo.userType + '")')
+            label(for='MagicLinkWorld') Select Entry World
+            select(name='MagicLinkWorld', id='MagicLinkWorld', , class="pure-input-1-3")
+            //will populate this select element when we load in worlds
+            //-   each val, index in window.all_circles_worlds 
+            //-     option=val
+          div(class='pure-controls')
+            input(type='button', class="pure-button pure-button-primary", value=buttonText, onclick='createMagicLinks("' + userInfo.userName + '","' + userInfo.email + '","' + userInfo.userType + '")')
 
       p Selection the expiry and world, then click on the blue <span style='color:#0078e7; font-weight:bold;'>[#{buttonText}]</span> button above to generate "magic links" to the selected world for each #{targetUsersText}. Just copy and send each link to each #{targetUsersText} to automatically log them in. Ask them to save the link so they can login repeatedly. 
       p <em>Note these links expire in <span id='countdownElem' style='color:#0078e7; font-weight:bold;'>15 minutes</span></em>.

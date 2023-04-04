@@ -97,8 +97,8 @@
                 gltf-model="#Drill-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
-                                  label_visible:true; label_offset:0 0.4 0; arrow_position:down;
+                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 90 0; inspectPosition:0 -0.2 0;
+                                  label_offset:0 0.4 0; arrow_position:down;
                                   title:Tools Unfamiliarity; 
                                   description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
                                   title_back:Group Work;
@@ -112,8 +112,8 @@
                 gltf-model="#Gloves-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:2 2 2; textRotationY:90; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.1;
-                                  label_visible:true; label_offset:0 0.35 0; arrow_position:down;
+                circles-artefact="inspectScale:2 2 2; textRotationY:90; inspectRotation:0 0 0; inspectPosition:0 -0.1 0;
+                                  label_offset:0 0.35 0; arrow_position:down;
                                   title:Equipment - Gloves; 
                                   description:'These glove sizes are almost impossible to work with. Yes, we need these for protection but I also need to pick up fine objects such as wires and screws. If the school had a greater selection for all sizes, I'd spend less time making adjustments and more time working in the lab.';
                                   title_back:One Size Does Not Fit All;
@@ -127,8 +127,8 @@
                 gltf-model="#Clipboard-gltf" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:0;
-                                  label_visible:true; label_offset:0 0.35 0; arrow_position:down;
+                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90;
+                                  label_offset:0 0.35 0; arrow_position:down;
                                   title:Culture and Not Fitting In; 
                                   description:'Mr. Smith always seems more open to chat about things with the guys, spending more time with their groups than ours. If he knew that I captained my basketball team in high-school, maybe he'd ask me who my fantasy picks were?'';
                                   title_back:Connecting to Everyone;
@@ -138,9 +138,9 @@
 
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
     
-    <a-entity id="hub_link"
+    <a-entity id="campfire_link"
                 position="6.549 1.347 4.864" rotation="0 143.672 0"  scale="1 1 1"
-                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/hub"></a-entity>
+                circles-portal="img_src:#link_1_360; title_text:The Fire; link_url:/w/Campfire"></a-entity>
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
