@@ -240,7 +240,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     }
 
     CONTEXT_AF.networkAttachedFunc = function(data) {
-      console.log('networkAttachedFunc', CONTEXT_AF.el.id);
+      //console.log('networkAttachedFunc', CONTEXT_AF.el.id);
 
       // const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
       // const isSameElem  = (data.origId === CONTEXT_AF.origId);
