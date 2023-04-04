@@ -1,0 +1,165 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <script src="/worlds/Campfire/scripts/fire.js"></script>
+    <script src="/worlds/Campfire/scripts/campfire-interactive.js"></script>
+  </head>
+  <body>
+
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <!-- assets -->
+        <img id='silhouettesMap'    src='/worlds/Campfire/assets/textures/Silhouettes.png' crossorigin="anonymous">
+        <img id='moonMap'           src='/worlds/Campfire/assets/textures/moonmap.jpg' crossorigin="anonymous">
+        <img id='skyMap'           src='/worlds/Campfire/assets/textures/TychoSkymapNASA.png' crossorigin="anonymous">
+
+        <!-- 360 -->
+        <img id='link_1_360'        src='/global/images/WIT_1_Screen.jpg' crossorigin="anonymous">
+        <img id='link_2_360'        src='/global/images/WIT_2_Screen.jpg' crossorigin="anonymous">
+        <img id='link_3_360'        src='/global/images/WIT_3_Screen.jpg' crossorigin="anonymous">
+
+        <a-asset-item id="enviro-gltf"    src="/worlds/Campfire/assets/models/hubenviro.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="treeline-gltf"  src="/worlds/Campfire/assets/models/Treeline.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="moon-gltf"      src="/worlds/Campfire/assets/models/moon.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="campfire-gltf"  src="/worlds/Campfire/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
+
+        <a-asset-item id="navmesh_gltf" src="/worlds/Campfire/assets/models/campfire-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <audio id="fireCrackling-snd" src="/worlds/Campfire/assets/audio/fire.mp3" preload="true"></audio>
+
+        <!-- credit: Arctura @ https://freesound.org/people/Arctura/sounds/39829/ -->
+        <audio id="wilderness-snd" src="/worlds/Campfire/assets/audio/arctura_wilderness.mp3" preload="true"></audio>
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <a-entity id="GameManager" campfire-interactive></a-entity>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!-- fire FX -->
+      <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
+        <a-entity
+          id="fireParticlesSound"
+          class="ambient-music"
+          fire="particles:200;"
+          position="0.0 -0.2 0.0"
+          sound="src:#fireCrackling-snd; autoplay:false; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
+        </a-entity>
+
+        <a-entity animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
+          <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
+            <a-entity light="type: point; color: #FFA200; intensity: 3.5; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
+                      animation="property:light.intensity; dur:293; dir:alternate; to:3.6; loop:true; easing:easeInOutExpo">
+            </a-entity>
+          </a-entity>
+        </a-entity>
+
+      </a-entity>
+
+      <!-- links to other worlds -->
+      <a-entity id="link_1"
+                position="-0.559 1.7 4.134" rotation="0 56.215 0" scale="0.0001 0.0001 0.0001"
+                circles-portal="img_src:#link_1_360; title_text:Growing Up; link_url:/w/WIT_1_Kitchen"
+                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
+                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
+                shadow></a-entity>
+      <a-entity position="-1.011 0.8 4.123" rotation="0 146.215 0" text="value:How can we support women considering tech' careers?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-1.011 0.4 4.123" rotation="0 146.215 0" text="value:What cultural biases should we be aware of?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+
+      <a-entity id="link_2"
+                position="-1.7 1.7 0" rotation="0 0 0" scale="0.0001 0.0001 0.0001"
+                circles-portal="img_src:#link_2_360; title_text:In The Classroom; link_url:/w/WIT_2_Lab"
+                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
+                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
+                shadow></a-entity>
+      <a-entity position="-2.309 0.8 0" rotation="0 90 0"  text="value:How can we make our tech' classrooms more inclusive?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-2.309 0.4 0" rotation="0 90 0"  text="value:What are some strategies for dealing with unbalanced group issues?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      
+
+      <a-entity id="link_3"
+                position="-0.637 1.7 -3.730" rotation="0 -46.494 0" scale="0.0001 0.0001 0.0001"
+                circles-portal="img_src:#link_3_360; title_text:On The Job; link_url:/w/WIT_3_Work"
+                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
+                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
+                shadow></a-entity>
+      <a-entity position="-0.884 0.8 -3.975" rotation="0 46.494 0"  text="value:What can we do to make women feel more welcome in tech' work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+      <a-entity position="-0.884 0.4 -3.975" rotation="0 46.494 0"  text="value:What can we do when we see someone being excluded at work?; align:left; width:3.0;" rotation="0 90 0" position="0 1 0"></a-entity>
+
+      <a-entity id="link_wardrobe"
+                position="2.0 1.7 -5.5" rotation="0 -90 0" scale="0.0001 0.0001 0.0001"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
+                animation__fireon="property:scale; isRawProperty:true; startEvents:startFireAnim; elasticity:150; autoplay:false; delay:0; dir:normal; dur:1000; easing:easeOutElastic; loop:false; from:0.0001 0.0001 0.0001; to:0.5 0.5 0.5;"
+                animation__fireoff="property:scale; isRawProperty:true; startEvents:stopFireAnim; autoplay:false; delay:0; dir:normal; dur:800; easing:easeOutExpo; loop:false; from:0.5 0.5 0.5; to:0.0001 0.0001 0.0001;"
+                shadow></a-entity>
+
+      <!-- environment -->
+      <a-entity
+        gltf-model="#enviro-gltf"
+        shadow="receive: true; cast: true"
+        ></a-entity>
+
+      <a-entity
+        id="campfire"
+        class="interactive"
+        gltf-model="#campfire-gltf"
+        shadow="receive: true; cast: true"
+        circles-interactive-object="type:highlight"
+        circles-label="text:click fire to start; visible:true; offset:1.1 0.2 0; arrow_position:left;"
+        ></a-entity>
+
+      <a-entity
+        gltf-model="#treeline-gltf"
+        circles-material-override="src:#silhouettesMap; side:double; alphaTest:0.99; shader:flat; opacity:1.0; transparent:true; flipTextureY:true;"
+        shadow="receive:false; cast:true"
+        ></a-entity>
+
+      <!-- spawn point -->
+      <a-entity id="spawnPoint" position="4.2 0.05 0.0"></a-entity>
+
+      <!-- checkpoints -->
+      <a-entity circles-checkpoint circles-spawnpoint position="-0.05815080880348927 0.05 -1.937126652165017"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.773788008561061 0.05 0.8206161356897833"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="3.305904940681001 0.05 4.682832166759203"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="4.520465233075439 0.05 5.488178163884363"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="4.344989426771491 0.05 -5.155362082135504"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="6.6834997831464555 0.05 2.380999204264945"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="7.618967519355324 0.05 0.22066088724057406"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="7.097920297322295 0.05 -1.716988338696096"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0.10819070461016445 0.05 2.1193249159737837"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1.644493348926841 0.05 -1.2374451315182142"></a-entity>
+
+
+      <!-- sky and lights -->
+      <a-entity light="type: hemisphere; color:#0E192B; groundColor:#1D0A57; intensity: 1.2"></a-entity>
+      <a-entity id="moonlight" position="11.5 8.5 -10.5" rotation="75 142 160" 
+        light="type:directional; color:#0E192B; intensity:15.0; castShadow:true; penumbra:0.4; angle:60.0; shadowMapHeight:512; shadowMapWidth:512;"></a-entity>
+      
+      <a-entity id="moon"
+        position="100.0 100.0 -100.0" rotation="47 22 7" gltf-model="#moon-gltf"
+        circles-material-override="src:#moonMap; side:front; shader:flat; flipTextureY:true;"
+        ></a-entity>
+
+      <a-entity id="sky" geometry="primitive:sphere; radius:500; segmentsWidth:9; segmentsHeight:18"
+              material="shader:flat; src:#skyMap; side:back; height:2048; width:2048" ></a-entity>
+
+      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+
+      <!-- sounds -->
+      <a-entity position="0 0 10" circles-sound="type:ambient; src:#wilderness-snd; autoplay:true; loop:true; volume:2.0;" sound="refDistance:10; rolloffFactor:4.0;" ></a-entity>
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>

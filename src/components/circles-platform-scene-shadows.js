@@ -3,11 +3,11 @@
 //this goe son lights to only cast shadows on platforms that can handle it
 AFRAME.registerComponent('circles-platform-scene-shadows', {
   schema: {
+    updateInterval: {type: "number",  default:15}    //ms
   },
   init: function() {
     const CONTEXT_AF = this;
     CONTEXT_AF.prevTime = 0;
-    CONTEXT_AF.shadowUpdateInterval = 60;
 
     if (AFRAME.utils.device.isMobile()) {
       CONTEXT_AF.el.setAttribute('shadow', {autoUpdate:false, type:'basic'});
@@ -29,7 +29,7 @@ AFRAME.registerComponent('circles-platform-scene-shadows', {
     }
   },
   tick: function(time, timeDelta) {
-      if ( time - this.prevTime > this.shadowUpdateInterval ) {
+      if (time - this.prevTime > this.data.updateInterval) {
         this.el.sceneEl.renderer.shadowMap.needsUpdate = true;
         this.prevTime = time;
       }

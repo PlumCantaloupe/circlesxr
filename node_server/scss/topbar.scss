@@ -5,7 +5,7 @@ $topbar-height: 80px;
   height: $topbar-height;
   display: flex;
   align-items: center;
-  padding: 0 ($gutter * 2);
+  padding: 0 calc($gutter * 2);
   justify-content: space-between;
   border-bottom: 1px solid #ddd;
   color: #777;
