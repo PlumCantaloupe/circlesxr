@@ -16,6 +16,10 @@ schema: {
         CONTEXT_AF.el.setAttribute('circles-object-world', {world:CIRCLES.getCirclesWorldName()});
     }
     if (CONTEXT_AF.data.id === '') {
+      if (!CONTEXT_AF.el.id) {
+        console.error('[circles-object-world]: A networked object requires an ID.')
+      }
+
         CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
     }
 

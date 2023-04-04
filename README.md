@@ -447,6 +447,22 @@ This is a core component in our framework that explores learning around tools an
   <a-entity id="lookyElement" circles-lookat="targetElement:#myCam; constrainYAxis:true;"></a-entity>
   ```
 
+- [circles-networked-basic](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-networked-basic.js): **_[ Experimental ]_** This component allows the any object to be shared with other connected clients. It also attempts to handle cases of when clients disconnecting, and remove the duplication of networked object basic networked-aframe objects have. Unlike _circles-pickup-networked_ these objects do not need to be interactive and cannot be picked up. This networked component also enables A-Frame's _[text](https://github.com/aframevr/aframe/blob/master/docs/components/text.md)_ to be synched.
+
+  _NOTE!!: ALl circles-networked objects require an element id_
+
+  | Property           | Type            | Description                                               | Default Value        |
+  |--------------------|-----------------|-----------------------------------------------------------|----------------------|
+  | networkedEnabled   | boolean         | turn off and on networking of this object to others       | true |
+  | networkedTemplate  | string          | Name of networked template                                | CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT |
+
+  *Example 'circles-networked-basic'*
+
+  ```html
+  <!-- this object will be synched by the networked between multiple clients -->
+  <a-entity id="required-id" circles-networked-basic geometry="primitive:sphere; radius:0.3;"></a-entity>
+  ```
+
 - [circles-pickup-object](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): This component allows you to pickup and drop objects on click.
 
   | Property           | Type            | Description                                               | Default Value        |
@@ -466,7 +482,9 @@ This is a core component in our framework that explores learning around tools an
   <!-- make sure the object is also interactive -->
   <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;"></a-entity>
   ```
-- [circles-pickup-networked](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): **_[ Experimental ]_** This component allows the _circles-pickup-object_ to be shared with other connected clients. It also attempts to handle cases of when clients disconnecting.
+- [circles-pickup-networked](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pickup-object.js): **_[ Experimental ]_** This component allows the _circles-pickup-object_ to be shared with other connected clients. It also attempts to handle cases of when clients disconnecting, and remove the duplication of networked object basic networked-aframe objects have.
+
+  _NOTE!!: ALl circles-networked objects require an element id_
 
   | Property           | Type            | Description                                               | Default Value        |
   |--------------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -477,7 +495,7 @@ This is a core component in our framework that explores learning around tools an
 
   ```html
   <!-- make sure the object is also interactive and has the circles-pickup-object component -->
-  <a-entity circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
+  <a-entity id="required-id" circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
   ```
 
 - [circles-pdf-loader](https://github.com/PlumCantaloupe/circlesxr/blob/main/src/components/circles-pdf-loader.js): **_[ Experimental ]_** A component to load in PDFs with basic next page annd previous page controls.
@@ -616,21 +634,35 @@ CIRCLES.getAllNAFElements();
 CONTEXT_AF.socket = null;
 CONTEXT_AF.campfireEventName = "campfire_event";
 
-//this is the event to listen to before trying to get a reference to the communication socket
-CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-  CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
-  
-  //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
-  CONTEXT_AF.campfire.addEventListener('click', function () {
-    CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
+  //create a function we can call to get all our networked stuff connected
+  CONTEXT_AF.createNetworkingSystem = function () {
+    CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
+    
+    //let the user click on the campfire to turn it on/off, and then after let all other clients know it has been toggled
+    CONTEXT_AF.campfire.addEventListener('click', function () {
+      CONTEXT_AF.fireOn = !CONTEXT_AF.fireOn;
 
-    //change (this) client current world
-    CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
+      //change (this) client current world
+      CONTEXT_AF.turnFire(CONTEXT_AF.fireOn);
 
-    //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
-    CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-  }
-});
+      //send event to change other client's worlds. Use CIRCLES object to get relevant infomation i.e., room and world. Room is used to know where server will send message.
+      CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:CONTEXT_AF.fireOnue, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    }
+  };
+
+    //check if circle networking is ready. If not, listen for network event to call out network setup function
+    if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+    }
+    else {
+        const wsReadyFunc = function() {
+            CONTEXT_AF.createNetworkingSystem();
+
+            //always good practise to remove eventlisteners we are not using
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        };
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+    }
 
     //listen for when others turn on campfire
     CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {

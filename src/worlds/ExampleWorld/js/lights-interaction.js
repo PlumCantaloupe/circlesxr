@@ -4,13 +4,6 @@ AFRAME.registerComponent('lights-interactive', {
         const CONTEXT_AF = this;
         const scene      = CIRCLES.getCirclesSceneElement();
 
-        scene.addEventListener(CIRCLES.EVENTS.READY, function() {
-            console.log('Circles is ready: ' + CIRCLES.isReady());
-
-            //this is the camera that is now also ready, if we want to parent elements to it i.e., a user interface or 2D buttons
-            console.log("Circles camera ID: " + CIRCLES.getMainCameraElement().id);
-        });
-
         //have to capture all components we need to play with here
         CONTEXT_AF.light_1    = scene.querySelector('#light_1');
         CONTEXT_AF.light_2    = scene.querySelector('#light_2');
@@ -28,7 +21,7 @@ AFRAME.registerComponent('lights-interactive', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.synchEventName = "lights_event";
 
-        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
+        CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
@@ -128,7 +121,26 @@ AFRAME.registerComponent('lights-interactive', {
                     }
                 }
             });
+        };
+
+        scene.addEventListener(CIRCLES.EVENTS.READY, function() {
+            console.log('Circles is ready: ' + CIRCLES.isReady());
+
+            //this is the camera that is now also ready, if we want to parent elements to it i.e., a user interface or 2D buttons
+            console.log("Circles camera ID: " + CIRCLES.getMainCameraElement().id);
         });
+
+        //check if circle networking is ready. If not, add an eent to listen for when it is ...
+        if (CIRCLES.isCirclesWebsocketReady()) {
+            CONTEXT_AF.createNetworkingSystem();
+        }
+        else {
+            const wsReadyFunc = function() {
+                CONTEXT_AF.createNetworkingSystem();
+                CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+            };
+            CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        }
     },
     update() {},
     toggleLight : function (lightElem, playSound) {

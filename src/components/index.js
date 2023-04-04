@@ -16,6 +16,7 @@ require('./circles-material-extend-fresnel');
 require('./circles-material-override');
 require('./circles-label');
 require('./circles-lookat');
+require('./circles-networked-basic');
 require('./circles-object-world');
 require('./circles-parent-constraint');
 require('./circles-pdf-loader');

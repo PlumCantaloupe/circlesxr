@@ -126,6 +126,7 @@ const EVENTS = {
 const NETWORKED_TEMPLATES = {
   AVATAR              : 'circles-user-template',
   INTERACTIVE_OBJECT  : 'circles-interactive-object-template',
+  BASIC_OBJECT        : 'circles-basic-object-template',
   ARTEFACT            : 'circles-artefact-template',
   TEXT                : 'circles-text-template'
 };
