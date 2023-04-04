@@ -169,8 +169,6 @@ AFRAME.registerComponent('circles-networked-basic', {
 
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
-
-    CONTEXT_AF.socket.on('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   removeEventListeners: function() {
     //console.log('removeEventListeners');
