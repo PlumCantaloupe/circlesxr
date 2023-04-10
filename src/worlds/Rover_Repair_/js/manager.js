@@ -1,6 +1,3 @@
-//class containing part info
-
-
 //sockets component for the world
 AFRAME.registerComponent('multi-interactions', {
     init: function(){
@@ -11,29 +8,17 @@ AFRAME.registerComponent('multi-interactions', {
         CONTEXT_AF.connected    = false;
 
         CONTEXT_AF.parts = document.querySelectorAll("[id*='part']");
+        CONTEXT_AF.rovers = document.querySelectorAll("[id*='rover']");
 
         CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
             CONTEXT_AF.socket    = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
 
             //updates part location when another player picks up a part
-            CONTEXT_AF.socket.on("partEvent", function(data){
+            CONTEXT_AF.socket.on("partHoldEvent", function(data){
                 
                 let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
-                let otherPlayer = null;                                         //variable for the player who is holding the part
-
-                //loop through all players in posibPlayers variable
-                for(let i = 0; i < posibPlayers.length; i++){
-                    
-                    //get the current possible player's networked id
-                    let curNetId = posibPlayers[i].getAttribute("networked").networkId;
-                    
-                    //when a match is found this means we found the player who's holding the part
-                    if(curNetId == data.pnID){
-                        otherPlayer = posibPlayers[i];
-                        break;
-                    }
-                }
+                let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
 
                 //if there has been another player found then have the part be a child of their avatar
                 if(otherPlayer){
@@ -43,6 +28,22 @@ AFRAME.registerComponent('multi-interactions', {
                 
             });
 
+            //updates rover with part that has been placed by other player
+            CONTEXT_AF.socket.on("roverPartEvent", function(data){
+                
+                let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
+                let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
+
+                //if another player is found and matches data.pnID then do the following
+                if(otherPlayer){
+                    let part = otherPlayer.querySelector(".avatar").querySelector("[id*='part']");
+                    let partIdx = Number(part.id.slice(-2));
+                    let rover = document.getElementById(data.roverID);
+
+                    adoptPart(rover, partIdx, true);
+                }
+            });
+
             //loop through all possible parts
             for(let i=0; i < CONTEXT_AF.parts.length; i++){
 
@@ -50,30 +51,52 @@ AFRAME.registerComponent('multi-interactions', {
                 console.log(part.id);
 
                 //add eventlistener for parts
-                part.addEventListener('update', function(){
-                    
-                    console.log("updateListener");
+                part.addEventListener('playerGrab', function(){
 
                     //getting correct variables to send
                     let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
                     let partIdx = Number(this.id.slice(-2));
 
                     //send message to other users that a part is being held
-                    CONTEXT_AF.socket.emit('partEvent', {partIdx:partIdx, pnID:playerNetId, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
+                    CONTEXT_AF.socket.emit('partHoldEvent', {partIdx:partIdx, pnID:playerNetId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 });
 
-                //testing stuff out
-                /*part.addEventListener('test', function(){
+            }
 
+            //looping through all possible rovers
+            for(let i=0; i < CONTEXT_AF.rovers.length; i++){
+                
+                let rover = CONTEXT_AF.rovers[i];
+                
+                //add event liseners for rovers
+                rover.addEventListener('partPlaced', function(){
+                    
+                    //find the player who place the object and call the socket function
                     let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
-
-                    CONTEXT_AF.socket.emit('test', {pnID:playerNetId, room:CIRCLES.getCirclesRoom(), world:CIRCLES.getCirclesWorld()});
-                });*/
-
+                    CONTEXT_AF.socket.emit("roverPartEvent", {pnID:playerNetId, roverID:this.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
             }
 
         });
 
     }
 });
+
+//function that finds the potential players
+function findOtherPlayer(posibPlayers, pnID){
+
+    //loop through all players in posibPlayers variable
+    for(let i = 0; i < posibPlayers.length; i++){
+                    
+        //get the current possible player's networked id
+        let curNetId = posibPlayers[i].getAttribute("networked").networkId;
+        
+        //when a match is found this means we found the player who's holding the part
+        if(curNetId == pnID){
+            return posibPlayers[i];
+        }
+    }
+
+    return null; //when nothing is found return null
+}
 

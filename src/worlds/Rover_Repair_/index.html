@@ -14,6 +14,7 @@
     <script src="js/manager.js"></script>
     <!--<script src="js/test.js"></script>-->
     <script src="js/hold.js"></script>
+    <script src="js/rover.js"></script>
   </head>
   <body>
 
@@ -91,7 +92,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity soj id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:outline"></a-entity>
+      <a-entity rover id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight"></a-entity>
       
       <!--tabel placeholder-->
       <a-entity id="tabel1" position="0 1 11" scale="1.4 1 1">
@@ -110,11 +111,3 @@
     <circles-end-scripts/>
   </body>
 </html>
-
-<!--
-
-git issue tickets
-- issues with spawnpoints
-- issues with circles-object-label
-
--->
