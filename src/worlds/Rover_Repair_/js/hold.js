@@ -23,34 +23,20 @@ AFRAME.registerComponent('wield', {
         this.el.addEventListener('click', function(){
 
             let pCam = document.getElementById("Player1Cam");   //getting player's camera
-            let scene = document.querySelector("a-scene");      //getting scene
+            pickup(pCam, this.id);                              //call the pick up function to place the object in the player's hand
+            this.emit('playerGrab');                            //emit playerGrab to update object for other players
 
-            //check if the player is already holding something
-            if(isHolding().holding){
+        });
 
-                //get the part that is in the player's hand
-                let inHand = pCam.querySelector("[id*='part']");
-                let partSwap = inHand.cloneNode(true);
+        //event listner for networking/multi-user interactions
+        this.el.addEventListener('playerGrab', function(){
 
-                //remove the part and make a clone at the position of the item that has been picked up (essentially swap the part and what's in the player's hand)
-                inHand.remove();
-                let thisPos = this.getAttribute("position");
-                partSwap.setAttribute("position", {x:thisPos.x, y:thisPos.y, z:thisPos.z});
+            //getting correct variables to send
+            let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+            let partId = this.id;
 
-                //turn back on interactive features
-                partSwap.setAttribute("circles-interactive-object", {enabled:true});
-
-                //add part back to the scene
-                scene.appendChild(partSwap);
-
-            }
-            
-            //always add the object to the player's hand
-            let partIdx = Number(this.id.slice(-2));       //getting part info index based off of id
-            adoptPart(pCam, partIdx, false);               //making the object a child of the player camera
-    
-            this.emit('playerGrab', null, false);    //call update for other players
-            
+            //send message to other users that a part is being held
+            CONTEXT_AF.socket.emit('partHoldEvent', {partId:partId, pnID:playerNetId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
         });
 
     }
@@ -63,7 +49,8 @@ AFRAME.registerComponent('rover', {
         //add event listener to object for when it's clicked
         this.el.addEventListener('click', function(){
 
-            let holdingInfo = isHolding(); //get player holding info
+            //will need CHANGESS
+            let holdingInfo = isHolding(document.getElementById("Player1Cam")); //get player holding info
 
             //verify that player is holdig a part. we have to assume they can only hold one part
             if(holdingInfo.holding){
@@ -84,10 +71,12 @@ AFRAME.registerComponent('rover', {
     }
 });
 
-//returns true and part id if local player is holding an object. assumes that they can only hold one part
-function isHolding(){
-    let pCam = document.getElementById("Player1Cam");       //get player camera
-    let partList = pCam.querySelectorAll("[id*='part']");   //get list of parts that are children of camera
+//returns true and part id if the suspect is holding an object. assumes that they can only hold one part
+function isHolding(suspect){
+    //let pCam = document.getElementById(suspect);       //get player camera
+    //let partList = pCam.querySelectorAll("[id*='part']");   //get list of parts that are children of camera
+
+    let partList = suspect.querySelectorAll("[id*='part']"); 
 
     if(partList.length > 0){
         return {holding:true, id:partList[0].getAttribute("id")};
@@ -97,13 +86,13 @@ function isHolding(){
 }
 
 //function used for when a player picks up an object. It is expect that they can only hold one object at a time
-/*
-function pickup(holdParent, partObj){
+function pickup(holdParent, partId){
     
     let scene = document.querySelector("a-scene");      //getting scene
+    let part = document.getElementById(partId);
 
     //check if the player is already holding something
-    if(isHolding().holding){
+    if(isHolding(holdParent).holding){
 
         //get the part that is in the player's hand
         let inHand      = holdParent.querySelector("[id*='part']");
@@ -111,7 +100,7 @@ function pickup(holdParent, partObj){
 
         //remove the part and make a clone at the position of the item that has been picked up (essentially swap the part and what's in the player's hand)
         inHand.remove();
-        let thisPos = partObj.getAttribute("position");
+        let thisPos = part.getAttribute("position");
         partSwap.setAttribute("position", {x:thisPos.x, y:thisPos.y, z:thisPos.z});
 
         //turn back on interactive features
@@ -123,9 +112,9 @@ function pickup(holdParent, partObj){
     }
     
     //always add the object to the player's hand
-    let partIdx = Number(partObj.id.slice(-2));       //getting part info index based off of id
-    adoptPart(pCam, partIdx, false);               //making the object a child of the player camera
-}*/
+    let partIdx = Number(partId.slice(-2));       //getting part info index based off of id
+    adoptPart(holdParent, partIdx, false);               //making the object a child of the player camera
+}
 
 //makes a given element a parent of a given rover part. Changes position based off the new parent
 //toRover: True = parent is the rover | false = parent is to player

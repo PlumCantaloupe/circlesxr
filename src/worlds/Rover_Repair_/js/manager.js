@@ -17,13 +17,18 @@ AFRAME.registerComponent('multi-interactions', {
             //updates part location when another player picks up a part
             CONTEXT_AF.socket.on("partHoldEvent", function(data){
                 
+                console.log("emit called");
+
                 let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
                 let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
 
                 //if there has been another player found then have the part be a child of their avatar
                 if(otherPlayer){
-                    console.log("calling adoption");
-                    adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
+                    //console.log("calling adoption");
+                    //adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
+                    pickup(otherPlayer.querySelector(".avatar"), data.partId);
+
+                    console.log("updating other player");
                 }
                 
             });
@@ -43,25 +48,6 @@ AFRAME.registerComponent('multi-interactions', {
                     adoptPart(rover, partIdx, true);
                 }
             });
-
-            //loop through all possible parts
-            for(let i=0; i < CONTEXT_AF.parts.length; i++){
-
-                let part = CONTEXT_AF.parts[i];
-                console.log(part.id);
-
-                //add eventlistener for parts
-                part.addEventListener('playerGrab', function(){
-
-                    //getting correct variables to send
-                    let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
-                    let partIdx = Number(this.id.slice(-2));
-
-                    //send message to other users that a part is being held
-                    CONTEXT_AF.socket.emit('partHoldEvent', {partIdx:partIdx, pnID:playerNetId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                });
-
-            }
 
             //looping through all possible rovers
             for(let i=0; i < CONTEXT_AF.rovers.length; i++){
