@@ -140,11 +140,7 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.link_3.emit('startFireAnim',{}, false);
             CONTEXT_AF.link_wardrobe.emit('startFireAnim',{}, false);
 
-<<<<<<< HEAD:src/worlds/hub/scripts/hub.js
-            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click button to stop'});
-=======
             CONTEXT_AF.campfireElem.setAttribute('circles-label',{text:'click fire to stop'});
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504:src/worlds/Campfire/scripts/campfire-interactive.js
         }
         else {
             CONTEXT_AF.fireSound.components.sound.stopSound();
@@ -170,11 +166,7 @@ AFRAME.registerComponent('campfire-interactive', {
             CONTEXT_AF.link_3.emit('stopFireAnim',{}, false);
             CONTEXT_AF.link_wardrobe.emit('stopFireAnim',{}, false);
 
-<<<<<<< HEAD:src/worlds/hub/scripts/hub.js
-            CONTEXT_AF.campfireElem.setAttribute('circles-object-label',{label_text:'click button to start'});
-=======
             CONTEXT_AF.campfireElem.setAttribute('circles-label',{text:'click fire to start'});
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504:src/worlds/Campfire/scripts/campfire-interactive.js
         }
     }
 });

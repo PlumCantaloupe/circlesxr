@@ -8,76 +8,10 @@ block content
   - var targetUsersText       = (userInfo.userType === CIRCLES.USER_TYPE.TEACHER) ? CIRCLES.USER_TYPE.STUDENT : CIRCLES.USER_TYPE.PARTICIPANT;
   - var buttonText            = 'Create ' + targetUsersText + ' Links';
 
-<<<<<<< HEAD
-  //this should be dynaically created one day from 'worlds' folders ...
-  - const spatium_worlds          = [ 'Spatium_Hub', 'Spatium_Past', 'Spatium_Present', 'Spatium_Future'];
-  - const spatium_worlds_txt      = [ 'Spatium Hub', 'Spatium Past', 'Spatium Present', 'Spatium Future'];
-
-  - const wit_worlds          = [ 'hub', 'WIT_1_Kitchen', 'WIT_2_Lab', 'WIT_3_Work'];
-  - const wit_worlds_txt      = [ 'Campfire Hub', 'Growing Up', 'In The Classroom', 'On The Job'];
-
-  - const desmond_worlds      = [ 'VD_1_Salon', 'VD_2_Theatre', 'VD_3_ProvinceHouse'];
-  - const desmond_worlds_txt  = [ 'The Salon', 'The Roseland Theatre', 'The Province House'];
-
-  - const kin_worlds          = [ 'KIN_Hub', 'KIN_FreeFall', 'KIN_ShootAndDrop', 'KIN_ShootTheMonkey' ];
-  - const kin_worlds_txt      = [ 'Kinematics Hub', 'Freefall', 'Shoot and Drop', 'Shoot the Monkey' ];
-
-  - const cog_worlds          = [ 'COG_MemoryPalace', 'COG_MemoryPalace_WIP' ];
-  - const cog_worlds_txt      = [ 'Memory Palace', 'Memory Palace (WIP)' ];
-
-  - const test_worlds         = [ 'explore', 'ExampleWorld', 'Wardrobe', 'Carleton_University', 'Testbed' ];
-  - const test_worlds_txt     = [ 'This "Circles\' Worlds" Page (explore)', 'Circles\' Example', 'Wardrobe', 'Carleton University WIP', 'Research Room' ];
-
-  - const all_circles_worlds      = [].concat(spatium_worlds, wit_worlds, desmond_worlds, kin_worlds, cog_worlds, test_worlds);
-  - const all_circles_worlds_txt  = [].concat(spatium_worlds_txt, wit_worlds_txt, desmond_worlds_txt, kin_worlds_txt, cog_worlds_txt, test_worlds_txt);
-
-  h2 Circles' Worlds
-  div(class="gutter-bottom-doubled")
-
-   div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">World of Spatium</span>
-      ul(class="pure-menu-list")
-        each val, index in wit_worlds
-          li!= '<a class="pure-button" href="' + '/w/' + spatium_worlds[index] + '">' + spatium_worlds_txt[index] + '</a>'
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Challenges Surrounding Women in the Trades</span>
-      ul(class="pure-menu-list")
-        each val, index in wit_worlds
-          li!= '<a class="pure-button" href="' + '/w/' + wit_worlds[index] + '">' + wit_worlds_txt[index] + '</a>'
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Viola Desmond, Canadian Civil Rights Pioneer</span>
-      ul(class="pure-menu-list")
-        each val, index in desmond_worlds
-          li!= '<a class="pure-button" href="' + '/w/' + desmond_worlds[index] + '">' + desmond_worlds_txt[index] + '</a>'
-
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Education - Kinematics</span>
-      ul(class="pure-menu-list")
-        each val, index in kin_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + kin_worlds[index])!= kin_worlds_txt[index]
-    
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">Education - CogSci</span>
-      ul(class="pure-menu-list")
-        each val, index in cog_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + cog_worlds[index])!= cog_worlds_txt[index]
-          
-    div(class="pure-menu gutter-bottom")
-    <span class="pure-menu-heading">For Testing</span>
-      ul(class="pure-menu-list")
-        each val, index in test_worlds
-          li
-            a(class= 'pure-button', href!= '/w/' + test_worlds[index])!= test_worlds_txt[index]
-=======
   h2 Circles' Worlds
   div(class="gutter-bottom-doubled")
     div(id="worlds_list_wrapper" class="pure-menu gutter-bottom")
     //will ask for worlds list from server and populate here
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504
 
   if userCanGenMagicLinks
 
