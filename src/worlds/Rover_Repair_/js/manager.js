@@ -23,7 +23,7 @@ AFRAME.registerComponent('multi-interactions', {
                 //if there has been another player found then have the part be a child of their avatar
                 if(otherPlayer){
                     console.log("calling adoption");
-                    adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx);
+                    adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
                 }
                 
             });
