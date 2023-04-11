@@ -35,7 +35,7 @@ let Reflector = function ( mesh, renderer, options, cameraEl ) {
 	var parameters = {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
+		format: THREE.RGBAFormat
 	};
 
 	var renderTarget = new THREE.WebGLRenderTarget( textureWidth, textureHeight, parameters );

@@ -34,7 +34,7 @@ AFRAME.registerComponent('circles-sound', {
       CONTEXT_AF.el.setAttribute('sound', {autoplay:false});
     }
 
-    //note that for all psoitional sound we shoudl be using mono sound clips
+    //note that for all positional sound we shoudl be using mono sound clips
     if ( (oldData.type !== data.type) && (data.type !== '') ) {
       switch (data.type) {
         case 'basic':

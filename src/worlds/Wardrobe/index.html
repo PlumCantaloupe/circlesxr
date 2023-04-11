@@ -31,7 +31,7 @@
 
       <!-- Body Shape Choices -->
       <a-entity id="body_choices" position="-1.3 3.0 -2">
-        <a-entity position="-0.7 -1.0 0" circles-object-label="label_text:Torso; arrow_position:right; billboard:false;"></a-entity>
+        <a-entity position="-0.7 -1.0 0" circles-label="text:Torso; arrow_position:right; lookAtCamera:false;"></a-entity>
         <a-entity rotation="0 180 0">
             <a-entity class="body_costume" position="0 -0.0 0" scale="0.7 0.7 0.7" circles-costume="body_type:body; color:; model:0; label_visible:false; persist:true;"></a-entity>
             <a-entity class="body_costume" position="0 -0.5 0" scale="0.7 0.7 0.7" circles-costume="body_type:body; color:; model:1; label_visible:false; persist:true;"></a-entity>
@@ -44,7 +44,7 @@
 
       <!-- Head Shape Choices -->
     <a-entity id="head_choices" position="1.3 3.0 -2">
-        <a-entity position="0.7 -1.0 0" circles-object-label="label_text:Head; arrow_position:left; billboard:false;"></a-entity>
+        <a-entity position="0.7 -1.0 0" circles-label="text:Head; arrow_position:left; lookAtCamera:false;"></a-entity>
         <a-entity rotation="0 180 0">
             <a-entity class="head_costume" position="0 -0.0 0" circles-costume="body_type:head; color:; model:0; label_visible:false; persist:true;"></a-entity>
             <a-entity class="head_costume" position="0 -0.5 0" circles-costume="body_type:head; color:; model:1; label_visible:false; persist:true;"></a-entity>
@@ -57,7 +57,7 @@
 
       <!-- Body Shape Choices -->
       <a-entity id="hair_choices" position="-1.18 -0.06 -2">
-        <a-entity position="1.18 -0.5 0" circles-object-label="label_text:Hair; arrow_position:up; billboard:false;"></a-entity>
+        <a-entity position="1.18 -0.5 0" circles-label="text:Hair; arrow_position:up; lookAtCamera:false;"></a-entity>
         <a-entity rotation="0 180 0" position="2.36 0 0">
             <a-entity class="hair_costume" position="0.0 0 0" circles-costume="body_type:hair; color:; model:0; label_visible:false; persist:true;"></a-entity>
             <a-entity class="hair_costume" position="0.5 0 0" circles-costume="body_type:hair; color:; model:1; label_visible:false; persist:true;"></a-entity>
@@ -72,7 +72,7 @@
       <!-- by default this portal will point to the "fire"; but we will change to last_visited if there is a world marked as last visisted in url search params (see script at bottm) -->>
       <a-entity id="portal"
                 position="0.0 1.7 5.0" rotation="0 90 0" scale="1 1 1"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:The Fire; link_url:/w/hub"></a-entity>
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:The Fire; link_url:/w/Campfire"></a-entity>
 
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
