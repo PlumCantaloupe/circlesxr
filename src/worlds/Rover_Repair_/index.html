@@ -15,6 +15,7 @@
     <script src="js/hold.js"></script>
     <script src="js/rover.js"></script>
     <script src="js/interactEvents.js"></script>
+    <script src="js/nav-mesh.js"></script>
   </head>
   <body>
 
@@ -33,6 +34,13 @@
         <img id="soj_wheel_00" src="assets/imgs/sojourner_wheel_red.png">
         <img id="soj_wheel_01" src="assets/imgs/sojourner_wheel_blue.png">
 
+        <img id="pers_part_radar_00" src="assets/imgs/perseverance_rimfax_red.png">
+        <img id="pers_part_radar_01" src="assets/imgs/perseverance_rimfax_blue.png">
+        <img id="pers_part_cam_00" src="assets/imgs/perseverance_supercam_red.png">
+        <img id="pers_part_cam_01" src="assets/imgs/perseverance_supercam_blue.png">
+        <img id="pers_part_Meda_00" src="assets/imgs/perseverance_meda_red.png">
+        <img id="pers_part_Meda_01" src="assets/imgs/perseverance_meda_blue.png">
+
         <!--Struggle Bus Assets-->
         <a-asset-item id="desk_gltf"         src="assets/models/desk/scene.gltf"        crossorigin="anonymous"></a-asset-item>    <!--desk assets-->
         <a-asset-item id="desk_drawer_gltf"  src="assets/models/desk_drawer/scene.gltf" crossorigin="anonymous"></a-asset-item>    <!--drawer assets-->
@@ -47,6 +55,10 @@
         <a-asset-item id="pers_MEDA_gltf" src="assets/models/perseverance_assets/MEDA/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--biggers screen asset-->
         <a-asset-item id="pers_radar_gltf" src="assets/models/perseverance_assets/radar/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--biggers screen asset-->
 
+        <!--room assets-->
+        <a-asset-item id="base_gltf" src="assets/models/full_base/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--biggers screen asset-->
+        <a-asset-item id="nav_gltf" src="assets/models/full_base_nav/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--biggers screen asset-->
+
         <circles-assets/>
       </a-assets>
 
@@ -59,13 +71,45 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <a-entity rover id="rover_perseverance" position="4 2.273 0" rotation="0 0 0" scale="1 1 1" gltf-model="#pers_body_gltf" circles-interactive-object="type:highlight">
+      <!--pers rover model-->
+      <a-entity rover id="rover_perseverance" position="-16.6 2.273 9.698" rotation="0 0 0" scale="1 1 1" gltf-model="#pers_body_gltf" circles-interactive-object="type:highlight">
         <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.5 0" circles-description="title_text_front:Perseverance; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
       </a-entity>
 
-      <a-entity wield id="pers_part_cam_04" position="4 2 3" gltf-model="#pers_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
-      <a-entity wield id="pers_part_radar_03" position="4 2 4" gltf-model="#pers_radar_gltf" circles-interactive-object="type:highlight"></a-entity>
-      <a-entity wield id="pers_part_Meda_05" position="4 2 4" gltf-model="#pers_MEDA_gltf" circles-interactive-object="type:highlight"></a-entity>
+      <!--pers desk -->
+      <a-entity position="-19.9 -0.8 5.26" rotation="0 60 0" gltf-model="#desk_gltf">
+        <!--basic drawer-->
+        <a-entity id="drawer_00" drawer_anim position="-0.804 -0.50 0.31" gltf-model="#desk_drawer_gltf" circles-interactive-object="type:highlight" fuckingbitch>
+          <!--object in the drawer-->
+          <a-entity wield id="pers_part_radar_03" position="0 2.737 0" gltf-model="#pers_radar_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--pers printer-->
+      <a-entity id="printer_00" position="-10 2.76 9.5">
+        <a-entity printer_anim="printObjId:test_part_01;" position="-0.12 -0.023 0.328" circles-button scale="0.25 0.25 0.25"></a-entity>
+        <a-entity id="printer_model" gltf-model="#3d_printer_gltf">
+          <a-entity wield id="pers_part_cam_04" position="0 -0.22 0.047" gltf-model="#pers_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--pers Screen -->
+      <a-entity id="pers_screen" position="-10.6 2.8 12.54" rotation="0 -119 0" gltf-model="#bigger_screen_gltf">
+        <a-entity id="screenTxt" text="value:Hello world; baseline:top;" position="0 0.75 0.06" scale="2 2 2"></a-entity>
+      </a-entity>
+
+      <!--holograms pers-->
+      <a-entity hologram="redImgId:#pers_part_radar_00; blueImgId:#pers_part_radar_01;" id="h_base_03" position="-17.7 1.4 4.16" rotation="0 24 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+      <a-entity hologram="redImgId:#pers_part_cam_00; blueImgId:#pers_part_cam_01;" id="h_base_04" position="-15 1.4 4.22" rotation="0 -15 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+      <a-entity hologram="redImgId:#pers_part_Meda_00; blueImgId:#pers_part_Meda_01;" id="h_base_05" position="-19.7 1.4 14.9" rotation="0 -38.6 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <a-entity wield id="pers_part_Meda_05" position="-12.8 2.33 3.88" gltf-model="#pers_MEDA_gltf" circles-interactive-object="type:highlight"></a-entity>
       
       <!-- the environment -->
       <a-entity environment="preset:yavapai"></a-entity>
@@ -73,43 +117,9 @@
       <!-- socket connector -->
       <a-entity multi-interactions id="worldManager"></a-entity>
 
-      <!-- temp building -->
-      <a-entity id="b_hub" position="0 1 0">
-        <!--wall (straight)-->
-        <a-box position="0 1.75 12" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="0 1.75 -12" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="12 1.75 0"  rotation="0 90 0" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="-12 1.75 0" rotation="0 90 0" height="3" width="10" depth="0.25"></a-box>
-        <!--wall (corner)-->
-        <a-box position="8.5 1.75 8.5"  rotation="0 45 0" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="8.5 1.75 -8.5"  rotation="0 -45 0" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="-8.5 1.75 8.5"  rotation="0 -45 0" height="3" width="10" depth="0.25"></a-box>
-        <a-box position="-8.5 1.75 -8.5"  rotation="0 45 0" height="3" width="10" depth="0.25"></a-box>
-        <!--floor-->
-        <a-box height="0.5" width="24" depth="10"></a-box>
-        <a-box height="0.5" width="24" depth="10" rotation="0 135 0"></a-box>
-        <a-box height="0.5" width="24" depth="10" rotation="0 270 0"></a-box>
-        <a-box height="0.5" width="24" depth="10" rotation="0 405 0"></a-box>
-      </a-entity>
-
-      <!-- Temp building details -->
-
-      <!--sojuourner area-->
-      <a-entity position="0.955 1.163 0">
-        <!--sand-->
-        <a-box position="-0.96469 0.10729 0" scale="1.7 0.055 1.7" color="#D5737A"></a-box>
-        <!-- border -->
-        <a-entity position="0 0 0">
-          <a-cylinder position="-1.8 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-          <a-box position="-0.92 0.097 0.85606" scale="1.71 0.1 0.075" color="black"></a-box>
-          <a-cylinder position="-1.8 0.124 -0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-          <a-box position="-0.92 0.097 -0.82" scale="1.71 0.1 0.075" color="black"></a-box>
-          <a-cylinder position="-0.12 0.124 0.84" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-          <a-box position="-0.11 0.097 0.012" scale="1.71117 0.1 0.07508" color="black" rotation="0 90 0"></a-box>
-          <a-cylinder position="-0.12 0.124 -0.83" scale="0.17 0.1 0.17" color="grey"></a-cylinder>
-          <a-box position="-1.8 0.097 0.012" scale="1.71 0.1 0.075" color="black" rotation="0 90 0"></a-box>
-        </a-entity>
-      </a-entity>
+      <!--base models-->
+      <a-entity position="0 1.25 0" gltf-model="#base_gltf"></a-entity>
+      <!--<a-entity position="0 1 0" id="navmesh" gltf-model="#nav_gltf" visible='true' nav-mesh></a-entity>-->
 
       <a-entity rover id="rover_sojourner" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight">
         <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.25 0" circles-description="title_text_front:Sojourner; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
