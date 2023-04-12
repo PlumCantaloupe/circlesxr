@@ -22,32 +22,25 @@
 
         <!-- Structural Environment Assests -->
         <a-asset-item id="untitled-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/moon_-_petavius_crater.glb"></a-asset-item>
-        <a-asset-item id="past_room-gltf" src="/worlds/Spatium_Past/assets/models/pastroom1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="past_room-gltf" src="/worlds/Spatium_Past/assets/models/pastroom.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         
 
         <!-- physical environment -->
-        
-     
         <!-- 360 -->
         <img id='link_1_360'        src='/global/images/Campfire_Screen.jpg' crossorigin="anonymous">
 
        <!-- <a-asset-item id="navmesh_gltf" src="/worlds/WIT_1_Kitchen/assets/models/wit-1-nav.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>-->
 
         <!-- artefact models -->
-        <a-asset-item id="telescope-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/assets/models/telescope.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="old_guy-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/assets/models/LP_old_man.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="americanflag-gltf" response-type="arraybuffer" src="/worlds/Spatium_Past/assets/models/usaflag.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="astronaut-gltf" src="/worlds/Spatium_Past/assets/models/testAstronaut.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="telescope-gltf" src="/worlds/Spatium_Past/assets/models/telescope.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="solarsystem-gltf" src="/worlds/Spatium_Past/assets/models/solarsystem.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <video id="moon_landing-vid" src="/worlds/Spatium_Past/assets/moon_landing.mp4"></video>
 
-        <!-- <a-asset-item id="Drill-gltf" src="/worlds/WIT_1_ElectricLab/assets/models/Drill.glb" response-type="arraybuffer"></a-asset-item> -->
-
         <!-- audio -->
         <audio id="hub_music-snd" src="/worlds/Spatium_Hub/assets/the_past_music.mp3" preload="true"></audio>
-        <!-- narration -->
-
-
-        <!-- ambience -->
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -64,32 +57,28 @@
       <circles-manager-avatar/>
 
       <!-- checkpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="-1.44 0.05 2.6"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-0.8 0.05 -1.0"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="1.3 0.05 1.3"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-0.956 0.05 4.779"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="3.374 0.05 1.289"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="6 0.05 -31.2"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="15.2 0.05 -35"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-3.88 0.05 -35"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-4.5 0.05 -50"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="6 0.05 -59"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="16.5 0.05 -50"></a-entity>
 
       <!-- sky and lights -->
       <!-- bad place for narrative manager but :) -->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
+      <a-entity light="type:ambient; color:#FFF; intensity:1.0"></a-entity>
 
       <!-- sounds -->
 
       <a-entity position=" 5 1 -10" circles-sound="type:ambient; src:#hub_music-snd; autoplay:true; loop:true; volume:1.0;" ></a-entity>
       
       <!-- environment / models -->
-     <a-entity id="Room_Model" gltf-model="#past_room-gltf" position="-1.2 4 -4"  img src="/worlds/Spatium_Past/file1.png" img src="/worlds/Spatium_Past/file2.png" img src="/worlds/Spatium_Past/file3.png" scale="50 50 50"></a-entity>
-      <a-entity id="old_man" gltf-model="#old_guy-gltf" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" postion= "1.4 0.15 -3.65 " rotation="0 30 0" scale="1 1 1" shadow="receive:false; cast:false;"></a-entity>
-      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+     <a-entity id="Room_Model" gltf-model="#past_room-gltf"  img src="/worlds/Spatium_Past/file14.png" img src="/worlds/Spatium_Past/file13.png" img src="/worlds/Spatium_Past/file15.png" img src="/worlds/Spatium_Past/file16.png" circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"  position="5.919 0 1.291" scale="25 25 25"></a-entity>
 
       <a-entity id="hub_link"
-                position="4.919 1.347 1.291" rotation="0 180 0" scale="1 1 1"
+                position="6 3.5 -45" rotation="0 180 0" scale="1 1 1"
                 
                 circles-portal="img_src:#link_1_360; title_text:Spatium Hub; link_url:/w/Spatium_Hub"></a-entity>
-
-      <!--<a-entity id="room" gltf-model="#untitled-gltf" position="1 -3 0" scale="80 80 80"></a-entity>-->
-      
 
 
       <!-- Artefacts -->
@@ -97,8 +86,8 @@
       <a-entity id="Artefact-moon_landing" geometry="primitive: plane" position="-1.2 4 -3" rotation="13 0 0" material=" side:double src:#moon_landing-vid" ></a-entity>
 
       <a-entity id="Artefact-Telescope"
-                position="2.8 0 -3.2" rotation="0 30 0" scale="1 1 1"
-                gltf-model="#telescope-gltf" 
+                position="13.5 1.5 -50" rotation="0 30 0" scale="0.5 0.5 0.5"
+                geometry="primitive: box;"
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
                 circles-artefact="inspectScale: 0.8 0.8 0.8; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
@@ -110,10 +99,23 @@
                                   label_text:Telescope;
                                   "></a-entity>
 
+      <a-entity id="Artefact-Galileo"
+                position="-1.7 1.5 -50" rotation="0 30 0" scale="0.5 0.5 0.5"
+                geometry="primitive: box;" 
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale: 0.8 0.8 0.8; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
+                                  label_visible:true; label_offset:0 2 0; arrow_position:down;
+                                  title:Galileo; 
+                                  description:Galileo enhanced the telescope and allowed the machine to view the Moon’s craters and the moons surrounding Jupiter! During his time, many people believed that the Earth was the center of the universe and everything revolved around the planet.';
+                                  title_back:Understanding Space;
+                                  description_back: By viewing the moons surrounding Jupiter and Venus’ phases, Galileo was able to explain that the planets are indeed moving around the sun, not the Earth. This created a massive discovery for the science and space exploration world and provided a better understanding on how the universe works.;
+                                  label_text:Galileo;
+                                  "></a-entity>
 
       <a-entity id="Artefact-Flag"
-                position="1.8 0 0.2" rotation="0 30 0" scale="0.5 0.5 0.5"
-                gltf-model="#americanflag-gltf" 
+                position="6 1.3 -34.2" rotation="0 30 0" scale="0.5 0.5 0.5"
+                geometry="primitive: box;" 
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
                 circles-artefact="inspectScale: 0.8 0.8 0.8; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
@@ -125,12 +127,26 @@
                                   label_text:American Flag;
                                   "></a-entity>
 
-      <a-entity id="Artefact-Astronaut"
-                position="-2.8 0 0.2" rotation="0 30 0" scale="0.5 0.5 0.5"
-                geometry="primitive: box;"
+      <a-entity id="Artefact-Planet"
+                position="6 0.8 -56" rotation="0 30 0" scale="15 15 15"
+                gltf-model="#solarsystem-gltf"
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
-                circles-artefact="inspectScale: 0.8 0.8 0.8; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
+                circles-artefact="inspectScale: 9 9 9; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
+                                                    label_visible:true; label_offset:0 2 0; arrow_position:down;
+                                                    title:Solar Planet; 
+                                                    description:Galileo enhanced the telescope and allowed the machine to view the Moon’s craters and the moons surrounding Jupiter! During his time, many people believed that the Earth was the center of the universe and everything revolved around the planet.';
+                                                    title_back:Understanding Space;
+                                                    description_back: By viewing the moons surrounding Jupiter and Venus’ phases, Galileo was able to explain that the planets are indeed moving around the sun, not the Earth. This created a massive discovery for the science and space exploration world and provided a better understanding on how the universe works.;
+                                                    label_text:Solar Planet;
+                                                    "></a-entity>
+
+      <a-entity id="Artefact-Astronaut"
+                position="15.5 0.8 -39" rotation="0 30 0" scale="15 15 15"
+                gltf-model="#astronaut-gltf"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale: 9 9 9; textRotationY:0; textLookAt:false; inspectRotation:0 90 0; inspectOffsetY:-0.2;
                                   label_visible:true; label_offset:0 2 0; arrow_position:down;
                                   title:Astronaut; 
                                   description:Galileo enhanced the telescope and allowed the machine to view the Moon’s craters and the moons surrounding Jupiter! During his time, many people believed that the Earth was the center of the universe and everything revolved around the planet.';
@@ -140,7 +156,7 @@
                                   "></a-entity>
 
       <a-entity id="Artefact-Apollo"
-                position="-0.8 0 0.9" rotation="0 30 0" scale="0.5 0.5 0.5"
+                position="-3.88 0.8 -39" rotation="0 30 0" scale="0.5 0.5 0.5"
                 geometry="primitive: box;"
                 shadow="receive:false; cast:false;"
                 circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
@@ -153,11 +169,8 @@
                                   label_text:Apollo;
                                   "></a-entity>
                   
-
       
     </a-scene>
-
-
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
