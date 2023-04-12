@@ -1,3 +1,35 @@
+//class for each rover's info
+class roverInfo {
+    constructor(roverId, screenId, roverDialogue, partsNum){
+        this.roverId        = roverId;
+        this.screenId       = screenId;
+        this.roverDialogue  = roverDialogue;
+        this.partsNum       = partsNum;
+    }
+}
+
+//info for sojourner
+const soj_info = new roverInfo("rover_sojourner", "soj_screen", 
+["When did you first come to Mars?\n\nI was sent down here in December 1996 and finally landed down on Mars in July 1997." +
+"I was the first of us Rovers to make it down here, and I don’t want to toot my own horn but if it weren’t for me the others might not even be here today.", 
+
+"How was your mission?\n\n My mission lasted for 3 months after I was stationed up on Mars. My job was to explore the surface of Mars with all the scientific" + 
+"tools the scientist on Earth equipped me with, and test out how well these tools worked on Mars. You found a good handful of them today when you were fixing me up today pal!" + 
+"\n\nThose tires you found were super handy with exploring the surface; I was able to move at speeds of 0.6 inches (1.5 cm) per second and even climb over obstacles up to 1.6 inches (4 cm) high." + 
+"\n\nI might’ve been the smallest rover to explore Mars, but I did a bang up job at completing my mission and explored 330 feet (100 meters).", 
+
+"How did your mission end?\n\nAfter about 3 months, I started to really get tired. Maybe it was my old age catching up to me, but the wear and tear on my parts were no joke."+ 
+"The scientists back at home realized my design wasn’t great at surviving extended exposure to the martian environment.\n\nSeptember of 1997, I was really worn down from my mission and couldn’t move any longer." +
+"\n\nWith all my parts degraded and my energy spent, I chose to rest in a location known as the 'Rock Garden' on Mars' Ares Vallis plain.", 
+
+"What is your legacy?\n\nI’m so glad you asked sonny! You should know that my mission contributed to the future of Mars exploration, and paved the way to the future mission."+ 
+"\n\nAll the other guys in this building are here thanks to me, and the scientists backon Earth were able togive them a better design and life expectancy thanks to what was discovered from my mission on Mars. "+
+"\n\nI might’ve only lasted 3 months, but the other rovers around here lasted exponentially longer than I did! They make the young guys different these days."
+], 0);
+
+//array of rover info
+let rovers = [soj_info];
+
 //animation component for opening and closing the drawer of desks. Mostly holds actual animation and eventssz
 AFRAME.registerComponent('drawer_anim', {
     schema:{
@@ -31,9 +63,6 @@ AFRAME.registerComponent('drawer_anim', {
 //funciton used for playing drawer animations
 //only works on drawers with the drawAnim component
 function playDrawerAnim(drawerId){
-    
-    //REMOVE THIS TESTING THING 
-    activate("WORLD");
 
     //find the drawer
     let drawer = document.getElementById(drawerId);
@@ -74,9 +103,6 @@ AFRAME.registerComponent('printer_anim', {
 
 //function used for animating the "created" part from a 3D printer
 function printerCreate(pPartId){
-    
-    //****** REMOVE THIS PART IT IS FOR TESTING
-    activate("HELLO");
 
     //getting the "printed" part and it's current position
     let part    = document.getElementById(pPartId);
@@ -125,20 +151,43 @@ function flipHolo(holoId){
     hologramImg.setAttribute("src", hologramInfo.blueImgId);
 }
 
+//finds index rover is located at in array of rovers based off of it's id
+function findRoverIdx(roverId){
+    for(let i=0; i < rovers.length; i++){
+        if(roverId == rovers[i].roverId){
+            return i;
+        }
+    }
+}
+
 //activates looping through rover facts
-function activate(rover){
+function activate(roverId){
     
-    //remember to remove test function calls
+    //find out where the rover is in array of rover info
+    let roverIdx = findRoverIdx(roverId);
 
-    //todo
-    //know which screen goes with which rover
-    //store all educational dialogue in array
-    //probably just make a roverinfo class like the part info
+    //variables used for looping
+    let screen = document.getElementById(rovers[roverIdx].screenId);
+    let txtEl  = screen.querySelector("#screenTxt");
+    let dialogue = rovers[roverIdx].roverDialogue;
 
-    let screen = document.getElementById("soj_screen");
-    let screenTxt = screen.querySelector("screenTxt");
+    //used to track which dialogue is being displayed
+    let diaIdx = dialogue.length - 1;
 
+    //for first display
+    txtEl.setAttribute("text", {value: dialogue[diaIdx]});
+    diaIdx--;
+
+    //infinitly cycle through dialogue
     setInterval(function(){
-        console.log(foo);
-    }, 5000);
+        
+        txtEl.setAttribute("text", {value: dialogue[diaIdx]});
+        
+        if(diaIdx == 0){
+            diaIdx = dialogue.length - 1;
+        } else {
+            diaIdx--;
+        }
+
+    }, 15000);
 }

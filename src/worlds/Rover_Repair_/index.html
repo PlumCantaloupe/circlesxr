@@ -39,6 +39,7 @@
         <a-asset-item id="3d_printer_gltf"   src="assets/models/3d_printer/scene.gltf"  crossorigin="anonymous"></a-asset-item>    <!--printer asset-->
         <a-asset-item id="holo_base_gltf"    src="assets/models/hologram_base/scene.gltf" crossorigin="anonymous"></a-asset-item>  <!--hologram asset-->
         <a-asset-item id="large_screen_gltf" src="assets/models/large_screen/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--large screen asset-->
+        <a-asset-item id="bigger_screen_gltf" src="assets/models/bigger_screen/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--biggers screen asset-->
 
         <circles-assets/>
       </a-assets>
@@ -96,7 +97,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity rover id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight">
+      <a-entity rover id="rover_sojourner" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight">
         <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.25 0" circles-description="title_text_front:Sojourner; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
       </a-entity>
       
@@ -133,8 +134,8 @@
       </a-entity>
 
       <!--large screen example-->
-      <a-entity id="soj_screen" position="4 2 -4" gltf-model="#large_screen_gltf">
-        <a-entity id="screenTxt" text="value:Hello world" position="0 0.4 0" scale="2 2 2"></a-entity>
+      <a-entity id="soj_screen" position="4 2 -4" gltf-model="#bigger_screen_gltf">
+        <a-entity id="screenTxt" text="value:Hello world; baseline:top;" position="0 0.75 0.06" scale="2 2 2"></a-entity>
       </a-entity>
 
     </a-scene>

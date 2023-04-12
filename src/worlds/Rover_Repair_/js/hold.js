@@ -19,10 +19,6 @@ const test_part = new partInfo("test_part_01", "h_base_00", false, {x:1, y:1, z:
 const test_part2 = new partInfo("test_part_02", "h_base_00", false, {x:-1, y:1, z:1}, {x:-0.6, y:-0.2, z:-0.5}, {x:0, y:180, z:0}, 
 "Amazing! You found my camera! That was the last part, you got me all fixed up! I look 20 years younger!");
 
-//other rover info part
-
-//other rover info part
-
 //array of parts
 let roverParts = [soj_wheel, test_part, test_part2];
 
@@ -134,6 +130,16 @@ function adoptPart(parent, objIdx, toRover){
         //get the text of ther rover and update it with the special dialogue
         let roverText = parent.querySelector("#roverText");
         roverText.setAttribute("circles-description", {description_text_front:childInfo.roverQuip});
+
+        //add one to rover parts num
+        let roverIdx = findRoverIdx(parent.id);
+        rovers[roverIdx].partsNum++;
+
+        //activate scren info when enough parts are found
+        if(rovers[roverIdx].partsNum > 2){
+            activate(parent.id);
+        }
+        
 
     } else {
         newChild.setAttribute("position", childInfo.holdingPos);
