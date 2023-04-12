@@ -32,6 +32,9 @@ AFRAME.registerComponent('drawer_anim', {
 //only works on drawers with the drawAnim component
 function playDrawerAnim(drawerId){
     
+    //REMOVE THIS TESTING THING 
+    activate("WORLD");
+
     //find the drawer
     let drawer = document.getElementById(drawerId);
 
@@ -72,6 +75,9 @@ AFRAME.registerComponent('printer_anim', {
 //function used for animating the "created" part from a 3D printer
 function printerCreate(pPartId){
     
+    //****** REMOVE THIS PART IT IS FOR TESTING
+    activate("HELLO");
+
     //getting the "printed" part and it's current position
     let part    = document.getElementById(pPartId);
     let curPos  = part.getAttribute("position");
@@ -117,4 +123,22 @@ function flipHolo(holoId){
 
     //change the hologram to the blue version
     hologramImg.setAttribute("src", hologramInfo.blueImgId);
+}
+
+//activates looping through rover facts
+function activate(rover){
+    
+    //remember to remove test function calls
+
+    //todo
+    //know which screen goes with which rover
+    //store all educational dialogue in array
+    //probably just make a roverinfo class like the part info
+
+    let screen = document.getElementById("soj_screen");
+    let screenTxt = screen.querySelector("screenTxt");
+
+    setInterval(function(){
+        console.log(foo);
+    }, 5000);
 }

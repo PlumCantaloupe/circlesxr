@@ -115,7 +115,7 @@
         <!--basic drawer-->
         <a-entity id="drawer_00" drawer_anim position="-0.804 -0.50 0.31" gltf-model="#desk_drawer_gltf" circles-interactive-object="type:highlight" fuckingbitch>
           <!--object in the drawer-->
-          
+          <a-box wield id="test_part_02" position="0.13 2.7 -0.158"  scale="0.5 0.5 0.5" color="blue" circles-interactive-object="type:highlight"></a-box>
         </a-entity>
       </a-entity>
 
@@ -133,7 +133,9 @@
       </a-entity>
 
       <!--large screen example-->
-      <a-entity id="soj_screen" position="4 2 -4" gltf-model="#large_screen_gltf"></a-entity>
+      <a-entity id="soj_screen" position="4 2 -4" gltf-model="#large_screen_gltf">
+        <a-entity id="screenTxt" text="value:Hello world" position="0 0.4 0" scale="2 2 2"></a-entity>
+      </a-entity>
 
     </a-scene>
 

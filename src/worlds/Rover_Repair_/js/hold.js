@@ -14,10 +14,17 @@ class partInfo {
 //sojourner part info
 const soj_wheel = new partInfo("sj_part_wheel_00", "h_base_00", false, {x:0.438, y:0.17, z:0.3}, {x:-0.6, y:-0.2, z:-0.5}, {x:0, y:180, z:0}, 
 "You found my tires. And all six to boot! I lost those ages ago, thanks pal. I guess you’re not so bad.");
-const test_part = new partInfo("test_part_01", "h_base_00", false, {x:1, y:1, z:1}, {x:-0.6, y:-0.2, z:-0.5}, {x:0, y:180, z:0});
+const test_part = new partInfo("test_part_01", "h_base_00", false, {x:1, y:1, z:1}, {x:-0.6, y:-0.2, z:-0.5}, {x:0, y:180, z:0}, 
+"Would you look at that, you even found my Alpha Proton X-Ray Spectrometer! Thanks for putting in all the work, I like your spunk. You’re only missing one more part, I believe in you.");
+const test_part2 = new partInfo("test_part_02", "h_base_00", false, {x:-1, y:1, z:1}, {x:-0.6, y:-0.2, z:-0.5}, {x:0, y:180, z:0}, 
+"Amazing! You found my camera! That was the last part, you got me all fixed up! I look 20 years younger!");
+
+//other rover info part
+
+//other rover info part
 
 //array of parts
-let roverParts = [soj_wheel, test_part];
+let roverParts = [soj_wheel, test_part, test_part2];
 
 //component that should be on all parts that a player can hold
 AFRAME.registerComponent('wield', {
@@ -114,6 +121,7 @@ function adoptPart(parent, objIdx, toRover){
     let newChild = child.cloneNode(true);
     child.remove();
 
+    //trigger series of events when added to a rover
     //apply offset position/rotation and append to the parent
     if(toRover){
         newChild.setAttribute("position", childInfo.roverPos);
