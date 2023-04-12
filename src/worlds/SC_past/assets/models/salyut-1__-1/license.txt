@@ -1,0 +1,11 @@
+Model Information:
+* title:	Salyut-1 / Салют-1
+* source:	https://sketchfab.com/3d-models/salyut-1-1-d6b616df31f34d1b8b7459b8144d58bc
+* author:	tashtego (https://sketchfab.com/tashtego)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Salyut-1 / Салют-1" (https://sketchfab.com/3d-models/salyut-1-1-d6b616df31f34d1b8b7459b8144d58bc) by tashtego (https://sketchfab.com/tashtego) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

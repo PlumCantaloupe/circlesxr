@@ -1,0 +1,11 @@
+Model Information:
+* title:	Voskhod
+* source:	https://sketchfab.com/3d-models/voskhod-8ef7a2a357fa4a5682c75dc88295a5c0
+* author:	BrianRioth (https://sketchfab.com/BrianRioth)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Voskhod" (https://sketchfab.com/3d-models/voskhod-8ef7a2a357fa4a5682c75dc88295a5c0) by BrianRioth (https://sketchfab.com/BrianRioth) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

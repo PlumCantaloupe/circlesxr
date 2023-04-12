@@ -1,0 +1,289 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 8846,
+      "max": [
+        1.5543400049209595,
+        1.5477099418640137,
+        6.419539928436279
+      ],
+      "min": [
+        -1.9552500247955322,
+        -1.5477099418640137,
+        -3.044450044631958
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 106152,
+      "componentType": 5126,
+      "count": 8846,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 8846,
+      "max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 8846,
+      "max": [
+        0.9965299963951111,
+        0.9946900010108948
+      ],
+      "min": [
+        0.004209999926388264,
+        0.06616999953985214
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 37794,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "BrianRioth (https://sketchfab.com/BrianRioth)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/voskhod-8ef7a2a357fa4a5682c75dc88295a5c0",
+      "title": "Voskhod"
+    },
+    "generator": "Sketchfab-12.66.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 151176,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 70768,
+      "byteOffset": 151176,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 212304,
+      "byteOffset": 221944,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 141536,
+      "byteOffset": 434248,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 575784,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Voskhod_lp_baseColor.png"
+    },
+    {
+      "uri": "textures/Voskhod_lp_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Voskhod_lp_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Voskhod_lp",
+      "normalTexture": {
+        "index": 2
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        },
+        "roughnessFactor": 0.7029344512195121
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Voskhod_lp_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        0.9144728183746338,
+        -1.1760534326690257e-16,
+        0.4046473801136017,
+        0.0,
+        0.26317140460014343,
+        0.75961571931839,
+        -0.5947476625442503,
+        0.0,
+        -0.30737653374671936,
+        0.6503721475601195,
+        0.6946479082107545,
+        0.0,
+        0.2206164449453354,
+        0.15961036086082478,
+        -0.8552563190460205,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2,
+        4
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        0.0,
+        0.35340000000000005,
+        -0.93547,
+        0.0,
+        -0.0,
+        0.93547,
+        0.35340000000000005,
+        0.0,
+        1.0,
+        -0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Voskhod_lp"
+    },
+    {
+      "mesh": 0,
+      "name": "Voskhod_lp_0"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        0.9961,
+        -0.020060000000000005,
+        -0.08590000000000002,
+        0.0,
+        0.08818000000000002,
+        0.24955000000000002,
+        0.9643400000000001,
+        0.0,
+        0.0020900000000000007,
+        -0.9681500000000001,
+        0.25035,
+        0.0,
+        0.04079000000000001,
+        -6.771680000000001,
+        5.903860000000001,
+        1.0
+      ],
+      "name": "Lamp"
+    },
+    {
+      "name": "Lamp"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}

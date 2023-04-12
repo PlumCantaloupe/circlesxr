@@ -19,7 +19,13 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <img id='skyMap' src='assets/textures/1301723365-small.jpg' crossorigin="anonymous">
+        <a-asset-item id="sputnik"   src="/worlds/SC_past/assets/models/sputnik_1/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="vostok"   src="/worlds/SC_past/assets/models/vostok_1/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="voskhod"   src="/worlds/SC_past/assets/models/voskhod/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="apollo"   src="/worlds/SC_past/assets/models/apollo_exterior-150k-4096-gltf/apollo_exterior-150k-4096.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="salyut"   src="/worlds/SC_past/assets/models/salyut-1__-1/scene.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="iss"   src="/worlds/SC_past/assets/models/ISS_stationary.glb" response-type="arraybuffer"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -32,98 +38,123 @@
       <a-entity id="game_manager" lights-interactive></a-entity>
 
       <!-- island 1, with some spawnpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="-9.404 0.592 9.588"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-9.751 0.546 7.433"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-11.233 0.618 9.290"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-12.606 0.592 12.521"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-8.678 0.546 11.322"></a-entity>
+      <a-entity circles-checkpoint position="-5.494 0.546 8.950"></a-entity>
+      <a-entity circles-checkpoint position="-4.181 0.546 4.216"></a-entity>
+      <a-entity circles-checkpoint position="-4.500 0.546 0.465"></a-entity>
+      <a-entity circles-checkpoint position="-1.294 0.546 -4.129"></a-entity>
+      <a-entity circles-checkpoint position="3.675 0.546 -4.872"></a-entity>
+      <a-entity circles-checkpoint position="6.364 0.546 -1.525"></a-entity>
 
-      <!-- bridge (don't want to spawn people here as they may get dizzy looking down :) -->
-      <a-entity circles-checkpoint position="-12.514 0.050 3.387"></a-entity>
-      <a-entity circles-checkpoint position="-13.701 -0.296 0.336"></a-entity>
-
-      <!-- island 2, top -->
-      <a-entity circles-checkpoint position="-16.312 -0.321 -6.120"></a-entity>
-      <a-entity circles-checkpoint position="-12.931 -0.394 -5.361"></a-entity>
-      <a-entity circles-checkpoint position="-14.979 -0.295 -3.137"></a-entity>
-
-      <!-- island 2, steps -->
-      <a-entity id="door_island_2" circles-checkpoint position="-10.202 -5.867 -2.003"></a-entity>
-      <a-entity circles-checkpoint position="-12.111 -2.054 -7.609"></a-entity>
-      <a-entity circles-checkpoint position="-10.319 -3.648 -5.525"></a-entity>
-
-      <!-- island 3 -->
-      <a-entity id="door_island_3" circles-checkpoint position="5.000 -9.665 2.444"></a-entity>
-      <a-entity circles-checkpoint position="5.413 -9.709 0.099"></a-entity>
-      <a-entity circles-checkpoint position="2.422 -9.769 0.526"></a-entity>
-
-      <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
-      <a-entity circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door_island_2;" position="6.850 -8.949 2.397" rotation="-89.089 86.144 -53.584" scale="0.8 0.8 0.8"></a-entity>
-      <a-entity circles-button="pedastal_color:rgb(80, 91, 100);" circles-sendpoint="target:#door_island_3" position="-11.503 -5.121 -0.803" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="-7.872 0.740 13.324" rotation="0 22.443 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="-3.725 0.740 10.982" rotation="0 36.582 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="-1.891 0.740 4.761" rotation="0 0 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="-6.095 0.740 -0.373" rotation="0 -17.126 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="-1.783 0.740 -5.817" rotation="0 8.354 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="5.206 0.740 -7.107" rotation="0 50.724 0" material="color: black;"></a-entity>
+      <a-entity geometry="primitive: box; height: 1.5; width: 0.5; depth: 0.5;" position="8.619 0.740 -2.286" rotation="0 0 0" material="color: black;"></a-entity>
 
       <!-- ambient music/sound -->
       <!-- <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity> -->
 
       <!-- example "artefact" -->
-      <a-entity id="Artefact-Gem"
-                position="1.963 -8.241 2.339" rotation="0 0 0" scale="1 1 1"
-                geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8; sphericalEnvMap:#skyMap;"
-                circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+      <a-entity id="Artefact-Sputnik-1"
+                position="-7.872 2 13.324" rotation="0 0 90" scale="0.1 0.1 0.1"
+                gltf-model="#sputnik"
+                circles-artefact="inspectScale:0.2 0.2 0.2; textRotationY:-138.298; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
                                   label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  label_text:Gem;"></a-entity>
+                                  title:First to Orbit;
+                                  description:Sputnik 1 was the first man made object successfully placed in orbit around earth. Launched by the USSR on October 4th, 1957 as the first of a four part program to test the viability of artificial satellites.;
+                                  title_back:Data Collector;
+                                  description_back:Its purpose was to collect data about the upper atmosphere, and presumably detect meteoroids, although that never occurred during Sputnik’s lifespan of three weeks. Sputnik 1 was also the linchpin in the space race, as the USA became worried that it was falling behind the USSR technologically.;
+                                  label_text:Sputnik 1;"></a-entity>
 
-      <!-- <a-entity id="Artefact-Sword"
-                position="-13.171 0.899 9.197" rotation="-18.718 42.756 2.641" scale="1 1 1"
-                gltf-model="#sword_gltf"
-                circles-sphere-env-map="src:#skyMap"
-                circles-artefact="inspectScale:0.5 0.5 0.5; textRotationY:90.0; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
-                                  label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  label_text:Sword;"></a-entity> -->
+      <a-entity id="Artefact-Sputnik-2"
+                position="-3.725 2 10.982" rotation="0 -142.050 0" scale="1 1 1"
+                geometry="primitive: plane; height: 0.7; width: 1;"
+                material="src: assets/textures/laika-post.jpg;"
+                shadow="receive:false; cast:false;"
+                circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg"
+                circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:-142.050; textLookAt:false; inspectRotation:0 0 0; inspectOffsetY:-0.2;
+                                  label_visible:true; label_offset:0 0.8 0; arrow_position:down;
+                                  title:Laika the Space Dog; 
+                                  description:Sputnik 2 was the first semi-successful launch of a living being into orbit around the earth. The USSR sent Laika the dog into space to test the viability of surviving in that environment. Laika only survived around two of the planned ten day orbit after a separation failure inhibited the temperature control system.;
+                                  title_back:Tragic Error;
+                                  description_back:Given that this was only the second successful mission getting an object to orbit the earth, there was no planned rescue for Laika anyway. Although sad, this mission proved that a human could survive in space, provided no major system failure.;
+                                  label_text:Sputnik 2;"></a-entity>
 
+      <a-entity id="Artefact-Vostok"
+                  position="-1.891 2 4.761" rotation="0 0 90" scale="0.4 0.4 0.4"
+                  gltf-model="#vostok"
+                  circles-artefact="inspectScale:0.4 0.4 0.4; textRotationY:-100.988; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                                    label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                    title:Vostok 1;
+                                    description:Vostok 1 was the first successful launch of a human into space, conducted by the USSR on April 12, 1961. Yuri A. Gagarin completed one orbit around the earth before being intentionally ejected and returning safely, while the craft continued to orbit another seventeen times.;
+                                    label_text:Vostok 1;"></a-entity>
+
+        <a-entity id="Artefact-Voskhod"
+                  position="-6.095 2 -0.373" rotation="0 0 90" scale="0.1 0.1 0.1"
+                  gltf-model="#voskhod"
+                  circles-artefact="inspectScale:0.15 0.15 0.15; textRotationY:68.218; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                                    label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                    title: Sputnik;
+                                    description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                    title_back:[~20-25 chars] Title Back;
+                                    description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                    label_text:Voskhod 2;"></a-entity>
+
+        <a-entity id="Artefact-Apollo"
+                  position="-1.783 2 -5.817" rotation="0 0 90" scale="0.001 0.001 0.001"
+                  gltf-model="#apollo"
+                  circles-artefact="inspectScale:0.0015 0.0015 0.0015; textRotationY:22.443; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                                    label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                    title: Sputnik;
+                                    description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                    title_back:[~20-25 chars] Title Back;
+                                    description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                    label_text:Apollo 11;"></a-entity>
+
+        <a-entity id="Artefact-Salyut"
+                  position="5.206 2 -7.107" rotation="0 0 90" scale="0.05 0.05 0.05"
+                  gltf-model="#salyut"
+                  circles-artefact="inspectScale:0.1 0.1 0.1; textRotationY:-31.308; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                                    label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                    title: Sputnik;
+                                    description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                    title_back:[~20-25 chars] Title Back;
+                                    description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                    label_text:Salyut;"></a-entity>
+
+        <a-entity id="Artefact-ISS"
+                  position="8.619 2 -2.286" rotation="0 0 0" scale="0.01 0.01 0.01"
+                  gltf-model="#iss"
+                  circles-artefact="inspectScale:0.01 0.01 0.01; textRotationY:-71.701; textLookAt:false; inspectRotation:0.0 0.0 0; inspectOffsetY:0;
+                                    label_offset:0.0 1.0 0.0; label_visible:true; arrow_position:down;
+                                    title: Inter. Space Station;
+                                    description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                    title_back:[~20-25 chars] Title Back;
+                                    description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                    label_text:ISS;"></a-entity>
+
+      <a-entity geometry="primitive: plane; height: 100; width: 100;" rotation="-90 0 0" material="color: black;"></a-entity>
+      
       <a-entity id="Portal-Wardrobe"
-                position="-13.0 1.7 11.4" rotation="0 50 0"
+                position="-15.899 1.7 12.550" rotation="0 50 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
                 shadow></a-entity>
 
-      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
-      <a-entity id="pdf-test" position="-14.4 2.2 6.4" rotation="0 62 0" scale="2.0 2.0 2.0" circles-pdf-loader="src:/global/assets/pdfs/Scavarelli2020_Article_VirtualRealityAndAugmentedReal.pdf;"></a-entity>
+      <a-entity id="PastLink"
+                position="-12.575 1.7 15.335" rotation="0 90 0" scale="1 1 1"
+                circles-portal="img_src:#hub360; title_text:Hub; link_url:/w/SC_Past"></a-entity>
+
+      <a-entity id="ISSLink"
+                position="7.599 1.7 0.772" rotation="0 90 0" scale="1 1 1"
+                circles-portal="img_src:#hub360; title_text:Inside the ISS; link_url:/w/SC_ISS"></a-entity>
 
       <!-- the environment -->
-      <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <a-entity id="island_3" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_3_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
       <!-- <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
 
-      <!-- synched lights -->
-      <a-entity id="light_1" position="3.6 -8.1 -1.2"
-              material="color:rgb(101,6,23); opacity:0.8; emissive:rgb(255,4,38); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.4;"
-              circles-interactive-object="type:highlight; click_sound:#note_c;" animation="property:position; to:3.6 -8.0 -1.2; loop:true; dur:3000; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(255,4,38); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_2" position="5.05 -8.9 -0.86"
-                material="color:rgb(12,19,34); opacity:0.8; emissive:rgb(30,59,118); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.3;"
-                circles-interactive-object="type:highlight; click_sound:#note_d;" animation="property:position; to:5.05 -8.8 -0.86; loop:true; dur:3300; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(30,59,118); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_3" position="6.67 -9.3 -0.44" 
-                material="color:rgb(56, 41, 56); opacity:0.8; emissive:rgb(148, 46, 148); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.2;"
-                circles-interactive-object="type:highlight; click_sound:#note_e;" animation="property:position; to:6.67 -9.2 -0.44; loop:true; dur:3200; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(148, 46, 148); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_4" position="7.2 -8.4 0.28" 
-                material="color:rgb(137,85,21); opacity:0.8; emissive:rgb(242,151,39); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.5;"
-                circles-interactive-object="type:highlight; click_sound:#note_f;" animation="property:position; to:7.2 -8.3 0.28; loop:true; dur:3500; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(242,151,39); intensity:5.0;"></a-entity>
-      </a-entity>
-
-      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
 
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
