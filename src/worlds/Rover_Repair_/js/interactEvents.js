@@ -27,8 +27,27 @@ const soj_info = new roverInfo("rover_sojourner", "soj_screen",
 "\n\nI might’ve only lasted 3 months, but the other rovers around here lasted exponentially longer than I did! They make the young guys different these days."
 ], 0);
 
+//info for perseverance rover
+const pers_info = new roverInfo("rover_perseverance", "pers_screen", 
+["When did you first come to Mars?\n\nI was launched to Mars by NASA in July 2020. I traveled through space for a brief period of time and landed in February 18, 2021 and I have been here ever since!", 
+
+"How was your mission?\n\nIt is super fun and exciting. I have all these new technologies that make me more capable of new discoveries compared to all the older rovers. I’m currently in progress for my" +
+" mission, however I have been sent here to explore the Martian surface collecting samples and signs of microbial life.", 
+
+"How did your mission end?\n\nMy mission is still going, I will go on as long as I can. With my discoveries we can improve and change the world."
+], 0);
+
+const curi_info = new roverInfo("rover_curiosity", "curi_screen", 
+["When did you first come to Mars?\n\nI was launched to Mars by NASA in November 2011 and landed in August 2021", 
+
+"How was your mission?\n\nMy mission was fairly successful I travelled over 23 kilometers on the martian surface and taken over 800,000 images. I made a lot of new discoveries such as finding out " +
+"that in the past that there was water activity, I detected organic compounds in the rocks, and identified the presence of methane within the Martian atmosphere.", 
+
+"How did your mission end?\n\nI am still on Mars today. I am going to go for as long as I can and continue to make new discoveries."
+], 0);
+
 //array of rover info
-let rovers = [soj_info];
+let rovers = [soj_info, pers_info, curi_info];
 
 //animation component for opening and closing the drawer of desks. Mostly holds actual animation and eventssz
 AFRAME.registerComponent('drawer_anim', {
