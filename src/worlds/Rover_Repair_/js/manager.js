@@ -49,6 +49,15 @@ AFRAME.registerComponent('multi-interactions', {
                 }
             });
 
+            //updates a drwer when another player opens or close it
+            CONTEXT_AF.socket.on("drawerEvent", function(data){
+                playDrawerAnim(data.drawerId);
+            });
+
+            CONTEXT_AF.socket.on("updatePrinter", function(data){
+                printerCreate(data.pPartId);
+            });
+
             //looping through all possible rovers
             for(let i=0; i < CONTEXT_AF.rovers.length; i++){
                 

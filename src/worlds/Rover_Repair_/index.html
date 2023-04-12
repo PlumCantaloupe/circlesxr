@@ -12,9 +12,9 @@
     <!--Environment Script-->
     <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
     <script src="js/manager.js"></script>
-    <!--<script src="js/test.js"></script>-->
     <script src="js/hold.js"></script>
     <script src="js/rover.js"></script>
+    <script src="js/interactEvents.js"></script>
   </head>
   <body>
 
@@ -30,11 +30,15 @@
         <a-asset-item id="soju_wheel_gltf"     src="assets/models/soju/soju_wheel/scene.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!--images-->
-        <img id="wheel_img" src="assets/imgs/Artboard_4.png">
-        <img id="wheelRed_img" src="assets/imgs/soj_red_wheel.png">
-        <img id="body_img" src="assets/imgs/soj_body.png">
-        <img id="bog_img" src="assets/imgs/soj_bog.png">
-        <img id="scale_w" src="assets/imgs/wheel_scaled.png">
+        <img id="soj_wheel_00" src="assets/imgs/sojourner_wheel_red.png">
+        <img id="soj_wheel_01" src="assets/imgs/sojourner_wheel_blue.png">
+
+        <!--Struggle Bus Assets-->
+        <a-asset-item id="desk_gltf"         src="assets/models/desk/scene.gltf"        crossorigin="anonymous"></a-asset-item>    <!--desk assets-->
+        <a-asset-item id="desk_drawer_gltf"  src="assets/models/desk_drawer/scene.gltf" crossorigin="anonymous"></a-asset-item>    <!--drawer assets-->
+        <a-asset-item id="3d_printer_gltf"   src="assets/models/3d_printer/scene.gltf"  crossorigin="anonymous"></a-asset-item>    <!--printer asset-->
+        <a-asset-item id="holo_base_gltf"    src="assets/models/hologram_base/scene.gltf" crossorigin="anonymous"></a-asset-item>  <!--hologram asset-->
+        <a-asset-item id="large_screen_gltf" src="assets/models/large_screen/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--large screen asset-->
 
         <circles-assets/>
       </a-assets>
@@ -92,7 +96,9 @@
         </a-entity>
       </a-entity>
 
-      <a-entity rover id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity rover id="rover" position="-0.132 1.281 0" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight">
+        <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.25 0" circles-description="title_text_front:Sojourner; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
+      </a-entity>
       
       <!--tabel placeholder-->
       <a-entity id="tabel1" position="0 1 11" scale="1.4 1 1">
@@ -102,9 +108,32 @@
       </a-entity>
 
       <a-entity wield id="sj_part_wheel_00" position="4 2 3.3" gltf-model="#soju_wheel_gltf" circles-interactive-object="type:highlight"></a-entity>
-      <a-box wield id="test_part_01" position="0.6 2.5 11"  scale="0.5 0.5 0.5" color="green" circles-interactive-object="type:highlight"></a-box>
+      <!--<a-box wield id="test_part_01" position="0.6 2.5 11"  scale="0.5 0.5 0.5" color="green" circles-interactive-object="type:highlight"></a-box>-->
       
-      <a-box position="20 1 0" id="testBox" circles-interactive-object></a-box>
+      <!--basic desk-->
+      <a-entity position="2 -0.8 4" rotation="0 90 0" gltf-model="#desk_gltf">
+        <!--basic drawer-->
+        <a-entity id="drawer_00" drawer_anim position="-0.804 -0.50 0.31" gltf-model="#desk_drawer_gltf" circles-interactive-object="type:highlight" fuckingbitch>
+          <!--object in the drawer-->
+          
+        </a-entity>
+      </a-entity>
+
+      <!--lowfidelity printer-->
+      <a-entity id="printer_00" position="-4 2.5 -4">
+        <a-entity printer_anim="printObjId:test_part_01;" position="-0.12 -0.023 0.328" circles-button scale="0.25 0.25 0.25"></a-entity>
+        <a-entity id="printer_model" gltf-model="#3d_printer_gltf">
+          <a-box wield id="test_part_01" position="0.13 0 -0.158"  scale="0.5 0.5 0.5" color="green" circles-interactive-object="type:highlight"></a-box>
+        </a-entity>
+      </a-entity>
+
+      <!--hologram example-->
+      <a-entity hologram="redImgId:#soj_wheel_00; blueImgId:#soj_wheel_01;" id="h_base_00" position="-4 1.4 4" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--large screen example-->
+      <a-entity id="soj_screen" position="4 2 -4" gltf-model="#large_screen_gltf"></a-entity>
 
     </a-scene>
 
