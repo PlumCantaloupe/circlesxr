@@ -1,6 +1,6 @@
 Model Information:
-* title:	SOJURNER FRIG YOU ITS CENTERED JORDAN
-* source:	https://sketchfab.com/3d-models/sojurner-frig-you-its-centered-jordan-6a8f60ed4c4e47febad0d096830d7284
+* title:	Sojurner Base Model NO PARTS
+* source:	https://sketchfab.com/3d-models/sojurner-base-model-no-parts-fcdb8ed8595a4e5380a41ccba9ec3fbf
 * author:	PatrickStevens (https://sketchfab.com/PatrickStevens)
 
 Model License:
@@ -8,4 +8,4 @@ Model License:
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "SOJURNER FRIG YOU ITS CENTERED JORDAN" (https://sketchfab.com/3d-models/sojurner-frig-you-its-centered-jordan-6a8f60ed4c4e47febad0d096830d7284) by PatrickStevens (https://sketchfab.com/PatrickStevens) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Sojurner Base Model NO PARTS" (https://sketchfab.com/3d-models/sojurner-base-model-no-parts-fcdb8ed8595a4e5380a41ccba9ec3fbf) by PatrickStevens (https://sketchfab.com/PatrickStevens) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

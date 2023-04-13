@@ -101,9 +101,6 @@ function playDrawerAnim(drawerId){
 
 //animation component for 3D printer to "print" a rover part
 AFRAME.registerComponent('printer_anim', {
-    schema:{
-        printObjId: {type:"string", default:"hello world"}
-    },
     init:function(){
 
         this.el.addEventListener("click", function(){

@@ -19,6 +19,15 @@ AFRAME.registerComponent('rover', {
                 //update other players of the event
                 this.emit('partPlaced', null, false);
 
+                //play sound
+                let soundEl = document.getElementById("place_sound_el");
+                soundEl.components.sound.playSound();
+
+                //waiting for a brief moment to then trigger rover sound (have it speak)
+                setTimeout(()=>{
+                    this.emit("speak");
+                }, 1000);
+
             }
 
         });
