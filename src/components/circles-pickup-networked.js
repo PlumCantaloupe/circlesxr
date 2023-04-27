@@ -270,12 +270,16 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
       //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
+
+      console.log('hackySyncDropPositionFunc');
+
       if (CONTEXT_AF.isClone === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
         if (isSameWorld && isSameElem) {
-          //console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
+          console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
           CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
+          console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
         }
       }
     };
@@ -346,7 +350,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
 
-    CONTEXT_AF.socket.on('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
+    CONTEXT_AF.socket.on('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   removeEventListeners: function() {
     const CONTEXT_AF  = this;
@@ -367,7 +371,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
 
-    CONTEXT_AF.socket.off('hacky_drop_position', CONTEXT_AF.hackySyncDropPositionFunc);
+    CONTEXT_AF.socket.off('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   getNetworkDataObject: function() {
     const networkId_ = (this.el.hasAttribute('networked')) ? this.el.components['networked'].data.networkId : '';
@@ -404,15 +408,20 @@ AFRAME.registerComponent('circles-pickup-networked', {
       }
     });
 
+    console.log('numSimilarNetObjs', numSimilarNetObjs);
     if (oldestElem) {
+      console.log('oldest elem');
       //if more than one, hide this one, if it is the oldest ...
       if (numSimilarNetObjs > 1) {
+        console.log('numSimilarNetObjs > 1');
         if (CONTEXT_AF.isShowing === true && oldestElem.id === CONTEXT_AF.el.id) {
           CONTEXT_AF.showThisElement(false, true);
         }
       }
       //if 0 elements that means that a remote owner disappeared and we must bring the other one to fruition
-      else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
+      // else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
+      else if (oldestElem.id === CONTEXT_AF.el.id) {
+        console.log('I am owner!');
         //am owner
         if (CONTEXT_AF.isShowing === false) {
           //you are now the host/owner of this networked object
@@ -440,7 +449,8 @@ AFRAME.registerComponent('circles-pickup-networked', {
                                 y:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.y,
                                 z:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.z
                               };
-        CONTEXT_AF.socket.emit('hacky_drop_position', netObj);
+        CONTEXT_AF.socket.emit('hacky_drop_rotation', netObj);
+        console.log('hacky_drop_rotation EMIT', netObj);
       }
     }
   },
