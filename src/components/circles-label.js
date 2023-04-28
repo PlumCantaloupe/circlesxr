@@ -32,7 +32,7 @@ AFRAME.registerComponent('circles-label', {
     CONTEXT_AF.createLabelElement();
 
     if (CIRCLES.isReady()) {
-        CONTEXT_AF.label.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
+        CONTEXT_AF.el.setAttribute('circles-lookat', {   targetElement:CIRCLES.getMainCameraElement(), 
                                                             enabled:CONTEXT_AF.data.lookAtCamera, 
                                                             constrainYAxis:CONTEXT_AF.data.constrainYAxis, 
                                                             updateRate:CONTEXT_AF.data.updateRate, 
