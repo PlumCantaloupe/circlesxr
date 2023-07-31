@@ -4,9 +4,10 @@
 
 AFRAME.registerComponent('circles-networked-basic', {
   schema: {
-    className:        {type:'string',   default:''},    //We will randomly generate one if need be. The class we will use to synch with the networked version
-    networkedEnabled: {type:'boolean',  default:true},
-    networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.BASIC_OBJECT}
+    className:          {type:'string',   default:''},    //We will randomly generate one if need be. The class we will use to synch with the networked version
+    visibleOtherWorlds: {type:'boolean',  default:false},
+    networkedEnabled:   {type:'boolean',  default:true},
+    networkedTemplate:  {type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.BASIC_OBJECT}
   },
   init: function() {
     const CONTEXT_AF      = this;
@@ -38,8 +39,6 @@ AFRAME.registerComponent('circles-networked-basic', {
     if (CONTEXT_AF.isClone === false) {
       CONTEXT_AF.el.setAttribute('circles-object-world', {});
     }
-
-    CONTEXT_AF.origId = CONTEXT_AF.el.components['circles-object-world'].data.id
   },
   update : function(oldData) {
     const CONTEXT_AF = this;
@@ -59,6 +58,8 @@ AFRAME.registerComponent('circles-networked-basic', {
     if ( (oldData.networkedEnabled !== data.networkedEnabled) && (data.networkedEnabled !== '') ) {
       CONTEXT_AF.enableNetworking(data.networkedEnabled, !CONTEXT_AF.isClone);
     }
+
+    if ( (oldData.visibleOtherWorlds !== data.visibleOtherWorlds) && (data.visibleOtherWorlds !== '') ) {}
   },
   remove : function() {
     if(CIRCLES.isCirclesWebsocketReady() === true) {
@@ -105,11 +106,11 @@ AFRAME.registerComponent('circles-networked-basic', {
       //console.log('networkAttachedFunc', CONTEXT_AF.el.id);
 
       const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-      const isSameElem  = (data.origId === CONTEXT_AF.origId);
+      const isSameElem  = (data.origId === CONTEXT_AF.el.components['circles-object-world'].data.id);
       if (isSameWorld && isSameElem) {
         if (CONTEXT_AF.isClone === true) {
           //make sure label click works on networked elements (if artefact)
-          const labelEl = document.querySelector('#' + CONTEXT_AF.origId + '_label');
+          const labelEl = document.querySelector('#' + CONTEXT_AF.el.components['circles-object-world'].data.id + '_label');
           if (labelEl) {
             labelEl.querySelector('.label_bg').addEventListener('click', CONTEXT_AF.clickLabelFunc);
           }
@@ -121,7 +122,7 @@ AFRAME.registerComponent('circles-networked-basic', {
       //console.log('networkDetachedFunc', CONTEXT_AF.el.id);
 
       const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-      const isSameElem  = (data.origId === CONTEXT_AF.origId);
+      const isSameElem  = (data.origId === CONTEXT_AF.el.components['circles-object-world'].data.id);
       if (isSameWorld && isSameElem) {
         //CONTEXT_AF.initSyncObjects();
       }
@@ -144,17 +145,21 @@ AFRAME.registerComponent('circles-networked-basic', {
           return;
         }
 
-        if (CONTEXT_AF.isClone === false && e.detail.el.components['circles-object-world'].data.id === CONTEXT_AF.origId) {
+        if (e.detail.el.components['circles-object-world'].data.id === CONTEXT_AF.el.components['circles-object-world'].data.id) {
           CONTEXT_AF.initSyncObjects();
         }
       });
   
       document.body.addEventListener('entityRemoved', function(e) {
         //console.log('NAF entityRemoved', e.detail.networkId);
-        if (CONTEXT_AF.isClone === false) {
-          CONTEXT_AF.initSyncObjects();
-        }
+        CONTEXT_AF.initSyncObjects();
       });
+    }
+
+    //if object from a different world we don't want to see this (if component option set)
+    const isSameWorld = (CONTEXT_AF.el.components['circles-object-world'].data.world === CIRCLES.getCirclesWorldName());
+    if (isSameWorld === false && CONTEXT_AF.data.visibleOtherWorlds === false) {
+      CONTEXT_AF.showThisElement(false, false);
     }
   }, 
   addEventListeners: function() {
@@ -192,7 +197,6 @@ AFRAME.registerComponent('circles-networked-basic', {
 
     const CONTEXT_AF = this;
 
-    //console.log('initSyncObjects', this.el.id);
     //if there already exists "the same element" then hide this and turn off networking (if this is not a clone)
     //get list of the "same" objects, and remove the one that is duplicate ...
     let numSimilarNetObjs = 0;
@@ -207,7 +211,7 @@ AFRAME.registerComponent('circles-networked-basic', {
 
     allNetworkObjects.forEach(function(netObj) {
       isSameWorld = (netObj.components['circles-object-world'].data.world === CIRCLES.getCirclesWorldName());
-      isSameElem  = (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId);
+      isSameElem  = (netObj.components['circles-object-world'].data.id === CONTEXT_AF.el.components['circles-object-world'].data.id);
 
       if (isSameWorld && isSameElem) {
         currAgeMS = netObj.components['circles-object-world'].data.timeCreated; 
@@ -216,8 +220,8 @@ AFRAME.registerComponent('circles-networked-basic', {
           oldestElem = netObj;
         }    
 
-        // if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-networked-basic'].isShowing === true) {
-          //console.log(CONTEXT_AF.el.id, CONTEXT_AF.origId, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-networked-basic'].isShowing);
+        // if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.el.components['circles-object-world'].data.id && netObj.components['circles-networked-basic'].isShowing === true) {
+          //console.log(CONTEXT_AF.el.id, CONTEXT_AF.el.components['circles-object-world'].data.id, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-networked-basic'].isShowing);
           numSimilarNetObjs++;
         // }
       }
