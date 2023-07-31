@@ -196,7 +196,7 @@ AFRAME.registerComponent('circles-networked-basic', {
     //if there already exists "the same element" then hide this and turn off networking (if this is not a clone)
     //get list of the "same" objects, and remove the one that is duplicate ...
     let numSimilarNetObjs = 0;
-    let oldestTime = 0;
+    let oldestTime = Number.MAX_SAFE_INTEGER;
     let currAgeMS = 0;
     let oldestElem = null;
     let isSameWorld = false;
@@ -211,27 +211,22 @@ AFRAME.registerComponent('circles-networked-basic', {
 
       if (isSameWorld && isSameElem) {
         currAgeMS = netObj.components['circles-object-world'].data.timeCreated; 
-        if (currAgeMS > oldestTime) {
+        if (currAgeMS < oldestTime) {
           oldestTime = currAgeMS;
           oldestElem = netObj;
         }    
 
-        if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-networked-basic'].isShowing === true) {
+        // if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-networked-basic'].isShowing === true) {
           //console.log(CONTEXT_AF.el.id, CONTEXT_AF.origId, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-networked-basic'].isShowing);
           numSimilarNetObjs++;
-        }
+        // }
       }
     });
 
     if (oldestElem) {
-      //if more than one, hide this one, if it is the oldest ...
-      if (numSimilarNetObjs > 1) {
-        if (CONTEXT_AF.isShowing === true && oldestElem.id === CONTEXT_AF.el.id) {
-          CONTEXT_AF.showThisElement(false, true);
-        }
-      }
       //if 0 elements that means that a remote owner disappeared and we must bring the other one to fruition
-      else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
+      if (oldestElem.id === CONTEXT_AF.el.id) {
+        console.log('I am the original', CONTEXT_AF.el.id, oldestTime);
         //am owner
         if (CONTEXT_AF.isShowing === false) {
           //you are now the host/owner of this networked object
@@ -249,6 +244,12 @@ AFRAME.registerComponent('circles-networked-basic', {
               CONTEXT_AF.el.object3D.scale.set(CONTEXT_AF.lastKnowObjectData.scale.x, CONTEXT_AF.lastKnowObjectData.scale.y, CONTEXT_AF.lastKnowObjectData.scale.z);
             }
           }
+        }
+      }
+      //if more than one, hide this one, if it is the oldest ...
+      else {
+        if (CONTEXT_AF.isShowing === true) {
+          CONTEXT_AF.showThisElement(false, true);
         }
       }
     }

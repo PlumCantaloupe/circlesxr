@@ -271,15 +271,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
     CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
       //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
 
-      console.log('hackySyncDropPositionFunc');
-
       if (CONTEXT_AF.isClone === true) {
         const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
         const isSameElem  = (data.origId === CONTEXT_AF.origId);
         if (isSameWorld && isSameElem) {
-          console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
           CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
-          console.log('setting for ', data.origId, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
         }
       }
     };
@@ -384,7 +380,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     //if there already exists "the same element" then hide this and turn off networking (if this is not a clone)
     //get list of the "same" objects, and remove the one that is duplicate ...
     let numSimilarNetObjs = 0;
-    let oldestTime = 0;
+    let oldestTime = Number.MAX_SAFE_INTEGER;
     let currAgeMS = 0;
     let oldestElem = null;
     let isSameWorld = false;
@@ -394,34 +390,28 @@ AFRAME.registerComponent('circles-pickup-networked', {
       isSameWorld = (netObj.components['circles-object-world'].data.world === CIRCLES.getCirclesWorldName());
       isSameElem  = (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId);
 
+      //make sure we are only finding "this" artefact in "this" world
       if (isSameWorld && isSameElem) {
         currAgeMS = netObj.components['circles-object-world'].data.timeCreated; 
-        if (currAgeMS > oldestTime) {
+        if (currAgeMS < oldestTime) {
           oldestTime = currAgeMS;
           oldestElem = netObj;
         }    
 
-        if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-pickup-networked'].isShowing === true) {
+        //if (netObj.components['circles-object-world'].data.id === CONTEXT_AF.origId && netObj.components['circles-pickup-networked'].isShowing === true) {
           //console.log(CONTEXT_AF.el.id, CONTEXT_AF.origId, netObj.id, netObj.components['circles-object-world'].data.id, netObj.components['circles-pickup-networked'].isShowing);
           numSimilarNetObjs++;
-        }
+        //}
       }
     });
 
-    console.log('numSimilarNetObjs', numSimilarNetObjs);
     if (oldestElem) {
-      console.log('oldest elem');
-      //if more than one, hide this one, if it is the oldest ...
-      if (numSimilarNetObjs > 1) {
-        console.log('numSimilarNetObjs > 1');
-        if (CONTEXT_AF.isShowing === true && oldestElem.id === CONTEXT_AF.el.id) {
-          CONTEXT_AF.showThisElement(false, true);
-        }
-      }
+      
       //if 0 elements that means that a remote owner disappeared and we must bring the other one to fruition
       // else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
-      else if (oldestElem.id === CONTEXT_AF.el.id) {
-        console.log('I am owner!');
+      // else if (numSimilarNetObjs === 0 && oldestElem.id === CONTEXT_AF.el.id) {
+      if (oldestElem.id === CONTEXT_AF.el.id) {
+        console.log('I am the original', CONTEXT_AF.el.id, oldestTime);
         //am owner
         if (CONTEXT_AF.isShowing === false) {
           //you are now the host/owner of this networked object
@@ -450,7 +440,12 @@ AFRAME.registerComponent('circles-pickup-networked', {
                                 z:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.z
                               };
         CONTEXT_AF.socket.emit('hacky_drop_rotation', netObj);
-        console.log('hacky_drop_rotation EMIT', netObj);
+      }
+      //if more than one, hide this one, if it is the oldest ...
+      else {
+        if (CONTEXT_AF.isShowing === true) {
+          CONTEXT_AF.showThisElement(false, true);
+        }
       }
     }
   },
