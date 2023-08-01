@@ -105,7 +105,7 @@ AFRAME.registerComponent('circles-networked-basic', {
     CONTEXT_AF.networkAttachedFunc = function(data) {
       //console.log('networkAttachedFunc', CONTEXT_AF.el.id);
 
-      const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
+      const isSameWorld = (data.origWorld === CIRCLES.getCirclesWorldName());
       const isSameElem  = (data.origId === CONTEXT_AF.el.components['circles-object-world'].data.id);
       if (isSameWorld && isSameElem) {
         if (CONTEXT_AF.isClone === true) {
@@ -121,11 +121,11 @@ AFRAME.registerComponent('circles-networked-basic', {
     CONTEXT_AF.networkDetachedFunc = function(data) {
       //console.log('networkDetachedFunc', CONTEXT_AF.el.id);
 
-      const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-      const isSameElem  = (data.origId === CONTEXT_AF.el.components['circles-object-world'].data.id);
-      if (isSameWorld && isSameElem) {
-        //CONTEXT_AF.initSyncObjects();
-      }
+      // const isSameWorld = (data.origWorld === CIRCLES.getCirclesWorldName());
+      // const isSameElem  = (data.origId === CONTEXT_AF.el.components['circles-object-world'].data.id);
+      // if (isSameWorld && isSameElem) {
+      //   CONTEXT_AF.initSyncObjects();
+      // }
     };
 
     //need this be always listening so that "hidden" objects can come back
@@ -190,7 +190,7 @@ AFRAME.registerComponent('circles-networked-basic', {
   },
   getNetworkDataObject: function() {
     const networkId_ = (this.el.hasAttribute('networked')) ? this.el.components['networked'].data.networkId : '';
-    return {id:this.el.id, origId:this.origId, networkId:networkId_, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()};
+    return {id:this.el.id, origId:this.el.components['circles-object-world'].data.id, networkId:networkId_, room:CIRCLES.getCirclesGroupName(), origWorld:this.el.components['circles-object-world'].data.world, world:CIRCLES.getCirclesWorldName()};
   },
   initSyncObjects: function() {
     //console.log('initSyncObjects');
