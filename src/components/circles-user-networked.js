@@ -47,23 +47,24 @@ AFRAME.registerComponent('circles-user-networked', {
           let avatarNode4 = CONTEXT_AF.el.querySelector('.deviceicon_back');
           let iconPath    = CIRCLES.CONSTANTS.ICON_DEVICE_UNKNOWN;
 
-          if (AFRAME.utils.device.isMobile()) {
-            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_MOBILE;
+          alert(AFRAME.utils.device.isMobile());
+
+          if (AFRAME.utils.device.getVRDisplay()) {
+            console.log('getVRDisplay!!!');
+            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
           }
           else if (AFRAME.utils.device.isMobileVR()) {
-            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD3DOF;
+            console.log('isMobileVR!!!');
+            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
           }
-          else if (AFRAME.utils.device.isTablet()) {
+          else if (AFRAME.utils.device.isMobile()) {
+            console.log('isMobile!!!');
             iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_MOBILE;
           }
           else {
-            //desktop and desktop HMD
-            if (AFRAME.utils.device.checkHeadsetConnected()) {
-              iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
-            }
-            else {
-              iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_DESKTOP;
-            }
+            //desktop
+            console.log('isDesktop!!!');
+            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_DESKTOP;
           }
 
           //set icon textures
