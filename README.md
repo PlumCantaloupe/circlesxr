@@ -723,17 +723,21 @@ Also, of course, if you have any formal or informal bugs, feedback, or suggestio
 
 <br>
 
-The following are several companions that have helped to bring this project into existence. Starting as a prototype for [Oculus Launchpad 2018](https://developer.oculus.com/launch-pad/) to showcase [Viola Desmond's story as a pioneer for Canadian civil rights](https://humanrights.ca/story/one-womans-resistance), I wanted to recognize them for their early direction and support. Though this is mainly a research project for my [Ph.D. work at Carleton University](https://carleton.ca/engineering-design/story/giving-new-life-to-a-canadian-legend/), I hope that their contributions in this open-source repository will also help inspire others as they have myself.
+The following are several companions that have helped to bring this project into existence. Starting as a prototype for [Oculus Launchpad 2018](https://developer.oculus.com/launch-pad/) to showcase [Viola Desmond's story as a pioneer for Canadian civil rights](https://humanrights.ca/story/one-womans-resistance), I wanted to recognize them for their early direction and support. Though this project is an extension of my completed [Ph.D. research at Carleton University](https://carleton.ca/engineering-design/story/giving-new-life-to-a-canadian-legend/), I hope that their contributions in this open-source repository will also help inspire others as they have myself.
 
-Thank you from an aspiring student of all things XR and learning, [Anthony Scavarelli](http://portfolio.anthony-scavarelli.com/)
+Thank you from an aspiring student of all things XR and learning, 
+[Anthony Scavarelli](http://portfolio.anthony-scavarelli.com/)
 
+
+To all those that helped along the way:
+
+- **[Dr. Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
+- **[Dr. Robert J. Teather](https://www.csit.carleton.ca/~rteather/)**, *Research Advisor*
 - **[Favour Diokpo](https://www.behance.net/favourdiokpo)**, *3D Artist*
 - **[Virginia Mielke](https://www.linkedin.com/in/virginia-mielke-ba1a361/)**, *3D Artist*
 - **[Nathaniel Parant](https://www.linkedin.com/in/nathaniel-parant-43901341/?originalSubdomain=ca)**, *Storyteller*
 - **[Jessica Alberga](http://jessicaalberga.ca/)**, *Journalist*
 - **[Julie McCann](http://portfolios.camayak.com/julie-mccann/page/4/)**, *Journalist*
-- **[Dr. Ali Arya](https://www.csit.carleton.ca/~arya/)**, *Research Advisor*
-- **[Dr. Robert J. Teather](https://www.csit.carleton.ca/~rteather/)**, *Research Advisor*
 - **[Grant Lucas](https://grantlucas.com/)**, *Web Developer*
 - **[Tetsuro Takara](https://www.tetchi.ca/)**, *Web Developer*
 - **[Heather Hennessey](https://www.linkedin.com/in/heather-hennessey-4961a5132/)**, *WebXR Developer*
