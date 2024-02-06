@@ -53,10 +53,14 @@ function startExperiment () {
     let ball = document.querySelector('#ball');
 
     // drop monkey
-    monkey.setAttribute('dynamic-body', 'shape: box;');
+    // monkey.setAttribute('dynamic-body', 'shape: box;');
+    monkey.setAttribute('body', 'type:dynamic; shape:none;');
+    monkey.setAttribute('shape', 'shape:cylinder; height:1.0; radiusTop:0.5; radiusBottom:0.5; offset:0 -1.0 0;');
 
     // shoot object2
-    ball.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
+    // ball.setAttribute('dynamic-body', 'shape: sphere; sphereRadius: 0.125; offset: 0 -1 0;');
+    ball.setAttribute('body', 'type:dynamic; shape:none;');
+    ball.setAttribute('shape', 'shape:sphere; radius:1.5;');
     console.log(forceToApply.x);
     ball.body.velocity.set(forceToApply.x, forceToApply.y, 0);
 
@@ -81,7 +85,9 @@ function resetExperiment () {
     element.setAttribute('velocity', {x: 0, y: 0, z: 0});
 
     // disable physics on the object
-    element.removeAttribute('dynamic-body');
+    // element.removeAttribute('dynamic-body');
+    element.removeAttribute('body');
+    element.removeAttribute('shape');
 
     // reset the position of the object
     element.emit('resetTransform', {});
