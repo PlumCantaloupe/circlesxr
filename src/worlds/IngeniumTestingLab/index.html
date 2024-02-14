@@ -9,14 +9,14 @@
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
-    <a-assets>
-
-      <!-- Circles' built-in assets [REQUIRED] -->
+    <a-assets timeout=30000>
+      <a-asset-item id="IngeniumLab-gltf" src="assets\DigitalInnovationLab.glb"></a-asset-item>      <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
+    <a-entity gltf-model="#IngeniumLab-gltf" id="lab" position="0 4.344 0" scale="1.5 1.5 1.5" rotation="0 0 0"></a-entity>
 
   </a-scene>
 
