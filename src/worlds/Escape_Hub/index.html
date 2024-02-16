@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts />
+</head>
+
+<body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui />
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+
+        <a-assets>
+            <!-- assets -->
+            <!-- Circles' built-in assets [REQUIRED] -->
+            <circles-assets />
+        </a-assets>
+        <!-- Circles' built-in manager and avatar [REQUIRED] -->
+        <circles-manager-avatar />
+
+        <!-- environment -->
+        <a-scene background="color:white"></a-scene>
+
+        <a-entity class="ground" geometry="primitive:plane; width:14; height:14;" material="color:#999999;"
+            position="0 0.01 0" rotation="-90 0 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity id="walls">
+            <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:#c9f9ff;"
+                position="7 2 0" rotation="0 -90 0" shadow="cast:false; receive:true;"></a-entity>
+            <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:#c9f9ff;"
+                position="-7 2 0" rotation="0 90 0" shadow="cast:false; receive:true;"></a-entity>
+            <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:#c9f9ff;"
+                position="0 2 7" rotation="0 180 0" shadow="cast:false; receive:true;"></a-entity>
+            <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:#c9f9ff;"
+                position="0 2 -7" rotation="0 0 0" shadow="cast:false; receive:true;"></a-entity>
+        </a-entity>
+
+        <a-entity id="door" position="0 1.5 -6" rotation="0 0 0">
+            <a-entity geometry="primitive:plane; width:2; height:3;" material="color:black;"
+                shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="Portal-Lab" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/PurpleBlue.jpg; title_text:Innovation Lab; link_url:/w/Escape_Lab"></a-entity>
+            <a-entity circles-checkpoint position="0 -1.5 1"></a-entity>
+        </a-entity>
+
+        <a-entity id="door" position="-3 1.5 -5" rotation="0 45 0">
+            <a-entity geometry="primitive:plane; width:2; height:3;" material="color:black;"
+                shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="Portal-Auto" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/PurpleBlue.jpg; title_text:Auto Room; link_url:/w/Wardrobe"></a-entity>
+            <a-entity circles-checkpoint position="0 -1.5 1"></a-entity>
+        </a-entity>
+
+        <a-entity id="door" position="3 1.5 -5" rotation="0 -45 0">
+            <a-entity geometry="primitive:plane; width:2; height:3;" material="color:black;"
+                shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="Portal-Collect" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/PurpleBlue.jpg; title_text:Collection Room; link_url:/w/Wardrobe"></a-entity>
+            <a-entity circles-checkpoint position="0 -1.5 1"></a-entity>
+        </a-entity>
+
+
+        <!-- lights -->
+        <a-entity light="type: ambient; color: white"></a-entity>
+
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts />
+</body>
+
+</html>

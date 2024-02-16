@@ -1,0 +1,276 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts />
+
+    <script src="scripts/door_interact.js" async></script>
+</head>
+
+<body>
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui />
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties background="color:black">
+
+        <a-assets>
+            <!-- Circles' built-in assets [REQUIRED] -->
+            <circles-assets />
+
+            <!-- assets -->
+            <a-asset-item id="table_rect" src="assets/models/rectangular_table.glb" response-type="arraybuffer"
+                crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="table_round" src="assets/models/circular_table.glb" response-type="arraybuffer"
+                crossorigin="anonymous"></a-asset-item>
+            <a-asset-item id="chair" src="assets/models/chair.glb" response-type="arraybuffer"
+                crossorigin="anonymous"></a-asset-item>
+
+            <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_2_Lab/assets/models/clipboard/scene.gltf"
+                response-type="arraybuffer"></a-asset-item>
+        </a-assets>
+
+        <!-- Circles' built-in manager and avatar [REQUIRED] -->
+        <circles-manager-avatar />
+
+        <a-entity class="ground" geometry="primitive:plane; width:14; height:28;" material="color:gray;"
+            position="0 0.01 0" rotation="-90 0 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="ceiling" geometry="primitive:plane; width:14; height:28;" material="color:gray;"
+            position="0 3.99 0" rotation="90 0 0" shadow="cast:false; receive:true;"></a-entity>
+
+        <!--top wall-->
+        <a-entity class="wall" geometry="primitive:plane; width:28; height:4;" material="color:silver;" position="7 2 0"
+            rotation="0 -90 0" shadow="cast:false; receive:true;"></a-entity>
+
+        <!--bottom walls-->
+        <a-entity class="wall" geometry="primitive:plane; width:8; height:4;" material="color:silver;" position="-7 2 7"
+            rotation="0 90 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="wall" geometry="primitive:plane; width:8; height:4;" material="color:silver;"
+            position="-7 2 -7" rotation="0 90 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="wall" geometry="primitive:plane; width:7; height:4;" material="color:silver;"
+            position="-7 2 14" rotation="0 90 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="wall" geometry="primitive:plane; width:7; height:4;" material="color:silver;"
+            position="-7 2 -14" rotation="0 90 0" shadow="cast:false; receive:true;"></a-entity>
+
+        <!--side walls-->
+        <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:silver;"
+            position="0 2 14" rotation="0 180 0" shadow="cast:false; receive:true;"></a-entity>
+        <a-entity class="wall" geometry="primitive:plane; width:14; height:4;" material="color:silver;"
+            position="0 2 -14" rotation="0 0 0" shadow="cast:false; receive:true;"></a-entity>
+
+        <!-- 
+            top wall of room x=7
+            bottom wall of room x=-7
+            left wall of room z=-14
+            right wall of room z=14
+        -->
+
+        <!-- left side of room -->
+        <a-entity circles-checkpoint position="5 0 -12"></a-entity>
+        <a-entity circles-checkpoint position="-1 0 -10"></a-entity>
+        <a-entity circles-checkpoint position="5 0 -8"></a-entity>
+        <a-entity circles-checkpoint position="-5 0 -8"></a-entity>
+        <a-entity circles-checkpoint position="0 0 -6"></a-entity>
+
+        <a-entity gltf-model="#table_rect" position="3 0 -12" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_rect" position="-6 0 -12" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_round" position="1 0 -8" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_round" position="5 0 -5" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <a-entity class="interactive narrative" geometry="primitive:plane; width:3; height:2;" material="color:white;"
+            position="-6.9 2 -8" rotation="0 90 0" shadow="cast:false; receive:true;" circles-artefact="inspectScale:1.0 1.0 1.0;
+            label_offset:0 0.35 0.35; arrow_position:down;
+            title:Useful information; 
+            description:This item has a code or cipher on it;
+            title_back:More useful information;
+            description_back:This item has a code or cipher on it;
+            label_text:Whiteboard;"></a-entity>
+
+        <!-- center of room -->
+        <a-entity circles-checkpoint position="0 0 1"></a-entity>
+        <a-entity circles-checkpoint position="5 0 1"></a-entity>
+        <a-entity circles-checkpoint position="-5 0 0"></a-entity>
+
+        <a-entity gltf-model="#table_rect" position="5 0 0" rotation="0 90 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_rect" position="0 0 2" rotation="0 90 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_rect" position="0 0 -5" rotation="0 90 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_rect" position="-5 0 -3" rotation="0 -45 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_round" position="-6 0 -4" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="-0.5 0.82 2" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; 
+                        label_offset:0 0.35 0; arrow_position:down;
+                        title:Useful information; 
+                        description:This artifact has a code or cipher on it;
+                        title_back:More useful information;
+                        description_back:This artifact has a code or cipher on it;
+                        label_text:Clipboard;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="0.1 0.82 2" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; 
+                        label_offset:0 0.35 0; arrow_position:down;
+                        title:Useful information; 
+                        description:This item has a code or cipher on it;
+                        title_back:More useful information;
+                        description_back:This item has a code or cipher on it;
+                        label_text:Clipboard;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="0.5 0.82 -5" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; 
+                                    label_offset:0 0.35 0; arrow_position:down;
+                                    title:Useful information; 
+                                    description:This item has a code or cipher on it;
+                                    title_back:More useful information;
+                                    description_back:This item has a code or cipher on it;
+                                    label_text:Clipboard;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="0.1 0.82 -5" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; 
+                        label_offset:0 0.35 0; arrow_position:down;
+                        title:Useful information; 
+                        description:This item has a code or cipher on it;
+                        title_back:More useful information;
+                        description_back:This item has a code or cipher on it;
+                        label_text:Clipboard;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="-0.5 0.82 -5" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; 
+                        label_offset:0 0.35 0; arrow_position:down;
+                        title:Useful information; 
+                        description:This item has a code or cipher on it;
+                        title_back:More useful information;
+                        description_back:This item has a code or cipher on it;
+                        label_text:Clipboard;"></a-entity>
+
+        <a-entity id="exit_button" circles-button="pedastal_color:rgb(74, 87, 95);" open-door position="-7 1.5 4"
+            rotation="0 0 -90" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity id="exit_door" geometry="primitive:plane; width:6; height:4;" material="color:#c9f9ff;"
+            position="-7 2 0" rotation="0 90 0"></a-entity>
+        <a-entity id="Portal-Hub" position="-8 2 0" rotation="0 0 0"
+            circles-portal="img_src:/global/assets/textures/equirectangular/PurpleBlue.jpg; title_text:Escape; link_url:/w/Escape_Hub"></a-entity>
+
+        <!-- right side of room -->
+        <a-entity circles-checkpoint position="0 0 7"></a-entity>
+        <a-entity circles-checkpoint position="-4.5 0 7"></a-entity>
+        <a-entity circles-checkpoint position="-4 0 12"></a-entity>
+        <a-entity circles-checkpoint position="0 0 12"></a-entity>
+        <a-entity circles-checkpoint position="4 0 12"></a-entity>
+
+        <a-entity gltf-model="#table_round" position="5.5 0 13" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_round" position="5.5 0 8" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#table_round" position="-6 0 8" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <a-entity id="Artifact-Clipboard" class="interactive narrative" position="-0.5 0.82 -5" rotation="-90 15 0.0"
+            scale="1 1 1" gltf-model="#Clipboard-gltf" shadow="receive:false; cast:false;"
+            circles-sphere-env-map="src:/global/assets/textures/equirectangular/WhiteBlue.jpg" circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90;
+                        label_offset:0 0.35 0; arrow_position:down;
+                        title:Useful information; 
+                        description:This item has a code or cipher on it;
+                        title_back:More useful information;
+                        description_back:This item has a code or cipher on it;
+                        label_text:Clipboard;"></a-entity>
+
+        <a-entity class="interactive narrative" geometry="primitive:plane; width:3; height:2;" material="color:white;"
+            position="-4 2 13.9" rotation="0 180 0" shadow="cast:false; receive:true;" circles-artefact="inspectScale:1.0 1.0 1.0;
+            label_offset:0 0.35 0.35; arrow_position:down;
+            title:Useful information; 
+            description:This item has a code or cipher on it;
+            title_back:More useful information;
+            description_back:This item has a code or cipher on it;
+            label_text:Whiteboard;"></a-entity>
+
+        <a-entity class="interactive narrative" geometry="primitive:plane; width:3; height:2;" material="color:white;"
+            position="0 2 13.9" rotation="0 180 0" shadow="cast:false; receive:true;" circles-artefact="inspectScale:1.0 1.0 1.0;
+            label_offset:0 0.35 0.35; arrow_position:down;
+            title:Useful information; 
+            description:This item has a code or cipher on it;
+            title_back:More useful information;
+            description_back:This item has a code or cipher on it;
+            label_text:Whiteboard;"></a-entity>
+
+        <a-entity class="interactive narrative" geometry="primitive:plane; width:3; height:2;" material="color:white;"
+            position="4 2 13.9" rotation="0 180 0" shadow="cast:false; receive:true;" circles-artefact="inspectScale:1.0 1.0 1.0;
+            label_offset:0 0.35 0.35; arrow_position:down;
+            title:Useful information; 
+            description:This item has a code or cipher on it;
+            title_back:More useful information;
+            description_back:This item has a code or cipher on it;
+            label_text:Whiteboard;"></a-entity>
+
+        <a-entity gltf-model="#chair" position="6 0 13" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="5 0 12" rotation="0 90 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="6 0 6.5" rotation="0 0 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="6 0 8" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <a-entity gltf-model="#chair" position="-5.5 0 8.5" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 9" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 9.6" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 10.2" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 10.8" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 11.4" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-6 0 12.0" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <a-entity gltf-model="#chair" position="-5.3 0 9.6" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-5.3 0 10.2" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-5.3 0 10.8" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-5.3 0 11.4" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+        <a-entity gltf-model="#chair" position="-5.3 0 12.0" rotation="0 180 0" scale="1 1 1"
+            shadow="cast:true; receive:false;"></a-entity>
+
+        <!-- 
+            top is x=7
+            bottom is x=-7
+            left is z=-14
+            right is z=14
+        -->
+
+        <a-entity id="door" position="6.99 1.5 10" rotation="0 -90 0">
+            <a-entity geometry="primitive:plane; width:2; height:3;" material="color:black;"
+                shadow="cast:false; receive:true;"></a-entity>
+            <a-entity id="Portal-Hub" rotation="0 -90 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/PurpleBlue.jpg; title_text:Hub; link_url:/w/Escape_Hub"></a-entity>
+            <a-entity circles-checkpoint circles-spawnpoint position="0 -1.5 1.5"></a-entity>
+        </a-entity>
+
+        <!-- lights -->
+        <a-entity light="type: ambient; color: white"></a-entity>
+
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts />
+</body>
+
+</html>
