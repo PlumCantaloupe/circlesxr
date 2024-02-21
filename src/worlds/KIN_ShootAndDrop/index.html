@@ -151,7 +151,9 @@
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-      <a-box id="floor" position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box>
+      <!-- <a-box id="floor" position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#f2b90c" static-body="shape: plane;" circles-shadow></a-box> -->
+      <a-entity id="floor" position="0 -0.5 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#f2b90c;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
+
       <a-cylinder color="crimson" height="3" radius="1.5" material="color: #996206" geometry="" scale="0.8 0.0001 0.8" position="-1.2 0.01 -6.9"></a-cylinder>
       <a-box id="wall1" scale="0.010 0.410 0.370" position="-12.86857 0.16055 -6.65853" height="1" width="12" depth="22" rotation="0 0 0" color="#f2b90c" static-body ></a-box>
       <a-box id="wall2" scale="0.010 0.410 0.370" position="12.86857 0.16055 -6.65853" height="1" width="12" depth="22" rotation="0 0 0" color="#f2b90c" static-body ></a-box>

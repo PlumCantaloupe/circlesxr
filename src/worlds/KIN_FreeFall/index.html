@@ -184,8 +184,9 @@
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-      <a-box position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#047cc7" static-body="shape: plane;" circles-shadow></a-box>
-      
+      <!-- <a-box position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#047cc7" static-body="shape: plane;" circles-shadow></a-box> -->
+      <a-entity id="floor" position="0 -0.5 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#047cc7;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
+
       <!-- Lab Counters-->
       <a-entity id="Counter1" gltf-model="#Counter-gltf" scale="0.43783 0.43783 0.43783" position="-4.82469 0.55975 -7.13517" rotation="0 180 0"></a-entity>
       <a-entity id="Counter2" gltf-model="#Counter-gltf" scale="-0.438 0.43783 0.43783" position="4.825 0.55975 -7.13517" rotation="0 180 0"></a-entity>
