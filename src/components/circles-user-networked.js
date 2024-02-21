@@ -46,24 +46,15 @@ AFRAME.registerComponent('circles-user-networked', {
           let avatarNode3 = CONTEXT_AF.el.querySelector('.deviceicon_front');
           let avatarNode4 = CONTEXT_AF.el.querySelector('.deviceicon_back');
           let iconPath    = CIRCLES.CONSTANTS.ICON_DEVICE_UNKNOWN;
+          let vrPlatform  = CIRCLES.getVRPlatform();
 
-          alert(AFRAME.utils.device.isMobile());
-
-          if (AFRAME.utils.device.getVRDisplay()) {
-            console.log('getVRDisplay!!!');
+          if (vrPlatform === CIRCLES.VR_PLATFORMS.HMD_WIRED || vrPlatform === CIRCLES.VR_PLATFORMS.HMD_STANDALONE) {
             iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
           }
-          else if (AFRAME.utils.device.isMobileVR()) {
-            console.log('isMobileVR!!!');
-            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
-          }
-          else if (AFRAME.utils.device.isMobile()) {
-            console.log('isMobile!!!');
+          else if (vrPlatform === CIRCLES.VR_PLATFORMS.MOBILE_PHONE || vrPlatform === CIRCLES.VR_PLATFORMS.MOBILE_TABLET) {
             iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_MOBILE;
           }
-          else {
-            //desktop
-            console.log('isDesktop!!!');
+          else if (vrPlatform === CIRCLES.VR_PLATFORMS.DESKTOP) {  
             iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_DESKTOP;
           }
 

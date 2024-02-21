@@ -123,6 +123,14 @@ const EVENTS = {
   // OBJECT_DESTROYED          : 'CIRCLES_OBJECT_DESTROYED',
 };
 
+const VR_PLATFORMS = {
+  DESKTOP              : 'DESKTOP',
+  MOBILE_PHONE         : 'MOBILE',
+  MOBILE_TABLET        : 'MOBILE_TABLET',
+  HMD_STANDALONE       : 'HMD_MOBILE',
+  HMD_WIRED            : 'HMD_OTHER',
+};
+
 const NETWORKED_TEMPLATES = {
   AVATAR              : 'circles-user-template',
   INTERACTIVE_OBJECT  : 'circles-interactive-object-template',
@@ -300,6 +308,33 @@ const enableErrors = function(enable) {
   errorLogsEnabled = enabled;
 }
 
+const getVRPlatform = function() {
+  let vr_platform = 'not_available';
+
+  if (AFRAME.utils.device.checkHeadsetConnected() === true) {
+    //alert('isVRDisplay!!!');
+    vr_platform = VR_PLATFORMS.HMD_WIRED;
+  }
+  if (AFRAME.utils.device.isMobileVR() === true) {
+    //alert('isMobileVR!!!');
+    vr_platform = VR_PLATFORMS.HMD_STANDALONE;
+  }
+  else if (AFRAME.utils.device.isMobile() === true) {
+    //alert('isMobile!!!');
+    vr_platform = VR_PLATFORMS.MOBILE_PHONE;
+  }
+  else if (AFRAME.utils.device.isTablet() === true || AFRAME.utils.device.isMobileDeviceRequestingDesktopSite() === true ) {
+    //alert('isTabletVR!!!');
+    vr_platform = VR_PLATFORMS.MOBILE_TABLET;
+  }
+  else {
+    //alert('isDesktop!!!');
+    vr_platform = VR_PLATFORMS.DESKTOP;
+  }
+
+  return vr_platform
+}
+
 module.exports = {
   CONSTANTS,
   UTILS,
@@ -314,6 +349,7 @@ module.exports = {
   MODEL_BODY_TYPE,
   EVENTS,
   NETWORKED_TEMPLATES,
+  VR_PLATFORMS,
   COLOR_PALETTE,
   getUUID,
   getCirclesConnectTime,
@@ -338,5 +374,6 @@ module.exports = {
   warn,
   enableWarning,
   error,
-  enableErrors
+  enableErrors,
+  getVRPlatform
 };
