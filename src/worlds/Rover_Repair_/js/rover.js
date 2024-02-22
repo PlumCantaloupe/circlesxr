@@ -6,13 +6,20 @@ AFRAME.registerComponent('rover', {
         this.el.addEventListener('click', function(){
 
             //will need CHANGESS
-            let holdingInfo = isHolding(document.getElementById("Player1Cam")); //get player holding info
+            //let holdingInfo = isHolding(document.getElementById("Player1Cam")); //get player holding info
 
+            let pickUpElem = CIRCLES.getPickedUpElement();
+            if (pickUpElem !== null) {
             //verify that player is holdig a part. we have to assume they can only hold one part
-            if(holdingInfo.holding){
+            //if(holdingInfo.holding){
                 
                 //find the part index and call adopt part
-                let partIdx = Number(holdingInfo.id.slice(-2));
+                // let partIdx = Number(holdingInfo.id.slice(-2));
+                let elemId = CIRCLES.getNonNetworkedID(pickUpElem);
+                let partIdx = Number(elemId.slice(-2)); //have array index built into the last two digits of id ...
+
+                //stop holding part
+                pickUpElem.click();  //forward click to element to release
 
                 adoptPart(this, partIdx, true);
 

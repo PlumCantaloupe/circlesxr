@@ -15,23 +15,23 @@ AFRAME.registerComponent('multi-interactions', {
             CONTEXT_AF.connected = true;
 
             //updates part location when another player picks up a part
-            CONTEXT_AF.socket.on("partHoldEvent", function(data){
+            // CONTEXT_AF.socket.on("partHoldEvent", function(data){
                 
-                console.log("emit called");
+            //     console.log("emit called");
 
-                let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
-                let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
+            //     let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
+            //     let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
 
-                //if there has been another player found then have the part be a child of their avatar
-                if(otherPlayer){
-                    //console.log("calling adoption");
-                    //adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
-                    pickup(otherPlayer.querySelector(".avatar"), data.partId);
+            //     //if there has been another player found then have the part be a child of their avatar
+            //     if(otherPlayer){
+            //         //console.log("calling adoption");
+            //         //adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
+            //         pickup(otherPlayer.querySelector(".avatar"), data.partId);
 
-                    console.log("updating other player");
-                }
+            //         console.log("updating other player");
+            //     }
                 
-            });
+            // });
 
             //updates rover with part that has been placed by other player
             CONTEXT_AF.socket.on("roverPartEvent", function(data){
