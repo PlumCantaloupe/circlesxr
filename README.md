@@ -255,6 +255,18 @@ CIRCLES.getAvatarRigElement();
 //return the camera element (from the avatar's point of view, if you want parent things to the camera e.g., adding UIs))
 CIRCLES.getMainCameraElement();
 
+//get reference to the Circles manager entity
+CIRCLES.getCirclesManagerElement();
+
+//get reference to the Circles manager component
+CIRCLES.getCirclesManagerComp();
+
+//returns reference to held element, or null if no held object on this player/client  
+CIRCLES.getPickedUpElement();
+
+//to get the non-networked id of an elem (queries the 'circles-object-world' component for tehj original "id") 
+CIRCLES.getNonNetworkedID(elem);
+
 //Example
 //You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
 CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {

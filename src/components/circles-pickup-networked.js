@@ -16,6 +16,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     networkedEnabled:               {type:'boolean',  default:true},
     networkedTemplate:              {type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
   },
+  dependencies: ['circles-pickup-object'],
   init: function() {
     const CONTEXT_AF      = this;
     const data            = CONTEXT_AF.data;

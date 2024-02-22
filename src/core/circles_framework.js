@@ -212,23 +212,27 @@ const getCirclesResearchWebsocket = function() {
 };
 
 const getCirclesGroupName = function() {
-  return getCirclesManager().getRoom();
+  return getCirclesManagerComp().getRoom();
 }
 
 const getCirclesUserName = function() {
-  return getCirclesManager().getUser();
+  return getCirclesManagerComp().getUser();
 }
 
 const getCirclesWorldName = function() {
-  return getCirclesManager().getWorld();
+  return getCirclesManagerComp().getWorld();
 }
 
-const getCirclesManager = function() {
-  return document.querySelector('[circles-manager]').components['circles-manager'];
+const getCirclesManagerElement = function() {
+  return document.querySelector('[circles-manager]');
+}
+
+const getCirclesManagerComp = function() {
+  return getCirclesManagerElement().components['circles-manager'];
 }
 
 const isReady = function() {
-  return getCirclesManager().isCirclesReady();
+  return getCirclesManagerComp().isCirclesReady();
 }
 
 const isCirclesWebsocketReady = function() {
@@ -276,6 +280,14 @@ const getNAFAvatarElements = function() {
 
 const getAllNAFElements = function() {
   return document.querySelectorAll('[networked]');              //returns all NAF networked objects. You may have to dig into children for more detail.             
+}
+
+const getPickedUpElement = function() {
+  return getCirclesManagerComp().pickedUpElem;             //returns reference to held element, or null if no held object on this player/client            
+}
+
+const getNonNetworkedID = function(elem) {
+  return (elem.hasAttribute('circles-object-world')) ? elem.components['circles-object-world'].data.id : elem.id;             //returns reference to held element, or null if no held object on this player/client            
 }
 
 //CIRCLES.log(text);
@@ -359,7 +371,8 @@ module.exports = {
   getCirclesGroupName,
   getCirclesUserName,
   getCirclesWorldName,
-  getCirclesManager,
+  getCirclesManagerElement,
+  getCirclesManagerComp,
   isReady,
   isCirclesWebsocketReady,
   getAvatarElement,
@@ -369,6 +382,8 @@ module.exports = {
   getCirclesSceneElement,
   getNAFAvatarElements,
   getAllNAFElements,
+  getPickedUpElement,
+  getNonNetworkedID,
   log,
   enableLogs,
   warn,
