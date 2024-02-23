@@ -2,6 +2,8 @@
 AFRAME.registerComponent('rover', {
     init:function(){
 
+        const CONTEXT_AF = this;
+
         //add event listener to object for when it's clicked
         this.el.addEventListener('click', function(){
 
@@ -21,10 +23,12 @@ AFRAME.registerComponent('rover', {
                 //stop holding part
                 pickUpElem.click();  //forward click to element to release
 
-                adoptPart(this, partIdx, true);
+                adoptPart(CONTEXT_AF.el, partIdx, true);
+
+                console.log('partPlaced emit');
 
                 //update other players of the event
-                this.emit('partPlaced', null, false);
+                CONTEXT_AF.el.emit('partPlaced', {roverId:CONTEXT_AF.el.id, partIdx:partIdx}, false);
 
                 //play sound
                 let soundEl = document.getElementById("place_sound_el");
@@ -32,7 +36,7 @@ AFRAME.registerComponent('rover', {
 
                 //waiting for a brief moment to then trigger rover sound (have it speak)
                 setTimeout(()=>{
-                    this.emit("speak");
+                    CONTEXT_AF.el.emit("speak");
                 }, 1000);
 
             }

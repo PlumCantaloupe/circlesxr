@@ -35,18 +35,20 @@ AFRAME.registerComponent('multi-interactions', {
 
             //updates rover with part that has been placed by other player
             CONTEXT_AF.socket.on("roverPartEvent", function(data){
+
+                console.log('on roverPartEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                 
-                let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
-                let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
+                // let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
+                // let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
 
-                //if another player is found and matches data.pnID then do the following
-                if(otherPlayer){
-                    let part = otherPlayer.querySelector(".avatar").querySelector("[id*='part']");
-                    let partIdx = Number(part.id.slice(-2));
-                    let rover = document.getElementById(data.roverID);
+                // //if another player is found and matches data.pnID then do the following
+                // if(otherPlayer){
+                    //let part = otherPlayer.querySelector(".avatar").querySelector("[id*='part']");
+                    //let partIdx = Number(part.id.slice(-2));
+                    //let rover = document.getElementById(data.roverID);
 
-                    adoptPart(rover, partIdx, true);
-                }
+                    adoptPart(document.getElementById(data.roverId), data.partIdx, true);
+                // }
             });
 
             //updates a drwer when another player opens or close it
@@ -62,13 +64,16 @@ AFRAME.registerComponent('multi-interactions', {
             for(let i=0; i < CONTEXT_AF.rovers.length; i++){
                 
                 let rover = CONTEXT_AF.rovers[i];
+
+                console.log('rover: ', rover.id);
                 
                 //add event liseners for rovers
-                rover.addEventListener('partPlaced', function(){
+                rover.addEventListener('partPlaced', function(e){
                     
                     //find the player who place the object and call the socket function
-                    let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
-                    CONTEXT_AF.socket.emit("roverPartEvent", {pnID:playerNetId, roverID:this.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit roverPartEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socket.emit("roverPartEvent", {roverId:e.detail.roverId, partIdx:e.detail.partIdx, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 });
             }
 
