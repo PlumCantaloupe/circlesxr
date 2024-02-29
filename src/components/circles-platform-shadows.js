@@ -20,10 +20,10 @@ AFRAME.registerComponent('circles-platform-shadows', {
     else {
       //desktop and desktop HMD
       if (AFRAME.utils.device.checkHeadsetConnected()) {
-        CONTEXT_AF.el.setAttribute('light', {castShadow:true, shadowMapHeight:1024, shadowMapWidth:2048, shadowBias:-0.00001});
+        CONTEXT_AF.el.setAttribute('light', {castShadow:true, shadowMapHeight:1024, shadowMapWidth:1024, shadowBias:-0.00001});
       }
       else {
-        CONTEXT_AF.el.setAttribute('light', {castShadow:true, shadowMapHeight:1024, shadowMapWidth:2048, shadowBias:-0.00001});
+        CONTEXT_AF.el.setAttribute('light', {castShadow:true, shadowMapHeight:1024, shadowMapWidth:1024, shadowBias:-0.00001});
       }
     }
   }

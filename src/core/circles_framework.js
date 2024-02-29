@@ -123,6 +123,14 @@ const EVENTS = {
   // OBJECT_DESTROYED          : 'CIRCLES_OBJECT_DESTROYED',
 };
 
+const VR_PLATFORMS = {
+  DESKTOP              : 'DESKTOP',
+  MOBILE_PHONE         : 'MOBILE',
+  MOBILE_TABLET        : 'MOBILE_TABLET',
+  HMD_STANDALONE       : 'HMD_MOBILE',
+  HMD_WIRED            : 'HMD_OTHER',
+};
+
 const NETWORKED_TEMPLATES = {
   AVATAR              : 'circles-user-template',
   INTERACTIVE_OBJECT  : 'circles-interactive-object-template',
@@ -204,23 +212,27 @@ const getCirclesResearchWebsocket = function() {
 };
 
 const getCirclesGroupName = function() {
-  return getCirclesManager().getRoom();
+  return getCirclesManagerComp().getRoom();
 }
 
 const getCirclesUserName = function() {
-  return getCirclesManager().getUser();
+  return getCirclesManagerComp().getUser();
 }
 
 const getCirclesWorldName = function() {
-  return getCirclesManager().getWorld();
+  return getCirclesManagerComp().getWorld();
 }
 
-const getCirclesManager = function() {
-  return document.querySelector('[circles-manager]').components['circles-manager'];
+const getCirclesManagerElement = function() {
+  return document.querySelector('[circles-manager]');
+}
+
+const getCirclesManagerComp = function() {
+  return getCirclesManagerElement().components['circles-manager'];
 }
 
 const isReady = function() {
-  return getCirclesManager().isCirclesReady();
+  return getCirclesManagerComp().isCirclesReady();
 }
 
 const isCirclesWebsocketReady = function() {
@@ -270,6 +282,14 @@ const getAllNAFElements = function() {
   return document.querySelectorAll('[networked]');              //returns all NAF networked objects. You may have to dig into children for more detail.             
 }
 
+const getPickedUpElement = function() {
+  return getCirclesManagerComp().pickedUpElem;             //returns reference to held element, or null if no held object on this player/client            
+}
+
+const getNonNetworkedID = function(elem) {
+  return (elem.hasAttribute('circles-object-world')) ? elem.components['circles-object-world'].data.id : elem.id;             //returns reference to held element, or null if no held object on this player/client            
+}
+
 //CIRCLES.log(text);
 const log = function(text) {
   if (basicLogsEnabled === true) {
@@ -300,6 +320,33 @@ const enableErrors = function(enable) {
   errorLogsEnabled = enabled;
 }
 
+const getVRPlatform = function() {
+  let vr_platform = 'not_available';
+
+  if (AFRAME.utils.device.checkHeadsetConnected() === true) {
+    //alert('isVRDisplay!!!');
+    vr_platform = VR_PLATFORMS.HMD_WIRED;
+  }
+  if (AFRAME.utils.device.isMobileVR() === true) {
+    //alert('isMobileVR!!!');
+    vr_platform = VR_PLATFORMS.HMD_STANDALONE;
+  }
+  else if (AFRAME.utils.device.isMobile() === true) {
+    //alert('isMobile!!!');
+    vr_platform = VR_PLATFORMS.MOBILE_PHONE;
+  }
+  else if (AFRAME.utils.device.isTablet() === true || AFRAME.utils.device.isMobileDeviceRequestingDesktopSite() === true ) {
+    //alert('isTabletVR!!!');
+    vr_platform = VR_PLATFORMS.MOBILE_TABLET;
+  }
+  else {
+    //alert('isDesktop!!!');
+    vr_platform = VR_PLATFORMS.DESKTOP;
+  }
+
+  return vr_platform
+}
+
 module.exports = {
   CONSTANTS,
   UTILS,
@@ -314,6 +361,7 @@ module.exports = {
   MODEL_BODY_TYPE,
   EVENTS,
   NETWORKED_TEMPLATES,
+  VR_PLATFORMS,
   COLOR_PALETTE,
   getUUID,
   getCirclesConnectTime,
@@ -323,7 +371,8 @@ module.exports = {
   getCirclesGroupName,
   getCirclesUserName,
   getCirclesWorldName,
-  getCirclesManager,
+  getCirclesManagerElement,
+  getCirclesManagerComp,
   isReady,
   isCirclesWebsocketReady,
   getAvatarElement,
@@ -333,10 +382,13 @@ module.exports = {
   getCirclesSceneElement,
   getNAFAvatarElements,
   getAllNAFElements,
+  getPickedUpElement,
+  getNonNetworkedID,
   log,
   enableLogs,
   warn,
   enableWarning,
   error,
-  enableErrors
+  enableErrors,
+  getVRPlatform
 };

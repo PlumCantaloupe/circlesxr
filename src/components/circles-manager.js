@@ -14,10 +14,18 @@ AFRAME.registerComponent('circles-manager', {
     CONTEXT_AF.camera             = null;
     CONTEXT_AF.playerHolder       = null;
     CONTEXT_AF.isCirclesReadyVar  = false;
-    CONTEXT_AF.artefactZoomSteps    = [-2.0, -1.0];
-    CONTEXT_AF.artefactRotSteps     = [360.0, 90.0, 180.0, 270.0];
-
+    CONTEXT_AF.artefactZoomSteps  = [-2.0, -1.0];
+    CONTEXT_AF.artefactRotSteps   = [360.0, 90.0, 180.0, 270.0];
+    CONTEXT_AF.pickedUpElem       = null; //element that has been picked up
     CONTEXT_AF.arteElems          = [];
+
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, function(e) {
+      CONTEXT_AF.pickedUpElem = e.detail.el;
+    });
+
+    CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, function(e) {
+      CONTEXT_AF.pickedUpElem = null;
+    });
 
     //remove AR/VR buttons if not in a standalone VR HMD (can play with this later but pressing them may result in unexpected behaviour for now i.e. mobile device going into cardboard mode)
     if (!AFRAME.utils.device.isMobileVR()) {

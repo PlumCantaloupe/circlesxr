@@ -46,24 +46,16 @@ AFRAME.registerComponent('circles-user-networked', {
           let avatarNode3 = CONTEXT_AF.el.querySelector('.deviceicon_front');
           let avatarNode4 = CONTEXT_AF.el.querySelector('.deviceicon_back');
           let iconPath    = CIRCLES.CONSTANTS.ICON_DEVICE_UNKNOWN;
+          let vrPlatform  = CIRCLES.getVRPlatform();
 
-          if (AFRAME.utils.device.isMobile()) {
+          if (vrPlatform === CIRCLES.VR_PLATFORMS.HMD_WIRED || vrPlatform === CIRCLES.VR_PLATFORMS.HMD_STANDALONE) {
+            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
+          }
+          else if (vrPlatform === CIRCLES.VR_PLATFORMS.MOBILE_PHONE || vrPlatform === CIRCLES.VR_PLATFORMS.MOBILE_TABLET) {
             iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_MOBILE;
           }
-          else if (AFRAME.utils.device.isMobileVR()) {
-            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD3DOF;
-          }
-          else if (AFRAME.utils.device.isTablet()) {
-            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_MOBILE;
-          }
-          else {
-            //desktop and desktop HMD
-            if (AFRAME.utils.device.checkHeadsetConnected()) {
-              iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_HMD6DOF;
-            }
-            else {
-              iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_DESKTOP;
-            }
+          else if (vrPlatform === CIRCLES.VR_PLATFORMS.DESKTOP) {  
+            iconPath = CIRCLES.CONSTANTS.ICON_DEVICE_DESKTOP;
           }
 
           //set icon textures

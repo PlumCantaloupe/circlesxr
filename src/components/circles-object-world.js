@@ -3,10 +3,10 @@
 
 AFRAME.registerComponent('circles-object-world', {
 schema: {
-    world:        {type: 'string', default:''},
-    id:           {type: 'string', default:''},
+    world:        {type: 'string',  default:''},
+    id:           {type: 'string',  default:''},
     pickedup:     {type: 'boolean', default:false},
-    timeCreated:  {type: 'number', default:-1}
+    timeCreated:  {type: 'number',  default:-1}
   },
   init: function() {
     const CONTEXT_AF    = this;
@@ -15,12 +15,13 @@ schema: {
     if (CONTEXT_AF.data.world === '') {
         CONTEXT_AF.el.setAttribute('circles-object-world', {world:CIRCLES.getCirclesWorldName()});
     }
+
     if (CONTEXT_AF.data.id === '') {
       if (!CONTEXT_AF.el.id) {
         console.error('[circles-object-world]: A networked object requires an ID.')
       }
 
-        CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
+      CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
     }
 
     if (CIRCLES.isCirclesWebsocketReady()) {

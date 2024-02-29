@@ -8,7 +8,7 @@ AFRAME.registerComponent('circles-pickup-object', {
     dropPosition:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to end up after it is released
     dropRotation:       { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //where do we want this to orient as after it is released
     dropScale:          { type: "vec3", default:{x:100001.0, y:0.0, z:0.0} },   //what scale after it is released
-    animate:            { type: "boolean", default:true },                     //whether we animate
+    animate:            { type: "boolean", default:false },                     //whether we animate
     animateDurationMS:  { type: "number", default:400 },                        //how long animation is
     enabled:            { type: "boolean", default:true },                      //whethere this works
   },
@@ -86,6 +86,7 @@ AFRAME.registerComponent('circles-pickup-object', {
 
     //let others know
     CONTEXT_AF.el.emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
+    CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
   },
   release : function(sendNetworkEvent, passedContext) {
     const CONTEXT_AF  = (passedContext) ? passedContext : this;
@@ -98,6 +99,7 @@ AFRAME.registerComponent('circles-pickup-object', {
     const releaseEventFunc = function() {
       //send off event for others
       CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
+      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
       if (data.animate === true) {
         CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
       }

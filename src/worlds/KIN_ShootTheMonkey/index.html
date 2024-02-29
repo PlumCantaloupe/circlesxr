@@ -17,7 +17,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="debug:true; gravity:-9.8; friction: 0.1;" background="color:#6BA32D;" fog="type:linear; color:#6BA32D; far:30; near:10">
+    <a-scene circles_scene_properties physics="debug:false; gravity:-9.8; friction: 0.1;" background="color:#6BA32D;" fog="type:linear; color:#6BA32D; far:30; near:10">
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -62,8 +62,8 @@
       <circles-manager-avatar/>
 
       <!-- Experiment Objects -->
-      <a-entity id="monkey" gltf-model="#Monkey-gltf" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 3 0.69 -6.88; mass: 37"></a-entity>
-      <a-entity id="ball" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -3.01 3.62 -6.97; mass: 0.06;"></a-entity>
+      <a-entity id="monkey" gltf-model="#Monkey-gltf" rotation="" scale="0.06 0.06 0.06" physics-object="initialPosition: 3 0.69 -6.88; mass:37"></a-entity>
+      <a-entity id="ball" scale="0.1 0.1 0.1" gltf-model="#TennisBall-gltf" physics-object="initialPosition: -3.01 3.62 -6.97; mass:0.06;"></a-entity>
       <a-entity id="cannonBase" position="-3.5 3.53 -7.16" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Base-gltf"></a-entity>
       <a-entity id="cannonNozzle" position="-3.45 3.6 -6.98" scale="0.07 0.07 0.07" rotation="0 90 0" gltf-model="#Cannon-Nozzle-gltf"></a-entity>
 
@@ -148,7 +148,8 @@
 
       <!-- Floor -->
       <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-      <a-box id="floor" position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#96CC39" static-body="shape: plane;" circles-shadow></a-box>
+      <!-- <a-box id="floor" position="0 -0.5 -5" height="1" width="30" depth="30" rotation="0 0 0" color="#96CC39" static-body="shape: plane;" circles-shadow></a-box> -->
+      <a-entity id="floor" position="0 -0.5 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#96CC39;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
 
       <!-- Environment -->
       <a-entity gltf-model="#Tree-gltf" position="3.36 0 -7.95" rotation="0 180 0" scale="0.06 0.06 0.06"></a-entity>
