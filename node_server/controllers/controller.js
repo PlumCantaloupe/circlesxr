@@ -657,7 +657,7 @@ const addTestUsers = () => {
     gltf_head_url:          '/global/assets/models/gltf/head/Head_Oval.glb',
     gltf_hair_url:          '/global/assets/models/gltf/hair/Hair_PonyTail.glb',
     gltf_body_url:          '/global/assets/models/gltf/body/Body_Hourglass.glb',
-    //gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb',
+    //gltf_hand_left_url:     '/global/assets/models/gltf/hands/left/Hand_Basic_L.glb', 
     //gltf_hand_right_url:    '/global/assets/models/gltf/hands/left/Hand_Basic_R.glb',
     color_head:             'rgb(59, 45, 37)',
     color_hair:             'rgb(10, 7, 5)',
