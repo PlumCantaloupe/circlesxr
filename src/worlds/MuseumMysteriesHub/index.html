@@ -12,7 +12,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties background="color:#B5CFD6;" fog="type:linear; color:#B5CFD6; far:45; near:0">
+    <a-scene circles_scene_properties background="color:#333333;" >
 
       <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
 
@@ -21,11 +21,14 @@
       <a-assets timeout="10000">
 
         <!-- Images -->
-        <img id='wardrobe' src='/worlds/MuseumMysteries/assets/images/wardrobe.png' crossorigin="anonymous">
-        <img id='storyMode360' src='/worlds/MuseumMysteries/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
+        <img id='icon' src='/worlds/MuseumMysteriesHub/assets/images/magnifyingGlassIcon.png' crossorigin="anonymous">
+        <img id='logo' src='/worlds/MuseumMysteriesHub/assets/images/logo.png' crossorigin="anonymous">
+        <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
+        <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
+        <img id='wardrobe' src='/worlds/MuseumMysteriesHub/assets/images/wardrobe.png' crossorigin="anonymous">
+        <img id='storyMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
         <!--WE NEED TO REPLACE THIS IMG-->
-        <img id='creativeMode360' src='/worlds/MuseumMysteries/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
-        <img id='icon' src='/worlds/MuseumMysteries/assets/images/magnifyingGlassIcon.png' crossorigin="anonymous">
+        <img id='creativeMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
 
         <!-- Models -->
         
@@ -44,7 +47,7 @@
       <circles-manager-avatar/>
       <a-entity id="txtPortal-Wardrobe" 
                 position="-3 4 -9" scale="1.5 1.5 1.5"
-                text="value: Wardrobe; color: #3E5945; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+                text="value: Wardrobe; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="Portal-WardrobeLink"
                 position="-3 2.5 -9" rotation="0 -90 0" scale="1 1 1"
                 circles-portal="img_src:#wardrobe; title_text:Click me to customize avatar; link_url:/w/Wardrobe"></a-entity>
@@ -52,27 +55,55 @@
 
       <!------------------------------------------------------------------------------->
       <!-- Floor -->
-      <a-box position="0 -0.5 -5" height="60" width="60" depth="1" rotation="-90 0 0" color="#415D43" static-body="shape: plane;" circles-shadow></a-box>
+      <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
+      <!-- Ceiling -->
+      <a-box position="0 15 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
+      <!--
       <a-entity id="grndtxtMuseumMWelcome" 
                 position="0 0.005 -2.95" scale="2.5 2.5 2.5" rotation="-90 0 0"
                 text="value: Welcome to; color: #8fd5a6; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="grndtxtMuseumM" 
                 position="0 0.005 -2.55" scale="5 5 5" rotation="-90 0 0"
                 text="value: Museum Mysteries; color: #8fd5a6; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+      -->
+      <!------------------------------------------------------------------------------->
+      <!-- Walls -->
+      <a-image  id="wallFLogo" 
+                position="0 8 -19.99" scale="8 5 5"
+                src="#logo"></a-image>
+      <a-entity id="wallF"
+                geometry="primitive:plane; height:15; width:20;"
+                position="0 7.5 -20"
+                material="src:#walltx"></a-entity>
+      <a-entity id="wallB"
+                geometry="primitive:plane; height:15; width:20;"
+                position="0 7.5 5"
+                rotation="0 180 0"
+                material="src:#walltx"></a-entity>
+      <a-entity id="wallB"
+                geometry="primitive:plane; height:15; width:25;"
+                position="-10 7.5 -7.5"
+                rotation="0 90 0"
+                material="src:#walltx"></a-entity>
+      <a-entity id="wallB"
+                geometry="primitive:plane; height:15; width:25;"
+                position="10 7.5 -7.5"
+                rotation="0 -90 0"
+                material="src:#walltx"></a-entity>
 
       <!------------------------------------------------------------------------------->
-      <!--NEED TO REPLACE LINKS AND IMGs-->
       <!-- Links -->
       <a-entity id="txtStoryMode" 
                 position="-2.5 4 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
-                text="value: Story Mode; color: #3E5945; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+                text="value: Story Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="StoryModeLink"
                 position="-2.5 2.5 -16" rotation="0 -90 0" scale="1 1 1"
                 circles-portal="img_src:#storyMode360; title_text:Click me to be teleported; link_url:/w/MM_StoryMode"></a-entity>
 
+      <!--NEED TO REPLACE LINKS AND IMGs-->
       <a-entity id="txtCreativeMode" 
                 position="2.5 4 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
-                text="value: Creative Mode; color: #3E5945; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+                text="value: Creative Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="CreativeModeLink"
                 position="2.5 2.5 -16" rotation="0 -90 0" scale="1 1 1"
                 circles-portal="img_src:#creativeMode360; title_text:Click me to be teleported; link_url:/w/MM_CreativeMode"></a-entity>
@@ -96,7 +127,17 @@
       <!------------------------------------------------------------------------------->
       <!-- guidelines -->
       <a-entity id="guidelines">
-        <a-entity id="light_1" position="0 -0.05 -3.5"
+        <a-entity id="light_-1" position="0 -0.05 -1"
+                material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                circles-interactive-object="type:highlight; click_sound:#note_c;">
+          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+        </a-entity>
+        <a-entity id="light_0" position="0 -0.05 -2"
+                material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                circles-interactive-object="type:highlight; click_sound:#note_c;">
+          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+        </a-entity>
+        <a-entity id="light_1" position="0 -0.05 -3"
                 material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
                 circles-interactive-object="type:highlight; click_sound:#note_c;">
           <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
@@ -171,8 +212,8 @@
       </a-entity>
 
       <!------------------------------------------------------------------------------->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
+      <!-- lighting -->
+      <a-entity light="type:ambient; color:#FFF; intensity:1"></a-entity>
       
     </a-scene>
 
