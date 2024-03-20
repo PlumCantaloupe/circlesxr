@@ -18,6 +18,9 @@
         <!-- add your assets here -->
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
 
+        <a-asset-item id="human_obj" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.obj"></a-asset-item>
+        <a-asset-item id="human_mtl" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.mtl"></a-asset-item>
+        
         <!-- physical environment -->
         <!-- ATTRIBUTION: model started with https://sketchfab.com/3d-models/wooden-kitchen-drewniana-kuchnia-378fc9906fb94538b72ce2f13c1c418b -->
         <!-- added additional geometry, optimized, re-UV'd and re-textured (WIP) -->
@@ -55,6 +58,7 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
+      <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="-2 0 -1"></a-entity>
 
       <!-- checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="-1.44 0.05 2.6"></a-entity>

@@ -54,12 +54,15 @@
         <a-asset-item id="Gloves-gltf" src="/worlds/WIT_2_Lab/assets/models/gloves/scene.gltf" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="Clipboard-gltf" src="/worlds/WIT_2_Lab/assets/models/clipboard/scene.gltf" response-type="arraybuffer"></a-asset-item>
 
+        <a-asset-item id="human_obj" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.obj"></a-asset-item>
+        <a-asset-item id="human_mtl" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.mtl"></a-asset-item>
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
+      <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="1 0 0"></a-entity>
 
       <!-- checkpoints -->
       <a-entity circles-checkpoint circles-spawnpoint position="6.5 0.050 3.5"></a-entity>

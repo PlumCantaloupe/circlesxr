@@ -16,7 +16,9 @@
       <!-- assets -->
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
-        
+        <a-asset-item id="human_obj" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.obj"></a-asset-item>
+        <a-asset-item id="human_mtl" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.mtl"></a-asset-item>
+       
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -28,6 +30,7 @@
         
         <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="0.0 1.5 -2.5" 
                     circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
+      <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="1 0 0"></a-entity>
 
       <!-- Body Shape Choices -->
       <a-entity id="body_choices" position="-1.3 3.0 -2">
