@@ -32,6 +32,9 @@
         <!-- Models -->
         <a-asset-item id="human_obj" src="assets/models/scaleReference.obj"></a-asset-item>
         <a-asset-item id="human_mtl" src="assets/models/scaleReference.mtl"></a-asset-item>
+        <a-asset-item id="podium_gltf" src="assets/models/podium.gltf" response-type="arraybuffer"></a-asset-item>
+        <img id='podium_tx' src='assets/models/podiumTX.jpg' crossorigin="anonymous">
+
 
         <!-- SOUND -->
         <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -54,6 +57,8 @@
                 circles-portal="img_src:#wardrobe; title_text:Click me to customize avatar; link_url:/w/Wardrobe"></a-entity>
 
       <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="-3 0.05 -7"></a-entity>
+      <a-entity id="podium" position="3 0.05 -8" rotation="0 180 0"
+                gltf-model="#podium_gltf" ></a-entity>
 
       
       <!------------------------------------------------------------------------------->

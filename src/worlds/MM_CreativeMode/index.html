@@ -26,17 +26,25 @@
         <!-- Aritfact Models -->
         <a-asset-item id="human_obj" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.obj"></a-asset-item>
         <a-asset-item id="human_mtl" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.mtl"></a-asset-item>
-       
+        <a-asset-item id="CPUTerminal_obj" src="assets/models/CPUTerminal.obj"></a-asset-item>
+        <a-asset-item id="CPUTerminal_mtl" src="assets/models/CPUTerminal.mtl"></a-asset-item>
+        <a-asset-item id="lemWood_gltf" src="assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="majesticCamera_obj" src="assets/models/majesticCamera.obj"></a-asset-item>
+        <a-asset-item id="majesticCamera_mtl" src="assets/models/majesticCamera.mtl"></a-asset-item>
+        <a-asset-item id="northernElectricPhone_obj" src="assets/models/northernElectricPhone.obj"></a-asset-item>
+        <a-asset-item id="northernElectricPhone_mtl" src="assets/models/northernElectricPhone.mtl"></a-asset-item>
+        <a-asset-item id="singerSewingMachine_gltf" src="assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Environment -->
-
 
         <!-- Images -->
         <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
         <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
+        <img id='lemWood_Tx' src='/worlds/MuseumMysteriesHub/assets/models/lemWood.jpg' crossorigin="anonymous">
+        <img id='singerSewingMachine_Tx' src='/worlds/MuseumMysteriesHub/assets/models/singerSewingMachine.jpg' crossorigin="anonymous">
        
         <!-- Hub image -->
-        <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHub.png' crossorigin="anonymous">
+        <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -44,7 +52,6 @@
 
       <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-manager-avatar/>
-      <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="1 0 0"></a-entity>
 
       <!-- Floor -->
       <a-entity id="floor" position="0 -1 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#f2b90c;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
@@ -81,34 +88,60 @@
       </a-entity>
 
       <!-- Artifacts -->
-      <a-entity id="artifacts" position="0 1 -1" rotation="0 -90 0">  
+      <a-entity id="artifacts" position="5 0.5 1" rotation="0 -90 0">
+        <a-entity id="singerSewingMachine" position="-2 1 0" rotation="0 90 0"
+                  gltf-model="#singerSewingMachine_gltf" 
+                  material.transparency="false"
+                  circles-pickup-object
+                  circles-pickup-networked
+                  shadow="receive:false; cast:false;"></a-entity>
+        <a-entity id="lemWood" position="-0.75 1 0.5"
+                  gltf-model="#lemWood_gltf" 
+                  material.transparency="false"
+                  circles-pickup-object
+                  circles-pickup-networked
+                  shadow="receive:false; cast:false;"></a-entity>  
+        <a-entity obj-model="obj: #CPUTerminal_obj; mtl: #CPUTerminal_mtl" position="0.25 1 0"
+                  circles-pickup-object
+                  circles-pickup-networked 
+                  shadow="cast:true; receive:true;"></a-entity>
+        <a-entity obj-model="obj: #majesticCamera_obj; mtl: #majesticCamera_mtl" position="1.25 1 0"
+                  circles-pickup-object
+                  circles-pickup-networked 
+                  shadow="cast:true; receive:true;"></a-entity>
+        <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl" position="2 1 0"
+                  circles-pickup-object
+                  circles-pickup-networked 
+                  shadow="cast:true; receive:true;"></a-entity>
+      </a-entity>
+      <a-entity id="artifacts_placeholders" position="0 3 -1" rotation="0 -90 0">  
         <a-entity id="torus_knot" position="0 1 -5"
                   geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
                   circles-pickup-object="pickupScale:0.5 0.5 0.5;"
                   circles-pickup-networked 
                   shadow="cast:true; receive:true;"></a-entity>
         <a-entity id="torus_knot" position="1 1 -5"
                   geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
                   circles-pickup-object="pickupScale:0.5 0.5 0.5;"
                   circles-pickup-networked 
                   shadow="cast:true; receive:true;"></a-entity>
         <a-entity id="torus_knot" position="2 1 -5"
                   geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
                   circles-pickup-object="pickupScale:0.5 0.5 0.5;"
                   circles-pickup-networked 
                   shadow="cast:true; receive:true;"></a-entity>
         <a-entity id="torus_knot" position="3 1 -5"
                   geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
                   circles-pickup-object="pickupScale:0.5 0.5 0.5;"
                   circles-pickup-networked 
                   shadow="cast:true; receive:true;"></a-entity>
         <a-entity id="torus_knot" position="4 1 -5"
                   geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:yellow; emissive:red; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
                   circles-pickup-object="pickupScale:0.5 0.5 0.5;"
                   circles-pickup-networked 
                   shadow="cast:true; receive:true;"></a-entity>
