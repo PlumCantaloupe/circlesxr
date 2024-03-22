@@ -29,6 +29,7 @@
           <a-asset-item id="singerSewingMachine_gltf" src="assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Environment -->
+        <a-asset-item id="room_gltf" src="assets/models/creativeRoom.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!-- Images -->
           <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
@@ -45,40 +46,12 @@
 
       <!-- Circles' built-in avatar [REQUIRED] -->
         <circles-manager-avatar/>
-
+      <a-entity id="room" 
+                gltf-model="#room_gltf"
+                position="0 0 0"
+                shadow></a-entity>
       <!-- TMP Room -->
-        <a-entity id="floor" position="0 -1 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#f2b90c;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
-        <a-entity id="TitleText" position="0 0.05 -2.5" rotation="-90 0 0" scale="12 12 12" text="value:Exhibit Room; color: #c79600; width: 1; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-        
-        <a-entity id="room" position="0 0 3">
-          <!------------------------------------------------------------------------------->
-          <!-- Floor -->
-          <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
-          <!-- Ceiling -->
-          <a-box position="0 9.75 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
 
-          <!------------------------------------------------------------------------------->
-          <!-- Walls -->
-          <a-entity id="wallF"
-                    geometry="primitive:plane; height:10; width:11;"
-                    position="0 4.8 -8"
-                    material="src:#walltx"></a-entity>
-          <a-entity id="wallB"
-                    geometry="primitive:plane; height:10; width:11;"
-                    position="0 4.8 2"
-                    rotation="0 180 0"
-                    material="src:#walltx"></a-entity>
-          <a-entity id="wallR"
-                    geometry="primitive:plane; height:10; width:15;"
-                    position="-5.5 4.8 -5"
-                    rotation="0 90 0"
-                    material="src:#walltx"></a-entity>
-          <a-entity id="wallL"
-                    geometry="primitive:plane; height:10; width:15;"
-                    position="5.5 4.8 -5"
-                    rotation="0 -90 0"
-                    material="src:#walltx"></a-entity>
-        </a-entity>
 
       <!-- Artifacts -->
         <a-entity id="artifacts" position="5 0.5 1" rotation="0 -90 0">
@@ -181,6 +154,11 @@
 
       <!------------------------------------------------------------------------------->
       <!-- lighting -->
+        <a-entity id='skyBox'
+                  rotation='0 200 0'
+                  geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+                  material='shader:flat; src:#skyMap; side:back;'>
+        </a-entity>
         <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
     </a-scene>
