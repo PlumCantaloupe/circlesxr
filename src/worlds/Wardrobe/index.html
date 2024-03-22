@@ -17,6 +17,8 @@
       <a-assets>
         <img id='skyMap' src='/global/assets/textures/equirectangular/WhiteBlue.jpg' crossorigin="anonymous">
 
+        <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -70,9 +72,13 @@
       </a-entity>
 
       <!-- by default this portal will point to the "fire"; but we will change to last_visited if there is a world marked as last visisted in url search params (see script at bottm) -->>
+      
+      <a-entity id="backToHubTXT" 
+                position="0.0 2.5 5.0" scale="1.5 1.5 1.5" rotation="0 180 0"
+                text="value: Back To Hub; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="portal"
                 position="0.0 1.7 5.0" rotation="0 90 0" scale="1 1 1"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:The Fire; link_url:/w/Campfire"></a-entity>
+                circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/MuseumMysteriesHub"></a-entity>
 
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
 
