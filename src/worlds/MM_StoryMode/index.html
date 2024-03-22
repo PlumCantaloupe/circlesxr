@@ -33,11 +33,18 @@
           <a-asset-item id="CPUTerminal_mtl" src="/worlds/MM_CreativeMode/assets/models/CPUTerminal.mtl"></a-asset-item>
           <a-asset-item id="northernElectricPhone_obj" src="/worlds/MM_CreativeMode/assets/models/northernElectricPhone.obj"></a-asset-item>
           <a-asset-item id="northernElectricPhone_mtl" src="/worlds/MM_CreativeMode/assets/models/northernElectricPhone.mtl"></a-asset-item>
+          <a-asset-item id="arm_obj" src="assets/models/spaceArmBeta.obj"></a-asset-item>
+          <a-asset-item id="arm_mtl" src="assets/models/spaceArmBeta.mtl"></a-asset-item>
 
         <!-- Environment -->
         <a-asset-item id="room_gltf" src="assets/models/room.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!-- Images -->
+          <img id='IngeniumLogo' src='assets/images/Ingenium-BI-rgb.png' crossorigin="anonymous">
+          <img id='hint01' src='assets/images/ingenium_hint01.png' crossorigin="anonymous">
+          <img id='hint02' src='assets/images/ingenium_hint02.png' crossorigin="anonymous">
+          <img id='hint03' src='assets/images/ingenium_hint03.png' crossorigin="anonymous">
+          
 
         <!-- Hub image -->
         <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
@@ -55,6 +62,10 @@
       <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl"
                 position="9.5 1 6"
                 shadow="cast:true; receive:true;"></a-entity>  
+      <a-entity obj-model="obj: #arm_obj; mtl: #arm_mtl"
+                position="-20 0.05 -1.7"
+                shadow="cast:true; receive:true;"></a-entity>  
+      <a-entity id="placeholdes">        
         <a-entity id="artefact-gem"
                     position="0 1.5 -12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
@@ -65,7 +76,7 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
+                                      label_text:Placeholder: Beaker Puzzle Object;"
                     circles-pickup-networked></a-entity>          
         <a-entity id="artefact-gem"
                     position="-2 1.5 -12" rotation="0 0 0" scale="1 1 1"
@@ -77,7 +88,7 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
+                                      label_text:Placeholder: Beaker Puzzle Object;"
                     circles-pickup-networked></a-entity> 
         <a-entity id="artefact-gem"
                     position="2 1.5 -12" rotation="0 0 0" scale="1 1 1"
@@ -89,10 +100,10 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
+                                      label_text:Placeholder: Beaker Puzzle Object;"
                     circles-pickup-networked></a-entity>     
         <a-entity id="artefact-gem"
-                    position="-0.5 1.5 12" rotation="0 0 0" scale="1 1 1"
+                    position="0.5 1.5 12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
@@ -101,10 +112,10 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
+                                      label_text:Placeholder:Placeholder: Cleaning Task Objectt;"
                     circles-pickup-networked></a-entity>          
         <a-entity id="artefact-gem"
-                    position="-1 1.5 12" rotation="0 0 0" scale="1 1 1"
+                    position="2 1.5 12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
@@ -113,10 +124,10 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
+                                      label_text:Placeholder: Cleaning Task Object;"
                     circles-pickup-networked></a-entity> 
         <a-entity id="artefact-gem"
-                    position="3 1.5 12" rotation="0 0 0" scale="1 1 1"
+                    position="3.5 1.5 12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
@@ -125,17 +136,26 @@
                                       description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked></a-entity>       
-
+                                      label_text:Placeholder: Cleaning Task Object;"
+                    circles-pickup-networked></a-entity> 
+        </a-entity>
+      
+      <!-- Text -->
+      <a-entity id="Welcome" position="9.5 2 5.5" scale="0.8 0.8 0.8" rotation="0 0 0" text="value: “Welcome to your first day on the job! You need to clean the artifacts so we can put them on the floor ASAP! Email me when you are finished with the job then you are good to go. Good luck!”; color: #fff; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+      
+      <!-- hints for computor password puzzle -->
+        <a-image src="#IngeniumLogo" position="-3 1.1 7.5" rotation="-80 -90 0"></a-image>
+        <a-image src="#hint01" position="-4 1.005 -12.4" rotation="-90 0 0" scale="2 0.5 1"></a-image>
+        <a-image src="#hint02" position="-9 0.005 0" rotation="-90 90 0" scale="10 2 1"></a-image>
+        <a-image src="#hint03" position="3 1.005 11" rotation="-90 180 0" scale="2 0.5 1"></a-image>
 
       <!-- Portal to back to MM Hub --> 
-        <a-entity id="backToHub" 
+        <a-entity id="backToHubTXT" 
                   position="14 3 8" scale="1.5 1.5 1.5" rotation="0 -90 0"
                   text="value: Back To Hub; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="HubLink"
             position="14 1.5 8" rotation="0 180 0" scale="1 1 1"
-            circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/MuseumMysteriesHub"></a-entity>
+            circles-portal="img_src:#hub360; title_text:Click me to be teleported; text_color:black; link_url:/w/MuseumMysteriesHub"></a-entity>
             
       </a-entity>
 
@@ -144,6 +164,7 @@
       <a-entity circles-checkpoint position="9.5 0.05 8"></a-entity>
       <a-entity circles-checkpoint position="5 0.05 8"></a-entity>
       
+      <a-entity circles-checkpoint position="2.5 0.05 8"></a-entity>
       <a-entity circles-checkpoint position="0 0.05 8"></a-entity>
       <a-entity circles-checkpoint position="-3.5 0.05 4.75"></a-entity>
       <a-entity circles-checkpoint position="-4.25 0.05 9"></a-entity>
@@ -151,8 +172,8 @@
       <a-entity circles-checkpoint position="0 0.05 3"></a-entity>
 
       <a-entity circles-checkpoint position="0 0.05 0"></a-entity>
-      <a-entity circles-checkpoint position="-3.5 0.05 -1.7"></a-entity>
-      <a-entity circles-checkpoint position="3.5 0.05 -1.7"></a-entity>
+      <a-entity circles-checkpoint position="-5 0.05 0.719"></a-entity>
+      <a-entity circles-checkpoint position="4 0.05 -1.7"></a-entity>
 
       <a-entity id="bkShelveCHK01" circles-checkpoint position="-5 0.05 -7"></a-entity>
       <a-entity id="bkShelveCHK02" circles-checkpoint position="-2 0.05 -7"></a-entity>
@@ -166,7 +187,7 @@
       <a-entity id="beakersCHK05" circles-checkpoint position="5 0.05 -10.5"></a-entity>
 
       <!-- envir -->
-      <a-entity id="grass" position="0 -1 0"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#63A350;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
+      <a-entity id="grass" position="0 -1 0"  geometry="primitive:box; depth:50; width:50; height:1;" material="color:#63A350;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
       <a-entity id="room" 
                 gltf-model="#room_gltf"
                 position="0 0 0"
@@ -179,6 +200,7 @@
                 geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
+      <a-entity id="MMSMInstructions" position="17 0.05 -1.7" text="value: FREE FALL; color: #13446e; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" rotation="-90 0 0"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

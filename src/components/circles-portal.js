@@ -4,6 +4,7 @@ AFRAME.registerComponent('circles-portal', {
   schema: {
     img_src:              {type:'asset', default:CIRCLES.CONSTANTS.DEFAULT_ENV_MAP},
     title_text:           {type:'string', default:''},
+    text_color:           {type:'string', default:''},
     link_url:             {type:'string', default:''},
     useDefaultModel:      {type:'boolean', default:true}
   },
@@ -21,6 +22,7 @@ AFRAME.registerComponent('circles-portal', {
     CONTEXT_AF.titleElem.setAttribute('position', {x:0, y:1, z:0});
     CONTEXT_AF.titleElem.setAttribute('rotation', {x:0, y:90, z:0});
     CONTEXT_AF.titleElem.setAttribute('text', {value:data.title_text, align:'center', width:5.0});
+    CONTEXT_AF.titleElem.setAttribute('color', {value:data.text_color});
     CONTEXT_AF.el.appendChild(CONTEXT_AF.titleElem);
 
     //where do we go when this portal is clicked

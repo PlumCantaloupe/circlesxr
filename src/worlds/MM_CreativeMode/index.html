@@ -32,8 +32,6 @@
         <a-asset-item id="room_gltf" src="assets/models/creativeRoom.gltf" crossorigin="anonymous"></a-asset-item>
 
         <!-- Images -->
-          <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
-          <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
           <img id='lemWood_Tx' src='/worlds/MuseumMysteriesHub/assets/models/lemWood.jpg' crossorigin="anonymous">
           <img id='singerSewingMachine_Tx' src='/worlds/MuseumMysteriesHub/assets/models/singerSewingMachine.jpg' crossorigin="anonymous">
        
@@ -46,20 +44,23 @@
 
       <!-- Circles' built-in avatar [REQUIRED] -->
         <circles-manager-avatar/>
+      <!-- Room -->
       <a-entity id="room" 
                 gltf-model="#room_gltf"
                 position="0 0 0"
                 shadow></a-entity>
-      <!-- TMP Room -->
 
+      <!-- Text -->
+      <a-entity id="Welcome" position="0.3 2.04 -5.81" scale="1.5 1.5 1.5" rotation="0 0 0" text="value: “Welcome to the Creative Room where you can curate your own exhibit. \nPickup objects off the shelves and place them as you like. \nWhen holding an object, click the information(i) icon to learn more about it!”; color: #fff; width: 4; wrapCount: 65; align: center; tabSize: 4.5; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+      
 
       <!-- Artifacts -->
-        <a-entity id="artifacts" position="5 0.5 1" rotation="0 -90 0">
-          <a-entity id="singerSewingMachine" position="-2 1 0" rotation="0 90 0"
+          <a-entity id="singerSewingMachine" position="-15.5 1 -12" rotation="0 0 0"
                     gltf-model="#singerSewingMachine_gltf" 
                     circles-pickup-object
                     circles-pickup-networked
                     shadow="receive:false; cast:false;"></a-entity>
+        <a-entity id="artifacts" position="4.5 0.2 1" rotation="0 -90 0">
           <a-entity id="lemWood" position="-0.75 1 0.5"
                     gltf-model="#lemWood_gltf" 
                     circles-pickup-object
@@ -78,7 +79,7 @@
                     circles-pickup-networked 
                     shadow="cast:true; receive:true;"></a-entity>
         </a-entity>
-        <a-entity id="artifacts_placeholders" position="0 3 -1" rotation="0 -90 0">  
+        <a-entity id="artifacts_placeholders" position="-1 2.7 -1" rotation="0 -90 0">  
           <a-entity id="torus_knot" position="0 1 -5"
                     geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
                     material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
@@ -142,15 +143,29 @@
         </a-entity>
 
       <!-- Back to hub -->
-        <a-entity class="backToLabel" position="0 0 3.5" rotation="-90 0 180" text="value:Back to; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-        <a-entity class="panelLabel" position="0 0 3" rotation="-90 0 180" text="value:Hub; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
+      <a-entity position="-6 0 0" rotation="0 -90 0">
+        <a-entity id="backToHubTXT" 
+                  position="0 3 0" scale="1.5 1.5 1.5" rotation="0 180 0"
+                  text="value: Back To Hub; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
         <a-entity id="HubLink"
-                  position="0 1.5 4.33" rotation="0 90 0" scale="1 1 1"
-                  circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/MuseumMysteriesHub"></a-entity>
-
+                  position="0 1.5 0" rotation="0 90 0" scale="1 1 1"
+                  circles-portal="img_src:#hub360; title_text:Click me to be teleported; color:black; link_url:/w/MuseumMysteriesHub"></a-entity>
+      </a-entity>
       <!------------------------------------------------------------------------------->
       <!-- Checkpoints -->
         <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 0"></a-entity>
+        <a-entity circles-checkpoint position="3 0.05 0"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 -3"></a-entity>
+        <a-entity circles-checkpoint position="0 0.05 -3"></a-entity>
+
+        <a-entity circles-checkpoint position="-4.5 0.05 -7.7"></a-entity>
+        <a-entity circles-checkpoint position="-4.5 0.05 -12"></a-entity>
+        <a-entity circles-checkpoint position="-8 0.05 -12"></a-entity>
+        
+        <a-entity circles-checkpoint position="-13.8 0.05 -9"></a-entity>
+        <a-entity circles-checkpoint position="-13.8 0.05 -12"></a-entity>
+        <a-entity circles-checkpoint position="-13.8 0.05 -15"></a-entity>
 
       <!------------------------------------------------------------------------------->
       <!-- lighting -->
