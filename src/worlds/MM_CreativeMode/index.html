@@ -5,11 +5,6 @@
 
     <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
-    <!-- Physics script goes after the Circles' head scripts [IMPORTANT]-->
-    <script src="/global/js/libs/aframe-physics-system.min.js"></script>
-    <script src="/worlds/KIN_ShootAndDrop/components/physics-object.js"></script>
-    <script src="/worlds/KIN_ShootAndDrop/components/collision-indicator.js"></script>
-    <script src="/worlds/KIN_ShootAndDrop/scripts/experiment-functions.js"></script>
   </head>
 
   <body onload="setup()">
@@ -17,151 +12,177 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="debug:false; gravity:-9.8; friction: 0.1; restitution: 0.5;" background="color:#fff;" fog="type:linear; color:#fff; far:30; near:0">
+    <a-scene circles_scene_properties background="color:#333333;" >
 
-      <a-camera position="0 1.4 3" rotation="-1 0 0"></a-camera>
+      <a-camera position="0 1.6 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
       <a-assets timeout="10000">
 
         <!-- Aritfact Models -->
-        <a-asset-item id="human_obj" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.obj"></a-asset-item>
-        <a-asset-item id="human_mtl" src="/worlds/MuseumMysteriesHub/assets/models/scaleReference.mtl"></a-asset-item>
-        <a-asset-item id="CPUTerminal_obj" src="assets/models/CPUTerminal.obj"></a-asset-item>
-        <a-asset-item id="CPUTerminal_mtl" src="assets/models/CPUTerminal.mtl"></a-asset-item>
-        <a-asset-item id="lemWood_gltf" src="assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="majesticCamera_obj" src="assets/models/majesticCamera.obj"></a-asset-item>
-        <a-asset-item id="majesticCamera_mtl" src="assets/models/majesticCamera.mtl"></a-asset-item>
-        <a-asset-item id="northernElectricPhone_obj" src="assets/models/northernElectricPhone.obj"></a-asset-item>
-        <a-asset-item id="northernElectricPhone_mtl" src="assets/models/northernElectricPhone.mtl"></a-asset-item>
-        <a-asset-item id="singerSewingMachine_gltf" src="assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="CPUTerminal_obj" src="assets/models/CPUTerminal.obj"></a-asset-item>
+          <a-asset-item id="CPUTerminal_mtl" src="assets/models/CPUTerminal.mtl"></a-asset-item>
+          <a-asset-item id="lemWood_gltf" src="assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="majesticCamera_obj" src="assets/models/majesticCamera.obj"></a-asset-item>
+          <a-asset-item id="majesticCamera_mtl" src="assets/models/majesticCamera.mtl"></a-asset-item>
+          <a-asset-item id="northernElectricPhone_obj" src="assets/models/northernElectricPhone.obj"></a-asset-item>
+          <a-asset-item id="northernElectricPhone_mtl" src="assets/models/northernElectricPhone.mtl"></a-asset-item>
+          <a-asset-item id="singerSewingMachine_gltf" src="assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Environment -->
 
         <!-- Images -->
-        <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
-        <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
-        <img id='lemWood_Tx' src='/worlds/MuseumMysteriesHub/assets/models/lemWood.jpg' crossorigin="anonymous">
-        <img id='singerSewingMachine_Tx' src='/worlds/MuseumMysteriesHub/assets/models/singerSewingMachine.jpg' crossorigin="anonymous">
+          <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
+          <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
+          <img id='lemWood_Tx' src='/worlds/MuseumMysteriesHub/assets/models/lemWood.jpg' crossorigin="anonymous">
+          <img id='singerSewingMachine_Tx' src='/worlds/MuseumMysteriesHub/assets/models/singerSewingMachine.jpg' crossorigin="anonymous">
        
         <!-- Hub image -->
-        <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
+          <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
 
         <!-- Circles' built-in assets [REQUIRED] -->
-        <circles-assets/>
+          <circles-assets/>
       </a-assets>
 
       <!-- Circles' built-in avatar [REQUIRED] -->
-      <circles-manager-avatar/>
+        <circles-manager-avatar/>
 
-      <!-- Floor -->
-      <a-entity id="floor" position="0 -1 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#f2b90c;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
-      <a-entity id="TitleText" position="0 0.05 -2.5" rotation="-90 0 0" scale="12 12 12" text="value:Exhibit Room; color: #c79600; width: 1; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-      
-      <a-entity id="room" position="0 0 3">
-        <!------------------------------------------------------------------------------->
-        <!-- Floor -->
-        <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
-        <!-- Ceiling -->
-        <a-box position="0 9.75 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
+      <!-- TMP Room -->
+        <a-entity id="floor" position="0 -1 -5"  geometry="primitive:box; depth:30; width:30; height:1;" material="color:#f2b90c;" body="type:static; mass:0; shape:box;" circles-shadow></a-entity>
+        <a-entity id="TitleText" position="0 0.05 -2.5" rotation="-90 0 0" scale="12 12 12" text="value:Exhibit Room; color: #c79600; width: 1; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        
+        <a-entity id="room" position="0 0 3">
+          <!------------------------------------------------------------------------------->
+          <!-- Floor -->
+          <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
+          <!-- Ceiling -->
+          <a-box position="0 9.75 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
 
-        <!------------------------------------------------------------------------------->
-        <!-- Walls -->
-        <a-entity id="wallF"
-                  geometry="primitive:plane; height:10; width:11;"
-                  position="0 4.8 -8"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallB"
-                  geometry="primitive:plane; height:10; width:11;"
-                  position="0 4.8 2"
-                  rotation="0 180 0"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallR"
-                  geometry="primitive:plane; height:10; width:15;"
-                  position="-5.5 4.8 -5"
-                  rotation="0 90 0"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallL"
-                  geometry="primitive:plane; height:10; width:15;"
-                  position="5.5 4.8 -5"
-                  rotation="0 -90 0"
-                  material="src:#walltx"></a-entity>
-      </a-entity>
+          <!------------------------------------------------------------------------------->
+          <!-- Walls -->
+          <a-entity id="wallF"
+                    geometry="primitive:plane; height:10; width:11;"
+                    position="0 4.8 -8"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallB"
+                    geometry="primitive:plane; height:10; width:11;"
+                    position="0 4.8 2"
+                    rotation="0 180 0"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallR"
+                    geometry="primitive:plane; height:10; width:15;"
+                    position="-5.5 4.8 -5"
+                    rotation="0 90 0"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallL"
+                    geometry="primitive:plane; height:10; width:15;"
+                    position="5.5 4.8 -5"
+                    rotation="0 -90 0"
+                    material="src:#walltx"></a-entity>
+        </a-entity>
 
       <!-- Artifacts -->
-      <a-entity id="artifacts" position="5 0.5 1" rotation="0 -90 0">
-        <a-entity id="singerSewingMachine" position="-2 1 0" rotation="0 90 0"
-                  gltf-model="#singerSewingMachine_gltf" 
-                  material.transparency="false"
-                  circles-pickup-object
-                  circles-pickup-networked
-                  shadow="receive:false; cast:false;"></a-entity>
-        <a-entity id="lemWood" position="-0.75 1 0.5"
-                  gltf-model="#lemWood_gltf" 
-                  material.transparency="false"
-                  circles-pickup-object
-                  circles-pickup-networked
-                  shadow="receive:false; cast:false;"></a-entity>  
-        <a-entity obj-model="obj: #CPUTerminal_obj; mtl: #CPUTerminal_mtl" position="0.25 1 0"
-                  circles-pickup-object
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity obj-model="obj: #majesticCamera_obj; mtl: #majesticCamera_mtl" position="1.25 1 0"
-                  circles-pickup-object
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl" position="2 1 0"
-                  circles-pickup-object
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-      </a-entity>
-      <a-entity id="artifacts_placeholders" position="0 3 -1" rotation="0 -90 0">  
-        <a-entity id="torus_knot" position="0 1 -5"
-                  geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                  circles-pickup-object="pickupScale:0.5 0.5 0.5;"
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity id="torus_knot" position="1 1 -5"
-                  geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                  circles-pickup-object="pickupScale:0.5 0.5 0.5;"
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity id="torus_knot" position="2 1 -5"
-                  geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                  circles-pickup-object="pickupScale:0.5 0.5 0.5;"
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity id="torus_knot" position="3 1 -5"
-                  geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                  circles-pickup-object="pickupScale:0.5 0.5 0.5;"
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-        <a-entity id="torus_knot" position="4 1 -5"
-                  geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                  material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                  circles-pickup-object="pickupScale:0.5 0.5 0.5;"
-                  circles-pickup-networked 
-                  shadow="cast:true; receive:true;"></a-entity>
-      </a-entity>
+        <a-entity id="artifacts" position="5 0.5 1" rotation="0 -90 0">
+          <a-entity id="singerSewingMachine" position="-2 1 0" rotation="0 90 0"
+                    gltf-model="#singerSewingMachine_gltf" 
+                    circles-pickup-object
+                    circles-pickup-networked
+                    shadow="receive:false; cast:false;"></a-entity>
+          <a-entity id="lemWood" position="-0.75 1 0.5"
+                    gltf-model="#lemWood_gltf" 
+                    circles-pickup-object
+                    circles-pickup-networked
+                    shadow="receive:false; cast:false;"></a-entity>  
+          <a-entity obj-model="obj: #CPUTerminal_obj; mtl: #CPUTerminal_mtl" position="0.25 1 0"
+                    circles-pickup-object
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity obj-model="obj: #majesticCamera_obj; mtl: #majesticCamera_mtl" position="1.25 1 0"
+                    circles-pickup-object
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl" position="2 1 0"
+                    circles-pickup-object
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+        </a-entity>
+        <a-entity id="artifacts_placeholders" position="0 3 -1" rotation="0 -90 0">  
+          <a-entity id="torus_knot" position="0 1 -5"
+                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
+                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
+                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                      title: Placeholder Artefact;
+                                      description:This is a placeholder artefact;
+                                      title_back:[~20-25 chars] Title Back;
+                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                      label_text:Placeholder;"
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity id="torus_knot" position="1 1 -5"
+                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
+                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
+                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                      title: Placeholder Artefact;
+                                      description:This is a placeholder artefact;
+                                      title_back:[~20-25 chars] Title Back;
+                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                      label_text:Placeholder;"
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity id="torus_knot" position="2 1 -5"
+                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
+                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
+                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                      title: Placeholder Artefact;
+                                      description:This is a placeholder artefact;
+                                      title_back:[~20-25 chars] Title Back;
+                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                      label_text:Placeholder;"
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity id="torus_knot" position="3 1 -5"
+                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
+                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
+                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                      title: Placeholder Artefact;
+                                      description:This is a placeholder artefact;
+                                      title_back:[~20-25 chars] Title Back;
+                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                      label_text:Placeholder;"
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity id="torus_knot" position="4 1 -5"
+                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
+                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
+                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
+                                      title: Placeholder Artefact;
+                                      description:This is a placeholder artefact;
+                                      title_back:[~20-25 chars] Title Back;
+                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                      label_text:Placeholder;"
+                    circles-pickup-networked 
+                    shadow="cast:true; receive:true;"></a-entity>
+        </a-entity>
 
       <!-- Back to hub -->
-      <a-entity class="backToLabel" position="0 0 3.5" rotation="-90 0 180" text="value:Back to; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
-      <a-entity class="panelLabel" position="0 0 3" rotation="-90 0 180" text="value:Hub; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
-      <a-entity id="HubLink"
-                position="0 1.5 4.33" rotation="0 90 0" scale="1 1 1"
-                circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/MuseumMysteriesHub"></a-entity>
+        <a-entity class="backToLabel" position="0 0 3.5" rotation="-90 0 180" text="value:Back to; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="4.5 4.5 4.5"></a-entity>
+        <a-entity class="panelLabel" position="0 0 3" rotation="-90 0 180" text="value:Hub; color: #c79600; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_ShootAndDrop/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"  scale="5 5 5"></a-entity>
+        <a-entity id="HubLink"
+                  position="0 1.5 4.33" rotation="0 90 0" scale="1 1 1"
+                  circles-portal="img_src:#hub360; title_text:Click me to be teleported; link_url:/w/MuseumMysteriesHub"></a-entity>
 
       <!------------------------------------------------------------------------------->
       <!-- Checkpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+        <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
 
       <!------------------------------------------------------------------------------->
       <!-- lighting -->
-      <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
-      <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
+        <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->

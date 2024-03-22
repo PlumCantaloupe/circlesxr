@@ -123,15 +123,9 @@ AFRAME.registerComponent('circles-pickup-object', {
     if (data.animate === true) {
       CONTEXT_AF.el.setAttribute('animation__cpo_position', { property:'position', dur:(CIRCLES.UTILS.isTheSameXYZ(dropPos, thisPos, SAME_DIFF) ? 0.0 : data.animateDurationMS), 
                                                               isRawProperty:true, to:dropPos, easing:'easeInOutQuad'});
-      CONTEXT_AF.el.setAttribute('animation__cpo_rotation', { property:'rotation', dur:(CIRCLES.UTILS.isTheSameXYZ(dropRot, thisRot, SAME_DIFF) ? 0.0 : data.animateDurationMS), 
-                                                              isRawProperty:true, to:dropRot, easing:'easeInOutQuad'});
-      CONTEXT_AF.el.setAttribute('animation__cpo_scale', {    property:'scale', dur:(CIRCLES.UTILS.isTheSameXYZ(dropSca, thisSca, SAME_DIFF) ? 0.0 : data.animateDurationMS),
-                                                              isRawProperty:true, to:dropSca, easing:'easeInOutQuad'});
     }
     else {
       CONTEXT_AF.el.object3D.position.set(dropPos.x, dropPos.y, dropPos.z);
-      CONTEXT_AF.el.object3D.rotation.set(dropRot.x, dropRot.y, dropRot.z);
-      CONTEXT_AF.el.object3D.scale.set(dropSca.x, dropSca.y, dropSca.z);
     }
 
     CONTEXT_AF.pickedUp = false;

@@ -14,214 +14,211 @@
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties background="color:#333333;" >
 
-
+      <a-camera position="0 1.6 3" rotation="-1 0 0"></a-camera>
       <!------------------------------------------------------------------------------->
       <!-- assets -->
       <a-assets timeout="10000">
 
         <!-- Images -->
-        <img id='icon' src='/worlds/MuseumMysteriesHub/assets/images/magnifyingGlassIcon.png' crossorigin="anonymous">
-        <img id='logo' src='/worlds/MuseumMysteriesHub/assets/images/logo.png' crossorigin="anonymous">
-        <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
-        <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
-        <img id='wardrobe' src='/worlds/MuseumMysteriesHub/assets/images/wardrobe.png' crossorigin="anonymous">
-        <img id='storyMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
-        <!--WE NEED TO REPLACE THIS IMG-->
-        <img id='creativeMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
+          <img id='icon' src='/worlds/MuseumMysteriesHub/assets/images/magnifyingGlassIcon.png' crossorigin="anonymous">
+          <img id='logo' src='/worlds/MuseumMysteriesHub/assets/images/logo.png' crossorigin="anonymous">
+          <img id='walltx' src='/worlds/MuseumMysteriesHub/assets/images/wall.png' crossorigin="anonymous">
+          <img id='floortx' src='/worlds/MuseumMysteriesHub/assets/images/floor.png' crossorigin="anonymous">
+          <img id='wardrobe' src='/worlds/MuseumMysteriesHub/assets/images/wardrobe.png' crossorigin="anonymous">
+          <img id='storyMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
+          <!--WE NEED TO REPLACE THIS IMG-->
+          <img id='creativeMode360' src='/worlds/MuseumMysteriesHub/assets/images/Spherical_From_Cubeface_7_cODkYA.jpg' crossorigin="anonymous">
 
         <!-- Models -->
-        <a-asset-item id="human_obj" src="assets/models/scaleReference.obj"></a-asset-item>
-        <a-asset-item id="human_mtl" src="assets/models/scaleReference.mtl"></a-asset-item>
-        <a-asset-item id="podium_gltf" src="assets/models/podium.gltf" response-type="arraybuffer"></a-asset-item>
-        <img id='podium_tx' src='assets/models/podiumTX.jpg' crossorigin="anonymous">
+          <a-asset-item id="human_obj" src="assets/models/scaleReference.obj"></a-asset-item>
+          <a-asset-item id="human_mtl" src="assets/models/scaleReference.mtl"></a-asset-item>
+          <a-asset-item id="podium_gltf" src="assets/models/podium.gltf" response-type="arraybuffer"></a-asset-item>
+          <img id='podium_tx' src='assets/models/podiumTX.jpg' crossorigin="anonymous">
 
-
-        <!-- SOUND -->
-        <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <!-- SOUND --> <!--maybe replace these later-->
+          <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
+          <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
+          <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
+          <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
 
         <!-- Circles' built-in assets [REQUIRED] -->
-        <circles-assets/>
+          <circles-assets/>
       </a-assets>
 
       <!------------------------------------------------------------------------------->
       <!-- Circles' built-in avatar [REQUIRED] -->
       <circles-manager-avatar/>
-      <a-entity id="txtPortal-Wardrobe" 
-                position="-3 3.5 -9" scale="1.5 1.5 1.5"
-                text="value: Wardrobe; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-      <a-entity id="Portal-WardrobeLink"
-                position="-3 2 -9" rotation="0 -90 0" scale="1 1 1"
-                circles-portal="img_src:#wardrobe; title_text:Click me to customize avatar; link_url:/w/Wardrobe"></a-entity>
-
-      <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="-3 0.05 -7"></a-entity>
-      <a-entity id="podium" position="3 0.05 -8" rotation="0 180 0"
-                gltf-model="#podium_gltf" ></a-entity>
-
+      <!-- scaleRerference
+        <a-entity obj-model="obj: #human_obj; mtl: #human_mtl" position="-3 0.05 -7"></a-entity>
+      -->
       
       <!------------------------------------------------------------------------------->
       <!-- Welcome/Intro/Instructions panel -->
+        <a-entity id="podium" position="3 0.05 -8" rotation="0 180 0"
+                  gltf-model="#podium_gltf" ></a-entity>
 
+      <!-- ROOM ----------------------------------------------------------------------->
       <a-entity id="room">
-        <!------------------------------------------------------------------------------->
-        <!-- Floor -->
-        <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
         <!-- Ceiling -->
-        <a-box position="0 15 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
-
-        <!------------------------------------------------------------------------------->
+          <a-box position="0 12.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="color:#BFB4A1" static-body="shape: plane;" circles-shadow></a-box>
+        <!-- Floor -->
+          <a-box position="-1.75 -0.5 -7.5" height="35" width="35" depth="1" rotation="-90 0 0" material="src:#floortx" static-body="shape: plane;" circles-shadow></a-box>
         <!-- Walls -->
-
-        <a-image  id="wallFLogo" 
-                  position="0 8 -19.99" scale="8 5 5"
-                  src="#logo"></a-image>
-        <a-entity id="wallF"
-                  geometry="primitive:plane; height:15; width:20;"
-                  position="0 7.5 -20"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallB"
-                  geometry="primitive:plane; height:15; width:20;"
-                  position="0 7.5 5"
-                  rotation="0 180 0"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallB"
-                  geometry="primitive:plane; height:15; width:25;"
-                  position="-10 7.5 -7.5"
-                  rotation="0 90 0"
-                  material="src:#walltx"></a-entity>
-        <a-entity id="wallB"
-                  geometry="primitive:plane; height:15; width:25;"
-                  position="10 7.5 -7.5"
-                  rotation="0 -90 0"
-                  material="src:#walltx"></a-entity>
+          <a-image  id="wallFLogo" 
+                    position="0 7.5 -19.99" scale="8 3.5 5"
+                    src="#logo"></a-image>
+          <a-entity id="wallF"
+                    geometry="primitive:plane; height:13; width:20;"
+                    position="0 6.5 -20"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallB"
+                    geometry="primitive:plane; height:13; width:20;"
+                    position="0 6.5 5"
+                    rotation="0 180 0"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallL"
+                    geometry="primitive:plane; height:13; width:25;"
+                    position="-9 6.5 -7.5"
+                    rotation="0 90 0"
+                    material="src:#walltx"></a-entity>
+          <a-entity id="wallR"
+                    geometry="primitive:plane; height:13; width:25;"
+                    position="9 6.5 -7.5"
+                    rotation="0 -90 0"
+                    material="src:#walltx"></a-entity>
       </a-entity>
 
       <!------------------------------------------------------------------------------->
       <!-- Links -->
-      <a-entity id="txtStoryMode" 
-                position="-2.5 3.5 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
-                text="value: Story Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-      <a-entity id="StoryModeLink"
-                position="-2.5 2 -16" rotation="0 -90 0" scale="1 1 1"
-                circles-portal="img_src:#storyMode360; title_text:Click me to be teleported; link_url:/w/MM_StoryMode"></a-entity>
-
-      <!--NEED TO REPLACE IMGs-->
-      <a-entity id="txtCreativeMode" 
-                position="2.5 3.5 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
-                text="value: Creative Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-      <a-entity id="CreativeModeLink"
-                position="2.5 2 -16" rotation="0 -90 0" scale="1 1 1"
-                circles-portal="img_src:#creativeMode360; title_text:Click me to be teleported; link_url:/w/MM_CreativeMode"></a-entity>
-      
+        <a-entity id="txtStoryMode" 
+                  position="-2.5 3.5 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
+                  text="value: Story Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity id="StoryModeLink"
+                  position="-2.5 2 -16" rotation="0 -90 0" scale="1 1 1"
+                  circles-portal="img_src:#storyMode360; title_text:Click me to be teleported; link_url:/w/MM_StoryMode"></a-entity>
+        <a-entity id="txtPortal-Wardrobe" 
+                  position="-3 3.5 -9" scale="1.5 1.5 1.5"
+                  text="value: Wardrobe; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <a-entity id="Portal-WardrobeLink"
+                  position="-3 2 -9" rotation="0 -90 0" scale="1 1 1"
+                  circles-portal="img_src:#wardrobe; title_text:Click me to customize avatar; link_url:/w/Wardrobe"></a-entity>
+        
+        <a-entity id="txtCreativeMode" 
+                  position="2.5 3.5 -16" scale="1.5 1.5 1.5" rotation="0 0 0"
+                  text="value: Creative Mode; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
+        <!--NEED TO REPLACE IMG-->
+        <a-entity id="CreativeModeLink"
+                  position="2.5 2 -16" rotation="0 -90 0" scale="1 1 1"
+                  circles-portal="img_src:#creativeMode360; title_text:Click me to be teleported; link_url:/w/MM_CreativeMode"></a-entity>
+        
       <!------------------------------------------------------------------------------->
       <!-- Checkpoints -->
-      <!--spawn-->
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
-      <!--checkPoint01-->
-      <a-entity circles-checkpoint position="0 0.05 -5"></a-entity>
-      <!--wardrobe-->
-      <a-entity circles-checkpoint position="-3 0.05 -7"></a-entity>
-      <!--welcomeTutorialTXT-->
-      <a-entity circles-checkpoint position="3 0.05 -7"></a-entity>
-      <!--checkPoint02-->
-      <a-entity circles-checkpoint position="0 0.05 -12"></a-entity>
-      <!--gameModes-->
-      <a-entity circles-checkpoint position="-2.5 0.05 -14"></a-entity>
-      <a-entity circles-checkpoint position="2.2 0.05 -14"></a-entity>
+        <!--spawn-->
+          <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+        <!--checkPoint01-->
+          <a-entity circles-checkpoint position="0 0.05 -5"></a-entity>
+        <!--wardrobe-->
+          <a-entity circles-checkpoint position="-3 0.05 -7"></a-entity>
+        <!--welcomeTutorialTXT-->
+          <a-entity circles-checkpoint position="3 0.05 -7"></a-entity>
+        <!--checkPoint02-->
+          <a-entity circles-checkpoint position="0 0.05 -12"></a-entity>
+        <!--gameModes-->
+          <a-entity circles-checkpoint position="-2.5 0.05 -14"></a-entity>
+          <a-entity circles-checkpoint position="2.2 0.05 -14"></a-entity>
 
       <!------------------------------------------------------------------------------->
-      <!-- guidelines -->
-      <a-entity id="guidelines">
-        <a-entity id="light_-1" position="0 -0.05 -1"
-                material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                circles-interactive-object="type:highlight; click_sound:#note_c;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_0" position="0 -0.05 -2"
-                material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                circles-interactive-object="type:highlight; click_sound:#note_c;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_1" position="0 -0.05 -3"
-                material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                circles-interactive-object="type:highlight; click_sound:#note_c;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_2" position="0 -0.05 -4" 
+      <!-- guidelines(the orbs on the ground) -->
+        <a-entity id="guidelines">
+          <a-entity id="light_-1" position="0 -0.05 -1"
                   material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_e;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_3" position="0 -0.05 -6" 
+                  circles-interactive-object="type:highlight; click_sound:#note_c;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_0" position="0 -0.05 -2"
                   material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_f;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_4" position="0 -0.05 -7"
+                  circles-interactive-object="type:highlight; click_sound:#note_c;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_1" position="0 -0.05 -3"
                   material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+                  circles-interactive-object="type:highlight; click_sound:#note_c;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_2" position="0 -0.05 -4" 
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_e;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_3" position="0 -0.05 -6" 
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_f;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_4" position="0 -0.05 -7"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_4ra" position="1 -0.05 -7"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_4rb" position="2 -0.05 -7"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_4la" position="-1 -0.05 -7"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_4lb" position="-2 -0.05 -7"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_5" position="0 -0.05 -8"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-image  id="iconFloor" position="0 0.01 -9" scale="0.45 0.45 0.45" rotation="-90 0 30"
+                    src="#icon"></a-image>
+          <a-entity id="light_6" position="0 -0.05 -10"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_7" position="0 -0.05 -13.25"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_8" position="0 -0.05 -14"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_8r" position="1 -0.05 -14"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
+          <a-entity id="light_8l" position="-1 -0.05 -14"
+                    material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
+                    circles-interactive-object="type:highlight; click_sound:#note_d;">
+            <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
+          </a-entity>
         </a-entity>
-        <a-entity id="light_4ra" position="1 -0.05 -7"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_4rb" position="2 -0.05 -7"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_4la" position="-1 -0.05 -7"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_4lb" position="-2 -0.05 -7"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_5" position="0 -0.05 -8"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-image  id="iconFloor" position="0 0.01 -9" scale="0.45 0.45 0.45" rotation="-90 0 30"
-                  src="#icon"></a-image>
-        <a-entity id="light_6" position="0 -0.05 -10"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_7" position="0 -0.05 -13.25"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_8" position="0 -0.05 -14"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_8r" position="1 -0.05 -14"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-        <a-entity id="light_8l" position="-1 -0.05 -14"
-                  material="color:#BFBAB6; opacity:0.8; emissive:#fff; emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.1;"
-                  circles-interactive-object="type:highlight; click_sound:#note_d;">
-          <a-entity light="type:point; color:#fff; intensity:5.0;"></a-entity>
-        </a-entity>
-      </a-entity>
       
       <!------------------------------------------------------------------------------->
       <!-- lighting -->
-      <a-entity light="type:ambient; color:#FFF; intensity:1"></a-entity>
-      
+        <a-entity light="type:ambient; color:#FFF; intensity:1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
+
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
