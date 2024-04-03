@@ -347,6 +347,55 @@ const getVRPlatform = function() {
   return vr_platform
 }
 
+/*
+The "sharedData" functions give developers an easy way to share data and states between a group, i.e., there is a semi-persistent data object available. 
+As long as one of the original group members is logged in the data will be available. However, once all grouped users leave a virtual environment the data is lost. 
+*/
+CIRCLES.shared_data = {};
+const setupSharedData = function() {
+  CONTEXT_AF.socket = null;
+  CONTEXT_AF.sharedDataEventName = "shared_data_event";
+
+  CONTEXT_AF.createNetworkingSystem = function () {
+    CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket(); //get socket
+
+    if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+    }
+    else {
+        const wsReadyFunc = function() {
+            CONTEXT_AF.createNetworkingSystem();
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        };
+        CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+    }
+
+    //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time (not perfect) ...
+    setTimeout(function() {
+      CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+    }, THREE.MathUtils.randInt(0,1200));
+
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+      if (data.room === CIRCLES.getCirclesGroupName()) {
+        CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {sharedData:CIRCLES.shared_data, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+      }
+    });
+
+    CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
+      if (data.room === CIRCLES.getCirclesGroupName()) {
+        CIRCLES.shared_data = data.sharedData;
+      }
+    });
+}
+
+const getSharedData = function(keyName) {
+
+}
+
+const setSharedData = function(keyName, keyData) {
+
+}
+
 module.exports = {
   CONSTANTS,
   UTILS,
