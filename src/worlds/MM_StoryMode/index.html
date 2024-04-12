@@ -29,12 +29,12 @@
         <audio id="Narr_welcome" src="assets/audio/narr_welcome.mp3" preload="true"></audio>-->
 
         <!-- Models -->
-          <a-asset-item id="CPUTerminal_obj" src="/worlds/MM_CreativeMode/assets/models/CPUTerminal.obj"></a-asset-item>
-          <a-asset-item id="CPUTerminal_mtl" src="/worlds/MM_CreativeMode/assets/models/CPUTerminal.mtl"></a-asset-item>
-          <a-asset-item id="northernElectricPhone_obj" src="/worlds/MM_CreativeMode/assets/models/northernElectricPhone.obj"></a-asset-item>
-          <a-asset-item id="northernElectricPhone_mtl" src="/worlds/MM_CreativeMode/assets/models/northernElectricPhone.mtl"></a-asset-item>
-          <a-asset-item id="arm_obj" src="assets/models/spaceArmBeta.obj"></a-asset-item>
-          <a-asset-item id="arm_mtl" src="assets/models/spaceArmBeta.mtl"></a-asset-item>
+          <a-asset-item id="majesticCamera_gltf" src="/worlds/MM_CreativeMode/assets/models/majesticCamera.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="northernElectronicsTelephone_gltf" src="/worlds/MM_CreativeMode/assets/models/northernElectricsTelephone.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="CPUTerminal_gltf" src="/worlds/MM_CreativeMode/assets/models/CPUTerminal.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="lemWood_gltf" src="/worlds/MM_CreativeMode/assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="singerSewingMachine_gltf" src="/worlds/MM_CreativeMode/assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
+
 
         <!-- Environment -->
         <a-asset-item id="room_gltf" src="assets/models/room.gltf" crossorigin="anonymous"></a-asset-item>
@@ -57,9 +57,10 @@
       <circles-manager-avatar/>
 
       <!-- models -->
-      <a-entity obj-model="obj: #CPUTerminal_obj; mtl: #CPUTerminal_mtl" position="-2.8 1 9" rotation="0 -90 0"
+      <a-entity gltf-model="#CPUTerminal_gltf" 
+                position="-2.8 1 9" rotation="0 -90 0"
                 shadow="cast:true; receive:true;"></a-entity>
-      <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl"
+      <a-entity gltf-model="#northernElectronicsTelephone_gltf"
                 position="9.5 1 6"
                 shadow="cast:true; receive:true;"></a-entity>  
       <a-entity obj-model="obj: #arm_obj; mtl: #arm_mtl"
@@ -77,7 +78,7 @@
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
                                       label_text:Placeholder: Beaker Puzzle Object;"
-                    circles-pickup-networked></a-entity>          
+                    circles-pickup-networked></a-entity>    
         <a-entity id="artefact-gem"
                     position="-2 1.5 -12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
@@ -102,30 +103,24 @@
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
                                       label_text:Placeholder: Beaker Puzzle Object;"
                     circles-pickup-networked></a-entity>     
-        <a-entity id="artefact-gem"
-                    position="0.5 1.5 12" rotation="0 0 0" scale="1 1 1"
+        <a-entity id="artefact-sewingMachine"
+                    position="0.5 1 11" rotation="0 90 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title:[~20-25 chars] Title Front;
-                                      description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder:Placeholder: Cleaning Task Objectt;"
-                    circles-pickup-networked></a-entity>          
+                    gltf-model="#singerSewingMachine_gltf">
+                    <a-entity class="button interactive"
+                    id="dirtSpec01"
+                    position="0.15 0.3 0.3"
+                    geometry="primitive:sphere; radius:0.04"
+                    material="color:#FFD637"
+                    animation__mouseenter="property:material.color; type:color; to:#FFE78B; startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:#FFD637; startEvents:mouseleave; dur:200"
+                    animation__click="property:geometry.radius; from:0.04; to:0; startEvents:click; dur:300"></a-entity>    </a-entity>          
         <a-entity id="artefact-gem"
-                    position="2 1.5 12" rotation="0 0 0" scale="1 1 1"
+                    position="2 1 11.5" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title:[~20-25 chars] Title Front;
-                                      description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder: Cleaning Task Object;"
-                    circles-pickup-networked></a-entity> 
+                    gltf-model="#lemWood_gltf"></a-entity> 
         <a-entity id="artefact-gem"
                     position="3.5 1.5 12" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"

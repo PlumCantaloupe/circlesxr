@@ -143,8 +143,10 @@ AFRAME.registerComponent('circles-artefact', {
       CONTEXT_AF.el.setAttribute('circles-pickup-object', {pickupScale: data.inspectScale });
     }
 
+    //set drop pos
     if ( (oldData.origPosition !== data.origPosition) && (data.origPosition !== '') ) {
-      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.origPos : data.origPosition)});
+      //this made the obj go back to the original pos, we don't want this
+      //CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.origPos : data.origPosition)});
     }
 
     if ( (oldData.origRotation !== data.origRotation) && (data.origRotation !== '') ) {

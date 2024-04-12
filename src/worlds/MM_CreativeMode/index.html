@@ -19,13 +19,10 @@
       <a-assets timeout="10000">
 
         <!-- Aritfact Models -->
-          <a-asset-item id="CPUTerminal_obj" src="assets/models/CPUTerminal.obj"></a-asset-item>
-          <a-asset-item id="CPUTerminal_mtl" src="assets/models/CPUTerminal.mtl"></a-asset-item>
+          <a-asset-item id="majesticCamera_gltf" src="assets/models/majesticCamera.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="northernElectronicsTelephone_gltf" src="assets/models/northernElectricsTelephone.gltf" response-type="arraybuffer"></a-asset-item>
+          <a-asset-item id="CPUTerminal_gltf" src="assets/models/CPUTerminal.gltf" response-type="arraybuffer"></a-asset-item>
           <a-asset-item id="lemWood_gltf" src="assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
-          <a-asset-item id="majesticCamera_obj" src="assets/models/majesticCamera.obj"></a-asset-item>
-          <a-asset-item id="majesticCamera_mtl" src="assets/models/majesticCamera.mtl"></a-asset-item>
-          <a-asset-item id="northernElectricPhone_obj" src="assets/models/northernElectricPhone.obj"></a-asset-item>
-          <a-asset-item id="northernElectricPhone_mtl" src="assets/models/northernElectricPhone.mtl"></a-asset-item>
           <a-asset-item id="singerSewingMachine_gltf" src="assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Environment -->
@@ -57,26 +54,64 @@
       <!-- Artifacts -->
           <a-entity id="singerSewingMachine" position="-15.5 1 -12" rotation="0 0 0"
                     gltf-model="#singerSewingMachine_gltf" 
-                    circles-pickup-object
                     circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.6 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Tools;
+                                      audio:#Narr_tools-snd; volume:0.4;"
                     shadow="receive:false; cast:false;"></a-entity>
         <a-entity id="artifacts" position="4.5 0.2 1" rotation="0 -90 0">
           <a-entity id="lemWood" position="-0.75 1 0.5"
                     gltf-model="#lemWood_gltf" 
-                    circles-pickup-object
                     circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.4 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Tools;
+                                      audio:#Narr_tools-snd; volume:0.4;"
                     shadow="receive:false; cast:false;"></a-entity>  
-          <a-entity obj-model="obj: #CPUTerminal_obj; mtl: #CPUTerminal_mtl" position="0.25 1 0"
-                    circles-pickup-object
-                    circles-pickup-networked 
+          <a-entity id="CPUTerminal" position="0.25 1 0"
+                    gltf-model="#CPUTerminal_gltf"
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.4 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Tools;
+                                      audio:#Narr_tools-snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-          <a-entity obj-model="obj: #majesticCamera_obj; mtl: #majesticCamera_mtl" position="1.25 1 0"
-                    circles-pickup-object
-                    circles-pickup-networked 
+          <a-entity id="majesticCamera" position="1.25 1 0"
+                    gltf-model="#majesticCamera_gltf"
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.4 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Tools;
+                                      audio:#Narr_tools-snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-          <a-entity obj-model="obj: #northernElectricPhone_obj; mtl: #northernElectricPhone_mtl" position="2 1 0"
-                    circles-pickup-object
-                    circles-pickup-networked 
+          <a-entity id="northernElectricsTelephone" position="2 1 0" rotation="0 0 0"
+                    gltf-model="#northernElectronicsTelephone_gltf"
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.4 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Tools;
+                                      audio:#Narr_tools-snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
         </a-entity>
         <a-entity id="artifacts_placeholders" position="-1 2.7 -1" rotation="0 -90 0">  
@@ -176,6 +211,18 @@
         </a-entity>
         <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 1.0" position="0 1 1"></a-entity>
+
+        
+        <!-- this is magic code created when the node server runs -->
+        <!-- //VERY HANDY! https://socket.io/docs/v3/emit-cheatsheet/  -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            socket.on('connect', (userData) => {
+                console.log('I exist!');
+            });
+        </script>
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
