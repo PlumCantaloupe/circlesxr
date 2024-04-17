@@ -24,8 +24,8 @@ AFRAME.registerComponent('circles-label', {
 
     CONTEXT_AF.TEXT_WIDTH           = 1.0;
     CONTEXT_AF.TEXT_HEIGHT          = 0.3;
-    CONTEXT_AF.LABEL_WIDTH          = 0.8; 
-    CONTEXT_AF.LABEL_HEIGHT         = 0.4;
+    CONTEXT_AF.LABEL_WIDTH          = 1.0; 
+    CONTEXT_AF.LABEL_HEIGHT         = 0.5;
     CONTEXT_AF.ARROW_SIZE           = 0.05; 
     CONTEXT_AF.worldPos             = new THREE.Vector3();
 

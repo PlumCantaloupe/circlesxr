@@ -108,12 +108,12 @@ AFRAME.registerComponent('circles-pickup-object', {
     //----------------------------------------------------------------------------------------------
     //dropPos
     var thisPos = {x:0, y:0, z:0};  
-    if (CONTEXT_AF.el.object3D.position.x < 0){
+    if ((CONTEXT_AF.el.object3D.position.x < -2) && (CONTEXT_AF.el.object3D.position.z < -5.5)){
       console.log("new pos");
       thisPos = {x:-10, y:1, z:20};
     }
-    else{
-      thisPos = {x:CONTEXT_AF.el.object3D.position.x, y:1.0, z:CONTEXT_AF.el.object3D.position.z};  
+    else{ //obj go back to orig pos in storage room
+      thisPos = {x:data.dropPosition.x, y:data.dropPosition.y, z:data.dropPosition.z};  
       console.log("default new pos");
     }
 
@@ -146,14 +146,20 @@ AFRAME.registerComponent('circles-pickup-object', {
 
     //sending a "pre" event to turn off controls before any animations might be done
     CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT_PRE, null, true);
+    //let others know
+    CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
+    //CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
   },
   clickFunc : function(e) {
+    console.log("clickFunction?")
     const CONTEXT_AF = (e) ? e.srcElement.components['circles-pickup-object'] : this;
     if (CONTEXT_AF.pickedUp === true) {
       CONTEXT_AF.release(true, CONTEXT_AF);
+      console.log("clickFunction01")
     }
     else {
       CONTEXT_AF.pickup(true, CONTEXT_AF);
+      console.log("clickFunction02")
     }
   }
 });

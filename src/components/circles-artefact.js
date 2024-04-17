@@ -114,13 +114,20 @@ AFRAME.registerComponent('circles-artefact', {
     // });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
+      console.log("1");
       if (e.detail.sendNetworkEvent === true) {
+        console.log("2");
         CONTEXT_AF.pickup(CONTEXT_AF);
+      }
+      else{
+        console.log("testing?")
       }
     });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
+      console.log("3");
       if (e.detail.sendNetworkEvent === true) {
+        console.log("4");
         CONTEXT_AF.release(CONTEXT_AF);
       }
     });
@@ -145,8 +152,8 @@ AFRAME.registerComponent('circles-artefact', {
 
     //set drop pos
     if ( (oldData.origPosition !== data.origPosition) && (data.origPosition !== '') ) {
-      //this made the obj go back to the original pos, we don't want this
-      //CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.origPos : data.origPosition)});
+      //this made the obj go back to the original pos, we don't want this?nvm
+      CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropPosition:((data.origPosition.x > 100000.0) ? CONTEXT_AF.origPos : data.origPosition)});
     }
 
     if ( (oldData.origRotation !== data.origRotation) && (data.origRotation !== '') ) {
@@ -164,24 +171,29 @@ AFRAME.registerComponent('circles-artefact', {
     //hide label
     if (CONTEXT_AF.data.label_on === true) {
       CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', false);
+      console.log("hidelabel");
     }
 
     //show description
     if (CONTEXT_AF.data.description_on === true) {
       CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', true);
+      console.log("showDescription");
     }
   },
   release : function(passedContext) {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
+    console.log("realeaseFunction");
 
     //show label
     if (CONTEXT_AF.data.label_on === true) {
       CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', true);
+      console.log("showlabel");
     }
 
     //hide description
     if (CONTEXT_AF.data.description_on === true) {
       CONTEXT_AF.descEl.setAttribute('circles-interactive-visible', false);
+      console.log("hideDescription");
     }
   },
   addLabelEventListener: function() {

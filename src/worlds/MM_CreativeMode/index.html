@@ -35,6 +35,8 @@
         <!-- Hub image -->
           <img id='hub360' src='/worlds/MuseumMysteriesHub/assets/images/MMHubIMG.png' crossorigin="anonymous">
 
+        <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
+          
         <!-- Circles' built-in assets [REQUIRED] -->
           <circles-assets/>
       </a-assets>
@@ -48,137 +50,83 @@
                 shadow></a-entity>
 
       <!-- Text -->
-      <a-entity id="Welcome" position="0.3 2.04 -5.81" scale="1.5 1.5 1.5" rotation="0 0 0" text="value: “Welcome to the Creative Room where you can curate your own exhibit. \nPickup objects off the shelves and place them as you like. \nWhen holding an object, click the information(i) icon to learn more about it!”; color: #fff; width: 4; wrapCount: 65; align: center; tabSize: 4.5; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
-      
+      <a-entity id="Welcome" position="0.6 2.1 -5.6" scale="1.5 1.5 1.5" rotation="0 0 0" text="value: “Welcome to the Creative Room where you can curate your own exhibit. \nPickup objects off the shelves and place them as you like. \nWhen holding an object, click the information(i) icon to learn more about it!”; color: #fff; width: 4; wrapCount: 65; align: center; tabSize: 4.5; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>     
 
       <!-- Artifacts -->
-          <a-entity id="singerSewingMachine" position="-15.5 1 -12" rotation="0 0 0"
+          <a-entity id="singerSewingMachine" position="4.2 3.2 -3" rotation="0 0 0"
+                    geometry="primitive:octahedron; radius:0.4;"
+                    material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#singerSewingMachine_gltf" 
                     circles-pickup-networked
-                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; inspectRotation:0 -90 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 1.3 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Singer Sewing Machine;
+                                      audio:#Narr_tools-snd; volume:0.4;"
+                    shadow="receive:false; cast:false;"></a-entity>
+          <a-entity id="lemWood" position="4 1.2 0.5" rotation="0 -90 0"
+                    geometry="primitive:octahedron; radius:0.4;"
+                    material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                    gltf-model="#lemWood_gltf" 
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; inspectRotation:0 0 0; inspectPosition:0 -0.5 0;
+                                      label_offset:0 0.9 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:Lunar Excursion Module, Wood Model;
+                                      audio:#Narr_tools-snd; volume:0.4;"
+                    shadow="receive:false; cast:false;"></a-entity>  
+          <a-entity id="CPUTerminal" position="4.5 3.2 -1" rotation="0 -90 0"
+                    geometry="primitive:octahedron; radius:0.4;"
+                    material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                    gltf-model="#CPUTerminal_gltf"
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; inspectRotation:0 0 0; inspectPosition:0 -0.4 0;
+                                      label_offset:0 1 0; arrow_position:down;
+                                      title:Tools Unfamiliarity; 
+                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
+                                      title_back:Group Work;
+                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
+                                      label_text:CPU Terminal;
+                                      audio:#Narr_tools-snd; volume:0.4;"
+                    shadow="cast:true; receive:true;"></a-entity>
+          <a-entity id="majesticCamera" position="4.5 1.2 -1" rotation="0 -90 0"
+                    geometry="primitive:octahedron; radius:0.4;"
+                    material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
+                    gltf-model="#majesticCamera_gltf"
+                    circles-pickup-networked
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
                                       label_offset:0 0.6 0; arrow_position:down;
                                       title:Tools Unfamiliarity; 
                                       description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                      label_text:Tools;
-                                      audio:#Narr_tools-snd; volume:0.4;"
-                    shadow="receive:false; cast:false;"></a-entity>
-        <a-entity id="artifacts" position="4.5 0.2 1" rotation="0 -90 0">
-          <a-entity id="lemWood" position="-0.75 1 0.5"
-                    gltf-model="#lemWood_gltf" 
-                    circles-pickup-networked
-                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
-                                      label_offset:0 0.4 0; arrow_position:down;
-                                      title:Tools Unfamiliarity; 
-                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
-                                      title_back:Group Work;
-                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                      label_text:Tools;
-                                      audio:#Narr_tools-snd; volume:0.4;"
-                    shadow="receive:false; cast:false;"></a-entity>  
-          <a-entity id="CPUTerminal" position="0.25 1 0"
-                    gltf-model="#CPUTerminal_gltf"
-                    circles-pickup-networked
-                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
-                                      label_offset:0 0.4 0; arrow_position:down;
-                                      title:Tools Unfamiliarity; 
-                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
-                                      title_back:Group Work;
-                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                      label_text:Tools;
+                                      label_text:Majestic Camera;
                                       audio:#Narr_tools-snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="majesticCamera" position="1.25 1 0"
-                    gltf-model="#majesticCamera_gltf"
-                    circles-pickup-networked
-                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
-                                      label_offset:0 0.4 0; arrow_position:down;
-                                      title:Tools Unfamiliarity; 
-                                      description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
-                                      title_back:Group Work;
-                                      description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                      label_text:Tools;
-                                      audio:#Narr_tools-snd; volume:0.4;"
-                    shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="northernElectricsTelephone" position="2 1 0" rotation="0 0 0"
+          <a-entity id="northernElectricsTelephone" position="4.5 1.2 -3" rotation="0 -90 0"
+                    geometry="primitive:octahedron; radius:0.4;"
+                    material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#northernElectronicsTelephone_gltf"
                     circles-pickup-networked
-                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:0; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
-                                      label_offset:0 0.4 0; arrow_position:down;
+                    circles-artefact="inspectScale:1.2 1.2 1.2; textRotationY:90; inspectRotation:0 0 0; inspectPosition:0 -0.2 0;
+                                      label_offset:0 0.8 0; arrow_position:down;
                                       title:Tools Unfamiliarity; 
                                       description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                      label_text:Tools;
+                                      label_text:Northern Electrics Telephone;
                                       audio:#Narr_tools-snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-        </a-entity>
-        <a-entity id="artifacts_placeholders" position="-1 2.7 -1" rotation="0 -90 0">  
-          <a-entity id="torus_knot" position="0 1 -5"
-                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title: Placeholder Artefact;
-                                      description:This is a placeholder artefact;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked 
-                    shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="torus_knot" position="1 1 -5"
-                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title: Placeholder Artefact;
-                                      description:This is a placeholder artefact;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked 
-                    shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="torus_knot" position="2 1 -5"
-                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title: Placeholder Artefact;
-                                      description:This is a placeholder artefact;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked 
-                    shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="torus_knot" position="3 1 -5"
-                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title: Placeholder Artefact;
-                                      description:This is a placeholder artefact;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked 
-                    shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="torus_knot" position="4 1 -5"
-                    geometry="primitive:torusKnot; radius:0.2; radiusTubular:0.05; segmentsTubular:128; segmentsRadial:16;"
-                    material="color:#8fd5a6; emissive:#8fd5a6; emissiveIntensity:0.3; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title: Placeholder Artefact;
-                                      description:This is a placeholder artefact;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder;"
-                    circles-pickup-networked 
-                    shadow="cast:true; receive:true;"></a-entity>
-        </a-entity>
+
 
       <!-- Back to hub -->
-      <a-entity position="-6 0 0" rotation="0 -90 0">
+      <a-entity position="-6.2 0 0" rotation="0 -90 0">
         <a-entity id="backToHubTXT" 
                   position="0 3 0" scale="1.5 1.5 1.5" rotation="0 180 0"
                   text="value: Back To Hub; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
@@ -188,19 +136,26 @@
       </a-entity>
       <!------------------------------------------------------------------------------->
       <!-- Checkpoints -->
+      <!--storageRoom-->
         <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
         <a-entity circles-checkpoint position="-4 0.05 0"></a-entity>
         <a-entity circles-checkpoint position="3 0.05 0"></a-entity>
-        <a-entity circles-checkpoint position="-4 0.05 -3"></a-entity>
         <a-entity circles-checkpoint position="0 0.05 -3"></a-entity>
+        <a-entity circles-checkpoint position="3 0.05 -3"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 -3"></a-entity>
+        <a-entity circles-checkpoint position="0 0.05 4"></a-entity>
+        <a-entity circles-checkpoint position="3 0.05 4"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 4"></a-entity>
 
-        <a-entity circles-checkpoint position="-4.5 0.05 -7.7"></a-entity>
-        <a-entity circles-checkpoint position="-4.5 0.05 -12"></a-entity>
-        <a-entity circles-checkpoint position="-8 0.05 -12"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 -7.7"></a-entity>
+        <a-entity circles-checkpoint position="-4 0.05 -11.5"></a-entity>
+        <a-entity circles-checkpoint position="-8 0.05 -11.5"></a-entity>
         
-        <a-entity circles-checkpoint position="-13.8 0.05 -9"></a-entity>
-        <a-entity circles-checkpoint position="-13.8 0.05 -12"></a-entity>
-        <a-entity circles-checkpoint position="-13.8 0.05 -15"></a-entity>
+        <a-entity circles-checkpoint position="-13.8 0.05 -8.5"></a-entity>
+        <a-entity circles-checkpoint position="-13.8 0.05 -11.5"></a-entity>
+        <a-entity circles-checkpoint position="-13.8 0.05 -14"></a-entity>
+
+
 
       <!------------------------------------------------------------------------------->
       <!-- lighting -->
