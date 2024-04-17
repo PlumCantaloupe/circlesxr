@@ -25,8 +25,8 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/images/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
 
-        <!-- narration, for some reason when I add this it messes with the spawn point????
-        <audio id="Narr_welcome" src="assets/audio/narr_welcome.mp3" preload="true"></audio>-->
+        <!-- narration, for some reason when I add this it messes with the spawn point????-->
+        <audio id="Narr_welcome" src="assets/audio/narr_welcome.mp3" preload="true"></audio>
         <audio id="Narr_tools-snd" src="/worlds/WIT_2_Lab/assets/audio/Narr_WIT_2_Drill.mp3" preload="true"></audio>
 
 
@@ -36,7 +36,7 @@
           <a-asset-item id="CPUTerminal_gltf" src="/worlds/MM_CreativeMode/assets/models/CPUTerminal.gltf" response-type="arraybuffer"></a-asset-item>
           <a-asset-item id="lemWood_gltf" src="/worlds/MM_CreativeMode/assets/models/lemWood.gltf" response-type="arraybuffer"></a-asset-item>
           <a-asset-item id="singerSewingMachine_gltf" src="/worlds/MM_CreativeMode/assets/models/singerSewingMachine.gltf" response-type="arraybuffer"></a-asset-item>
-
+          <a-asset-item id="clock_gltf" src="/worlds/MM_CreativeMode/assets/models/clock.gltf" response-type="arraybuffer"></a-asset-item>
 
         <!-- Environment -->
         <a-asset-item id="room_gltf" src="assets/models/room.gltf" crossorigin="anonymous"></a-asset-item>
@@ -73,7 +73,7 @@
                                   description:'Walking into the lab the first day was exhilarating and terrifying. I’m excited to learn and get comfortable with the tools. But, it's next to impossible when I'm always paired with someone who takes over. I was never exposed to these tools as a child growing up.'';
                                   title_back:Group Work;
                                   description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
-                                  label_text:Tools;
+                                  label_text:Pickup Telephone;
                                   audio:#Narr_welcome; volume:0.4;"
                 shadow="cast:true; receive:true;"></a-entity>  
       <a-entity obj-model="obj: #arm_obj; mtl: #arm_mtl"
@@ -115,15 +115,23 @@
                                       title_back:[~20-25 chars] Title Back;
                                       description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
                                       label_text:Placeholder: Beaker Puzzle Object;"
-                    circles-pickup-networked></a-entity>     
+                    circles-pickup-networked></a-entity>  
+
         <a-entity id="artefact-sewingMachine"
-                    position="0.5 1 11" rotation="0 90 0" scale="1 1 1"
+                    position="-3 1 -7.25" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#singerSewingMachine_gltf">
-                    <a-entity></a-entity>
                     <a-entity class="button interactive"
-                    id="dirtSpec"
+                    id="dirtSpec_01"
+                    position="0.15 0.6 -0.3"
+                    geometry="primitive:sphere; radius:0.04"
+                    material="color: #FFD637"
+                    animation__mouseenter="property:material.color; type:color; to:#FFE78B; startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:#FFD637; startEvents:mouseleave; dur:200"
+                    animation__click="property:geometry.radius; from:0.04; to:0; startEvents:click; dur:300"></a-entity>
+                    <a-entity class="button interactive"
+                    id="dirtSpec_02"
                     position="0.15 0.3 0.3"
                     geometry="primitive:sphere; radius:0.04"
                     material="color: #FFD637"
@@ -132,22 +140,16 @@
                     animation__click="property:geometry.radius; from:0.04; to:0; startEvents:click; dur:300"></a-entity>    
           </a-entity>          
         <a-entity id="artefact-gem"
-                    position="2 1 11.5" rotation="0 0 0" scale="1 1 1"
+                    position="-3 1 -8.75" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#lemWood_gltf"></a-entity> 
         <a-entity id="artefact-gem"
-                    position="3.5 1.5 12" rotation="0 0 0" scale="1 1 1"
+                    position="-3 1 -9.75" rotation="0 0 0" scale="1 1 1"
                     geometry="primitive:octahedron; radius:0.5;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
-                    circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; arrow_position:down;
-                                      title:[~20-25 chars] Title Front;
-                                      description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                      title_back:[~20-25 chars] Title Back;
-                                      description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                      label_text:Placeholder: Cleaning Task Object;"
-                    circles-pickup-networked></a-entity> 
+                    gltf-model="#clock_gltf"
+                    ></a-entity> 
         </a-entity>
       
       <!-- Text -->
@@ -157,45 +159,25 @@
         <a-image src="#IngeniumLogo" position="-3 1.1 7.5" rotation="-80 -90 0"></a-image>
         <a-image src="#hint01" position="-4 1.005 -12.4" rotation="-90 0 0" scale="2 0.5 1"></a-image>
         <a-image src="#hint02" position="-9 0.005 0" rotation="-90 90 0" scale="10 2 1"></a-image>
-        <a-image id="hint01_img" src="#hint03" position="3 1.005 11" rotation="-90 180 0" scale="0 0 0"><!--2 0.5 1--></a-image>
+        <a-image id="hint01_img" src="#hint03" position="-2.55 0.8 -7.5" rotation="0 90 0" scale="2 0.2 2" visible="false"><!--2 0.5 1--></a-image>
 
       <!-- Portal to back to MM Hub --> 
         <a-entity id="backToHubTXT" 
-                  position="14 3 8" scale="1.5 1.5 1.5" rotation="0 -90 0"
+                  position="0 3.5 4" scale="1.5 1.5 1.5" rotation="0 180 0"
                   text="value: Back To Hub; color: #f29f05; width: 3; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>
       <a-entity id="HubLink"
-            position="14 1.5 8" rotation="0 180 0" scale="1 1 1"
+            position="0 2 4" rotation="0 90 0" scale="1 1 1"
             circles-portal="img_src:#hub360; title_text:Click me to be teleported; text_color:black; link_url:/w/MuseumMysteriesHub"></a-entity>
             
       </a-entity>
 
       <!-- Checkpoints -->
       <a-entity id="CHECKPOINTS">
-        <a-entity circles-checkpoint circles-spawnpoint position="12 0.05 8"></a-entity>
-        <a-entity circles-checkpoint position="9.5 0.05 8"></a-entity>
-        <a-entity circles-checkpoint position="5 0.05 8"></a-entity>
+        <a-entity circles-checkpoint circles-spawnpoint position="0 0.05 0"></a-entity>
+        <a-entity circles-checkpoint position="0 0.05 2.5"></a-entity>
+        <a-entity circles-checkpoint position="0 0.05 -4"></a-entity>
         
-        <a-entity circles-checkpoint position="2.5 0.05 8"></a-entity>
-        <a-entity circles-checkpoint position="0 0.05 8"></a-entity>
-        <a-entity circles-checkpoint position="-3.5 0.05 4.75"></a-entity>
-        <a-entity circles-checkpoint position="-4.25 0.05 9"></a-entity>
-        <a-entity circles-checkpoint position="3.5 0.05 4.75"></a-entity>
-        <a-entity circles-checkpoint position="0 0.05 3"></a-entity>
 
-        <a-entity circles-checkpoint position="0 0.05 0"></a-entity>
-        <a-entity circles-checkpoint position="-5 0.05 0.719"></a-entity>
-        <a-entity circles-checkpoint position="4 0.05 -1.7"></a-entity>
-
-        <a-entity id="bkShelveCHK01" circles-checkpoint position="-5 0.05 -7"></a-entity>
-        <a-entity id="bkShelveCHK02" circles-checkpoint position="-2 0.05 -7"></a-entity>
-        <a-entity id="bkShelveCHK03" circles-checkpoint position="0 0.05 -7"></a-entity>
-        <a-entity id="bkShelveCHK04" circles-checkpoint position="2 0.05 -7"></a-entity>
-        <a-entity id="bkShelveCHK05" circles-checkpoint position="5 0.05 -7"></a-entity>
-        <a-entity id="beakersCHK01" circles-checkpoint position="-5 0.05 -10.5"></a-entity>
-        <a-entity id="beakersCHK02" circles-checkpoint position="-2 0.05 -10.5"></a-entity>
-        <a-entity id="beakersCHK03" circles-checkpoint position="0 0.05 -10.5"></a-entity>
-        <a-entity id="beakersCHK04" circles-checkpoint position="2 0.05 -10.5"></a-entity>
-        <a-entity id="beakersCHK05" circles-checkpoint position="5 0.05 -10.5"></a-entity>
       </a-entity>
 
       <!-- envir -->
@@ -215,8 +197,7 @@
       <a-entity id="MMSMInstructions" position="17 0.05 -1.7" text="value: FREE FALL; color: #13446e; width: 1.7; wrapCount: 30; align: center; tabSize: 4.43; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60" scale="1.5 1.5 1.5" rotation="-90 0 0"></a-entity>
     
       
-        <!-- this is magic code created when the node server runs -->
-        <!-- //VERY HANDY! https://socket.io/docs/v3/emit-cheatsheet/  -->
+
         <script src="/socket.io/socket.io.js"></script>
         <script>
           var isClean = 0;
@@ -225,12 +206,28 @@
 
             socket.on('connect', (userData) => {
                 console.log('I exist!');
-                document.querySelector('#dirtSpec').addEventListener('click', function(){
-   
+
+                document.querySelector('#dirtSpec_01').addEventListener('click', function(){
                     console.log('I clean!');
                     isClean++;
                     console.log(isClean);
-                });//9.5 1 6
+
+                    if(isClean > 1){
+                      console.log("cleaningFinished!");
+                      document.querySelector('#hint01_img').setAttribute('visible', true);
+                    }
+                });
+                document.querySelector('#dirtSpec_02').addEventListener('click', function(){
+                    console.log('I clean!');
+                    isClean++;
+                    console.log(isClean);
+                    
+                    if(isClean > 1){
+                      console.log("cleaningFinished!");
+                      document.querySelector('#hint01_img').setAttribute('visible', true);
+                    }
+                });
+
                 /*
                 document.querySelector('#phone').addEventListener('click', function(){
                     socket.emit('introPhone');

@@ -19,12 +19,17 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"lemWood",
+			"name":"adjusted",
 			"rotation":[
 				0.7071068286895752,
 				0,
 				0,
 				0.7071068286895752
+			],
+			"scale":[
+				1.600000023841858,
+				1.600000023841858,
+				1.600000023841858
 			]
 		}
 	],
@@ -44,7 +49,7 @@
 					"ior":1
 				}
 			},
-			"name":"aiStandardSurface2SG",
+			"name":"aiStandardSurface2SG.004",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
@@ -56,7 +61,7 @@
 	],
 	"meshes":[
 		{
-			"name":"lemWood",
+			"name":"adjusted.004",
 			"primitives":[
 				{
 					"attributes":{
@@ -87,29 +92,29 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":6888884,
+			"count":6843850,
 			"max":[
-				0.33131399750709534,
-				-0.01737000048160553,
-				0.00016199999663513154
+				0.1102679967880249,
+				0.10733799636363983,
+				0.00012199999764561653
 			],
 			"min":[
-				-0.33131399750709534,
-				-0.6806359887123108,
-				-0.4503600001335144
+				-0.10801699757575989,
+				-0.1111529991030693,
+				-0.14829300343990326
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":6888884,
+			"count":6843850,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":6888884,
+			"count":6843850,
 			"type":"VEC2"
 		},
 		{
@@ -122,26 +127,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":82666608,
+			"byteLength":82126200,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":82666608,
-			"byteOffset":82666608,
+			"byteLength":82126200,
+			"byteOffset":82126200,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":55111072,
-			"byteOffset":165333216,
+			"byteLength":54750800,
+			"byteOffset":164252400,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":27594372,
-			"byteOffset":220444288,
+			"byteOffset":219003200,
 			"target":34963
 		}
 	],
@@ -153,7 +158,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":248038660,
+			"byteLength":246597572,
 			"uri":"lemWood.bin"
 		}
 	]

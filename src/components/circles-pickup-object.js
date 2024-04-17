@@ -109,22 +109,49 @@ AFRAME.registerComponent('circles-pickup-object', {
     //dropPos
     var thisPos = {x:0, y:0, z:0};  
     if ((CONTEXT_AF.el.object3D.position.x < -2) && (CONTEXT_AF.el.object3D.position.z < -5.5)){
-      console.log("new pos");
-      thisPos = {x:-10, y:1, z:20};
+
+        if ((CONTEXT_AF.el.object3D.position.x < -14) && (CONTEXT_AF.el.object3D.position.z < -8)){
+          console.log("new pos 11");
+          thisPos = {x:-16.4, y:1.4, z:-8.8};
+        }
+        if ((CONTEXT_AF.el.object3D.position.x < -14) && (CONTEXT_AF.el.object3D.position.z < -10)){
+          console.log("new pos 12");
+          thisPos = {x:-16.4, y:1.4, z:-11.75};
+        }
+
+        if ((CONTEXT_AF.el.object3D.position.x < -3) && (CONTEXT_AF.el.object3D.position.z < -12)){
+          console.log("new pos 21");
+          thisPos = {x:-5.5, y:1.4, z:-16.4};
+        }
+        if ((CONTEXT_AF.el.object3D.position.x < -8) && (CONTEXT_AF.el.object3D.position.z < -12)){
+          console.log("new pos 22");
+          thisPos = {x:-8.5, y:1.4, z:-16.4};
+        }
+        if ((CONTEXT_AF.el.object3D.position.x < -10) && (CONTEXT_AF.el.object3D.position.z < -12)){
+          console.log("new pos 23");
+          thisPos = {x:-11.5, y:1.4, z:-16.4};
+        }
+        
+        if ((CONTEXT_AF.el.object3D.position.x < -14) && (CONTEXT_AF.el.object3D.position.z < -12)){
+          console.log("here");
+          console.log("new pos 13");
+          thisPos = {x:-16.4, y:1.4, z:-14.8};
+        }
+
     }
     else{ //obj go back to orig pos in storage room
       thisPos = {x:data.dropPosition.x, y:data.dropPosition.y, z:data.dropPosition.z};  
-      console.log("default new pos");
+      console.log("orig new pos");
     }
 
 
 
 
-    const thisRot = {x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)};
+    const thisRot = {x:0, y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), z:0};
     const thisSca = {x:CONTEXT_AF.el.object3D.scale.x, y:CONTEXT_AF.el.object3D.scale.y, z:CONTEXT_AF.el.object3D.scale.z};
 
     const dropPos  = thisPos;
-    const dropRot  = (data.dropRotation.x < 100001.0) ? {x:data.dropRotation.x, y:data.dropRotation.y, z:data.dropRotation.z} : thisRot;
+    const dropRot  = thisRot;
     const dropSca  = (data.dropScale.x < 100001.0) ? {x:data.dropScale.x, y:data.dropScale.y, z:data.dropScale.z} : thisSca;
 
     //set drop transforms, if any

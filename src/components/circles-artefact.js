@@ -184,6 +184,10 @@ AFRAME.registerComponent('circles-artefact', {
     const CONTEXT_AF = (passedContext) ? passedContext : this;
     console.log("realeaseFunction");
 
+    const tempPos = CONTEXT_AF.el.getAttribute('position');
+    CONTEXT_AF.labelEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
+    CONTEXT_AF.descEl.setAttribute('position', {x:tempPos.x, y:tempPos.y, z:tempPos.z});
+
     //show label
     if (CONTEXT_AF.data.label_on === true) {
       CONTEXT_AF.labelEl.setAttribute('circles-interactive-visible', true);
