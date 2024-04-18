@@ -13,6 +13,16 @@
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties background="color:#333333;" >
+      
+      <a-entity>
+        <audio id="Narr_sewing_snd" src="artifact01_sewingmachine.mp3" preload="auto"></audio>
+        <audio id="Narr_clock_snd" src="src/worlds/MM_CreativeMode/assets/audio/artifact02_clock.mp3" preload="auto"></audio>
+        <audio id="Narr_LEM_snd" src="src/worlds/MM_CreativeMode/assets/audio/artifact03_LEM.mp3" preload="auto"></audio>
+        <audio id="Narr_telephone_snd" src="src/worlds/MM_CreativeMode/assets/audio/artifact04_telephone.mp3" preload="auto"></audio>
+        <audio id="Narr_computer_snd" src="src/worlds/MM_CreativeMode/assets/audio/artifact05_computer.mp3" preload="auto"></audio>
+        <audio id="Narr_camera_snd" src="src/worlds/MM_CreativeMode/assets/audio/artifact06_camera.mp3" preload="auto"></audio>
+      </a-entity>
+      
 
       <a-camera position="0 1.6 3" rotation="-1 0 0"></a-camera>
       <!-- assets -->
@@ -54,7 +64,7 @@
       <a-entity id="Welcome" position="0.6 2.1 -5.6" scale="1.5 1.5 1.5" rotation="0 0 0" text="value: “Welcome to the Creative Room where you can curate your own exhibit. \nPickup objects off the shelves and place them as you like. \nWhen holding an object, click the information(i) icon to learn more about it!”; color: #fff; width: 4; wrapCount: 65; align: center; tabSize: 4.5; font: /worlds/KIN_Hub/assets/font/BebasNeue-Regular-msdf.json; negate: false; lineHeight: 60"></a-entity>     
 
       <!-- Artifacts -->
-          <a-entity id="singerSewingMachine" position="4.2 2.8 -3" rotation="0 0 0" scale="0.6 0.6 0.6"
+          <a-entity id="singerSewingMachine" sound="src: #Narr_sewing_snd" position="4.2 2.8 -3" rotation="0 0 0" scale="0.6 0.6 0.6"
                     geometry="primitive:octahedron; radius:0.4;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#singerSewingMachine_gltf" 
@@ -66,9 +76,10 @@
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                       label_text:Singer Sewing Machine;
-                                      audio:#Narr_tools-snd; volume:0.4;"
+                                      audio:#Narr_sewing_snd;
+                                      volume:2;"
                     shadow="receive:false; cast:false;"></a-entity>
-          <a-entity id="CPUTerminal" position="4.5 2.8 -1" rotation="0 -90 0"
+          <a-entity id="CPUTerminal" sound="src: #Narr_computer_snd" position="4.5 2.8 -1" rotation="0 -90 0"
                     geometry="primitive:octahedron; radius:0.4;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#CPUTerminal_gltf"
@@ -80,9 +91,9 @@
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                       label_text:CPU Terminal;
-                                      audio:#Narr_tools-snd; volume:0.4;"
+                                      audio:#Narr_computer_snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-            <a-entity id="clock" position="4 2.8 1" rotation="0 0 0"
+            <a-entity id="clock" position="4 2.8 1" sound="src: #Narr_clock_snd" rotation="0 0 0"
                       geometry="primitive:octahedron; radius:0.4;"
                       material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                       gltf-model="#clock_gltf"
@@ -94,10 +105,10 @@
                                         title_back:Group Work;
                                         description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                         label_text:Clock;
-                                        audio:#Narr_tools-snd; volume:0.4;"
+                                        audio:#Narr_clock_snd; volume:0.4;"
                       shadow="cast:true; receive:true;"></a-entity>
 
-          <a-entity id="lemWood" position="4.3 1.2 0.5" rotation="0 -90 0"
+          <a-entity id="lemWood"  sound="src: #Narr_LEM_snd" position="4.3 1.2 0.5" rotation="0 -90 0"
                     geometry="primitive:octahedron; radius:0.4;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#lemWood_gltf" 
@@ -109,9 +120,9 @@
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                       label_text:Lunar Excursion Module, Wood Model;
-                                      audio:#Narr_tools-snd; volume:0.4;"
+                                      audio:#Narr_LEM_snd; volume:0.4;"
                     shadow="receive:false; cast:false;"></a-entity>  
-          <a-entity id="majesticCamera" position="4.2 1.2 -1" rotation="0 -90 0"
+          <a-entity id="majesticCamera" sound="src: #Narr_camera_snd"  position="4.2 1.2 -1" rotation="0 -90 0"
                     geometry="primitive:octahedron; radius:0.4;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#majesticCamera_gltf"
@@ -123,9 +134,9 @@
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                       label_text:Majestic Camera;
-                                      audio:#Narr_tools-snd; volume:0.4;"
+                                      audio:#Narr_camera_snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
-          <a-entity id="northernElectricsTelephone" position="4.3 1.2 -3" rotation="0 -90 0"
+          <a-entity id="northernElectricsTelephone" sound="src: #Narr_telephone_snd"  position="4.3 1.2 -3" rotation="0 -90 0"
                     geometry="primitive:octahedron; radius:0.4;"
                     material="color:blue; emissive:green; emissiveIntensity:0.7; metalness:0.3; roughness:0.8;" 
                     gltf-model="#northernElectronicsTelephone_gltf"
@@ -137,7 +148,7 @@
                                       title_back:Group Work;
                                       description_back:Men usually go into tech. with a better understanding of tools such as this drill. However, women may not have had the same exposure. Though with positive intentions men taking over exercises with unfamiliar tools prevents women from learning.;
                                       label_text:Northern Electrics Telephone;
-                                      audio:#Narr_tools-snd; volume:0.4;"
+                                      audio:#Narr_telephone_snd; volume:0.4;"
                     shadow="cast:true; receive:true;"></a-entity>
 
 
