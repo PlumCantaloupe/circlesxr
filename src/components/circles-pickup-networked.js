@@ -128,9 +128,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
     //click func
     CONTEXT_AF.clickLabelFunc           = null;
 
-    //hacky crap
-    CONTEXT_AF.hackySyncDropPositionFunc  = null;
-
     CONTEXT_AF.pickupObjFunc = function(e) {
       //console.log('pickupObjFunc', CONTEXT_AF.el.id);
 
@@ -314,17 +311,17 @@ AFRAME.registerComponent('circles-pickup-networked', {
       }
     };
 
-    CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
-      //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
+    // CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
+    //   //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
 
-      if (CONTEXT_AF.isClone === true) {
-        const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-        const isSameElem  = (data.id === CONTEXT_AF.el.components['circles-object-world'].data.id);
-        if (isSameWorld && isSameElem) {
-          CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
-        }
-      }
-    };
+    //   if (CONTEXT_AF.isClone === true) {
+    //     const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
+    //     const isSameElem  = (data.id === CONTEXT_AF.el.components['circles-object-world'].data.id);
+    //     if (isSameWorld && isSameElem) {
+    //       CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
+    //     }
+    //   }
+    // };
 
     //need this be always listening so that "hidden" objects can come back
     if (CONTEXT_AF.isClone === false) {
@@ -395,8 +392,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
-
-    CONTEXT_AF.socket.on('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   removeEventListeners: function() {
     const CONTEXT_AF  = this;
@@ -416,8 +411,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
-
-    CONTEXT_AF.socket.off('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   getNetworkDataObject: function() {
     const networkId_ = (this.el.hasAttribute('networked')) ? this.el.components['networked'].data.networkId : '';
@@ -483,15 +476,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
             }
           }
         }
-  
-        //if the only one send a message to the dupes
-        //hacky send as the network dupes don't copy this over for some reason ...
-        let netObj = CONTEXT_AF.getNetworkDataObject();
-        netObj.dropRotation = { x:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.x,
-                                y:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.y,
-                                z:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.z
-                              };
-        CONTEXT_AF.socket.emit('hacky_drop_rotation', netObj);
       }
       //if more than one, hide this one, if it is the oldest ...
       else {
