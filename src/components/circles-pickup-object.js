@@ -96,21 +96,6 @@ AFRAME.registerComponent('circles-pickup-object', {
     //release
     CONTEXT_AF.origParent.object3D.attach(CONTEXT_AF.el.object3D); //using three's "attach" allows us to retain world transforms during pickup/release
 
-    const releaseEventFunc = function() {
-      //send off event for others
-      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
-      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
-      if (data.animate === true) {
-        CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
-      }
-    };
-    if (data.animate === true) {
-      CONTEXT_AF.el.addEventListener('animationcomplete__cpo_position', releaseEventFunc);
-    }
-    else {
-      releaseEventFunc();
-    }
-
     const thisPos = {x:CONTEXT_AF.el.object3D.position.x, y:CONTEXT_AF.el.object3D.position.y, z:CONTEXT_AF.el.object3D.position.z};
     const thisRot = {x:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.x), y:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.y), z:THREE.MathUtils.radToDeg(CONTEXT_AF.el.object3D.rotation.z)};
     const thisSca = {x:CONTEXT_AF.el.object3D.scale.x, y:CONTEXT_AF.el.object3D.scale.y, z:CONTEXT_AF.el.object3D.scale.z};
@@ -118,6 +103,39 @@ AFRAME.registerComponent('circles-pickup-object', {
     const dropPos  = (data.dropPosition.x < 100001.0) ? {x:data.dropPosition.x, y:data.dropPosition.y, z:data.dropPosition.z} : thisPos;
     const dropRot  = (data.dropRotation.x < 100001.0) ? {x:data.dropRotation.x, y:data.dropRotation.y, z:data.dropRotation.z} : thisRot;
     const dropSca  = (data.dropScale.x < 100001.0) ? {x:data.dropScale.x, y:data.dropScale.y, z:data.dropScale.z} : thisSca;
+
+    const releaseEventFunc = function() {
+      console.log('releaseEventFunc');
+
+      console.log(CONTEXT_AF.el.object3D.position);
+
+      // CONTEXT_AF.el.object3D.position.set(dropPos.x, dropPos.y, dropPos.z);
+      // CONTEXT_AF.el.object3D.rotation.set(dropRot.x, dropRot.y, dropRot.z);
+      // CONTEXT_AF.el.object3D.scale.set(dropSca.x, dropSca.y, dropSca.z);
+      CONTEXT_AF.el.setAttribute('position', {x:dropPos.x, y:dropPos.y, z:dropPos.z});
+      CONTEXT_AF.el.setAttribute('rotation', {x:dropRot.x, y:dropRot.y, z:dropRot.z});
+      CONTEXT_AF.el.setAttribute('scale', {x:dropSca.x, y:dropSca.y, z:dropSca.z});
+
+      console.log(CONTEXT_AF.el.object3D.position);
+
+      //send off event for others
+      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
+      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
+      if (data.animate === true) {
+        CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
+      }
+    };
+    
+    if (data.animate === true) {
+      CONTEXT_AF.el.addEventListener('animationcomplete__cpo_position', releaseEventFunc);
+    }
+    else {
+      releaseEventFunc();
+    }
+
+    
+
+    console.log(dropPos, dropRot, dropSca);
 
     //set drop transforms, if any
     if (data.animate === true) {
@@ -129,9 +147,9 @@ AFRAME.registerComponent('circles-pickup-object', {
                                                               isRawProperty:true, to:dropSca, easing:'easeInOutQuad'});
     }
     else {
-      CONTEXT_AF.el.object3D.position.set(dropPos.x, dropPos.y, dropPos.z);
-      CONTEXT_AF.el.object3D.rotation.set(dropRot.x, dropRot.y, dropRot.z);
-      CONTEXT_AF.el.object3D.scale.set(dropSca.x, dropSca.y, dropSca.z);
+      // CONTEXT_AF.el.object3D.position.set(dropPos.x, dropPos.y, dropPos.z);
+      // CONTEXT_AF.el.object3D.rotation.set(dropRot.x, dropRot.y, dropRot.z);
+      // CONTEXT_AF.el.object3D.scale.set(dropSca.x, dropSca.y, dropSca.z);
     }
 
     CONTEXT_AF.pickedUp = false;

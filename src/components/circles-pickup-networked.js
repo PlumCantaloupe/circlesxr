@@ -232,7 +232,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
-      //console.log('releaseObjFunc_Sync ', CONTEXT_AF.el.id);
+      console.log('releaseObjFunc_Sync ', data);
 
       CONTEXT_AF.isPickedUp = false;
 
@@ -246,6 +246,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
           //if dropped we want to the original owner to take back ownership
           if (data.origId === CONTEXT_AF.el.id) {
             //console.log('Taking back control!');
+            console.log(CONTEXT_AF.el.object3D.position);
             CONTEXT_AF.takeNetworkOwnership(CONTEXT_AF.el);
           }
 
