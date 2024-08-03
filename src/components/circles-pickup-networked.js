@@ -232,7 +232,9 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
-      console.log('releaseObjFunc_Sync ', data);
+      //console.log('releaseObjFunc_Sync ', data);
+
+      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
 
       CONTEXT_AF.isPickedUp = false;
 
@@ -245,8 +247,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         if (isSameWorld === true) {
           //if dropped we want to the original owner to take back ownership
           if (data.origId === CONTEXT_AF.el.id) {
-            //console.log('Taking back control!');
-            console.log(CONTEXT_AF.el.object3D.position);
             CONTEXT_AF.takeNetworkOwnership(CONTEXT_AF.el);
           }
 
@@ -311,18 +311,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         //CONTEXT_AF.initSyncObjects();
       }
     };
-
-    // CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
-    //   //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
-
-    //   if (CONTEXT_AF.isClone === true) {
-    //     const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-    //     const isSameElem  = (data.id === CONTEXT_AF.el.components['circles-object-world'].data.id);
-    //     if (isSameWorld && isSameElem) {
-    //       CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
-    //     }
-    //   }
-    // };
 
     //need this be always listening so that "hidden" objects can come back
     if (CONTEXT_AF.isClone === false) {
