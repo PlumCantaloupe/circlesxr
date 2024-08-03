@@ -214,11 +214,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
         if (isSameElem === true) {
           if (isSameWorld === true) {
             //if artefact ...
-            if (document.querySelector('#' + data.id + '_label')) {
-              document.querySelector('#' + data.id + '_label').setAttribute('circles-interactive-visible', false);
+            if (document.querySelector('#' + data.origId + '_label')) {
+              document.querySelector('#' + data.origId + '_label').setAttribute('circles-interactive-visible', false);
             }
-            if (document.querySelector('#' + data.id + '_description')) {
-              document.querySelector('#' + data.id + '_description').setAttribute('circles-interactive-visible', true);
+            if (document.querySelector('#' + data.origId + '_description')) {
+              document.querySelector('#' + data.origId + '_description').setAttribute('circles-interactive-visible', true);
             }
           }
           else {
@@ -233,8 +233,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
       //console.log('releaseObjFunc_Sync ', data);
-
-      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
 
       CONTEXT_AF.isPickedUp = false;
 

@@ -114,8 +114,8 @@ AFRAME.registerComponent('circles-pickup-object', {
       CONTEXT_AF.el.setAttribute('scale', {x:dropSca.x, y:dropSca.y, z:dropSca.z});
 
       //send off event for others
-      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, false);
-      // CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
+      CONTEXT_AF.el.emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {sendNetworkEvent:sendNetworkEvent}, true);
+      CIRCLES.getCirclesManagerElement().emit(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, {el:CONTEXT_AF.el}, false);
       if (data.animate === true && artReleaseTimeout !== null) {
         clearTimeout(artReleaseTimeout);
         //CONTEXT_AF.el.removeEventListener('animationcomplete__cpo_position', releaseEventFunc);
