@@ -128,9 +128,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
     //click func
     CONTEXT_AF.clickLabelFunc           = null;
 
-    //hacky crap
-    CONTEXT_AF.hackySyncDropPositionFunc  = null;
-
     CONTEXT_AF.pickupObjFunc = function(e) {
       //console.log('pickupObjFunc', CONTEXT_AF.el.id);
 
@@ -217,11 +214,11 @@ AFRAME.registerComponent('circles-pickup-networked', {
         if (isSameElem === true) {
           if (isSameWorld === true) {
             //if artefact ...
-            if (document.querySelector('#' + data.id + '_label')) {
-              document.querySelector('#' + data.id + '_label').setAttribute('circles-interactive-visible', false);
+            if (document.querySelector('#' + data.origId + '_label')) {
+              document.querySelector('#' + data.origId + '_label').setAttribute('circles-interactive-visible', false);
             }
-            if (document.querySelector('#' + data.id + '_description')) {
-              document.querySelector('#' + data.id + '_description').setAttribute('circles-interactive-visible', true);
+            if (document.querySelector('#' + data.origId + '_description')) {
+              document.querySelector('#' + data.origId + '_description').setAttribute('circles-interactive-visible', true);
             }
           }
           else {
@@ -235,7 +232,7 @@ AFRAME.registerComponent('circles-pickup-networked', {
     };
 
     CONTEXT_AF.releaseObjFunc_Sync = function(data) {
-      //console.log('releaseObjFunc_Sync ', CONTEXT_AF.el.id);
+      //console.log('releaseObjFunc_Sync ', data);
 
       CONTEXT_AF.isPickedUp = false;
 
@@ -248,7 +245,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
         if (isSameWorld === true) {
           //if dropped we want to the original owner to take back ownership
           if (data.origId === CONTEXT_AF.el.id) {
-            //console.log('Taking back control!');
             CONTEXT_AF.takeNetworkOwnership(CONTEXT_AF.el);
           }
 
@@ -311,18 +307,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
       if (isSameWorld && isSameElem) {
         //console.log('setting for ', data.id, CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation, data.dropRotation);
         //CONTEXT_AF.initSyncObjects();
-      }
-    };
-
-    CONTEXT_AF.hackySyncDropPositionFunc = function(data) {
-      //console.log('hackySyncDropPositionFunc', CONTEXT_AF.el.id);
-
-      if (CONTEXT_AF.isClone === true) {
-        const isSameWorld = (data.world === CIRCLES.getCirclesWorldName());
-        const isSameElem  = (data.id === CONTEXT_AF.el.components['circles-object-world'].data.id);
-        if (isSameWorld && isSameElem) {
-          CONTEXT_AF.el.setAttribute('circles-pickup-object', {dropRotation:data.dropRotation});
-        }
       }
     };
 
@@ -395,8 +379,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.on(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
-
-    CONTEXT_AF.socket.on('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   removeEventListeners: function() {
     const CONTEXT_AF  = this;
@@ -416,8 +398,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
 
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_ATTACHED, CONTEXT_AF.networkAttachedFunc);
     CONTEXT_AF.socket.off(CIRCLES.EVENTS.OBJECT_NETWORKED_DETACHED, CONTEXT_AF.networkDetachedFunc);
-
-    CONTEXT_AF.socket.off('hacky_drop_rotation', CONTEXT_AF.hackySyncDropPositionFunc);
   },
   getNetworkDataObject: function() {
     const networkId_ = (this.el.hasAttribute('networked')) ? this.el.components['networked'].data.networkId : '';
@@ -483,15 +463,6 @@ AFRAME.registerComponent('circles-pickup-networked', {
             }
           }
         }
-  
-        //if the only one send a message to the dupes
-        //hacky send as the network dupes don't copy this over for some reason ...
-        let netObj = CONTEXT_AF.getNetworkDataObject();
-        netObj.dropRotation = { x:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.x,
-                                y:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.y,
-                                z:CONTEXT_AF.el.components['circles-pickup-object'].data.dropRotation.z
-                              };
-        CONTEXT_AF.socket.emit('hacky_drop_rotation', netObj);
       }
       //if more than one, hide this one, if it is the oldest ...
       else {

@@ -35,16 +35,15 @@ AFRAME.registerComponent('circles-artefact', {
     // networkedEnabled: {type:'boolean',  default:false},
     // networkedTemplate:{type:'string',   default:CIRCLES.NETWORKED_TEMPLATES.INTERACTIVE_OBJECT}
   },
+  dependencies: ['circles-interactive-object', 'circles-pickup-object'],
   init: function() {
     const CONTEXT_AF  = this;
     const data        = this.data;
 
     //need to save this for later (before it is moved)
     CONTEXT_AF.origPos = CONTEXT_AF.el.object3D.position.clone();
-    CONTEXT_AF.origRot = CONTEXT_AF.el.object3D.rotation.clone();
-    CONTEXT_AF.origRot.x = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.x);    //convert
-    CONTEXT_AF.origRot.y = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.y);
-    CONTEXT_AF.origRot.z = THREE.MathUtils.radToDeg(CONTEXT_AF.origRot.z);
+    const rotClone = CONTEXT_AF.el.object3D.rotation.clone();
+    CONTEXT_AF.origRot = new THREE.Vector3(THREE.MathUtils.radToDeg(rotClone.x), THREE.MathUtils.radToDeg(rotClone.y), THREE.MathUtils.radToDeg(rotClone.z));
     CONTEXT_AF.origSca = CONTEXT_AF.el.object3D.scale.clone();
 
 
