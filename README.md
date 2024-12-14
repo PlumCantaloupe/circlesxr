@@ -33,7 +33,8 @@ developers to create multi-user and multi-platform [WebXR](https://www.w3.org/TR
 
 CIRCLES is the practical Work-In-Progress (WIP) implementation of a research project into [universal](http://universaldesign.ie/What-is-Universal-Design/The-7-Principles/) and [inclusive](https://www.microsoft.com/design/inclusive/) multi-user VR considering how people interact with each other, their physical and virtual environments, and with learning artefacts in variable VR space. Our current focus is within both guided and unguided classroom and museum learning contexts; but we aim to keep the framework flexible where possible to allow for greater creativity.
 
-**[Click here for more information on Circles and its progress, research, and development](https://www.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)**
+- **[Click here for a blogpost on Circles and its progress, research, and development.](https://www.anthony-scavarelli.com/portfolio/circles-webvr-education-platform/)**
+- **[Click here to view an open-access paper describing Circles and its core motivation, elements,and features.](https://publications.immersivelrn.org/index.php/academic/article/view/228)**
 
 <br>
 
