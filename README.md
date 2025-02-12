@@ -269,9 +269,8 @@ CIRCLES.getNonNetworkedID(elem);
 
 //Example
 //You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
-CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
-    //to change speed of character movement
-    CIRCLES.getAvatarRigElement().setAttribute('movement-controls', {speed:0.3});
+document.addEventListener(CIRCLES.EVENTS.READY, function() {
+    console.log('Circles is ready!');
 });
 ```
 
