@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Through Krieghoff's Eyes",
+        "type": "experince",
+        "imgPath": "./Studio.jpg",
+        "description_short": "Hub world campfire.",
+        "description_long": "Participants gather around the fire to discuss, create, and explore different experiences.",
+        "tags": [ "experince", "fire", "campfire"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
