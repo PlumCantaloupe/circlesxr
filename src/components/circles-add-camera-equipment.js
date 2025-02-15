@@ -60,8 +60,8 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           rigElem.appendChild(entity_Controller_2);
 
           //we will default with right controller having pointer first
-          const raycasterProperties = {far:20, interval:30, objects:'.interactive', showLine:true};
-          const lineProperties = {start:{x:0, y:0, z:0}, end:{x:0, y:0, z:-20}, color:'rgb(100, 100, 100)', gapSize:0.01, dashSize:0.02};
+          const raycasterProperties = {far:20, interval:30, objects:'.interactive', direction:{x:0, y:-1, z:-1}, showLine:true};
+          const lineProperties = {start:{x:0, y:0, z:0}, end:{x:0, y:-Math.sqrt(200), z:-Math.sqrt(200)}, color:'rgb(100, 100, 100)', gapSize:0.01, dashSize:0.02};
           entity_Controller_1.setAttribute('id', 'primary_pointer');
           entity_Controller_1.setAttribute('laser-controls',{hand:'right', model:false});
           entity_Controller_1.setAttribute('raycaster', raycasterProperties);
