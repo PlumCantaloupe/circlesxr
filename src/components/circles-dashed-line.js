@@ -7,7 +7,7 @@ AFRAME.registerComponent('circles-dashed-line', {
     color: {type: 'color', default: '#74BEC1'},
     gapSize: {type: 'number', default: 0.1},
     dashSize: {type: 'number', default: 0.1},
-    visible: {default: true}
+    visible: {type: 'boolean', default: true}
   },
 
   multiple: true,
