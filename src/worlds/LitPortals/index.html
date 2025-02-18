@@ -35,32 +35,74 @@
       <!-- Area 1, with some spawnpoints -->
 
       <!-- room -->
-      <a-cylinder position="0 2.5 0" radius="10" height="5" color="#cccccc" side="double" open-ended="true"></a-cylinder>
-      <a-entity rotation= " 90 0 0" geometry="primitive: plane; height: 15; width: 15" material="side: double"></a-entity>
+      <a-entity position="0 2.5 0" 
+        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 160; rotation: 0 180 0" 
+        material="color: #cccccc; side: double;">
+      </a-entity>
+      <a-entity position="0 2.5 0" 
+        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 60;" 
+        material="color: #cccccc; side: double;"
+        rotation= " 0 235 0">
+      </a-entity>
+      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
       -->
       <a-box id="box" 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-        position="2 1 0" scale="0.5 0.5 0.5" color="red">
+        position="8 1 0" scale="0.5 0.5 0.5" color="red">
       </a-box>
       <a-sphere id="sphere" 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="-2 1 0" scale="0.5 0.5 0.5" color="blue">
+        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
       </a-sphere>
       <a-cone id="cone" 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="0 1 2" scale="0.5 0.5 0.5" color="green">
+        position="8 1 3" scale="0.5 0.5 0.5" color="green">
       </a-cone>
       <a-dodecahedron id="dodeca" 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="0 1 -2" scale="0.5 0.5 0.5" color="purple">
+        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
       </a-dodecahedron>
       <a-torus id="torus" 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="1.5 1 -1.5" scale="0.5 0.5 0.5" color="orange">
+        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
       </a-torus>
+
+       <!-- gems with text box
+        can be instructions or welcome message
+        these are networked-->
+        
+      <a-entity id="instructions-1"
+                position="0 1 5" rotation="0 0 0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title:[~20-25 chars] Title Front;
+                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                  title_back:[~20-25 chars] Title Back;
+                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Gem;"
+                circles-pickup-networked></a-entity>
+
+                <a-entity id="instructions-2"
+                position="3 1 5" rotation="0 0 0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title:[~20-25 chars] Title Front;
+                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                  title_back:[~20-25 chars] Title Back;
+                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Gem;"
+                circles-pickup-networked></a-entity>
 
       <!-- teleport pads-->
       <a-entity circles-checkpoint position="5 0 5"></a-entity>
@@ -69,12 +111,22 @@
       <a-entity circles-checkpoint position="-7 0 5"></a-entity>
 
       <!-- Area 2, top -->
+      <a-entity position="-4.25 2.5 -15"
+        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
+        material="color: blue; side: double;"
+        rotation="0 60 0">
+      </a-entity>
+      <a-entity color="black" position="-4.4 0 -16.5" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
 
       <!-- Area 2, steps -->
     
       <!-- Area 3 -->
-
-      <!-- Inventory UI (Clickable) -->
+      <a-entity position=" -9.25 2.5 15" 
+        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
+        material="color: red; side: double;"
+        rotation="0 192 0">
+      </a-entity>
+      <a-entity color="black"position="-9 0 13.4" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
 
 
       <!-- ambient music/sound 
