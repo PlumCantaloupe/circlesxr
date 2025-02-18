@@ -35,8 +35,8 @@
       <!-- Area 1, with some spawnpoints -->
 
       <!-- room -->
-      <a-cylinder position="0 1.5 0" radius="20" height="10" color="#cccccc" open-ended="true" side="double"></a-cylinder>
-      
+      <a-cylinder position="0 2.5 0" radius="10" height="5" color="#cccccc" side="double" open-ended="true"></a-cylinder>
+      <a-entity rotation= " 90 0 0" geometry="primitive: plane; height: 15; width: 15" material="side: double"></a-entity>
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
@@ -62,13 +62,16 @@
         position="1.5 1 -1.5" scale="0.5 0.5 0.5" color="orange">
       </a-torus>
 
+      <!-- teleport pads-->
+      <a-entity circles-checkpoint position="5 0 5"></a-entity>
+      <a-entity circles-checkpoint position="-7 0 -7"></a-entity>
+      <a-entity circles-checkpoint position="5 0 -7"></a-entity>
+      <a-entity circles-checkpoint position="-7 0 5"></a-entity>
+
       <!-- Area 2, top -->
 
       <!-- Area 2, steps -->
-      <a-entity id="door_island_2" circles-checkpoint position="-10.202 -5.867 -2.003"></a-entity>
-      <a-entity circles-checkpoint position="-12.111 -2.054 -7.609"></a-entity>
-      <a-entity circles-checkpoint position="-10.319 -3.648 -5.525"></a-entity>
-
+    
       <!-- Area 3 -->
 
       <!-- Inventory UI (Clickable) -->
