@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+
+  </head>
+  <body>
+    
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
+        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
+        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
+       
+        <!-- gltf models -->
+       
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+      
+      <!-- just creating an entity that connects many elements together -->
+
+      <!-- Area 1, with some spawnpoints -->
+
+      <!-- room -->
+      <a-entity position="0 2.5 0" 
+        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 160; rotation: 0 180 0" 
+        material="color: #cccccc; side: double;">
+      </a-entity>
+      <a-entity position="0 2.5 0" 
+        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 60;" 
+        material="color: #cccccc; side: double;"
+        rotation= " 0 235 0">
+      </a-entity>
+      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
+      <!-- pick up objects 
+      This line lets an object be picked up - needs to click on it twice for full controls        
+      circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+      -->
+      <a-box id="box" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+        position="8 1 0" scale="0.5 0.5 0.5" color="red">
+      </a-box>
+      <a-sphere id="sphere" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
+      </a-sphere>
+      <a-cone id="cone" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 3" scale="0.5 0.5 0.5" color="green">
+      </a-cone>
+      <a-dodecahedron id="dodeca" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
+      </a-dodecahedron>
+      <a-torus id="torus" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
+      </a-torus>
+
+       <!-- gems with text box
+        can be instructions or welcome message
+        these are networked-->
+        
+      <a-entity id="instructions-1"
+                position="0 1 5" rotation="0 0 0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title:[~20-25 chars] Title Front;
+                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                  title_back:[~20-25 chars] Title Back;
+                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Gem;"
+                circles-pickup-networked></a-entity>
+
+                <a-entity id="instructions-2"
+                position="3 1 5" rotation="0 0 0" scale="1 1 1"
+                geometry="primitive:octahedron; radius:0.5;"
+                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title:[~20-25 chars] Title Front;
+                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
+                                  title_back:[~20-25 chars] Title Back;
+                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Gem;"
+                circles-pickup-networked></a-entity>
+
+      <!-- teleport pads-->
+      <a-entity circles-checkpoint position="5 0 5"></a-entity>
+      <a-entity circles-checkpoint position="-7 0 -7"></a-entity>
+      <a-entity circles-checkpoint position="5 0 -7"></a-entity>
+      <a-entity circles-checkpoint position="-7 0 5"></a-entity>
+
+      <!-- Area 2, top -->
+      <a-entity position="-4.25 2.5 -15"
+        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
+        material="color: blue; side: double;"
+        rotation="0 60 0">
+      </a-entity>
+      <a-entity color="black" position="-4.4 0 -16.5" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
+
+      <!-- Area 2, steps -->
+    
+      <!-- Area 3 -->
+      <a-entity position=" -9.25 2.5 15" 
+        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
+        material="color: red; side: double;"
+        rotation="0 192 0">
+      </a-entity>
+      <a-entity color="black"position="-9 0 13.4" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
+
+
+      <!-- ambient music/sound 
+      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+      -->
+
+      <!-- example "artefact" -->
+
+
+      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
+
+      <!-- the environment -->
+      
+      
+      <!-- sky and lights -->
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
+                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+
+      <a-entity id='skyBox'
+                rotation='0 200 0'
+                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+                material='shader:flat; src:#skyMap; side:back;'>
+      </a-entity>
+      
+    </a-scene>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>

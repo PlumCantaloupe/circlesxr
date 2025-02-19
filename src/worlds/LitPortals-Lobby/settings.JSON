@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "The Gallery",
+        "type": "hub",
+        "imgPath": "./placeholder_StartBG.png",
+        "description_short": "Hub world Gallery.",
+        "description_long": "Participants gather in the gallery to discuss, create, and explore different expression of human creativity.",
+        "tags": [ "hub", "Gallery"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
