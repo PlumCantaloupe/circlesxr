@@ -36,14 +36,10 @@
 
       <!-- room -->
       <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 160; rotation: 0 180 0" 
-        material="color: #cccccc; side: double;">
+        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; " 
+        material="color: #ffde21; side: double;">
       </a-entity>
-      <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 60;" 
-        material="color: #cccccc; side: double;"
-        rotation= " 0 235 0">
-      </a-entity>
+
       <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
@@ -53,22 +49,6 @@
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
         position="8 1 0" scale="0.5 0.5 0.5" color="red">
       </a-box>
-      <a-sphere id="sphere" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
-      </a-sphere>
-      <a-cone id="cone" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 3" scale="0.5 0.5 0.5" color="green">
-      </a-cone>
-      <a-dodecahedron id="dodeca" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
-      </a-dodecahedron>
-      <a-torus id="torus" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
-      </a-torus>
 
        <!-- gems with text box
         can be instructions or welcome message
@@ -111,23 +91,10 @@
       <a-entity circles-checkpoint position="-7 0 5"></a-entity>
 
       <!-- Area 2, top -->
-      <a-entity position="-4.25 2.5 -15"
-        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
-        material="color: blue; side: double;"
-        rotation="0 60 0">
-      </a-entity>
-      <a-entity color="black" position="-4.4 0 -16.5" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
-
+     
       <!-- Area 2, steps -->
     
       <!-- Area 3 -->
-      <a-entity position=" -9.25 2.5 15" 
-        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
-        material="color: red; side: double;"
-        rotation="0 192 0">
-      </a-entity>
-      <a-entity color="black"position="-9 0 13.4" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
-
 
       <!-- ambient music/sound 
       <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
