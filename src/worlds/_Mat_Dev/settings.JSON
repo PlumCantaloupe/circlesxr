@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Mat Dev Env",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Mats dev environment.",
+        "description_long": "Dev mats environment.",
+        "tags": [ "hub", "hub", "hub"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
