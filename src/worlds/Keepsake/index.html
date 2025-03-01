@@ -1,168 +1,308 @@
 <html>
-  <head>
-    <meta charset="utf-8">
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+  <!-- custom scripts are added here-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keepsake</title>
+  <!-- scripts link -->
+  <script src="js/test.js"></script>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  <script src="https://rawgit.com/Ctrl-Alt-Zen/aframe-mobile-controls/master/components/twoway-motion/twoway-motion.js"></script>
 
-    <!-- Circles' head scripts [REQUIRED] -->
-    <circles-start-scripts/>
+  <!-- css link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/user-gesture.css">
+    <!-- INTERACTIVITY SCRIPT HERE ******************************************************************************* -->
+    <script>
+      "use strict";
 
-    <!-- add your custom scripts here -->
-    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
-    <script src="js/lights-interaction.js"></script>
-  </head>
-  <body>
+      // picking up an object
+      AFRAME.registerComponent('pickupable', {
+          init: function() {
+              var self = this;
+              self.player = document.querySelector('#camera');
+              self.pickedUp = false;
+              
+              if (!self.el.classList.contains('interactive')) {
+              self.el.classList.add('interactive'); 
+              }
 
-    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
-    <circles-start-ui/>
+              self.el.addEventListener('click', (e) => {
+              if (self.pickedUp === true) {
+                  // release entity
+                  self.el.sceneEl.object3D.attach(self.el.object3D);
+                  self.pickedUp = false;
+                  self.el.emit('object-released', {id: self.el.id});
+              } else {
+                  // pick up entity
+                  self.player.object3D.attach(self.el.object3D);
+                  self.pickedUp = true;
+                  self.el.emit('object-picked-up', {id: self.el.id});
+              }
+              });
 
-    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
-      <a-assets>
-        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+              // check if entity is picked up
+              self.isPickedUp = function() {
+              return self.pickedUp;
+              };
+          }
+          });
 
-        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-        <audio id="magic_music" src="assets/sounds/Magic_Music.mp3" preload="auto" crossorigin="anonymous"></audio>
+      AFRAME.registerComponent('pedestal-interaction', {
+          init: function() {
+              const self = this;
+              this.hasDisplayedOwl = false;
+              this.pedestalTop = new THREE.Vector3();
+              
+              if (!self.el.classList.contains('interactive')) {
+                  self.el.classList.add('interactive');
+              }
 
-        <audio id="note_c" src="assets/sounds/Note_C.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_d" src="assets/sounds/Note_D.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_e" src="assets/sounds/Note_E.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="note_f" src="assets/sounds/Note_F.mp3" preload="auto" crossorigin="anonymous"></audio>
+              // calc top center of pedestal
+              this.updatePedestalPosition = () => {
+                  this.el.object3D.getWorldPosition(this.pedestalTop);
+                  this.pedestalTop.y += 1.5; // adjustable based on height
+              };
 
-        <!-- gltf models -->
-        <!-- credits [a mix of custom models and the [editted] models listed below]:  -->
-        <!-- Emiel @ https://sketchfab.com/3d-models/stylized-assets-7c180198693542a49fb39c8f81af14fd -->
-        <!-- Glezova @ https://sketchfab.com/3d-models/stylized-bridge-dea55cb580e44d458e84d4455eda5de8 -->
-        <!-- Sereda @ https://sketchfab.com/3d-models/stylized-stones-minipack-719d8ee393db4b218ace19ce9124918d -->
-        <!-- Satendra Saraswat @ https://sketchfab.com/3d-models/stylized-hand-painted-tree-f4e3fe276aca48d09d312b6dae100bce -->
-        <a-asset-item id="island_1_gltf"      src="assets/models/island_1/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_2_gltf"      src="assets/models/island_2/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="island_3_gltf"      src="assets/models/island_3/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <!-- <a-asset-item id="island_leaves_gltf" src="assets/models/island_leaves/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
+              this.el.addEventListener('click', () => {
+                  const manager = this.el.sceneEl.components['interaction-manager'];
+                  const heldId = manager.pickedUpObject;
+                  const owlEntity = document.querySelector('#owl');
+                  const uploadUI = document.querySelector('#upload-ui');
+                  
+                  // when clicked show upload UI
+                  if (uploadUI) {
+                      uploadUI.style.display = 'block';
+                  } else {
+                      console.error("Upload component not found...");
+                  }
 
-        <!-- credit: Raystani E. de Oliveira @ https://sketchfab.com/3d-models/stylized-sword-and-shield-lowpoly-e076a1a9fae84c97b8a6cdd5c9162ca2 [editted]-->
-        <!-- <a-asset-item id="sword_gltf"    src="assets/models/sword/scene.gltf" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item> -->
+                  if (!owlEntity) return;
 
-        <!-- loading navmesh. Following instructiosn from here: https://github.com/n5ro/aframe-extras/tree/master/src/pathfinding -->
-        <a-asset-item id="navmesh_gltf" src="assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+                  this.updatePedestalPosition();
 
-        <!-- Circles' built-in assets [REQUIRED] -->
-        <circles-assets/>
-      </a-assets>
+                  if (heldId === 'owl' && !this.hasDisplayedOwl) {
+                      console.log('placing owl on pedestal...');
+                      this.hasDisplayedOwl = true;
 
-      <!-- Circles' built-in manager and avatar [REQUIRED] -->
-      <circles-manager-avatar/>
+                      // detach owl from camera to place in scene
+                      owlEntity.sceneEl.object3D.attach(owlEntity.object3D);
+                      
+                      // setting owl world postiion to top of pedestal
+                      owlEntity.setAttribute('position', {
+                          x: this.pedestalTop.x,
+                          y: this.pedestalTop.y,
+                          z: this.pedestalTop.z
+                      });
+                      owlEntity.setAttribute('rotation', '0 0 0');
+                      owlEntity.setAttribute('scale', '1 1 1');
+                      owlEntity.setAttribute('visible', true);
+                      
+                      // update pickup state
+                      owlEntity.components.pickupable.pickedUp = false;
+                      manager.pickedUpObject = null;
 
-      <!-- just creating an entity that connects many elements together -->
-      <a-entity id="game_manager" lights-interactive></a-entity>
+                      console.log('Owl placed at position:', owlEntity.getAttribute('position'));
+                  } 
+                  else if (this.hasDisplayedOwl && !manager.pickedUpObject) {
+                      console.log('retrieving owl from pedestal');
+                      this.hasDisplayedOwl = false;
 
-      <!-- island 1, with some spawnpoints -->
-      <a-entity circles-checkpoint circles-spawnpoint position="-9.404 0.592 9.588"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-9.751 0.546 7.433"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-11.233 0.618 9.290"></a-entity>
+                      const camera = document.querySelector('#camera');
+                      
+                      // attach owl to camera for pickup
+                      camera.object3D.attach(owlEntity.object3D);
+                      
+                      // update pos relative to camera
+                      owlEntity.setAttribute('position', {
+                          x: 0,
+                          y: -0.5, // slightly below
+                          z: -1    // infront
+                      });
+                      
+                      owlEntity.components.pickupable.pickedUp = true;
+                      manager.pickedUpObject = 'owl';
+                  }
+              });
 
-      <!-- bridge (don't want to spawn people here as they may get dizzy looking down :) -->
-      <a-entity circles-checkpoint position="-12.514 0.050 3.387"></a-entity>
-      <a-entity circles-checkpoint position="-13.701 -0.296 0.336"></a-entity>
+              // Initial position update
+              this.updatePedestalPosition();
+          }
+      });
 
-      <!-- island 2, top -->
-      <a-entity circles-checkpoint position="-16.312 -0.321 -6.120"></a-entity>
-      <a-entity circles-checkpoint position="-12.931 -0.394 -5.361"></a-entity>
-      <a-entity circles-checkpoint position="-14.979 -0.295 -3.137"></a-entity>
+      // interaction manager - listens for entities being picked up/released globally
+      AFRAME.registerComponent('interaction-manager', {
+          init: function() {
+              this.pickedUpObject = null;
+              
+              this.el.sceneEl.addEventListener('object-picked-up', (e) => {
+              this.pickedUpObject = e.detail.id;
+              console.log('picked up:', this.pickedUpObject);
+              });
 
-      <!-- island 2, steps -->
-      <a-entity id="door_island_2" circles-checkpoint position="-10.202 -5.867 -2.003"></a-entity>
-      <a-entity circles-checkpoint position="-12.111 -2.054 -7.609"></a-entity>
-      <a-entity circles-checkpoint position="-10.319 -3.648 -5.525"></a-entity>
+              this.el.sceneEl.addEventListener('object-released', (e) => {
+              this.pickedUpObject = null;
+              console.log('nothing in hand');
+              });
+          }
+      });
 
-      <!-- island 3 -->
-      <a-entity id="door_island_3" circles-checkpoint position="5.000 -9.665 2.444"></a-entity>
-      <a-entity circles-checkpoint position="5.413 -9.709 0.099"></a-entity>
-      <a-entity circles-checkpoint position="2.422 -9.769 0.526"></a-entity>
+      // upload UI listeners
+      // close btn
+      document.addEventListener('DOMContentLoaded', function() {
+          const closeBtn = document.getElementById('close-btn');
+          if (closeBtn) {
+              closeBtn.addEventListener('click', function() {
+                  document.getElementById('upload-ui').style.display = 'none';
+              });
+          }
 
-      <!-- button that we will use to "teleport" to far off places (i.e., door-to-door in this world) -->
-      <a-entity circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door_island_2;" position="6.850 -8.949 2.397" rotation="-89.089 86.144 -53.584" scale="0.8 0.8 0.8"></a-entity>
-      <a-entity circles-button="pedastal_color:rgb(80, 91, 100);" circles-sendpoint="target:#door_island_3" position="-11.503 -5.121 -0.803" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
+          // upload btn
+          const uploadBtn = document.getElementById('upload-btn');
+          if (uploadBtn) {
+              uploadBtn.addEventListener('click', function() {
+                  // opens files on click
+                  document.getElementById('file-input').click();
+              });
+          }
 
-      <!-- ambient music/sound -->
-      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
+          // file upload
+          const fileInput = document.getElementById('file-input');
+          if (fileInput) {
+              fileInput.addEventListener('change', function(e) {
+                  const file = e.target.files[0];
+                  if (file) {
+                      alert('File "' + file.name + '", uploading..');
+                      // hide upload UI after upload
+                      document.getElementById('upload-ui').style.display = 'none';
+                  }
+              });
+          }
+      });
+  </script>
+</head>
 
-      <!-- example "artefact" -->
-      <a-entity id="Artefact-Gem"
-                position="1.963 -8.241 2.339" rotation="0 0 0" scale="1 1 1"
-                geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
-                circles-sphere-env-map="src:#skyMap"
-                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  description_offset:0 0.5 0;
-                                  desc_arrow_position:down;
-                                  label_text:Gem;"
-                circles-pickup-networked></a-entity> <!-- circles-pickup-networked allows this to be seen and interacted with other players -->
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
 
-      <a-entity id="welcome_description" position="-13.171 0.899 9.197" rotation="0 0 0"
-                circles-description=" title_text_front:Welcome to Circles;
-                                      title_text_back:Welcome to Circles;
-                                      description_text_front:This is an example world. It is meant to showcase most of the features Circles' provides for your own worlds.;
-                                      description_text_back:This is an example world. It is meant to showcase most of the features Circles' provides for your own worlds.;
-                                      lookAtCamera:true;
-                                      "></a-entity>
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties interaction-manager background="color: black">
+    <a-assets>
+      <!-- put all assets here -->
+      <!-- pedestal -->
+      <a-asset-item id="pedestal-model" src="worlds/Keepsake/assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <!-- polycam scans -->
+      <a-asset-item id="owl-model" src="worlds/Keepsake/assets/models/Owl Puppet (1).glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-      <a-entity id="Portal-Wardrobe"
-                position="-13.0 1.7 11.4" rotation="0 50 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Wardrobe; link_url:/w/Wardrobe"
-                shadow></a-entity>
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
 
-      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
-      <a-entity id="pdf-test" position="-14.4 2.2 6.4" rotation="0 62 0" scale="2.0 2.0 2.0" circles-pdf-loader="src:/global/assets/pdfs/Scavarelli2020_Article_VirtualRealityAndAugmentedReal.pdf;"></a-entity>
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+  
+    <!-- put scene stuff here -->
+        <!-- camera -->
+        <a-entity 
+        id="camera" 
+        camera 
+        look-controls 
+        wasd-controls 
+        twoway-motion="speed: 35"
+        position="0 1.6 0" 
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .interactive; far: 20; interval: 100">
+        </a-entity>
 
-      <!-- the environment -->
-      <a-entity id="island_1" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_1_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <a-entity id="island_2" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_2_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <a-entity id="island_3" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_3_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
-      <!-- <a-entity id="island_leaves" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#island_leaves_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity> -->
+        <!-- pedestal -->
+        <a-entity
+        id="pedestal"
+        position="2.3 0 0"
+        rotation="0 90 0"
+        scale="2 2 2"
+        gltf-model="#pedestal-model"
+        pedestal-interaction
+        shadow="cast:true; recieve:true;">
+        </a-entity>
 
-      <!-- synched lights -->
-      <a-entity id="light_1" position="3.6 -8.1 -1.2"
-              material="color:rgb(101,6,23); opacity:0.8; emissive:rgb(255,4,38); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.4;"
-              circles-interactive-object="type:highlight; click_sound:#note_c;" animation="property:position; to:3.6 -8.0 -1.2; loop:true; dur:3000; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(255,4,38); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_2" position="5.05 -8.9 -0.86"
-                material="color:rgb(12,19,34); opacity:0.8; emissive:rgb(30,59,118); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.3;"
-                circles-interactive-object="type:highlight; click_sound:#note_d;" animation="property:position; to:5.05 -8.8 -0.86; loop:true; dur:3300; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(30,59,118); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_3" position="6.67 -9.3 -0.44" 
-                material="color:rgb(56, 41, 56); opacity:0.8; emissive:rgb(148, 46, 148); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.2;"
-                circles-interactive-object="type:highlight; click_sound:#note_e;" animation="property:position; to:6.67 -9.2 -0.44; loop:true; dur:3200; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(148, 46, 148); intensity:5.0;"></a-entity>
-      </a-entity>
-      <a-entity id="light_4" position="7.2 -8.4 0.28" 
-                material="color:rgb(137,85,21); opacity:0.8; emissive:rgb(242,151,39); emissiveIntensity:0.0;" geometry="primitive:sphere; radius:0.5;"
-                circles-interactive-object="type:highlight; click_sound:#note_f;" animation="property:position; to:7.2 -8.3 0.28; loop:true; dur:3500; easing:easeInOutQuad; dir:alternate;">
-        <a-entity light="type:point; color:rgb(242,151,39); intensity:5.0;"></a-entity>
-      </a-entity>
+        <!-- owl -->
+        <a-entity
+        id="owl"
+        class="interactive"
+        pickupable
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="1 1 1"
+        gltf-model="#owl-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+        </a-entity>
 
-      <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh></a-entity>
+        <!-- floor -->
+        <a-box 
+            position="0 -0.1 0"
+            width="10" 
+            height="0.2" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
 
-      <!-- sky and lights -->
-      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
-                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
-      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+        <!-- ceiling -->
+        <a-box 
+            position="0 4 0"
+            width="10" 
+            height="0.2" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
 
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
-    </a-scene>
+        <!-- walls -->
+        <a-box 
+            position="0 2 -5"
+            width="10" 
+            height="4" 
+            depth="0.2" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
 
-    <!-- Circles' end scripts [REQUIRED] -->
-    <circles-end-scripts/>
-  </body>
+        <a-box 
+            position="0 2 5"
+            width="10" 
+            height="4" 
+            depth="0.2" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <a-box 
+            position="-5 2 0"
+            width="0.2" 
+            height="4" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <a-box 
+            position="5 2 0"
+            width="0.2" 
+            height="4" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
 </html>
