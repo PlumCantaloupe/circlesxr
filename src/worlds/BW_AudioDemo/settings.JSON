@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "BW Gallery Audio Demo",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Audio visualizer demo.",
+        "description_long": "Audio visualizer demo.",
+        "tags": [ "demo", "visualizer", "audio"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
