@@ -29,15 +29,25 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
-
-      <!-- TO BE REPLACED - START -->
+      
+      <!-- Lights and sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
                 geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
 
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+      <!-- main lights -->
+      <a-entity light="type: ambient; color: #2b188c"></a-entity>
+      <a-entity light="type: point; intensity: 5" position="4.4 3.3"></a-entity>
+      <a-entity light="type: point; intensity: 5" position="-3.7 3.3 -2.3"></a-entity>
+      <a-entity light="type: point; intensity: 5" position="-0.2 3.3 5"></a-entity>
+      
+      <!-- tunnel lights -->
+      <a-entity light="type: point; color:#4f4dff; decay: -0.4; distance: 6.5" position="-5.5 1.4 -11.5"></a-entity>
+
+      <!-- room model -->
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <!-- TO BE REPLACED - END -->
 
       <a-entity id="Portal-Delta"
@@ -54,17 +64,6 @@
                 position="3.7 1.5 -2.2" rotation="0 -100 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Gamma; link_url:/w/BW_Gamma"
                 shadow></a-entity>
-
-      <!-- sky and lights -->
-      <!-- <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
-                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
-      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity> -->
-
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
