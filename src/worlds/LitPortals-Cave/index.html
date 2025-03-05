@@ -6,7 +6,7 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
-
+    <script src="js/sorting-interaction.js"></script>
   </head>
   <body>
     
@@ -45,10 +45,6 @@
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
       -->
-      <a-box id="box" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-        position="8 1 0" scale="0.5 0.5 0.5" color="red">
-      </a-box>
 
        <!-- gems with text box
         can be instructions or welcome message
@@ -83,6 +79,44 @@
                                   desc_arrow_position:down;
                                   label_text:Gem;"
                 circles-pickup-networked></a-entity>
+
+      <a-sphere id="sphere" sorting-collision class="sorting_item"
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
+      </a-sphere>
+      <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox" 
+        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      
+      <a-cone id="cone" sorting-collision class="sorting_item"
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 2 2" scale="0.5 0.5 0.5" color="green">
+      </a-cone>
+      <a-cylinder position="8 0.1 2 color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox"
+        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      
+      <a-box id="box" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+        position="8 1 0" scale="0.5 0.5 0.5" color="red">
+      </a-box>
+      <a-cylinder position="8 0.1 0" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox"
+        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-dodecahedron id="dodeca" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
+      </a-dodecahedron>
+      <a-cylinder position="8 0.1 -2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox"
+        position="8 0.5 -2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-torus id="torus" 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
+      </a-torus>
+      <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox"
+        position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
 
       <!-- teleport pads-->
       <a-entity circles-checkpoint position="5 0 5"></a-entity>
