@@ -38,13 +38,14 @@
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #2b188c"></a-entity>
-      <a-entity light="type: point; intensity: 5" position="4.4 3.3"></a-entity>
-      <a-entity light="type: point; intensity: 5" position="-3.7 3.3 -2.3"></a-entity>
-      <a-entity light="type: point; intensity: 5" position="-0.2 3.3 5"></a-entity>
+      <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
+      <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
+      <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
+      <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
+      <a-entity light="type: point; intensity: 7" position="-4.56 3.3 1.078"></a-entity>
       
       <!-- tunnel lights -->
-      <a-entity light="type: point; color:#4f4dff; decay: -0.4; distance: 6.5" position="-5.5 1.4 -11.5"></a-entity>
+      <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
 
       <!-- room model -->
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
