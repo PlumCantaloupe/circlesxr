@@ -1,0 +1,172 @@
+<html>
+
+<head>
+  <!-- the AFrame library and 3rd party components -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe@1.7.0/dist/aframe-master.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.5.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/components/sphere-collider.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.controls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/physx@v0.1.2/dist/physx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls@0.4.3/dist/aframe-blink-controls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handy-work@3.1.11/build/handy-controls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handy-work@3.1.11/build/magnet-helpers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-htmlmesh@2.2.0/build/aframe-html.min.js"></script>
+  <script src="simple-navmesh-constraint.js"></script>
+  
+  <!-- Our custom behaviour -->
+  <script src="main.js"></script>
+  
+  <title>AFrame Handy Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <a-scene
+    physx="autoLoad: true; delay: 1000; debug: true"
+    background="color:skyblue;"
+    reflection="directionalLight:#dirlight;"
+    renderer="alpha:true;physicallyCorrectLights:true;colorManagement:true;exposure:2;toneMapping:ACESFilmic;"
+    shadow="type: pcfsoft">
+
+    <a-assets>
+      <a-asset-item id="stew-gltf" src="https://cdn.glitch.global/d29f98b4-ddd1-4589-8b66-e2446690e697/model.gltf?v=1690887932932"></a-asset-item>
+      <a-asset-item id="table-gltf" src="https://cdn.glitch.global/d29f98b4-ddd1-4589-8b66-e2446690e697/small_wooden_table_01_1k-v1.glb?v=1647263187998"></a-asset-item>
+      <a-asset-item id="clock-gltf" src="https://cdn.glitch.global/d29f98b4-ddd1-4589-8b66-e2446690e697/vintage_grandfather_clock_01_1k-v2.glb?v=1647265174189"></a-asset-item>
+    </a-assets>
+
+    <a-entity position="0 0 0" environment="lighting:none; shadow:true; preset: default;"></a-entity>
+
+   <!-- Player -->
+    <a-entity id="cameraRig"
+              simple-navmesh-constraint="navmesh:.navmesh; fall:0.5; height:0; exclude:.navmesh-hole;"
+              movement-controls="speed:0.15; camera:#head;"
+              position="0 0 0" rotation="0 0 0" origin-on-ar-start>
+
+      <!-- camera -->
+      <a-entity id="head"
+                camera="near:0.01;"
+                look-controls="pointerLockEnabled: false"
+                position="0 1.6 0">
+      </a-entity>
+
+      <!-- collision box for body -->
+      <a-box  id="collisionBox" 
+              width="0.7" 
+              height="1.6" 
+              depth="0.7" 
+              visible="true" 
+              physx-body="type: kinematic;" 
+              position="0 0.8 0"
+              >
+      </a-box>
+
+      <script>
+        AFRAME.registerComponent('follow-camera-rotation', {
+          tick: function () {
+            const camera = document.querySelector('#head');
+            const collisionBox = this.el;
+
+            // Get camera's Y rotation (for horizontal turning only)
+            const cameraYRotation = camera.object3D.rotation.y;
+
+            // Apply only Y-axis rotation to the collision box
+            collisionBox.object3D.rotation.set(0, cameraYRotation, 0);
+          }
+        });
+      </script>
+
+    </a-entity>
+    
+    <a-entity id="my-ar-objects" position="-6 0 1">
+      <!-- "Dusty Piano" (https://skfb.ly/66EPx) by Vincent074 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/). -->
+      <a-gltf-model id="piano" rotation="0 100 0" shadow="receive:false;cast:true;" src="https://cdn.glitch.global/d29f98b4-ddd1-4589-8b66-e2446690e697/piano.glb?v=1644414775118">
+        <a-plane rotation="-90 0 0" width="1.5" height="0.6" class="navmesh-hole" visible="false"></a-plane>
+      </a-gltf-model>
+    </a-entity>
+
+    <!-- This plane is only visible in AR and follows the given target to provide it with shadows.-->
+    <a-light id="dirlight" intensity="0.8" light="castShadow:true;type:directional" position="0 3 -6"></a-light>
+
+    <a-entity environment="lighting:none; shadow:true; preset: default;"></a-entity>
+
+      <a-gltf-model id="pot" toggle-physics shadow="receive:false;" src="#stew-gltf" position="-2 1.2 0.8" physx-body-from-model="type:dynamic;mass:2;">
+      </a-gltf-model>
+
+      <a-gltf-model id="table" shadow="receive:true;" src="#table-gltf" position="-2 0 0.8" rotation="0 51 0" scale="1.5 1.5 1.5" physx-body-from-model="type: static;">
+        <a-plane rotation="-90 0 0" width="1.2" height="0.6" class="navmesh-hole" visible="false"></a-plane>
+      </a-gltf-model>
+      
+      <a-gltf-model id="clock" shadow="receive:true;" src="#clock-gltf" position="-5 0 1.8" rotation="0 51 0" physx-body-from-model="type:dynamic;mass:15;"></a-gltf-model>
+
+      <!-- 
+      
+      class="navmesh"    // affects the player
+
+      static-body="type:___"    // affects the geometry/models in the scene
+
+      // a-planes do not work well with static bodies so opt for a-boxes instead
+      
+      -->
+
+      <!-- blue box -->
+      <a-box position="0 2 -3"
+            depth="1" height="1" width="1"
+            color="#4CC3D9"
+            physx-body="type: dynamic; mass: 5;"
+            physx-restitution="0.8"
+            shadow="cast: true; receive: true">
+      </a-box>
+
+      <!-- red box -->
+      <a-box position="2 0.5 -3"
+        depth="1" height="1" width="1"
+        color="#FF0000"
+        class="navmesh"
+        physx-body="type: static;" 
+        shadow="cast: true; receive: true">
+      </a-box>
+
+     <!-- nav mesh (ground) -->
+    <a-box 
+              class="navmesh"
+              physx-body="type: static" 
+              position="0 -0.5 0" 
+              rotation="-90 0 0" 
+              width="20" 
+              height="20" 
+              color="#808080" 
+              visible="true">
+    </a-box>
+
+    <!-- nav mesh (ramp) -->
+    <a-box 
+              class="navmesh" 
+              physx-body="type: static" 
+              position="0 0 10" 
+              rotation="-135 0 0" 
+              width="20" 
+              height="20" 
+              color="#808080" 
+              visible="true">
+    </a-box>
+
+     <!-- nav mesh (platform) -->
+     <a-box 
+              class="navmesh" 
+              physx-body="type: static" 
+              position="0 6.921 26.701" 
+              rotation="-90 0 0" 
+              width="20" 
+              height="20" 
+              color="#808080" 
+              visible="true">
+    </a-box>
+
+    <!-- inaccessible square -->
+    <a-entity id="wall" shadow="receive:true;" position="5 0 -3" rotation="0 0 0" scale="1.5 1.5 1.5" physx-body-from-model="type: static;">
+      <a-plane rotation="-90 0 0" width="1" height="1" class="navmesh-hole" visible="true"></a-plane>
+    </a-entity>
+
+  </a-scene>
+  </body>
+</html>

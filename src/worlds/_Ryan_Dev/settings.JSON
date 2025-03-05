@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Ryan Dev world",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Ryans development world.",
+        "description_long": "Ryands dkhfagfpadhjgdmcvnlksldkgjlsgjas.",
+        "tags": [ "hub", "hub", "hub"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}
