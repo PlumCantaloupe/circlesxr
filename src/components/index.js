@@ -36,3 +36,4 @@ require('./circles-spawnpoint');
 require('./circles-sphere-env-map.js');
 require('./circles-user-networked');
 require('./circles-enter-ui');
+require('./mat-user-device.js');

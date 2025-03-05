@@ -1,0 +1,78 @@
+<html>
+<head>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+  
+  <!-- MAT'S PLAYER STRUCT, CREATED ON 02-24 -->
+  <script>
+    //Basic struct like 
+    window.matPlayer = {
+      system : {
+          Desktop : false,
+          Portable  : false,
+          Headset : false
+      }
+    };
+    console.log("PLAYER SYSTEM", window.matPlayer.system);
+  </script>
+
+</head>
+<body>
+ 
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties  mat-user-device>
+          <!-- Belongs to systemDetection.js - Mat Created 02-21, Mat updated 02-24 - This is a function that runs a system check (mobile, VR, or PC)-->
+    
+    <a-assets>
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+
+      <!--Our Assets-->
+      <audio id="winSound" src="assets/sounds/testSound.mp3" preload="true"></audio> 
+      <audio id="lossSound" src="assets/sounds//oof.mp3" preload="true"></audio>  
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <!--Add Code Here-->
+    <a-entity id="spawn" 
+    circles-checkpoint circles-interactive-object="highlight_color:rgb(74, 230, 95); click_sound:#winSound;"
+     circles-spawnpoint position="0.0 0.0 0" ></a-entity>
+    <a-entity circles-checkpoint
+     circles-interactive-object="highlight_color:rgb(74, 230, 95); click_sound:#winSound;"
+     position="2.5 0 3.0" ></a-entity>
+    <a-entity 
+    circles-checkpoint circles-interactive-object="highlight_color:rgb(74, 230, 95); click_sound:#winSound;" 
+    position="-2.5 0 3.0" ></a-entity>
+
+    <a-entity geometry="primitive: plane; height: 60; width:60;" position="0 -.1 0" rotation="-90 0 0" material="color:skyblue;" ></a-entity>
+
+    <a-entity sound="src: #audiosource"></a-entity>
+    <!--<a-entity id="audiosource" circles-sound="type:ambient; src:#winSound; autoplay:true; loop:false; volume:1.0;" sound="refDistance:10; rolloffFactor:4.0;"></a-entity> -->
+
+    <a-text 
+      id="displayText" 
+      value="Initial Text"
+      position="0 2 -3"
+        color="black">
+    </a-text>
+    <a-entity circles-button="pedastal_color:rgb(74, 87, 95);" 
+      circles-interactive-object="highlight_color:rgb(74, 87, 95);"
+      circles-sendpoint="target:#spawn;" 
+      position="5 0 0" 
+      rotation="0 0 0" 
+      scale="0.8 0.8 0.8">
+    </a-entity>
+
+
+  </a-scene>
+
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
