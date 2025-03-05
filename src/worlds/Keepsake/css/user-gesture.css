@@ -1,0 +1,40 @@
+/* upload ui css */
+#upload-ui {
+    font-family: 'Open Sans', sans-serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+    display: none; /* default is hidden */
+  }
+  
+  .center {
+    text-align: center;
+  }
+  
+  #upload-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #upload-btn:hover {
+    background-color: #45a049;
+  }
+  
+  #close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+  }
