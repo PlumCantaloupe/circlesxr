@@ -109,6 +109,11 @@
       <a-entity circles-checkpoint position="-7 0 -7"></a-entity>
       <a-entity circles-checkpoint position="5 0 -7"></a-entity>
       <a-entity circles-checkpoint position="-7 0 5"></a-entity>
+      <a-entity circles-checkpoint position="-10 0 5"></a-entity>
+      <a-entity circles-checkpoint position="-5 0 10"></a-entity>
+      <a-entity circles-checkpoint position="-1 0 7"></a-entity>
+      <a-entity circles-checkpoint position="-14 0 11"></a-entity>
+
 
       <!-- Area 2, top -->
       <a-entity position="-4.25 2.5 -15"
@@ -117,6 +122,22 @@
         rotation="0 60 0">
       </a-entity>
       <a-entity color="black" position="-4.4 0 -16.5" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
+
+      <!-- portals -->
+      <a-entity id="Portal-Cave"
+        position="-15 1.7 11" rotation="0 50 0"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Cave; link_url:/w/LitPortals-Cave"
+        shadow></a-entity>
+
+        <a-entity id="Portal-Future"
+        position="-10.0 1.7 10" rotation="0 50 0"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Future; link_url:/w/LitPortals-Future"
+        shadow></a-entity>
+
+        <a-entity id="Portal-Lobby"
+        position="-5 1.7 9" rotation="0 50 0"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Lobby; link_url:/w/LitPortals-Lobby"
+        shadow></a-entity>
 
       <!-- Area 2, steps -->
     
