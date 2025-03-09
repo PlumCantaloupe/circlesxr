@@ -21,6 +21,7 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <a-asset-item id="room_gltf" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -28,19 +29,27 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
+      
+      <!-- Lights and sky box -->
+      <a-entity id='skyBox'
+                rotation='0 45 0'
+                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+                material='shader:flat; src:#skyMap; side:back;'>
+      </a-entity>
 
-      <!-- TO BE REPLACED - START -->
-      <a-entity environment="preset: default"></a-entity>
-      <a-plane position="0 1.5 -2.4"></a-plane>
-      <a-entity position="1.259 1.5 -2.355" text="value: Alpha World; width:3"></a-entity>
+      <!-- main lights -->
+      <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
+      <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
+      <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
+      <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
+      <a-entity light="type: point; intensity: 7" position="-4.56 3.3 1.078"></a-entity>
+      
+      <!-- tunnel lights -->
+      <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
+
+      <!-- room model -->
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <!-- TO BE REPLACED - END -->
-
-
-
-      <a-entity id="Portal-Hub"
-                position="2 1.5 -2.2" rotation="0 -108 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
-                shadow></a-entity>
 
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
