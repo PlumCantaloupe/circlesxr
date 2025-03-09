@@ -16,7 +16,7 @@
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties fog="type: none;">
-      <a-entity environment="preset:starry; active:true;"></a-entity>
+      <a-entity environment="preset:starry; active:true;" change-environment></a-entity>
 
       <a-assets>
 
@@ -103,7 +103,7 @@
 
 
       <a-entity id="Portal-Lobby"
-        position="-3 1.7 0" rotation="0 50 0"
+        position="-5 1.7 0" rotation="0 50 0"
         circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Lobby; link_url:/w/LitPortals-Lobby"
         shadow></a-entity>
 
@@ -133,6 +133,82 @@
       
     </a-scene>
 
+    <script>
+      let currentEnvironment = "starry"; // Default environment
+
+      AFRAME.registerComponent("change-environment", {
+        init: function () {
+          
+          const envEntity = document.querySelector("[environment]");
+          const redButton = document.querySelector("#red_button .button");
+    
+          const environments = ["starry", "forest", "yavapai", "arches", "contact"];
+          let currentIndex = 0;
+    
+          redButton.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % environments.length;
+            currentEnvironment = environments[currentIndex]; // Update global variable
+            envEntity.setAttribute("environment", `preset: ${currentEnvironment}`);
+            
+            // Store the current environment preset for later use
+            document.body.setAttribute("current-environment", environments[currentIndex]);
+          });
+    
+          // Initialize with the first environment
+          document.body.setAttribute("current-environment", environments[currentIndex]);
+        }
+      });
+    
+      // Add event listener to blue button to spawn a shape at a random position
+      const shapes = ["a-box", "a-cone", "a-cylinder", "a-sphere", "a-triangle"];
+      let currentShapeIndex = 0;
+    
+      const blueButton = document.querySelector("#blue_button .button");
+    blueButton.addEventListener("click", function () {
+        // Generate random position within specified ranges
+        const randomX = Math.floor(Math.random() * 41) - 20;
+        const randomY = Math.floor(Math.random() * 11);
+        const randomZ = Math.floor(Math.random() * 41) - 20;
+
+        // Determine the shape's color based on the environment
+        let shapeColor;
+        switch (currentEnvironment) { // Use the global variable instead
+            case "starry":
+                shapeColor = "black";
+                break;
+            case "forest":
+                shapeColor = "red";
+                break;
+            case "yavapai":
+                shapeColor = "green";
+                break;
+            case "arches":
+                shapeColor = "yellow";
+                break;
+            case "contact":
+                shapeColor = "white";
+                break;
+            default:
+                shapeColor = "blue"; // Default color
+        }
+
+        // Select the shape from the shapes array
+        const shape = document.createElement(shapes[currentShapeIndex]);
+        shape.setAttribute("position", `${randomX} ${randomY} ${randomZ}`);
+        shape.setAttribute("material", "color", shapeColor); // Corrected setting color
+        shape.setAttribute("scale", "1 1 1");
+        shape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5");
+
+        // Increment the shape index and reset if needed
+        currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
+
+        // Add the shape to the scene
+        document.querySelector("a-scene").appendChild(shape);
+    });
+</script>
+
+    
+    
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
