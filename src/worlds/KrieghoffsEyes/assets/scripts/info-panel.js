@@ -1,7 +1,5 @@
 AFRAME.registerComponent('info-panel', {
   init: function () {
-    // Query or create the fade background and info text elements.
-    //this.fadeBackgroundEl = document.querySelector('#fadeBackground');
     this.titleEl = document.querySelector('#panelTitle');
     this.descriptionEl = document.querySelector('#panelDescription');
 
@@ -11,7 +9,7 @@ AFRAME.registerComponent('info-panel', {
       bluePaint: { x: -3.816, y: 1.805, z: -8.242 }
     };
     
-    // Mapping painting IDs to their info. Customize as needed.
+    // Paintings Descriptions.
     this.paintingInfo = {
       redPaint: {
         title: 'Red Painting',
@@ -27,17 +25,15 @@ AFRAME.registerComponent('info-panel', {
       }
     };
     
-    // Listen for the custom event on the scene.
+    // Recieve painting selected
     this.el.sceneEl.addEventListener('paintingSelected', this.onPaintingSelected.bind(this));
     
-    // Also, click on the background hides the panel.
-    //var backgroundEl = document.querySelector('#background');
-   // backgroundEl.addEventListener('click', this.hidePanel.bind(this));
     
-    // Initially hide the panel.
+    
     this.el.setAttribute('visible', false);
   },
   
+  //Handling selected painting
   onPaintingSelected: function (evt) {
     var paintingId = evt.detail.id;
     var info = this.paintingInfo[paintingId];
@@ -49,7 +45,6 @@ AFRAME.registerComponent('info-panel', {
     this.el.object3D.scale.set(1, 1, 1);
     this.el.setAttribute('visible', true);
     
-    // Set the text content.
     this.titleEl.setAttribute('text', 'value', info.title);
     this.descriptionEl.setAttribute('text', 'value', info.description);
   },
