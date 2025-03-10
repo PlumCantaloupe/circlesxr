@@ -61,7 +61,7 @@ AFRAME.registerComponent('circles-checkpoint', {
     if (useDefaultModel) {
       //create sphere component for portal
       CONTEXT_AF.el.setAttribute('material', {transparent:data.transparent, opacity:data.opacity, color:data.colour, emissive:data.emissive, roughness:0.8, metalness:0.0});
-      CONTEXT_AF.el.setAttribute('geometry', {primitive:'cylinder', radius:0.5, height:0.04});
+      CONTEXT_AF.el.setAttribute('geometry', {primitive:'cylinder', radius:0.5, height:0.06});
       CONTEXT_AF.el.setAttribute('circles-interactive-object', {type:'outline'});
     }
     else {
