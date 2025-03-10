@@ -1,3 +1,7 @@
+//custom BW components
+require('./bw-shared-state-manager.js')
+
+//circles components
 require('./circles-add-camera-equipment');
 require('./circles-artefact');
 require('./circles-avatar-construction');

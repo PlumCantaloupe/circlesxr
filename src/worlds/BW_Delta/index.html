@@ -29,13 +29,14 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
+      <!-- component to manage shared state between worlds through localStorage -->
+      <a-entity bw-shared-state-manager='currWorld: delta'></a-entity>
+
       <!-- TO BE REPLACED - START -->
       <a-entity environment="preset: default"></a-entity>
       <a-plane position="0 1.5 -2.4"></a-plane>
       <a-entity position="1.259 1.5 -2.355" text="value: Delta World; width:3"></a-entity>
       <!-- TO BE REPLACED - END -->
-
-
 
       <a-entity id="Portal-Hub"
                 position="2 1.5 -2.2" rotation="0 -108 0"

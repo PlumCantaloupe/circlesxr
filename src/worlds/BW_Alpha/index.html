@@ -30,6 +30,9 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
+      <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
+      <a-entity bw-shared-state-manager='currWorld: alpha'></a-entity>
+      
       <!--Portal - don't remove from scene please -->
       <a-entity id="Portal-Hub"
                 position="2 1.5 -54.86" rotation="0 -108 0"
@@ -55,6 +58,7 @@
 
       <!-- room model -->
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
+
       <!-- TO BE REPLACED - END -->
 
     <!-- Circles' end scripts [REQUIRED] -->
