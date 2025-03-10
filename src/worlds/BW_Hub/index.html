@@ -13,9 +13,23 @@
       AFRAME.registerComponent('comp', {
         init: function() {
           setTimeout(function(){
-            const comp = document.querySelector('[bw-hub-state-manager]').components['bw-hub-state-manager'];
-          },2000)
+            const comp = document.querySelector('[bw-shared-state-manager]').components['bw-shared-state-manager'];
+            console.log("get")
+            console.log(comp.getData(BRAINWAVES.LS_TELEPORT_PAD))
+            console.log(comp.getData(BRAINWAVES.LS_GUIDING_TEXT))
+            console.log(comp.getData(BRAINWAVES.LS_RECENT_ROOM))
+
+            //update
+            console.log("update")
+            comp.setData(BRAINWAVES.LS_TELEPORT_PAD, true);
+            comp.setData(BRAINWAVES.LS_GUIDING_TEXT, true);
+
+            //check again
+            console.log("check again")
+            console.log(comp.getData(BRAINWAVES.LS_TELEPORT_PAD))
+            console.log(comp.getData(BRAINWAVES.LS_GUIDING_TEXT))
           
+          },2000)
         }
       })
     </script>
@@ -48,7 +62,7 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity bw-hub-state-manager></a-entity>
+      <a-entity bw-shared-state-manager='currWorld: hub'></a-entity>
       <a-entity comp></a-entity>
 
       <!-- main lights -->

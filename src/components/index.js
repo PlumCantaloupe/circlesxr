@@ -1,6 +1,5 @@
 //custom BW components
-require('./bw-hub-state-manager.js')
-require('./bw-world-state-manager.js')
+require('./bw-shared-state-manager.js')
 
 //circles components
 require('./circles-add-camera-equipment');
