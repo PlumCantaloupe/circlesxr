@@ -30,8 +30,14 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!-- component to manage shared state between worlds through localStorage -->
+      <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
       <a-entity bw-shared-state-manager='currWorld: alpha'></a-entity>
+      
+      <!--Portal - don't remove from scene please -->
+      <a-entity id="Portal-Hub"
+                position="2 1.5 -54.86" rotation="0 -108 0"
+                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
+                shadow></a-entity>
       
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
