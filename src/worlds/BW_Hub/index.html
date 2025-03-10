@@ -33,6 +33,9 @@
         }
       })
     </script>
+    <script src="js/constants.js"></script>
+    <script src="js/dispense-emotion.js"></script>
+    <script src="js/emotion-pick-up.js"></script>
   </head>
   <body>
 
@@ -79,6 +82,41 @@
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <!-- TO BE REPLACED - END -->
 
+      <!-- dispense buttons -->
+       <!-- blue button -->
+      <a-entity class="buttonContainer" rotation="0 32.9 0">
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+                  dispense-emotion="orbColour: #05cdff"
+                  position="0 1.02 2.13"
+                  rotation="90 0 0"></a-entity>
+        <a-sphere scale="0.1 0.1 0.1"></a-sphere>
+      </a-entity>
+      <!-- pink button -->
+      <a-entity class="buttonContainer" rotation="0 105.2 0">
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+                  position="0 1.02 2.13"
+                  rotation="90 0 0"></a-entity>
+      </a-entity>
+      <!-- green button -->
+      <a-entity class="buttonContainer" rotation="0 177.62 0">
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+                  position="0 1.02 2.13"
+                  rotation="90 0 0"></a-entity>
+      </a-entity>
+      <!-- orange button -->
+      <a-entity class="buttonContainer" rotation="0 249.12 0">
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+                  position="0 1.02 2.13"
+                  rotation="90 0 0"></a-entity>
+      </a-entity>
+      <!-- yellow button -->
+      <a-entity class="buttonContainer" rotation="0 320.89 0">
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+                  position="0 1.02 2.13"
+                  rotation="90 0 0"></a-entity>
+      </a-entity>
+
+      <!-- portals -->
       <a-entity id="Portal-Delta"
                 position="2 1.5 -2.2" rotation="0 -108 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Delta; link_url:/w/BW_Delta"
