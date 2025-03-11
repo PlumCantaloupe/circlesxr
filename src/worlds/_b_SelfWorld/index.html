@@ -10,15 +10,24 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
-
+        <!--OurLoaded in Assets-->
+        <a-asset-item id="navmesh_gltf" src="/worlds/_b_SelfWorld/assets/beta_self_navmesh.glb" response-type="arraybuffer" ></a-asset-item>
+        <a-asset-item id="env_model" src="/worlds/_b_SelfWorld/assets/beta_self.glb" response-type="arraybuffer" ></a-asset-item>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
-    </a-assets>
+    
+    </a-assets> <!---------------------------------------------------------------------------------------------------------->
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
+    <!--light-->
+    <a-entity light="type: hemisphere; color:#fffcd6; groundColor:#499763; intensity: 1.2" position = "8.819 18.436 -8.481"></a-entity>
+    <!--models-->
+    <a-entity id="environment-model" gltf-model="#env_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
+    <!--navmesh-->
+    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'   nav-mesh ></a-entity>
   </a-scene>
-
+  
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
