@@ -6,7 +6,9 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
-    <script src="js/sorting-interaction.js"></script>
+    <script src="js/sorting-component.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@master/dist/aframe-physics-system.min.js"></script>-->
+
   </head>
   <body>
     
@@ -14,7 +16,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties physics="debug: true">
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -80,20 +82,20 @@
                                   label_text:Gem;"
                 circles-pickup-networked></a-entity>
 
-      <a-sphere id="sphere" sorting-collision class="sorting_item"
+      <a-sphere id="artifact4" class="sorting_item" data-order="2" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
+        position="8 1.5 1" scale="0.5 0.5 0.5" color="blue">
       </a-sphere>
       <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox" 
-        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-entity class="collisionbox" id="goal-1" sorting-collision 
+        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-entity>
       
-      <a-cone id="cone" sorting-collision class="sorting_item"
+      <a-cone id="cone" class="sorting_item" data-order="1" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 2 2" scale="0.5 0.5 0.5" color="green">
+        position="8 1.5 2" scale="0.5 0.5 0.5" color="green">
       </a-cone>
-      <a-cylinder position="8 0.1 2 color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox"
+      <a-cylinder position="8 0.1 2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-box class="collisionbox" id="goal-2" sorting-collision 
         position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
       
       <a-box id="box" 
