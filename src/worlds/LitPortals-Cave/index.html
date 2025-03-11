@@ -2,6 +2,17 @@
   <head>
     <meta charset="utf-8">
 
+    <script>
+      window.addEventListener('load', () => {
+        const fireSound = document.getElementById('fireCrackling-snd');
+        if (fireSound) {
+          console.log('Audio file is loaded.');
+        } else {
+          console.log('Audio file not loaded.');
+        }
+      });
+    </script>
+    
     <!-- Circles' head scripts [REQUIRED] -->
     <circles-start-scripts/>
 
@@ -16,9 +27,13 @@
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties>
       <a-assets>
+        <a-asset-item id="campfire-gltf"  src="/worlds/LitPortals-Cave/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
+        <audio id="fireCrackling-snd" src="src\worlds\LitPortals-Cave\assets\sounds\fire.mp3" preload="true"></audio>
+
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
+        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+         -->
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
        
         <!-- gltf models -->
@@ -33,6 +48,52 @@
       <!-- just creating an entity that connects many elements together -->
 
       <!-- Area 1, with some spawnpoints -->
+
+
+      <!-- Campfire -->
+
+      <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
+        <a-entity position="0 -0.2 0" id="fire">
+          <!-- Layer 1: Base fire cones -->
+          <a-cone position="0 0 0" radius-bottom="0.3" radius-top="0" height="1.2" color="orange" animation="property: position; to: 0 1 0; dir: alternate; dur: 800; loop: true;"></a-cone>
+          <a-cone position="0.2 0 0" radius-bottom="0.2" radius-top="0" height="1" color="yellow" animation="property: position; to: 0.2 1 0; dir: alternate; dur: 700; loop: true;"></a-cone>
+          <a-cone position="-0.2 0 0" radius-bottom="0.2" radius-top="0" height="0.9" color="red" animation="property: position; to: -0.2 1 0; dir: alternate; dur: 900; loop: true;"></a-cone>
+  
+          <!-- Layer 2: Smaller flames -->
+          <a-cone position="0 0.5 0" radius-bottom="0.2" radius-top="0" height="1" color="orange" animation="property: position; to: 0 1 0; dir: alternate; dur: 600; loop: true;"></a-cone>
+          <a-cone position="0.1 0.5 0" radius-bottom="0.1" radius-top="0" height="0.8" color="yellow" animation="property: position; to: 0.1 1 0; dir: alternate; dur: 700; loop: true;"></a-cone>
+          <a-cone position="-0.1 0.5 0" radius-bottom="0.1" radius-top="0" height="0.9" color="red" animation="property: position; to: -0.1 1 0; dir: alternate; dur: 800; loop: true;"></a-cone>
+        </a-entity>
+
+        <a-entity
+            id="fireParticlesSound"
+            class="ambient-music"
+            fire="particles:200;"
+            position="0.0 -0.2 0.0"
+            sound="src:#fireCrackling-snd; autoplay:true; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
+        </a-entity>
+    
+        <a-entity animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
+            <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
+                <a-entity light="type: point; color: #FFA200; intensity: 3.5; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
+                          animation="property:light.intensity; dur:293; dir:alternate; to:3.6; loop:true; easing:easeInOutExpo">
+                </a-entity>
+            </a-entity>
+        </a-entity>
+    </a-entity>
+    
+    <a-entity id="campfire_label" circles-label="text:click fire to start; visible:true; offset:1.0 0.4 0; arrow_position:left;"></a-entity>
+    
+    <a-entity
+        id="campfire"
+        class="interactive"
+        gltf-model="#campfire-gltf"
+        shadow="receive: true; cast: true"
+        circles-interactive-object="type:highlight"
+        onclick="document.getElementById('fireRig').setAttribute('visible', 'true'); 
+                   document.getElementById('fireParticlesSound').components.sound.play();">
+    </a-entity>
+    
 
       <!-- room -->
       <a-entity position="0 2.5 0" 
