@@ -1,7 +1,10 @@
 AFRAME.registerComponent('manager', {
+    schema: {
+      holdingOrb: {type: 'boolean', default: false}
+    },
+
     init: function () {
       const Context_AF = this;
-      Context_AF.holdingObject = false;
     },
 
     update: function () {

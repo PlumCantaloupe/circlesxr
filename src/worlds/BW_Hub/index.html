@@ -28,12 +28,27 @@
             console.log("check again")
             console.log(comp.getData(BRAINWAVES.LS_TELEPORT_PAD))
             console.log(comp.getData(BRAINWAVES.LS_GUIDING_TEXT))
+
+            const ball = document.createElement('a-entity');
+
+            ball.setAttribute('geometry', {primitive: 'sphere',
+                                            radius: 0.2});
+            ball.object3D.position.set(0, 4, 0);
+            ball.setAttribute('ammo-body', {type: 'dynamic'});
+            ball.setAttribute('ammo-shape', {type: 'sphere'});
+
+            document.querySelector('a-scene').appendChild(ball);
+    
           
-          },2000)
+          },20000)
         }
       })
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/MozillaReality/ammo.js@8bbc0ea/builds/ammo.wasm.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.3/dist/aframe-physics-system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-particle-system-component@1.2.0/dist/aframe-particle-system-component.min.js"></script>
     <script src="js/constants.js"></script>
+    <script src="js/manager.js"></script>
     <script src="js/dispense-emotion.js"></script>
     <script src="js/emotion-pick-up.js"></script>
   </head>
@@ -43,7 +58,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties physics="driver: ammo; debug:true;  contactEquationRelaxation:1; frictionEquationRegularization:1">
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -56,6 +71,8 @@
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
+
+      <a-entity id="manager" manager></a-entity>
       
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -151,7 +168,32 @@
       <a-entity circles-checkpoint position="7.4 0.03 8.8"></a-entity>
       <a-entity circles-checkpoint position="7.1 0.03 -8.2"></a-entity>
 
-    <!-- Circles' end scripts [REQUIRED] -->
+      <!-- <a-sphere  position="0 1 0" scale="0.3 0.3 0.3" material="color:#FFF"></a-sphere>
+      <a-sphere  ammo-body="type:dynamic" ammo-shape="type:sphere"  position="0 2 0" scale="0.1 0.1 0.1" material="color:red" animation="property: scale; from: 0.08 0.08 0.08; to: 0.1 0.1 0.1; delay: 10000; dur: 500"></a-sphere>
+      <a-sphere   ammo-body="type:dynamic" ammo-shape="type:sphere" position="0 3 0" scale="0.19 0.19 0.19" material="color:blue"></a-sphere>
+      <a-sphere   ammo-body="type:dynamic" ammo-shape="type:sphere" position="0 4 0" scale="0.2 0.2 0.2" material="color:green"></a-sphere>
+      <a-sphere   ammo-body="type:dynamic" ammo-shape="type:sphere" position="0 5 0" scale="0.1 0.1 0.1" material="color:yellow"></a-sphere>
+      <a-sphere   ammo-body="type:dynamic" ammo-shape="type:sphere" position="0 5 0" scale="0.15 0.15 0.15" material="color:pink"></a-sphere>
+
+      <a-sphere theta-length="113" theta-start="70" scale='0.5 0.5 0.5' ammo-body="type:static" ammo-shape="type:hacd" material="transparent: true; opacity: 0.5" position="-0.01 1.2 0"></a-sphere>
+     -->
+     <a-entity particle-system="preset: none;
+     particleCount: 500;
+     velocityValue: 0 0 5;
+     velocitySpread: 5 5 5;
+     accelerationValue: 0 0 -5;
+     maxAge: 3;
+     dragValue: 0.1;
+     size: 1;
+     color: #ff0000;
+     positionSpread: 1 1 1;
+     opacity: 1;
+     blending: 2;">
+    
+      <!-- 
+      
+    
+    Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>
