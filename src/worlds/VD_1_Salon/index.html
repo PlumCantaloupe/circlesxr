@@ -41,9 +41,16 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!-- a mirror -->
-      <a-entity geometry="primitive:plane; width:1; height:1" position="-3.228 1.822 1.052" rotation="0 90 0" scale="6.742 1.667 1.000" 
-                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256; color:#002920;"></a-entity>
+      <!-- mirror -->
+       <a-entity class="mirror" position="-3.228 1.822 1.072" rotation="0 90 0">
+        <a-entity class="mirror_edge" position="3.33 0.0 0.0"    geometry="primitive:box; width:0.03; height:1.7; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+        <a-entity class="mirror_edge" position="-3.33 0.0 0.0"   geometry="primitive:box; width:0.03; height:1.7; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+        <a-entity class="mirror_edge" position="0.0 0.85 0.0"    geometry="primitive:box; width:6.69; height:0.03; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+        <a-entity class="mirror_edge" position="0.0 -0.85 0.0"   geometry="primitive:box; width:6.69; height:0.03; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+        <a-entity geometry="primitive:plane; width:6.66; height:1.7" circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024;"></a-entity>
+      </a-entity>
+      <!-- <a-entity geometry="primitive:plane; width:; height:1" position="-3.228 1.822 1.052" rotation="0 90 0" scale="6.742 1.667 1.000" 
+                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256;"></a-entity> -->
 
       <!-- portal back to campfire -->
       <a-entity id="campfire_link"

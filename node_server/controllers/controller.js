@@ -761,7 +761,7 @@ const addTestUsers = () => {
           if (error) {
             console.log("createUser error on [" + usersToAdd[i].username + "]: " + error.message);
           } else {
-            console.log("successfully added test user: " + user.username);
+            console.log("successfully added test user: " + usersToAdd[i].username);
           }
 
           error = null;
