@@ -6,6 +6,10 @@ const EMOTION_ORB_INFO = {
     Z_POS: 2.13,
 };
 
+const CYLINDER_Y_SIZE = 1;
+
+const DELTA_VISUALIZATION_EVENT = 'updateDeltaVisualization';
+
 //function displays 2D UI text
 function displayText() {
 

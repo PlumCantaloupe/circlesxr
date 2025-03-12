@@ -34,7 +34,7 @@ AFRAME.registerComponent('dispense-emotion', {
         orbEl.setAttribute('material', {color: Context_AF.data.orbColour});
         orbEl.setAttribute('emotion-pick-up', {animate:true});
         orbEl.setAttribute('circles-interactive-object', {type: 'outline'});
-        orbEl.setAttribute('id', 'orb');
+        orbEl.setAttribute('id', 'blue');
 
         Context_AF.parent.appendChild(orbEl);
     }

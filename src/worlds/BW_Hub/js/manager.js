@@ -1,6 +1,7 @@
 AFRAME.registerComponent('manager', {
     schema: {
-      holdingOrb: {type: 'boolean', default: false}
+      holdingOrb: {type: 'boolean', default: false},
+      holdingOrbId: {type: 'string'}
     },
 
     init: function () {

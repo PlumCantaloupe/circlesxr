@@ -20,11 +20,12 @@ AFRAME.registerComponent('emotion-pick-up', {
       orb.object3D.parent = camera.object3D;
       orb.object3D.position.set(0, 0, -1);
       orb.object3D.scale.set(2, 2, 2);
-      manager.setAttribute('manager', {holdingOrb: true});
+      manager.setAttribute('manager', {holdingOrb: true, holdingOrbId: orb.id});
     },
 
     remove: function () {
       //allow an emotion of this type to be dispensed again
-      Context_AF.parent.children[0].setAttribute('dispense-emotion', {enabled: true});
+      const Context_AF = this;
+      //Context_AF.parent.children[0].setAttribute('dispense-emotion', {enabled: true});
     }
 });
