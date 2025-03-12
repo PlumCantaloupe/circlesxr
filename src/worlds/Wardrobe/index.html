@@ -26,8 +26,15 @@
         
         <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.0 0.0"></a-entity>
         
-        <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="0.0 1.5 -2.5" 
-                    circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
+        <!-- wardrobe mirror -->
+        <a-entity class="mirror" position="0.0 1.5 -2.5">
+          <a-entity class="mirror_edge" position="0.8 0.0 0.0"    geometry="primitive:box; width:0.1; height:2.0; depth:0.1;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+          <a-entity class="mirror_edge" position="-0.8 0.0 0.0"   geometry="primitive:box; width:0.1; height:2.0; depth:0.1;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+          <a-entity class="mirror_edge" position="0.0 1.0 0.0"    geometry="primitive:box; width:1.7; height:0.1; depth:0.1;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+          <a-entity class="mirror_edge" position="0.0 -1.0 0.0"   geometry="primitive:box; width:1.7; height:0.1; depth:0.1;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+          <a-entity class="mirror_back" position="0.0 0.0 -0.01" rotation="0 180 0"  geometry="primitive:plane; width:1.6; height:2.0;" material="color:rgb(100, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
+          <a-entity geometry="primitive:plane; width:1.6; height:2.0" circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024;"></a-entity>
+        </a-entity>
 
       <!-- Body Shape Choices -->
       <a-entity id="body_choices" position="-1.3 3.0 -2">
