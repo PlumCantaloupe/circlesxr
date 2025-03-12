@@ -18,6 +18,9 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
+        <!--portals-->
+        <a-asset-item id="portalsModel" response-type="arraybuffer" src="/worlds/LitPortals-Lobby/assets/models/portals.glb"></a-asset-item>
+        <a-asset-item id="lobbyWallsModel" response-type="arraybuffer" src="/worlds/LitPortals-Lobby/assets/models/lobby_walls.glb"></a-asset-item>
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
        
@@ -69,6 +72,11 @@
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
       </a-torus>
+
+      <!--Portals-->
+      <a-entity id="portals" position="0 0 0" rotation = "0 180 0" scale= "30 30 30" gltf-model="#portalsModel"></a-entity>
+      <a-entity id="lobby_walls" position="0 0 0" rotation = "0 0 0" scale= "30 30 30" gltf-model="#lobbyWallsModel"></a-entity>
+
 
        <!-- gems with text box
         can be instructions or welcome message
