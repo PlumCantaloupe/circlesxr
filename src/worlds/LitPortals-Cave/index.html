@@ -61,6 +61,8 @@
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
        
         <!-- gltf models -->
+        <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
+         
        
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -120,6 +122,8 @@
     
 
       <!-- room -->
+      <!--Cave base-->
+      <a-entity id="caveBase" position="0 2.8 0" scale= "0.4 0.4 0.4" gltf-model="#caveBaseModel"></a-entity>
       <a-entity position="0 2.5 0" 
         geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; " 
         material="color: #964B00; side: double;">
