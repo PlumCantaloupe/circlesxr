@@ -2,6 +2,7 @@
   <head>
     <meta charset="utf-8">
 
+    <link rel="stylesheet" href="style.css">
     <script>
       window.addEventListener('load', () => {
         const fireSound = document.getElementById('fireCrackling-snd');
@@ -17,12 +18,35 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
+    
+    <script src="components/toggle-movement.js"></script>
+    <script src="components/toggle-canvas.js"></script>
+    <script src="components/update-canvas.js"></script>
 
   </head>
   <body>
     
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
+
+    <!-- cave painting stuff -->
+    <div id="canvasDiv">
+      <div class="center">
+      <button onclick="toggleCanvas()"> exit painting</button>
+      <canvas id="drawCanvas" width="512" height="512" style="border:1px solid #000000;" ></canvas>
+      </div>
+    </div>
+  
+    <script>
+      let toggleCanvas = function (){
+        document.getElementById("canvasDiv").style.visibility = "hidden";
+      }
+    </script>
+      <!-- cave painting stuff end-->
+  
+
+    
+   
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties>
@@ -156,6 +180,19 @@
       circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Lobby; link_url:/w/LitPortals-Lobby"
       shadow></a-entity>
 
+      <!-- Cave painting interaction -->
+      <!-- Plane where the drawing will display -->
+      <a-entity update-canvas position="6.5 1.7 -8" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="src: #drawCanvas;"> </a-entity>
+
+      <!-- Button to start the interaction -->
+      <a-entity circles-button="type:cylinder" position="4.7 1.1 -8.8" toggle-canvas>
+        <!-- TO FIX: clicking bubble triggers button -->
+        <a-entity circles-label="text:cave painting; offset:0 0.8 0; arrow_position:down;"></a-entity>
+      </a-entity>
+      <a-entity geometry="primitive:cylinder; radius:0.32; height:1;" position="4.7 0.5 -8.8" material="color:white"></a-entity>
+
+    
+
       <!-- Area 2, top -->
      
       <!-- Area 2, steps -->
@@ -190,4 +227,5 @@
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
+  <script src='canvas.js'></script>
 </html>
