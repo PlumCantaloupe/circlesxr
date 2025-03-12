@@ -82,43 +82,35 @@
                                   label_text:Gem;"
                 circles-pickup-networked></a-entity>
 
-      <a-sphere id="artifact4" class="sorting_item" data-order="2" sorting-collision
+      <!--artifacts-->
+      <a-dodecahedron id="artifact1" class="sorting_item" data-order="4" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1.5 1" scale="0.5 0.5 0.5" color="blue">
-      </a-sphere>
-      <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-entity class="collisionbox" id="goal-1" sorting-collision 
-        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-entity>
-      
-      <a-cone id="cone" class="sorting_item" data-order="1" sorting-collision
+        position="8 1.5 -1" scale="0.5 0.5 0.5" color="red"></a-dodecahedron>
+      <a-sphere id="artifact2" class="sorting_item" data-order="3" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1.5 2" scale="0.5 0.5 0.5" color="green">
-      </a-cone>
-      <a-cylinder position="8 0.1 2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox" id="goal-2" sorting-collision 
-        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
-      
-      <a-box id="box" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-        position="8 1 0" scale="0.5 0.5 0.5" color="red">
-      </a-box>
-      <a-cylinder position="8 0.1 0" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox"
-        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
-      <a-dodecahedron id="dodeca" 
+        position="8 1.5 0" scale="0.5 0.5 0.5" color="yellow"></a-sphere>
+      <a-sphere id="artifact3" class="sorting_item" data-order="2" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
-      </a-dodecahedron>
-      <a-cylinder position="8 0.1 -2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox"
-        position="8 0.5 -2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
-      <a-torus id="torus" 
+        position="8 1.5 1" scale="0.5 0.5 0.5" color="blue"></a-sphere>
+      <a-sphere id="artifact4" class="sorting_item" data-order="1" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
-      </a-torus>
-      <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-box class="collisionbox"
+        position="8 1.5 2" scale="0.5 0.5 0.5" color="green"></a-sphere>
+
+      <!--detection box-->
+      <a-box class="collisionbox" id="goal-1" sorting-collision
         position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-box class="collisionbox" id="goal-2" sorting-collision
+        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-box class="collisionbox" id="goal-3" sorting-collision 
+        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+      <a-box class="collisionbox" id="goal-4" sorting-collision 
+        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.3"></a-box>
+
+      <!--pedestal-->
+      <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 0" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
 
       <!-- teleport pads-->
       <a-entity circles-checkpoint position="5 0 5"></a-entity>
