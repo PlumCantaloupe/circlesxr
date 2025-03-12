@@ -427,6 +427,10 @@
       <!-- put all assets here -->
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
+      <!-- orb room model -->
+      <a-asset-item id="orb-room-model" src="assets/models/Orb_Room.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
       <!-- polycam scans -->
       <a-asset-item id="owl-model" src="assets/models/Owl Puppet (1).glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
@@ -499,62 +503,16 @@
         class="interactive">
         </a-cylinder>
 
-        <!-- floor -->
-        <a-box 
-            position="0 -0.1 0"
-            width="10" 
-            height="0.2" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+        <!-- testing orb room model -->
+        <!--<a-entity
+        id="orb-room"
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="30 30 30"
+        gltf-model="#orb-room-model"
+        shadow="recieve:true;">
+        </a-entity>-->
 
-        <!-- ceiling -->
-        <a-box 
-            position="0 4 0"
-            width="10" 
-            height="0.2" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
-
-        <!-- walls -->
-        <a-box 
-            position="0 2 -5"
-            width="10" 
-            height="4" 
-            depth="0.2" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
-
-        <a-box 
-            position="0 2 5"
-            width="10" 
-            height="4" 
-            depth="0.2" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
-
-        <a-box 
-            position="-5 2 0"
-            width="0.2" 
-            height="4" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
-
-        <a-box 
-            position="5 2 0"
-            width="0.2" 
-            height="4" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->

@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Keepsake - Gallery",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Memory Preservation in VR",
+        "description_long": "Memory preservation is awesome!",
+        "tags": [ "hub", "fire", "campfire"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}

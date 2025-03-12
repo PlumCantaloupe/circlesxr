@@ -1,0 +1,90 @@
+<html>
+<head>
+    <!--TESTING COMMENT BY STEVEN-->
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+  <!-- custom scripts are added here-->
+  <script src="/worlds/Keepsake/components/circles-pickup-object.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keepsake</title>
+  <!-- scripts link -->
+
+  <!-- css link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="">
+    <!-- INTERACTIVITY SCRIPT HERE ******************************************************************************* -->
+    <script>
+      "use strict";
+
+  </script>
+</head>
+
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties interaction-manager background="color: black">
+    <a-assets>
+      <!-- put all assets here -->
+      <!-- pedestal -->
+      <a-asset-item id="pedestal-model" src="assets/models/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
+      <!-- minimal gallery model -->
+      <a-asset-item id="minimal-room-model" src="assets/models/Minimal_Room.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+  
+    <!-- put scene stuff here -->
+        <!-- camera -->
+        <a-entity 
+        id="camera" 
+        camera 
+        look-controls 
+        wasd-controls 
+        twoway-motion="speed: 35"
+        position="0 1.6 0" 
+        cursor="rayOrigin: mouse"
+        circles-interactive-object
+        raycaster="objects: .interactive; far: 20; interval: 100">
+        </a-entity>
+
+        <!-- pedestal -->
+        <a-entity
+        id="pedestal"
+        class="interactive"
+        position="2.3 0 0"
+        rotation="0 90 0"
+        scale="2 2 2"
+        gltf-model="#pedestal-model"
+        pedestal-interaction
+        circles-interactive-object
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <!-- testing minimal room model -->
+        <a-entity
+        id="minimal-room"
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="30 30 30"
+        gltf-model="#minimal-room-model"
+        shadow="recieve:true;">
+        </a-entity>
+
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
