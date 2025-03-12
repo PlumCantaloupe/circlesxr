@@ -100,22 +100,22 @@
     // orb placement and gallery naming
     AFRAME.registerComponent('plate-interaction', {
     init: function() {
-        const self = this;
-        self.hasObject = false;
-        self.placedObjectId = null;
-        self.objectsLabeled = {}; // track labelled objs
-        
-        if (!self.el.classList.contains('interactive')) {
+      const self = this;
+      self.hasObject = false;
+      self.placedObjectId = null;
+      self.objectsLabeled = {}; // track labelled objs
+      
+      if (!self.el.classList.contains('interactive')) {
         self.el.classList.add('interactive');
-        }
-        
-        self.plateTopPosition = new THREE.Vector3();
-        self.updatePlatePosition = () => {
+      }
+      
+      self.plateTopPosition = new THREE.Vector3();
+      self.updatePlatePosition = () => {
         self.el.object3D.getWorldPosition(self.plateTopPosition);
         self.plateTopPosition.y += (self.el.getAttribute('height') || 0.1) / 2 + 0.05;
-        };
-        
-        self.el.addEventListener('click', () => {
+      };
+      
+      self.el.addEventListener('click', () => {
         console.log('Plate clicked');
         const manager = self.el.sceneEl.components['interaction-manager'];
         const heldObjectId = manager.pickedUpObject;
@@ -124,14 +124,14 @@
         
         // If nothing held, do nothing
         if (!heldObjectId) {
-            console.log('Nothing in hand to place');
-            return;
+          console.log('Nothing in hand to place');
+          return;
         }
         
         const heldObject = document.getElementById(heldObjectId);
         if (!heldObject) {
-            console.log('Could not find object with ID:', heldObjectId);
-            return;
+          console.log('Could not find object with ID:', heldObjectId);
+          return;
         }
         
         self.updatePlatePosition();
@@ -145,39 +145,43 @@
         
         // set pos on plate
         heldObject.setAttribute('position', {
-            x: self.plateTopPosition.x,
-            y: self.plateTopPosition.y,
-            z: self.plateTopPosition.z
+          x: self.plateTopPosition.x,
+          y: self.plateTopPosition.y,
+          z: self.plateTopPosition.z
         });
         
         heldObject.setAttribute('rotation', '0 0 0');
         
         if (heldObject.components['pickupable']) {
-            heldObject.components['pickupable'].pickedUp = false;
+          heldObject.components['pickupable'].pickedUp = false;
         }
         
         manager.pickedUpObject = null;
         
         // only show labelling if there isn't a label
         if (!self.objectsLabeled[heldObjectId]) {
-            const labelUI = document.querySelector('#label-ui');
-            if (labelUI) {
+          const labelUI = document.querySelector('#label-ui');
+          if (labelUI) {
             labelUI.style.display = 'block';
             
             labelUI.dataset.objectId = heldObjectId;
             
             const labelInput = document.querySelector('#label-input');
             if (labelInput) {
-                labelInput.value = '';
-                setTimeout(() => labelInput.focus(), 100);
+              labelInput.value = '';
+              setTimeout(() => labelInput.focus(), 100);
             }
-            }
+          }
+          else
+          {
+            window.location.href = "gallery.html";
+          }
         }
-        });
-        
-        self.updatePlatePosition();
+      });
+      
+      self.updatePlatePosition();
     }
-    });
+  });
 
     // Gallery Naming
     AFRAME.registerComponent('object-label', {
@@ -225,62 +229,61 @@
     }
     });
 
-    // label UI handlers
-    document.addEventListener('DOMContentLoaded', function() {
+    // label creation
+  document.addEventListener('DOMContentLoaded', function() {
     // setup label submission
     const submitLabel = function() {
-        const labelUI = document.querySelector('#label-ui');
-        const labelInput = document.querySelector('#label-input');
-        
-        if (!labelUI || !labelInput) return;
-        
-        const objectId = labelUI.dataset.objectId;
-        const labelText = labelInput.value.trim();
-        
-        if (objectId && labelText) {
+      const labelUI = document.querySelector('#label-ui');
+      const labelInput = document.querySelector('#label-input');
+      
+      if (!labelUI || !labelInput) return;
+      
+      const objectId = labelUI.dataset.objectId;
+      const labelText = labelInput.value.trim();
+      
+      if (objectId && labelText) {
         // get obj and add label
         const object = document.getElementById(objectId);
         if (object) {
-            object.setAttribute('object-label', {text: labelText});
-            console.log(`Set label "${labelText}" on object ${objectId}`);
-            
-            // mark this object as labeled
-            const plate = document.querySelector('[plate-interaction]');
-            if (plate && plate.components['plate-interaction']) {
+          object.setAttribute('object-label', {text: labelText});
+          console.log(`Set label "${labelText}" on object ${objectId}`);
+          
+          // mark this object as labeled
+          const plate = document.querySelector('[plate-interaction]');
+          if (plate && plate.components['plate-interaction']) {
             plate.components['plate-interaction'].objectsLabeled[objectId] = true;
-            }
+          }
         }
-        }
-        
-        // hide ui
-        labelUI.style.display = 'none';
-        
-    };
-  
-  // submit
-  const submitButton = document.querySelector('#submit-label');
-  if (submitButton) {
-    submitButton.addEventListener('click', submitLabel);
-  }
-  
-  // cancel
-  const cancelButton = document.querySelector('#cancel-label');
-  if (cancelButton) {
-    cancelButton.addEventListener('click', function() {
-      document.querySelector('#label-ui').style.display = 'none';
-    });
-  }
-  
-  // enter label
-  const labelInput = document.querySelector('#label-input');
-  if (labelInput) {
-    labelInput.addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        submitLabel();
       }
-    });
-  }
-});
+      
+      // hide ui
+      labelUI.style.display = 'none';
+    };
+
+    // submit
+    const submitButton = document.querySelector('#submit-label');
+    if (submitButton) {
+      submitButton.addEventListener('click', submitLabel);
+    }
+    
+    // cancel
+    const cancelButton = document.querySelector('#cancel-label');
+    if (cancelButton) {
+      cancelButton.addEventListener('click', function() {
+        document.querySelector('#label-ui').style.display = 'none';
+      });
+    }
+    
+    // enter label
+    const labelInput = document.querySelector('#label-input');
+    if (labelInput) {
+      labelInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+          submitLabel();
+        }
+      });
+    }
+  });
 
     // bugs on the pedestal interaction
       AFRAME.registerComponent('pedestal-interaction', {
