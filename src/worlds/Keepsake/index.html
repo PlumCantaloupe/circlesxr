@@ -1,0 +1,337 @@
+<html>
+<head>
+    <!--TESTING COMMENT BY STEVEN-->
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+  <!-- custom scripts are added here-->
+  <script src="/worlds/Keepsake/components/circles-pickup-object.js"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keepsake</title>
+  <!-- scripts link -->
+
+  <!-- css link -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/user-gesture.css">
+    <!-- INTERACTIVITY SCRIPT HERE ******************************************************************************* -->
+    <script>
+      "use strict";
+
+      // picking up an object
+      AFRAME.registerComponent('pickupable', {
+        init: function() {
+            var self = this;
+            self.player = document.querySelector('#camera');
+            self.pickedUp = false;
+            self.clickProcessed = false; // add debounce flag
+
+            self.playerHolder = CIRCLES.getAvatarHolderElementBody();
+            self.origParent = self.el.parentNode;
+            
+            if (!self.el.classList.contains('interactive')) {
+            self.el.classList.add('interactive'); 
+            }
+
+            self.el.addEventListener('click', (e) => {
+            
+            if (self.pickedUp === true) {
+                // release entity
+                //self.el.sceneEl.object3D.attach(self.el.object3D);
+                self.playerHolder.object3D.attach(self.el.object3D);
+
+                self.pickedUp = false;
+                self.el.emit('object-released', {id: self.el.id});
+            } else {
+                // pick up obj
+                //self.player.object3D.attach(self.el.object3D);
+                self.playerHolder.object3D.attach(self.el.object3D);
+                console.log('something has been picked up.');
+                console.log(self.pickedUp);
+                
+                // pos obj infront of camera
+                self.el.setAttribute('position', {
+                x: 0,
+                y: -0.5,  // slightly below center of view
+                z: -1   // closer to camera so it appears in hand
+                });
+                
+                self.el.setAttribute('rotation', {
+                x: 0,
+                y: 0,
+                z: 0
+                });
+                
+                self.pickedUp = true;
+                self.el.emit('object-picked-up', {id: self.el.id});
+            }
+            });
+
+            // check if entity is picked up
+            self.isPickedUp = function() {
+            return self.pickedUp;
+            };
+        }
+        });
+
+      AFRAME.registerComponent('pedestal-interaction', {
+          init: function() {
+              const self = this;
+              this.hasDisplayedOwl = false;
+              this.pedestalTop = new THREE.Vector3();
+              
+              
+              if (!self.el.classList.contains('interactive')) {
+                  self.el.classList.add('interactive');
+              }
+
+              // calc top center of pedestal
+              this.updatePedestalPosition = () => {
+                  this.el.object3D.getWorldPosition(this.pedestalTop);
+                  this.pedestalTop.y += 1.5; // adjustable based on height
+              };
+
+              this.el.addEventListener('click', () => {
+                console.log('Pedestal clicked');
+                  const manager = this.el.sceneEl.components['interaction-manager'];
+                  const heldId = manager.pickedUpObject;
+                  const owlEntity = document.querySelector('#owl');
+                  const uploadUI = document.querySelector('#upload-ui');
+                  
+                  // when clicked show upload UI
+                  if (uploadUI) {
+                    console.log('Showing Upload UI');
+                      uploadUI.style.display = 'block';
+                  } else {
+                      console.error("Upload component not found...");
+                  }
+
+                  if (!owlEntity) return;
+
+                  this.updatePedestalPosition();
+
+                  if (heldId === 'owl' && !this.hasDisplayedOwl) {
+                      console.log('placing owl on pedestal...');
+                      this.hasDisplayedOwl = true;
+
+                      // detach owl from camera to place in scene
+                      owlEntity.sceneEl.object3D.attach(owlEntity.object3D);
+                      
+                      // setting owl world postiion to top of pedestal
+                      owlEntity.setAttribute('position', {
+                          x: this.pedestalTop.x,
+                          y: this.pedestalTop.y,
+                          z: this.pedestalTop.z
+                      });
+                      owlEntity.setAttribute('rotation', '0 0 0');
+                      owlEntity.setAttribute('scale', '1 1 1');
+                      owlEntity.setAttribute('visible', true);
+                      
+                      // update pickup state
+                      owlEntity.components.pickupable.pickedUp = false;
+                      manager.pickedUpObject = null;
+
+                      console.log('Owl placed at position:', owlEntity.getAttribute('position'));
+                  } 
+                  else if (this.hasDisplayedOwl && !manager.pickedUpObject) {
+                      console.log('retrieving owl from pedestal');
+                      this.hasDisplayedOwl = false;
+
+                      const camera = document.querySelector('#camera');
+                      
+                      // attach owl to camera for pickup
+                      camera.object3D.attach(owlEntity.object3D);
+                      
+                      // update pos relative to camera
+                      owlEntity.setAttribute('position', {
+                          x: 0,
+                          y: -0.5, // slightly below
+                          z: -1    // infront
+                      });
+                      
+                      owlEntity.components.pickupable.pickedUp = true;
+                      manager.pickedUpObject = 'owl';
+                  }
+              });
+
+              // Initial position update
+              this.updatePedestalPosition();
+          }
+      });
+
+      // interaction manager - listens for entities being picked up/released globally
+      AFRAME.registerComponent('interaction-manager', {
+          init: function() {
+              this.pickedUpObject = null;
+              
+              this.el.sceneEl.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
+            this.pickedUpObject = e.detail.el.id;
+            console.log('picked up:', this.pickedUpObject);
+        });
+
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
+            this.pickedUpObject = null;
+            console.log('nothing in hand');
+        });
+          }
+      });
+
+  </script>
+</head>
+
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- Upload UI -->
+  <div id="upload-ui">
+    <span id="close-btn">&times;</span>
+    <div class="center">
+        <h2 style="color: white;">Upload a Keepsake</h2>
+        <p style="color: white;">Acceptable file types 3D:.glb, .gltf</p>
+        <button id="upload-btn">Choose File</button>
+        <input type="file" id="file-input" style="display: none" accept=".glb,.gltf">
+    </div>
+</div>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties interaction-manager background="color: black">
+    <a-assets>
+      <!-- put all assets here -->
+      <!-- pedestal -->
+      <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <!-- polycam scans -->
+      <a-asset-item id="owl-model" src="assets/models/Owl Puppet (1).glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+  
+    <!-- put scene stuff here -->
+        <!-- camera -->
+        <a-entity 
+        id="camera" 
+        camera 
+        look-controls 
+        wasd-controls 
+        twoway-motion="speed: 35"
+        position="0 1.6 0" 
+        cursor="rayOrigin: mouse"
+        circles-interactive-object
+        raycaster="objects: .interactive; far: 20; interval: 100">
+        </a-entity>
+
+        <!-- pedestal -->
+        <a-entity
+        id="pedestal"
+        class="interactive"
+        position="2.3 0 0"
+        rotation="0 90 0"
+        scale="2 2 2"
+        gltf-model="#pedestal-model"
+        pedestal-interaction
+        circles-interactive-object
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <!-- owl -->
+        <a-entity
+        id="owl"
+        circles-pickup-object="
+        
+        "
+        circles-interactive-object
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="1 1 1"
+        gltf-model="#owl-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+        </a-entity>
+
+        <!--- orb interaction testing -->
+        <a-sphere id="pickupSphere"
+        position="0 1 -2"
+        radius="0.2"
+        material="color: #3498db"
+        circles-interactive-object
+        pickupable>
+        </a-sphere>
+
+        <!-- plate -->
+        <a-cylinder id="plate"
+        position="1 0.05 -2"
+        height="0.1"
+        radius="0.5"
+        material="color: #e74c3c"
+        circles-interactive-object
+        class="interactive">
+        </a-cylinder>
+
+        <!-- floor -->
+        <a-box 
+            position="0 -0.1 0"
+            width="10" 
+            height="0.2" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <!-- ceiling -->
+        <a-box 
+            position="0 4 0"
+            width="10" 
+            height="0.2" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <!-- walls -->
+        <a-box 
+            position="0 2 -5"
+            width="10" 
+            height="4" 
+            depth="0.2" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <a-box 
+            position="0 2 5"
+            width="10" 
+            height="4" 
+            depth="0.2" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <a-box 
+            position="-5 2 0"
+            width="0.2" 
+            height="4" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+
+        <a-box 
+            position="5 2 0"
+            width="0.2" 
+            height="4" 
+            depth="10" 
+            color="white"
+            shadow="receive: true">
+        </a-box>
+  </a-scene>
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
