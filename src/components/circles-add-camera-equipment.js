@@ -7,29 +7,29 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
     const CONTEXT_AF = this;
 
     //only want to attach to 'this' player aka 'player1'
-    // if ( CONTEXT_AF.el.getAttribute('id') === CIRCLES.CONSTANTS.PRIMARY_USER_ID ) {
       CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function (event) {
   
         let rigElem = CONTEXT_AF.el;
-        //rigElem.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID);
         const avatarCam = rigElem.querySelector('.avatar');
 
         //set camera
-        //let cameraElem = event.detail.element;
         avatarCam.setAttribute('id', CIRCLES.CONSTANTS.PRIMARY_USER_ID + 'Cam');
         avatarCam.setAttribute('camera',{});
         avatarCam.setAttribute('look-controls',{pointerLockEnabled:false});
 
-        //set rig
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
         rigElem.setAttribute('circles-snap-turning',{enabled:true});
         //rigElem.setAttribute('circles-teleport',{});
         //rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
-        rigElem.setAttribute('movement-controls',{controls:'checkpoint, gamepad, trackpad, keyboard, nipple', constrainToNavMesh:true, speed:0.2});
-        rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
+        rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad, nipple', constrainToNavMesh:true, speed:0.2});
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
         rigElem.setAttribute('nipple-controls', {mode: 'static'});
+        //rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
+
         //console.log('Attached camera controls to rig');
+
+        const lineDistance = 20;
+        const raycasterTestInterval = 30;
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {
@@ -39,7 +39,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           entity_Pointer.setAttribute('id', 'primary_pointer');
           entity_Pointer.setAttribute('class', 'pointer');
           entity_Pointer.setAttribute('cursor', 'fuse:false; rayOrigin:mouse;'); //don't want fuse - just clicks as expected :)
-          entity_Pointer.setAttribute('raycaster', {far:20, interval:30, objects:'.interactive', useWorldCoordinates:true});
+          entity_Pointer.setAttribute('raycaster', {far:lineDistance, interval:raycasterTestInterval, objects:'.interactive', useWorldCoordinates:true});
           entity_Pointer.setAttribute('position', {x:0.0, y:0.0, z:-1.0});
           avatarCam.appendChild(entity_Pointer);
         }
@@ -62,21 +62,35 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           //we will default with right controller having pointer first (both active at first though)
           const primaryControllerID = 'primary_pointer';
           const secondaryControllerID = 'secondary_pointer';
-          let raycasterProperties = {enabled:true, showLine:true, far:20, interval:30, objects:'.interactive', direction:{x:0, y:-1, z:-1}};
-          let lineProperties = {visible:true, start:{x:0, y:0, z:0}, end:{x:0, y:-Math.sqrt(200), z:-Math.sqrt(200)}, color:'rgb(100, 100, 100)', gapSize:0.01, dashSize:0.02};
+          let raycasterProperties = {enabled:true, showLine:true, showLine:true, far:lineDistance, interval:raycasterTestInterval, objects:'.interactive'};
+          let lineProperties = {visible:true, start:{x:0, y:0, z:0}, end:{x:0, y:-Math.sqrt(lineDistance), z:-Math.sqrt(lineDistance)}, color:'rgb(100, 100, 100)', gapSize:0.01, dashSize:0.02};
+         
           primaryController.setAttribute('id', primaryControllerID);
           primaryController.setAttribute('laser-controls',{hand:'right', model:false});
           primaryController.setAttribute('raycaster', raycasterProperties);
           primaryController.setAttribute('circles-dashed-line', lineProperties);
-
+          
           secondaryController.setAttribute('id', secondaryControllerID);
           secondaryController.setAttribute('laser-controls',{hand:'left', model:false});
           secondaryController.setAttribute('raycaster', raycasterProperties);
           secondaryController.setAttribute('circles-dashed-line', lineProperties);
 
-          //default to right hand pointer
-          // primaryController.setAttribute('circles-dashed-line', {visible:false});
-          // secondaryController.setAttribute('raycaster', {enabled:false, showLine:false});
+          //HACK: Delaying soem initialization until components are ready
+          CONTEXT_AF.el.sceneEl.addEventListener('enter-vr', function (e) {
+            // if (e.detail.name === 'raycaster') {
+              console.log('enter VR event');
+              setTimeout(function(e) {
+                console.log('YAHOOOOOOOOOO');
+                primaryController.setAttribute('raycaster', {enabled:true, showLine:true, direction:{x: 0, y: -1, z: -1}});
+                primaryController.setAttribute('circles-dashed-line', {visible:false});
+
+                secondaryController.setAttribute('raycaster', {enabled:false, showLine:false, direction:{x: 0, y: -1, z: -1}});
+                secondaryController.setAttribute('circles-dashed-line', {visible:true});
+
+                rigElem.setAttribute('gamepad-controls', {enabled:false});
+              }, 300);
+            // }
+          });
 
           //TODO: add a debug toggle
           //let fps_entity = document.createElement('a-entity');
@@ -86,28 +100,29 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
           //advanced features
           //we want 'gamepade movement-controls' as an "advanced" feature only triggered when the user clicks down on joystick as a new Vr doing this can make themselves nauseous
+          let gamepadOn = false;
           const toggleGamepadControlsFunc = (e) => {
             //console.log(e.type);
             //console.log(CONTEXT_AF.el);
-            if (e.type === 'thumbstickdown') {
+            gamepadOn = !gamepadOn;
+
+            if (gamepadOn === true) {
               console.log('turn on smooth gamepad controls');
-              CONTEXT_AF.el.setAttribute('gamepad-controls', {enabled:true});
-              CONTEXT_AF.el.setAttribute('circles-snap-turning', {enabled:false});
+              // rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard,gamepad,nipple'});
+              rigElem.setAttribute('gamepad-controls', {enabled:true});
+              rigElem.setAttribute('circles-snap-turning', {enabled:false});
             } 
-            else if (e.type === 'thumbstickup') {
-              console.log('turn off smooth gamepad controls');
-              CONTEXT_AF.el.setAttribute('gamepad-controls', {enabled:false});
-              CONTEXT_AF.el.setAttribute('circles-snap-turning',{enabled:true});
-            }
             else {
-              console.warn('toggleGamepadControlsFunc has an unexpected event');
+              console.log('turn off smooth gamepad controls');
+              rigElem.setAttribute('gamepad-controls', {enabled:false});
+              rigElem.setAttribute('circles-snap-turning',{enabled:true});
             }
           };
 
           //to switch and trigger laser-controls (so that you can use either controller)
-          const toggleLaserPointer = (e) => {
+          const toggleLaserPointerFunc = (e) => {
             // console.log(e);
-            if (e.type === 'triggerdown' || e.type === 'xbuttondown') {              
+            if (e.type === 'triggerdown') {              
               console.log(e.target.id);
 
               const newActiveController = e.target;
@@ -115,31 +130,28 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
               const oldActiveController = document.querySelector('#' + oldActiveControllerID);
 
               //turn off old active pointer
-              oldActiveController.setAttribute('circles-dashed-line', {visible:true});
               oldActiveController.setAttribute('raycaster', {enabled:false, showLine:false});
+              oldActiveController.setAttribute('circles-dashed-line', {visible:true});
               oldActiveController.setAttribute('id', secondaryControllerID);
 
               //turn on new active pointer
+              newActiveController.setAttribute('raycaster', {enabled:true, showLine:true, direction:{x: 0, y: -1, z: -1}});
               newActiveController.setAttribute('circles-dashed-line', {visible:false});
-              newActiveController.setAttribute('raycaster', {enabled:true, showLine:true});
               newActiveController.setAttribute('id', primaryControllerID);
+
+              console.log(e.target.components['raycaster']);
+              console.log(e.target.components['line']);
             } 
             else {
-              console.warn('toggleLaserPointer has an unexpected event');
+              console.warn('toggleLaserPointerFunc has an unexpected event');
             }
           };
 
-          primaryController.addEventListener('thumbstickdown', toggleGamepadControlsFunc);
           primaryController.addEventListener('thumbstickup', toggleGamepadControlsFunc);
-          primaryController.addEventListener('triggerdown', toggleLaserPointer);
-          primaryController.addEventListener('xbuttondown', toggleLaserPointer);
-          primaryController.addEventListener('abuttondown', toggleLaserPointer);
+          primaryController.addEventListener('triggerdown', toggleLaserPointerFunc);
 
-          secondaryController.addEventListener('thumbstickdown', toggleLaserPointer);
-          secondaryController.addEventListener('thumbstickup', toggleLaserPointer);
-          secondaryController.addEventListener('triggerdown', toggleLaserPointer);
-          secondaryController.addEventListener('xbuttondown', toggleLaserPointer);
-          secondaryController.addEventListener('abuttondown', toggleLaserPointer);
+          secondaryController.addEventListener('thumbstickup', toggleGamepadControlsFunc);
+          secondaryController.addEventListener('triggerdown', toggleLaserPointerFunc);
         }
 
         const CONTROL_BUTTON_SIZE = 0.2;
