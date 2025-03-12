@@ -30,7 +30,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
         //don't want nipple controls on anything but mobile
         if (AFRAME.utils.device.isMobile() === true) {
           rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad, nipple'});
-          rigElem.setAttribute('nipple-controls', {mode:'semi'});
+          rigElem.setAttribute('nipple-controls', {mode:'static'});
         }
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
