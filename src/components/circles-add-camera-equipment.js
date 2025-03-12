@@ -19,17 +19,19 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
         rigElem.setAttribute('circles-snap-turning',{enabled:true});
-        //rigElem.setAttribute('circles-teleport',{});
-        //rigElem.setAttribute('circles-wasd-movement',{adEnabled:true, fly:false, acceleration:20});
-        rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad, nipple', constrainToNavMesh:true, speed:0.2});
+        rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad', constrainToNavMesh:true, speed:0.2});
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
-        rigElem.setAttribute('nipple-controls', {mode: 'static'});
-        //rigElem.setAttribute('gamepad-controls', {enabled:false});  //default we want off for now (can make unsuspecting users nauseous ...)
 
         //console.log('Attached camera controls to rig');
 
         const lineDistance = 20;
         const raycasterTestInterval = 30;
+
+        //don't want nipple controls on anything but mobile
+        if (AFRAME.utils.device.isMobile() === true) {
+          rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad, nipple'});
+          rigElem.setAttribute('nipple-controls', {mode:'semi'});
+        }
 
         //add pointer if not a standalone HMD (we will use laser controls there instead)
         if (!AFRAME.utils.device.isMobileVR()) {
