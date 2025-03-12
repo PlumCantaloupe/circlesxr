@@ -14,7 +14,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties fog="type: none;">
+    <a-scene circles_scene_properties fog="type: none;" circles-networked-entity>
       <a-entity environment="preset:starry; active:true;" change-environment></a-entity>
 
       <a-assets>
@@ -94,20 +94,16 @@
         can be instructions or welcome message
         these are networked-->
         
-      <a-entity id="instructions-1"
-                position="0 1 5" rotation="0 0 0" scale="1 1 1"
-                geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
-                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  description_offset:0 0.5 0;
-                                  desc_arrow_position:down;
-                                  label_text:Gem;"
-                circles-pickup-networked></a-entity>
+      <a-entity id="instructions-1" position="0 1 -1"
+      circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+      title: Make your future;
+      description:Use the buttons to create elements of you future. Mix and match to make the future you want. Feel free to move the object around;
+      title_back: How it works?;
+      description_back:Red Button - Changes the enviroment. Blue Button - Spawns objects based on the enviroment. Green Button - Changes the colour of the light. Yellow Button - Turns the light on or off.;
+      description_offset:0 0.5 0;
+      desc_arrow_position:down;
+      label_text: Make your future;"></a-entity>
 
 
 
@@ -214,8 +210,7 @@
         shape.setAttribute("material", "color", shapeColor); // Corrected setting color
         shape.setAttribute("scale", "1 1 1");
         shape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5");
-
-        // Increment the shape index and reset if needed
+        //shape.setAttribute('circles-pickup-networked', `networkId:shape-${Date.now()}`);
         currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
 
         // Add the shape to the scene

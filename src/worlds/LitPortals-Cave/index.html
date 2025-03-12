@@ -81,9 +81,7 @@
             </a-entity>
         </a-entity>
     </a-entity>
-    
     <a-entity id="campfire_label" circles-label="text:click fire to start; visible:true; offset:1.0 0.4 0; arrow_position:left;"></a-entity>
-    
     <a-entity
         id="campfire"
         class="interactive"
@@ -105,9 +103,11 @@
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+      
+      circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
       -->
       <a-box id="box" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+        circles-pickup-networked
         position="8 1 0" scale="0.5 0.5 0.5" color="red">
       </a-box>
 
