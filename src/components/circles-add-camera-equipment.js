@@ -65,7 +65,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
           const primaryControllerID = 'primary_pointer';
           const secondaryControllerID = 'secondary_pointer';
           let raycasterProperties = {enabled:true, showLine:true, showLine:true, far:lineDistance, interval:raycasterTestInterval, objects:'.interactive'};
-          let lineProperties = {visible:true, start:{x:0, y:0, z:0}, end:{x:0, y:-Math.sqrt(lineDistance), z:-Math.sqrt(lineDistance)}, color:'rgb(100, 100, 100)', gapSize:0.01, dashSize:0.02};
+          let lineProperties = {visible:true, start:{x:0, y:0, z:0}, end:{x:0, y:-Math.sqrt(lineDistance), z:-Math.sqrt(lineDistance)}, color:'rgb(100, 100, 100)', gapSize:0.02, dashSize:0.02};
          
           primaryController.setAttribute('id', primaryControllerID);
           primaryController.setAttribute('laser-controls',{hand:'right', model:false});
