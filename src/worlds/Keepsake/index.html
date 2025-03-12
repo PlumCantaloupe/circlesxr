@@ -19,62 +19,270 @@
     <script>
       "use strict";
 
-      // picking up an object
-      AFRAME.registerComponent('pickupable', {
-        init: function() {
-            var self = this;
-            self.player = document.querySelector('#camera');
+    // custom pick up
+    AFRAME.registerComponent('pickupable', {
+    init: function() {
+        var self = this;
+        self.player = document.querySelector('#camera');
+        self.pickedUp = false;
+        self.clickDebounce = false; // click debounce
+        
+        self.playerHolder = CIRCLES.getAvatarHolderElementBody();
+        self.origParent = self.el.parentNode;
+        
+        if (!self.el.classList.contains('interactive')) {
+        self.el.classList.add('interactive'); 
+        }
+        
+        // event handler to stop default Circles control
+        self.suppressControlsFunc = function(e) {
+        // stop circles object-pickup UI from showing
+        e.stopPropagation();
+        // preventing default behaviours
+        e.preventDefault();
+        return false;
+        };
+
+        // debounce
+        self.handleClick = function(e) {
+        if (self.clickDebounce) return;
+        
+        self.clickDebounce = true;
+        setTimeout(function() { self.clickDebounce = false; }, 300); // 300ms debounce
+        
+        console.log('clicked on object, current state:', self.pickedUp ? 'picked up' : 'not picked up');
+        
+        if (self.pickedUp === true) {
+            // release obj
+            self.origParent.object3D.attach(self.el.object3D);
+            console.log('released');
             self.pickedUp = false;
-            self.clickProcessed = false; // add debounce flag
-
-            self.playerHolder = CIRCLES.getAvatarHolderElementBody();
-            self.origParent = self.el.parentNode;
             
-            if (!self.el.classList.contains('interactive')) {
-            self.el.classList.add('interactive'); 
-            }
-
-            self.el.addEventListener('click', (e) => {
+            self.el.emit('object-released', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-released', {id: self.el.id}, false);
+        } else {            
+            // pick up obj
+            self.playerHolder.object3D.attach(self.el.object3D);
             
-            if (self.pickedUp === true) {
-                // release entity
-                //self.el.sceneEl.object3D.attach(self.el.object3D);
-                self.playerHolder.object3D.attach(self.el.object3D);
-
-                self.pickedUp = false;
-                self.el.emit('object-released', {id: self.el.id});
-            } else {
-                // pick up obj
-                //self.player.object3D.attach(self.el.object3D);
-                self.playerHolder.object3D.attach(self.el.object3D);
-                console.log('something has been picked up.');
-                console.log(self.pickedUp);
-                
-                // pos obj infront of camera
-                self.el.setAttribute('position', {
-                x: 0,
-                y: -0.5,  // slightly below center of view
-                z: -1   // closer to camera so it appears in hand
-                });
-                
-                self.el.setAttribute('rotation', {
-                x: 0,
-                y: 0,
-                z: 0
-                });
-                
-                self.pickedUp = true;
-                self.el.emit('object-picked-up', {id: self.el.id});
-            }
+            // position in front of camera
+            self.el.setAttribute('position', {
+            x: 0.8,
+            y: -0.6,  // slightly below center of view
+            z: 1     // closer to camera so it appears in hand
             });
+            
+            self.el.setAttribute('rotation', {
+            x: 0,
+            y: 0,
+            z: 0
+            });
+            
+            console.log('picked up');
+            self.pickedUp = true;
+            self.el.emit('object-picked-up', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-picked-up', {id: self.el.id}, false);
+        }
+        };
 
-            // check if entity is picked up
-            self.isPickedUp = function() {
-            return self.pickedUp;
-            };
+        self.el.addEventListener('click', self.handleClick);
+        
+        // is obj picked up
+        self.isPickedUp = function() {
+        return self.pickedUp;
+        };
+    },
+    
+    remove: function() {
+        this.el.removeEventListener('click', this.handleClick);
+    }
+    });
+
+    // orb placement and gallery naming
+    AFRAME.registerComponent('plate-interaction', {
+    init: function() {
+        const self = this;
+        self.hasObject = false;
+        self.placedObjectId = null;
+        self.objectsLabeled = {}; // track labelled objs
+        
+        if (!self.el.classList.contains('interactive')) {
+        self.el.classList.add('interactive');
+        }
+        
+        self.plateTopPosition = new THREE.Vector3();
+        self.updatePlatePosition = () => {
+        self.el.object3D.getWorldPosition(self.plateTopPosition);
+        self.plateTopPosition.y += (self.el.getAttribute('height') || 0.1) / 2 + 0.05;
+        };
+        
+        self.el.addEventListener('click', () => {
+        console.log('Plate clicked');
+        const manager = self.el.sceneEl.components['interaction-manager'];
+        const heldObjectId = manager.pickedUpObject;
+        
+        console.log('Manager reports held object:', heldObjectId);
+        
+        // If nothing held, do nothing
+        if (!heldObjectId) {
+            console.log('Nothing in hand to place');
+            return;
+        }
+        
+        const heldObject = document.getElementById(heldObjectId);
+        if (!heldObject) {
+            console.log('Could not find object with ID:', heldObjectId);
+            return;
+        }
+        
+        self.updatePlatePosition();
+        
+        console.log('Placing object on plate:', heldObjectId);
+        self.placedObjectId = heldObjectId;
+        self.hasObject = true;
+        
+        // detach from player and place on plate
+        heldObject.sceneEl.object3D.attach(heldObject.object3D);
+        
+        // set pos on plate
+        heldObject.setAttribute('position', {
+            x: self.plateTopPosition.x,
+            y: self.plateTopPosition.y,
+            z: self.plateTopPosition.z
+        });
+        
+        heldObject.setAttribute('rotation', '0 0 0');
+        
+        if (heldObject.components['pickupable']) {
+            heldObject.components['pickupable'].pickedUp = false;
+        }
+        
+        manager.pickedUpObject = null;
+        
+        // only show labelling if there isn't a label
+        if (!self.objectsLabeled[heldObjectId]) {
+            const labelUI = document.querySelector('#label-ui');
+            if (labelUI) {
+            labelUI.style.display = 'block';
+            
+            labelUI.dataset.objectId = heldObjectId;
+            
+            const labelInput = document.querySelector('#label-input');
+            if (labelInput) {
+                labelInput.value = '';
+                setTimeout(() => labelInput.focus(), 100);
+            }
+            }
         }
         });
+        
+        self.updatePlatePosition();
+    }
+    });
 
+    // Gallery Naming
+    AFRAME.registerComponent('object-label', {
+    schema: {
+        text: {type: 'string', default: ''},
+        color: {type: 'color', default: '#FFF'},
+        size: {type: 'number', default: 1.0},
+        yOffset: {type: 'number', default: 0.3} // distance above object
+    },
+    
+    init: function() {
+        this.createLabel();
+    },
+    
+    update: function() {
+        this.createLabel();
+    },
+    
+    createLabel: function() {
+        // remove existing label if any
+        if (this.labelEntity) {
+        this.el.removeChild(this.labelEntity);
+        }
+        
+        if (!this.data.text) return;
+        
+        // create label entity
+        this.labelEntity = document.createElement('a-entity');
+        this.labelEntity.setAttribute('text', {
+        value: this.data.text,
+        color: this.data.color,
+        width: 2,
+        align: 'center',
+        anchor: 'center'
+        });
+        
+        // position above obj
+        this.labelEntity.setAttribute('position', `0 ${this.data.yOffset} 0`);
+        
+        // make label always face camera
+        this.labelEntity.setAttribute('look-at', '#camera');
+        
+        // add to parent entity
+        this.el.appendChild(this.labelEntity);
+    }
+    });
+
+    // label UI handlers
+    document.addEventListener('DOMContentLoaded', function() {
+    // setup label submission
+    const submitLabel = function() {
+        const labelUI = document.querySelector('#label-ui');
+        const labelInput = document.querySelector('#label-input');
+        
+        if (!labelUI || !labelInput) return;
+        
+        const objectId = labelUI.dataset.objectId;
+        const labelText = labelInput.value.trim();
+        
+        if (objectId && labelText) {
+        // get obj and add label
+        const object = document.getElementById(objectId);
+        if (object) {
+            object.setAttribute('object-label', {text: labelText});
+            console.log(`Set label "${labelText}" on object ${objectId}`);
+            
+            // mark this object as labeled
+            const plate = document.querySelector('[plate-interaction]');
+            if (plate && plate.components['plate-interaction']) {
+            plate.components['plate-interaction'].objectsLabeled[objectId] = true;
+            }
+        }
+        }
+        
+        // hide ui
+        labelUI.style.display = 'none';
+        
+    };
+  
+  // submit
+  const submitButton = document.querySelector('#submit-label');
+  if (submitButton) {
+    submitButton.addEventListener('click', submitLabel);
+  }
+  
+  // cancel
+  const cancelButton = document.querySelector('#cancel-label');
+  if (cancelButton) {
+    cancelButton.addEventListener('click', function() {
+      document.querySelector('#label-ui').style.display = 'none';
+    });
+  }
+  
+  // enter label
+  const labelInput = document.querySelector('#label-input');
+  if (labelInput) {
+    labelInput.addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        submitLabel();
+      }
+    });
+  }
+});
+
+    // bugs on the pedestal interaction
       AFRAME.registerComponent('pedestal-interaction', {
           init: function() {
               const self = this;
@@ -162,20 +370,21 @@
 
       // interaction manager - listens for entities being picked up/released globally
       AFRAME.registerComponent('interaction-manager', {
-          init: function() {
-              this.pickedUpObject = null;
-              
-              this.el.sceneEl.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
-            this.pickedUpObject = e.detail.el.id;
-            console.log('picked up:', this.pickedUpObject);
-        });
+  init: function() {
+    const self = this;
+    self.pickedUpObject = null;
+    
+    self.el.sceneEl.addEventListener('object-picked-up', (e) => {
+      self.pickedUpObject = e.detail.id;
+      console.log('interaction-manager: picked up:', self.pickedUpObject);
+    });
 
-        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
-            this.pickedUpObject = null;
-            console.log('nothing in hand');
-        });
-          }
-      });
+    self.el.sceneEl.addEventListener('object-released', (e) => {
+      self.pickedUpObject = null;
+      console.log('interaction-manager: nothing in hand');
+    });
+  }
+});
 
   </script>
 </head>
@@ -194,6 +403,19 @@
         <input type="file" id="file-input" style="display: none" accept=".glb,.gltf">
     </div>
 </div>
+
+    <!-- Orb Label UI-->
+<div id="label-ui">
+    <span id="close-label-btn">&times;</span>
+    <div class="label-content">
+      <h2>Name Your Orb</h2>
+      <input type="text" id="label-input" placeholder="Enter a name...">
+    </div>
+    <div class="label-buttons">
+      <button id="cancel-label" class="label-btn">Cancel</button>
+      <button id="submit-label" class="label-btn">Submit</button>
+    </div>
+  </div>
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties interaction-manager background="color: black">
@@ -253,14 +475,14 @@
         visible="true">
         </a-entity>
 
-        <!--- orb interaction testing -->
         <a-sphere id="pickupSphere"
         position="0 1 -2"
         radius="0.2"
-        material="color: #3498db"
+        material="color: #3498db; metalness: 0.7; roughness: 0.3"
         circles-interactive-object
-        pickupable>
-        </a-sphere>
+        pickupable
+        object-label="text: ; yOffset: 0.4">
+      </a-sphere>
 
         <!-- plate -->
         <a-cylinder id="plate"
@@ -269,6 +491,7 @@
         radius="0.5"
         material="color: #e74c3c"
         circles-interactive-object
+        plate-interaction
         class="interactive">
         </a-cylinder>
 
