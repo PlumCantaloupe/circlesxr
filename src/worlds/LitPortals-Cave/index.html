@@ -79,7 +79,7 @@
       <!-- Campfire -->
 
       <a-entity id="fireRig" position="0.0 0.0 0.0" visible="false">
-        <a-entity position="0 -0.2 0" id="fire">
+        <a-entity position="0  0" id="fire">
           <!-- Layer 1: Base fire cones -->
           <a-cone position="0 0 0" radius-bottom="0.3" radius-top="0" height="1.2" color="orange" animation="property: position; to: 0 1 0; dir: alternate; dur: 800; loop: true;"></a-cone>
           <a-cone position="0.2 0 0" radius-bottom="0.2" radius-top="0" height="1" color="yellow" animation="property: position; to: 0.2 1 0; dir: alternate; dur: 700; loop: true;"></a-cone>
@@ -121,13 +121,8 @@
 
       <!-- room -->
       <!--Cave base-->
-      <a-entity id="caveBase" position="0 2.8 0" scale= "0.4 0.4 0.4" gltf-model="#caveBaseModel"></a-entity>
-      <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; " 
-        material="color: #964B00; side: double;">
-      </a-entity>
+      <a-entity id="caveBase" position="0 3.5 0" scale= "0.4 0.4 0.4" gltf-model="#caveBaseModel"></a-entity>
 
-      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
@@ -217,15 +212,9 @@
       
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
-                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+                light="type:directional; intensity:1; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
-      
     </a-scene>
 
     <!-- Circles' end scripts [REQUIRED] -->
