@@ -261,16 +261,17 @@
       labelUI.style.display = 'none';
     };
 
-    // submit
+    // submit label
     const submitButton = document.querySelector('#submit-label');
     if (submitButton) {
       submitButton.addEventListener('click', submitLabel);
     }
     
-    // cancel
+    // cancel label
     const cancelButton = document.querySelector('#cancel-label');
     if (cancelButton) {
       cancelButton.addEventListener('click', function() {
+        // hide gallery naming
         document.querySelector('#label-ui').style.display = 'none';
       });
     }
@@ -284,6 +285,35 @@
         }
       });
     }
+
+    // upload btn
+    const uploadBtn = document.getElementById('upload-btn');
+      if (uploadBtn) {
+          uploadBtn.addEventListener('click', function() {
+          // opens files on click
+          document.getElementById('file-input').click();
+        });
+      }
+
+    // file upload
+    const fileInput = document.getElementById('file-input');
+      if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+            if (file) {
+              alert('File "' + file.name + '", uploading..');
+              // hide upload UI after upload
+              document.getElementById('upload-ui').style.display = 'none';
+          }
+      });
+    }
+
+    const closeBtn = document.getElementById('close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+        document.getElementById('upload-ui').style.display = 'none';
+        });
+      }
   });
 
     // bugs on the pedestal interaction
@@ -483,7 +513,7 @@
         visible="true">
         </a-entity>
 
-        <a-sphere id="pickupSphere"
+      <a-sphere id="pickupSphere"
         position="0 1 -2"
         radius="0.2"
         material="color: #3498db; metalness: 0.7; roughness: 0.3"
