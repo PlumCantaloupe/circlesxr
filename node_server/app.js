@@ -333,6 +333,7 @@ io.on("connection", socket => {
       socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
     }
   });
+  
 });
 
 //let's create a research namespace.
@@ -435,6 +436,9 @@ if (env.ENABLE_RESEARCH_MODE) {
     });
   });
 }
+
+
+
 
 //lets start up
 server.listen(env.SERVER_PORT, () => {

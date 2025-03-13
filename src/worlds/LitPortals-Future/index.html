@@ -6,7 +6,7 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
-
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
     
@@ -14,32 +14,73 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties fog="type: none;" circles-networked-entity>
+      <a-entity environment="preset:starry; active:true;" change-environment></a-entity>
+
       <a-assets>
-        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-       
+        
+          <!-- Background Music -->
+          <audio id="breeze" src="src/worlds/LitPortals-Future/assets/sounds/Breeze.mp3"></audio>
+          <audio id="eternity" src="src/worlds/LitPortals-Future/assets/sounds/Eternity.mp3"></audio>
+          <audio id="exploration" src="src/worlds/LitPortals-Future/assets/sounds/Exploration.mp3"></audio>
+          <audio id="hybrid" src="src/worlds/LitPortals-Future/assets/sounds/Hybrid.mp3"></audio>
+          <audio id="peace" src="src/worlds/LitPortals-Future/assets/sounds/Peace.mp3"></audio>
+          
+          <!-- Button Sound Effect -->
+          <audio id="ding" src="src/worlds/LitPortals-Future/assets/sounds/ding.mp3"></audio>
         <!-- gltf models -->
-       
+        <a-sound id="bg-music" src="#breeze" autoplay="true" loop="true" volume="0.2"></a-sound>
+        <a-sound id="button-sound" src="#ding"></a-sound>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
 
+      <!-- Background Music -->
+     
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
       
       <!-- just creating an entity that connects many elements together -->
 
       <!-- Area 1, with some spawnpoints -->
-
+      <a-entity id="red_button" position="2 0.6 -1">
+        <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255, 100, 100)"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(255, 0, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(255, 100, 100); startEvents:mouseleave; dur:200"
+                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300" sound="on: click; src: #ding"
+                    shadow></a-entity>
+        <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+    </a-entity>
+    <!-- blue button -->
+    <a-entity id="blue_button" position="-2 0.6 -1">
+        <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(100, 100, 255)"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(0, 0, 255); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(100, 100, 255); startEvents:mouseleave; dur:200"
+                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300"  sound="on: click; src: #ding"
+                    shadow></a-entity>
+        <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+    </a-entity>
+    <!-- green button -->
+    <a-entity id="green_button" position="5 0.6 -1">
+        <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(100, 255, 100)"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(0, 255, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb( 100, 255, 100); startEvents:mouseleave; dur:200"
+                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300"  sound="on: click; src: #ding"
+                    shadow></a-entity>
+        <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+    </a-entity>
+    <!-- yellow button -->
+    <a-entity id="yellow_button" position="-5 0.6 -1">
+        <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255, 255, 100)"
+                    animation__mouseenter="property:material.color; type:color; to:rgb(255, 255, 0); startEvents:mouseenter; dur:200"
+                    animation__mouseleave="property:material.color; type:color; to:rgb(255, 255, 100); startEvents:mouseleave; dur:200"
+                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300"  sound="on: click; src: #ding"
+                    shadow></a-entity>
+        <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+    </a-entity>
       <!-- room -->
-      <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true;" 
-        material="color: #000000; side: double;">
-      </a-entity>
-      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
+
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
@@ -53,41 +94,30 @@
         can be instructions or welcome message
         these are networked-->
         
-      <a-entity id="instructions-1"
-                position="0 1 5" rotation="0 0 0" scale="1 1 1"
-                geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
-                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  description_offset:0 0.5 0;
-                                  desc_arrow_position:down;
-                                  label_text:Gem;"
-                circles-pickup-networked></a-entity>
+      <a-entity id="instructions-1" position="0 1 -1"
+      circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+      title: Make your future;
+      description:Use the buttons to create elements of you future. Mix and match to make the future you want. Feel free to move the object around;
+      title_back: How it works?;
+      description_back:Red Button - Changes the enviroment. Blue Button - Spawns objects based on the enviroment. Green Button - Changes the colour of the light. Yellow Button - Turns the light on or off.;
+      description_offset:0 0.5 0;
+      desc_arrow_position:down;
+      label_text: Make your future;"></a-entity>
 
-                <a-entity id="instructions-2"
-                position="3 1 5" rotation="0 0 0" scale="1 1 1"
-                geometry="primitive:octahedron; radius:0.5;"
-                material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
-                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
-                                  description_offset:0 0.5 0;
-                                  desc_arrow_position:down;
-                                  label_text:Gem;"
-                circles-pickup-networked></a-entity>
+
 
       <!-- teleport pads-->
-      <a-entity circles-checkpoint position="5 0 5"></a-entity>
-      <a-entity circles-checkpoint position="-7 0 -7"></a-entity>
+      <a-entity circles-checkpoint position="-3.5 0 0"></a-entity>
+      <a-entity circles-checkpoint position="4 0 0"></a-entity>
       <a-entity circles-checkpoint position="5 0 -7"></a-entity>
       <a-entity circles-checkpoint position="-7 0 5"></a-entity>
+
+
+      <a-entity id="Portal-Lobby"
+        position="-5 1.7 0" rotation="0 50 0"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Lobby; link_url:/w/LitPortals-Lobby"
+        shadow></a-entity>
 
       <!-- Area 2, top -->
 
@@ -112,15 +142,145 @@
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
 
-      <a-entity id='skyBox'
-                rotation='0 200 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
       
     </a-scene>
 
+    <script>
+      let currentEnvironment = "starry"; // Default environment
+
+      AFRAME.registerComponent("change-environment", {
+        init: function () {
+          
+          const envEntity = document.querySelector("[environment]");
+          const redButton = document.querySelector("#red_button .button");
+    
+          const environments = ["starry", "forest", "yavapai", "arches", "contact"];
+          let currentIndex = 0;
+    
+          redButton.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % environments.length;
+            currentEnvironment = environments[currentIndex]; // Update global variable
+            envEntity.setAttribute("environment", `preset: ${currentEnvironment}`);
+            
+            // Store the current environment preset for later use
+            document.body.setAttribute("current-environment", environments[currentIndex]);
+          });
+    
+          // Initialize with the first environment
+          document.body.setAttribute("current-environment", environments[currentIndex]);
+        }
+      });
+    
+      // Add event listener to blue button to spawn a shape at a random position
+      const shapes = ["a-box", "a-cone", "a-cylinder", "a-sphere", "a-triangle"];
+      let currentShapeIndex = 0;
+    
+      const blueButton = document.querySelector("#blue_button .button");
+    blueButton.addEventListener("click", function () {
+        // Generate random position within specified ranges
+        const randomX = Math.floor(Math.random() * 41) - 20;
+        const randomY = Math.floor(Math.random() * 11);
+        const randomZ = Math.floor(Math.random() * 41) - 20;
+
+        // Determine the shape's color based on the environment
+        let shapeColor;
+        switch (currentEnvironment) { // Use the global variable instead
+            case "starry":
+                shapeColor = "black";
+                break;
+            case "forest":
+                shapeColor = "red";
+                break;
+            case "yavapai":
+                shapeColor = "green";
+                break;
+            case "arches":
+                shapeColor = "yellow";
+                break;
+            case "contact":
+                shapeColor = "white";
+                break;
+            default:
+                shapeColor = "blue"; // Default color
+        }
+
+        // Select the shape from the shapes array
+        const shape = document.createElement(shapes[currentShapeIndex]);
+        shape.setAttribute("position", `${randomX} ${randomY} ${randomZ}`);
+        shape.setAttribute("material", "color", shapeColor); // Corrected setting color
+        shape.setAttribute("scale", "1 1 1");
+        shape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5");
+        //shape.setAttribute('circles-pickup-networked', `networkId:shape-${Date.now()}`);
+        currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
+
+        // Add the shape to the scene
+        document.querySelector("a-scene").appendChild(shape);
+    });
+
+    AFRAME.registerComponent("toggle-lighting", {
+  init: function () {
+    const sunLight = document.querySelector("#sunlight");
+    const yellowButton = document.querySelector("#yellow_button .button");
+
+    let isDay = true; // Start with day lighting
+
+    yellowButton.addEventListener("click", function () {
+      if (isDay) {
+        // Switch to night lighting
+        sunLight.setAttribute("light", "intensity", 0.1); // Dim light for night
+      } else {
+        // Switch to day lighting
+        sunLight.setAttribute("light", "intensity", 7); // Brighter light
+      }
+      isDay = !isDay; // Toggle state
+    });
+  }
+});
+
+// Attach component to the scene
+document.querySelector("a-scene").setAttribute("toggle-lighting", "");
+
+
+AFRAME.registerComponent("cycle-light-color", {
+    init: function () {
+        const greenButton = document.querySelector("#green_button .button");
+        const lightEntity = document.querySelector("#sunlight");
+
+        // Define the seven colors for the light
+        const colors = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"];
+        let colorIndex = 0;
+
+        greenButton.addEventListener("click", function () {
+            colorIndex = (colorIndex + 1) % colors.length;
+            lightEntity.setAttribute("light", "color", colors[colorIndex]);
+        });
+    }
+});
+
+// Attach the script to the green button
+document.querySelector("#green_button").setAttribute("cycle-light-color", "");
+
+
+AFRAME.registerComponent('change-music', {
+          schema: {type: 'string'},  // The new music track ID
+
+          init: function () {
+            this.el.addEventListener('click', () => {
+              let bgMusic = document.querySelector('#bg-music');
+              bgMusic.setAttribute('src', `#${this.data}`);
+              bgMusic.components.sound.stop();
+              bgMusic.components.sound.play();
+            });
+          }
+        });
+</script>
+
+    
+    
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
 </html>
+
+
+
