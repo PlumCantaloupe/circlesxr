@@ -156,12 +156,12 @@
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
                                   textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
                                   title:Sorting Game;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  description:These vases are all mixed up! Can you help sort them out on the ground?;
+                                  title_back:About the vases:;
+                                  description_back: ;
                                   description_offset:0 0.5 0;
                                   desc_arrow_position:down;
-                                  label_text:Gem;"
+                                  label_text:Activity Info;"
                 circles-pickup-networked></a-entity>
 
       <a-entity id="instructions-2"
@@ -182,32 +182,32 @@
       <!--artifacts (vases go here)--> 
       <a-sphere id="artifact1" class="sorting_item" data-order="4" sorting-collision 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -1" scale="0.5 0.5 0.5" color="red"></a-sphere>
+        position="12.5 2.5 -15.1" scale="0.4 0.4 0.4" color="red"></a-sphere>
       <a-sphere id="artifact2" class="sorting_item" data-order="3" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 0" scale="0.5 0.5 0.5" color="yellow"></a-sphere>
+        position="12.5 2.5 -14.2" scale="0.4 0.4 0.4" color="yellow"></a-sphere>
       <a-sphere id="artifact3" class="sorting_item" data-order="2" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 1" scale="0.5 0.5 0.5" color="green"></a-sphere>
+        position="12.5 2.5 -13.3" scale="0.4 0.4 0.4" color="green"></a-sphere>
       <a-sphere id="artifact4" class="sorting_item" data-order="1" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 2" scale="0.5 0.5 0.5" color="blue"></a-sphere>
+        position="12.5 2.5 -12.5" scale="0.4 0.4 0.4" color="blue"></a-sphere>
 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
-        position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -15.1" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-2" sorting-collision
-        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -14.2" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-3" sorting-collision 
-        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -13.3" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-4" sorting-collision 
-        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -12.5" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
 
       <!--pedestal-->
-      <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-cylinder position="8 0.1 0" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
-      <a-cylinder position="8 0.1 2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="11.5 0.1 -15.1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="11.5 0.1 -14.2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="11.5 0.1 -13.3" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="11.5 0.1 -12.5" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
       <!--<a-box position="9 0 0.5" color="brown" depth="4" height="1" width="1"></a-box>-->
 
 
@@ -226,7 +226,7 @@
         <a-entity circles-checkpoint position="-10 0 -12.9"></a-entity>
         <a-entity circles-checkpoint position="-10 0 -16.2"></a-entity>
         
-        <a-entity circles-checkpoint position="9.4 0 -13.9"></a-entity>
+        <a-entity circles-checkpoint position="9 0 -13.9"></a-entity>
         <a-entity circles-checkpoint position="9 0 -19.5"></a-entity>
         <a-entity circles-checkpoint position="9 0 -19.5"></a-entity>
 
