@@ -53,17 +53,22 @@
     <a-scene circles_scene_properties>
       <a-assets>
         <a-asset-item id="campfire-gltf"  src="/worlds/LitPortals-Cave/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
-        <audio id="fireCrackling-snd" src="src\worlds\LitPortals-Cave\assets\sounds\fire.mp3" preload="true"></audio>
+        <audio id="fireCrackling-snd" src="assets/sounds/fire.mp3" preload="true"></audio>
 
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
          -->
+
+         <!-- AUDIO -->
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
         <a-sound id="ding" src="assets/ding.mp3" preload="auto" position="9 1 1"></a-sound>
         <!--credit:https://pixabay.com/sound-effects/ding-101492/-->
         <a-sound id="buzzer" src="assets/buzzer.mp3" preload="auto" position="9 1 1"></a-sound>
         <!--credit: https://pixabay.com/sound-effects/wrong-47985/-->
+
+        <!-- credit: https://freesound.org/people/LittleRobotSoundFactory/sounds/270387/  -->
+         <a-sound id="cave_Amb-snd" src="assets/sounds/cave_Ambience.wav" preload="true"></a-sound>
 
         <!-- gltf models -->
         <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
@@ -78,6 +83,8 @@
       
       <!-- just creating an entity that connects many elements together -->
 
+      <!-- adding ambient sounds -->
+       <a-entity circles-sound="src:#cave_Amb-snd; type:ambience; autoplay:true; loop:true; volume:0.3;"></a-entity>
       <!-- Area 1, with some spawnpoints -->
 
 
@@ -100,7 +107,7 @@
             class="ambient-music"
             fire="particles:200;"
             position="0.0 -0.2 0.0"
-            sound="src:#fireCrackling-snd; autoplay:true; loop:true; refDistance:1.0; rolloffFactor:3.0; volume:1.0; distanceModel:exponential;">
+            sound="src:#fireCrackling-snd; autoplay:false; loop:true; refDistance:2.0; rolloffFactor:2.0; volume:1; distanceModel:exponential;">
         </a-entity>
             <a-entity id = "firelight" animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
                 <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
@@ -117,8 +124,8 @@
         gltf-model="#campfire-gltf"
         shadow="receive: true; cast: true"
         circles-interactive-object="type:highlight"
-        onclick="document.getElementById('fireRig').setAttribute('visible', 'true'); 
-                   document.getElementById('fireParticlesSound').components.sound.play();">
+        onclick="document.getElementById('fireRig').setAttribute('visible', 'true');
+                   document.getElementById('fireParticlesSound').components.sound.playSound();">
         </a-entity>
       </a-entity>
 
