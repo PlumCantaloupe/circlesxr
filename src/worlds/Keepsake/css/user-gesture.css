@@ -46,7 +46,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 20px;
   border-radius: 10px;
   z-index: 1000;
@@ -59,7 +59,7 @@
   position: absolute;
   top: 10px;
   right: 15px;
-  color: white;
+  color: red;
   font-size: 20px;
   cursor: pointer;
 }
