@@ -151,13 +151,80 @@
              </a-entity>
        
              <a-entity id="delta-visualization-pink">
-               <a-cylinder color="pink" position="0.661 0.400 -0.323" scale="0.120 0.8 0.120"></a-cylinder>
+               <a-cylinder color="pink" position="0.661 0.5 -0.323"></a-cylinder>
              </a-entity>
            </a-entity>
          </a-entity>
 
-         <a-entity share-emotion="visualizationID: delta-visualization" circles-interactive-object geometry="primitive: cylinder" position="0.635 0.4 -0.221" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+         <a-entity position="0.635 0 -0.221">
+          <a-entity share-emotion="visualizationID: delta-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+         </a-entity>
+         
       </a-entity>
+
+      <!-- info orbs -->
+      <a-entity rotation="0 0 0">
+        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        circles-artefact=" textRotationY:-70;
+        inspectScale: 0.3 0.3 0.3;
+        description_offset: 0 1.22 0.7;
+        descriptionLookAt: true;
+        label_offset:0.0 0.5 0.0; arrow_position:down;
+        title:Gamma Brain Wave;
+        description:The Gamma brain wave is lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula.;
+        label_text:Learn more;"></a-entity>
+      </a-entity>
+
+      <a-entity rotation="0 65 0">
+        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        circles-artefact=" textRotationY:-70;
+        inspectScale: 0.3 0.3 0.3;
+        description_offset: 0 1.22 0.7;
+        descriptionLookAt: true;
+        label_offset:0.0 0.5 0.0; arrow_position:down;
+        title:Delta Brain Wave;
+        description:The Delta brain wave is lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula.;
+        label_text:Learn more;"></a-entity>
+      </a-entity>
+
+      <a-entity rotation="0 130 0">
+        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        circles-artefact=" textRotationY:-70;
+        inspectScale: 0.3 0.3 0.3;
+        description_offset: 0 1.22 0.7;
+        descriptionLookAt: true;
+        label_offset:0.0 0.5 0.0; arrow_position:down;
+        title:Theta Brain Wave;
+        description:The Theta brain wave is lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula.;
+        label_text:Learn more;"></a-entity>
+      </a-entity>
+
+      <a-entity rotation="0 195 0">
+        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        circles-artefact=" textRotationY:-70;
+        inspectScale: 0.3 0.3 0.3;
+        description_offset: 0 1.22 0.7;
+        descriptionLookAt: true;
+        label_offset:0.0 0.5 0.0; arrow_position:down;
+        title:Alpha Brain Wave;
+        description:The Alpha brain wave is lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula.;
+        label_text:Learn more;"></a-entity>
+      </a-entity>
+
+      <a-entity rotation="0 260 0">
+        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        circles-artefact=" textRotationY:-70;
+        inspectScale: 0.3 0.3 0.3;
+        description_offset: 0 1.22 0.7;
+        descriptionLookAt: true;
+        label_offset:0.0 0.5 0.0; arrow_position:down;
+        title:Beta Brain Wave;
+        description:The Beta brain wave is lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula.;
+        label_text:Learn more;"></a-entity>
+      </a-entity>
+
+      
+      
 
       <!-- portals -->
       <a-entity id="Portal-Delta"

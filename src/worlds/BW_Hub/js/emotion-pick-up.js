@@ -13,6 +13,7 @@ AFRAME.registerComponent('emotion-pick-up', {
         else
           Context_AF.pickUp(Context_AF.el, Context_AF.camera, Context_AF.manager);
       })
+      
     },
 
     pickUp: function (orb, camera, manager) {

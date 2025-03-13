@@ -47,6 +47,10 @@ AFRAME.registerComponent('room', {
       });
   
       //listen for websocket
+    //   Context_AF.socket.on(DELTA_VISUALIZATION_EVENT, function(data) {
+    //     console.log("data visualization event received");
+    // });
+
     //   Context_AF.el.addEventListener('', function() {
 
     //   })
