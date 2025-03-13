@@ -299,19 +299,7 @@
         });
       }
 
-    // file upload
-    const fileInput = document.getElementById('file-input');
-      if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
-          const file = e.target.files[0];
-            if (file) {
-              alert('File "' + file.name + '", uploading..');
-              // hide upload UI after upload
-              document.getElementById('upload-ui').style.display = 'none';
-          }
-      });
-    }
-
+    s
     const closeBtn = document.getElementById('close-btn');
       if (closeBtn) {
         closeBtn.addEventListener('click', function() {
