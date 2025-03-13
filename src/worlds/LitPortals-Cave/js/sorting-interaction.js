@@ -1,3 +1,0 @@
-const SORT_ITEMS = {
-    
-}

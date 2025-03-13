@@ -16,13 +16,17 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="debug: true">
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-       
+        <a-sound id="ding" src="assets/ding.mp3" preload="auto" position="9 1 1"></a-sound>
+        <!--credit:https://pixabay.com/sound-effects/ding-101492/-->
+        <a-sound id="buzzer" src="assets/buzzer.mp3" preload="auto" position="9 1 1"></a-sound>
+        <!--credit: https://pixabay.com/sound-effects/wrong-47985/-->
+
         <!-- gltf models -->
        
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -82,10 +86,10 @@
                                   label_text:Gem;"
                 circles-pickup-networked></a-entity>
 
-      <!--artifacts-->
-      <a-dodecahedron id="artifact1" class="sorting_item" data-order="4" sorting-collision
+      <!--artifacts (vases go here)--> 
+      <a-sphere id="artifact1" class="sorting_item" data-order="4" sorting-collision 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -1" scale="0.5 0.5 0.5" color="red"></a-dodecahedron>
+        position="8 1 -1" scale="0.5 0.5 0.5" color="red"></a-sphere>
       <a-sphere id="artifact2" class="sorting_item" data-order="3" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="8 1 0" scale="0.5 0.5 0.5" color="yellow"></a-sphere>
@@ -98,13 +102,13 @@
 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
-        position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-2" sorting-collision
-        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-3" sorting-collision 
-        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
       <a-box class="collisionbox" id="goal-4" sorting-collision 
-        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.1" height="0.5" width="0.6" opacity="0.2"></a-box>
+        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
 
       <!--pedestal-->
       <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
