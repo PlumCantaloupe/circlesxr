@@ -1,40 +1,104 @@
 /* upload ui css */
 #upload-ui {
-    font-family: 'Open Sans', sans-serif;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 10;
-    display: none; /* default is hidden */
-  }
-  
-  .center {
-    text-align: center;
-  }
-  
-  #upload-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  #upload-btn:hover {
-    background-color: #45a049;
-  }
-  
-  #close-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    color: red;
-    font-size: 20px;
-    cursor: pointer;
-  }
+  font-family: 'Open Sans', sans-serif;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 10;
+  display: none; /* default is hidden */
+}
+
+.center {
+  text-align: center;
+}
+
+#upload-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#upload-btn:hover {
+  background-color: #45a049;
+}
+
+#close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* orb / gallery label */
+#label-ui {
+  font-family: 'Open Sans', sans-serif;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+  display: none;
+}
+
+#close-label-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.label-content {
+  margin-bottom: 20px;
+}
+
+#label-ui h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+#label-input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.label-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label-btn {
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 45%;
+}
+
+#cancel-label {
+  background-color: #e74c3c;
+}
+
+#submit-label {
+  background-color: #2ecc71;
+}

@@ -24,62 +24,303 @@
     <script>
       "use strict";
 
-      // picking up an object
-      AFRAME.registerComponent('pickupable', {
-        init: function() {
-            var self = this;
-            self.player = document.querySelector('#camera');
-            self.pickedUp = false;
-            self.clickProcessed = false; // add debounce flag
-
-            self.playerHolder = CIRCLES.getAvatarHolderElementBody();
-            self.origParent = self.el.parentNode;
-            
-            if (!self.el.classList.contains('interactive')) {
-            self.el.classList.add('interactive'); 
-            }
-
-            self.el.addEventListener('click', (e) => {
-            
-            if (self.pickedUp === true) {
-                // release entity
-                //self.el.sceneEl.object3D.attach(self.el.object3D);
-                self.playerHolder.object3D.attach(self.el.object3D);
-
-                self.pickedUp = false;
-                self.el.emit('object-released', {id: self.el.id});
-            } else {
-                // pick up obj
-                //self.player.object3D.attach(self.el.object3D);
-                self.playerHolder.object3D.attach(self.el.object3D);
-                console.log('something has been picked up.');
-                console.log(self.pickedUp);
-                
-                // pos obj infront of camera
-                self.el.setAttribute('position', {
-                x: 0,
-                y: -0.5,  // slightly below center of view
-                z: -1   // closer to camera so it appears in hand
-                });
-                
-                self.el.setAttribute('rotation', {
-                x: 0,
-                y: 0,
-                z: 0
-                });
-                
-                self.pickedUp = true;
-                self.el.emit('object-picked-up', {id: self.el.id});
-            }
-            });
-
-            // check if entity is picked up
-            self.isPickedUp = function() {
-            return self.pickedUp;
-            };
+    // custom pick up
+    AFRAME.registerComponent('pickupable', {
+    init: function() {
+        var self = this;
+        self.player = document.querySelector('#camera');
+        self.pickedUp = false;
+        self.clickDebounce = false; // click debounce
+        
+        self.playerHolder = CIRCLES.getAvatarHolderElementBody();
+        self.origParent = self.el.parentNode;
+        
+        if (!self.el.classList.contains('interactive')) {
+        self.el.classList.add('interactive'); 
         }
-        });
+        
+        // event handler to stop default Circles control
+        self.suppressControlsFunc = function(e) {
+        // stop circles object-pickup UI from showing
+        e.stopPropagation();
+        // preventing default behaviours
+        e.preventDefault();
+        return false;
+        };
 
+        // debounce
+        self.handleClick = function(e) {
+        if (self.clickDebounce) return;
+        
+        self.clickDebounce = true;
+        setTimeout(function() { self.clickDebounce = false; }, 300); // 300ms debounce
+        
+        console.log('clicked on object, current state:', self.pickedUp ? 'picked up' : 'not picked up');
+        
+        if (self.pickedUp === true) {
+            // release obj
+            self.origParent.object3D.attach(self.el.object3D);
+            console.log('released');
+            self.pickedUp = false;
+            
+            self.el.emit('object-released', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-released', {id: self.el.id}, false);
+        } else {            
+            // pick up obj
+            self.playerHolder.object3D.attach(self.el.object3D);
+            
+            // position in front of camera
+            self.el.setAttribute('position', {
+            x: 0.8,
+            y: -0.6,  // slightly below center of view
+            z: 1     // closer to camera so it appears in hand
+            });
+            
+            self.el.setAttribute('rotation', {
+            x: 0,
+            y: 0,
+            z: 0
+            });
+            
+            console.log('picked up');
+            self.pickedUp = true;
+            self.el.emit('object-picked-up', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-picked-up', {id: self.el.id}, false);
+        }
+        };
+
+        self.el.addEventListener('click', self.handleClick);
+        
+        // is obj picked up
+        self.isPickedUp = function() {
+        return self.pickedUp;
+        };
+    },
+    
+    remove: function() {
+        this.el.removeEventListener('click', this.handleClick);
+    }
+    });
+
+    // orb placement and gallery naming
+    AFRAME.registerComponent('plate-interaction', {
+    init: function() {
+      const self = this;
+      self.hasObject = false;
+      self.placedObjectId = null;
+      self.objectsLabeled = {}; // track labelled objs
+      
+      if (!self.el.classList.contains('interactive')) {
+        self.el.classList.add('interactive');
+      }
+      
+      self.plateTopPosition = new THREE.Vector3();
+      self.updatePlatePosition = () => {
+        self.el.object3D.getWorldPosition(self.plateTopPosition);
+        self.plateTopPosition.y += (self.el.getAttribute('height') || 0.1) / 2 + 0.05;
+      };
+      
+      self.el.addEventListener('click', () => {
+        console.log('Plate clicked');
+        const manager = self.el.sceneEl.components['interaction-manager'];
+        const heldObjectId = manager.pickedUpObject;
+        
+        console.log('Manager reports held object:', heldObjectId);
+        
+        // If nothing held, do nothing
+        if (!heldObjectId) {
+          console.log('Nothing in hand to place');
+          return;
+        }
+        
+        const heldObject = document.getElementById(heldObjectId);
+        if (!heldObject) {
+          console.log('Could not find object with ID:', heldObjectId);
+          return;
+        }
+        
+        self.updatePlatePosition();
+        
+        console.log('Placing object on plate:', heldObjectId);
+        self.placedObjectId = heldObjectId;
+        self.hasObject = true;
+        
+        // detach from player and place on plate
+        heldObject.sceneEl.object3D.attach(heldObject.object3D);
+        
+        // set pos on plate
+        heldObject.setAttribute('position', {
+          x: self.plateTopPosition.x,
+          y: self.plateTopPosition.y,
+          z: self.plateTopPosition.z
+        });
+        
+        heldObject.setAttribute('rotation', '0 0 0');
+        
+        if (heldObject.components['pickupable']) {
+          heldObject.components['pickupable'].pickedUp = false;
+        }
+        
+        manager.pickedUpObject = null;
+        
+        // only show labelling if there isn't a label
+        if (!self.objectsLabeled[heldObjectId]) {
+          const labelUI = document.querySelector('#label-ui');
+          if (labelUI) {
+            labelUI.style.display = 'block';
+            
+            labelUI.dataset.objectId = heldObjectId;
+            
+            const labelInput = document.querySelector('#label-input');
+            if (labelInput) {
+              labelInput.value = '';
+              setTimeout(() => labelInput.focus(), 100);
+            }
+          }
+          else
+          {
+            window.location.href = "gallery.html";
+          }
+        }
+      });
+      
+      self.updatePlatePosition();
+    }
+  });
+
+    // Gallery Naming
+    AFRAME.registerComponent('object-label', {
+    schema: {
+        text: {type: 'string', default: ''},
+        color: {type: 'color', default: '#FFF'},
+        size: {type: 'number', default: 1.0},
+        yOffset: {type: 'number', default: 0.3} // distance above object
+    },
+    
+    init: function() {
+        this.createLabel();
+    },
+    
+    update: function() {
+        this.createLabel();
+    },
+    
+    createLabel: function() {
+        // remove existing label if any
+        if (this.labelEntity) {
+        this.el.removeChild(this.labelEntity);
+        }
+        
+        if (!this.data.text) return;
+        
+        // create label entity
+        this.labelEntity = document.createElement('a-entity');
+        this.labelEntity.setAttribute('text', {
+        value: this.data.text,
+        color: this.data.color,
+        width: 2,
+        align: 'center',
+        anchor: 'center'
+        });
+        
+        // position above obj
+        this.labelEntity.setAttribute('position', `0 ${this.data.yOffset} 0`);
+        
+        // make label always face camera
+        this.labelEntity.setAttribute('look-at', '#camera');
+        
+        // add to parent entity
+        this.el.appendChild(this.labelEntity);
+    }
+    });
+
+    // label creation
+  document.addEventListener('DOMContentLoaded', function() {
+    // setup label submission
+    const submitLabel = function() {
+      const labelUI = document.querySelector('#label-ui');
+      const labelInput = document.querySelector('#label-input');
+      
+      if (!labelUI || !labelInput) return;
+      
+      const objectId = labelUI.dataset.objectId;
+      const labelText = labelInput.value.trim();
+      
+      if (objectId && labelText) {
+        // get obj and add label
+        const object = document.getElementById(objectId);
+        if (object) {
+          object.setAttribute('object-label', {text: labelText});
+          console.log(`Set label "${labelText}" on object ${objectId}`);
+          
+          // mark this object as labeled
+          const plate = document.querySelector('[plate-interaction]');
+          if (plate && plate.components['plate-interaction']) {
+            plate.components['plate-interaction'].objectsLabeled[objectId] = true;
+          }
+        }
+      }
+      
+      // hide ui
+      labelUI.style.display = 'none';
+    };
+
+    // submit label
+    const submitButton = document.querySelector('#submit-label');
+    if (submitButton) {
+      submitButton.addEventListener('click', submitLabel);
+    }
+    
+    // cancel label
+    const cancelButton = document.querySelector('#cancel-label');
+    if (cancelButton) {
+      cancelButton.addEventListener('click', function() {
+        // hide gallery naming
+        document.querySelector('#label-ui').style.display = 'none';
+      });
+    }
+    
+    // enter label
+    const labelInput = document.querySelector('#label-input');
+    if (labelInput) {
+      labelInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+          submitLabel();
+        }
+      });
+    }
+
+    // upload btn
+    const uploadBtn = document.getElementById('upload-btn');
+      if (uploadBtn) {
+          uploadBtn.addEventListener('click', function() {
+          // opens files on click
+          document.getElementById('file-input').click();
+        });
+      }
+
+    // file upload
+    const fileInput = document.getElementById('file-input');
+      if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+            if (file) {
+              alert('File "' + file.name + '", uploading..');
+              // hide upload UI after upload
+              document.getElementById('upload-ui').style.display = 'none';
+          }
+      });
+    }
+
+    const closeBtn = document.getElementById('close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+        document.getElementById('upload-ui').style.display = 'none';
+        });
+      }
+  });
+
+    // bugs on the pedestal interaction
       AFRAME.registerComponent('pedestal-interaction', {
           init: function() {
               const self = this;
@@ -167,20 +408,21 @@
 
       // interaction manager - listens for entities being picked up/released globally
       AFRAME.registerComponent('interaction-manager', {
-          init: function() {
-              this.pickedUpObject = null;
-              
-              this.el.sceneEl.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
-            this.pickedUpObject = e.detail.el.id;
-            console.log('picked up:', this.pickedUpObject);
-        });
+  init: function() {
+    const self = this;
+    self.pickedUpObject = null;
+    
+    self.el.sceneEl.addEventListener('object-picked-up', (e) => {
+      self.pickedUpObject = e.detail.id;
+      console.log('interaction-manager: picked up:', self.pickedUpObject);
+    });
 
-        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, (e) => {
-            this.pickedUpObject = null;
-            console.log('nothing in hand');
-        });
-          }
-      });
+    self.el.sceneEl.addEventListener('object-released', (e) => {
+      self.pickedUpObject = null;
+      console.log('interaction-manager: nothing in hand');
+    });
+  }
+});
 
   </script>
 </head>
@@ -200,12 +442,34 @@
     </div>
 </div>
 
+    <!-- Orb Label UI-->
+<div id="label-ui">
+    <span id="close-label-btn">&times;</span>
+    <div class="label-content">
+      <h2>Name Your Orb</h2>
+      <input type="text" id="label-input" placeholder="Enter a name...">
+    </div>
+    <div class="label-buttons">
+      <button id="cancel-label" class="label-btn">Cancel</button>
+      <button id="submit-label" class="label-btn">Submit</button>
+    </div>
+  </div>
+
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties interaction-manager background="color: black">
     <a-assets>
       <!-- put all assets here -->
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
+      <a-asset-item id="chair-model" response-type="arraybuffer" src="./assets/models/Chair_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="table-model" response-type="arraybuffer" src="./assets/models/Table_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="reception-desk-model" response-type="arraybuffer" src="./assets/models/Desk_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="computer-model" response-type="arraybuffer" src="./assets/models/Computer_BaseColor.glb"></a-asset-item>
+
+      <!-- orb room model -->
+      <a-asset-item id="orb-room-model" src="assets/models/Lobby_BaseColor.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      
       <!-- polycam scans -->
       <a-asset-item id="owl-model" src="assets/models/Owl Puppet (1).glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
@@ -258,14 +522,14 @@
         visible="true">
         </a-entity>
 
-        <!--- orb interaction testing -->
-        <a-sphere id="pickupSphere"
+      <a-sphere id="pickupSphere"
         position="0 1 -2"
         radius="0.2"
-        material="color: #3498db"
+        material="color: #3498db; metalness: 0.7; roughness: 0.3"
         circles-interactive-object
-        pickupable>
-        </a-sphere>
+        pickupable
+        object-label="text: ; yOffset: 0.4">
+      </a-sphere>
 
         <!-- plate -->
         <a-cylinder id="plate"
@@ -274,65 +538,146 @@
         radius="0.5"
         material="color: #e74c3c"
         circles-interactive-object
+        plate-interaction
         class="interactive">
         </a-cylinder>
 
-        <!-- floor -->
-        <a-box 
-            position="0 -0.1 0"
-            width="10" 
-            height="0.2" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
 
-        <!-- ceiling -->
-        <a-box 
-            position="0 4 0"
-            width="10" 
-            height="0.2" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+         <!--Chairs-->
+         <a-entity
+         id="chair1"
+         position="22 0.1 7" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
 
-        <!-- walls -->
-        <a-box 
-            position="0 2 -5"
-            width="10" 
-            height="4" 
-            depth="0.2" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+         <a-entity
+         id="chair2"
+         position="24 0.1 7" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
 
-        <a-box 
-            position="0 2 5"
-            width="10" 
-            height="4" 
-            depth="0.2" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+         <a-entity
+         id="chair3"
+         position="12 0.1 30.5" rotation="0 135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
 
-        <a-box 
-            position="-5 2 0"
-            width="0.2" 
-            height="4" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+         <a-entity
+         id="chair4"
+         position="14 0.1 30.5" rotation="0 -135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
 
-        <a-box 
-            position="5 2 0"
-            width="0.2" 
-            height="4" 
-            depth="10" 
-            color="white"
-            shadow="receive: true">
-        </a-box>
+         <a-entity
+         id="chair5"
+         position="19 0.1 30.5" rotation="0 135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair6"
+         position="22 0.1 30.5" rotation="0 -135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <!--Table-->
+         <a-entity
+         id="table1"
+         position="4 0.1 15" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table2"
+         position="4 0.1 25" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table3"
+         position="30 0.1 15" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table4"
+         position="30 0.1 25" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <!--Computers-->
+         <a-entity
+         id="computer1"
+         position="4.12 1 15.5" rotation="0 35 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="computer2"
+         position="4.5 1 25" rotation="0 135 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+         
+         <a-entity
+         id="computer3"
+         position="30.8 1 14.7" rotation="0 -38 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="computer4"
+         position="30.3 1 25.93" rotation="0 -135 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+
+        <!--Receptionist Desk-->
+        <a-entity
+        id="receptionistDesk"
+        position="17 0.1 20" rotation="0 0 0" scale="0.33 0.33 0.33"
+        gltf-model="#reception-desk-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+        </a-entity>
+
+        <!--Lobby Model-->
+        <a-entity
+        id="orb-room"
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="0.3 0.3 0.3"
+        gltf-model="#orb-room-model"
+        shadow="recieve:true;">
+        </a-entity>
+
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->
