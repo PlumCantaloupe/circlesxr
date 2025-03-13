@@ -1,10 +1,12 @@
 'use strict';
 
-const router     = require('express').Router();
-const path       = require('path');
+const router = require('express').Router();
+const s3ServerLogic = require('../aws/s3_serverLogic');
+const path = require('path');
 const controller = require('../controllers/controller');
-const User       = require('../models/user');
-const passport   = require('passport');
+const fs = require('fs').promises;
+const User = require('../models/user');
+const passport = require('passport');
 
 /**
  * Authenticated
@@ -45,10 +47,16 @@ router.get('/', notAuthenticated, (req, res) => {
   });
 });
 
-router.post('/login',  passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
   successRedirect: '/explore',
   failureRedirect: '/'
 }));
+
+// endpoint for uploading objects to s3 bucket
+router.post('/s3_upload', async (req, res) => s3ServerLogic.uploadToS3(req, res));
+
+// endpoint for retrieving objects from s3 bucket
+router.get('/s3_retrieve:key', async (req, res) => s3ServerLogic.retrieveFromS3(req, res));
 
 //magic links for students
 router.get('/get-magic-links', authenticated, controller.getMagicLinks);
@@ -56,11 +64,11 @@ router.get('/get-magic-links', authenticated, controller.getMagicLinks);
 //get list of worlds
 router.get('/get-worlds-list', authenticated, controller.getWorldsList);
 
-router.get('/magic-login', function(req, res, next) {
-  passport.authenticate('jwt', function(err, user, info) {
+router.get('/magic-login', function (req, res, next) {
+  passport.authenticate('jwt', function (err, user, info) {
     if (err) { return next(err); }
     if (!user) { return res.redirect('/'); }
-    req.logIn(user, function(err) {
+    req.logIn(user, function (err) {
       if (err) { return next(err); }
       return res.redirect(req.query.route);
     });
@@ -70,7 +78,7 @@ router.get('/magic-login', function(req, res, next) {
 // Ensure a user is authenticated before hitting logout
 router.get('/logout', authenticated, (req, res, next) => {
   // Logout of Passport
-  req.logout(function(err) {
+  req.logout(function (err) {
     if (err) { return next(err); }
     res.redirect('/'); // Redirect to home page
   });
@@ -100,7 +108,7 @@ router
       successRedirect: '/explore',
       failureRedirect: '/'
     }));
-    
+
 router.post('/update-user', controller.updateUserInfo);
 
 //TODO: this is a temporary fix. Sometime will have to add in ability for user to upload ....

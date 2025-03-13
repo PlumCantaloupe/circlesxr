@@ -5,6 +5,10 @@
   <circles-start-scripts/>
   <!-- custom scripts are added here-->
   <script src="/worlds/Keepsake/components/circles-pickup-object.js"></script>
+  <script src="./logic/file.js"></script>
+  <script src="./logic/basic.js"></script>
+  <script src="./repository/s3.js"></script>
+  <script src="./model/artifact.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -191,7 +195,7 @@
     <div class="center">
         <h2 style="color: white;">Upload a Keepsake</h2>
         <p style="color: white;">Acceptable file types 3D:.glb, .gltf</p>
-        <button id="upload-btn">Choose File</button>
+        <button id="upload-btn" onclick="new FileLogic().getFileFromSystem()">Choose File</button>
         <input type="file" id="file-input" style="display: none" accept=".glb,.gltf">
     </div>
 </div>

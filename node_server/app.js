@@ -13,46 +13,6 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
-const fs = require('fs').promises;
-
-// configure aws s3 client using env variables
-const aws = require('@aws-sdk/client-s3');
-const s3 = new aws.S3Client({
-  "region": env.AWS_REGION,
-  "accessKeyId": env.AWS_ACCESS_KEY,
-  "secretKeyAccess": env.AWS_SECRET_TOKEN,
-});
-
-const bucketName = 'circlesxr-objects';
-
-// test to retrieve the s3 bucket
-// should return the "circlesxr_objectbucket" bucket
-const command = new aws.ListBucketsCommand();
-s3.send(command).then((response) => {
-  console.log('\n\n// ===== LOAD S3 BUCKET ===== //');
-  console.log(response);
-  console.log('\n// ========================== //');
-
-});
-
-// add object to s3 bucket
-const objectKey = "OWL_OBJECT";
-fs.readFile('./node_server/aws/owl_object.glb').then((file) => {
-  // add an object into the bucket
-  const addObjectCmd = new aws.PutObjectCommand({
-    Bucket: bucketName,
-    Key: objectKey,
-    Body: file.toString()
-  });
-  s3.send(addObjectCmd).then((response) => {
-    console.log('\n\n// ===== ADDED OBJECTED TO S3 ===== //');
-    console.log("\nSuccessfully added '" + objectKey + "' to '" + bucketName + "'.\n");
-    console.log(response);
-    console.log('\n// ========================== //');
-  });
-
-});
-
 
 
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
@@ -120,8 +80,8 @@ app.use(
     },
   })
 );
-app.use(bodyParser.json());                                 //set body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));                                 //set body parser middleware
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));        //set body parser middleware
 
 app.use(sassMiddleware({
   src: __dirname + '/scss',
