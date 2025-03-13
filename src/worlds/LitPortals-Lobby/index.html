@@ -24,7 +24,6 @@
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
        
         <!-- gltf models -->
-       
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -34,68 +33,57 @@
       
       <!-- just creating an entity that connects many elements together -->
 
-      <!-- Area 1, with some spawnpoints -->
+      <a-entity id="portals" position="0 0 0" rotation = "0 180 0" scale= "40 40 40" gltf-model="#portalsModel"></a-entity>
 
       <!-- room -->
-      <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 160; rotation: 0 180 0" 
-        material="color: #cccccc; side: double;">
-      </a-entity>
-      <a-entity position="0 2.5 0" 
-        geometry="primitive: cylinder; radius: 12; height: 5; openEnded: true; thetaStart: 0; thetaLength: 60;" 
-        material="color: #cccccc; side: double;"
-        rotation= " 0 235 0">
-      </a-entity>
-      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 25; width: 25" material="color: black; side: double"></a-entity>
+      <a-entity  rotation= " 90 0 0" geometry="primitive: plane; height: 100; width: 100" material="color: black; side: back; transparent: true; opacity: 0.5"></a-entity>
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
       -->
-      <a-box id="box" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-        position="8 1 0" scale="0.5 0.5 0.5" color="red">
-      </a-box>
-      <a-sphere id="sphere" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 1" scale="0.5 0.5 0.5" color="blue">
-      </a-sphere>
-      <a-cone id="cone" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 3" scale="0.5 0.5 0.5" color="green">
-      </a-cone>
-      <a-dodecahedron id="dodeca" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
-      </a-dodecahedron>
-      <a-torus id="torus" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
-        position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
-      </a-torus>
-
-      <!--Portals-->
-      <a-entity id="portals" position="0 0 0" rotation = "0 180 0" scale= "30 30 30" gltf-model="#portalsModel"></a-entity>
-
+      <a-entity id="testing pickup" rotation= " 0 120 0">
+        <a-box id="box" 
+          circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
+          position="8 1 0" scale="0.5 0.5 0.5" color="red">
+        </a-box>
+        <a-sphere id="sphere" 
+          circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+          position="8 1 1" scale="0.5 0.5 0.5" color="blue">
+        </a-sphere>
+        <a-cone id="cone" 
+          circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+          position="8.1 1 2.3" scale="0.5 0.5 0.5" color="green">
+        </a-cone>
+        <a-dodecahedron id="dodeca" 
+          circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+          position="8 1 -2" scale="0.5 0.5 0.5" color="purple">
+        </a-dodecahedron>
+        <a-torus id="torus" 
+          circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+          position="8 1 -1" scale="0.5 0.5 0.5" color="orange">
+        </a-torus>
+      </a-entity>
 
        <!-- gems with text box
         can be instructions or welcome message
         these are networked-->
         
       <a-entity id="instructions-1"
-                position="0 1 5" rotation="0 0 0" scale="1 1 1"
+                position="-5.6 1 -4.7" rotation="0 0 0" scale="1 1 1"
                 geometry="primitive:octahedron; radius:0.5;"
                 material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
                                   textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-                                  title:[~20-25 chars] Title Front;
-                                  description:[~240-280 chars]  This is the FRONT text that will display when an object is picked up. Adjust scale size and text rotation properties to make more visible.;
-                                  title_back:[~20-25 chars] Title Back;
-                                  description_back:[~240-280 chars] This is the back/secondary text that will display when you rotate the description bubble.;
+                                  title:Pick Up Practice;
+                                  description:This a tutorial where users can test some of the features that will be used in the other rooms;
+                                  title_back: How to?;
+                                  description_back: This can be done by click on an object, turning and using the ui elements to manipulate it.;
                                   description_offset:0 0.5 0;
                                   desc_arrow_position:down;
-                                  label_text:Gem;"
-                circles-pickup-networked></a-entity>
+                                  label_text:Pick Up Practice;"
+        circles-pickup-networked></a-entity>
 
-                <a-entity id="instructions-2"
+      <a-entity id="instructions-2"
                 position="3 1 5" rotation="0 0 0" scale="1 1 1"
                 geometry="primitive:octahedron; radius:0.5;"
                 material="color:rgb(255, 100, 20); roughness:0.2; metalness:0.8;"
@@ -108,65 +96,37 @@
                                   description_offset:0 0.5 0;
                                   desc_arrow_position:down;
                                   label_text:Gem;"
-                circles-pickup-networked></a-entity>
+        -pickup-networked></a-entity>
 
       <!-- teleport pads-->
-      <a-entity circles-checkpoint position="5 0 5"></a-entity>
-      <a-entity circles-checkpoint position="-7 0 -7"></a-entity>
-      <a-entity circles-checkpoint position="5 0 -7"></a-entity>
-      <a-entity circles-checkpoint position="-7 0 5"></a-entity>
-      <a-entity circles-checkpoint position="-10 0 5"></a-entity>
-      <a-entity circles-checkpoint position="-5 0 10"></a-entity>
-      <a-entity circles-checkpoint position="-1 0 7"></a-entity>
-      <a-entity circles-checkpoint position="-14 0 11"></a-entity>
-
-
-      <!-- Area 2, top -->
-      <a-entity position="-4.25 2.5 -15"
-        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
-        material="color: blue; side: double;"
-        rotation="0 60 0">
+      <a-entity id = "teleport pads">
+        <a-entity circles-checkpoint position="-4.6 0 -3.5"></a-entity>
+        <a-entity circles-checkpoint position="-1.5 0 -5.6"></a-entity>
+        <a-entity circles-checkpoint position="2.5 0 3"></a-entity>
+        <a-entity circles-checkpoint position="2.5 0 -4.5"></a-entity>
+        <a-entity circles-checkpoint position="-3.5 0 3"></a-entity>
+        <a-entity circles-checkpoint position="0 0.54 0"></a-entity>
       </a-entity>
-      <a-entity color="black" position="-4.4 0 -16.5" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
 
-      <!-- portals -->
-      <a-entity id="Portal-Cave"
-        position="-15 1.7 11" rotation="0 50 0"
-        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Cave; link_url:/w/LitPortals-Cave"
+      <a-entity id = "portals">
+        <a-entity id="Portal-Cave"
+        position="4.8 1.7 0.03" rotation="0 0 0" scale="0.1 3.8 3"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; link_url:/w/LitPortals-Cave"
         shadow></a-entity>
 
         <a-entity id="Portal-Future"
-        position="-10.0 1.7 10" rotation="0 50 0"
-        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Future; link_url:/w/LitPortals-Future"
+        position="0 2.1 4.8" rotation="0 0 0" scale="3.6 3.35 0.1"
+        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; link_url:/w/LitPortals-Future;"  
         shadow></a-entity>
 
-        <a-entity id="Portal-Lobby"
-        position="-5 1.7 9" rotation="0 50 0"
-        circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Lobby; link_url:/w/LitPortals-Lobby"
-        shadow></a-entity>
-
-      <!-- Area 2, steps -->
-    
-      <!-- Area 3 -->
-      <a-entity position=" -9.25 2.5 15" 
-        geometry="primitive: cylinder; radius: 10; height: 5; openEnded: true; thetaStart: 0; thetaLength: 270;" 
-        material="color: red; side: double;"
-        rotation="0 192 0">
+        <a-entity id="Portal-Lobby" 
+          position="-4.7 2.2 0.1" rotation="0 0 0"  scale="0.1 2.64 3.08"
+          circles-portal= "img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; link_url:/w/LitPortals-Lobby"
+          shadow>
+        </a-entity>
+        
       </a-entity>
-      <a-entity color="black"position="-9 0 13.4" rotation= " 90 0 0" geometry="primitive: plane; height: 20; width: 20" material="color: black; side: double"></a-entity>
-
-
-      <!-- ambient music/sound 
-      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
-      -->
-
-      <!-- example "artefact" -->
-
-
-      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
-
-      <!-- the environment -->
-      
+     
       
       <!-- sky and lights -->
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
