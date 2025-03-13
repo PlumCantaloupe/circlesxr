@@ -18,7 +18,8 @@
     <circles-start-scripts/>
 
     <!-- add your custom scripts here -->
-    
+
+    <script src="js/sorting-component.js"></script> 
     <script src="components/toggle-movement.js"></script>
     <script src="components/toggle-canvas.js"></script>
     <script src="components/update-canvas.js"></script>
@@ -59,7 +60,11 @@
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
          -->
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-       
+        <a-sound id="ding" src="assets/ding.mp3" preload="auto" position="9 1 1"></a-sound>
+        <!--credit:https://pixabay.com/sound-effects/ding-101492/-->
+        <a-sound id="buzzer" src="assets/buzzer.mp3" preload="auto" position="9 1 1"></a-sound>
+        <!--credit: https://pixabay.com/sound-effects/wrong-47985/-->
+
         <!-- gltf models -->
         <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
          
@@ -127,6 +132,7 @@
       
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
       -->
+
       <a-box id="box" 
         circles-pickup-networked
         position="8 1 0" scale="0.5 0.5 0.5" color="red">
@@ -165,6 +171,38 @@
                                   desc_arrow_position:down;
                                   label_text:Gem;"
                 circles-pickup-networked></a-entity>
+
+      <!--artifacts (vases go here)--> 
+      <a-sphere id="artifact1" class="sorting_item" data-order="4" sorting-collision 
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 -1" scale="0.5 0.5 0.5" color="red"></a-sphere>
+      <a-sphere id="artifact2" class="sorting_item" data-order="3" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 0" scale="0.5 0.5 0.5" color="yellow"></a-sphere>
+      <a-sphere id="artifact3" class="sorting_item" data-order="2" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 1" scale="0.5 0.5 0.5" color="green"></a-sphere>
+      <a-sphere id="artifact4" class="sorting_item" data-order="1" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
+        position="8 1 2" scale="0.5 0.5 0.5" color="blue"></a-sphere>
+
+      <!--detection box-->
+      <a-box class="collisionbox" id="goal-1" sorting-collision
+        position="8 0.5 -1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+      <a-box class="collisionbox" id="goal-2" sorting-collision
+        position="8 0.5 0" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+      <a-box class="collisionbox" id="goal-3" sorting-collision 
+        position="8 0.5 1" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+      <a-box class="collisionbox" id="goal-4" sorting-collision 
+        position="8 0.5 2" color="tan" rotation="0 0 0" depth="0.3" height="0.5" width="0.6" opacity="0.2"></a-box>
+
+      <!--pedestal-->
+      <a-cylinder position="8 0.1 -1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 0" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <a-cylinder position="8 0.1 2" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
+      <!--<a-box position="9 0 0.5" color="brown" depth="4" height="1" width="1"></a-box>-->
+
 
       <!-- teleport pads-->
       <a-entity id="Portals and Pads">
