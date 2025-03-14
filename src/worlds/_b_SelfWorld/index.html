@@ -5,7 +5,7 @@
   <circles-start-scripts/>
 
   <!--Our Scripts-->
-  <script src="/worlds/_b_SelfWorld/assets/scripts/sproot-dialogue.js"></script>
+ 
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -46,7 +46,7 @@
     <!--npc models-->
     
     <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
-    <a-box  scale = " 1 1 1" id = "sproot_collider" class = "interactive" position = "-4.702 2.460 -7.749" visible = "false"  geometry sproot-dialogue = "highlight:scale"></a-box>
+    <a-box  scale = " 1 1 1" id = "sproot_collider" class = "interactive" position = "-4.702 2.460 -7.749" visible = "false"  geometry onclick-sproot></a-box>
     
     
     <!---->
@@ -54,7 +54,7 @@
     <!--navmesh-->
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'  nav-mesh ></a-entity>
     <a-sky src = "#sky_map"></a-sky>
-    <a-entity id="dialogue" position="-3.667 2.721 -7.566" circles-sound = "src:#sproot_dialogue;" ></a-entity>
+    <a-entity id="dialogue" position="-3.667 2.721 -7.566" circles-sound = "src:#sproot_dialogue; type:dialogue" ></a-entity>
 
     <a-entity  scale = "2 2 2" position="-0.77 1.357 7.185" rotation = " 0 90 0" circles-portal="img_src:#link_1_360; title_text:Self; link_url:/w/_b_LandingHub" ></a-entity>
     <a-entity id="env_music" position = " 0 8 -11.130" circles-sound = "src:#self_music; autoplay:true; volume:0.4; loop:true; type: basic" ></a-entity>
