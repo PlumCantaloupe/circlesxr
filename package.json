@@ -15,11 +15,11 @@
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.5",
     "dotenv-parse-variables": "^2.0.0",
-    "express": "^4.19.2",
+    "express": "^4.21.2",
     "express-dart-sass": "^1.0.4",
     "express-session": "^1.18.0",
     "express-socket.io-session": "^1.3.5",
-    "helmet": "^7.1.0",
+    "helmet": "^8.0.0",
     "jstransformer-markdown-it": "^3.0.0",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
@@ -32,11 +32,10 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
     "jsonwebtoken": "^9.0.2",
-    "nodemon": "^3.1.4",
     "passport-jwt": "^4.0.1",
     "string-replace-loader": "^3.1.0",
     "webpack": "^5.93.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^6.0.1"
   },
   "scripts": {
     "easyrtc-install": "cd ./node_modules/easyrtc; npm install; cd ../../;",
@@ -46,7 +45,7 @@
     "build:worlds": "webpack --config ./webpack.worlds.js --mode=production",
     "build:dev": "npm run build:dev:client && npm run build:dev:worlds",
     "build": "npm run build:client && npm run build:worlds",
-    "serve:dev": "npm run build:dev && nodemon ./node_server/app.js",
+    "serve:dev": "npm run build:dev && node ./node_server/app.js",
     "serve": "npm run build && node ./node_server/app.js"
   },
   "repository": {

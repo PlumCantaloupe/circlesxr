@@ -1,9 +1,4 @@
-//custom BW components
-require('./aframe-audioanalyser-component.js');
-require('./bw-shared-state-manager.js')
-require('./bw-teleport-pad-manager.js')
-
-//circles components
+require('./aframe-audioanalyser-component');
 require('./circles-add-camera-equipment');
 require('./circles-artefact');
 require('./circles-avatar-construction');
