@@ -54,6 +54,13 @@
         <a-asset-item id="room_gltf" src="assets/models/room/room-noTank.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="controlPanel_gltf" src="assets/models/control panel/PBR - Metallic Roughness Alpha-blend.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+
+        <!-- Sounds -->
+        <audio id="hub_ambience" src="assets/sounds/hub_ambience.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="shimmering_sound" src="assets/sounds/shimmering_sound.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="button_press" src="assets/sounds/button_press.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="place_orb_tube" src="assets/sounds/place_orb_tube.mp3" preload="auto" crossorigin="anonymous"></audio>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -73,6 +80,9 @@
       <!-- test entity - to remove -->
       <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub' accessibility-controls></a-entity>
       <a-entity comp></a-entity>
+
+      <!-- Ambient music entity -->
+       <a-entity id="ambient-sound-player" circles-sound="src: #hub_ambience; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
 
       <!-- main lights -->
       <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
@@ -154,37 +164,47 @@
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
                   dispense-emotion="orbColour: #05cdff"
                   position="0 1.02 2.13"
-                  rotation="90 0 0"></a-entity>
+                  rotation="90 0 0"
+                  circles-interactive-object="click_sound: #button_press"
+                  ></a-entity>
         <a-sphere scale="0.1 0.1 0.1"></a-sphere>
       </a-entity>
       <!-- pink button -->
       <a-entity class="buttonContainer" rotation="0 105.2 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
                   position="0 1.02 2.13"
-                  rotation="90 0 0"></a-entity>
+                  rotation="90 0 0"
+                  circles-interactive-object="click_sound: #button_press"
+                  ></a-entity>
       </a-entity>
       <!-- green button -->
       <a-entity class="buttonContainer" rotation="0 177.62 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
                   position="0 1.02 2.13"
-                  rotation="90 0 0"></a-entity>
+                  rotation="90 0 0"
+                  circles-interactive-object="click_sound: #button_press"
+                  ></a-entity>
       </a-entity>
       <!-- orange button -->
       <a-entity class="buttonContainer" rotation="0 249.12 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
                   position="0 1.02 2.13"
-                  rotation="90 0 0"></a-entity>
+                  rotation="90 0 0"
+                  circles-interactive-object="click_sound: #button_press"
+                  ></a-entity>
       </a-entity>
       <!-- yellow button -->
       <a-entity class="buttonContainer" rotation="0 320.89 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
                   position="0 1.02 2.13"
-                  rotation="90 0 0"></a-entity>
+                  rotation="90 0 0"
+                  circles-interactive-object="click_sound: #button_press"
+                  ></a-entity>
       </a-entity>
 
 
       <!-- TEMP Visualized central orbs -->
-      <a-entity id="spheres" rotation="0 30.4260 0">
+      <a-entity id="spheres" rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
         <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emisive: #fe86e8"></a-sphere>
         <a-sphere position="0 3.077 0.622" scale="0.24 0.24 0.24" material="color:#7094ff; emisive: #4294ff"></a-sphere>
         <a-sphere position="0.604 1.944 0.74" scale="0.3 0.3 0.3" material="color:#ff7438; emisive: #ff4d4d"></a-sphere>
@@ -226,7 +246,7 @@
          </a-entity>
 
          <a-entity position="0.635 0 -0.221">
-          <a-entity share-emotion="visualizationID: delta-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+          <a-entity share-emotion="visualizationID: delta-visualization" circles-interactive-object="type:outline;" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
          </a-entity>
          
       </a-entity>
