@@ -78,7 +78,6 @@ AFRAME.registerComponent('campfire-interactive', {
 
             //listen for when others turn on campfire
             CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-                console.log("fireeeeeeeeeeeeeeeeeeee")
                 CONTEXT_AF.turnFire(data.campfireOn);
                 CONTEXT_AF.fireOn = data.campfireOn;
             });
