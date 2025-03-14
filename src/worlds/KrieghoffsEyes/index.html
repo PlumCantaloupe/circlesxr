@@ -8,6 +8,7 @@
     <script src="assets/scripts/change-environment.js"></script>
     <script src="assets/scripts/painting-highlight.js"></script>
     <script src="assets/scripts/info-panel.js"></script>
+    <script src="assets/scripts/voting-listener.js"></script>
   </head>
   <body>
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -38,7 +39,7 @@
         <circles-assets />
       </a-assets>
 
-      <a-entity id="GameManager" change-environment></a-entity>
+      <a-entity id="GameManager" change-environment voting-listener></a-entity>
 
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar />
@@ -107,6 +108,26 @@
     <a-entity light="type: point; intensity: 3; distance: 5" position="0 2 -8" circles-interactive-object="type:highlight"></a-entity>
     <a-entity light="type: point; intensity: 3; distance: 5" position="4 2 -8" circles-interactive-object="type:highlight"></a-entity>
     -->
+
+      <!-- Vote Counters Above Each Painting -->
+      <a-entity
+        id="voteCounter_redPaint"
+        position="4 2.7 -8.866"
+        text="value: Votes: 0; align: center; color: white; width: 4"
+      >
+      </a-entity>
+      <a-entity
+        id="voteCounter_greenPaint"
+        position="0 2.7 -8.866"
+        text="value: Votes: 0; align: center; color: white; width: 4"
+      >
+      </a-entity>
+      <a-entity
+        id="voteCounter_bluePaint"
+        position="-4 2.7 -8.866"
+        text="value: Votes: 0; align: center; color: white; width: 4"
+      >
+      </a-entity>
 
       <a-entity
         light="distance: 5; intensity: 3; type: point"
