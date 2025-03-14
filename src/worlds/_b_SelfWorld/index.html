@@ -22,12 +22,16 @@
         <!--NPCs-->
         <a-asset-item id = "sproot_model" src = "/worlds/_b_SelfWorld/assets/models/sproot/sproot_model.gltf"  response-type="arraybuffer"></a-asset-item>
 
+        <!--papers-->
+        <a-asset-item id = "paper_model0" src = "/worlds/_b_SelfWorld/assets/models/papers/papers1.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "paper_model1" src = "/worlds/_b_SelfWorld/assets/models/papers/papers2.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "paper_model2" src = "/worlds/_b_SelfWorld/assets/models/papers/papers3.glb"  response-type="arraybuffer"></a-asset-item>
         <!--Images-->
         <img id="sky_map" src = "/worlds/_b_SelfWorld/assets/textures/cloudy_sky.jpg"></img>
         <!--Sound-->
-        <a-asset id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/SprootDialogue.wav"></a-asset>
-        <a-asset id = "self_music" src = "/worlds/_b_SelfWorld/assets/sounds/Self_Music.mp3"></a-asset>
-        <a-asset id = "ambiance_effects" src = "/worlds/_b_SelfWorld/assets/sounds/ambiance.wav"></a-asset>
+        <a-asset-item  id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/SprootDialogue.wav" response-type="arraybuffer"></a-asset-item >
+        <a-asset-item  id = "self_music" src = "/worlds/_b_SelfWorld/assets/sounds/Self_Music.mp3" response-type="arraybuffer"></a-asset-item >
+        <a-asset-item  id = "ambiance_effects" src = "/worlds/_b_SelfWorld/assets/sounds/ambiance.wav" response-type="arraybuffer"></a-asset-item  >
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     
@@ -46,12 +50,18 @@
     <!--npc models-->
     
     <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
+   
+    
     <a-box  scale = " 1 1 1" id = "sproot_collider" class = "interactive" position = "-4.702 2.460 -7.749" visible = "false"  geometry onclick-sproot></a-box>
     
     
     <!---->
-
-    <!--navmesh-->
+    <a-entity id="papers1"  rotation = " 0 -40 0" scale = " 1 1 1" position = "-3.518 0.744 -11.350" gltf-model="#paper_model0" visible='true'  circles-pickup-object = "pickupRotation: {-90 0 0}"></a-entity> 
+    <a-entity id="papers2" scale = " 1 1 1" position = "5.990 0.744 -10.861" gltf-model="#paper_model1" visible='true'  circles-pickup-object = "pickupRotation: {-90 0 0}"></a-entity>
+    <a-entity id="papers3" scale = " 1 1 1" position = "-3.518 0.744 11.350" gltf-model="#paper_model2" visible='true'  circles-pickup-object = "pickupRotation: {-90 0 0}"></a-entity>
+    
+    
+      <!--navmesh-->
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'  nav-mesh ></a-entity>
     <a-sky src = "#sky_map"></a-sky>
     <a-entity id="dialogue" position="-3.667 2.721 -7.566" circles-sound = "src:#sproot_dialogue; type:dialogue" ></a-entity>
@@ -62,7 +72,6 @@
   </a-scene>
 
   <script>
-    document.querySelector('#sproot').components['animation-mixer'].data
   </script>
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
