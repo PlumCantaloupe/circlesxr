@@ -40,7 +40,7 @@
     <!--furniture models-->
    
     <!--npc models-->
-    <a-box  id = "sproot_collider" position = "-4.702 2.460 -7.749" visible = "false" sproot-dialogue></a-box>
+    <a-box  scale = " 1 1 1" id = "sproot_collider" position = "-4.702 2.460 -7.749" visible = "false"  geometry></a-box>
     <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
     <script>
       document.querySelector('#sproot').components['animation-mixer'].data
@@ -51,7 +51,7 @@
     <!--navmesh-->
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'   nav-mesh ></a-entity>
     <a-sky src = "#sky_map"></a-sky>
-    <a-entity id="dialogue" sound = "src:#sproot_dialogue; autoplay: false" ></a-entity>
+    <a-entity id="dialogue" circles-sound = "src:#sproot_dialogue;" ></a-entity>
   </a-scene>
 
   
