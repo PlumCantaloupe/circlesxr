@@ -8,9 +8,13 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
+        CONTEXT_AF.playersEventName = "shareplayers_event";
+        CONTEXT_AF.playerLeaveEventName = "playerdisconnect_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 2000; // 10 seconds cooldown
         CONTEXT_AF.timer = null; // Store the timer ID
+        CONTEXT_AF.isHost = false; //if this clientg is the host or not
+        CONTEXT_AF.players = [];
     
 
         // Bézier curve paths for orb drops of the 6 tubes yayyyyy
@@ -76,7 +80,6 @@ AFRAME.registerComponent('orb-manager', {
             [[], [], [], []],
         ];*/ 
 
-
         CONTEXT_AF.duration = 200;
 
         // Setup WebSocket & Event Listeners
@@ -85,8 +88,68 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            // Start the timer for the drop cycle 
-            CONTEXT_AF.scheduleNextDrop();
+            //listen for when a player joins
+            CONTEXT_AF.el.sceneEl.addEventListener("loaded", function () {
+            CONTEXT_AF.el.sceneEl.addEventListener("entityCreated", function (evt){
+                // request other user states to sync up player lists
+                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                //recevie sync data from others to add approprirate players to player list
+                CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
+                    if (data.world === CIRCLES.getCirclesWorldName()) {
+                        CONTEXT_AF.players = data.players;
+                    }
+                });
+               //add own client id to player id array
+                CONTEXT_AF.players.push(CONTEXT_AF.socket.id);
+                console.log("adding " + CONTEXT_AF.socket.id + " to player list");
+                //emit this addition to other players in the world if applicable
+                CONTEXT_AF.socket.emit(CONTEXT_AF.playersEventName, {players:CONTEXT_AF.players, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+
+                //if you are the first player
+                if (CIRCLES.players[0] === CONTEXT_AF.socket.id) {
+                    CONTEXT_AF.setHost(true);
+                }
+            })
+            });
+
+            // Listen for when a player leaves the session
+            CONTEXT_AF.el.sceneEl.addEventListener("entityRemoved", function (evt) {
+                //emit to let others know who left
+                CONTEXT_AF.socket.emit(CONTEXT_AF.playerLeaveEventName, {playerId:CONTEXT_AF.socket.id, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+            });
+
+             //if someone else requests sync data, we send
+            CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+                //if the same world as the one requesting
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {players:CONTEXT_AF.players, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                }
+            });
+          
+            //if someone disconnects, we receive that information and update our player arrays
+            CONTEXT_AF.socket.on(CONTEXT_AF.playerLeaveEventName, function(data) {
+                if (data.world === CIRCLES.getCirclesWorldName()) {
+                    //get index of player who left
+                    console.log("why");
+                    CONTEXT_AF.index = players.indexOf(data.playerId);
+                    //remove from the player array
+                    CONTEXT_AF.newPlayers = players.filter((_, index) => index !== CONTEXT_AF.index );
+                    players = CONTEXT_AF.newPlayers;
+
+                    if(players[0] === CONTEXT_AF.socket.id){
+                        CONTEXT_AF.setHost(true);
+                    }
+                }
+            });
+
+            // Listen for incoming orb drop events
+             CONTEXT_AF.socket.on(CONTEXT_AF.playersEventName, (data) => {
+                CONTEXT_AF.players = data.players;
+            });
+
+            if (CONTEXT_AF.isHost){
+               CONTEXT_AF.scheduleNextDrop();  
+            }
 
              // Listen for incoming orb drop events
              CONTEXT_AF.socket.on(CONTEXT_AF.orbDropEventName, (data) => {
@@ -118,6 +181,31 @@ AFRAME.registerComponent('orb-manager', {
             };
             CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
         }
+    },
+
+    setHost(isHost) {
+        const CONTEXT_AF = this;
+        CONTEXT_AF.isHost = isHost;
+        if (isHost) {
+            console.log("I am the host!");
+            CONTEXT_AF.startOrbTimer();
+        } else {
+            clearInterval(CONTEXT_AF.timer);
+        }
+    },
+    
+    startOrbTimer() {
+        const CONTEXT_AF = this;
+        
+        if (CONTEXT_AF.timer) {
+            clearInterval(CONTEXT_AF.timer);
+        }
+    
+        CONTEXT_AF.timer = setInterval(() => {
+            if (CONTEXT_AF.isHost) {
+                CONTEXT_AF.scheduleNextDrop();
+            }
+        }, CONTEXT_AF.DROP_COOLDOWN); // Adjust interval as needed
     },
 
     scheduleNextDrop() {
@@ -167,11 +255,10 @@ AFRAME.registerComponent('orb-manager', {
     dropOrbAtPosition: function (spawnPos) {
         const scene = this.el.sceneEl;
         const sphere = document.createElement('a-sphere');
-        sphere.setAttribute('radius', 0.2);
+        sphere.setAttribute('radius', 0.3);
         sphere.setAttribute('color', 'red');
         sphere.setAttribute('position', spawnPos);
-        sphere.setAttribute('circles-pickup-object', 'animate:false');
-        sphere.setAttribute('circles-pickup-networked');
+
         sphere.setAttribute('animation', {
             property: 'position',
             from: spawnPos,

@@ -1,3 +1,4 @@
+require('./aframe-audioanalyser-component');
 require('./circles-add-camera-equipment');
 require('./circles-artefact');
 require('./circles-avatar-construction');
