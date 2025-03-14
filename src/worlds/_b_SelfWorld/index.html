@@ -1,5 +1,7 @@
 <html>
 <head>
+  <!--Our Scripts-->
+  <script src="/worlds/_b_SelfWorld/assets/scripts/sproot-dialogue.js"></script>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
 </head>
@@ -20,6 +22,8 @@
 
         <!--Images-->
         <img id="sky_map" src = "/worlds/_b_SelfWorld/assets/textures/cloudy_sky.jpg"></img>
+        <!--Sound-->
+        <a-asset id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/test_jingle.wav"></a-asset>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     
@@ -28,13 +32,16 @@
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
     <!--light-->
-    <a-entity light="type: hemisphere; color:#fffcd6; groundColor:#499763; intensity: 1.2" position = "8.819 18.436 -8.481"></a-entity>
+    <a-entity light="type:point; color:#fffcd6; groundColor:#499763; intensity: 22" position = "0.310 6.040 -2.920"></a-entity>
+    <a-entity light="type:point; color:#ffffff; groundColor:#499763; intensity: 24.460" position = "-6.220 6.040 -10.200"></a-entity>
+    <a-entity light="type:ambient; color:#fdf35d; groundColor:#499763; intensity: 1.38" position = "0 10 -7"></a-entity>
     <!--env models-->
-    <a-entity id="environment-model" gltf-model="#env_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
+    <a-entity id="environment-model" gltf-model="#env_model" visible='true' sa  shadow="receive:true; cast:true;"></a-entity>
     <!--furniture models-->
-    <a-entity id="chryo" scale = " 1 1 1" position = "-2.274 1.2 -19.639" gltf-model="#chryo_model" visible='true'  shadow="receive:true; cast:true;" ></a-entity> <!--circles-sphere-env-map="src:#sky-map;"-->
+   
     <!--npc models-->
-    <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle"></a-entity>
+    <a-box  id = "sproot_collider" position = "-4.702 2.460 -7.749" visible = "false" sproot-dialogue></a-box>
+    <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
     <script>
       document.querySelector('#sproot').components['animation-mixer'].data
     </script>
@@ -44,7 +51,9 @@
     <!--navmesh-->
     <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'   nav-mesh ></a-entity>
     <a-sky src = "#sky_map"></a-sky>
+    <a-entity id="dialogue" sound = "src:#sproot_dialogue; autoplay: false" ></a-entity>
   </a-scene>
+
   
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>

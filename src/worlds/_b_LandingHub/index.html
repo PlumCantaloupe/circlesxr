@@ -10,12 +10,15 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
-      <a-assets-item id="world_model" src="/worlds/_b_LandingHub/assets/models/world_0/world0_model.gltf" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
+      <a-assets-item id="world_model" src="/worlds/_b_LandingHub/assets/models/world_0/world_0.gltf" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
+      <a-assets-item id="navmesh_gltf" src="/worlds/_b_LandingHub/assets/models/nav_mesh/nav_mesh.glb" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
       <img id="sky_map" src ="/worlds/_b_LandingHub/assets/textures/space_sky.png" response-type="arraybuffer"></img>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
     <a-entity id="environment-model" gltf-model="#world_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
+    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false' nav-mesh ></a-entity>
+    <a-sky src = "#sky_map"></a-sky>
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
   </a-scene>
