@@ -12,7 +12,7 @@ class FileLogic {
             fileInput.addEventListener('change', (event) => {
                 const file = event.target.files[0];
                 if(file) {
-                    this.loadObjectInScene(file);
+                    
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         const arrayBuffer = e.target.result;
@@ -26,7 +26,7 @@ class FileLogic {
                         const binaryData = basicLogic.arrayBufferToBase64(arrayBuffer);
                         const artifact = new Artifact("croissants", 1, "", "", [], [], binaryData);
 
-                        s3Repository.uploadToS3(artifact);
+                        s3Repository.uploadToS3(artifact, file);
                     };
                     reader.readAsArrayBuffer(file);
                 }

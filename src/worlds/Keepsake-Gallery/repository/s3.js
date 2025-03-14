@@ -1,5 +1,5 @@
 class S3Repository{ 
-    uploadToS3 = async (artifact) => {
+    uploadToS3 = async (artifact, file) => {
         try{
             const response = await fetch('/s3_upload', {
                 method: 'POST',
@@ -11,7 +11,7 @@ class S3Repository{
     
             if (response.status == 200) {
                 console.log("Object uploaded successfully");
-                await this.retrieveAllObjects(artifact.objectKey);
+                await this.retrieveAllObjects(artifact.objectKey, file);
             } else {
                 console.error("Error uploading object");
             }
@@ -21,11 +21,12 @@ class S3Repository{
         
     }
 
-    retrieveAllObjects = async (key) => {
+    retrieveAllObjects = async (key, file) => {
         try{
             const response = await fetch(`/s3_retrieveObject:${key}`);
             if(response.status == 200){
                 console.log("Object retrieved successfully!");
+                new FileLogic().loadObjectInScene(file);
                 // const jsonResponse = await response.json();
                 // const data = jsonResponse.data.Contents;
                 // const sortedArtifacts = data.sort((a, b) => new Date(b.LastModified) - new Date(a.LastModified));
