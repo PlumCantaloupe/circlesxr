@@ -19,10 +19,10 @@ AFRAME.registerComponent('ria-manager', {
 
     spawnLogs: function () {
         const positions = [
-            { x: 22, y: .1, z: -3 },
-            { x: 23, y: 0.1, z: -2 },
-            { x: 21, y: 0.1, z: 2 },
-            { x: 24, y: 0.1, z: 3 }
+            { x: 1, y: .11, z: -8 },
+            { x: -6, y: 0.1, z: 12 },
+            { x: 11, y: 0.1, z: 4 },
+            { x: -15, y: 0.1, z: 6.5 }
         ];
 
         positions.forEach(pos => {
@@ -37,8 +37,8 @@ AFRAME.registerComponent('ria-manager', {
             log.setAttribute('circles-pickup-object', '');
             log.setAttribute('static-body', '');
         
-            // log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-            // log.setAttribute('rotation', '0 90 0');
+            log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+            log.setAttribute('rotation', '0 90 0');
 
             this.scene.appendChild(log);
             this.logs.push(log);
@@ -48,22 +48,22 @@ AFRAME.registerComponent('ria-manager', {
     spawnPedestal: function () {
         this.pedestal = document.createElement('a-box');
         this.pedestal.setAttribute('id', 'raftPedestal');
-        this.pedestal.setAttribute('position', '20 0 -12');
+        this.pedestal.setAttribute('position', '-18.4 0.1 -.9');
         this.pedestal.setAttribute('width', '3');
         this.pedestal.setAttribute('height', '0.2');
         this.pedestal.setAttribute('depth', '3');
-        this.pedestal.setAttribute('color', 'gray');
+        this.pedestal.setAttribute('color', 'red');
         this.pedestal.setAttribute('pedestal-trigger', '');
     
         let raft = document.createElement('a-entity');
-        raft.setAttribute('position', `20 .2 -12`);
+        raft.setAttribute('position', `-18.4 0.21 -.9`);
 
         raft.setAttribute('id', `raft`);
         raft.setAttribute('gltf-model', `#Raft4`);
         raft.setAttribute('material', 'color: brown'); // Material needs to be separate
         
-        // raft.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-        // raft.setAttribute('rotation', '0 90 0');
+        raft.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+        raft.setAttribute('rotation', '0 90 0');
         
         // Make it a physics trigger
         this.pedestal.setAttribute('dynamic-body', 'mass: 0;'); // A-Frame physics component
@@ -101,6 +101,7 @@ AFRAME.registerComponent('pedestal-trigger', {
 
                     if (this.logsPlaced === this.maxLogs) {
                         console.log("Raft is complete!");
+                        this.el.setAttribute('color', 'green');
                     }
                 }
             }, 0);
