@@ -1,6 +1,5 @@
 <html>
 <head>
-    <!--TESTING COMMENT BY STEVEN-->
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
   <!-- custom scripts are added here-->
@@ -102,8 +101,8 @@
     }
     });
 
-    // orb placement and gallery naming
-    AFRAME.registerComponent('plate-interaction', {
+  // orb placement and gallery naming
+  AFRAME.registerComponent('plate-interaction', {
     init: function() {
       const self = this;
       self.hasObject = false;
@@ -151,7 +150,7 @@
         // set pos on plate
         heldObject.setAttribute('position', {
           x: self.plateTopPosition.x,
-          y: self.plateTopPosition.y,
+          y: self.plateTopPosition.y + 0.5,
           z: self.plateTopPosition.z
         });
         
@@ -235,7 +234,7 @@
     });
 
     // label creation
-  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
     // setup label submission
     const submitLabel = function() {
       const labelUI = document.querySelector('#label-ui');
@@ -250,8 +249,21 @@
         // get obj and add label
         const object = document.getElementById(objectId);
         if (object) {
+          // add the label text to the object
           object.setAttribute('object-label', {text: labelText});
           console.log(`Set label "${labelText}" on object ${objectId}`);
+          
+          // add circles-portal attribute with the label text
+          object.setAttribute('circles-portal', {
+            title_text: labelText,
+            link_url: '/w/Keepsake-Gallery'
+          });
+          
+          // disable the pickupable component so it can't be picked up again
+          if (object.components.pickupable) {
+            object.removeAttribute('pickupable');
+            console.log(`Disabled pickupable on ${objectId}`);
+          }
           
           // mark this object as labeled
           const plate = document.querySelector('[plate-interaction]');
@@ -299,7 +311,6 @@
         });
       }
 
-    s
     const closeBtn = document.getElementById('close-btn');
       if (closeBtn) {
         closeBtn.addEventListener('click', function() {
@@ -389,28 +400,28 @@
                   }
               });
 
-              // Initial position update
+              // initial position update
               this.updatePedestalPosition();
           }
       });
 
       // interaction manager - listens for entities being picked up/released globally
       AFRAME.registerComponent('interaction-manager', {
-  init: function() {
-    const self = this;
-    self.pickedUpObject = null;
-    
-    self.el.sceneEl.addEventListener('object-picked-up', (e) => {
-      self.pickedUpObject = e.detail.id;
-      console.log('interaction-manager: picked up:', self.pickedUpObject);
-    });
+      init: function() {
+        const self = this;
+        self.pickedUpObject = null;
+        
+        self.el.sceneEl.addEventListener('object-picked-up', (e) => {
+          self.pickedUpObject = e.detail.id;
+          console.log('interaction-manager: picked up:', self.pickedUpObject);
+        });
 
-    self.el.sceneEl.addEventListener('object-released', (e) => {
-      self.pickedUpObject = null;
-      console.log('interaction-manager: nothing in hand');
+        self.el.sceneEl.addEventListener('object-released', (e) => {
+          self.pickedUpObject = null;
+          console.log('interaction-manager: nothing in hand');
+        });
+      }
     });
-  }
-});
 
   </script>
 </head>
@@ -519,7 +530,7 @@
         material="color: #3498db; metalness: 0.7; roughness: 0.3"
         circles-interactive-object
         pickupable
-        object-label="text: ; yOffset: 0.4">
+        object-label="text: ; yOffset: 0.6">
       </a-sphere>
 
         <!-- plate -->
@@ -532,7 +543,7 @@
         plate-interaction
         class="interactive">
         </a-cylinder>
-
+    
         <a-cylinder id="plate2"
         position="-30.9 1.3 3.6"
         height="0.1"
