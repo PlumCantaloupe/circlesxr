@@ -83,7 +83,7 @@
       <a-entity comp></a-entity>
 
       <!-- Ambient music entity -->
-       <a-entity id="ambient-sound-player" circles-sound="src: #hub_ambience; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
+       <a-entity id="ambient-sound-player" circles-sound="src: #hub_ambience; autoplay: true; loop: true; type: music; volume: 0.3;"></a-entity>
 
       <!-- main lights -->
       <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
@@ -292,7 +292,7 @@
         </a-entity>
 
         <a-entity position="0.635 0 -0.221">
-         <a-entity share-emotion="visualizationID: alpha-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+         <a-entity share-emotion="visualizationID: alpha-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
         </a-entity>
 
       </a-entity>
@@ -335,7 +335,7 @@
       </a-entity>
 
       <a-entity position="0.635 0 -0.221">
-       <a-entity share-emotion="visualizationID: gammma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+       <a-entity share-emotion="visualizationID: gammma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
       </a-entity>
 
     </a-entity>
