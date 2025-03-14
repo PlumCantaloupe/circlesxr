@@ -73,6 +73,8 @@
         <!-- gltf models -->
         <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
         <a-asset-item id="rockModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/rock_model/scene.gltf"></a-asset-item>
+        <a-asset-item id="torchModel"response-type="arraybuffer"src="assets/models/torch.glb"></a-asset-item>
+        
 
        
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -137,7 +139,11 @@
       </a-entity>
 
       <!-- room -->
-      
+
+      <!--Cave base-->
+      <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
+      <a-entity id="torch-model" position="11.21 1.43 -10.54" gltf-model="#torchModel" scale="26.2 26.2 26.2"rotation="0 0 26.35"></a-entity>
+
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
       circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
@@ -200,13 +206,13 @@
 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
-        position="11.5 0.7 -15.1" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -15.1" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-2" sorting-collision
-        position="11.5 0.7 -14.2" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -14.2" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-3" sorting-collision 
-        position="11.5 0.7 -13.3" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -13.3" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-4" sorting-collision 
-        position="11.5 0.7 -12.5" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0.2"></a-box>
+        position="11.5 0.7 -12.5" color="tan" rotation="0 0 0" depth="0.3" height="0.7" width="0.6" opacity="0"></a-box>
 
       <!--pedestal-->
       <a-cylinder position="11.5 0.1 -15.1" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
@@ -311,7 +317,7 @@
               </a-entity>
               <a-cylinder position="0 -0.37 0.226" scale="0.1 1.6 0.1" rotation="-30 0 0" color="brown"></a-cylinder>
           </a-entity>
-        <a-entity id = "torch4" position="10.73 2.3 -17.8" rotation="0 90 0">
+        <a-entity id = "torch4" position="12.2 2.3 -18" rotation="0 90 0">
               <a-entity id = "firelight" animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
                 <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
                     <a-entity light="type: point; color: #FFA200; intensity: 2; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
@@ -327,7 +333,7 @@
                 </a-entity>
                 <a-cylinder position="0 -0.37 0.226" scale="0.1 1.6 0.1" rotation="-30 0 0" color="brown"></a-cylinder>
           </a-entity>
-        <a-entity id = "torch5" position="10.73 2.3 -10.55" rotation="0 90 0">
+        <a-entity id = "torch5" position="12.2 2.3 -11" rotation="0 90 0">
                 <a-entity id = "firelight" animation="property:position; dur:223; to:0.0 0.0 0.05; loop:true; dir:alternate; easing:easeInOutExpo">
                   <a-entity position="0.0 1.5 0.0" animation="property:position; dur:163; to:0.0 1.55 0.0; loop:true; dir:alternate; easing:linear">
                       <a-entity light="type: point; color: #FFA200; intensity: 2; distance: 20.0; castShadow: true; shadowMapHeight: 256; shadowMapWidth: 256;"
