@@ -50,15 +50,15 @@
    
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties >
+      <a-light type="ambient" color="#666"></a-light>
+
       <a-assets>
         <a-asset-item id="campfire-gltf"  src="/worlds/LitPortals-Cave/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
         <audio id="fireCrackling-snd" src="assets/sounds/fire.mp3" preload="true"></audio>
 
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/
-        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-         -->
+        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">-->
 
          <!-- AUDIO -->
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
@@ -72,9 +72,10 @@
 
         <!-- gltf models -->
         <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
+        <a-asset-item id="rockModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/rock_model/scene.gltf"></a-asset-item>
         <a-asset-item id="torchModel"response-type="arraybuffer"src="assets/models/torch.glb"></a-asset-item>
         
-         
+
        
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -88,6 +89,12 @@
       <!-- adding ambient sounds -->
        <a-entity circles-sound="src:#cave_Amb-snd; type:ambience; autoplay:true; loop:true; volume:0.3;"></a-entity>
       <!-- Area 1, with some spawnpoints -->
+
+      <!--Cave base-->
+      <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
+      <!--rocks-->
+      <a-entity id="rock" position="0 0 3" scale= "0.001 0.001 0.001" gltf-model="#rockModel"></a-entity>
+      <a-entity id="rock1" position="-1.83 0.145" scale= "0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
 
 
       <!-- Campfire -->
@@ -132,6 +139,7 @@
       </a-entity>
 
       <!-- room -->
+
       <!--Cave base-->
       <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
       <a-entity id="torch-model" position="11.21 1.43 -10.54" gltf-model="#torchModel" scale="26.2 26.2 26.2"rotation="0 0 26.35"></a-entity>
