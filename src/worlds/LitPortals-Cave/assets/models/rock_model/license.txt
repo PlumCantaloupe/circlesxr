@@ -1,0 +1,11 @@
+Model Information:
+* title:	Rock 1 - Low poly
+* source:	https://sketchfab.com/3d-models/rock-1-low-poly-325e01ff5ae0486e81efb60fc662abc6
+* author:	lightguard (https://sketchfab.com/lightguard)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Rock 1 - Low poly" (https://sketchfab.com/3d-models/rock-1-low-poly-325e01ff5ae0486e81efb60fc662abc6) by lightguard (https://sketchfab.com/lightguard) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
