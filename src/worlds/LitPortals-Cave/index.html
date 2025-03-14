@@ -72,6 +72,8 @@
 
         <!-- gltf models -->
         <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave_base.glb"></a-asset-item>
+        <a-asset-item id="torchModel"response-type="arraybuffer"src="assets/models/torch.glb"></a-asset-item>
+        
          
        
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -132,6 +134,7 @@
       <!-- room -->
       <!--Cave base-->
       <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
+      <a-entity id="torch-model" position="11.21 1.43 -10.54" gltf-model="#torchModel" scale="26.2 26.2 26.2"rotation="0 0 26.35"></a-entity>
 
       <!-- pick up objects 
       This line lets an object be picked up - needs to click on it twice for full controls        
