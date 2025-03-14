@@ -37,8 +37,8 @@ AFRAME.registerComponent('ria-manager', {
             log.setAttribute('circles-pickup-object', '');
             log.setAttribute('static-body', '');
         
-            log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-            log.setAttribute('rotation', '0 90 0');
+            // log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+            // log.setAttribute('rotation', '0 90 0');
 
             this.scene.appendChild(log);
             this.logs.push(log);
@@ -62,8 +62,8 @@ AFRAME.registerComponent('ria-manager', {
         raft.setAttribute('gltf-model', `#Raft4`);
         raft.setAttribute('material', 'color: brown'); // Material needs to be separate
         
-        raft.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-        raft.setAttribute('rotation', '0 90 0');
+        // raft.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+        // raft.setAttribute('rotation', '0 90 0');
         
         // Make it a physics trigger
         this.pedestal.setAttribute('dynamic-body', 'mass: 0;'); // A-Frame physics component

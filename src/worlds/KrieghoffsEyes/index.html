@@ -36,41 +36,43 @@
 
     <a-entity id="GameManager" change-environment ria-manager></a-entity>
 
+    <a-entity id="Cabin" visible="true">
 
-    <!-- Cabin Structure with Collision -->
-    <a-box position="0 1.5 -9" width="10" height="3" depth="0.2" color="#8B5A2B" ></a-box>  <!-- Back Wall -->
-    <a-box position="-5 1.5 -4" width="0.2" height="3" depth="10" color="#8B5A2B"></a-box>  <!-- Left Wall -->
-    <a-box position="5 1.5 -4" width="0.2" height="3" depth="10" color="#8B5A2B"></a-box>  <!-- Right Wall -->
-    <a-box position="0 1.5 1" width="10" height="3" depth="0.2" color="#8B5A2B"></a-box>  <!-- Back Wall -->
-    <a-box position="0 3 -4" width="10" height="0.2" depth="10" color="#704214"></a-box>  <!-- Roof -->
-    <a-box position="0 0 -4" width="10" height="0.2" depth="10" color="#654321"></a-box>  <!-- Floor -->
 
-    <!-- Lights inside the cabin -->
-    <a-entity light="type: point; intensity: 3; distance: 5" position="-4 2 -8" circles-interactive-object="type:highlight"></a-entity>
-    <a-entity light="type: point; intensity: 3; distance: 5" position="0 2 -8" circles-interactive-object="type:highlight"></a-entity>
-    <a-entity light="type: point; intensity: 3; distance: 5" position="4 2 -8" circles-interactive-object="type:highlight"></a-entity>
-
-    <!-- Painting -->
-     <a-box position="4 1.86 -8.866" scale=".95 1.3 .071" color="#940000"
-     id="redPaint"
-     class="interactive"
-     circles-interactive-object="type:highlight"
-     circles-sendpoint="target:#checkpoint_red;"
-     environemntProp = "preset: forest; seed: 222; skyType: atmosphere;  lighting: distant; dressing: trees;"
-     ></a-box>
-     <a-box position="0 1.86 -8.866" scale=".95 1.3 .071" color="#009400"
-     id="greenPaint"
-     class="interactive"
-     circles-interactive-object="type:highlight"
-     ></a-box>
-     <a-box position="-4 1.86 -8.866" scale=".95 1.3 .071" color="#000094"
-     id="bluePaint"
-     class="interactive"
-     circles-interactive-object="type:highlight"
-     circles-sendpoint="target:#checkpoint_blue;"
-     environemntProp = "preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
-
-     ></a-box>
+      <!-- Cabin Structure with Collision -->
+      <a-box position="0 1.5 -9" width="10" height="3" depth="0.2" color="#8B5A2B" ></a-box>  <!-- Back Wall -->
+      <a-box position="-5 1.5 -4" width="0.2" height="3" depth="10" color="#8B5A2B"></a-box>  <!-- Left Wall -->
+      <a-box position="5 1.5 -4" width="0.2" height="3" depth="10" color="#8B5A2B"></a-box>  <!-- Right Wall -->
+      <a-box position="0 1.5 1" width="10" height="3" depth="0.2" color="#8B5A2B"></a-box>  <!-- Back Wall -->
+      <a-box position="0 3 -4" width="10" height="0.2" depth="10" color="#704214"></a-box>  <!-- Roof -->
+      <a-box position="0 0 -4" width="10" height="0.2" depth="10" color="#654321"></a-box>  <!-- Floor -->
+  
+      <!-- Lights inside the cabin -->
+      <a-entity light="type: point; intensity: 3; distance: 5" position="-4 2 -8" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity light="type: point; intensity: 3; distance: 5" position="0 2 -8" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity light="type: point; intensity: 3; distance: 5" position="4 2 -8" circles-interactive-object="type:highlight"></a-entity>
+  
+      <!-- Painting -->
+       <a-box position="4 1.86 -8.866" scale=".95 1.3 .071" color="#940000"
+       id="redPaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       circles-sendpoint="target:#checkpoint_red;"
+       environemntProp = "preset: forest; seed: 222; skyType: atmosphere;  lighting: distant; dressing: trees;"
+       ></a-box>
+       <a-box position="0 1.86 -8.866" scale=".95 1.3 .071" color="#009400"
+       id="greenPaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       ></a-box>
+       <a-box position="-4 1.86 -8.866" scale=".95 1.3 .071" color="#000094"
+       id="bluePaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       circles-sendpoint="target:#checkpoint_blue;"
+       environemntProp = "preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
+       ></a-box>
+    </a-entity>
 
      <a-entity id="checkpoint_red" circles-checkpoint position="20 0.105 0"></a-entity>
      <a-entity id="checkpoint_blue" circles-checkpoint position="-40 0.105 0"></a-entity>
