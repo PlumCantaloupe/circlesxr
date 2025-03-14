@@ -1,8 +1,6 @@
 class S3Repository{ 
     uploadToS3 = async (artifact) => {
         try{
-            
-            console.log(JSON.stringify(artifact.toJson()));
             const response = await fetch('/s3_upload', {
                 method: 'POST',
                 headers: {
@@ -13,6 +11,7 @@ class S3Repository{
     
             if (response.status == 200) {
                 console.log("Object uploaded successfully");
+                await this.retrieveAllObjects(artifact.objectKey);
             } else {
                 console.error("Error uploading object");
             }
@@ -22,12 +21,16 @@ class S3Repository{
         
     }
 
-    retrieveFromS3 = async (key) => {
+    retrieveAllObjects = async (key) => {
         try{
-            const response = await fetch(`/s3/retrieve/${key}`);
+            const response = await fetch(`/s3_retrieveObject:${key}`);
             if(response.status == 200){
-                console.log("Object retrieved successfully");
-                return response.json();
+                console.log("Object retrieved successfully!");
+                // const jsonResponse = await response.json();
+                // const data = jsonResponse.data.Contents;
+                // const sortedArtifacts = data.sort((a, b) => new Date(b.LastModified) - new Date(a.LastModified));
+                // const lastArtifact = sortedArtifacts[0];
+                //await this.retrieveObject(lastArtifact.Key);
             } else {
                 console.log("Error retrieving object");
                 return null;
@@ -36,6 +39,21 @@ class S3Repository{
             console.error(error);
             return null;
         }
-        
+    }
+
+    retrieveObject = async (key) => {
+        try{
+            const response = await fetch(`/s3_retrieveObject${key}`);
+            if(response.status == 200){
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.log("Error retrieving object");
+                return null;
+            }
+        } catch(error){
+            console.error(error);
+            return null;
+        }
     }
 }

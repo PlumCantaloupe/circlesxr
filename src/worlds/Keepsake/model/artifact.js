@@ -22,6 +22,9 @@ class Artifact {
     }
 
 
-    static fromJson = (json) =>
-        new Artifact(json.objectKey, json.userId, json.objectName, json.objectDescription, json.reactions, json.comments, json.binaryData);
+    static fromJson = (json) => {
+     
+       return new Artifact(data.objectKey, data.userId, data.objectName, data.objectDescription, data.reactions, data.comments, data.binaryData);
+    }
+        
 }

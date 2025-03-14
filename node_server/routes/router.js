@@ -1,7 +1,7 @@
 'use strict';
 
 const router = require('express').Router();
-const s3ServerLogic = require('../aws/s3_serverLogic');
+const s3ApiLogic = require('../aws/s3_apiLogic');
 const path = require('path');
 const controller = require('../controllers/controller');
 const fs = require('fs').promises;
@@ -52,11 +52,9 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/'
 }));
 
-// endpoint for uploading objects to s3 bucket
-router.post('/s3_upload', async (req, res) => s3ServerLogic.uploadToS3(req, res));
-
-// endpoint for retrieving objects from s3 bucket
-router.get('/s3_retrieve:key', async (req, res) => s3ServerLogic.retrieveFromS3(req, res));
+router.post('/s3_upload', async (req, res) => s3ApiLogic.uploadToS3(req, res));
+router.get('/s3_retrieveObject:key', async (req, res) => s3ApiLogic.retrieveAllObjects(req, res));
+//router.get('/s3_retrieveObject:key', async (req, res) => s3ApiLogic.retrieveObject(req, res));
 
 //magic links for students
 router.get('/get-magic-links', authenticated, controller.getMagicLinks);
