@@ -1,24 +1,238 @@
 <html>
 <head>
-    <!--TESTING COMMENT BY STEVEN-->
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
   <!-- custom scripts are added here-->
-  <script src="/worlds/Keepsake/components/circles-pickup-object.js"></script>
+  <script src="worlds/Keepsake-Gallery/components/circles-pickup-object.js"></script>
+  <script src="worlds/Keepsake-Gallery/components/circles-interactive-object.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keepsake</title>
+  <title>entering gallery...</title>
   <!-- scripts link -->
 
   <!-- css link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="">
+  <link rel="stylesheet" href="css/user-gesture.css">
     <!-- INTERACTIVITY SCRIPT HERE ******************************************************************************* -->
     <script>
       "use strict";
+
+    // custom pick up
+    AFRAME.registerComponent('pickupable', {
+    init: function() {
+        var self = this;
+        self.player = document.querySelector('#camera');
+        self.pickedUp = false;
+        self.clickDebounce = false; // click debounce
+        
+        self.playerHolder = CIRCLES.getAvatarHolderElementBody();
+        self.origParent = self.el.parentNode;
+        
+        if (!self.el.classList.contains('interactive')) {
+        self.el.classList.add('interactive'); 
+        }
+        
+        // event handler to stop default Circles control
+        self.suppressControlsFunc = function(e) {
+        // stop circles object-pickup UI from showing
+        e.stopPropagation();
+        // preventing default behaviours
+        e.preventDefault();
+        return false;
+        };
+
+        // debounce
+        self.handleClick = function(e) {
+        if (self.clickDebounce) return;
+        
+        self.clickDebounce = true;
+        setTimeout(function() { self.clickDebounce = false; }, 300); // 300ms debounce
+        
+        console.log('clicked on object, current state:', self.pickedUp ? 'picked up' : 'not picked up');
+        
+        if (self.pickedUp === true) {
+            // release obj
+            self.origParent.object3D.attach(self.el.object3D);
+            console.log('released');
+            self.pickedUp = false;
+            
+            self.el.emit('object-released', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-released', {id: self.el.id}, false);
+        } else {            
+            // pick up obj
+            self.playerHolder.object3D.attach(self.el.object3D);
+            
+            // position in front of camera
+            self.el.setAttribute('position', {
+            x: 0.8,
+            y: -0.6,  // slightly below center of view
+            z: 1     // closer to camera so it appears in hand
+            });
+            
+            self.el.setAttribute('rotation', {
+            x: 0,
+            y: 0,
+            z: 0
+            });
+            
+            console.log('picked up');
+            self.pickedUp = true;
+            self.el.emit('object-picked-up', {id: self.el.id}, true);
+            self.el.sceneEl.emit('object-picked-up', {id: self.el.id}, false);
+        }
+        };
+
+        self.el.addEventListener('click', self.handleClick);
+        
+        // is obj picked up
+        self.isPickedUp = function() {
+        return self.pickedUp;
+        };
+    },
+    
+    remove: function() {
+        this.el.removeEventListener('click', this.handleClick);
+    }
+    });
+
+    // bugs on the pedestal interaction
+    AFRAME.registerComponent('pedestal-interaction', {
+      init: function() {
+          const self = this;
+          this.hasDisplayedObject = false;
+          this.displayedObjectId = null;
+          this.pedestalTop = new THREE.Vector3();
+          
+          if (!self.el.classList.contains('interactive')) {
+              self.el.classList.add('interactive');
+          }
+
+          // calc top center of pedestal
+          this.updatePedestalPosition = () => {
+              this.el.object3D.getWorldPosition(this.pedestalTop);
+              this.pedestalTop.y += 1.5; // adjustable based on height
+          };
+
+          this.el.addEventListener('click', () => {
+            console.log('Pedestal clicked');
+              const manager = this.el.sceneEl.components['interaction-manager'];
+              const heldId = manager.pickedUpObject;
+              console.log('Currently held object ID:', heldId);
+              
+              const breadEntity = document.querySelector('#bread');
+              const uploadUI = document.querySelector('#upload-ui');
+              
+              // log bread in console
+              console.log('Bread entity found:', !!breadEntity);
+              if (breadEntity) {
+                console.log('Bread pickup component:', !!breadEntity.components['circles-pickup-object']);
+                if (breadEntity.components['circles-pickup-object']) {
+                  console.log('Bread pickedUp state:', breadEntity.components['circles-pickup-object'].pickedUp);
+                }
+              }
+              
+              this.updatePedestalPosition();
+              
+              // when clicked show upload UI if nothing is displayed or held
+              if (uploadUI && !this.hasDisplayedObject && !heldId) {
+                console.log('Showing Upload UI');
+                uploadUI.style.display = 'block';
+              }
+
+              // place bread
+              if (heldId === 'bread' && !this.hasDisplayedObject) {
+                  console.log('placing bread on pedestal...');
+                  this.hasDisplayedObject = true;
+                  this.displayedObjectId = 'bread';
+
+                  // detach bread from camera to place in scene
+                  breadEntity.sceneEl.object3D.attach(breadEntity.object3D);
+                  
+                  // setting bread world position to top of pedestal
+                  breadEntity.setAttribute('position', {
+                      x: this.pedestalTop.x,
+                      y: this.pedestalTop.y,
+                      z: this.pedestalTop.z
+                  });
+                  breadEntity.setAttribute('rotation', '0 0 0');
+                  breadEntity.setAttribute('scale', '1.5 1.5 1.5');
+                  breadEntity.setAttribute('visible', true);
+                  
+                  // update pickup state - using circles-pickup-object instead of pickupable
+                  breadEntity.components['circles-pickup-object'].pickedUp = false;
+                  manager.pickedUpObject = null;
+
+                  console.log('Bread placed at position:', breadEntity.getAttribute('position'));
+              }
+              // handle picking up bread from pedestal
+              else if (this.hasDisplayedObject && !manager.pickedUpObject && this.displayedObjectId === 'bread') {
+                  console.log('retrieving bread from pedestal');
+                  this.hasDisplayedObject = false;
+                  this.displayedObjectId = null;
+
+                  const camera = document.querySelector('#camera');
+                  
+                  // attach bread to camera for pickup
+                  camera.object3D.attach(breadEntity.object3D);
+                  
+                  // update pos relative to camera
+                  breadEntity.setAttribute('position', {
+                      x: 0,
+                      y: -0.5, // slightly below
+                      z: -1    // infront
+                  });
+                  
+                  // update pickup state - using circles-pickup-object instead of pickupable
+                  breadEntity.components['circles-pickup-object'].pickedUp = true;
+                  manager.pickedUpObject = 'bread';
+              }
+          });
+
+          // initial position update
+          this.updatePedestalPosition();
+      }
+  });
+
+      // interaction manager - listens for entities being picked up/released globally
+      AFRAME.registerComponent('interaction-manager', {
+      init: function() {
+        const self = this;
+        self.pickedUpObject = null;
+        
+        self.el.sceneEl.addEventListener('object-picked-up', (e) => {
+          self.pickedUpObject = e.detail.id;
+          console.log('interaction-manager: picked up:', self.pickedUpObject);
+        });
+
+        self.el.sceneEl.addEventListener('object-released', (e) => {
+          self.pickedUpObject = null;
+          console.log('interaction-manager: nothing in hand');
+        });
+      }
+    });
+
+
+    // UI handler
+    document.addEventListener('DOMContentLoaded', function() {
+    // upload btn
+    const uploadBtn = document.getElementById('upload-btn');
+      if (uploadBtn) {
+          uploadBtn.addEventListener('click', function() {
+          // opens files on click
+          document.getElementById('file-input').click();
+        });
+      }
+
+    const closeBtn = document.getElementById('close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+        document.getElementById('upload-ui').style.display = 'none';
+        });
+      }
+  });
 
   </script>
 </head>
@@ -27,6 +241,16 @@
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
   <circles-start-ui/>
 
+  <!-- Upload UI -->
+  <div id="upload-ui">
+    <span id="close-btn">&times;</span>
+    <div class="center">
+        <h2 style="color: white;">Upload a Keepsake</h2>
+        <p style="color: white;">Acceptable file types 3D:.glb, .gltf</p>
+        <button id="upload-btn" onclick="new FileLogic().getFileFromSystem()">Choose File</button>
+        <input type="file" id="file-input" style="display: none" accept=".glb,.gltf">
+    </div>
+  </div>
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties interaction-manager background="color: black">
@@ -34,10 +258,19 @@
       <!-- put all assets here -->
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/Pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <!-- frame -->
+      <a-asset-item id="frame-model" src="assets/models/Frame.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       
       <!-- minimal gallery model -->
       <a-asset-item id="minimal-room-model" src="assets/models/Minimal_Room.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-      
+
+      <!-- polycam models -->
+      <!-- bread -->
+      <a-asset-item id="bread-model" src="assets/models/bread.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <!-- croissants -->
+      <a-asset-item id="croissants-model" src="assets/models/croissants.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -60,25 +293,124 @@
         </a-entity>
 
         <!-- pedestal (this is huge)-->
-        <!--<a-entity
-        id="pedestal"
+        <a-entity
+        id="pedestal-1"
         class="interactive"
-        position="2.3 0 0"
+        position="3.150 0 -1.822"
         rotation="0 90 0"
-        scale="1 1 1"
+        scale="0.05 0.05 0.05"
         gltf-model="#pedestal-model"
+        pedestal-interaction
         shadow="cast:true; recieve:true;">
-        </a-entity>-->
+        </a-entity>
+
+        <!-- scale="0.045 0.045 0.045"-->
+        <a-entity
+        id="pedestal-2"
+        class="interactive"
+        position="-2.87 0 -3.581"
+        rotation="0 90 0"
+        scale="0.045 0.045 0.045"
+        gltf-model="#pedestal-model"
+        pedestal-interaction
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <a-entity
+        id="pedestal-3"
+        class="interactive"
+        position="4.592 0 3.352"
+        rotation="0 90 0"
+        scale="0.03 0.03 0.03"
+        gltf-model="#pedestal-model"
+        pedestal-interaction
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <!-- frame (1)-->
+        <a-entity
+        id="frame-1"
+        class="interactive"
+        position="-5.752 1.5 -1.6"
+        rotation="0 90 0"
+        scale="0.45 0.45 0.45"
+        gltf-model="#frame-model"
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <!-- frame (2)-->
+        <a-entity
+        id="frame-2"
+        class="interactive"
+        position="1 1.7 -5.787"
+        rotation="0 0 0"
+        scale="0.45 0.45 0.45"
+        gltf-model="#frame-model"
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <!-- frame (3)-->
+        <a-entity
+        id="frame-3"
+        class="interactive"
+        position="5.754 1 0.04"
+        rotation="0 -90 0"
+        scale="0.45 0.45 0.45"
+        gltf-model="#frame-model"
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+
+        <!-- croissant -->
+        <a-entity
+        id="croissants"
+        class="interactive"
+        pickupable
+        circles-interactive-object=
+        "
+        type:scale;
+        "
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="1.5 1.5 1.5"
+        gltf-model="#croissants-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+      </a-entity>
+
+        <!-- bread -->
+        <a-entity
+        id="bread"
+        class="interactive"
+        pickupable
+        circles-interactive-object=
+        "
+        type:scale;
+        "
+        position="2 0 0"
+        rotation="0 0 0"
+        scale="1.5 1.5 1.5"
+        gltf-model="#bread-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+      </a-entity>
+
+
 
         <!-- testing minimal room model -->
         <a-entity
         id="minimal-room"
         position="0 0 0"
         rotation="0 0 0"
-        scale="4 4 4"
+        scale="0.23 0.23 0.23"
         gltf-model="#minimal-room-model"
-        shadow="recieve:true;">
+        shadow="recieve:false; cast:false;">
         </a-entity>
+
+        <!-- EXIT: back to lobby portal -->
+        <a-entity id="portal_link"
+        position="-4.573 1.347 4.479" rotation="0 143.672 0" scale="1 1 1"
+        circles-portal="title_text:Exit to Lobby; link_url:/w/Keepsake"></a-entity>
 
   </a-scene>
 
