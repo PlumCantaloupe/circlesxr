@@ -1,5 +1,7 @@
 AFRAME.registerComponent('voting-listener', {
   init: function () {
+    const riaManager = document.querySelector("#GameManager");
+    const cabin = document.querySelector("#Cabin");
     var self = this;
     // Array to store voterId, painting
     this.votes = [];
@@ -105,9 +107,20 @@ AFRAME.registerComponent('voting-listener', {
              var checkpointTarget = "#checkpoint_" + data.winner.replace("Paint", "");
             winningEntity.setAttribute("circles-sendpoint", "target:" + checkpointTarget + ";");
 
-            
-            winningEntity.emit('click');
+            // Only activate RIAmanager if the red painting is clicked
+            if (data.winner === "redPaint") {
+              riaManager.emit('painting-clicked');  // Trigger ria-manager
+              cabin.setAttribute('visible', 'false');
+          
           }
+          winningEntity.emit('click');
+
+          const painting = document.querySelector("#"+ data.winner);
+          const newEnvironment = painting.getAttribute("environemntProp");
+          if (newEnvironment) {
+          environment.setAttribute("environment", newEnvironment);
+          }
+        }
         }
       });
     }
