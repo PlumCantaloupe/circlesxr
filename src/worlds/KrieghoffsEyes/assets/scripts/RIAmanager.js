@@ -37,8 +37,8 @@ AFRAME.registerComponent('ria-manager', {
             log.setAttribute('circles-pickup-object', '');
             log.setAttribute('static-body', '');
         
-            log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-            log.setAttribute('rotation', '0 90 0');
+            // log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+            // log.setAttribute('rotation', '0 90 0');
 
             this.scene.appendChild(log);
             this.logs.push(log);
