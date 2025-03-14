@@ -24,7 +24,7 @@ class FileLogic {
 
                         const timestamp = basicLogic.getCurrentTimestamp();
                         const binaryData = basicLogic.arrayBufferToBase64(arrayBuffer);
-                        const artifact = new Artifact("owl", 1, "", "", [], [], binaryData);
+                        const artifact = new Artifact("croissants", 1, "", "", [], [], binaryData);
 
                         s3Repository.uploadToS3(artifact);
                     };
@@ -39,11 +39,12 @@ class FileLogic {
     }
 
     loadObjectInScene(file){
-        const camera = document.getElementById("camera");
+        const pedestal = document.getElementById("pedestal-3");
         const model = document.createElement("a-entity");
         model.setAttribute("gltf-model", `url(${URL.createObjectURL(file)})`);
-        model.setAttribute("position", "0 0 -2");
-        camera.appendChild(model);
+        pedestal.appendChild(model);
+        model.setAttribute("scale", "70 70 70");
+        model.setAttribute("position", "74 18 13");
     } 
 }
 
