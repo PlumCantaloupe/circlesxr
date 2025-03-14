@@ -13,6 +13,9 @@
       <a-assets-item id="world_model" src="/worlds/_b_LandingHub/assets/models/world_0/world_0.gltf" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
       <a-assets-item id="navmesh_gltf" src="/worlds/_b_LandingHub/assets/models/nav_mesh/nav_mesh.glb" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
       <img id="sky_map" src ="/worlds/_b_LandingHub/assets/textures/space_sky.png" response-type="arraybuffer"></img>
+      <a-asset id ="hub_music" src = "/worlds/_b_LandingHub/assets/sounds/HubMusic.mp3"></a-asset>
+      <a-asset id ="narration" src = "/worlds/_b_LandingHub/assets/sounds/hub_narration.mp3"></a-asset>
+      
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
@@ -26,6 +29,10 @@
     <a-entity light="type:directional; color:#b1cdbb; groundColor:#879155; intensity: 1.38" position = "-7.293 -0.715 1.727"></a-entity>
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
+    <a-entity id="env_music" position = " 0 6 -11.130" circles-sound = "src:#hub_music; autoplay:true; volume:0.17" ></a-entity>
+    <a-entity id="narration_sound" position = " 0 6 -5" circles-sound = "src:#narration; autoplay:true; volume:0.3; type: basic-nondiegetic" ></a-entity>
+    <a-entity   roation = " 0 -90 0" position="-1 2.6 -12.953" scale = "2 2 2" circles-portal="img_src:#link_1_360; title_text:Self; link_url:/w/_b_SelfWorld" ></a-entity>
+
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->

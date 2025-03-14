@@ -1,4 +1,7 @@
 'use strict';
+//NOTE!!: There needs to be a material on the model before we "extend" it with "highlight". A gltf likley has one, but make sure if manually defining that the "material" attribute is listed before this component
+
+
 AFRAME.registerComponent('sproot-dialogue', {
     schema: {
       isPlaying:  {type:'boolean', default:false},
@@ -6,54 +9,37 @@ AFRAME.registerComponent('sproot-dialogue', {
     },
     init: function() {
       const CONTEXT_AF = this;
+      this.el.addEventListener('click', function(){
+        
+        console.log("I am clicked!");
+        
+        
+          CONTEXT_AF.isPlaying = true;
+          let sproot = document.querySelector("#sproot");
+          let dialogue = document.querySelector("#dialogue");
+          sproot.setAttribute("animation-mixer", "clip: Sproot_Waving; loop:once");
+          dialogue.setAttribute('circles-sound', {state: 'play'});
      
-      document.addEventListener(CIRCLES.EVENTS.READY, function() {
+          setTimeout(function(){
+            sproot.setAttribute("animation-mixer", "clip: Sproot_Idle; loop:repeat");
+          }, 8000)
         
-        console.log("i am registered!");
         
-        //if (CONTEXT_AF.el.hasAttribute('circles-interactive-object') === false) {
-         //  CONTEXT_AF.el.setAttribute('circles-interactive-object', {});
-       // } 
-       CONTEXT_AF.el.addEventListener('click', CONTEXT_AF.playDialogue());
-  
+        
+      });
+      CONTEXT_AF.el.addEventListener('animation-finished', function(){
+        sproot.setAttribute("animation-mixer", "clip: Sproot_Idle; loop:repeat");
+       
       });
       
-      //make sure this is interactive
-    
- 
-    },
-    update : function(oldData) {
-     
-    },
-    tick : function (time, timeDelta) {
-    
-    },
-    playDialogue : function() {
-      
-
-      const CONTEXT_AF = this;
-      console.log("I am clicked!");
-      if (!CONTEXT_AF.isPlaying){
-        console.log("I am playing!");
-        CONTEXT_AF.isPlaying = true;
-        let sproot = document.querySelector("#sproot");
-        let dialogue = document.querySelector("#dialogue");
-        sproot.setAttribute("animation-mixer", "clip: Sproot_Waving; loop:once");
-        dialogue.setAttribute('circles-sound', {state: 'play'});
-        CONTEXT_AF.el.addEventListener('animation-finished', endFunction());
         
-        function endFunction(){
-          CONTEXT_AF.el.removeEventListener('animation-finished', endFunction());
-          sproot.setAttribute("animation-mixer", "clip: Sproot_Idle; loop:repeat");
-          CONTEXT_AF.isPlaying = false;
-        }
+      },
 
-      }
-    },
-    prepElemsForInteraction: function(){
-      console.log("I am active");
-      
-    },
+    
+
+  
+
+      //make sure this is interactive
     
     
   });

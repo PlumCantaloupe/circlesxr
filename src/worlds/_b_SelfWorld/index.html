@@ -1,9 +1,11 @@
 <html>
 <head>
-  <!--Our Scripts-->
   
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+
+  <!--Our Scripts-->
+  <script src="/worlds/_b_SelfWorld/assets/scripts/sproot-dialogue.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -23,7 +25,9 @@
         <!--Images-->
         <img id="sky_map" src = "/worlds/_b_SelfWorld/assets/textures/cloudy_sky.jpg"></img>
         <!--Sound-->
-        <a-asset id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/test_jingle.wav"></a-asset>
+        <a-asset id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/SprootDialogue.wav"></a-asset>
+        <a-asset id = "self_music" src = "/worlds/_b_SelfWorld/assets/sounds/Self_Music.mp3"></a-asset>
+        <a-asset id = "ambiance_effects" src = "/worlds/_b_SelfWorld/assets/sounds/ambiance.wav"></a-asset>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     
@@ -32,29 +36,34 @@
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
     <!--light-->
-    <a-entity light="type:point; color:#fffcd6; groundColor:#499763; intensity: 22" position = "0.310 6.040 -2.920"></a-entity>
-    <a-entity light="type:point; color:#ffffff; groundColor:#499763; intensity: 24.460" position = "-6.220 6.040 -10.200"></a-entity>
+    <a-entity light="type:point; color:#e1c2a8; groundColor:#499763; intensity: 22" position = "3.994 6.292 -5.825"></a-entity>
+    <a-entity light="type:directional; color:#ffffff; groundColor:#499763; intensity: 1" position = "-15.048 16.165 -15.023"></a-entity>
     <a-entity light="type:ambient; color:#fdf35d; groundColor:#499763; intensity: 1.38" position = "0 10 -7"></a-entity>
     <!--env models-->
     <a-entity id="environment-model" gltf-model="#env_model" visible='true' sa  shadow="receive:true; cast:true;"></a-entity>
     <!--furniture models-->
    
     <!--npc models-->
-    <a-box  scale = " 1 1 1" id = "sproot_collider" position = "-4.702 2.460 -7.749" visible = "false"  geometry></a-box>
+    
     <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
-    <script>
-      document.querySelector('#sproot').components['animation-mixer'].data
-    </script>
+    <a-box  scale = " 1 1 1" id = "sproot_collider" class = "interactive" position = "-4.702 2.460 -7.749" visible = "false"  geometry sproot-dialogue = "highlight:scale"></a-box>
+    
     
     <!---->
 
     <!--navmesh-->
-    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'   nav-mesh ></a-entity>
+    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'  nav-mesh ></a-entity>
     <a-sky src = "#sky_map"></a-sky>
-    <a-entity id="dialogue" circles-sound = "src:#sproot_dialogue;" ></a-entity>
+    <a-entity id="dialogue" position="-3.667 2.721 -7.566" circles-sound = "src:#sproot_dialogue;" ></a-entity>
+
+    <a-entity  scale = "2 2 2" position="-0.77 1.357 7.185" rotation = " 0 90 0" circles-portal="img_src:#link_1_360; title_text:Self; link_url:/w/_b_LandingHub" ></a-entity>
+    <a-entity id="env_music" position = " 0 8 -11.130" circles-sound = "src:#self_music; autoplay:true; volume:0.4; loop:true; type: basic" ></a-entity>
+    <a-entity id="ambiance_music" position = " 0 5 -11.130" circles-sound = "src:#ambiance_effects; autoplay:true; volume:0.2; loop:true; type: ambience" ></a-entity>
   </a-scene>
 
-  
+  <script>
+    document.querySelector('#sproot').components['animation-mixer'].data
+  </script>
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
