@@ -4,23 +4,28 @@
   <circles-start-scripts/>
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe-physics-system/4.0.1/aframe-physics-system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.3/dist/aframe-physics-system.min.js"></script>
+  <script src="http://kripken.github.io/ammo.js/builds/ammo.wasm.js"></script>
   <script src="assets/scripts/change-environment.js"></script>
+  <script src="assets/scripts/RIAmanager.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
   <circles-start-ui/>
 
   <!-- a-scene with physics for collision -->
-  <a-scene circles_scene_properties physics="gravity: 0">
+  <a-scene circles_scene_properties physics="gravity: 0; debug: true" >
     <a-assets>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
+      <a-asset-item id ="logModel" src="assets/models/RIA/Log.glb"></a-asset-item>
+      <a-asset-item id ="Raft1" src="assets/models/RIA/Raft1.glb"></a-asset-item>
+      <a-asset-item id ="Raft2" src="assets/models/RIA/Raft2.glb"></a-asset-item>
+      <a-asset-item id ="Raft3" src="assets/models/RIA/Raft3.glb"></a-asset-item>
+      <a-asset-item id ="Raft4" src="assets/models/RIA/Raft4.glb"></a-asset-item>
     </a-assets>
 
-    <a-entity id="GameManager" change-environment></a-entity>
-
-    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+        <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
 
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
@@ -28,6 +33,9 @@
     <a-entity id = "environment" environment="preset: checkerboard; seed: 123; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
     <!-- Ambient lighting inside the cabin -->
     <a-entity light="type: ambient; intensity: 0.5"></a-entity>
+
+    <a-entity id="GameManager" change-environment ria-manager></a-entity>
+
 
     <!-- Cabin Structure with Collision -->
     <a-box position="0 1.5 -9" width="10" height="3" depth="0.2" color="#8B5A2B" ></a-box>  <!-- Back Wall -->
@@ -67,9 +75,7 @@
      <a-entity id="checkpoint_red" circles-checkpoint position="20 0.105 0"></a-entity>
      <a-entity id="checkpoint_blue" circles-checkpoint position="-40 0.105 0"></a-entity>
 
-    <a-plane id="navmesh" visible="false" position="0 .105 -4" rotation="-90 0 0" scale=".95 9.4 1" width="10" depth="10" color="#FFFFFF" nav-mesh></a-plane>
-    <a-plane id="navmeshred" visible="false" position="20 .105 0" rotation="-90 0 0" scale=".95 9.4 1" width="10" depth="10" color="#FFFFFF" nav-mesh></a-plane>
-    <a-plane id="navmeshblue" visible="false" position="-40 .105 0" rotation="-90 0 0" scale=".95 9.4 1" width="10" depth="10" color="#FFFFFF" nav-mesh></a-plane>
+   
 
   </a-scene>
 
