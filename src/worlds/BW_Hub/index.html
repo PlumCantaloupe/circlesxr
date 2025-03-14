@@ -39,6 +39,7 @@
     <script src="js/share-emotion.js"></script>
     <script src="js/room.js"></script>
     <script src="js/accessibility-settings.js"></script>
+    <script src="js/set-spawnpoint.js"></script>
   </head>
   <body>
 
@@ -61,7 +62,7 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <a-entity id="manager" manager></a-entity>
+      <a-entity id="manager" manager ></a-entity>
       
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -71,7 +72,7 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub' accessibility-controls></a-entity>
+      <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub' accessibility-controls spawn-point></a-entity>
       <a-entity comp></a-entity>
 
       <!-- main lights -->
@@ -152,32 +153,36 @@
        <!-- blue button -->
       <a-entity class="buttonContainer" rotation="0 32.9 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
-                  dispense-emotion="orbColour: #05cdff"
+                  dispense-emotion="orbColour: #05cdff; idColour: blue"
                   position="0 1.02 2.13"
                   rotation="90 0 0"></a-entity>
         <a-sphere scale="0.1 0.1 0.1"></a-sphere>
       </a-entity>
       <!-- pink button -->
       <a-entity class="buttonContainer" rotation="0 105.2 0">
-        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #fe90e6; button_color_hover: #d339fe" 
+                  dispense-emotion="orbColour: #fe90e6; idColour: pink"          
                   position="0 1.02 2.13"
                   rotation="90 0 0"></a-entity>
       </a-entity>
       <!-- green button -->
       <a-entity class="buttonContainer" rotation="0 177.62 0">
-        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #afff4d; button_color_hover: #369c11" 
+                  dispense-emotion="orbColour: #afff4d; idColour: green" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"></a-entity>
       </a-entity>
       <!-- orange button -->
       <a-entity class="buttonContainer" rotation="0 249.12 0">
-        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #ff8b4d; button_color_hover: #e06500" 
+                  dispense-emotion="orbColour: #ff8b4d; idColour: red" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"></a-entity>
       </a-entity>
       <!-- yellow button -->
       <a-entity class="buttonContainer" rotation="0 320.89 0">
-        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
+        <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #ffe74d; button_color_hover: #ca9502" 
+                  dispense-emotion="orbColour: #ffe74d; idColour: yellow" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"></a-entity>
       </a-entity>
@@ -193,7 +198,7 @@
        </a-entity>
 
 
-      <!-- emotion visualizers -->
+      <!-- emotion visualizers -- Delta-->
       <a-entity position="2.176 0 -5.729">
          <a-entity class="emptyCollider"></a-entity>
 
@@ -204,23 +209,23 @@
            <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
            <a-entity room id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
              <a-entity id="delta-visualization-red">
-               <a-cylinder color="red" position="0 0.5 0"></a-cylinder>
+               <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
              </a-entity>
        
              <a-entity id="delta-visualization-yellow">
-               <a-cylinder color="yellow" position="0 0.5 0"></a-cylinder>
+               <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
              </a-entity>
        
              <a-entity id="delta-visualization-blue">
-               <a-cylinder color="blue" position="0 0.5 0"></a-cylinder>
+               <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
              </a-entity>
        
              <a-entity id="delta-visualization-green">
-               <a-cylinder color="green" position="0 0.5 0"></a-cylinder>
+               <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
              </a-entity>
        
              <a-entity id="delta-visualization-pink">
-               <a-cylinder color="pink" position="0 0.5 0"></a-cylinder>
+               <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
              </a-entity>
            </a-entity>
          </a-entity>
@@ -230,6 +235,92 @@
          </a-entity>
          
       </a-entity>
+
+       <!-- emotion visualizers -- Alpha-->
+      <a-entity rotation="0 127.598 0">
+        <a-entity position="2.176 0 -5.729">
+            <a-entity class="emptyCollider"></a-entity>
+
+       
+
+        <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
+          <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
+          <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
+          <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+          <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
+          <a-entity room id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
+            <a-entity id="alpha-visualization-red">
+              <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+            </a-entity>
+      
+            <a-entity id="alpha-visualization-yellow">
+              <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+            </a-entity>
+      
+            <a-entity id="alpha-visualization-blue">
+              <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+            </a-entity>
+      
+            <a-entity id="alpha-visualization-green">
+              <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+            </a-entity>
+      
+            <a-entity id="alpha-visualization-pink">
+              <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
+            </a-entity>
+          </a-entity>
+        </a-entity>
+
+        <a-entity position="0.635 0 -0.221">
+         <a-entity share-emotion="visualizationID: alpha-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+        
+     </a-entity>
+
+     <!-- emotion visualizers -- Gamma-->
+     <a-entity rotation="0 -102.271 0">
+      <a-entity position="2.176 0 -5.729">
+        <a-entity class="emptyCollider"></a-entity>
+    
+     
+
+      <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
+        <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
+        <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
+        <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+        <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
+        <a-entity room id="gammma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
+          <a-entity id="gammma-visualization-red">
+            <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+          </a-entity>
+    
+          <a-entity id="gammma-visualization-yellow">
+            <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+          </a-entity>
+    
+          <a-entity id="gammma-visualization-blue">
+            <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+          </a-entity>
+    
+          <a-entity id="gammma-visualization-green">
+            <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+          </a-entity>
+    
+          <a-entity id="gammma-visualization-pink">
+            <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="0.635 0 -0.221">
+       <a-entity share-emotion="visualizationID: gammma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;"></a-entity>
+      </a-entity>
+
+    </a-entity>
+      
+   </a-entity>
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
@@ -295,23 +386,23 @@
       
       <!-- portals -->
       <a-entity id="Portal-Delta"
-                position="2 1.5 -2.2" rotation="0 -108 0"
+                position="8.244 1.5 -9.740" rotation="0 -125.015 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Delta; link_url:/w/BW_Delta"
                 shadow></a-entity>
       
       <a-entity id="Portal-Alpha"
-                position="-1.8 1.5 -2.2" rotation="0 -100 0"
+                position="-12.704 1.274 0.093" rotation="0 3.231 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Alpha; link_url:/w/BW_Alpha"
                 shadow></a-entity>
 
       <a-entity id="Portal-Gamma"
-                position="3.7 1.5 -2.2" rotation="0 -100 0"
+                position="8.587 1.191 10.258" rotation="0 129.070 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Gamma; link_url:/w/BW_Gamma"
                 shadow></a-entity>
 
 
       <!-- checkpoints -->
-      <a-entity id="main" circles-checkpoint="colour: #3f4fca; emission: #4a6fba; transparent: false; opacity: 1" position="4.4 0.03 0" ></a-entity>
+      <a-entity id="mainSpawn"circles-spawnpoint circles-checkpoint="colour: #3f4fca; emission: #4a6fba; transparent: false; opacity: 1" position="4.4 0.03 0" ></a-entity>
       
       <a-entity circles-checkpoint position="1.9 0.03 3"></a-entity>
       <a-entity circles-checkpoint position="-2.3 0.03 2.7"></a-entity>
@@ -325,9 +416,9 @@
       <a-entity circles-checkpoint position="3.2 0.03 -3.7"></a-entity>
       <a-entity circles-checkpoint position="-2.3 0.03 -4.8"></a-entity>
 
-      <a-entity circles-checkpoint position="-10.4 0.03 0"></a-entity>
-      <a-entity circles-checkpoint position="7.4 0.03 8.8"></a-entity>
-      <a-entity circles-checkpoint position="7.1 0.03 -8.2"></a-entity>
+      <a-entity id="alphaSpawn" circles-checkpoint position="-10.4 0.03 0"></a-entity>
+      <a-entity id="gammaSpawn" circles-checkpoint position="7.4 0.03 8.8"></a-entity>
+      <a-entity id="deltaSpawn" circles-checkpoint position="7.1 0.03 -8.2"></a-entity>
 
       <!-- 
       
