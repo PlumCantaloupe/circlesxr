@@ -233,45 +233,46 @@
     document.addEventListener('DOMContentLoaded', function() {
     // setup label submission
     const submitLabel = function() {
-      const labelUI = document.querySelector('#label-ui');
-      const labelInput = document.querySelector('#label-input');
-      
-      if (!labelUI || !labelInput) return;
-      
-      const objectId = labelUI.dataset.objectId;
-      const labelText = labelInput.value.trim();
-      
-      if (objectId && labelText) {
-        // get obj and add label
-        const object = document.getElementById(objectId);
-        if (object) {
-          // add the label text to the object
-          object.setAttribute('object-label', {text: labelText});
-          console.log(`Set label "${labelText}" on object ${objectId}`);
-          
-          // add circles-portal attribute with the label text
-          object.setAttribute('circles-portal', {
-            title_text: labelText,
-            link_url: '/w/Keepsake-Gallery'
-          });
-          
-          // disable the pickupable component so it can't be picked up again
-          if (object.components.pickupable) {
-            object.removeAttribute('pickupable');
-            console.log(`Disabled pickupable on ${objectId}`);
-          }
-          
-          // mark this object as labeled
-          const plate = document.querySelector('[plate-interaction]');
-          if (plate && plate.components['plate-interaction']) {
-            plate.components['plate-interaction'].objectsLabeled[objectId] = true;
-          }
+    const labelUI = document.querySelector('#label-ui');
+    const labelInput = document.querySelector('#label-input');
+    
+    if (!labelUI || !labelInput) return;
+    
+    const objectId = labelUI.dataset.objectId;
+    const labelText = labelInput.value.trim();
+    
+    if (objectId && labelText) {
+      // get obj and add label
+      const object = document.getElementById(objectId);
+      if (object) {
+        // add the label text to the object
+        object.setAttribute('object-label', {text: labelText});
+        console.log(`Set label "${labelText}" on object ${objectId}`);
+        
+        // add circles-portal attribute with the label text
+        // include the gallery name as a URL parameter
+        object.setAttribute('circles-portal', {
+          title_text: labelText,
+          link_url: '/w/Keepsake-Gallery?galleryName=' + encodeURIComponent(labelText)
+        });
+        
+        // disable the pickupable component so it can't be picked up again
+        if (object.components.pickupable) {
+          object.removeAttribute('pickupable');
+          console.log(`Disabled pickupable on ${objectId}`);
+        }
+        
+        // mark this object as labeled
+        const plate = document.querySelector('[plate-interaction]');
+        if (plate && plate.components['plate-interaction']) {
+          plate.components['plate-interaction'].objectsLabeled[objectId] = true;
         }
       }
-      
-      // hide ui
-      labelUI.style.display = 'none';
-    };
+    }
+    
+    // hide ui
+    labelUI.style.display = 'none';
+  };
 
     // submit label
     const submitButton = document.querySelector('#submit-label');
@@ -454,6 +455,10 @@
   <a-scene circles_scene_properties interaction-manager background="color: black">
     <a-assets>
       <!-- put all assets here -->
+
+      <!--Skybox Image-->
+      <img id="sky_map" src="assets/images/resting_place.jpg" crossorigin="anonymous">
+
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       
@@ -490,6 +495,14 @@
         circles-interactive-object
         raycaster="objects: .interactive; far: 20; interval: 100">
         
+        </a-entity>
+
+        <!--SKY BOX-->
+        <a-entity id="sky-box"
+              geometry="primitive:sphere; radius:100"
+              position="0 -50 0"
+              material="src: #sky_map; side:back; shader:flat">
+              <!--Use "side" property to load material on the inside/outside of the faces-->
         </a-entity>
 
         <!-- pedestal -->
