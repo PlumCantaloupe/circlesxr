@@ -1,5 +1,8 @@
 AFRAME.registerComponent('orb-manager', {
-    schema: {},
+    schema: {
+        duration: {type: 'int', default: 9000},
+        clipNum: {type: 'number', default: 30},
+    },
     init() {
         const CONTEXT_AF = this;
         const scene = CIRCLES.getCirclesSceneElement();
@@ -9,9 +12,16 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.connected = false;
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
-        CONTEXT_AF.DROP_COOLDOWN = 2000; // 10 seconds cooldown
+        CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
         CONTEXT_AF.timer = null; // Store the timer ID
-    
+        CONTEXT_AF.numOrbs = 0; //used to give a unique id to each orb
+
+        CONTEXT_AF.orb1 = document.querySelector('#orboutside1'); 
+        CONTEXT_AF.orb2 = document.querySelector('#orboutside2'); 
+        CONTEXT_AF.orb3 = document.querySelector('#orboutside3'); 
+        CONTEXT_AF.orb4 = document.querySelector('#orboutside4'); 
+
+        CONTEXT_AF.orbs = document.querySelectorAll('.orb');
 
         // Bézier curve paths for orb drops of the 6 tubes yayyyyy
         //i love numbers!!! SO MUCHHH
@@ -142,6 +152,7 @@ AFRAME.registerComponent('orb-manager', {
     randomizePosition: function () {
         const CONTEXT_AF = this;
         let n = Math.floor(Math.random() * 6) + 1;
+        CONTEXT_AF.colour = Math.floor(Math.random() * 4) + 1;
 
         let cs = Math.floor(Math.random() * CONTEXT_AF[`curve${n}`].length);
         let t = Math.random();
@@ -165,22 +176,86 @@ AFRAME.registerComponent('orb-manager', {
 
     // Drops an orb at a specific position
     dropOrbAtPosition: function (spawnPos) {
+        const CONTEXT_AF = this;
+
         const scene = this.el.sceneEl;
-        const sphere = document.createElement('a-sphere');
-        sphere.setAttribute('radius', 0.2);
-        sphere.setAttribute('color', 'red');
-        sphere.setAttribute('position', spawnPos);
-        sphere.setAttribute('circles-pickup-object', 'animate:false');
-        sphere.setAttribute('circles-pickup-networked');
-        sphere.setAttribute('animation', {
+        const orb = CONTEXT_AF[`orb${CONTEXT_AF.colour}`].cloneNode(true);
+        orb.setAttribute('id', `orb${CONTEXT_AF.numOrbs}`);
+        orb.setAttribute('class', 'orb');
+        orb.setAttribute('circles-pickup-networked', `objectId: orb${CONTEXT_AF.numOrbs}`);
+        orb.setAttribute('position', spawnPos);
+        orb.setAttribute('animation', {
             property: 'position',
             from: spawnPos,
-            to: { x: spawnPos.x, y: 0.4, z: spawnPos.z },
-            dur: this.duration * spawnPos.y,
+            to: { x: spawnPos.x, y: 0.6, z: spawnPos.z },
+            dur: CONTEXT_AF.duration * spawnPos.y,
             easing: 'linear'
         });
+        
+        orb.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.playParticles(orb);
+            CONTEXT_AF.playAnimation(orb); 
+            CONTEXT_AF.playSound(Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1);
+            orb.setAttribute('circles-interactive-object', 'enabled:false');
+            setTimeout(() => {
+                orb.parentNode.removeChild(orb); // Remove from the scene
+            }, CONTEXT_AF.data.duration);
+        });
 
-        scene.appendChild(sphere);
-        setTimeout(() => { sphere.parentNode.removeChild(sphere); }, this.duration * spawnPos.y + 20000);
-    }
+        /*orb.addEventListener('click', function () {
+            console.log("peepeepoopoo");
+            CONTEXT_AF.playParticles(orb);
+            CONTEXT_AF.playAnimation(orb);
+            //setTimeout(() => {
+                //orb.setAttribute('circles-interactive-visible', "false");
+            //}, CONTEXT_AF.data.duration);
+        });*/
+            
+        scene.appendChild(orb);
+        CONTEXT_AF.numOrbs++;
+
+        setTimeout(() => {
+            //if the orb has not yet been picked up by the end of its lifespan, it gets deleted
+            /*if (orb.parentElement !== document.querySelector('a-scene')) { 
+                orb.parentNode.removeChild(orb);
+            }*/
+            orb.parentNode.removeChild(orb);
+        }, CONTEXT_AF.duration * spawnPos.y + 30000);
+    }, 
+
+    playParticles: function (orb) {
+        const CONTEXT_AF = this;
+
+        const particleSystem = document.createElement('a-entity');
+        particleSystem.setAttribute('particle-system', "preset: dust; color:#b1f8ff; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0.7 0.5 0.7; maxAge:2.5,blending: 3; dragValue: 1; velocityValue: 0 0.5 0; size: 0.1; sizeSpread: 0.3; duration: 9000; particleCount: 150");
+        particleSystem.setAttribute('position', '0 -0.2 0');
+        particleSystem.setAttribute('rotation', '0 90 136');
+        orb.appendChild(particleSystem);
+        setTimeout(() => particleSystem.remove(),  CONTEXT_AF.data.duration + 2000);
+    },
+
+    playAnimation: function (orb) {
+        const CONTEXT_AF = this;
+        orb.setAttribute('animation', {
+            property: 'opacity',
+            to: '0',
+            dur: CONTEXT_AF.data.duration,
+            startEvents: onclick,
+        });
+
+        const position = orb.getAttribute("position");
+        orb.setAttribute('animation__ascend', {
+            property: 'position',
+            from: position,
+            to: {x: position.x, y: position.y + 2, z: position.z},
+            dur: CONTEXT_AF.data.duration,
+            startEvents: onclick,
+        });
+    },
+
+    playSound: function (soundNum) {
+        const CONTEXT_AF = this;
+        CONTEXT_AF.clip = document.querySelector(`#clip${soundNum}`);
+        CONTEXT_AF.clip.components.sound.playSound();
+    },
 });

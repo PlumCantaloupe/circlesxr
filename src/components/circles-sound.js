@@ -45,13 +45,13 @@ AFRAME.registerComponent('circles-sound', {
           CONTEXT_AF.el.setAttribute('sound', {positional:false});
         } break;
         case 'dialogue': {
-          ontext_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
+          CONTEXT_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
         } break;
         case 'soundeffect': {
-          ontext_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
+          CONTEXT_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
         } break;
         case 'foley': {
-          ontext_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
+          CONTEXT_AF.el.setAttribute('sound', {positional:true, distanceModel:'inverse', maxDistance:10000.0, refDistance:1.0, rolloffFactor:1.0});
         } break;
         case 'music':
         case 'artefact':
