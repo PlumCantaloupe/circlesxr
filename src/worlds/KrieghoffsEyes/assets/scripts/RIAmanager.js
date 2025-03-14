@@ -34,7 +34,7 @@ AFRAME.registerComponent('ria-manager', {
             log.setAttribute('material', 'color: brown'); // Material needs to be separate
             log.setAttribute('class', 'interactable-log');
             log.setAttribute('circles-interactive-object', '');
-            log.setAttribute('circles-pickup-object', '');
+            log.setAttribute('circles-pickup-networked', '');
             log.setAttribute('static-body', '');
         
             // log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
