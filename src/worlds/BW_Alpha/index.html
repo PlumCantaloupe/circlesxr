@@ -21,7 +21,7 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="room_gltf" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="library_model" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -38,7 +38,7 @@
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
+      <a-entity light="type: ambient; color: #f2d6c0; intensity: 3"></a-entity>
       <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
       <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
@@ -48,7 +48,7 @@
       <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
 
       <!-- room model -->
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_model" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <!-- TO BE REPLACED - END -->
 
     <!-- Circles' end scripts [REQUIRED] -->
