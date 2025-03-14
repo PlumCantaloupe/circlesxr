@@ -5,10 +5,11 @@ AFRAME.registerComponent('sproot-dialogue', {
      
     },
     init: function() {
-      CONTEXT_AF = this;
+      const CONTEXT_AF = this;
       console.log("i am registered!");
       document.querySelector("#sproot_collider").addEventListener('click', function(e) {
-        CONTEXT_AF.prepElemsForInteraction();
+        console.log("I am listening!");
+        CONTEXT_AF.playDialogue();
       });
     },
     update : function(oldData) {
@@ -18,7 +19,8 @@ AFRAME.registerComponent('sproot-dialogue', {
       
     },
     playDialogue : function() {
-      CONTEXT_AF = this;
+      const CONTEXT_AF = this;
+      console.log("I am clicked!");
       if (!CONTEXT_AF.isPlaying){
         console.log("I am clicked!");
         CONTEXT_AF.isPlaying = true;
