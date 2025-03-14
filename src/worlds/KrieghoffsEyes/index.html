@@ -80,6 +80,14 @@
           responnse-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
+
+        <a-asset-item
+          id="room"
+          src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf"
+          responnse-type="arraybuffer"
+          crossorigin="anonymous"
+        ></a-asset-item>
+
         <circles-assets />
     </a-assets>
 
@@ -103,13 +111,11 @@
     position=".7 1.8 -3">
     </a-entity>
 
-      <!-- Cabin Structure with Collision -->
-      <a-box position="0 1.5 -9" width="10" height="3" depth="0.2"  src="assets/textures/Woodtextures/worn_planks_diff_2k.jpg" repeat="4 1" ></a-box>  <!-- Back Wall -->
-      <a-box position="-5 1.5 -4" width="0.2" height="3" depth="10" src="assets/textures/Woodtextures/worn_planks_diff_2k.jpg" repeat="4 1"></a-box>  <!-- Left Wall -->
-      <a-box position="5 1.5 -4" width="0.2" height="3" depth="10" src="assets/textures/Woodtextures/worn_planks_diff_2k.jpg" repeat="4 1"></a-box>  <!-- Right Wall -->
-      <a-box position="0 1.5 1" width="10" height="3" depth="0.2"  src="assets/textures/Woodtextures/worn_planks_diff_2k.jpg" repeat="4 1"></a-box>  <!-- Back Wall -->
-      <a-box position="0 3 -4" width="10" height="0.2" depth="10"  src="assets/textures/Woodtextures/worn_planks_diff_2k.jpg" repeat="4 1"></a-box>  <!-- Roof -->
-      <a-box position="0 -0.586 -4" width="10" height="0.2" depth="10" material="src: assets/textures/Woodtextures/worn_planks_diff_2k.jpg; repeat: 6.89 -6.97; normalMap: assets/textures/Woodtextures/worn_planks_nor_2k.png; displacementMap: assets/textures/Woodtextures/worn_planks_arm_2k.png" ></a-box>  <!-- Floor -->
+
+    <!-- room -->
+    <a-entity id="ceiling" gltf-model="#room" position="0 0.001 0"></a-entity>
+
+      <!-- Floor -->
       <!-- Lights inside the cabin 
       <a-entity light="type: point; intensity: 3; distance: 5" position="-4 2 -8" circles-interactive-object="type:highlight"></a-entity>
       <a-entity light="type: point; intensity: 3; distance: 5" position="0 2 -8" circles-interactive-object="type:highlight"></a-entity>
@@ -271,28 +277,33 @@
     id="frame1"
     scale="0.28877 0.28877 0.28877"
     gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb"
-    position="-4.869 1.173 -1.487"
+    position="-5.594 1.173 -1.487"
     rotation="0 -180 0"
   ></a-entity>
   <a-entity id="frame1-2" 
             scale="0.28877 0.28877 0.28877" 
             gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
-            position="-4.869 1.17321 -5.71147" 
+            position="-5.594 1.17321 -5.71147" 
             rotation="0 -180 0"></a-entity>
   <a-entity id="frame1-3" 
             scale="0.28877 0.28877 0.28877" 
             gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
-            position="4.70095 1.17321 -1.48734"></a-entity>
+            position="5.594 1.17321 -1.48734"></a-entity>
   <a-entity id="frame1-4"
             scale="0.28877 0.28877 0.28877" 
             gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
-            position="4.70095 1.17321 -5.91606"></a-entity>
+            position="5.594 1.17321 -5.91606"></a-entity>
 
   <a-entity id="stool"
             scale="1 1 1" 
             gltf-model="/worlds/KrieghoffsEyes/assets/models/stool.glb" 
             position="3.618 -0.025 0"></a-entity>
 
+  
+  <a-entity id="stool"
+            scale="1 1 1" 
+            src="/worlds/KrieghoffsEyes/assets/models/stool.glb" 
+            position="3.618 -0.025 0"></a-entity>
   <!-- Book Piles -->
   <a-entity id="book_pile_1" gltf-model="#book_pile_gltf" position="3.59154 0.00085 -0.83013"></a-entity>
   <a-entity id="book_pile_2" gltf-model="#book_pile_gltf" position="2.90213 0 -1.64883" rotation="0 38.28274803946108 0"></a-entity>
@@ -313,6 +324,9 @@
   <a-entity id="wooden_crate_2-1" gltf-model="#wooden_crate_2_gltf" position="-3.80811 0.45226 -2.29344" rotation="7.063423698372789 -132.2615774279992 -142.60289267231548"></a-entity>
   <a-entity id="wooden_crate_3-1" gltf-model="#wooden_crate_3_gltf" position="-3.82469 0 -3.35021" rotation="0 -21.621135357056744 0"></a-entity>
 
+  <!-- room -->
+  <a-entity id="ceiling" gltf-model="#room" position="0 0.001 0"></a-entity>
+  
 <!-- Responsive UI -->
       <!-- Background element used for UI interactions -->
       <a-entity
