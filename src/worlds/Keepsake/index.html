@@ -458,6 +458,10 @@
   <a-scene circles_scene_properties interaction-manager background="color: black">
     <a-assets>
       <!-- put all assets here -->
+
+      <!--Skybox Image-->
+      <img id="sky_map" src="assets/images/resting_place.jpg" crossorigin="anonymous">
+
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       
@@ -491,6 +495,14 @@
         cursor="rayOrigin: mouse"
         circles-interactive-object
         raycaster="objects: .interactive; far: 20; interval: 100">
+        </a-entity>
+
+        <!--SKY BOX-->
+        <a-entity id="sky-box"
+              geometry="primitive:sphere; radius:100"
+              position="0 -50 0"
+              material="src: #sky_map; side:back; shader:flat">
+              <!--Use "side" property to load material on the inside/outside of the faces-->
         </a-entity>
 
         <!-- pedestal -->
