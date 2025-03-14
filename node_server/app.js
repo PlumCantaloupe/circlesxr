@@ -13,37 +13,39 @@ if (env.error) {
 // Parse the dot configs so that things like false are boolean, not strings
 env = dotenvParseVariables(env.parsed);
 
+
+
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
-const express         = require('express');
-const app             = express();
-const fs              = require('fs');
-const url             = require('url');
-const path            = require('path');
-const helmet          = require("helmet");
-const sassMiddleware  = require('express-dart-sass');
+const express = require('express');
+const app = express();
 
-const http            = require('http');
-const server          = http.createServer(app);
+const url = require('url');
+const path = require('path');
+const helmet = require("helmet");
+const sassMiddleware = require('express-dart-sass');
+
+const http = require('http');
+const server = http.createServer(app);
 
 //server stuff
-const session       = require('express-session');
-const MongoStore    = require('connect-mongo');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 //database
-const mongoose      = require('mongoose');
-const User          = require('./models/user');
-const bodyParser    = require('body-parser');
-const dbURL         = 'mongodb://' + env.DATABASE_HOST + ':' +  env.DATABASE_PORT + '/circles';
+const mongoose = require('mongoose');
+const User = require('./models/user');
+const bodyParser = require('body-parser');
+const dbURL = 'mongodb://' + env.DATABASE_HOST + ':' + env.DATABASE_PORT + '/circles';
 
 // Set process name
 process.title = "node-circlesxr";
 
 //database connect
 mongoose.connect(dbURL);
-const db            = mongoose.connection;
-const sessionObj    = session({
+const db = mongoose.connection;
+const sessionObj = session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
@@ -53,7 +55,7 @@ const sessionObj    = session({
 });
 
 //handle mongo error
-db.on('error', function(e) {
+db.on('error', function (e) {
   console.log('connection error:' + e);
   process.exit(1);
 });
@@ -66,20 +68,20 @@ app.use(sessionObj);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      "default-src":      ["'self'"],
-      "connect-src":      ["*", "'unsafe-inline'", "blob:", "data:"],
-      "img-src":          ["*", "blob:", "data:"],
-      "media-src":        ["*"],
-      "frame-src":        ["*"],
-      "style-src":        ["*", "'unsafe-inline'"],
-      "script-src":       ["*", "'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
-      "script-src-attr":  ["*", "'unsafe-inline'"],
-      "object-src":       ["'none'"],
+      "default-src": ["'self'"],
+      "connect-src": ["*", "'unsafe-inline'", "blob:", "data:"],
+      "img-src": ["*", "blob:", "data:"],
+      "media-src": ["*"],
+      "frame-src": ["*"],
+      "style-src": ["*", "'unsafe-inline'"],
+      "script-src": ["*", "'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
+      "script-src-attr": ["*", "'unsafe-inline'"],
+      "object-src": ["'none'"],
     },
   })
 );
-app.use(bodyParser.json());                                 //set body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));                                 //set body parser middleware
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));        //set body parser middleware
 
 app.use(sassMiddleware({
   src: __dirname + '/scss',
@@ -99,10 +101,10 @@ app.use(function (req, res, next) {
 app.use(express.static(__dirname + '/public'));             //set root path of server ...
 
 // Set up Passport
-const passport              = require('passport');
+const passport = require('passport');
 const passportLocalStrategy = require('passport-local').Strategy;
-const JwtStrategy           = require('passport-jwt').Strategy
-const ExtractJwt            = require('passport-jwt').ExtractJwt
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
 
 const jwtOptions = {
   secretOrKey: env.JWT_SECRET, //the same one we used for token generation
@@ -114,75 +116,75 @@ const jwtOptions = {
 passport.use(
   'jwt',
   new JwtStrategy(jwtOptions, (req, token, done) => {
-    let user  = null;
+    let user = null;
     let error = null;
     async function getItems() {
       try {
         user = await User.findOne({ email: token.data }).exec();
-      } catch(err) {
+      } catch (err) {
         error = err;
       }
     }
 
-    getItems().then(function() {
+    getItems().then(function () {
       done(error, user);
     });
   })
 );
 
 // Build the passport local strategy for authentication
-passport.use(new passportLocalStrategy (
+passport.use(new passportLocalStrategy(
   {
     usernameField: 'email'
   },
   function (username, password, done) {
-      let user  = null;
-      let error = null;
-      async function getItems() {
-        try {
-          user = await User.findOne({ email: username }).exec();
-        } catch(err) {
-          error = err;
-        }
+    let user = null;
+    let error = null;
+    async function getItems() {
+      try {
+        user = await User.findOne({ email: username }).exec();
+      } catch (err) {
+        error = err;
+      }
+    }
+
+    getItems().then(function () {
+      if (error) {
+        return done(error, user, { message: 'unexpected error' });
       }
 
-      getItems().then(function() {
-        if (error) {
-          return done(error, user, { message: 'unexpected error' });
+      if (!user) {
+        return done(error, user, { message: 'username invalid' });
+      }
+
+      user.validatePassword(password, function (err, usr) {
+        if (err) {
+          return done(null, false, { message: 'Incorrect username or password' });
         }
 
-        if (!user) {
-          return done(error, user, { message: 'username invalid' });
-        }
-
-        user.validatePassword(password, function (err, usr) {
-          if (err) {
-            return done(null, false, { message: 'Incorrect username or password' });
-          }
-
-          return done(null, usr);
-        });
+        return done(null, usr);
       });
+    });
   }
 ));
 
 // Set up serialization of user to the session
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-  let user  = null;
+passport.deserializeUser(function (id, done) {
+  let user = null;
   let error = null;
   async function getItems() {
     try {
       user = await User.findById(id);
-    } catch(err) {
+    } catch (err) {
       error = err;
     }
   }
 
-  getItems().then(function(foundItems) {
+  getItems().then(function (foundItems) {
     done(error, user);
   });
 });
@@ -222,15 +224,15 @@ app.use(function (err, req, res, next) {
 
 //websockets
 let io = require("socket.io")(server, {
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
+  handlePreflightRequest: (req, res) => {
+    const headers = {
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+      "Access-Control-Allow-Credentials": true
+    };
+    res.writeHead(200, headers);
+    res.end();
+  }
 });
 
 //this code is unused when we are using the janus sever/adapter 
@@ -295,20 +297,20 @@ io.on("connection", socket => {
   //to catch all events: https://stackoverflow.com/questions/10405070/socket-io-client-respond-to-all-events-with-one-handler
   let onevent = socket.onevent;
   socket.onevent = function (packet) {
-      let args = packet.data || [];
-      onevent.call (this, packet);    // original call
-      packet.data = ["*"].concat(args);
-      onevent.call(this, packet);      // additional call to catch-all
+    let args = packet.data || [];
+    onevent.call(this, packet);    // original call
+    packet.data = ["*"].concat(args);
+    onevent.call(this, packet);      // additional call to catch-all
   };
 
   //listen for all events and forward to all other clients
-  socket.on("*", function(event, data) {
+  socket.on("*", function (event, data) {
     //console.log('socket event fired: ' + event);
 
     //ignore reserved event names
-    if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
+    if (event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+      event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+      event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC) {
       return; //exit
     }
 
@@ -319,7 +321,7 @@ io.on("connection", socket => {
   });
 
   //this is a request to ask others for their world state for syncing purposes
-  socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
+  socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function (data) {
     if (data.room) {
       socket.join(data.room); //hacky solution for janus adapter which doesn't set room
       socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
@@ -327,7 +329,7 @@ io.on("connection", socket => {
   });
 
   //this is an event to send world data for syncing to others
-  socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function(data) {
+  socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function (data) {
     if (data.room) {
       socket.join(data.room); //hacky solution for janus adapter which doesn't set room
       socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
@@ -343,22 +345,22 @@ if (env.ENABLE_RESEARCH_MODE) {
     console.log("research websockets connected", socket.id);
 
     //research socket events
-    
+
     const researchUtils = require('./modules/research-utils');
 
     socket.on(CIRCLES.RESEARCH.EVENT_FROM_CLIENT, (data) => {
-      console.log('CIRCLES RESEARCH EVENT: '+ data.event_type);
+      console.log('CIRCLES RESEARCH EVENT: ' + data.event_type);
 
       switch (data.event_type) {
         case CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED: {
           console.log('CIRCLES.RESEARCH.EVENT_TYPE.CONNECTED:' + data.room);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE: {
           researchUtils.startExperiment(data);
           io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START: {
           //start trials
 
@@ -368,69 +370,69 @@ if (env.ENABLE_RESEARCH_MODE) {
           //if no new trial then all trials complete, end experiment
           if (newData === null) {
             //creating new object as data may not be valid
-            const eData         = CIRCLES.RESEARCH.createExpData();
-            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            const eData = CIRCLES.RESEARCH.createExpData();
+            eData.event_type = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
-            eData.and = {downloadURL:researchUtils.getDownloadLink()};
+            eData.and = { downloadURL: researchUtils.getDownloadLink() };
             io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
-            newData.event_type  = data.event_type
-            newData.exp_id      = data.exp_id
-            newData.user_id     = data.user_id
-            newData.user_type   = data.user_type
-            
+            newData.event_type = data.event_type
+            newData.exp_id = data.exp_id
+            newData.user_id = data.user_id
+            newData.user_type = data.user_type
+
             io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
           }
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP: {
           researchUtils.stopExperiment(data);
-          data.and = {downloadURL:researchUtils.getDownloadLink()};
+          data.and = { downloadURL: researchUtils.getDownloadLink() };
           io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_START: {
           researchUtils.startSelection(data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_STOP: {
           researchUtils.stopSelection(data);
 
           //if no new trial then all trials complete, end experiment
           const newData = researchUtils.getNextTrial();
           if (newData === null) {
-            const eData         = CIRCLES.RESEARCH.createExpData();
-            eData.event_type    = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
+            const eData = CIRCLES.RESEARCH.createExpData();
+            eData.event_type = CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP;
             researchUtils.stopExperiment(eData);
-            eData.and = {downloadURL:researchUtils.getDownloadLink()};
+            eData.and = { downloadURL: researchUtils.getDownloadLink() };
             io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, eData);
           } else {
-            newData.event_type  = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
-            newData.exp_id      = data.exp_id
-            newData.user_id     = data.user_id
-            newData.user_type   = data.user_type
+            newData.event_type = CIRCLES.RESEARCH.EVENT_TYPE.NEW_TRIAL;
+            newData.exp_id = data.exp_id
+            newData.user_id = data.user_id
+            newData.user_type = data.user_type
 
             io.of(CIRCLES.CONSTANTS.WS_NSP_RESEARCH).emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, newData);
-          } 
+          }
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_PAUSE: {
           // researchUtils.pauseExperiment(data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_UNPAUSE: {
           // researchUtils.unpauseExperiment(data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.SELECTION_ERROR: {
           researchUtils.noteSelectionError(data);
         }
-        break;
+          break;
         case CIRCLES.RESEARCH.EVENT_TYPE.TRANSFORM_UPDATE: {
           // not implemented yet
           // socket.to(curRoom).broadcast.emit(CIRCLES.RESEARCH.EVENT_FROM_SERVER, data);
         }
-        break;
+          break;
       }
     });
   });
@@ -438,7 +440,7 @@ if (env.ENABLE_RESEARCH_MODE) {
 
 //lets start up
 server.listen(env.SERVER_PORT, () => {
-  console.log("Listening on http port: " + env.SERVER_PORT );
+  console.log("Listening on http port: " + env.SERVER_PORT);
 });
 
 app.set('views', './views');

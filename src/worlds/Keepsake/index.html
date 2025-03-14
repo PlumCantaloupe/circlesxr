@@ -5,6 +5,10 @@
   <circles-start-scripts/>
   <!-- custom scripts are added here-->
   <script src="/worlds/Keepsake/components/circles-pickup-object.js"></script>
+  <script src="./logic/file.js"></script>
+  <script src="./logic/basic.js"></script>
+  <script src="./repository/s3.js"></script>
+  <script src="./model/artifact.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -308,19 +312,7 @@
         });
       }
 
-    // file upload
-    const fileInput = document.getElementById('file-input');
-      if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
-          const file = e.target.files[0];
-            if (file) {
-              alert('File "' + file.name + '", uploading..');
-              // hide upload UI after upload
-              document.getElementById('upload-ui').style.display = 'none';
-          }
-      });
-    }
-
+    s
     const closeBtn = document.getElementById('close-btn');
       if (closeBtn) {
         closeBtn.addEventListener('click', function() {
@@ -446,7 +438,7 @@
     <div class="center">
         <h2 style="color: white;">Upload a Keepsake</h2>
         <p style="color: white;">Acceptable file types 3D:.glb, .gltf</p>
-        <button id="upload-btn">Choose File</button>
+        <button id="upload-btn" onclick="new FileLogic().getFileFromSystem()">Choose File</button>
         <input type="file" id="file-input" style="display: none" accept=".glb,.gltf">
     </div>
 </div>
@@ -471,8 +463,13 @@
       <!-- pedestal -->
       <a-asset-item id="pedestal-model" src="assets/models/doric_twist_pedestal.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       
+      <a-asset-item id="chair-model" response-type="arraybuffer" src="./assets/models/Chair_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="table-model" response-type="arraybuffer" src="./assets/models/Table_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="reception-desk-model" response-type="arraybuffer" src="./assets/models/Desk_BaseColor.glb"></a-asset-item>
+      <a-asset-item id="computer-model" response-type="arraybuffer" src="./assets/models/Computer_BaseColor.glb"></a-asset-item>
+
       <!-- orb room model -->
-      <a-asset-item id="orb-room-model" src="assets/models/Orb_Room.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="orb-room-model" src="assets/models/Lobby_BaseColor.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       
       <!-- polycam scans -->
       <a-asset-item id="owl-model" src="assets/models/Owl Puppet (1).glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -551,15 +548,140 @@
         position="0.656 1.347 9.268" rotation="0 143.672 0" scale="1 1 1"
         circles-portal="title_text:Gallery Temporary Teleporter; link_url:/w/Keepsake-Gallery"></a-entity>
 
-        <!-- testing orb room model -->
-        <!--<a-entity
+         <!--Chairs-->
+         <a-entity
+         id="chair1"
+         position="22 0.1 7" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair2"
+         position="24 0.1 7" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair3"
+         position="12 0.1 30.5" rotation="0 135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair4"
+         position="14 0.1 30.5" rotation="0 -135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair5"
+         position="19 0.1 30.5" rotation="0 135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="chair6"
+         position="22 0.1 30.5" rotation="0 -135 0" scale="0.23 0.23 0.23"
+         gltf-model="#chair-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <!--Table-->
+         <a-entity
+         id="table1"
+         position="4 0.1 15" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table2"
+         position="4 0.1 25" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table3"
+         position="30 0.1 15" rotation="0 45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="table4"
+         position="30 0.1 25" rotation="0 -45 0" scale="0.23 0.23 0.23"
+         gltf-model="#table-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <!--Computers-->
+         <a-entity
+         id="computer1"
+         position="4.12 1 15.5" rotation="0 35 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="computer2"
+         position="4.5 1 25" rotation="0 135 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+         
+         <a-entity
+         id="computer3"
+         position="30.8 1 14.7" rotation="0 -38 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+         <a-entity
+         id="computer4"
+         position="30.3 1 25.93" rotation="0 -135 0" scale="0.07 0.07 0.07"
+         gltf-model="#computer-model"
+         shadow="cast:true; receive:true"
+         visible="true">
+         </a-entity>
+
+
+        <!--Receptionist Desk-->
+        <a-entity
+        id="receptionistDesk"
+        position="17 0.1 20" rotation="0 0 0" scale="0.33 0.33 0.33"
+        gltf-model="#reception-desk-model"
+        shadow="cast:true; receive:true"
+        visible="true">
+        </a-entity>
+
+        <!--Lobby Model-->
+        <a-entity
         id="orb-room"
         position="0 0 0"
         rotation="0 0 0"
-        scale="30 30 30"
+        scale="0.3 0.3 0.3"
         gltf-model="#orb-room-model"
         shadow="recieve:true;">
-        </a-entity>-->
+        </a-entity>
 
   </a-scene>
 
