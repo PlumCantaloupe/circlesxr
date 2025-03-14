@@ -13,7 +13,7 @@ AFRAME.registerComponent('circles-snap-turning', {
     CONTEXT_AF.trackpadY = 0.0;
 
     CONTEXT_AF.keyboard_detection();
-    CONTEXT_AF.trackpad_detection();
+    // CONTEXT_AF.trackpad_detection();
     CONTEXT_AF.joystick_detection();
     //CONTEXT_AF.touchscreen_detection(); //this detects swipes but not sure required as A-Frame already does this
   },

@@ -227,11 +227,11 @@ _NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/af
 
 Circles follows the [ECS (Entity-Component System)](https://aframe.io/docs/1.4.0/introduction/entity-component-system.html) programming design pattern that [A-Frame](https://aframe.io) follows, likely be familiar to [Unity](https://unity.com) Developers.
 
-Also note that Circle sis built on several libraries, giving you additional functionality. They follow:
-- [A-Frame](https://aframe.io/docs/1.4.0/introduction/), which is built on [Three.js](https://aframe.io/docs/1.4.0/introduction/developing-with-threejs.html): This gives us a 3D engine specifically created for building multi-platform WebXR content using [HTML](https://www.w3schools.com/whatis/whatis_html.asp) and [Javascript](https://www.w3schools.com/js/).
+Also note that Circles is built on several libraries, giving you additional functionality. The foundational libraries are:
+- [A-Frame](https://aframe.io), which is built on [Three.js](https://threejs.org): This gives us a 3D engine specifically created for building multi-platform WebXR content using [HTML](https://www.w3schools.com/whatis/whatis_html.asp) and [Javascript](https://www.w3schools.com/js/).
 - [Networked-Aframe](https://github.com/networked-aframe/networked-aframe): For quickly networking objects. To send simple message, and synching client states, see [Circles Networking](https://github.com/PlumCantaloupe/circlesxr#circles-networking).
 - [Aframe-extras (controls and pathfinding)](https://github.com/c-frame/aframe-extras). This library gives us additional multi-platform controls, including the ability to use [nav meshes](https://medium.com/@donmccurdy/creating-a-nav-mesh-for-a-webvr-scene-b3fdb6bed918) to limit movement within Circles' worlds.
-- [Aframe-Physics](https://github.com/c-frame/aframe-physics-system): Available for those that wish to include physics into their Circles worlds (see the "KIN_" worlds included as an example).
+- [Aframe-Physics-System](https://github.com/c-frame/aframe-physics-system): Available for those that wish to include physics into their Circles worlds (see the "KIN_" worlds included as an example).
 
 The general structure of the framework (and the Github repository) follows:
 
@@ -240,7 +240,7 @@ The general structure of the framework (and the Github repository) follows:
 - [Circles Worlds](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds): All Circles' worlds are placed here. From here they are modified to include Circles specific functionality and copied into an untracked folder on the server.
 - [Circles Groups](https://github.com/networked-aframe/networked-aframe#scene-component): All Circles' users are connected to others within the same "group" (or "room"), no matter which Circles world they are within. You can set this manually by adding `?group=YOUR_GROUP_NAME` manually to the end of your Circles URL e.g., `http://127.0.0.1:{SERVER_PORT}/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`, or as recommended above using [ngrok](https://ngrok.com/), `https://your_ngrok_url.ngrok.io/w/{YOUR_WORLD_FOLDER}?group={YOUR_GROUP_NAME}`. This group is then passed to the [networked-aframe](https://github.com/networked-aframe/networked-aframe) room property to connect users only to users within the same group..
 
-*Also note, that a [TestBed](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) is currently in development for testing selection and find performance using [Fitt's Law](https://www.yorku.ca/mack/hhci2018.html). At this time the TestBed, and the associated [research-manager](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed/scripts) components are local to the ["TestBed" world](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/Testbed). After more extensive testing it will likely be moved to the Circles core.*
+*Also note, that a [ResearchSpace](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ResearchSpace/) is currently in development for evaluating [Fitts' Law selections](https://www.yorku.ca/mack/hhci2018.html) and search performance. At this time the ResearchSpace, and the associated [research components](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ResearchSpace/scripts) are local to the ["ResearchSpace" world](https://github.com/PlumCantaloupe/circlesxr/tree/master/src/worlds/ResearchSpace/index.html). After more extensive testing it will likely be moved to the Circles core.*
 
 ----------------
 
@@ -289,9 +289,8 @@ CIRCLES.getNonNetworkedID(elem);
 
 //Example
 //You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
-CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
-    //to change speed of character movement
-    CIRCLES.getAvatarRigElement().setAttribute('movement-controls', {speed:0.3});
+document.addEventListener(CIRCLES.EVENTS.READY, function() {
+    console.log('Circles is ready!');
 });
 ```
 
