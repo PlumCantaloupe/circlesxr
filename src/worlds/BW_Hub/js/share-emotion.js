@@ -25,9 +25,12 @@ AFRAME.registerComponent('share-emotion', {
           //   });
 
           CONTEXT_AF.el.addEventListener('click', function() {
+            
             const holdingOrb = manager.getAttribute('manager').holdingOrb;
             //if holding orb then it can be dispensed
             if(holdingOrb) {
+              // play sound
+            CONTEXT_AF.el.components.sound.playSound();
               //un-parent orb from user and parent above the suction tube
               const holdingOrbId = manager.getAttribute('manager').holdingOrbId;
               const orb = document.querySelector(`#${holdingOrbId}`);
