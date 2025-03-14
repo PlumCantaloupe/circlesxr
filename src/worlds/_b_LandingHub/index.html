@@ -10,11 +10,12 @@
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
     <a-assets>
-
+      <a-assets-item id="world_model" src="/worlds/_b_LandingHub/assets/models/world_0/world0_model.gltf" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
+      <img id="sky_map" src ="/worlds/_b_LandingHub/assets/textures/space_sky.png" response-type="arraybuffer"></img>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
-
+    <a-entity id="environment-model" gltf-model="#world_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
   </a-scene>

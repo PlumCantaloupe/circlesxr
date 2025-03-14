@@ -32,10 +32,12 @@
     <!--env models-->
     <a-entity id="environment-model" gltf-model="#env_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
     <!--furniture models-->
-    <a-entity id="chryo" scale = " 1 1 1" position = "-2.274 1.2 -19.639" gltf-model="#chryo_model" visible='true'  shadow="receive:true; cast:true;" circles-sphere-env-map="src:#sky-map;"></a-entity>
+    <a-entity id="chryo" scale = " 1 1 1" position = "-2.274 1.2 -19.639" gltf-model="#chryo_model" visible='true'  shadow="receive:true; cast:true;" ></a-entity> <!--circles-sphere-env-map="src:#sky-map;"-->
     <!--npc models-->
-    <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;" circles-sphere-env-map="src:#sky-map;"></a-entity>
-    
+    <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle"></a-entity>
+    <script>
+      document.querySelector('#sproot').components['animation-mixer'].data
+    </script>
     
     <!---->
 
