@@ -60,29 +60,49 @@
         </a-entity>
 
         <!-- pedestal (this is huge)-->
-        <!--<a-entity
+        <a-entity
         id="pedestal"
         class="interactive"
-        position="2.3 0 0"
+        position="3.150 0 -1.822"
         rotation="0 90 0"
-        scale="1 1 1"
+        scale="0.05 0.05 0.05"
         gltf-model="#pedestal-model"
         shadow="cast:true; recieve:true;">
-        </a-entity>-->
+        </a-entity>
+
+        <a-entity
+        id="pedestal"
+        class="interactive"
+        position="-2.87 0 -3.581"
+        rotation="0 90 0"
+        scale="0.045 0.045 0.045"
+        gltf-model="#pedestal-model"
+        shadow="cast:true; recieve:true;">
+        </a-entity>
+
+        <a-entity
+        id="pedestal"
+        class="interactive"
+        position="4.592 0 3.352"
+        rotation="0 90 0"
+        scale="0.03 0.03 0.03"
+        gltf-model="#pedestal-model"
+        shadow="cast:true; recieve:true;">
+        </a-entity>
 
         <!-- testing minimal room model -->
         <a-entity
         id="minimal-room"
         position="0 0 0"
         rotation="0 0 0"
-        scale="4 4 4"
+        scale="0.23 0.23 0.23"
         gltf-model="#minimal-room-model"
-        shadow="recieve:true;">
+        shadow="recieve:false; cast:false;">
         </a-entity>
 
         <!-- EXIT: back to lobby portal -->
         <a-entity id="portal_link"
-        position="0.656 1.347 9.268" rotation="0 143.672 0" scale="1 1 1"
+        position="-4.573 1.347 4.479" rotation="0 143.672 0" scale="1 1 1"
         circles-portal="title_text:Exit to Lobby; link_url:/w/Keepsake"></a-entity>
 
   </a-scene>
