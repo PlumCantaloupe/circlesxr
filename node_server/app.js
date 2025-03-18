@@ -333,7 +333,12 @@ io.on("connection", socket => {
       socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
     }
   });
-  
+
+  socket.on("fireToggled", (data) => {
+    console.log("Received 'fireToggled' event from client:", data);
+        // Broadcast to all connected clients, including the sender
+        io.emit('fireToggled', data);
+      });
 });
 
 //let's create a research namespace.

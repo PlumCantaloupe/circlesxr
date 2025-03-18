@@ -20,9 +20,12 @@
     <!-- add your custom scripts here -->
 
     <script src="js/sorting-component.js"></script> 
+    <script src="js/cave_networking.js"></script> 
     <script src="components/toggle-movement.js"></script>
     <script src="components/toggle-canvas.js"></script>
     <script src="components/update-canvas.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
 
   </head>
   <body>
@@ -141,8 +144,7 @@
         gltf-model="#campfire-gltf"
         shadow="receive: true; cast: true"
         circles-interactive-object="type:highlight"
-        onclick="document.getElementById('fireRig').setAttribute('visible', 'true');
-                   document.getElementById('fireParticlesSound').components.sound.playSound();">
+        onclick="toggleFire();">
         </a-entity>
       </a-entity>
 

@@ -27,7 +27,8 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pug": "^3.0.3",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
