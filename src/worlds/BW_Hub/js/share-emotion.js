@@ -50,7 +50,7 @@ AFRAME.registerComponent('share-emotion', {
               setTimeout(function() {
                 //trigger visualization update
                 CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
-                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 console.log("emit")
                 orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
                 orb.parentNode.removeChild(orb);
@@ -70,11 +70,11 @@ AFRAME.registerComponent('share-emotion', {
             }
           })
 
-          //listen for when others turn on campfire
-          CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-            console.log(data.orbTypeToUpdate)
-            CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}) 
-        });
+        //   //listen for when others turn on campfire
+        //   CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+        //     console.log(data.orbTypeToUpdate)
+        //     CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}) 
+        // });
       };
 
       //check if circle networking is ready. If not, add an eent to listen for when it is ...
