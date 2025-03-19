@@ -22,6 +22,7 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <a-asset-item id="library_model" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="navmesh_model" src="assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -38,7 +39,10 @@
                 position="2 1.5 0" rotation="0 -108 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
-      
+      <!--navmesh-->
+
+      <a-entity id="navmesh" gltf-model="#navmesh_model" visible='false' nav-mesh></a-entity>
+
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
