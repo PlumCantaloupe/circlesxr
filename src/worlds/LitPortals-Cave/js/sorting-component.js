@@ -9,7 +9,11 @@ AFRAME.registerComponent('sorting-collision', {
         //this.itemBoundary = new THREE.Box3();
         this.boxBoundary = new THREE.Box3();
 
-        this.el.addEventListener('mouseup', () => {
+        /*this.el.addEventListener('mouseup', () => {
+            this.checkCollision();
+        });*/
+
+        this.el.addEventListener('releaseEventFunc', () => {
             this.checkCollision();
         });
     },
@@ -45,7 +49,7 @@ AFRAME.registerComponent('sorting-collision', {
                     //this.checkItemPositions();
                     
                 } else {
-                    //document.querySelector("#buzzer").components.sound.playSound();
+                    //document.querySelector("#buzzer").components.sound.playSound(); took out bc sometimes the item will touch both boundaries which plays the ding and buzz at the same time
                     console.log(`❌ Item ${item.id} is in the wrong spot`);
                     delete this.allItems[item.id];
                 }
