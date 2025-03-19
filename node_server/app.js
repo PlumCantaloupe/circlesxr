@@ -339,6 +339,15 @@ io.on("connection", socket => {
         // Broadcast to all connected clients, including the sender
         io.emit('fireToggled', data);
       });
+
+    // Listen for environment change from client
+    socket.on("changeEnvironment", (newEnvironment) => {
+    console.log(`Received environment change request from ${socket.id}: ${newEnvironment}`);
+    
+    // Broadcast the change to all connected clients
+    io.emit("updateEnvironment", newEnvironment);
+    console.log(`Broadcasting new environment to all clients: ${newEnvironment}`);
+  });
 });
 
 //let's create a research namespace.
