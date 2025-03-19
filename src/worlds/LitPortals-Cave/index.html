@@ -65,10 +65,13 @@
 
          <!-- AUDIO -->
         <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-        <a-sound id="ding" src="assets/ding.mp3" preload="auto" position="9 1 1"></a-sound>
+        
+        <a-sound id="ding" src="assets/sounds/ding.mp3" preload="auto" position="11.5 0.7 -14.4"></a-sound>
         <!--credit:https://pixabay.com/sound-effects/ding-101492/-->
-        <a-sound id="buzzer" src="assets/buzzer.mp3" preload="auto" position="9 1 1"></a-sound>
+        <a-sound id="buzzer" src="assets/sounds/buzzer.mp3" preload="auto" position="11.5 0.7 -14.4"></a-sound>
         <!--credit: https://pixabay.com/sound-effects/wrong-47985/-->
+        <a-sound id="trumpet" src="assets/sounds/trumpet.mp3" preload="auto" position="11.5 0.7 -14.4"></a-sound>
+        <!--credit:https://uppbeat.io/sfx/winner-trumpet-fanfare/11352/29787-->
 
         <!-- credit: https://freesound.org/people/LittleRobotSoundFactory/sounds/270387/  -->
          <a-sound id="cave_Amb-snd" src="assets/sounds/cave_Ambience.wav" preload="true"></a-sound>
@@ -231,16 +234,16 @@
                 circles-pickup-networked></a-entity>    
 
       <!--artifacts (vases go here)--> 
-      <a-sphere id="artifact1" class="sorting_item" data-order="4" sorting-collision 
+      <a-sphere id="artifact1" class="sorting_item" data-order="4" data-correct="false" sorting-collision 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="12.5 2.5 -15.1" scale="0.4 0.4 0.4" color="red"></a-sphere>
-      <a-sphere id="artifact2" class="sorting_item" data-order="3" sorting-collision
+      <a-sphere id="artifact2" class="sorting_item" data-order="3" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="12.5 2.5 -14.2" scale="0.4 0.4 0.4" color="yellow"></a-sphere>
-      <a-sphere id="artifact3" class="sorting_item" data-order="2" sorting-collision
+      <a-sphere id="artifact3" class="sorting_item" data-order="2" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="12.5 2.5 -13.3" scale="0.4 0.4 0.4" color="green"></a-sphere>
-      <a-sphere id="artifact4" class="sorting_item" data-order="1" sorting-collision
+      <a-sphere id="artifact4" class="sorting_item" data-order="1" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5"
         position="12.5 2.5 -12.5" scale="0.4 0.4 0.4" color="blue"></a-sphere>
 
