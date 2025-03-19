@@ -3,13 +3,16 @@ AFRAME.registerComponent('sorting-collision', {
     init: function() {
         //this.sortingItems = document.querySelectorAll('.sorting_item'); //sortingItems = any element with class 'sorting_item'
         this.boundaryBoxes = document.querySelectorAll('.collisionbox'); //^ ^
-        this.allItems = {};
 
         //bounding boxes
         //this.itemBoundary = new THREE.Box3();
         this.boxBoundary = new THREE.Box3();
 
-        this.el.addEventListener('mouseup', () => {
+        /*this.el.addEventListener('mouseup', () => {
+            this.checkCollision();
+        });*/
+
+        this.el.addEventListener('releaseEventFunc', () => {
             this.checkCollision();
         });
     },
@@ -41,23 +44,34 @@ AFRAME.registerComponent('sorting-collision', {
 
                     document.querySelector("#ding").components.sound.playSound();
                     item.object3D.position.copy(goalPosition); //makes artifact reposition (have to press on artifact itself)
-                    this.allItems[item.id] = true; //all items are correctly placed
-                    //this.checkItemPositions();
+
+                    item.setAttribute("data-correct", "true");
+                    this.checkItemPositions();
                     
                 } else {
-                    //document.querySelector("#buzzer").components.sound.playSound();
+                    //document.querySelector("#buzzer").components.sound.playSound(); took out bc sometimes the item will touch both boundaries which plays the ding and buzz at the same time
                     console.log(`❌ Item ${item.id} is in the wrong spot`);
-                    delete this.allItems[item.id];
+
+                    item.setAttribute("data-correct", "false");
                 }
             }
         });
     },
 
     checkItemPositions: function() {
-        console.log("Current placed items:", Object.keys(this.allItems)); 
-        console.log("Number of placed items:", Object.keys(this.allItems).length); 
+        let allItems = document.querySelectorAll('.sorting_item'); // = any element with class 'sorting_item'
 
-        if (Object.keys(this.allItems).length === 4) { // if all items are placed
+        let allCorrect = true;
+        allItems.forEach((item) => {
+            if (item.getAttribute("data-correct") !== "true") {
+                allCorrect = false;
+            }
+        });
+
+        console.log("Logging..."); 
+
+        if (allCorrect) { // if all items are placed
+            document.querySelector("#trumpet").components.sound.playSound();
             console.log("🎉 All items sorted correctly! Congrats.");
         }
     }
