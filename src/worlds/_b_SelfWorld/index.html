@@ -1,7 +1,11 @@
 <html>
 <head>
+  
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+
+  <!--Our Scripts-->
+ 
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -9,25 +13,84 @@
 
   <!-- a-scene with 'circles-properties' component [REQUIRED] -->
   <a-scene circles_scene_properties>
-    <a-assets>
+    <a-assets timeout="10000">
         <!--OurLoaded in Assets-->
+        <!--Env-->
         <a-asset-item id="navmesh_gltf" src="/worlds/_b_SelfWorld/assets/beta_self_navmesh.glb" response-type="arraybuffer" ></a-asset-item>
-        <a-asset-item id="env_model" src="/worlds/_b_SelfWorld/assets/beta_self.glb" response-type="arraybuffer" ></a-asset-item>
+        <a-asset-item id="env_model" src="/worlds/_b_SelfWorld/assets/beta_self_new.glb" response-type="arraybuffer" ></a-asset-item>
+        <a-assets-item id="chryo_model" src="/worlds/_b_SelfWorld/assets/test_models/chryoTest.glb" response-type="arraybuffer" ></a-asset-item>></a-assets-item>
+        <!--NPCs-->
+        <a-asset-item id = "sproot_model" src = "/worlds/_b_SelfWorld/assets/models/sproot/sproot_model.gltf"  response-type="arraybuffer"></a-asset-item>
+
+        <!--papers-->
+        <a-asset-item id = "paper_model0" src = "/worlds/_b_SelfWorld/assets/models/papers/papers1.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "paper_model1" src = "/worlds/_b_SelfWorld/assets/models/papers/papers2.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "paper_model2" src = "/worlds/_b_SelfWorld/assets/models/papers/papers3.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "frog_model" src = "/worlds/_b_SelfWorld/assets/models/other/frogs.glb"  response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id = "grass_model" src = "/worlds/_b_SelfWorld/assets/models/other/grass.glb"  response-type="arraybuffer"></a-asset-item>
+        <!--Images-->
+        <img id="sky_map" src = "/worlds/_b_SelfWorld/assets/textures/cloudy_sky.jpg"></img>
+        <!--Sound-->
+        <a-asset-item  id = "sproot_dialogue" src = "/worlds/_b_SelfWorld/assets/sounds/SprootDialogue.wav" response-type="arraybuffer"></a-asset-item >
+        <a-asset-item  id = "self_music" src = "/worlds/_b_SelfWorld/assets/sounds/Self_Music.mp3" response-type="arraybuffer"></a-asset-item >
+        <a-asset-item  id = "ambiance_effects" src = "/worlds/_b_SelfWorld/assets/sounds/ambiance.wav" response-type="arraybuffer"></a-asset-item  >
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     
     </a-assets> <!---------------------------------------------------------------------------------------------------------->
-
+    
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
     <!--light-->
-    <a-entity light="type: hemisphere; color:#fffcd6; groundColor:#499763; intensity: 1.2" position = "8.819 18.436 -8.481"></a-entity>
-    <!--models-->
-    <a-entity id="environment-model" gltf-model="#env_model" visible='true' material = "shader:phong; reflectivity: 0.9; shininess: 30 color: red"  shadow="receive:true; cast:true;"></a-entity>
-    <!--navmesh-->
-    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'   nav-mesh ></a-entity>
+    <a-entity light="type:point; color:#e1c2a8; groundColor:#499763; intensity: 22" position = "3.994 6.292 -5.825"></a-entity>
+    <a-entity light="type:directional; color:#ffffff; groundColor:#499763; intensity: 1" position = "-15.048 16.165 -15.023"></a-entity>
+    <a-entity light="type:ambient; color:#fdf35d; groundColor:#499763; intensity: 1.38" position = "0 10 -7"></a-entity>
+    <!--env models-->
+    <a-entity id="environment-model" gltf-model="#env_model" visible='true' sa  shadow="receive:true; cast:true;"></a-entity>
+    <!--furniture models-->
+   
+    <!--npc models-->
+    
+    <a-entity id="sproot" scale = " 0.5 0.5 0.5" position = "-4.970 1.187 -7.836" gltf-model="#sproot_model" visible='true'  shadow="receive:true; cast:true;"  animation-mixer="loop:repeat; clip:Sproot_Idle" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    
+    <a-entity id="grass" scale = "1 1 1" position = "-9.911 -0.965 -0.400" gltf-model="#grass_model" visible='true'   animation-mixer="loop:repeat; clip:Wind_V1" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    <a-entity id="grass" scale = "1 1 1" position = "12.980 -0.965 -9.371" gltf-model="#grass_model" visible='true'   animation-mixer="loop:repeat; clip:Wind_V1" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    <a-entity id="grass" scale = "1 1 1" position = "10.305 -0.965 -19.207" gltf-model="#grass_model" visible='true'   animation-mixer="loop:repeat; clip:Wind_V1" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    
+    <a-entity id="frogs" scale = "0.020 0.020 0.020" position = "-6.209 0 -1.740" gltf-model="#frog_model" visible='true'   animation-mixer="loop:repeat; clip:frog" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    <a-entity id="frogs" scale = "0.020 0.020 0.020" position = "-2.277 0.759 -11.662" rotation = "0 75 0" gltf-model="#frog_model" visible='true'   animation-mixer="loop:repeat; clip:frog" circles-sphere-env-map = "src:#sky_map"></a-entity>
+    <a-box  scale = " 1 1 1" id = "sproot_collider" class = "interactive" position = "-4.702 2.460 -7.749" visible = "false"  geometry onclick-sproot></a-box>
+    
+    
+    <!---->
+    <a-entity id="papers1"  rotation = " 0 -40 0" scale = " 1 1 1" position = "-3.518 0.744 -11.350" gltf-model="#paper_model0" visible='true'  circles-pickup-object = "pickupRotation: -80 0 0"></a-entity> 
+    <a-entity id="papers2" scale = " 1 1 1" position = "5.990 0.744 -10.861" gltf-model="#paper_model1" visible='true'  circles-pickup-object = "pickupRotation: -80 0 0"></a-entity>
+    <a-entity id="papers3" scale = " 1 1 1" position = "3.984 0.744 -15.158" gltf-model="#paper_model2" visible='true'  circles-pickup-object = "pickupRotation: -80 0 0"></a-entity>
+    
+    
+      <!--navmesh-->
+    <a-entity id="navmesh" gltf-model="#navmesh_gltf" visible='false'  nav-mesh ></a-entity>
+    <a-entity id="skySphere" scale=" 3 3 3">
+      <a-sky src = "#sky_map"></a-sky>
+    </a-entity>
+    <a-entity id="dialogue" position="-3.667 2.721 -7.566" circles-sound = "src:#sproot_dialogue; type:dialogue" ></a-entity>
+
+    <a-entity  scale = "2 2 2" position="-0.77 1.357 7.185" rotation = " 0 90 0" circles-portal="img_src:#link_1_360; title_text:Return To Hub; link_url:/w/_b_LandingHub" ></a-entity>
+    <a-entity id="env_music" position = " 0 8 -11.130" circles-sound = "src:#self_music; autoplay:true; volume:0.4; loop:true; type: basic" ></a-entity>
+    <a-entity id="ambiance_music" position = " 0 5 -11.130" circles-sound = "src:#ambiance_effects; autoplay:true; volume:0.2; loop:true; type: ambience" ></a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="0.108 0.05 2.826"></a-entity>
+    
+    <a-entity circles-checkpoint position="0.108 0.05 -2.052"></a-entity>
+    <a-entity circles-checkpoint position="0.108 0.688 -8.301"></a-entity>
+    <a-entity circles-checkpoint position="-2.93 0.688 -7.768"></a-entity>
+    <a-entity circles-checkpoint position="-3.02 0.688 -13.54"></a-entity>
+    <a-entity circles-checkpoint position="0.338 0.688 -15.96"></a-entity>
+    <a-entity circles-checkpoint position="4.426 0.688 -12.73"></a-entity>
+    <a-entity circles-checkpoint position="6.471 0.688 -8.434"></a-entity>
   </a-scene>
-  
+
+  <script>
+  </script>
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
