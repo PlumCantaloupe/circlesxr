@@ -35,11 +35,21 @@
 
     <!-- cave painting stuff -->
     <div id="canvasDiv">
-      <div class="center">
-      <button onclick="toggleCanvas()"> exit painting</button>
-      <canvas id="drawCanvas" width="512" height="512" style="border:1px solid #000000;" ></canvas>
+      <canvas  class="center" id="drawCanvas" width="200" height="200" style="border:1px solid #000000;" ></canvas>
+      <div>
+        <button onclick="toggleCanvas()"> exit painting</button>
+        <button id="updateTexture"> update texture</button>
+
+        <!-- <p>Touched coordinates: </p> -->
+        <p>Coordinates: </p>
+        <p id="clickCoords"> Mouse Coordinates:</p>
+        <p id="touchCoords">Touch Coordinates:</p>
+
+
+
       </div>
     </div>
+  
   
     <script>
       let toggleCanvas = function (){
