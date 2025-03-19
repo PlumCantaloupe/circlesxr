@@ -1,16 +1,8 @@
-<<<<<<< HEAD
+
 require('./aframe-audioanalyser-component');
 require('./bw-shared-state-manager.js')
 require('./bw-teleport-pad-manager.js')
 
-=======
-//custom BW components
-require('./aframe-audioanalyser-component.js');
-require('./bw-shared-state-manager.js')
-require('./bw-teleport-pad-manager.js')
-
-//circles components
->>>>>>> parent of 223f890 (Merge branch 'kayla-delta' into development)
 require('./circles-add-camera-equipment');
 require('./circles-artefact');
 require('./circles-avatar-construction');
