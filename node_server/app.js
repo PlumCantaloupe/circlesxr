@@ -348,7 +348,18 @@ io.on("connection", socket => {
     io.emit("updateEnvironment", newEnvironment);
     console.log(`Broadcasting new environment to all clients: ${newEnvironment}`);
   });
+
+  socket.on('updateCanvas', (data) =>{
+    //console.log('Server recieving: ' + data);
+
+    //sending change too all clients
+    io.emit('updateCanvas', (data));
+  
+  });
+
 });
+
+
 
 //let's create a research namespace.
 //This will definitely need to be redone if we run more than one experiemnet on this server at a time in the future

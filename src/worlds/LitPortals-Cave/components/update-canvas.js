@@ -10,7 +10,16 @@ AFRAME.registerComponent("update-canvas", {
         Context_AF.texture = null;
         Context_AF.material = Context_AF.el.getObject3D("mesh").material;
         let canvas = document.getElementById("drawCanvas");
-        const updateButton = document.querySelector("#updateTexture");
+        const context = canvas.getContext("2d");
+
+        // let imgData = context.getImageData(0,0,canvas.width, canvas.height);
+
+        Context_AF.updateButton = document.querySelector("#updateTexture");
+
+
+        Context_AF.socket= null;
+        Context_AF.connected  = false;
+
 
         canvas.addEventListener("mouseup", e => {
             Context_AF.isDrawing = false;
@@ -25,11 +34,85 @@ AFRAME.registerComponent("update-canvas", {
             console.log("mousedown in the updatee component")
         });
 
-        updateButton.addEventListener("click",function(){
+
+        Context_AF.createNetworkingSystem = function () {
+            Context_AF.socket = CIRCLES.getCirclesWebsocket();
+            Context_AF.connected = true;
+
+            console.log('CONNECTED!!!!!!!!');
+
+            Context_AF.updateButton.addEventListener("click",function(){
+
+                // const imgData = context.getImageData(0,0,canvas.width, canvas.height);
+             
+                // imgData is saved as an ImageData object as expected...
+                // console.log('Sending canvas: ' + imgData);  //// Sending canvas: [object ImageData]
+                // console.log(imgData);
+
+                // but it's not sending as an ImageData obj ......
+                // Context_AF.socket.emit('updateCanvas', imgData);
+               
+
+
+                // https://developer.mozilla.org/en-US/docs/Web/API/ImageData/ImageData
+                // https://stackoverflow.com/questions/22228552/serialize-canvas-content-to-arraybuffer-and-deserialize-again
+                // trying to send as Uint8ClampedArray >>> 
+                const imgData = context.getImageData(0,0,canvas.width, canvas.height);
+                
+
+                const canvasArray = new Uint8Array(imgData.data);
+
+                let canvasBuffer = imgData.data.buffer;
+                Context_AF.socket.emit('updateCanvas', canvasBuffer);
+
+                // Testing some outputs
+                // console.log(imgData.data.byteLength);
+                // console.log(canvasArray);
+                // console.log(canvasArray.buffer);
+
+
+                
+            });
+
+            Context_AF.socket.on('updateCanvas', (data) => {
+
+                console.log('front end recieving: ' + data);    //// front end recieving: [object ArrayBuffer]
+                console.log(data);
+
+                let incommingBuffer = data;
+                let imgData = context.createImageData(canvas.width, canvas.height);
+                imgData.data.set(incommingBuffer); 
+
+                
+                console.log(imgData);
+
+               // context.putImageData(imgData,0,0);
+                applyTexture();
+
+
+            });
+
+
+        };
+
+        function applyTexture (){
             material = Context_AF.el.getObject3D("mesh").material;
             material.map.needsUpdate = true;
-            console.log("updating texture by click");
-        });
+            console.log("updating texture ");
+        }
+
+
+        if (CIRCLES.isCirclesWebsocketReady()) {
+            Context_AF.createNetworkingSystem();
+            console.log('circles websocket is ready ');
+        }
+        else {
+            const wsReadyFunc = function() {
+                Context_AF.createNetworkingSystem();
+                Context_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+            };
+            Context_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+        }
 
         Context_AF.el.addEventListener("loaded", e => {
 
@@ -40,6 +123,9 @@ AFRAME.registerComponent("update-canvas", {
             // mesh.material.map = Context_AF.texture;
             // if (textureToBeRemoved) textureToBeRemoved.dispose();
         });
+
+
+
         },
 
     // tick: function() {
