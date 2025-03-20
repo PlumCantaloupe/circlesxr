@@ -349,11 +349,13 @@ io.on("connection", socket => {
     console.log(`Broadcasting new environment to all clients: ${newEnvironment}`);
   });
 
-  socket.on('updateCanvas', (data) =>{
+  socket.on('canvasData', (data) =>{
     //console.log('Server recieving: ' + data);
 
-    //sending change too all clients
-    io.emit('updateCanvas', (data));
+    //sending change too all clients but initial sender
+    socket.broadcast.emit('updateCanvas', data);
+    //console.log(data);
+
   
   });
 
