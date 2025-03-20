@@ -116,6 +116,8 @@ AFRAME.registerComponent("update-canvas", {
             console.log("updating texture ");
         }
 
+        //https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
+        // https://jsfiddle.net/donmccurdy/jugzk15b/
         function sendCanvasData (){
 
             // const dataURL = canvas.toDataURL("image/png"); 
@@ -132,7 +134,7 @@ AFRAME.registerComponent("update-canvas", {
                 reader.onloadend = () => {
                     socket.emit("canvasData", reader.result);
                 };
-            }, "image/png"); // Specify PNG format
+            }, "image/png"); 
 
         }
 
