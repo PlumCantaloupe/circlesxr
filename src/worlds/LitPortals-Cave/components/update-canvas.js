@@ -63,27 +63,46 @@ AFRAME.registerComponent("update-canvas", {
 
                 // apply texture to plane client only
 
-                
+
                 applyTexture();
                 sendCanvasData();
                 
             });
 
             // recieve canvas data, updates canvas than applies texture
-            Context_AF.socket.on('updateCanvas', (dataURL) => {
+            // Context_AF.socket.on('updateCanvas', (dataURL) => {
 
-                // console.log('front end recieving: ' + data);    //// front end recieving: [object ArrayBuffer]
-                // let incommingBuffer = data;
-                // let imgData = context.createImageData(canvas.width, canvas.height);
-                // imgData.data.set(incommingBuffer); 
-                // context.putImageData(imgData,0,0);
+            //     // console.log('front end recieving: ' + data);    //// front end recieving: [object ArrayBuffer]
+            //     // let incommingBuffer = data;
+            //     // let imgData = context.createImageData(canvas.width, canvas.height);
+            //     // imgData.data.set(incommingBuffer); 
+            //     // context.putImageData(imgData,0,0);
                 
-                console.log('recieving dataURL');
+            //     console.log('recieving dataURL');
+            //     const img = new Image();
+            //     img.src = dataURL;
+            //     img.onload = () => {
+            //         context.clearRect(0, 0, canvas.width, canvas.height); // Clear before drawing
+            //         context.drawImage(img, 0, 0);
+            //     };
+            //     applyTexture();
+            // });
+
+            Context_AF.socket.on('updateCanvas', (arrayBuffer) => {
+                
+                console.log('recieving arrayBuffer');
+
+                const blob = new Blob([arrayBuffer], { type: "image/png" });
+                const url = URL.createObjectURL(blob);
+
+                console.log('url: '+ url);
                 const img = new Image();
-                img.src = dataURL;
+                img.src = url;
                 img.onload = () => {
-                    context.clearRect(0, 0, canvas.width, canvas.height); // Clear before drawing
+                    context.clearRect(0, 0, canvas.width, canvas.height); // clear before drawing
                     context.drawImage(img, 0, 0);
+                    // no longer needed, clear up memory
+                    URL.revokeObjectURL(url); 
                 };
                 applyTexture();
             });
@@ -99,11 +118,27 @@ AFRAME.registerComponent("update-canvas", {
 
         function sendCanvasData (){
 
-            const dataURL = canvas.toDataURL("image/png"); 
-            Context_AF.socket.emit("canvasData", dataURL);
+            // const dataURL = canvas.toDataURL("image/png"); 
+            // Context_AF.socket.emit("canvasData", dataURL);
 
-            console.log('sending dataURL');
+            // console.log('sending dataURL');
+
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+        
+                // Convert Blob to ArrayBuffer
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(blob);
+                reader.onloadend = () => {
+                    socket.emit("canvasData", reader.result);
+                };
+            }, "image/png"); // Specify PNG format
+
         }
+
+        // updates canvas periodically for all users 
+        //this would override all canvases. if new person joined the canvas set to blank for all 
+        //setInterval(sendCanvasData, 3000);
 
 
         if (CIRCLES.isCirclesWebsocketReady()) {
