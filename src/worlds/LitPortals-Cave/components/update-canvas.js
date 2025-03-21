@@ -10,6 +10,7 @@ AFRAME.registerComponent("update-canvas", {
         Context_AF.texture = null;
         Context_AF.material = Context_AF.el.getObject3D("mesh").material;
         let canvas = document.getElementById("drawCanvas");
+        const updateButton = document.querySelector("#updateTexture");
 
         canvas.addEventListener("mouseup", e => {
             Context_AF.isDrawing = false;
@@ -24,6 +25,12 @@ AFRAME.registerComponent("update-canvas", {
             console.log("mousedown in the updatee component")
         });
 
+        updateButton.addEventListener("click",function(){
+            material = Context_AF.el.getObject3D("mesh").material;
+            material.map.needsUpdate = true;
+            console.log("updating texture by click");
+        });
+
         Context_AF.el.addEventListener("loaded", e => {
 
             //console.log('the plane is loaded');
@@ -35,20 +42,18 @@ AFRAME.registerComponent("update-canvas", {
         });
         },
 
-    tick: function() {
-        const Context_AF = this;
-        material = Context_AF.el.getObject3D("mesh").material;
-        if (!material.map) {
-            console.error("no material map");
-            return;
-          }
-          else if (Context_AF.isDrawing){
-            material.map.needsUpdate = true;
-            console.log("updating texture")
+    // tick: function() {
+    //     const Context_AF = this;
+    //     material = Context_AF.el.getObject3D("mesh").material;
+    //     if (!material.map) {
+    //         console.error("no material map");
+    //         return;
+    //       }
+    //       else if (Context_AF.isDrawing){
+    //         material.map.needsUpdate = true;
+    //         console.log("updating texture")
 
-          }
+    //       }
           
-
-    // if (Context_AF.texture && Context_AF.isDrawing) Context_AF.texture.needsUpdate = true;
-    }
+    // }
   });
