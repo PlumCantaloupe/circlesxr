@@ -21,26 +21,26 @@
     <a-assets>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
-      <a-asset-item id ="logModel" src="assets/models/RIA/Log.glb"></a-asset-item>
-      <a-asset-item id ="Raft1" src="assets/models/RIA/Raft1.glb"></a-asset-item>
-      <a-asset-item id ="Raft2" src="assets/models/RIA/Raft2.glb"></a-asset-item>
-      <a-asset-item id ="Raft3" src="assets/models/RIA/Raft3.glb"></a-asset-item>
-      <a-asset-item id ="Raft4" src="assets/models/RIA/Raft4.glb"></a-asset-item>
+      <a-asset-item id ="logModel" src="assets/models/RIA/Log.gltf"></a-asset-item>
+      <a-asset-item id ="Raft1" src="assets/models/RIA/Raft1.gltf"></a-asset-item>
+      <a-asset-item id ="Raft2" src="assets/models/RIA/Raft2.gltf"></a-asset-item>
+      <a-asset-item id ="Raft3" src="assets/models/RIA/Raft3.gltf"></a-asset-item>
+      <a-asset-item id ="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
       <a-asset-item
-          id="chair_1_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/chair.glb"
+          id="chair_gltf"
+          src="/worlds/KrieghoffsEyes/assets/models/chair/chair.gltf"
           response-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
         <a-asset-item
-          id="easle_and_painting_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/painting.glb"
+          id="painting_gltf"
+          src="/worlds/KrieghoffsEyes/assets/models/painting/painting.gltf"
           response-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
         <a-asset-item
-          id="palette.gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/palette.glb"
+          id="palette_gltf"
+          src="/worlds/KrieghoffsEyes/assets/models/palette/palette.gltf"
           responnse-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
@@ -53,6 +53,13 @@
         <a-asset-item
           id="stool_round_gltf"
           src="/worlds/KrieghoffsEyes/assets/models/stool_round/stool_round.gltf"
+          responnse-type="arraybuffer"
+          crossorigin="anonymous"
+        ></a-asset-item>
+
+        <a-asset-item
+          id="stool_gltf"
+          src="/worlds/KrieghoffsEyes/assets/models/stool/stool.gltf"
           responnse-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
@@ -80,7 +87,14 @@
           responnse-type="arraybuffer"
           crossorigin="anonymous"
         ></a-asset-item>
-
+        
+        <a-asset-item
+          id="frame_gltf"
+          src="/worlds/KrieghoffsEyes/assets/models/frame/frame1.gltf"
+          responnse-type="arraybuffer"
+          crossorigin="anonymous"
+        ></a-asset-item>
+        
         <a-asset-item
           id="room"
           src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf"
@@ -208,43 +222,44 @@
   <a-entity
   id="chair"  
   position="2.78254 0 -5.84547"
-    rotation="0 11.506138441817194 0"
-    scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/chair.glb"
+  rotation="0 11.506138441817194 0"
+  scale="20 20 20"
+  gltf-model="#chair_gltf"
   ></a-entity>
 
-  <a-entity id="chair-2" 
-            position="4.45998 -0.33531 -2.62104" 
-            rotation="0.8445397900228334 -5.826980776480472 119.99741582322396" 
-            scale="20 20 20" 
-            gltf-model="/worlds/KrieghoffsEyes/assets/models/chair.glb">
+  <a-entity 
+   id="chair-2" 
+   position="4.45998 -0.33531 -2.62104" 
+   rotation="0.8445397900228334 -5.826980776480472 119.99741582322396" 
+   scale="20 20 20" 
+   gltf-model="#chair_gltf">
   </a-entity>
 
   <a-entity
     id="painting"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/painting.glb"
+    gltf-model="#painting_gltf"
     position="2.69453 0 -5.4894"
     rotation="0 -38.35895142621349 0"
   ></a-entity>
   <a-entity
   id="painting1"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/painting.glb"
+    gltf-model="#painting_gltf"
     position="-2.85013 0 -4.29198"
     rotation="0 -46.65824508868346 0"
   ></a-entity>
   <a-entity
     id="painting2"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/painting.glb"
+    gltf-model="#painting_gltf"
     position="-1.05372 0 -5.11934"
     rotation="0 -82.69671744461711 0"
   ></a-entity>
   <a-entity
     id="painting3"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/painting.glb"
+    gltf-model="#painting_gltf"
     position="0.90896 0 -4.31538"
     rotation="0 -130.53239080229443 0"
   ></a-entity>
@@ -252,57 +267,57 @@
   <a-entity
     id="palette"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/palette.glb"
-    position="0.90896 0 -4.31538"
-    rotation="0 -130.53239080229443 0"
+    gltf-model="#palette_gltf"
+    position="-2.927 0.064 -4.31538"
+    rotation="0 0 0"
   ></a-entity>
 
   <a-entity
     id="palette2"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/palette.glb"
-    position="0.90896 0 -4.31538"
-    rotation="0 -130.53239080229443 0"
+    gltf-model="#palette_gltf"
+    position="-1.169 0.064 -4.31538"
+    rotation="0 -130 0"
   ></a-entity>
 
   <a-entity
     id="palette3"
     scale="20 20 20"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/palette.glb"
-    position="0.90896 0 -4.31538"
-    rotation="0 -130.53239080229443 0"
+    gltf-model="#palette_gltf"
+    position="0.857 0.064 -4.31538"
+    rotation="0 -90 0"
   ></a-entity>
 
   <a-entity
     id="frame1"
     scale="0.28877 0.28877 0.28877"
-    gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb"
+    gltf-model="#frame_gltf"
     position="-5.594 1.173 -1.487"
     rotation="0 -180 0"
   ></a-entity>
   <a-entity id="frame1-2" 
             scale="0.28877 0.28877 0.28877" 
-            gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
+            gltf-model="#frame_gltf" 
             position="-5.594 1.17321 -5.71147" 
             rotation="0 -180 0"></a-entity>
   <a-entity id="frame1-3" 
             scale="0.28877 0.28877 0.28877" 
-            gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
+            gltf-model="#frame_gltf" 
             position="5.594 1.17321 -1.48734"></a-entity>
   <a-entity id="frame1-4"
             scale="0.28877 0.28877 0.28877" 
-            gltf-model="/worlds/KrieghoffsEyes/assets/models/frame1.glb" 
+            gltf-model="#frame_gltf" 
             position="5.594 1.17321 -5.91606"></a-entity>
 
   <a-entity id="stool"
             scale="1 1 1" 
-            gltf-model="/worlds/KrieghoffsEyes/assets/models/stool.glb" 
+            gltf-model="#stool_gltf" 
             position="3.618 -0.025 0"></a-entity>
 
   
   <a-entity id="stool"
             scale="1 1 1" 
-            src="/worlds/KrieghoffsEyes/assets/models/stool.glb" 
+            gltf-model="#stool_gltf" 
             position="3.618 -0.025 0"></a-entity>
   <!-- Book Piles -->
   <a-entity id="book_pile_1" gltf-model="#book_pile_gltf" position="3.59154 0.00085 -0.83013"></a-entity>

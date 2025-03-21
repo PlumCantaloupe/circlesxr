@@ -8,138 +8,52 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				1,
-				4,
-				6,
-				10
+				0
 			]
 		}
 	],
 	"nodes":[
 		{
-			"name":"Wall1"
-		},
-		{
-			"children":[
-				0
-			],
-			"name":"RootNode",
-			"scale":[
-				0.26185449957847595,
-				0.26185449957847595,
-				0.26185449957847595
-			]
-		},
-		{
-			"name":"Floor"
-		},
-		{
-			"children":[
-				2
-			],
-			"name":"group1",
-			"scale":[
-				2.683534622192383,
-				2.1958041191101074,
-				3.6853270530700684
-			]
-		},
-		{
-			"children":[
-				3
-			],
-			"name":"RootNode.001",
-			"scale":[
-				0.2583776116371155,
-				0.2583776116371155,
-				0.2583776116371155
-			]
-		},
-		{
-			"name":"wood1"
-		},
-		{
-			"children":[
-				5
-			],
-			"name":"RootNode.002",
-			"scale":[
-				0.009999999776482582,
-				0.009999999776482582,
-				0.009999999776482582
-			]
-		},
-		{
 			"mesh":0,
-			"name":"Ceiling.001",
-			"translation":[
-				0,
-				-0.11166572570800781,
-				0
-			]
-		},
-		{
-			"children":[
-				7
-			],
-			"name":"Ceiling",
+			"name":"Wall1.003",
 			"scale":[
-				1.0125001668930054,
-				1,
-				1.0125000476837158
-			],
-			"translation":[
-				0,
-				10.22484016418457,
-				0
-			]
-		},
-		{
-			"children":[
-				8
-			],
-			"name":"group1.001",
-			"scale":[
-				2.683534860610962,
-				2.1958043575286865,
-				3.6853272914886475
-			]
-		},
-		{
-			"children":[
-				9
-			],
-			"name":"RootNode.003",
-			"scale":[
-				0.2645038664340973,
-				0.2645038664340973,
-				0.2645038664340973
+				0.26311779022216797,
+				0.26311779022216797,
+				0.26311779022216797
 			]
 		}
 	],
 	"materials":[
 		{
-			"name":"ceiling_1001",
-			"normalTexture":{
-				"index":0
-			},
+			"name":"wall_1001.003",
 			"occlusionTexture":{
-				"index":1
+				"index":0
 			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":2
+					"index":1
 				},
 				"metallicRoughnessTexture":{
-					"index":1
+					"index":0
 				}
 			}
 		},
 		{
-			"name":"wall_1001",
-			"normalTexture":{
-				"index":3
+			"name":"ceiling_1001.003",
+			"occlusionTexture":{
+				"index":2
 			},
+			"pbrMetallicRoughness":{
+				"baseColorTexture":{
+					"index":3
+				},
+				"metallicRoughnessTexture":{
+					"index":2
+				}
+			}
+		},
+		{
+			"name":"floor_1001.002",
 			"occlusionTexture":{
 				"index":4
 			},
@@ -153,43 +67,23 @@
 			}
 		},
 		{
-			"name":"floor_1001",
-			"normalTexture":{
+			"name":"wood_1001.003",
+			"occlusionTexture":{
 				"index":6
 			},
-			"occlusionTexture":{
-				"index":7
-			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":8
-				},
-				"metallicRoughnessTexture":{
 					"index":7
-				}
-			}
-		},
-		{
-			"name":"wood_1001",
-			"normalTexture":{
-				"index":9
-			},
-			"occlusionTexture":{
-				"index":10
-			},
-			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":11
 				},
 				"metallicRoughnessTexture":{
-					"index":10
+					"index":6
 				}
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"Ceiling",
+			"name":"Wall1",
 			"primitives":[
 				{
 					"attributes":{
@@ -262,181 +156,145 @@
 		{
 			"sampler":0,
 			"source":7
-		},
-		{
-			"sampler":0,
-			"source":8
-		},
-		{
-			"sampler":0,
-			"source":9
-		},
-		{
-			"sampler":0,
-			"source":10
-		},
-		{
-			"sampler":0,
-			"source":11
 		}
 	],
 	"images":[
 		{
-			"mimeType":"image/png",
-			"name":"Image_2",
-			"uri":"room/Image_2.png"
+			"mimeType":"image/jpeg",
+			"name":"wallRough",
+			"uri":"textures/wallRough.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_1",
-			"uri":"room/Image_1.png"
+			"mimeType":"image/jpeg",
+			"name":"Wall",
+			"uri":"textures/Wall.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_0",
-			"uri":"room/Image_0.png"
+			"mimeType":"image/jpeg",
+			"name":"ceilingRough",
+			"uri":"textures/ceilingRough.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_2",
-			"uri":"room/Image_2-1.png"
+			"mimeType":"image/jpeg",
+			"name":"Ceiling",
+			"uri":"textures/Ceiling.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_1",
-			"uri":"room/Image_1-1.png"
+			"mimeType":"image/jpeg",
+			"name":"floorRough",
+			"uri":"textures/floorRough.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_0",
-			"uri":"room/Image_0-1.png"
+			"mimeType":"image/jpeg",
+			"name":"floor",
+			"uri":"textures/floor.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_2",
-			"uri":"room/Image_2-2.png"
+			"mimeType":"image/jpeg",
+			"name":"woodRough",
+			"uri":"textures/woodRough.jpg"
 		},
 		{
-			"mimeType":"image/png",
-			"name":"Image_1",
-			"uri":"room/Image_1-2.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"Image_0",
-			"uri":"room/Image_0-2.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"Image_2",
-			"uri":"room/Image_2-3.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"Image_1",
-			"uri":"room/Image_1-3.png"
-		},
-		{
-			"mimeType":"image/png",
-			"name":"Image_0",
-			"uri":"room/Image_0-3.png"
+			"mimeType":"image/jpeg",
+			"name":"wood",
+			"uri":"textures/wood.jpg"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":342,
+			"count":1425,
 			"max":[
-				7.999999523162842,
-				0.09999921917915344,
-				8
+				21.736635208129883,
+				22.496158599853516,
+				29.851152420043945
 			],
 			"min":[
-				-7.999999523162842,
-				-4.470348358154297e-07,
-				-8
+				-21.736635208129883,
+				-0.19869613647460938,
+				-29.851152420043945
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":342,
+			"count":1425,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":342,
+			"count":1425,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":1536,
+			"count":6144,
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":1405,
+			"count":360,
 			"max":[
-				7.9198689460754395,
-				0.029270172119140625,
-				7.919868469238281
+				21.736631393432617,
+				22.671329498291016,
+				29.851154327392578
 			],
 			"min":[
-				-7.9198689460754395,
-				-10.2027587890625,
-				-7.919868469238281
+				-21.736631393432617,
+				22.451749801635742,
+				-29.851154327392578
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5126,
-			"count":1405,
+			"count":360,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":6,
 			"componentType":5126,
-			"count":1405,
+			"count":360,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":7,
 			"componentType":5123,
-			"count":6144,
+			"count":1536,
 			"type":"SCALAR"
 		},
 		{
 			"bufferView":8,
 			"componentType":5126,
-			"count":354,
+			"count":376,
 			"max":[
-				7.872595310211182,
-				-10.113176345825195,
-				7.872594833374023
+				21.468278884887695,
+				0.21958044171333313,
+				29.482616424560547
 			],
 			"min":[
-				-7.872595310211182,
-				-10.212814331054688,
-				-7.872594833374023
+				-21.468278884887695,
+				0,
+				-29.482616424560547
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":354,
+			"count":376,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":354,
+			"count":376,
 			"type":"VEC2"
 		},
 		{
@@ -450,14 +308,14 @@
 			"componentType":5126,
 			"count":96,
 			"max":[
-				7.745824813842773,
-				0.0189361572265625,
-				7.998290538787842
+				21.23515510559082,
+				22.44807243347168,
+				28.362606048583984
 			],
 			"min":[
-				-7.707235813140869,
-				-0.4324216842651367,
-				-7.968456745147705
+				-21.129364013671875,
+				21.44807243347168,
+				-28.256813049316406
 			],
 			"type":"VEC3"
 		},
@@ -483,98 +341,98 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":4104,
+			"byteLength":17100,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4104,
-			"byteOffset":4104,
+			"byteLength":17100,
+			"byteOffset":17100,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2736,
-			"byteOffset":8208,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":3072,
-			"byteOffset":10944,
-			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":16860,
-			"byteOffset":14016,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":16860,
-			"byteOffset":30876,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":11240,
-			"byteOffset":47736,
+			"byteLength":11400,
+			"byteOffset":34200,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":12288,
-			"byteOffset":58976,
+			"byteOffset":45600,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":4248,
-			"byteOffset":71264,
+			"byteLength":4320,
+			"byteOffset":57888,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4248,
-			"byteOffset":75512,
+			"byteLength":4320,
+			"byteOffset":62208,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2832,
-			"byteOffset":79760,
+			"byteLength":2880,
+			"byteOffset":66528,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":3072,
-			"byteOffset":82592,
+			"byteOffset":69408,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":4512,
+			"byteOffset":72480,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":4512,
+			"byteOffset":76992,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":3008,
+			"byteOffset":81504,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":3072,
+			"byteOffset":84512,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":1152,
-			"byteOffset":85664,
+			"byteOffset":87584,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":1152,
-			"byteOffset":86816,
+			"byteOffset":88736,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":768,
-			"byteOffset":87968,
+			"byteOffset":89888,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":288,
-			"byteOffset":88736,
+			"byteOffset":90656,
 			"target":34963
 		}
 	],
@@ -586,7 +444,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":89024,
+			"byteLength":90944,
 			"uri":"room.bin"
 		}
 	]

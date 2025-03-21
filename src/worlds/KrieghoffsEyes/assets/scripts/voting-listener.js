@@ -36,7 +36,7 @@ AFRAME.registerComponent('voting-listener', {
       console.log("Votes received: " + votesReceived + " / " + totalPlayers);
 
      
-      if (votesReceived >= totalPlayers) {
+      if (votesReceived === totalPlayers) {
         var totalVotes = self.updateTotalVotes();
         var winner = null;
         var maxVotes = 0;
@@ -55,6 +55,31 @@ AFRAME.registerComponent('voting-listener', {
         });
 
         
+        if (totalPlayers === 1) {
+          var winningEntity = document.querySelector("#" + winner);
+          if (winningEntity) {
+            
+            winningEntity.setAttribute("material", "emissive", "#FFFF00");
+
+            var checkpointTarget = "#checkpoint_" + winner.replace("Paint", "");
+            winningEntity.setAttribute("circles-sendpoint", "target:" + checkpointTarget + ";");
+
+            // Only activate RIAmanager if the red painting is clicked
+            if (winner === "redPaint") {
+              riaManager.emit('painting-clicked');  // Trigger ria-manager
+              cabin.setAttribute('visible', 'false');
+          
+          }
+          winningEntity.emit('click');
+
+          const painting = document.querySelector("#"+ winner);
+          const newEnvironment = painting.getAttribute("environemntProp");
+          if (newEnvironment) {
+          environment.setAttribute("environment", newEnvironment);
+          }
+        }
+        }
+
         setTimeout(function () {
           self.votes = [];
           self.updateCounters();
