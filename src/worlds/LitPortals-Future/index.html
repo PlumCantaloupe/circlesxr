@@ -22,7 +22,9 @@
       <a-entity environment="preset:starry; active:true;" change-environment></a-entity>
 
       <a-assets>
-        
+          <!--Models-->
+          <a-asset-item id="building1Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building1/building1.glb"></a-asset-item>
+
           <!-- Background Music -->
           <audio id="breeze" src="/worlds/LitPortals-Future/assets/sounds/Breeze.mp3" preload="true"></audio>
           <audio id="eternity" src="/worlds/LitPortals-Future/assets/sounds/Eternity.mp3" preload="true"></audio>
@@ -41,6 +43,9 @@
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
+
+      <!--Buildings Models-->
+      <a-entity id="building1" position="0 0 -20" scale= "100 100 100" gltf-model="#building1Model"></a-entity>
 
      
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
