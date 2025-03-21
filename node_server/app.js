@@ -348,6 +348,31 @@ io.on("connection", socket => {
     io.emit("updateEnvironment", newEnvironment);
     console.log(`Broadcasting new environment to all clients: ${newEnvironment}`);
   });
+
+    // Broadcast the spawn event to all clients when the server receives a "spawnShape" event
+    socket.on('spawnShape', (shapeData) => {
+      console.log('Spawning shape:', shapeData);
+      // Emit the shape spawn data to all clients
+      io.emit('spawnShape', shapeData);
+  });
+  
+  // Listen for environment change from client
+  socket.on("changeEnvironment", (newEnvironment) => {
+      console.log(`Received environment change request from ${socket.id}: ${newEnvironment}`);
+
+      // Broadcast the change to all connected clients
+      io.emit("updateEnvironment", newEnvironment);
+      console.log(`Broadcasted new environment to all clients: ${newEnvironment}`);
+  });
+    socket.on("changeLightState", (lightState) => {
+      // Broadcast the light state to all clients
+      io.emit("updateLightState", lightState);
+  });
+   // Listen for light color change event
+  socket.on("changeLightColor", (data) => {
+    console.log("Light color changed to:", data.color);
+    io.emit("updateLightColor", data);
+  });
 });
 
 //let's create a research namespace.
