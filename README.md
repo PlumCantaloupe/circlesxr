@@ -108,7 +108,7 @@ _NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/af
 | <br>Interaction      | Default<br>Desktop  | <br>Mobile          |<br>HMD              | Advanced<br>Desktop | <br>Mobile          | <br>HMD             |
 |:---                  |:---                 |:---                 |:---                 |:---                 |:---                 |:---                 |
 |  Navigation          | Checkpoint Teleport |                     |                     | WASD                | on-screen left joystick                 | Click-in Left Joysick        |
-|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | on-screen right joystick | Joysicks left/right                 |
+|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | on-screen right joystick | Joysicks left/right (click-in for smooth)                 |
 |  Selection           | Single Click        | Tap                 | Raycast (laser pointer)     | TBD                 | TBD                 | TBD                 |
 |  Manipulation        | Non-Diegetic UI     | Non-Diegetic UI     | Non-Diegetic UI     | TBD                 | TBD                 | TBD                 |
 |  Release             | Single Click        | Tap                 | Raycast Object      | TBD                 | TBD                 | TBD                 |         
