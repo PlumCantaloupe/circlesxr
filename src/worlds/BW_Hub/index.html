@@ -48,13 +48,14 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="driver: ammo; debug:true;  contactEquationRelaxation:1; frictionEquationRegularization:1">
+    <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <a-asset-item id="room_gltf" src="assets/models/room/room-noTank.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="controlPanel_gltf" src="assets/models/control panel/PBR - Metallic Roughness Alpha-blend.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="orb_gltf" src="assets/models/orb/orb.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
         <!-- Sounds -->
@@ -346,9 +347,9 @@
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
-        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        <a-entity class="info orb" position="5.314 1.159 -3.757" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap" 
         circles-artefact=" textRotationY:-70;
-        inspectScale: 0.3 0.3 0.3;
+        inspectScale: 1 1 1;
         description_offset: 0 1.22 0.7;
         descriptionLookAt: true;
         label_offset:0.0 0.5 0.0; arrow_position:down;
