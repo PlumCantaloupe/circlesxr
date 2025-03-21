@@ -107,11 +107,11 @@ _NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/af
 
 | <br>Interaction      | Default<br>Desktop  | <br>Mobile          |<br>HMD              | Advanced<br>Desktop | <br>Mobile          | <br>HMD             |
 |:---                  |:---                 |:---                 |:---                 |:---                 |:---                 |:---                 |
-|  Navigation          | Checkpoint Teleport                       ||                    | WASD                | n/a                 | Left Joysick        |
-|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | tap-drag left/right | n/a                 |
-|  Selection           | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |
-|  Manipulation        | Non-Diegetic UI (rotate, zoom, release)   ||                    | TBD                 | TBD                 | TBD                 |
-|  Release             | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |         
+|  Navigation          | Checkpoint Teleport |                     |                     | WASD                | n/a                 | Click-in Left Joysick        |
+|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | on-screen joysticks | Joysicks left/right                 |
+|  Selection           | Single Click        | Tap                 | Raycast (laser pointer)     | TBD                 | TBD                 | TBD                 |
+|  Manipulation        | Non-Diegetic UI     | Non-Diegetic UI     | Non-Diegetic UI     | TBD                 | TBD                 | TBD                 |
+|  Release             | Single Click        | Tap                 | Raycast Object      | TBD                 | TBD                 | TBD                 |         
 
 <br>
 
