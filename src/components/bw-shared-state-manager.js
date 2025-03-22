@@ -13,8 +13,6 @@ AFRAME.registerComponent('bw-shared-state-manager', {
       const isTeleportPadTransparent = localStorage.getItem(BRAINWAVES.LS_TELEPORT_PAD);
       const isGuidingTextOn = localStorage.getItem(BRAINWAVES.LS_GUIDING_TEXT);
 
-      
-
       //store the shared states from localStorage in the component if not null
       //if the sates are null then set them to the default values
       //setting the recently visited room
@@ -39,12 +37,23 @@ AFRAME.registerComponent('bw-shared-state-manager', {
         localStorage.setItem(BRAINWAVES.LS_GUIDING_TEXT, BRAINWAVES.DEFAULT_GUIDING_TEXT);
       }
 
-      //set the recently visited room to the current room the user is in
-      localStorage.setItem(BRAINWAVES.LS_RECENT_ROOM, Context_AF.data.currWorld);
-
+      //set the recently visited room to the current room the user is in if it's the main hub
+      const worldName = CIRCLES.getCirclesWorldName();
+      if ( worldName === 'BW_Hub'){
+        localStorage.setItem(BRAINWAVES.LS_RECENT_ROOM, Context_AF.data.currWorld);
+      }
+      //if not the main hub the set the recently visited world after the user leaves the world
+      else {
+        document.querySelector('#Portal-Hub').addEventListener('click', function(){
+          localStorage.setItem(BRAINWAVES.LS_RECENT_ROOM, Context_AF.data.currWorld);
+        })
+      }
+      
 
       //create teleport pad component (will need to be moved to individual game managers probs)
       Context_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: Context_AF[BRAINWAVES.LS_TELEPORT_PAD], colour: '#5764c2'});
+
+      
     },
 
     //function for other components to access properties from this one

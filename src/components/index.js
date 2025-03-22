@@ -2,7 +2,6 @@
 require('./aframe-audioanalyser-component');
 require('./bw-shared-state-manager.js')
 require('./bw-teleport-pad-manager.js')
-require('./bw-bloom.js')
 
 require('./circles-add-camera-equipment');
 require('./circles-artefact');

@@ -3,7 +3,8 @@
 AFRAME.registerComponent('bw-teleport-pad-manager', {
     schema: {
       isTransparent: {type: 'boolean', default: false},
-      colour: {type: 'color'}
+      colour: {type: 'color'},
+      spawnPoint: {type: 'color'}
     },
 
     init: function () {    
@@ -11,7 +12,6 @@ AFRAME.registerComponent('bw-teleport-pad-manager', {
 
       Context_AF.teleportPads = document.querySelectorAll('[circles-checkpoint]');
       Context_AF.setTeleportPadMat(Context_AF.data.isTransparent);
-
     },
 
     update: function(oldData) {
