@@ -28,17 +28,14 @@ AFRAME.registerComponent('visualization-info', {
 
       //display a label with this 
       Context_AF.el.addEventListener('mouseenter', function() {
-        Context_AF.info.setAttribute('circles-description', {title_text_front: "Stats",
-                                                             description_text_front: Context_AF.infoText,
-                                                             offset: '-1.4 1.2 0',
-                                                             arrow_position: 'right'});
-
+        Context_AF.info.setAttribute('circles-description', {description_text_front: Context_AF.infoText});
+        Context_AF.info.setAttribute('circles-interactive-visible', 'true');
       })
 
       //display a label with this 
       Context_AF.el.addEventListener('mouseleave', function() {
         console.log("removeeeeeee")
-        Context_AF.info.removeAttribute('circles-description');
+        Context_AF.info.setAttribute('circles-interactive-visible', 'false');
       })
     },
 

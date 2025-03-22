@@ -32,6 +32,15 @@
         }
       })
     </script> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/examples/jsm/"
+        }
+      }
+    </script>
+
     <script src="js/constants.js"></script>
     <script src="js/manager.js"></script>
     <script src="js/dispense-emotion.js"></script>
@@ -41,14 +50,18 @@
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
     <script src="js/visualization-info.js"></script>
+    <script src="js/bloom.js" type="module"></script>
   </head>
   <body>
 
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
+    
+    <!-- renderer="toneMapping: no;" -->
+     
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties bloom="threshold: 1; strength: 0.3; radius: 0.1; enabled: false" >
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -90,13 +103,12 @@
       <!-- main lights -->
       <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
       <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
+      <a-entity light="type: point; intensity: 5" position="3.457 3.3 -1.737"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-4.56 3.3 1.078"></a-entity>
+      <a-entity light="type: point; intensity: 1" position="0 1 0"></a-entity>
       
-      <!-- tunnel lights -->
-      <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
-
       <!-- room model -->
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <a-entity id="controlPanel" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#controlPanel_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
@@ -212,7 +224,7 @@
 
       <!-- TEMP Visualized central orbs -->
       <a-entity id="spheres" rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
-        <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emisive: #fe86e8"></a-sphere>
+        <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emissive: #ff6bba; emissiveIntensity: 2.150"></a-sphere>
         <a-sphere position="0 3.077 0.622" scale="0.24 0.24 0.24" material="color:#7094ff; emisive: #4294ff"></a-sphere>
         <a-sphere position="0.604 1.944 0.74" scale="0.3 0.3 0.3" material="color:#ff7438; emisive: #ff4d4d"></a-sphere>
         <a-sphere position="-0.418 1.798 -0.272" scale="0.16 0.16 0.16" material="color:#3e952d; emisive: #7ffd7c"></a-sphere>
@@ -227,7 +239,7 @@
          <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
            <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
            <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-           <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+           <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2; color: #9c9c9c"></a-entity>
            <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
            <a-entity room id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
              <a-entity id="delta-visualization-red">
@@ -307,7 +319,7 @@
         <a-entity class="emptyCollider"></a-entity>
     
      
-      <a-entity id="gamma-visualization-info" position="0 0 -0.52"></a-entity>
+      <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right" circles-interactive-visible="false"></a-entity>
       <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
         <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
