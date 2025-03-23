@@ -4,12 +4,16 @@ AFRAME.registerComponent('accessibility-controls', {
         const TRANSPARENT = "transparent";
         const COLOUR = "#5764c2";
         const CONTEXT_AF = this;
+        CONTEXT_AF.scene = document.querySelector('a-scene');
         CONTEXT_AF.mobileInstructions = document.querySelector('#mobileInstructions');
         CONTEXT_AF.desktopInstructions = document.querySelector('#desktopInstructions');
         CONTEXT_AF.headsetInstructions = document.querySelector('#headsetInstructions');
 
         CONTEXT_AF.opaqueTeleportPadSetting = document.querySelector('#opaqueTeleportPadSetting');
         CONTEXT_AF.transparentTeleportPadSetting = document.querySelector('#transparentTeleportPadSetting');
+
+        CONTEXT_AF.bloomOnSetting = document.querySelector('#bloomOnSetting');
+        CONTEXT_AF.bloomOffSetting = document.querySelector('#bloomOffSetting');
 
         CONTEXT_AF.title = document.querySelector('#screenText');
 
@@ -43,6 +47,18 @@ AFRAME.registerComponent('accessibility-controls', {
             CONTEXT_AF.teleportSet = true;
             CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_TELEPORT_PAD, true);
             CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: true});
+        })
+
+        CONTEXT_AF.bloomOnSetting.addEventListener('click', function(){
+            CONTEXT_AF.scene.setAttribute('bloom', {threshold: 1,  
+                                                    strength: 0.3,
+                                                    radius: 0.1});
+            CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_BLOOM, true);
+        })
+
+        CONTEXT_AF.bloomOffSetting.addEventListener('click', function(){
+            CONTEXT_AF.scene.removeAttribute('bloom');
+            CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_BLOOM, false);
         })
     },
 });

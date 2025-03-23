@@ -41,6 +41,7 @@
       }
     </script>
 
+    <script src="js/bloom.js" type="module"></script>
     <script src="js/constants.js"></script>
     <script src="js/manager.js"></script>
     <script src="js/dispense-emotion.js"></script>
@@ -50,7 +51,7 @@
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
     <script src="js/visualization-info.js"></script>
-    <script src="js/bloom.js" type="module"></script>
+    
   </head>
   <body>
 
@@ -95,7 +96,7 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub' accessibility-controls spawn-point></a-entity>
+      <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub; bloomAvailable: true' accessibility-controls spawn-point></a-entity>
       <a-entity comp></a-entity>
 
       <!-- Ambient music entity -->
@@ -150,6 +151,14 @@
                     position="0.12 -0.03 0"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
                     <a-entity text="value: Transparent; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+          <a-entity id="bloomOnSetting"
+          position="0.12 -0.03 0.473"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: On; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+          <a-entity id="bloomOffSetting"
+          position="0.12 -0.03 0.85"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: Off; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
         </a-entity>
 
         <!-- TO ADD BACK IN -->
@@ -320,7 +329,7 @@
         <a-entity class="emptyCollider"></a-entity>
     
      
-      <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right" circles-interactive-visible="false"></a-entity>
+      <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
       <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
         <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>

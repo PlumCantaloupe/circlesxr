@@ -35,7 +35,7 @@
       <!-- TO BE REPLACED - END -->
 
       <!-- component to manage shared state between worlds through localStorage -->
-      <a-entity bw-shared-state-manager='currWorld: gamma'></a-entity>
+      <a-entity bw-shared-state-manager></a-entity>
 
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -65,7 +65,6 @@
 
       <!-- Portal to Hub -->
       <a-entity id="Portal-Hub"
-                circles-interactive-object
                 position="0 1.5 -2.2" rotation="0 -108 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
