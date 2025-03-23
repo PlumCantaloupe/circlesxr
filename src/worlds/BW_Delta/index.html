@@ -48,7 +48,7 @@
       <circles-manager-avatar/>
 
       <!-- component to manage shared state between worlds through localStorage -->
-      <a-entity bw-shared-state-manager='bloomAvailable: true'></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1'></a-entity>
 
       <!-- Sound entitites -->
       <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; autoplay: true; loop: true; type: music;"></a-entity>

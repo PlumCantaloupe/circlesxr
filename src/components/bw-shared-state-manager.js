@@ -2,7 +2,10 @@
 
 AFRAME.registerComponent('bw-shared-state-manager', {
     schema: {
-      bloomAvailable: {type: 'boolean', default: false}
+      bloomAvailable: {type: 'boolean', default: false},
+      bloomThreshold: { type: 'number', default: 1 },
+      bloomStrength: { type: 'number', default: 0.5 },
+      bloomRadius: { type: 'number', default: 1 }
     },
 
     init: function () {    
@@ -66,9 +69,9 @@ AFRAME.registerComponent('bw-shared-state-manager', {
 
       //turn on bloom if the it's turned on in accessibility settings and this world has bloom
       if(CONTEXT_AF[BRAINWAVES.LS_BLOOM] && CONTEXT_AF.data.bloomAvailable){
-        CONTEXT_AF.scene.setAttribute('bloom', {threshold: 1,  
-                                                strength: 0.3,
-                                                radius: 0.1});
+        CONTEXT_AF.scene.setAttribute('bloom', {threshold: CONTEXT_AF.data.bloomThreshold,  
+                                                strength: CONTEXT_AF.data.bloomStrength,
+                                                radius: CONTEXT_AF.data.bloomRadius});
       }
     },
 
