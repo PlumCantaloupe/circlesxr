@@ -20,7 +20,7 @@ AFRAME.registerComponent('bw-shared-state-manager', {
       const worldName = CIRCLES.getCirclesWorldName();
 
       //store the shared states from localStorage in the component if not null
-      //if the sates are null then set them to the default values
+      //if the states are null then set them to the default values
       //setting the recently visited room
       if(recentlyVisitedRoom != null)
         CONTEXT_AF[BRAINWAVES.LS_RECENT_ROOM] = recentlyVisitedRoom;

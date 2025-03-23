@@ -3,8 +3,7 @@
 AFRAME.registerComponent('bw-teleport-pad-manager', {
     schema: {
       isTransparent: {type: 'boolean', default: false},
-      colour: {type: 'color'},
-      spawnPoint: {type: 'color'}
+      colour: {type: 'color'}
     },
 
     init: function () {    
