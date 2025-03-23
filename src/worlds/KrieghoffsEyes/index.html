@@ -11,13 +11,14 @@
   <script src="assets/scripts/painting-highlight.js"></script>
   <script src="assets/scripts/info-panel.js"></script>
   <script src="assets/scripts/voting-listener.js"></script>
+  <script src="assets/scripts/lazy-load.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
   <circles-start-ui/>
 
   <!-- a-scene with physics for collision -->
-  <a-scene circles_scene_properties physics="gravity: 0; debug: false" >
+  <a-scene  lazy-load-environment circles_scene_properties physics="gravity: 0; debug: false">
     <a-assets>
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
@@ -28,6 +29,13 @@
       <a-asset-item id ="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
 
       <img id ="RIA" src="assets/models/painting/paintings/RIA.jpg"crossorigin="anonymous"></a-asset-item>
+      
+      <a-asset-item
+          id="ria_environment"
+          src="/worlds/KrieghoffsEyes/assets/models/environment/environment.gltf"
+          response-type="arraybuffer"
+          crossorigin="anonymous"
+        ></a-asset-item>
       
       <a-asset-item
           id="chair_gltf"
@@ -111,10 +119,9 @@
         <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
 
-    <!-- Circles' built-in manager and avatar [REQUIRED] -->
-    
-    <a-entity id = "environment" environment="preset: checkerboard; seed: 123; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
-    <!--<a-ocean id="ocean" color="#92E2E2" width="25" depth="25" density="15" speed="2" circles-interactive-visible="false"></a-ocean>-->
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->   
+    <a-entity id = "environment" position ="0 -2.265 0" environment="preset: checkerboard; seed: 123; fog:0.06; lightPosition:-4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
+    <a-ocean id="ocean" color="#92E2E2" opacity="1" width="500" depth="500" position="36.222 -0.792 0" density="100" speed="3" circles-interactive-visible="false"></a-ocean>
     <a-entity id="GameManager" 
               ria-manager 
               voting-listener
@@ -179,7 +186,7 @@
     id="redPaint"
     class="interactive"
     circles-interactive-object="type:highlight"
-    environemntProp="preset: forest; seed: 222; skyType: atmosphere;  lighting: distant; dressing: trees;"
+    environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
     painting-highlight
     material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"
   ></a-box>
@@ -210,20 +217,26 @@
     painting-highlight
     material="emissive: #fff700; emissiveIntensity: 0;"
   ></a-box>
-
-
+    
+ 
+      
   <!-- Checkpoints -->
   <a-entity
     id="checkpoint_red"
     circles-checkpoint
-    position="20 0.105 0"
+    position="-18.400 3.215 0"
   ></a-entity>
   <a-entity
     id="checkpoint_blue"
     circles-checkpoint
     position="-40 0.105 0"
   ></a-entity>
-   
+
+  <!--Environment-->
+  
+  <!--ria_environment-->
+ 
+
   <!-- models -->
   <a-entity
   id="chair"  

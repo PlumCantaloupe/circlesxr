@@ -16,16 +16,23 @@ AFRAME.registerComponent('ria-manager', {
         this.spawnLogs();
         this.spawnPedestal();
     },
-
+   
     spawnLogs: function () {
         const positions = [
-            { x: 1, y: .11, z: -8 },
-            { x: -6, y: 0.1, z: 12 },
+            { x: 1, y: 1.23968, z: -8 },
+            { x: -6, y: 1.779, z: 12 },
             { x: 11, y: 0.1, z: 4 },
-            { x: -15, y: 0.1, z: 6.5 }
+            { x: -15, y: 2.431, z: 6.5 }
         ];
 
-        positions.forEach(pos => {
+        const rotations = [
+            { x: 0, y: 0, z: -11.141 },
+            { x: 0, y: 0, z: -1.662 },
+            { x: 0, y: 0, z: 4 },
+            { x: 0, y: 0, z: -5.258 }
+        ];
+
+        positions.forEach((pos, index) => {
             let log = document.createElement('a-entity');
             log.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
             // log.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2'); // Fixed typo
@@ -36,9 +43,10 @@ AFRAME.registerComponent('ria-manager', {
             log.setAttribute('circles-interactive-object', '');
             log.setAttribute('circles-pickup-networked', '');
             log.setAttribute('static-body', '');
-        
-            // log.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
-            // log.setAttribute('rotation', '0 90 0');
+            
+            log.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
+            const rot = rotations[index];
+            log.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
 
             this.scene.appendChild(log);
             this.logs.push(log);
@@ -48,21 +56,21 @@ AFRAME.registerComponent('ria-manager', {
     spawnPedestal: function () {
         this.pedestal = document.createElement('a-box');
         this.pedestal.setAttribute('id', 'raftPedestal');
-        this.pedestal.setAttribute('position', '-18.4 0.1 -.9');
+        this.pedestal.setAttribute('position', '-0.876 1.741 -14.777');
         this.pedestal.setAttribute('width', '3');
-        this.pedestal.setAttribute('height', '0.2');
+        this.pedestal.setAttribute('height', '0.3');
         this.pedestal.setAttribute('depth', '3');
         this.pedestal.setAttribute('color', 'red');
         this.pedestal.setAttribute('pedestal-trigger', '');
     
         let raft = document.createElement('a-entity');
-        raft.setAttribute('position', `-18.4 0.21 -.9`);
+        raft.setAttribute('position', `-1.017 1.983 -14.995`);
 
         raft.setAttribute('id', `raft`);
         raft.setAttribute('gltf-model', `#Raft4`);
         raft.setAttribute('material', 'color: brown'); // Material needs to be separate
         
-        raft.setAttribute('scale', '0.3 0.3 0.3'); // Scale down by half in all directions
+        raft.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
         raft.setAttribute('rotation', '0 90 0');
         
         // Make it a physics trigger
