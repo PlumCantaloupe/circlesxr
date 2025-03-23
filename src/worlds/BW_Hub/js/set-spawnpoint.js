@@ -17,20 +17,20 @@ AFRAME.registerComponent('spawn-point', {
         //set spawn 
         switch (CONTEXT_AF.room)
         {
-            case 'hub':
-                CONTEXT_AF.hub.setAttribute('circles-spawnpoint');
+            case 'BW_Hub':
+                CONTEXT_AF.hub.setAttribute('circles-spawnpoint', {});
                 break;
-            case 'alpha':
-                CONTEXT_AF.alpha.setAttribute('circles-spawnpoint');
+            case 'BW_Alpha':
+                CONTEXT_AF.alpha.setAttribute('circles-spawnpoint', {});
                 break;
-            case 'delta':
-                CONTEXT_AF.delta.setAttribute('circles-spawnpoint');
+            case 'BW_Delta':
+                CONTEXT_AF.delta.setAttribute('circles-spawnpoint', {});
                 break;
-            case 'gamma':
-                CONTEXT_AF.gamma.setAttribute('circles-spawnpoint');
+            case 'BW_Gamma':
+                CONTEXT_AF.gamma.setAttribute('circles-spawnpoint', {});
                 break;
             default:
-                CONTEXT_AF.hub.setAttribute('circles-spawnpoint');
+                CONTEXT_AF.hub.setAttribute('circles-spawnpoint', {});
                 break;
         }
         

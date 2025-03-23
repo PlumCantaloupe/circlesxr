@@ -32,6 +32,16 @@
         }
       })
     </script> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script src="js/bloom.js" type="module"></script>
     <script src="js/constants.js"></script>
     <script src="js/manager.js"></script>
     <script src="js/dispense-emotion.js"></script>
@@ -40,20 +50,27 @@
     <script src="js/room.js"></script>
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
+    <script src="js/visualization-info.js"></script>
+    
   </head>
   <body>
 
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
+    
+    <!-- renderer="toneMapping: no;" 
+     bloom="threshold: 1; strength: 0.3; radius: 0.1; enabled: false" -->
+     
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties physics="driver: ammo; debug:true;  contactEquationRelaxation:1; frictionEquationRegularization:1">
+    <a-scene circles_scene_properties >
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
         <a-asset-item id="room_gltf" src="assets/models/room/room-noTank.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="controlPanel_gltf" src="assets/models/control panel/PBR - Metallic Roughness Alpha-blend.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="orb_gltf" src="assets/models/orb/orb.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
 
         <!-- Sounds -->
@@ -79,7 +96,7 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity id="shared-state-manager" bw-shared-state-manager='currWorld: hub' accessibility-controls spawn-point></a-entity>
+      <a-entity id="shared-state-manager" bw-shared-state-manager='bloomAvailable: true, bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' accessibility-controls spawn-point></a-entity>
       <a-entity comp></a-entity>
 
       <!-- Ambient music entity -->
@@ -88,13 +105,12 @@
       <!-- main lights -->
       <a-entity light="type: ambient; color: #c8c0f2; intensity: 2.4"></a-entity>
       <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
+      <a-entity light="type: point; intensity: 5" position="3.457 3.3 -1.737"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
       <a-entity light="type: point; intensity: 7" position="-4.56 3.3 1.078"></a-entity>
+      <a-entity light="type: point; intensity: 1" position="0 1 0"></a-entity>
       
-      <!-- tunnel lights -->
-      <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
-
       <!-- room model -->
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <a-entity id="controlPanel" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#controlPanel_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
@@ -135,6 +151,14 @@
                     position="0.12 -0.03 0"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
                     <a-entity text="value: Transparent; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+          <a-entity id="bloomOnSetting"
+          position="0.12 -0.03 0.473"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: On; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+          <a-entity id="bloomOffSetting"
+          position="0.12 -0.03 0.85"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: Off; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
         </a-entity>
 
         <!-- TO ADD BACK IN -->
@@ -210,7 +234,7 @@
 
       <!-- TEMP Visualized central orbs -->
       <a-entity id="spheres" rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
-        <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emisive: #fe86e8"></a-sphere>
+        <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emissive: #ff6bba; emissiveIntensity: 2.150"></a-sphere>
         <a-sphere position="0 3.077 0.622" scale="0.24 0.24 0.24" material="color:#7094ff; emisive: #4294ff"></a-sphere>
         <a-sphere position="0.604 1.944 0.74" scale="0.3 0.3 0.3" material="color:#ff7438; emisive: #ff4d4d"></a-sphere>
         <a-sphere position="-0.418 1.798 -0.272" scale="0.16 0.16 0.16" material="color:#3e952d; emisive: #7ffd7c"></a-sphere>
@@ -225,7 +249,7 @@
          <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
            <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
            <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-           <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+           <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2; color: #9c9c9c"></a-entity>
            <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
            <a-entity room id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
              <a-entity id="delta-visualization-red">
@@ -266,7 +290,7 @@
         <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
           <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
           <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-          <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+          <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
           <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
           <a-entity room id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
             <a-entity id="alpha-visualization-red">
@@ -305,37 +329,38 @@
         <a-entity class="emptyCollider"></a-entity>
     
      
-
+      <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
       <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
         <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-        <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+        <a-entity circles-interactive-object visualization-info="visualizationID: gamma-visualization" geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"
+        ></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-        <a-entity room id="gammma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
-          <a-entity id="gammma-visualization-red">
+        <a-entity room id="gamma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
+          <a-entity id="gamma-visualization-red">
             <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
           </a-entity>
     
-          <a-entity id="gammma-visualization-yellow">
+          <a-entity id="gamma-visualization-yellow">
             <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
           </a-entity>
     
-          <a-entity id="gammma-visualization-blue">
+          <a-entity id="gamma-visualization-blue">
             <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
           </a-entity>
     
-          <a-entity id="gammma-visualization-green">
+          <a-entity id="gamma-visualization-green">
             <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
           </a-entity>
     
-          <a-entity id="gammma-visualization-pink">
+          <a-entity id="gamma-visualization-pink">
             <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
           </a-entity>
         </a-entity>
       </a-entity>
 
       <a-entity position="0.635 0 -0.221">
-       <a-entity share-emotion="visualizationID: gammma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
+       <a-entity share-emotion="visualizationID: gamma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
       </a-entity>
 
     </a-entity>
@@ -344,9 +369,9 @@
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
-        <a-entity class="info orb" position="5.314 1.159 -3.757" geometry="primitive: sphere" scale="0.1 0.1 0.1" material="color: blue" 
+        <a-entity class="info orb" position="5.314 1.159 -3.757" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap" 
         circles-artefact=" textRotationY:-70;
-        inspectScale: 0.3 0.3 0.3;
+        inspectScale: 1 1 1;
         description_offset: 0 1.22 0.7;
         descriptionLookAt: true;
         label_offset:0.0 0.5 0.0; arrow_position:down;
@@ -422,7 +447,7 @@
 
 
       <!-- checkpoints -->
-      <a-entity id="mainSpawn"circles-spawnpoint circles-checkpoint="colour: #3f4fca; emission: #4a6fba; transparent: false; opacity: 1" position="4.4 0.03 0" ></a-entity>
+      <a-entity id="mainSpawn" circles-checkpoint="colour: #3f4fca; emission: #4a6fba; transparent: false; opacity: 1" position="4.4 0.03 0" ></a-entity>
       
       <a-entity circles-checkpoint position="1.9 0.03 3"></a-entity>
       <a-entity circles-checkpoint position="-2.3 0.03 2.7"></a-entity>

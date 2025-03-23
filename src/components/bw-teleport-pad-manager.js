@@ -11,7 +11,6 @@ AFRAME.registerComponent('bw-teleport-pad-manager', {
 
       Context_AF.teleportPads = document.querySelectorAll('[circles-checkpoint]');
       Context_AF.setTeleportPadMat(Context_AF.data.isTransparent);
-
     },
 
     update: function(oldData) {
