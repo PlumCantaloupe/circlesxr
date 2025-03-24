@@ -1,10 +1,12 @@
 <html>
+
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
-  <circles-start-scripts/>
+  <circles-start-scripts />
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.3/dist/aframe-physics-system.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.3/dist/aframe-physics-system.min.js"></script>
   <script src="http://kripken.github.io/ammo.js/builds/ammo.wasm.js"></script>
   <script src="assets/scripts/change-environment.js"></script>
   <script src="assets/scripts/RIAmanager.js"></script>
@@ -13,130 +15,84 @@
   <script src="assets/scripts/voting-listener.js"></script>
   <script src="assets/scripts/lazy-load.js"></script>
 </head>
+
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
-  <circles-start-ui/>
+  <circles-start-ui />
 
   <!-- a-scene with physics for collision -->
-  <a-scene  lazy-load-environment circles_scene_properties physics="gravity: 0; debug: false">
+  <a-scene circles_scene_properties physics="gravity: 0; debug: false">
     <a-assets>
       <!-- Circles' built-in assets [REQUIRED] -->
-      <circles-assets/>
-      <a-asset-item id ="logModel" src="assets/models/RIA/Log.gltf"></a-asset-item>
-      <a-asset-item id ="Raft1" src="assets/models/RIA/Raft1.gltf"></a-asset-item>
-      <a-asset-item id ="Raft2" src="assets/models/RIA/Raft2.gltf"></a-asset-item>
-      <a-asset-item id ="Raft3" src="assets/models/RIA/Raft3.gltf"></a-asset-item>
-      <a-asset-item id ="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
+      <circles-assets />
+      <a-asset-item id="logModel" src="assets/models/RIA/Log.gltf"></a-asset-item>
+      <a-asset-item id="Raft1" src="assets/models/RIA/Raft1.gltf"></a-asset-item>
+      <a-asset-item id="Raft2" src="assets/models/RIA/Raft2.gltf"></a-asset-item>
+      <a-asset-item id="Raft3" src="assets/models/RIA/Raft3.gltf"></a-asset-item>
+      <a-asset-item id="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
 
-      <img id ="RIA" src="assets/models/painting/paintings/RIA.jpg"crossorigin="anonymous"></a-asset-item>
-      
-      <a-asset-item
-          id="ria_environment"
-          src="/worlds/KrieghoffsEyes/assets/models/environment/environment.gltf"
-          response-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-      
-      <a-asset-item
-          id="chair_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/chair/chair.gltf"
-          response-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="painting_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/painting/painting.gltf"
-          response-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="palette_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/palette/palette.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="book_pile_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/book_pile/book_pile.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="stool_round_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/stool_round/stool_round.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
+      <img id="RIA" src="assets/models/painting/paintings/RIA.jpg" crossorigin="anonymous"></a-asset-item>
 
-        <a-asset-item
-          id="stool_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/stool/stool.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="shelf_wall_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/shelf_wall/shelf_wall.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="wooden_crate_1_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_1.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="wooden_crate_2_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_2.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        <a-asset-item
-          id="wooden_crate_3_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_3.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        
-        <a-asset-item
-          id="frame_gltf"
-          src="/worlds/KrieghoffsEyes/assets/models/frame/frame1.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
-        
-        <a-asset-item
-          id="room"
-          src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf"
-          responnse-type="arraybuffer"
-          crossorigin="anonymous"
-        ></a-asset-item>
+      <a-asset-item id="ria_environment" src="/worlds/KrieghoffsEyes/assets/models/environment/environment.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-        <circles-assets />
+      <a-asset-item id="chair_gltf" src="/worlds/KrieghoffsEyes/assets/models/chair/chair.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="painting_gltf" src="/worlds/KrieghoffsEyes/assets/models/painting/painting.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="palette_gltf" src="/worlds/KrieghoffsEyes/assets/models/palette/palette.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="book_pile_gltf" src="/worlds/KrieghoffsEyes/assets/models/book_pile/book_pile.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="stool_round_gltf" src="/worlds/KrieghoffsEyes/assets/models/stool_round/stool_round.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="stool_gltf" src="/worlds/KrieghoffsEyes/assets/models/stool/stool.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="shelf_wall_gltf" src="/worlds/KrieghoffsEyes/assets/models/shelf_wall/shelf_wall.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="wooden_crate_1_gltf"
+        src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_1.gltf" responnse-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="wooden_crate_2_gltf"
+        src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_2.gltf" responnse-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="wooden_crate_3_gltf"
+        src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_3.gltf" responnse-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="frame_gltf" src="/worlds/KrieghoffsEyes/assets/models/frame/frame1.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="room" src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf" responnse-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+
+      <circles-assets />
     </a-assets>
 
-        <!-- Circles' built-in manager and avatar [REQUIRED] -->
-    <circles-manager-avatar/>
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar />
 
-    <!-- Circles' built-in manager and avatar [REQUIRED] -->   
-    <a-entity id = "environment" position ="0 -2.265 0" environment="preset: checkerboard; seed: 123; fog:0.06; lightPosition:-4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
-    <a-ocean id="ocean" color="#92E2E2" opacity="1" width="500" depth="500" position="36.222 -0.792 0" density="100" speed="3" circles-interactive-visible="false"></a-ocean>
-    <a-entity id="GameManager" 
-              ria-manager 
-              voting-listener
-    ></a-entity>
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <a-entity id="environment" position="0 -2.265 0"
+      environment="preset: checkerboard; seed: 123; fog:0.06; lightPosition:-4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
 
-    <a-entity id="Cabin" visible="true">
-    <!-- Point lighting inside the cabin -->
-    <a-entity 
-    light="type: point; color: #FF8C42; intensity: 2.5; distance: 10; decay: 1.2; castShadow: true"
-    position=".7 1.8 -3">
+
+    <a-entity id="GameManager" ria-manager voting-listener lazy-load-environment></a-entity>
+    <a-entity id="riaWorld">
+      <a-ocean id="ocean" color="#92E2E2" opacity="1" width="500" depth="500" position="36.222 -0.792 0" density="100"
+        speed="3" circles-interactive-visible="false"></a-ocean>
     </a-entity>
 
-    
-    <!-- room -->
-    <a-entity id="room" gltf-model="#room" position="0 0.001 0"></a-entity>
+    <a-entity id="Cabin" visible="true">
+      <!-- Point lighting inside the cabin -->
+      <a-entity light="type: point; color: #FF8C42; intensity: 2.5; distance: 10; decay: 1.2; castShadow: true"
+        position=".7 1.8 -3">
+      </a-entity>
+
+
+      <!-- room -->
+      <a-entity id="room" gltf-model="#room" position="0 0.001 0"></a-entity>
 
       <!-- Floor -->
       <!-- Lights inside the cabin 
@@ -146,256 +102,139 @@
       -->
 
       <!-- Vote Counters Above Each Painting -->
-      <a-entity
-        id="voteCounter_redPaint"
-        position="0.89307 2.7 -4.2979"
+      <a-entity id="voteCounter_redPaint" position="0.89307 2.7 -4.2979"
         rotation="-15.487622160181282 -38.13320605493194 0.3472124238492789"
-        text="value: Votes: 0; align: center; color: white; width: 4"
-      >
+        text="value: Votes: 0; align: center; color: white; width: 4">
       </a-entity>
-      <a-entity
-        id="voteCounter_greenPaint"
-        position="-1.06558 2.7 -5.12713"
+      <a-entity id="voteCounter_greenPaint" position="-1.06558 2.7 -5.12713"
         rotation="-15.103740437443632 6.330037720605334 0.4125296124941928"
-        text="value: Votes: 0; align: center; color: white; width: 4"
-      >
+        text="value: Votes: 0; align: center; color: white; width: 4">
       </a-entity>
-      <a-entity
-        id="voteCounter_bluePaint"
-        position="-2.912 2.427 -4.239"
-        rotation="0 31.355 0"
-        text="value: Votes: 0; align: center; color: white; width: 4"
-      >
+      <a-entity id="voteCounter_bluePaint" position="-2.912 2.427 -4.239" rotation="0 31.355 0"
+        text="value: Votes: 0; align: center; color: white; width: 4">
       </a-entity>
 
-      <a-entity
-        position="-0.93859 1.97876 -4.44843"
-        circles-interactive-object=""
-        class="interactive"
-        scale=""
-        circles-material-extend-fresnel="fresnelPow: 2; fresnelOpacity: 0"
-        sound="volume: 0.5"
-      ></a-entity>
+      <a-entity position="-0.93859 1.97876 -4.44843" circles-interactive-object="" class="interactive" scale=""
+        circles-material-extend-fresnel="fresnelPow: 2; fresnelOpacity: 0" sound="volume: 0.5"></a-entity>
 
-    <!-- Painting -->
-    <a-box
-    position="0.89307 1.31338 -4.2979"
-    scale="1 1.3 0.071"
-    rotation="-15.487622160181282 -38.13320605493194 0.3472124238492789"
-    color="#940000"
-    id="redPaint"
-    class="interactive"
-    circles-interactive-object="type:highlight"
-    environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
-    painting-highlight
-    material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"
-  ></a-box>
+      <!-- Painting -->
+      <a-box position="0.89307 1.31338 -4.2979" scale="1 1.3 0.071"
+        rotation="-15.487622160181282 -38.13320605493194 0.3472124238492789" color="#940000" id="redPaint"
+        class="interactive" circles-interactive-object="type:highlight"
+        environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
+        painting-highlight
+        material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
-  
 
-  <a-box
-    position="-1.06558 1.33932 -5.12713"
-    scale="1 1.3 0.071"
-    rotation="-15.103740437443632 6.330037720605334 0.4125296124941928"
-    color="#009400"
-    id="greenPaint"
-    class="interactive"
-    circles-interactive-object="type:highlight"
-    painting-highlight
-    material="emissive: #fff700; emissiveIntensity: 0;"
-  ></a-box>
-  <a-box
-    position="-2.86388 1.33563 -4.2867"
-    scale="1 1.3 0.071"
-    rotation="-15.513978218757302 42.626914042142985 0.9035544429213082"
-    color="#000094"
-    id="bluePaint"
-    class="interactive"
-    circles-interactive-object="type:highlight"
-    circles-sendpoint="target:#checkpoint_blue;"
-    environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
-    painting-highlight
-    material="emissive: #fff700; emissiveIntensity: 0;"
-  ></a-box>
-    
- 
-      
-  <!-- Checkpoints -->
-  <a-entity
-    id="checkpoint_red"
-    circles-checkpoint
-    position="-18.400 3.215 0"
-  ></a-entity>
-  <a-entity
-    id="checkpoint_blue"
-    circles-checkpoint
-    position="-40 0.105 0"
-  ></a-entity>
 
-  <!--Environment-->
-  
-  <!--ria_environment-->
- 
+      <a-box position="-1.06558 1.33932 -5.12713" scale="1 1.3 0.071"
+        rotation="-15.103740437443632 6.330037720605334 0.4125296124941928" color="#009400" id="greenPaint"
+        class="interactive" circles-interactive-object="type:highlight" painting-highlight
+        material="emissive: #fff700; emissiveIntensity: 0;"></a-box>
+      <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
+        rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="#000094" id="bluePaint"
+        class="interactive" circles-interactive-object="type:highlight" circles-sendpoint="target:#checkpoint_blue;"
+        environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
+        painting-highlight material="emissive: #fff700; emissiveIntensity: 0;"></a-box>
 
-  <!-- models -->
-  <a-entity
-  id="chair"  
-  position="2.78254 0 -5.84547"
-  rotation="0 11.506138441817194 0"
-  scale="20 20 20"
-  gltf-model="#chair_gltf"
-  ></a-entity>
 
-  <a-entity 
-   id="chair-2" 
-   position="4.45998 -0.33531 -2.62104" 
-   rotation="0.8445397900228334 -5.826980776480472 119.99741582322396" 
-   scale="20 20 20" 
-   gltf-model="#chair_gltf">
-  </a-entity>
 
-  <a-entity
-    id="painting"
-    scale="20 20 20"
-    gltf-model="#painting_gltf"
-    position="2.69453 0 -5.4894"
-    rotation="0 -38.35895142621349 0"
-  ></a-entity>
-  <a-entity
-  id="painting1"
-    scale="20 20 20"
-    gltf-model="#painting_gltf"
-    position="-2.85013 0 -4.29198"
-    rotation="0 -46.65824508868346 0"
-  ></a-entity>
-  <a-entity
-    id="painting2"
-    scale="20 20 20"
-    gltf-model="#painting_gltf"
-    position="-1.05372 0 -5.11934"
-    rotation="0 -82.69671744461711 0"
-  ></a-entity>
-  <a-entity
-    id="painting3"
-    scale="20 20 20"
-    gltf-model="#painting_gltf"
-    position="0.90896 0 -4.31538"
-    rotation="0 -130.53239080229443 0"
-  ></a-entity>
+      <!-- Checkpoints -->
+      <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 3.215 0"></a-entity>
+      <a-entity id="checkpoint_blue" circles-checkpoint position="-40 0.105 0"></a-entity>
+      <a-entity id="checkpoint_red_return" circles-checkpoint position="0 0 0"></a-entity>
 
-  <a-entity
-    id="palette"
-    scale="20 20 20"
-    gltf-model="#palette_gltf"
-    position="-2.927 0.064 -4.31538"
-    rotation="0 0 0"
-  ></a-entity>
+      <!--Environment-->
 
-  <a-entity
-    id="palette2"
-    scale="20 20 20"
-    gltf-model="#palette_gltf"
-    position="-1.169 0.064 -4.31538"
-    rotation="0 -130 0"
-  ></a-entity>
+      <!--ria_environment-->
 
-  <a-entity
-    id="palette3"
-    scale="20 20 20"
-    gltf-model="#palette_gltf"
-    position="0.857 0.064 -4.31538"
-    rotation="0 -90 0"
-  ></a-entity>
 
-  <a-entity
-    id="frame1"
-    scale="0.28877 0.28877 0.28877"
-    gltf-model="#frame_gltf"
-    position="-5.594 1.173 -1.487"
-    rotation="0 -180 0"
-  ></a-entity>
-  <a-entity id="frame1-2" 
-            scale="0.28877 0.28877 0.28877" 
-            gltf-model="#frame_gltf" 
-            position="-5.594 1.17321 -5.71147" 
-            rotation="0 -180 0"></a-entity>
-  <a-entity id="frame1-3" 
-            scale="0.28877 0.28877 0.28877" 
-            gltf-model="#frame_gltf" 
-            position="5.594 1.17321 -1.48734"></a-entity>
-  <a-entity id="frame1-4"
-            scale="0.28877 0.28877 0.28877" 
-            gltf-model="#frame_gltf" 
-            position="5.594 1.17321 -5.91606"></a-entity>
+      <!-- models -->
+      <a-entity id="chair" position="2.78254 0 -5.84547" rotation="0 11.506138441817194 0" scale="20 20 20"
+        gltf-model="#chair_gltf"></a-entity>
 
-  <a-entity id="stool"
-            scale="1 1 1" 
-            gltf-model="#stool_gltf" 
-            position="3.618 -0.025 0"></a-entity>
+      <a-entity id="chair-2" position="4.45998 -0.33531 -2.62104"
+        rotation="0.8445397900228334 -5.826980776480472 119.99741582322396" scale="20 20 20" gltf-model="#chair_gltf">
+      </a-entity>
 
-  
-  <a-entity id="stool"
-            scale="1 1 1" 
-            gltf-model="#stool_gltf" 
-            position="3.618 -0.025 0"></a-entity>
-  <!-- Book Piles -->
-  <a-entity id="book_pile_1" gltf-model="#book_pile_gltf" position="3.59154 0.00085 -0.83013"></a-entity>
-  <a-entity id="book_pile_2" gltf-model="#book_pile_gltf" position="2.90213 0 -1.64883" rotation="0 38.28274803946108 0"></a-entity>
-  <a-entity id="book_pile_3" gltf-model="#book_pile_gltf" position="3.98486 0 -1.8378" rotation="0 -46.56599888366739 0"></a-entity>
-  <a-entity id="book_pile_4" gltf-model="#book_pile_gltf" position="4.17924 0 -3.91568"></a-entity>
+      <a-entity id="painting" scale="20 20 20" gltf-model="#painting_gltf" position="2.69453 0 -5.4894"
+        rotation="0 -38.35895142621349 0"></a-entity>
+      <a-entity id="painting1" scale="20 20 20" gltf-model="#painting_gltf" position="-2.85013 0 -4.29198"
+        rotation="0 -46.65824508868346 0"></a-entity>
+      <a-entity id="painting2" scale="20 20 20" gltf-model="#painting_gltf" position="-1.05372 0 -5.11934"
+        rotation="0 -82.69671744461711 0"></a-entity>
+      <a-entity id="painting3" scale="20 20 20" gltf-model="#painting_gltf" position="0.90896 0 -4.31538"
+        rotation="0 -130.53239080229443 0"></a-entity>
 
-  <!-- Round Stools -->
-  <a-entity id="stool_round_1" gltf-model="#stool_round_gltf" position="2.64273 0.11403 -0.39044" rotation="-41.042112780811124 96.44312086539581 -72.68829067927189"></a-entity>
-  <a-entity id="stool_round_2" gltf-model="#stool_round_gltf" position="3.28881 0 -4.58313" scale="1.6188 1.6188 1.6188"></a-entity>
-  <a-entity id="stool_round_3" gltf-model="#stool_round_gltf" position="-4.26057 0 -2.86813"></a-entity>
+      <a-entity id="palette" scale="20 20 20" gltf-model="#palette_gltf" position="-2.927 0.064 -4.31538"
+        rotation="0 0 0"></a-entity>
 
-  <!-- Wall Shelves -->
-  <a-entity id="shelf_wall_1" gltf-model="#shelf_wall_gltf" position="-2.98275 1.66445 -7.223" scale="5 3 4"></a-entity>
-  <a-entity id="shelf_wall_2" gltf-model="#shelf_wall_gltf" position="0.22357 1.21294 -7.223" scale="5 3 4"></a-entity>
+      <a-entity id="palette2" scale="20 20 20" gltf-model="#palette_gltf" position="-1.169 0.064 -4.31538"
+        rotation="0 -130 0"></a-entity>
 
-  <!-- wooden crates -->
-  <a-entity id="wooden_crate_1-1" gltf-model="#wooden_crate_1_gltf" position="-4.16149 0 -1.92959"></a-entity>
-  <a-entity id="wooden_crate_2-1" gltf-model="#wooden_crate_2_gltf" position="-3.80811 0.45226 -2.29344" rotation="7.063423698372789 -132.2615774279992 -142.60289267231548"></a-entity>
-  <a-entity id="wooden_crate_3-1" gltf-model="#wooden_crate_3_gltf" position="-3.82469 0 -3.35021" rotation="0 -21.621135357056744 0"></a-entity>
-  
+      <a-entity id="palette3" scale="20 20 20" gltf-model="#palette_gltf" position="0.857 0.064 -4.31538"
+        rotation="0 -90 0"></a-entity>
 
-      <!-- Info Panel for displaying painting details -->
-      <a-entity
-        id="infoPanel"
-        info-panel
-        position="0 1.6 -2.5"
-        geometry="primitive: plane; width: 1.5; height: 1.8"
-        material="color: #333; shader: flat; side: double"
-        visible="false"
-      >
-        <!-- Text elements inside the info panel -->
-        <a-entity
-          id="panelTitle"
-          position="-0.68 0.5 0"
-          text="anchor: left; width: 1.5; color: white; value:"
-        >
-          <a-entity
-            id="button"
-            geometry="primitive: cylinder"
-            position="0.7 -0.955 0.030"
-            scale="0.082 0.082 0.08346"
-            material="color:#a22020;"
-            rotation="-90 0 0"
-            class="interactive"
-            highlight-button
-          >
-          </a-entity>
+      <a-entity id="frame1" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf" position="-5.594 1.173 -1.487"
+        rotation="0 -180 0"></a-entity>
+      <a-entity id="frame1-2" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
+        position="-5.594 1.17321 -5.71147" rotation="0 -180 0"></a-entity>
+      <a-entity id="frame1-3" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
+        position="5.594 1.17321 -1.48734"></a-entity>
+      <a-entity id="frame1-4" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
+        position="5.594 1.17321 -5.91606"></a-entity>
+
+      <a-entity id="stool" scale="1 1 1" gltf-model="#stool_gltf" position="3.618 -0.025 0"></a-entity>
+
+
+      <a-entity id="stool" scale="1 1 1" gltf-model="#stool_gltf" position="3.618 -0.025 0"></a-entity>
+      <!-- Book Piles -->
+      <a-entity id="book_pile_1" gltf-model="#book_pile_gltf" position="3.59154 0.00085 -0.83013"></a-entity>
+      <a-entity id="book_pile_2" gltf-model="#book_pile_gltf" position="2.90213 0 -1.64883"
+        rotation="0 38.28274803946108 0"></a-entity>
+      <a-entity id="book_pile_3" gltf-model="#book_pile_gltf" position="3.98486 0 -1.8378"
+        rotation="0 -46.56599888366739 0"></a-entity>
+      <a-entity id="book_pile_4" gltf-model="#book_pile_gltf" position="4.17924 0 -3.91568"></a-entity>
+
+      <!-- Round Stools -->
+      <a-entity id="stool_round_1" gltf-model="#stool_round_gltf" position="2.64273 0.11403 -0.39044"
+        rotation="-41.042112780811124 96.44312086539581 -72.68829067927189"></a-entity>
+      <a-entity id="stool_round_2" gltf-model="#stool_round_gltf" position="3.28881 0 -4.58313"
+        scale="1.6188 1.6188 1.6188"></a-entity>
+      <a-entity id="stool_round_3" gltf-model="#stool_round_gltf" position="-4.26057 0 -2.86813"></a-entity>
+
+      <!-- Wall Shelves -->
+      <a-entity id="shelf_wall_1" gltf-model="#shelf_wall_gltf" position="-2.98275 1.66445 -7.223"
+        scale="5 3 4"></a-entity>
+      <a-entity id="shelf_wall_2" gltf-model="#shelf_wall_gltf" position="0.22357 1.21294 -7.223"
+        scale="5 3 4"></a-entity>
+
+      <!-- wooden crates -->
+      <a-entity id="wooden_crate_1-1" gltf-model="#wooden_crate_1_gltf" position="-4.16149 0 -1.92959"></a-entity>
+      <a-entity id="wooden_crate_2-1" gltf-model="#wooden_crate_2_gltf" position="-3.80811 0.45226 -2.29344"
+        rotation="7.063423698372789 -132.2615774279992 -142.60289267231548"></a-entity>
+      <a-entity id="wooden_crate_3-1" gltf-model="#wooden_crate_3_gltf" position="-3.82469 0 -3.35021"
+        rotation="0 -21.621135357056744 0"></a-entity>
+
+
+
+    </a-entity>
+    <!-- Info Panel for displaying painting details -->
+    <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
+      material="color: #333; shader: flat; side: double" visible="false">
+      <!-- Text elements inside the info panel -->
+      <a-entity id="panelTitle" position="-0.68 0.5 0" text="anchor: left; width: 1.5; color: white; value:">
+        <a-entity id="button" geometry="primitive: cylinder" position="0.7 -0.955 0.030" scale="0.082 0.082 0.08346"
+          material="color:#a22020;" rotation="-90 0 0" class="interactive" highlight-button>
         </a-entity>
-        <a-entity
-          id="panelDescription"
-          position="-0.68 0.3 0"
-          text="anchor: left; width: 1.5; color: white; value:"
-        ></a-entity>
       </a-entity>
+      <a-entity id="panelDescription" position="-0.68 0.3 0"
+        text="anchor: left; width: 1.5; color: white; value:"></a-entity>
 
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->
-  <circles-end-scripts/>
+  <circles-end-scripts />
 </body>
+
 </html>

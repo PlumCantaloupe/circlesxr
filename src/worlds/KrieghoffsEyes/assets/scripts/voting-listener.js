@@ -1,15 +1,15 @@
 AFRAME.registerComponent('voting-listener', {
   init: function () {
     const riaManager = document.querySelector("#GameManager");
-    const cabin = document.querySelector("#Cabin");
+    // const cabin = document.querySelector("#Cabin");
     var self = this;
     // Array to store voterId, painting
     this.votes = [];
-    this.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0 };
+    this.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0 };
 
     // Update totalVotes
     this.updateTotalVotes = function () {
-      self.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0 };
+      self.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0 };
       self.votes.forEach(function (vote) {
         var p = vote.painting;
         self.totalVotes[p] = (self.totalVotes[p] || 0) + 1;
@@ -66,10 +66,14 @@ AFRAME.registerComponent('voting-listener', {
 
             // Only activate RIAmanager if the red painting is clicked
             if (winner === "redPaint") {
-              riaManager.emit('painting-clicked');  // Trigger ria-manager
-              cabin.setAttribute('visible', 'false');
+              riaManager.emit('ria-painting-clicked');  // Trigger ria-manager
           
           }
+
+          if (winner === "redPaint_return") {
+            console.log("YIPEEE DOOOODAAAAAA");
+        
+        }
           winningEntity.emit('click');
 
           const painting = document.querySelector("#"+ winner);
@@ -135,7 +139,7 @@ AFRAME.registerComponent('voting-listener', {
             // Only activate RIAmanager if the red painting is clicked
             if (data.winner === "redPaint") {
               riaManager.emit('painting-clicked');  // Trigger ria-manager
-              cabin.setAttribute('visible', 'false');
+
           
           }
           winningEntity.emit('click');
