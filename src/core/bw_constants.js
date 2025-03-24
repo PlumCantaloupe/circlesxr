@@ -13,10 +13,8 @@ const DEFAULT_BLOOM = false;
 
 //guiding text constants
 const GUIDING_TEXT = {
-  GUIDING_STATE: 'guiding',
-  ERROR_STATE: 'error',
-  TIMED_DISPLAY: 'timed',
-  CONSTANT_DISPLAY: 'constant',
+  HIDDEN: 'none',
+  SHOW: 'flex',
   TIMER_MS: 3000,
 }
 
