@@ -71,7 +71,7 @@ AFRAME.registerComponent('voting-listener', {
           }
 
           if (winner === "redPaint_return") {
-            console.log("YIPEEE DOOOODAAAAAA");
+            riaManager.emit('return-clicked');
         
         }
           winningEntity.emit('click');

@@ -16,6 +16,27 @@ AFRAME.registerComponent('ria-manager', {
         this.el.addEventListener('ria-complete', () =>{
             this.spawnPortal();
         });
+
+        this.el.addEventListener('return-clicked', () => {
+            this.riaWorld = document.querySelector('riaWorld');
+            this.environment = document.querySelector('#environment');
+            riaWorld.setAttribute('visible', 'false');
+            this.cabin.setAttribute('visible', 'true');
+            this.environment.setAttribute('position', '0 -2.265 0');
+            this.environment.setAttribute('environment', {
+                preset: 'checkerboard',
+                seed: 123,
+                fog: 0.06,
+                lightPosition: '-4.160 1 0',
+                skyType: 'gradient',
+                skyColor: '#0f0c14',
+                horizonColor: '#000000',
+                lighting: 'none',
+                dressing: 'none'
+            });
+
+            console.log(this.environment);
+        });
     },
 
     startRaftTask: function () {
