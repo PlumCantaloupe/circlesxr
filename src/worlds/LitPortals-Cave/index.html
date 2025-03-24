@@ -24,6 +24,7 @@
     <script src="components/toggle-movement.js"></script>
     <script src="components/toggle-canvas.js"></script>
     <script src="components/update-canvas.js"></script>
+    <script src="components/raycaster-listen.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
 
@@ -311,6 +312,7 @@
       <a-entity id = "drawGroup" position="-2.11 0 -14.4"  rotation="0 130 0">
         <!-- Plane where the drawing will display -->
         <a-entity update-canvas position="6.5 1.7 -8" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="src: #drawCanvas;"> </a-entity>
+        <a-entity class="interactive" raycaster-listen position="9.5 1.7 -3" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="color:#964B00;"> </a-entity>
 
         <!-- Button to start the interaction -->
         <a-entity circles-button="type:cylinder" position="4.7 1.1 -8.8" toggle-canvas>
