@@ -36,7 +36,7 @@ AFRAME.registerComponent('orb-release', {
             if (!orb.dataset.hasClickListener) { 
                 orb.dataset.hasClickListener = true;
                 orb.addEventListener('click', function () {
-                    console.log("peepeepoopoo");
+                    //console.log("peepeepoopoo");
                     CONTEXT_AF.playParticles(orb);
                     CONTEXT_AF.playAnimation(orb);
                     setTimeout(() => {

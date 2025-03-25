@@ -2,6 +2,7 @@ AFRAME.registerComponent('orb-manager', {
     schema: {
         duration: {type: 'int', default: 9000},
         clipNum: {type: 'number', default: 30},
+        sendRate: {type: 'int', default: 100},
     },
     init() {
         const CONTEXT_AF = this;
@@ -11,6 +12,8 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
+        CONTEXT_AF.orbReleaseEventName = "orbrelease_event";
+        CONTEXT_AF.orbPosUpdateEventName = "orbposition_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
         CONTEXT_AF.timer = null; // Store the timer ID
@@ -20,6 +23,11 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.orb2 = document.querySelector('#orboutside2'); 
         CONTEXT_AF.orb3 = document.querySelector('#orboutside3'); 
         CONTEXT_AF.orb4 = document.querySelector('#orboutside4'); 
+
+        CONTEXT_AF.innerorb1 = document.querySelector('#orbinside1'); 
+        CONTEXT_AF.innerorb2 = document.querySelector('#orbinside2'); 
+        CONTEXT_AF.innerorb3 = document.querySelector('#orbinside3'); 
+        CONTEXT_AF.innerorb4 = document.querySelector('#orbinside4'); 
 
         CONTEXT_AF.orbs = document.querySelectorAll('.orb');
 
@@ -95,14 +103,38 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
+            //yu need this as part of the emitted data: room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+
             // Start the timer for the drop cycle 
             CONTEXT_AF.scheduleNextDrop();
 
              // Listen for incoming orb drop events
              CONTEXT_AF.socket.on(CONTEXT_AF.orbDropEventName, (data) => {
                 console.log("received drop PLSS IMMA KMS");
+                //onsole.log(data.colour);
                 CONTEXT_AF.lastDropTime = Date.now();
+                CONTEXT_AF.colour = data.colour;
                 CONTEXT_AF.dropOrbAtPosition(data.position);
+            });
+
+            //listen for incoming orb release events to sync position and animation
+            CONTEXT_AF.socket.on(CONTEXT_AF.orbReleaseEventName, (data) => {
+                const releaseorb = document.querySelector(`#${data.id}`); 
+                CONTEXT_AF.playParticles(releaseorb);
+                CONTEXT_AF.playAnimation(releaseorb);
+                releaseorb.setAttribute('circles-interactive-object', 'enabled:false');
+                setTimeout(() => {
+                    releaseorb.parentNode.removeChild(releaseorb); // Remove from the scene
+                }, CONTEXT_AF.data.duration);
+            });
+
+            //listen for updating orb positions on pickup
+            CONTEXT_AF.socket.on(CONTEXT_AF.orbPosUpdateEventName, (data) => {
+                //data.id and data.position (id and positioon of orb)
+                //console.log("position received");
+                //console.log(data.id);
+                const moveorb = document.querySelector(`#${data.id}`); 
+                moveorb.setAttribute('position', data.position);
             });
 
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
@@ -130,6 +162,7 @@ AFRAME.registerComponent('orb-manager', {
         }
     },
 
+    //emit the next orb drop to other users
     scheduleNextDrop() {
         const CONTEXT_AF = this;
         setTimeout(() => {
@@ -139,7 +172,7 @@ AFRAME.registerComponent('orb-manager', {
                 const spawnPos = CONTEXT_AF.randomizePosition();
                 CONTEXT_AF.lastDropTime = now;
                 CONTEXT_AF.position = spawnPos;
-                CONTEXT_AF.socket.emit(CONTEXT_AF.orbDropEventName, {position:spawnPos, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()}); 
+                CONTEXT_AF.socket.emit(CONTEXT_AF.orbDropEventName, {position:spawnPos, colour:CONTEXT_AF.colour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()}); 
                 console.log("send drop");
                 CONTEXT_AF.dropOrbAtPosition(spawnPos);
             }
@@ -179,10 +212,12 @@ AFRAME.registerComponent('orb-manager', {
         const CONTEXT_AF = this;
 
         const scene = this.el.sceneEl;
+
+        //console.log(CONTEXT_AF.colour);
+        //create outer orb
         const orb = CONTEXT_AF[`orb${CONTEXT_AF.colour}`].cloneNode(true);
         orb.setAttribute('id', `orb${CONTEXT_AF.numOrbs}`);
         orb.setAttribute('class', 'orb');
-        orb.setAttribute('circles-pickup-networked', `objectId: orb${CONTEXT_AF.numOrbs}`);
         orb.setAttribute('position', spawnPos);
         orb.setAttribute('animation', {
             property: 'position',
@@ -192,53 +227,66 @@ AFRAME.registerComponent('orb-manager', {
             easing: 'linear'
         });
         
+        //create inner orb and parent to outer orb
+        const innerorb = CONTEXT_AF[`innerorb${CONTEXT_AF.colour}`].cloneNode(true);
+        innerorb.setAttribute('id', `innerorb${CONTEXT_AF.numOrbs}`);
+        innerorb.setAttribute('position', {x: 0, y: 0, z: 0});
+        orb.appendChild(innerorb);
+
         orb.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.socket.emit(CONTEXT_AF.orbReleaseEventName, {id: orb.getAttribute("id"), position: orb.getAttribute("position"), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             CONTEXT_AF.playParticles(orb);
             CONTEXT_AF.playAnimation(orb); 
             CONTEXT_AF.playSound(Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1);
             orb.setAttribute('circles-interactive-object', 'enabled:false');
             setTimeout(() => {
-                orb.parentNode.removeChild(orb); // Remove from the scene
-            }, CONTEXT_AF.data.duration);
+                if (orb.parentNode) {
+                    orb.parentNode.removeChild(orb);
+                }
+            }, CONTEXT_AF.data.duration + 6000);
         });
 
-        /*orb.addEventListener('click', function () {
-            console.log("peepeepoopoo");
-            CONTEXT_AF.playParticles(orb);
-            CONTEXT_AF.playAnimation(orb);
-            //setTimeout(() => {
-                //orb.setAttribute('circles-interactive-visible', "false");
-            //}, CONTEXT_AF.data.duration);
-        });*/
-            
+        orb.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.sendPosition(orb);
+        });
+
         scene.appendChild(orb);
+
         CONTEXT_AF.numOrbs++;
 
         setTimeout(() => {
-            //if the orb has not yet been picked up by the end of its lifespan, it gets deleted
-            /*if (orb.parentElement !== document.querySelector('a-scene')) { 
+            if (orb.getAttribute("position").x != 0 && orb.getAttribute("position").y != -0.1 && orb.getAttribute("position").z != 0.2){
                 orb.parentNode.removeChild(orb);
-            }*/
-            orb.parentNode.removeChild(orb);
+            }
         }, CONTEXT_AF.duration * spawnPos.y + 30000);
     }, 
 
-    playParticles: function (orb) {
+    playParticles: function (orb, colour) {
         const CONTEXT_AF = this;
 
+        //make particle colour match orb colour
+        const curColour = orb.children[0].getAttribute("material").emissive;
+
         const particleSystem = document.createElement('a-entity');
-        particleSystem.setAttribute('particle-system', "preset: dust; color:#b1f8ff; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0.7 0.5 0.7; maxAge:2.5,blending: 3; dragValue: 1; velocityValue: 0 0.5 0; size: 0.1; sizeSpread: 0.3; duration: 9000; particleCount: 150");
+        particleSystem.setAttribute('particle-system', "preset: dust; color:" + curColour + "; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0.7 0.5 0.7; maxAge:2.5,blending: 3; dragValue: 1; velocityValue: 0 0.5 0; size: 0.1; sizeSpread: 0.3; duration:" + CONTEXT_AF.data.duration + "; particleCount: 150");
         particleSystem.setAttribute('position', '0 -0.2 0');
-        particleSystem.setAttribute('rotation', '0 90 136');
+        particleSystem.setAttribute('rotation', '-10 90 136');
         orb.appendChild(particleSystem);
-        setTimeout(() => particleSystem.remove(),  CONTEXT_AF.data.duration + 2000);
+        setTimeout(() => particleSystem.remove(),  CONTEXT_AF.data.duration);
     },
 
     playAnimation: function (orb) {
         const CONTEXT_AF = this;
         orb.setAttribute('animation', {
-            property: 'opacity',
-            to: '0',
+            property: 'material.opacity',
+            to: 0,
+            dur: CONTEXT_AF.data.duration,
+            startEvents: onclick,
+        });
+
+        orb.children[0].setAttribute('animation', {
+            property: 'material.opacity',
+            to: 0,
             dur: CONTEXT_AF.data.duration,
             startEvents: onclick,
         });
@@ -258,4 +306,30 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.clip = document.querySelector(`#clip${soundNum}`);
         CONTEXT_AF.clip.components.sound.playSound();
     },
+
+    sendPosition: function (orb) {
+        const CONTEXT_AF = this;
+        const sendRate = CONTEXT_AF.data.sendRate;
+        const emitPosition = () => {
+            //x: 0, y: -0.1, z: 0.2 when pickedup
+            // if orb is not picked up 
+            if (orb.getAttribute("position").x != 0 && orb.getAttribute("position").y != -0.1 && orb.getAttribute("position").z != 0.2){
+                return;
+            }
+
+            let worldPos = new THREE.Vector3();
+            orb.object3D.getWorldPosition(worldPos);
+            //console.log(worldPos);
+;
+            CONTEXT_AF.socket.emit(CONTEXT_AF.orbPosUpdateEventName, {
+                id: orb.getAttribute("id"),
+                position: {x: worldPos.x, y: worldPos.y, z: worldPos.z},
+                room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+            });
+
+            setTimeout(emitPosition, 1000 / sendRate); // Repeat at the defined rate
+        };
+    
+        emitPosition(); // Start sending
+    }
 });

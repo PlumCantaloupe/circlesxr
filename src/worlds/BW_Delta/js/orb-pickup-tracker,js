@@ -1,0 +1,23 @@
+AFRAME.registerComponent('orb-pickup-tracker', {
+    schema: {
+        position: {type: 'vec3', default: { x: 0, y: 0, z: 0 } },
+        pickedUp: {type: 'boolean', default: false},
+    },
+
+    init: function () {
+        const CONTEXT_AF = this;
+        CONTEXT_AF.updateInterval = 100; // update position every 100 ms
+        CONTEXT_AF.lastUpdateTime = 0;
+    },
+
+    tick: function (time) {
+        const CONTEXT_AF = this;
+
+        // Only update every updateInterval ms
+        if (time - CONTEXT_AF.lastUpdateTime < CONTEXT_AF.updateInterval) return;
+        CONTEXT_AF.lastUpdateTime = time;
+
+        // Get current position and update schema
+        CONTEXT_AF.data.position = CONTEXT_AF.el.getAttribute('position');
+    }
+});
