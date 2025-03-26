@@ -67,8 +67,10 @@ AFRAME.registerComponent('voting-listener', {
             // Only activate RIAmanager if the red painting is clicked
             if (winner === "redPaint") {
               riaManager.emit('ria-painting-clicked');  // Trigger ria-manager
-          
-          }
+            } 
+            if (winner === "greenPaint") {
+              riaManager.emit('blz-painting-clicked'); // GameManager sends signal that blz-painting was clicked 
+            }
 
           if (winner === "redPaint_return") {
             riaManager.emit('return-clicked');
@@ -139,17 +141,19 @@ AFRAME.registerComponent('voting-listener', {
             // Only activate RIAmanager if the red painting is clicked
             if (data.winner === "redPaint") {
               riaManager.emit('painting-clicked');  // Trigger ria-manager
+            }
+            if (winner === "greenPaint") {
+              riaManager.emit('blz-painting-clicked'); // GameManager sends signal that blz-painting was clicked 
+            }
 
-          
-          }
-          winningEntity.emit('click');
+            winningEntity.emit('click');
 
-          const painting = document.querySelector("#"+ data.winner);
-          const newEnvironment = painting.getAttribute("environemntProp");
-          if (newEnvironment) {
-          environment.setAttribute("environment", newEnvironment);
+            const painting = document.querySelector("#"+ data.winner);
+            const newEnvironment = painting.getAttribute("environemntProp");
+            if (newEnvironment) {
+            environment.setAttribute("environment", newEnvironment);
+            }
           }
-        }
         }
       });
     }

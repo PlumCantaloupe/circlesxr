@@ -1,4 +1,4 @@
-AFRAME.registerComponent('ria-manager', {
+AFRAME.registerComponent('blz-manager', {
     init: function () {
         this.logs = [];
         this.logsPlaced = 0;
@@ -8,19 +8,19 @@ AFRAME.registerComponent('ria-manager', {
         this.cabin = document.querySelector("#Cabin");
 
 
-        // Wait for the red painting click event
-        this.el.addEventListener('ria-painting-clicked', () => {
+        // Wait for the green painting click event
+        this.el.addEventListener('blz-painting-clicked', () => {
             this.startRaftTask();
         });
 
-        this.el.addEventListener('ria-complete', () =>{
+        this.el.addEventListener('blz-complete', () =>{
             this.spawnPortal();
         });
 
         this.el.addEventListener('return-clicked', () => {
-            this.riaWorld = document.querySelector('riaWorld');
+            this.blzWorld = document.querySelector('blzWorld');
             this.environment = document.querySelector('#environment');
-            riaWorld.setAttribute('visible', 'false');
+            blzWorld.setAttribute('visible', 'false');
             this.cabin.setAttribute('visible', 'true');
             this.environment.setAttribute('position', '0 -2.265 0');
             this.environment.setAttribute('environment', {
@@ -40,14 +40,14 @@ AFRAME.registerComponent('ria-manager', {
     },
 
     startRaftTask: function () {
-        console.log('Starting Raft in Autumn task');
+        console.log('Blizzard task');
         this.spawnLogs();
         this.spawnPedestal();
         this.cabin.setAttribute('visible', 'false');
     },
    
     spawnLogs: function () {
-        const riaWorld = document.querySelector('#riaWorld');
+        const blzWorld = document.querySelector('#blzWorld');
         const positions = [
             { x: 1, y: 1.23968, z: -8 },
             { x: -6, y: 1.779, z: 12 },
@@ -78,13 +78,13 @@ AFRAME.registerComponent('ria-manager', {
             const rot = rotations[index];
             log.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
 
-            riaWorld.appendChild(log);
+            blzWorld.appendChild(log);
             this.logs.push(log);
         });
     },
 
     spawnPedestal: function () {
-        const riaWorld = document.querySelector('#riaWorld');
+        const blzWorld = document.querySelector('#blzWorld');
         this.pedestal = document.createElement('a-box');
         this.pedestal.setAttribute('id', 'raftPedestal');
         this.pedestal.setAttribute('position', '-0.876 1.741 -14.777');
@@ -107,14 +107,14 @@ AFRAME.registerComponent('ria-manager', {
         // Make it a physics trigger
         this.pedestal.setAttribute('dynamic-body', 'mass: 0;'); // A-Frame physics component
     
-        riaWorld.appendChild(this.pedestal);
-        riaWorld.appendChild(raft);
+        blzWorld.appendChild(this.pedestal);
+        blzWorld.appendChild(raft);
 
     },
     
     spawnPortal: function () {
         // Create the a-box element
-        const riaWorld = document.querySelector('#riaWorld');
+        const blzWorld = document.querySelector('#blzWorld');
         let redPaint = document.createElement('a-box');
         redPaint.setAttribute('position', '-0.584 3.046 -18.700');
         redPaint.setAttribute('scale', '1 1.3 0.071');
@@ -143,8 +143,8 @@ AFRAME.registerComponent('ria-manager', {
     
 
         // Append elements to the scene
-        riaWorld.appendChild(redPaint);
-        riaWorld.appendChild(painting3);
+        blzWorld.appendChild(redPaint);
+        blzWorld.appendChild(painting3);
     }
     
 });
@@ -176,19 +176,18 @@ AFRAME.registerComponent('pedestal-trigger', {
                     if (this.logsPlaced === this.maxLogs) {
                         console.log("Raft is complete!");
                         this.el.setAttribute('color', 'green');
-                        gameManager.emit('ria-complete');
+                        gameManager.emit('blz-complete');
                     }
                 }
             }, 0);
         });
     }
 });
-
+/* UPDATED in RIAmanager.js so we don't re-register this component
 AFRAME.registerComponent('lazy-load-environment', {
     init: function () {
       const scene = document.querySelector('a-scene');
       const riaWorld = document.querySelector('#riaWorld');
-      const blzWorld = document.querySelector('#blzWorld');
       scene.addEventListener('loaded', () => {
         const riaEnv = document.createElement('a-entity');
         riaEnv.setAttribute('gltf-model', '#ria_environment');
@@ -198,16 +197,8 @@ AFRAME.registerComponent('lazy-load-environment', {
         riaEnv.setAttribute('visible', 'false');
         riaEnv.setAttribute('id', 'riaEnv');
         riaWorld.appendChild(riaEnv);
-
-        //Blizzard set up
-        const blzEnv = document.createElement('a-entity');
-        //adding cylinder for testing
-        blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
-        blzEnv.setAttribute('position', '42 1 0');
-        blzEnv.setAttribute('visible', 'false');
-        blzEnv.setAttribute('id', 'blzEnv');
-        blzWorld.appendChild(blzEnv);
   
+        
       });
       
      
@@ -225,14 +216,8 @@ AFRAME.registerComponent('lazy-load-environment', {
           }
   
         });
-        gameManager.addEventListener('blz-painting-clicked', () => {
-            const blzEnv = document.querySelector('#blzEnv');
-            if (blzEnv) {
-              blzEnv.setAttribute('visible', 'true');
-            }
-        })
       }
     }
   });
   
-
+*/
