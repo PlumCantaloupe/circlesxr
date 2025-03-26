@@ -66,7 +66,7 @@ AFRAME.registerComponent('network-test', {
 
                 CONTEXT_AF.guessFour.setAttribute('material', keyFour.material)
                 CONTEXT_AF.guessFour.setAttribute('geometry', keyFour.geometry)
-                CONTEXT_AF.guessFour.setAttribute('scale', kewayFour.scale)
+                CONTEXT_AF.guessFour.setAttribute('scale', keyFour.scale)
 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.codeEventName, {netKeyOne:keyOne, netKeyTwo:keyTwo, netKeyThree:keyThree, netKeyFour:keyFour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 
@@ -108,7 +108,7 @@ AFRAME.registerComponent('network-test', {
                     keyThree = {geometry:CONTEXT_AF.guessThree.getAttribute('geometry'), material:CONTEXT_AF.guessThree.getAttribute('material'), scale:CONTEXT_AF.guessThree.getAttribute('scale')}
                     keyFour = {geometry:CONTEXT_AF.guessFour.getAttribute('geometry'), material:CONTEXT_AF.guessFour.getAttribute('material'), scale:CONTEXT_AF.guessFour.getAttribute('scale')}
 
-                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {netKeyOne:keyOne, netKeyTwo:keyTwo, netKeyThree:keyThree, netKeyFour:keyFour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {netKeys:{netKeyOne: keyOne, netKeyTwo: keyTwo, netKeyThree: keyThree, netKeyFour: keyFour}, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 }
             });
 
@@ -116,21 +116,23 @@ AFRAME.registerComponent('network-test', {
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
                 if (data.world === CIRCLES.getCirclesWorldName()) {
-                    CONTEXT_AF.guessOne.setAttribute('material', data.netKeyOne.material)
-                    CONTEXT_AF.guessOne.setAttribute('geometry', data.netKeyOne.geometry)
-                    CONTEXT_AF.guessOne.setAttribute('scale', data.netKeyOne.scale)
 
-                    CONTEXT_AF.guessTwo.setAttribute('material', data.netKeyTwo.material)
-                    CONTEXT_AF.guessTwo.setAttribute('geometry', data.netKeyTwo.geometry)
-                    CONTEXT_AF.guessTwo.setAttribute('scale', data.netKeyTwo.scale)
+                    CONTEXT_AF.guessOne.setAttribute('material', data.netKeys.netKeyOne.material)
+                    CONTEXT_AF.guessOne.setAttribute('geometry', data.netKeys.netKeyOne.geometry)
+                    CONTEXT_AF.guessOne.setAttribute('scale', data.netKeys.netKeyOne.scale)
 
-                    CONTEXT_AF.guessThree.setAttribute('material', data.netKeyThree.material)
-                    CONTEXT_AF.guessThree.setAttribute('geometry', data.netKeyThree.geometry)
-                    CONTEXT_AF.guessThree.setAttribute('scale', data.netKeyThree.scale)
+                    CONTEXT_AF.guessTwo.setAttribute('material', data.netKeys.netKeyTwo.material)
+                    CONTEXT_AF.guessTwo.setAttribute('geometry', data.netKeys.netKeyTwo.geometry)
+                    CONTEXT_AF.guessTwo.setAttribute('scale', data.netKeys.netKeyTwo.scale)
 
-                    CONTEXT_AF.guessFour.setAttribute('material', data.netKeyFour.material)
-                    CONTEXT_AF.guessFour.setAttribute('geometry', data.netKeyFour.geometry)
-                    CONTEXT_AF.guessFour.setAttribute('scale', data.netKeyFour.scale)
+                    CONTEXT_AF.guessThree.setAttribute('material', data.netKeys.netKeyThree.material)
+                    CONTEXT_AF.guessThree.setAttribute('geometry', data.netKeys.netKeyThree.geometry)
+                    CONTEXT_AF.guessThree.setAttribute('scale', data.netKeys.netKeyThree.scale)
+
+                    CONTEXT_AF.guessFour.setAttribute('material', data.netKeys.netKeyFour.material)
+                    CONTEXT_AF.guessFour.setAttribute('geometry', data.netKeys.netKeyFour.geometry)
+                    CONTEXT_AF.guessFour.setAttribute('scale', data.netKeys.netKeyFour.scale)
+
                 }
             });
         };
