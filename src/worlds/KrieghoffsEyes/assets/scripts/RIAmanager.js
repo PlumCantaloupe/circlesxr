@@ -203,7 +203,7 @@ AFRAME.registerComponent('lazy-load-environment', {
         const blzEnv = document.createElement('a-entity');
         //adding cylinder for testing
         blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
-        blzEnv.setAttribute('position', '42 1 0');
+        blzEnv.setAttribute('position', '-42 1 0');
         blzEnv.setAttribute('visible', 'false');
         blzEnv.setAttribute('id', 'blzEnv');
         blzWorld.appendChild(blzEnv);

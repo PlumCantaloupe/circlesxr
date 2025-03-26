@@ -1,7 +1,7 @@
 AFRAME.registerComponent('blz-manager', {
     init: function () {
-        this.logs = [];
-        this.logsPlaced = 0;
+        this.sledParts = [];
+        this.sledPartsPlaced = 0;
         this.scene = this.el.sceneEl;
         this.pedestal = null;
 
@@ -10,7 +10,8 @@ AFRAME.registerComponent('blz-manager', {
 
         // Wait for the green painting click event
         this.el.addEventListener('blz-painting-clicked', () => {
-            this.startRaftTask();
+            console.log("BLZ painting click heard");
+            this.startSledTask();
         });
 
         this.el.addEventListener('blz-complete', () =>{
@@ -39,7 +40,7 @@ AFRAME.registerComponent('blz-manager', {
         });
     },
 
-    startRaftTask: function () {
+    startSledTask: function () {
         console.log('Blizzard task');
         this.spawnLogs();
         this.spawnPedestal();
@@ -49,10 +50,10 @@ AFRAME.registerComponent('blz-manager', {
     spawnLogs: function () {
         const blzWorld = document.querySelector('#blzWorld');
         const positions = [
-            { x: 45, y: 1, z: 0 },
-            { x: 45, y: 1, z: 1 },
-            { x: 45, y: 1, z: 2 },
-            { x: 45, y: 1, z: 3 }
+            { x: -45, y: 0, z: 0 },
+            { x: -45, y: 0, z: 1 },
+            { x: -45, y: 0, z: 2 },
+            { x: -45, y: 0, z: 3 }
         ];
 
         const rotations = [
@@ -63,98 +64,99 @@ AFRAME.registerComponent('blz-manager', {
         ];
 
         positions.forEach((pos, index) => {
-            let log = document.createElement('a-entity');
-            log.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
-            // log.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2'); // Fixed typo
-            log.setAttribute('id', `log${pos.x}`);
-            log.setAttribute('gltf-model', `#logModel`);
-            log.setAttribute('material', 'color: brown'); // Material needs to be separate
-            log.setAttribute('class', 'interactable-log');
-            log.setAttribute('circles-interactive-object', '');
-            log.setAttribute('circles-pickup-networked', '');
-            log.setAttribute('static-body', '');
+            let sledPart = document.createElement('a-entity');
+            sledPart.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
+            // sledPart.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2'); // Fixed typo
+            sledPart.setAttribute('id', `log${pos.x}`);
+            sledPart.setAttribute('gltf-model', `#logModel`);
+            sledPart.setAttribute('material', 'color: brown'); // Material needs to be separate
+            sledPart.setAttribute('class', 'interactable-log');
+            sledPart.setAttribute('circles-interactive-object', '');
+            sledPart.setAttribute('circles-pickup-networked', '');
+            sledPart.setAttribute('static-body', '');
             
-            log.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
+            sledPart.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
             const rot = rotations[index];
-            log.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
+            sledPart.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
 
-            blzWorld.appendChild(log);
-            this.logs.push(log);
+            blzWorld.appendChild(sledPart);
+            this.sledParts.push(sledPart);
         });
     },
 
     spawnPedestal: function () {
         const blzWorld = document.querySelector('#blzWorld');
         this.pedestal = document.createElement('a-box');
-        this.pedestal.setAttribute('id', 'raftPedestal');
-        this.pedestal.setAttribute('position', '-0.876 1.741 -14.777');
+        this.pedestal.setAttribute('id', 'sledPedestal');
+        this.pedestal.setAttribute('position', '-60 0 0');
         this.pedestal.setAttribute('width', '3');
         this.pedestal.setAttribute('height', '0.3');
         this.pedestal.setAttribute('depth', '3');
         this.pedestal.setAttribute('color', 'red');
-        this.pedestal.setAttribute('pedestal-trigger', '');
+        this.pedestal.setAttribute('sled-pedestal-trigger', '');
     
-        let raft = document.createElement('a-entity');
-        raft.setAttribute('position', `-1.017 1.983 -14.995`);
+        let sled = document.createElement('a-entity');
+        sled.setAttribute('position', `-60 0.3 0`);
 
-        raft.setAttribute('id', `raft`);
-        raft.setAttribute('gltf-model', `#Raft4`);
-        raft.setAttribute('material', 'color: brown'); // Material needs to be separate
+        sled.setAttribute('id', `sled`);
+        sled.setAttribute('visible', 'false');
+        sled.setAttribute('gltf-model', `#Raft4`);
+        sled.setAttribute('material', 'color: brown'); // Material needs to be separate
         
-        raft.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
-        raft.setAttribute('rotation', '0 90 0');
+        sled.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
+        sled.setAttribute('rotation', '0 90 0');
         
         // Make it a physics trigger
         this.pedestal.setAttribute('dynamic-body', 'mass: 0;'); // A-Frame physics component
     
         blzWorld.appendChild(this.pedestal);
-        blzWorld.appendChild(raft);
+        blzWorld.appendChild(sled);
 
     },
     
     spawnPortal: function () {
         // Create the a-box element
         const blzWorld = document.querySelector('#blzWorld');
-        let redPaint = document.createElement('a-box');
-        redPaint.setAttribute('position', '-0.584 3.046 -18.700');
-        redPaint.setAttribute('scale', '1 1.3 0.071');
-        redPaint.setAttribute('rotation', '-15.487622160181282 -38.13320605493194 0.3472124238492789');
-        redPaint.setAttribute('color', '#940000');
-        redPaint.setAttribute('id', 'redPaint_return');
-        redPaint.setAttribute('class', 'interactive');
-        redPaint.setAttribute('circles-interactive-object', 'type:highlight');
-        redPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;');
-        redPaint.setAttribute('painting-highlight', '');
-        redPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
+        let greenPaint = document.createElement('a-box');
+        greenPaint.setAttribute('position', '-60 1.3 -3');
+        greenPaint.setAttribute('scale', '1 1.3 0.071');
+        greenPaint.setAttribute('rotation', '-15 90 0');
+        greenPaint.setAttribute('color', '#940000');
+        greenPaint.setAttribute('id', 'greenPaint_return');
+        greenPaint.setAttribute('class', 'interactive');
+        greenPaint.setAttribute('circles-interactive-object', 'type:highlight');
+        greenPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;');
+        greenPaint.setAttribute('painting-highlight', '');
+        greenPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 
         // Create the a-entity element
-        let painting3 = document.createElement('a-entity');
-        painting3.setAttribute('id', 'painting3_return');
-        painting3.setAttribute('scale', '20 20 20');
-        painting3.setAttribute('gltf-model', '#painting_gltf');
-        painting3.setAttribute('position', '-0.579 1.707 -18.683');
-        painting3.setAttribute('rotation', '0 -130.53239080229443 0');
+        let painting1 = document.createElement('a-entity');
+        painting1.setAttribute('id', 'painting1_return');
+        painting1.setAttribute('scale', '20 20 20');
+        painting1.setAttribute('gltf-model', '#painting_gltf');
+        painting1.setAttribute('position', '-60 0 -3');
+        painting1.setAttribute('rotation', '0 0 0');
 
         let voteCounter = document.createElement('a-entity');
-        voteCounter.setAttribute('id', 'voteCounter_redPaint_return');
-        voteCounter.setAttribute('position', '0.89307 2.7 -4.2979');
-        voteCounter.setAttribute('rotation', '-15.487622160181282 -38.13320605493194 0.3472124238492789');
+        voteCounter.setAttribute('id', 'voteCounter_greenPaint_return');
+        voteCounter.setAttribute('position', '-60 2.7 -3');
+        voteCounter.setAttribute('rotation', '0 0 0');
         voteCounter.setAttribute('text', 'value: Votes: 0; align: center; color: white; width: 4');
     
 
         // Append elements to the scene
-        blzWorld.appendChild(redPaint);
-        blzWorld.appendChild(painting3);
+        blzWorld.appendChild(greenPaint);
+        blzWorld.appendChild(painting1);
     }
     
 });
 
-AFRAME.registerComponent('pedestal-trigger', {
+AFRAME.registerComponent('sled-pedestal-trigger', {
     init: function () {
-        this.logsPlaced = 0;
-        this.maxLogs = 4;
-        this.el = document.querySelector("#raftPedestal");
-        this.raft = document.querySelector('#raft');
+        this.sledPartsPlaced = 0;
+        this.maxParts = 4;
+        this.el = document.querySelector("#sledPedestal");
+        this.sled = document.querySelector('#sled');
         const gameManager = document.querySelector('#GameManager');
 
         this.el.addEventListener('collide', (event) => {
@@ -169,12 +171,13 @@ AFRAME.registerComponent('pedestal-trigger', {
             setTimeout(() => {
                 if (log.parentNode) {
                     log.parentNode.removeChild(log);
-                    this.logsPlaced++;
-                    this.raft.setAttribute('gltf-model', `#Raft${this.logsPlaced}`);
+                    this.sledPartsPlaced++;
                     
+                    this.sled.setAttribute('visible', 'true');
+                    this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
 
-                    if (this.logsPlaced === this.maxLogs) {
-                        console.log("Raft is complete!");
+                    if (this.sledPartsPlaced === this.maxParts) {
+                        console.log("Sled is complete!");
                         this.el.setAttribute('color', 'green');
                         gameManager.emit('blz-complete');
                     }
