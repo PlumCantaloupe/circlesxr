@@ -145,12 +145,18 @@ AFRAME.registerComponent('voting-listener', {
             // Only activate RIAmanager if the red painting is clicked
             if (data.winner === "redPaint") {
               riaManager.emit('ria-painting-clicked');  // Trigger ria-manager
-              winningEntity.removeAttribute("circles-sendpoint");
+              setTimeout(() => {
+                winningEntity.removeAttribute("circles-sendpoint");
+              }, 0);
             }
 
             if (data.winner === "redPaint_return") {
               riaManager.emit('return-clicked');
-
+              setTimeout(() => {
+                winningEntity.removeAttribute("circles-sendpoint");
+                self.votes = [];  // <-- Reset votes here
+                self.updateCounters();
+              }, 0);
             }
             winningEntity.emit('click');
 
