@@ -35,7 +35,7 @@ AFRAME.registerComponent('ria-manager', {
                 dressing: 'none'
             });
 
-            console.log(this.environment);
+            console.log("returned environment" + this.environment);
         });
     },
 
@@ -123,7 +123,7 @@ AFRAME.registerComponent('ria-manager', {
         redPaint.setAttribute('id', 'redPaint_return');
         redPaint.setAttribute('class', 'interactive');
         redPaint.setAttribute('circles-interactive-object', 'type:highlight');
-        redPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;');
+        redPaint.setAttribute('environemntProp', 'preset: checkerboard; seed: 123; fog: 0.06; lightPosition: -4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000 lighting: none; dressing: none;');
         redPaint.setAttribute('painting-highlight', '');
         redPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 
@@ -188,7 +188,7 @@ AFRAME.registerComponent('lazy-load-environment', {
     init: function () {
       const scene = document.querySelector('a-scene');
       const riaWorld = document.querySelector('#riaWorld');
-      const blzWorld = document.querySelector('#blzWorld');
+      
       scene.addEventListener('loaded', () => {
         const riaEnv = document.createElement('a-entity');
         riaEnv.setAttribute('gltf-model', '#ria_environment');
@@ -199,15 +199,6 @@ AFRAME.registerComponent('lazy-load-environment', {
         riaEnv.setAttribute('id', 'riaEnv');
         riaWorld.appendChild(riaEnv);
 
-        //Blizzard set up
-        const blzEnv = document.createElement('a-entity');
-        //adding cylinder for testing
-        blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
-        blzEnv.setAttribute('position', '-42 1 0');
-        blzEnv.setAttribute('visible', 'false');
-        blzEnv.setAttribute('id', 'blzEnv');
-        blzWorld.appendChild(blzEnv);
-  
       });
       
      
@@ -225,12 +216,7 @@ AFRAME.registerComponent('lazy-load-environment', {
           }
   
         });
-        gameManager.addEventListener('blz-painting-clicked', () => {
-            const blzEnv = document.querySelector('#blzEnv');
-            if (blzEnv) {
-              blzEnv.setAttribute('visible', 'true');
-            }
-        })
+        
       }
     }
   });

@@ -5,11 +5,11 @@ AFRAME.registerComponent('voting-listener', {
     var self = this;
     // Array to store voterId, painting
     this.votes = [];
-    this.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0 };
+    this.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0, greenPaint_return: 0 };
 
     // Update totalVotes
     this.updateTotalVotes = function () {
-      self.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0 };
+      self.totalVotes = { redPaint: 0, greenPaint: 0, bluePaint: 0, redPaint_return: 0, greenPaint_return: 0 };
       self.votes.forEach(function (vote) {
         var p = vote.painting;
         self.totalVotes[p] = (self.totalVotes[p] || 0) + 1;
@@ -73,14 +73,18 @@ AFRAME.registerComponent('voting-listener', {
             }
 
           if (winner === "redPaint_return") {
+            console.log("RIA return clicked emitted");
             riaManager.emit('return-clicked');
-        
         }
+        if (winner === "greenPaint_return") {
+          riaManager.emit('return-clicked');
+        } 
           winningEntity.emit('click');
 
           const painting = document.querySelector("#"+ winner);
           const newEnvironment = painting.getAttribute("environemntProp");
           if (newEnvironment) {
+            console.log("New environment set from: " + winner);
           environment.setAttribute("environment", newEnvironment);
           }
         }
@@ -142,8 +146,8 @@ AFRAME.registerComponent('voting-listener', {
             if (data.winner === "redPaint") {
               riaManager.emit('painting-clicked');  // Trigger ria-manager
             }
-            if (winner === "greenPaint") {
-              riaManager.emit('blz-painting-clicked'); // GameManager sends signal that blz-painting was clicked 
+            if (data.winner === "greenPaint") {
+              riaManager.emit('painting-clicked'); // GameManager sends signal that blz-painting was clicked 
             }
 
             winningEntity.emit('click');

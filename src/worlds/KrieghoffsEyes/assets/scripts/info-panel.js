@@ -5,20 +5,23 @@ AFRAME.registerComponent('info-panel', {
     this.panelPositions = {
       redPaint: { x: 0.83307, y: 1.31338, z: -4.2279 },
       greenPaint: { x: -2.5964, y: 1.33563, z: -4.01162 },
-      redPaint_return: { x: -0.644, y: 3.046, z: -18.630 }
+      redPaint_return: { x: -0.644, y: 3.046, z: -18.630 },
+      greenPaint_return: { x: -59.9, y: 1.3, z: -3 }
     };
 
     this.panelRotation = {
       redPaint: { x:-15.487622160181282, y:-38.13320605493194, z:0.3472124238492789},
       greenPaint: { x: -15.513978218757302, y: 42.626914042142985, z: 0.9035544429213082 },
-      redPaint_return: { x: -15.487622160181282, y: -38.13320605493194, z: 0.3472124238492789 }
+      redPaint_return: { x: -15.487622160181282, y: -38.13320605493194, z: 0.3472124238492789 },
+      greenPaint_return: { x: -15, y: 90, z: 0 }
     }
 
     this.paintingInfo = {
       redPaint: { title: 'Red Painting', description: 'A red painting.' },
       greenPaint: { title: 'Green Painting', description: 'A green painting.' },
       bluePaint: { title: 'Blue Painting', description: 'A blue painting.' },
-      redPaint_return: { title: 'Red Painting', description: 'A red painting.' }
+      redPaint_return: { title: 'Red Painting', description: 'A red painting.' },
+      greenPaint_return: { title: 'Green Painting', description: 'A green painting.' } 
     };
 
     this.currentPaintingId = null;

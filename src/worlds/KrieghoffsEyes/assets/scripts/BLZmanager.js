@@ -125,7 +125,7 @@ AFRAME.registerComponent('blz-manager', {
         greenPaint.setAttribute('id', 'greenPaint_return');
         greenPaint.setAttribute('class', 'interactive');
         greenPaint.setAttribute('circles-interactive-object', 'type:highlight');
-        greenPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;');
+        greenPaint.setAttribute('environemntProp', 'preset: checkerboard; seed: 123; fog: 0.06; lightPosition: -4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000 lighting: none; dressing: none;');
         greenPaint.setAttribute('painting-highlight', '');
         greenPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 
@@ -186,41 +186,36 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
         });
     }
 });
-/* UPDATED in RIAmanager.js so we don't re-register this component
-AFRAME.registerComponent('lazy-load-environment', {
+
+//load the Blizard Enviroment model
+AFRAME.registerComponent('blz-lazy-load-environment', {
     init: function () {
       const scene = document.querySelector('a-scene');
-      const riaWorld = document.querySelector('#riaWorld');
+      
+      const blzWorld = document.querySelector('#blzWorld');
       scene.addEventListener('loaded', () => {
-        const riaEnv = document.createElement('a-entity');
-        riaEnv.setAttribute('gltf-model', '#ria_environment');
-        riaEnv.setAttribute('position', '32.323 0.246 0');
-        riaEnv.setAttribute('rotation', '0 90 0');
-        riaEnv.setAttribute('scale', '5 5 5');
-        riaEnv.setAttribute('visible', 'false');
-        riaEnv.setAttribute('id', 'riaEnv');
-        riaWorld.appendChild(riaEnv);
+
+        //Blizzard set up
+        const blzEnv = document.createElement('a-entity');
+        //adding cylinder for testing - replace with gltf
+        blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
+        blzEnv.setAttribute('position', '-42 1 0');
+        blzEnv.setAttribute('visible', 'false');
+        blzEnv.setAttribute('id', 'blzEnv');
+        blzWorld.appendChild(blzEnv);
   
-        
       });
       
      
       const gameManager = document.querySelector('#GameManager');
       if (gameManager) {
-        gameManager.addEventListener('ria-painting-clicked', () => {
-          const ocean = document.querySelector('#ocean');
-          if (ocean) {
-            ocean.setAttribute('circles-interactive-visible', 'true');
-          }
-        
-          const riaEnv = document.querySelector('#riaEnv');
-          if (riaEnv) {
-            riaEnv.setAttribute('visible', 'true');
-          }
-  
-        });
+        gameManager.addEventListener('blz-painting-clicked', () => {
+            const blzEnv = document.querySelector('#blzEnv');
+            if (blzEnv) {
+              blzEnv.setAttribute('visible', 'true');
+            }
+        })
       }
     }
   });
   
-*/
