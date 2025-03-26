@@ -4,15 +4,13 @@ AFRAME.registerComponent('info-panel', {
     this.descriptionEl = document.querySelector('#panelDescription');
     this.panelPositions = {
       redPaint: { x: 0.83307, y: 1.31338, z: -4.2279 },
-      greenPaint: { x: -1.06558, y: 1.33932, z: -5.072 },
-      bluePaint: { x: -2.86388, y: 1.33563, z: -4.2867 },
+      greenPaint: { x: -2.5964, y: 1.33563, z: -4.01162 },
       redPaint_return: { x: -0.644, y: 3.046, z: -18.630 }
     };
 
     this.panelRotation = {
       redPaint: { x:-15.487622160181282, y:-38.13320605493194, z:0.3472124238492789},
-      greenPaint: { x: -15.103740437443632, y: 6.330037720605334, z: 0.4125296124941928 },
-      bluePaint: { x: -15.513978218757302, y: 42.626914042142985, z: 0.9035544429213082 },
+      greenPaint: { x: -15.513978218757302, y: 42.626914042142985, z: 0.9035544429213082 },
       redPaint_return: { x: -15.487622160181282, y: -38.13320605493194, z: 0.3472124238492789 }
     }
 
