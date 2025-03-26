@@ -49,17 +49,17 @@ AFRAME.registerComponent('blz-manager', {
     spawnLogs: function () {
         const blzWorld = document.querySelector('#blzWorld');
         const positions = [
-            { x: 1, y: 1.23968, z: -8 },
-            { x: -6, y: 1.779, z: 12 },
-            { x: 11, y: 0.1, z: 4 },
-            { x: -15, y: 2.431, z: 6.5 }
+            { x: 45, y: 1, z: 0 },
+            { x: 45, y: 1, z: 1 },
+            { x: 45, y: 1, z: 2 },
+            { x: 45, y: 1, z: 3 }
         ];
 
         const rotations = [
-            { x: 0, y: 0, z: -11.141 },
-            { x: 0, y: 0, z: -1.662 },
-            { x: 0, y: 0, z: 4 },
-            { x: 0, y: 0, z: -5.258 }
+            { x: 0, y: 0, z: 0 },
+            { x: 0, y: 0, z: 0 },
+            { x: 0, y: 0, z: 0 },
+            { x: 0, y: 0, z: 0 }
         ];
 
         positions.forEach((pos, index) => {
