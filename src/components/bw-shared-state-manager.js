@@ -11,6 +11,7 @@ AFRAME.registerComponent('bw-shared-state-manager', {
     init: function () {    
       const CONTEXT_AF = this;
       CONTEXT_AF.scene = document.querySelector('a-scene');
+      CONTEXT_AF.guidingTextContainer = document.querySelector('#guidingTextManager');
 
       //get the shared states from localStorage
       const recentlyVisitedRoom = localStorage.getItem(BRAINWAVES.LS_RECENT_ROOM);
@@ -63,6 +64,9 @@ AFRAME.registerComponent('bw-shared-state-manager', {
         })
       }
 
+      //update the guiding text component
+      if(CONTEXT_AF[BRAINWAVES.LS_GUIDING_TEXT])
+        CONTEXT_AF.guidingTextContainer.setAttribute('bw-guiding-text', {enabled: true});
 
       //create teleport pad component (will need to be moved to individual game managers probs)
       CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: CONTEXT_AF[BRAINWAVES.LS_TELEPORT_PAD], colour: '#5764c2'});

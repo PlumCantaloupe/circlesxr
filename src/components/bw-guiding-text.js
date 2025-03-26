@@ -1,8 +1,6 @@
 AFRAME.registerComponent('bw-guiding-text', {
     schema: {
         content: {type: 'string'},
-        error: {type: 'boolean', default: false},
-        timed: {type: 'boolean', default: false},
         show: {type: 'boolean', default: false},
         enabled: {type: 'boolean', default: false},
     },
@@ -10,54 +8,51 @@ AFRAME.registerComponent('bw-guiding-text', {
     init: function () {
         const CONTEXT_AF = this;
         CONTEXT_AF.textEl = document.querySelector('#guidingText');
-        CONTEXT_AF.prevContent = '';
-        CONTEXT_AF.currContent = '';
+        CONTEXT_AF.showText = false;
+        CONTEXT_AF.errorEl = document.querySelector('#errorText');
+        CONTEXT_AF.displayingError = false;
     },
 
     update: function (oldData) {
       const CONTEXT_AF = this;
       const data = CONTEXT_AF.data;
 
-      //display guiding text
-      if( (data.show) && (data.content != oldData.content && data.content != '') ) {
-        CONTEXT_AF.textEl.styles.display = BRAINWAVES.GUIDING_TEXT.SHOW;
-        CONTEXT_AF.updateContent(data.content);
-      }
-
-      //hide guiding text
-      if(!data.show && data.show != oldData.show)
-        CONTEXT_AF.textEl.styles.display = BRAINWAVES.GUIDING_TEXT.HIDDEN;
-
+    
       //hide text if guiding text has been disabled
-      if(!data.enabled)
-        CONTEXT_AF.el.setAttribute('bw-guiding-text', {show: false});
+      if(!data.enabled && data.enabled != oldData.enabled){
+        CONTEXT_AF.textEl.style.display = BRAINWAVES.GUIDING_TEXT.HIDDEN;
+        CONTEXT_AF.showText = false;
+      }
     },
 
-    updateContent: function(content) {
+    hideGuidingText: function() {
       const CONTEXT_AF = this;
-        CONTEXT_AF.textEl.innerText = content;
-        CONTEXT_AF.prevContent = CONTEXT_AF.currContent;
-        CONTEXT_AF.currContent = content;
-
-        if(CONTEXT_AF.data.error) 
-          CONTEXT_AF.textEl.styles.backgroundColor = 'red';
-        else 
-          CONTEXT_AF.textEl.styles.backgroundColor = 'default';
-
-        //call timer
-        if(CONTEXT_AF.data.timed)
-          CONTEXT_AF.displayTimedText();
+      
+      CONTEXT_AF.showText = false;
+      CONTEXT_AF.textEl.style.display = BRAINWAVES.GUIDING_TEXT.HIDDEN;
     },
 
-    //function will display text for 3 seconds 
-    displayTimedText: function() {
+    updateGuidingText: function(content) {
       const CONTEXT_AF = this;
+      CONTEXT_AF.textEl.innerText = content;
+      CONTEXT_AF.showText = true;
+      if(!CONTEXT_AF.displayingError && CONTEXT_AF.data.enabled)
+        CONTEXT_AF.textEl.style.display = BRAINWAVES.GUIDING_TEXT.SHOW;
+    },
+
+    displayError: function(content) {
+      const CONTEXT_AF = this;
+      CONTEXT_AF.errorEl.innerText = content;
+      CONTEXT_AF.errorEl.style.display = BRAINWAVES.GUIDING_TEXT.SHOW;
         //after a 3 seconds of displaying the timed text, display the constant text if it needs to be displayed
         setTimeout(function(){
+          CONTEXT_AF.displayingError = false;
           //if there is guiding text to continue displaying, then display it
-          if(show) {
-            CONTEXT_AF.updateContent(CONTEXT_AF.prevContent)
+          CONTEXT_AF.errorEl.style.display = BRAINWAVES.GUIDING_TEXT.HIDDEN;
+          if(CONTEXT_AF.showText && CONTEXT_AF.data.enabled) {
+            CONTEXT_AF.textEl.style.display = BRAINWAVES.GUIDING_TEXT.SHOW;
           }
         }, BRAINWAVES.GUIDING_TEXT.TIMER_MS)
     }
+    
 });

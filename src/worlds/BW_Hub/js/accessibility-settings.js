@@ -15,7 +15,11 @@ AFRAME.registerComponent('accessibility-controls', {
         CONTEXT_AF.bloomOnSetting = document.querySelector('#bloomOnSetting');
         CONTEXT_AF.bloomOffSetting = document.querySelector('#bloomOffSetting');
 
+        CONTEXT_AF.guidingTextOnSetting = document.querySelector('#guidingTextOnSetting');
+        CONTEXT_AF.guidingTextOffSetting = document.querySelector('#guidingTextOffSetting');
+
         CONTEXT_AF.title = document.querySelector('#screenText');
+        CONTEXT_AF.guidingTextManager = document.querySelector('#guidingTextManager');
 
         CONTEXT_AF.sharedStateManager = document.querySelector('[bw-shared-state-manager]').components['bw-shared-state-manager'];
 
@@ -49,6 +53,7 @@ AFRAME.registerComponent('accessibility-controls', {
             CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: true});
         })
 
+        //bloom toggle event listeners
         CONTEXT_AF.bloomOnSetting.addEventListener('click', function(){
             CONTEXT_AF.scene.setAttribute('bloom', {threshold: 1,  
                                                     strength: 0.3,
@@ -59,6 +64,17 @@ AFRAME.registerComponent('accessibility-controls', {
         CONTEXT_AF.bloomOffSetting.addEventListener('click', function(){
             CONTEXT_AF.scene.removeAttribute('bloom');
             CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_BLOOM, false);
+        })
+
+        //guiding text toggle event listeners 
+        CONTEXT_AF.guidingTextOnSetting.addEventListener('click', function(){
+            CONTEXT_AF.guidingTextManager.setAttribute('bw-guiding-text', {enabled: true});
+            CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_GUIDING_TEXT, true);
+        })
+
+        CONTEXT_AF.guidingTextOffSetting.addEventListener('click', function(){
+            CONTEXT_AF.guidingTextManager.setAttribute('bw-guiding-text', {enabled: false});
+            CONTEXT_AF.sharedStateManager.setData(BRAINWAVES.LS_GUIDING_TEXT, false);
         })
     },
 });
