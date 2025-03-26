@@ -29,13 +29,13 @@ AFRAME.registerComponent('voting-listener', {
       console.log("Visual counters updated:", totalVotes);
     };
 
-   
+
     this.checkVotingComplete = function (socket) {
       var totalPlayers = CIRCLES.getNAFAvatarElements().length;
       var votesReceived = self.votes.length;
       console.log("Votes received: " + votesReceived + " / " + totalPlayers);
 
-     
+
       if (votesReceived === totalPlayers) {
         var totalVotes = self.updateTotalVotes();
         var winner = null;
@@ -54,11 +54,11 @@ AFRAME.registerComponent('voting-listener', {
           world: CIRCLES.getCirclesWorldName()
         });
 
-        
+
         if (totalPlayers === 1) {
           var winningEntity = document.querySelector("#" + winner);
           if (winningEntity) {
-            
+
             winningEntity.setAttribute("material", "emissive", "#FFFF00");
 
             var checkpointTarget = "#checkpoint_" + winner.replace("Paint", "");
@@ -67,21 +67,21 @@ AFRAME.registerComponent('voting-listener', {
             // Only activate RIAmanager if the red painting is clicked
             if (winner === "redPaint") {
               riaManager.emit('ria-painting-clicked');  // Trigger ria-manager
-          
-          }
 
-          if (winner === "redPaint_return") {
-            riaManager.emit('return-clicked');
-        
-        }
-          winningEntity.emit('click');
+            }
 
-          const painting = document.querySelector("#"+ winner);
-          const newEnvironment = painting.getAttribute("environemntProp");
-          if (newEnvironment) {
-          environment.setAttribute("environment", newEnvironment);
+            if (winner === "redPaint_return") {
+              riaManager.emit('return-clicked');
+
+            }
+            winningEntity.emit('click');
+
+            const painting = document.querySelector("#" + winner);
+            const newEnvironment = painting.getAttribute("environemntProp");
+            if (newEnvironment) {
+              environment.setAttribute("environment", newEnvironment);
+            }
           }
-        }
         }
 
         setTimeout(function () {
@@ -91,7 +91,7 @@ AFRAME.registerComponent('voting-listener', {
       }
     };
 
-    
+
     this.addVote = function (vote) {
       self.votes.push(vote);
       self.updateCounters();
@@ -101,13 +101,13 @@ AFRAME.registerComponent('voting-listener', {
     };
 
     function setupVotingListeners(socket) {
-      self.socket = socket; 
+      self.socket = socket;
       socket.on("vote_event", function (data) {
         if (
           data.room === CIRCLES.getCirclesGroupName() &&
           data.world === CIRCLES.getCirclesWorldName()
         ) {
-          
+
           if (data.voterId === window.myVoterId) {
             var alreadyExists = self.votes.some(function (v) {
               return v.voterId === data.voterId && v.painting === data.painting && v.local;
@@ -116,7 +116,7 @@ AFRAME.registerComponent('voting-listener', {
               return;
             }
           }
-          
+
           self.addVote({ voterId: data.voterId, painting: data.painting });
         }
       });
@@ -127,29 +127,34 @@ AFRAME.registerComponent('voting-listener', {
           data.world === CIRCLES.getCirclesWorldName()
         ) {
           console.log("Voting complete event received. Winner:", data.winner);
-          
+
           var winningEntity = document.querySelector("#" + data.winner);
           if (winningEntity) {
-            
+
             winningEntity.setAttribute("material", "emissive", "#FFFF00");
 
-             var checkpointTarget = "#checkpoint_" + data.winner.replace("Paint", "");
+            var checkpointTarget = "#checkpoint_" + data.winner.replace("Paint", "");
             winningEntity.setAttribute("circles-sendpoint", "target:" + checkpointTarget + ";");
 
             // Only activate RIAmanager if the red painting is clicked
             if (data.winner === "redPaint") {
-              riaManager.emit('painting-clicked');  // Trigger ria-manager
+              riaManager.emit('ria-painting-clicked');  // Trigger ria-manager
 
-          
-          }
-          winningEntity.emit('click');
 
-          const painting = document.querySelector("#"+ data.winner);
-          const newEnvironment = painting.getAttribute("environemntProp");
-          if (newEnvironment) {
-          environment.setAttribute("environment", newEnvironment);
+            }
+
+            if (data.winner === "redPaint_return") {
+              riaManager.emit('return-clicked');
+
+            }
+            winningEntity.emit('click');
+
+            const painting = document.querySelector("#" + data.winner);
+            const newEnvironment = painting.getAttribute("environemntProp");
+            if (newEnvironment) {
+              environment.setAttribute("environment", newEnvironment);
+            }
           }
-        }
         }
       });
     }
