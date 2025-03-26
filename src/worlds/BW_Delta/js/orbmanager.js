@@ -14,6 +14,7 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
         CONTEXT_AF.orbReleaseEventName = "orbrelease_event";
         CONTEXT_AF.orbPosUpdateEventName = "orbposition_event";
+        CONTEXT_AF.orbNumUpdateEventName = "orbnumber_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
         CONTEXT_AF.timer = null; // Store the timer ID
@@ -108,6 +109,11 @@ AFRAME.registerComponent('orb-manager', {
             // Start the timer for the drop cycle 
             CONTEXT_AF.scheduleNextDrop();
 
+            CONTEXT_AF.socket.on(CONTEXT_AF.orbNumUpdateEventName, (data) => {
+                CONTEXT_AF.numOrbs = data.numOrbs;
+                console.log("current: " + CONTEXT_AF.numOrbs);
+            });
+
              // Listen for incoming orb drop events
              CONTEXT_AF.socket.on(CONTEXT_AF.orbDropEventName, (data) => {
                 console.log("received drop PLSS IMMA KMS");
@@ -170,6 +176,8 @@ AFRAME.registerComponent('orb-manager', {
             // dnly emit drop if no one else has dropped in the last 10 seconds
             if (now - CONTEXT_AF.lastDropTime > CONTEXT_AF.DROP_COOLDOWN) {
                 const spawnPos = CONTEXT_AF.randomizePosition();
+                console.log("sending: " + CONTEXT_AF.numOrbs);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.orbNumUpdateEventName, {numOrbs: CONTEXT_AF.numOrbs, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 CONTEXT_AF.lastDropTime = now;
                 CONTEXT_AF.position = spawnPos;
                 CONTEXT_AF.socket.emit(CONTEXT_AF.orbDropEventName, {position:spawnPos, colour:CONTEXT_AF.colour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()}); 

@@ -31,6 +31,11 @@
         <a-asset-item id="tubes_model" src="/worlds/BW_Delta/assets/models/tubes.obj"></a-asset-item>
         <a-asset-item id="memory-core-model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
+        <a-asset-item id="tube1orb1_model" src="/worlds/BW_Delta/assets/models/tube1orb1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="tube1orb2_model" src="/worlds/BW_Delta/assets/models/tube1orb2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="tube1orb3_model" src="/worlds/BW_Delta/assets/models/tube1orb3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="tube1orb4_model" src="/worlds/BW_Delta/assets/models/tube1orb4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <!-- Sound assets -->
         <audio id="delta-ambient-sound" src="/worlds/BW_Delta/assets/sounds/delta_ambience_no_beat_v5.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="delta-heartbeats" src="/worlds/BW_Delta/assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -66,8 +71,6 @@
         <audio id="orb-clip28" src="/worlds/BW_Delta/assets/sounds/orb-clips/28.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip29" src="/worlds/BW_Delta/assets/sounds/orb-clips/29.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip30" src="/worlds/BW_Delta/assets/sounds/orb-clips/30.mp3" preload="auto" crossorigin="anonymous"></audio>
-
-        <a-asset-item id="tube1ball1_model" src="/worlds/BW_Delta/assets/models/tube1ball1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -135,23 +138,29 @@
                   obj-model="obj: #tubes_model"
                   material="color: #cfe6ff; opacity:0.4"
                   position="0 0 0"></a-entity>
-      
-      <a-entity   id="tube1ball1" 
-                  gltf-model="#tube1ball1_model"
-                  animation-mixer="loop: repeat"
-                  position="0 0 0"></a-entity>
-      
-      <a-entity   id="tube1ball2" 
-                  gltf-model="#tube1ball1_model"
-                  animation-mixer="loop: repeat; startAt: 10"
-                  position="0 0 0"></a-entity>
             
       <!--<a-entity   id="globe" 
                   obj-model="obj: #globe_model"
                   material="color: #cfe6ff; opacity:0.4; blending: subtractive"
                   position="0 0 0"></a-entity>-->
+      <a-entity   id="tube1orb1" 
+                  gltf-model="#tube1orb1_model"
+                  animation-mixer="startAt: 2000"
+                  position="0 0 0"></a-entity>
+      <a-entity   id="tube1orb2" 
+                  gltf-model="#tube1orb2_model"
+                  animation-mixer="startAt: 4000"
+                  position="0 0 0"></a-entity>
+      <a-entity   id="tube1orb3" 
+                  gltf-model="#tube1orb3_model"
+                  animation-mixer="startAt: 8000"
+                  position="0 0 0"></a-entity>
+      <a-entity   id="tube1orb4" 
+                  gltf-model="#tube1orb4_model"
+                  animation-mixer="startAt: 0"
+                  position="0 0 0"></a-entity>
 
-        <a-entity id= "particle1" position="1.158 9.438 -10.724" rotation="0 0 12.4"
+      <a-entity id= "particle1" position="1.158 9.438 -10.724" rotation="0 0 12.4"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
@@ -164,7 +173,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-        <a-entity id= "particle2" position="0.825 10.228 -8.911" rotation="-20.211 -25.568 21.949"
+      <a-entity id= "particle2" position="0.825 10.228 -8.911" rotation="-20.211 -25.568 21.949"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
@@ -177,7 +186,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-        <a-entity id= "particle3" position="-0.877, 10.15, -8.948" rotation="-12.229 -105.941 39.594"
+      <a-entity id= "particle3" position="-0.877, 10.15, -8.948" rotation="-12.229 -105.941 39.594"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
@@ -190,7 +199,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-        <a-entity id= "particle4" position= "0.17, 8.732, -10.613" rotation="-29.224 -145.387 -69.902"
+      <a-entity id= "particle4" position= "0.17, 8.732, -10.613" rotation="-29.224 -145.387 -69.902"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
@@ -203,7 +212,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-        <a-entity id= "particle5" position="-1.382, 10.866, -10.177" rotation="12.056 -18.693 -177.155"
+      <a-entity id= "particle5" position="-1.382, 10.866, -10.177" rotation="12.056 -18.693 -177.155"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
@@ -216,7 +225,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-        <a-entity id= "particle6" position="-0.0271, 11.599, -11.302" rotation="-71.270 -37.958 144.113"
+      <a-entity id= "particle6" position="-0.0271, 11.599, -11.302" rotation="-71.270 -37.958 144.113"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
                                     accelerationValue: 0 0 0;
