@@ -26,7 +26,7 @@ AFRAME.registerComponent('memory-core', {
             z: adjVol
         });
 
-        console.log(vol);
+        //console.log(vol);
     },
     mapToRange: function (value, minA, maxA, minB, maxB) {
         // Reference: https://docs.arduino.cc/language-reference/en/functions/math/map/ 
