@@ -1,0 +1,270 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.7.33",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                4
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Box_03_Wooden_box_0"
+        },
+        {
+            "children" : [
+                0
+            ],
+            "name" : "Box_03",
+            "rotation" : [
+                -0.7071067690849304,
+                0,
+                0,
+                0.7071069478988647
+            ],
+            "translation" : [
+                0,
+                17.279949188232422,
+                0
+            ]
+        },
+        {
+            "children" : [
+                1
+            ],
+            "name" : "RootNode"
+        },
+        {
+            "children" : [
+                2
+            ],
+            "name" : "wooden_crates.fbx",
+            "rotation" : [
+                0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ],
+            "scale" : [
+                0.009999999776482582,
+                0.009999999776482582,
+                0.009999999776482582
+            ]
+        },
+        {
+            "children" : [
+                3
+            ],
+            "name" : "Sketchfab_model",
+            "rotation" : [
+                -0.7071068286895752,
+                0,
+                0,
+                0.7071068286895752
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Wooden_box",
+            "normalTexture" : {
+                "index" : 0
+            },
+            "occlusionTexture" : {
+                "index" : 1
+            },
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 2
+                },
+                "metallicRoughnessTexture" : {
+                    "index" : 1
+                }
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Box_03_Wooden_box_0",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2,
+                        "TEXCOORD_1" : 3,
+                        "TEXCOORD_2" : 4,
+                        "TEXCOORD_3" : 5,
+                        "TEXCOORD_4" : 6,
+                        "TEXCOORD_5" : 7
+                    },
+                    "indices" : 8,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
+        },
+        {
+            "sampler" : 0,
+            "source" : 2
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "Wooden_box_normal",
+            "uri" : "textures/Wooden_box_normal.jpg"
+        },
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "Wooden_box_metallicRoughness",
+            "uri" : "textures/Wooden_box_metallicRoughness.jpg"
+        },
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "Wooden_box_baseColor",
+            "uri" : "textures/Wooden_box_baseColor.jpg"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 718,
+            "max" : [
+                32.47869110107422,
+                19.15883445739746,
+                16.985942840576172
+            ],
+            "min" : [
+                -32.47868728637695,
+                -19.15883445739746,
+                -16.985944747924805
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5126,
+            "count" : 718,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5123,
+            "count" : 852,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 8616,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 8616,
+            "byteOffset" : 8616
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 17232
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 22976
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 28720
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 34464
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 40208
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 5744,
+            "byteOffset" : 45952
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 1704,
+            "byteOffset" : 51696
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 53400,
+            "uri" : "wooden_crate_2.bin"
+        }
+    ]
+}
