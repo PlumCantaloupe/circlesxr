@@ -11,6 +11,8 @@ AFRAME.registerComponent('ria-manager', {
         // Wait for the red painting click event
         this.el.addEventListener('ria-painting-clicked', () => {
             this.startRaftTask();
+            this.riaWorld = document.querySelector('#riaWorld');
+            this.riaWorld.setAttribute('visible', 'true');
         });
 
         this.el.addEventListener('ria-complete', () =>{
@@ -18,9 +20,11 @@ AFRAME.registerComponent('ria-manager', {
         });
 
         this.el.addEventListener('return-clicked', () => {
-            this.riaWorld = document.querySelector('riaWorld');
+            this.riaWorld = document.querySelector('#riaWorld');
             this.environment = document.querySelector('#environment');
-            riaWorld.setAttribute('visible', 'false');
+        
+            // Hide Ria world, show cabin
+            this.riaWorld.setAttribute('visible', 'false');
             this.cabin.setAttribute('visible', 'true');
             this.environment.setAttribute('position', '0 -2.265 0');
             this.environment.setAttribute('environment', {
@@ -34,8 +38,35 @@ AFRAME.registerComponent('ria-manager', {
                 lighting: 'none',
                 dressing: 'none'
             });
-
-            console.log(this.environment);
+        
+            // Remove all logs from the scene
+            this.logs.forEach(log => {
+                if (log.parentNode) {
+                    log.parentNode.removeChild(log);
+                }
+            });
+            this.logs = []; // Clear the logs array
+        
+            // Remove pedestal and raft
+            const pedestal = document.querySelector('#raftPedestal');
+            if (pedestal && pedestal.parentNode) {
+                pedestal.parentNode.removeChild(pedestal);
+            }
+        
+            const raft = document.querySelector('#raft');
+            if (raft && raft.parentNode) {
+                raft.parentNode.removeChild(raft);
+            }
+        
+            // Remove portal elements
+            ['redPaint_return', 'painting3_return', 'voteCounter_redPaint_return'].forEach(id => {
+                const element = document.querySelector(`#${id}`);
+                if (element && element.parentNode) {
+                    element.parentNode.removeChild(element);
+                }
+            });
+        
+            console.log("All spawned objects removed. Environment reset.");
         });
     },
 
