@@ -1,11 +1,8 @@
 AFRAME.registerComponent('spawn-object', {
     schema: {},
     init() {
+        // setting variables
         const CONTEXT_AF = this;
-        //CONTEXT_AF.guessOne = document.querySelector('#guessOne');
-        //CONTEXT_AF.guessTwo = document.querySelector('#guessTwo');
-        //CONTEXT_AF.guessThree = document.querySelector('#guessThree');
-        //CONTEXT_AF.guessFour = document.querySelector('#guessFour');
         CONTEXT_AF.scene = document.querySelector('a-scene')
 
         CONTEXT_AF.socket     = null;
@@ -17,15 +14,11 @@ AFRAME.registerComponent('spawn-object', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            // CONTEXT_AF.el.addEventListener('click', function () {
-            //     CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            //     console.log("emit")
-            //   });
-
+            // spawn object on click (integrate music library to this function)
             CONTEXT_AF.el.addEventListener('click', function() {
                 
+                // gets a random shape based on an integer as well as a random x-value within 2 and -2
                 shapeNum = Math.floor((Math.random() * 4) + 1);
-
                 xVal = (Math.random() * 4) -2;
 
                 function letterGenerator(key) {
@@ -46,16 +39,16 @@ AFRAME.registerComponent('spawn-object', {
                 }
 
                 shapeKey = letterGenerator(shapeNum)
-
                 randPosition = xVal.toString() + " 1.7 27"
 
+                // spawn object with attributes
                 toSpawn = document.createElement("a-entity")
                 toSpawn.setAttribute("id", "spawnedObject")
                 toSpawn.setAttribute("material", shapeKey.material)
                 toSpawn.setAttribute("geometry", shapeKey.geometry)
                 toSpawn.setAttribute("position", randPosition)
                 toSpawn.setAttribute("scale", shapeKey.scale)
-                //toSpawn.setAttribute("network-test", "")
+                toSpawn.setAttribute("guess-shape", "")
                 toSpawn.setAttribute("circles-interactive-object", "")
                 CONTEXT_AF.scene.appendChild(toSpawn)
 
@@ -63,18 +56,19 @@ AFRAME.registerComponent('spawn-object', {
                 
             })
 
-            //listen for when others turn on campfire
+            //listen for when others spawn objects
             CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
 
                 shapeKey = data.shapeKeyNet
 
+                // spawn object with attributes
                 toSpawn = document.createElement("a-entity")
                 toSpawn.setAttribute("id", "spawnedObject")
                 toSpawn.setAttribute("material", shapeKey.material)
                 toSpawn.setAttribute("geometry", shapeKey.geometry)
                 toSpawn.setAttribute("position", data.netRandPos)
                 toSpawn.setAttribute("scale", shapeKey.scale)
-                //toSpawn.setAttribute("network-test", "")
+                toSpawn.setAttribute("guess-shape", "")
                 toSpawn.setAttribute("circles-interactive-object", "")
                 CONTEXT_AF.scene.appendChild(toSpawn)
 
@@ -85,39 +79,6 @@ AFRAME.registerComponent('spawn-object', {
                 CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             }, THREE.MathUtils.randInt(0,1200));
 
-            //if someone else requests our sync data, we send it.
-            CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function(data) {
-                //if the same world as the one requesting
-                if (data.world === CIRCLES.getCirclesWorldName()) {
-
-                    //CONTEXT_AF.items = document.querySelectorAll('#spawnedObject')
-                    //console.log(CONTEXT_AF.items)
-
-                    //CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                }
-            });
-
-            //receiving sync data from others (assuming all others is the same for now)
-            CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
-                //make sure we are receiving data for this world
-                if (data.world === CIRCLES.getCirclesWorldName()) {
-
-                    //console.log(data)
-
-                    //if(data.items.length > 0){
-                    //    for (let i=0; i<data.items.length; i++){
-                    //        shapeKey = data.items[i]
-                    //        toSpawn = document.createElement("a-entity")
-                    //        toSpawn.setAttribute("id", "spawnedObject")
-                    //        toSpawn.setAttribute("material", shapeKey.getAttribute("material"))
-                    //        toSpawn.setAttribute("geometry", shapeKey.getAttribute("geometry"))
-                    //        toSpawn.setAttribute("position", shapeKey.getAttribute("position"))
-                    //        toSpawn.setAttribute("scale", shapeKey.getAttribute("scale"))
-                    //        CONTEXT_AF.scene.appendChild(toSpawn)
-                    //    }
-                    //}
-                }
-            });
         };
 
         //check if circle networking is ready. If not, add an eent to listen for when it is ...
@@ -132,45 +93,20 @@ AFRAME.registerComponent('spawn-object', {
             CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
         }
 
-        /*CONTEXT_AF.el.addEventListener('click', function(e){
-
-            keyNum = Math.floor((Math.random() * 4) + 1);
-
-            function colorGenerator(key) {
-                switch(key){
-                    case 1:
-                        return 'color:yellow';
-                        break;
-                    case 2:
-                        return 'color:black';
-                        break;
-                    case 3:
-                        return 'color:purple';
-                        break;
-                    case 4:
-                        return 'color:green';
-                        break;
-                }
-            }
-
-            colorChange = colorGenerator(keyNum)
-
-            CONTEXT_AF.guessOne.setAttribute('material', colorChange)
-        });*/
     },
     tick: function(time, timeDelta) {
         const CONTEXT_AF = this;
         CONTEXT_AF.items = document.querySelectorAll('#spawnedObject')
-        //console.log(CONTEXT_AF.items)
+
+        // move all spawned objects by -0.05 in the z-direction per tick
+        // check if objects' z-values are less than -3.5 and delete them if so
         if (CONTEXT_AF.items.length > 0) {
             for (let i=0; i<CONTEXT_AF.items.length; i++){
-                CONTEXT_AF.items[i].getAttribute("position").z -= 0.2
+                CONTEXT_AF.items[i].getAttribute("position").z -= 0.05
                 if(CONTEXT_AF.items[i].getAttribute("position").z < -3.5){
                     CONTEXT_AF.items[i].parentNode.removeChild(CONTEXT_AF.items[i])
                 }
             }
-            //console.log(CONTEXT_AF.items[0])
-            //CONTEXT_AF.items.getAttribute("position").z -= 0.2
         }
     }
 });
