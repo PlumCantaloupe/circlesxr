@@ -19,7 +19,9 @@
       }
     </script>
 
-    <script src="js/bloom.js" type="module"></script>
+    <script src="/worlds/BW_Alpha/js/bloom.js" type="module"></script>
+    <script src="/worlds/BW_Alpha/js/book-manager.js" type="module"></script>
+    <script src="/worlds/BW_Alpha/js/aframe-outline.js" type="module"></script>
   </head>
   <body>
 
@@ -27,13 +29,15 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties outline="thickness: 3">
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="library_model" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="navmesh_model" src="assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <img id='skyMap' src='/worlds/BW_Alpha/assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
+        <a-asset-item id="library_model" src="/worlds/BW_Alpha/assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="navmesh_model" src="/worlds/BW_Alpha/assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_modelobj" src="/worlds/BW_Alpha/assets/models/book.obj"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -52,6 +56,8 @@
                 shadow></a-entity>
       <!--navmesh-->
 
+      <a-entity id="bookmanager" book-manager></a-entity>
+
       <a-entity id="navmesh" gltf-model="#navmesh_model" visible='false' nav-mesh></a-entity>
 
       <!-- Lights and sky box -->
@@ -62,17 +68,56 @@
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #f2d6c0; intensity: 3"></a-entity>
-      <!-- <a-entity light="type: point; intensity: 10" position="4.4 3.3"></a-entity> -->
-      <a-entity light="type: point; intensity: 7" position="-3.7 3.3 -2.3"></a-entity>
-      <a-entity light="type: point; intensity: 7" position="-0.2 3.3 5"></a-entity>
-      <a-entity light="type: point; intensity: 7" position="-4.56 3.3 1.078"></a-entity>
-      
-      <!-- tunnel lights -->
-      <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
+      <a-entity light="type: ambient; color: #f2d6c0; intensity: 2"></a-entity>
+      <a-entity light="type: point; color: #f2d6c0; intensity: 3" position="0 4.26 -15.058"></a-entity>
 
       <!-- room model -->
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_model" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_model" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:true;"></a-entity>
+
+      <a-entity id="tempbutton"  
+                position="0 0 -5" 
+                rotation="0 0 0" 
+                circles-button="type: cylinder; pedastal_visible: true; diameter: 0.4; false; button_color: #734b55; button_color_hover: #a36d70"
+                circles-interactive-object
+                shadow="cast:false; receive:true;"></a-entity>
+
+      <a-entity id="book1" 
+                obj-model="obj: #book_modelobj"
+                material="color: #f5abbe"
+                position="0 -10 0" 
+                rotation="0 0 0" 
+                shadow="cast:true; receive:true;"
+                circles-interactive-object="type: 'outline'"
+                circles-pickup-networked
+                circles-pickup-object="animate:true; pickupScale: 1 1 1"></a-entity>
+      <a-entity id="book2" 
+                obj-model="obj: #book_modelobj"
+                material="color: #f5abbe"
+                position="0 -10 0" 
+                rotation="0 0 0" 
+                shadow="cast:false; receive:true;"
+                circles-interactive-object="type: 'outline'"
+                circles-pickup-networked
+                circles-pickup-object="animate:true; pickupScale: 1 1 1"></a-entity>
+      <a-entity id="book3" 
+                obj-model="obj: #book_modelobj"
+                material="color: #f5abbe" 
+                position="0 -10 0" 
+                rotation="0 0 0" 
+                shadow="cast:false; receive:true;"
+                circles-interactive-object="type: 'outline'"
+                circles-pickup-networked
+                circles-pickup-object="animate:true; pickupScale: 1 1 1"></a-entity>
+      <a-entity id="book4" 
+                obj-model="obj: #book_modelobj"
+                material="color: #f5abbe"
+                position="0 -10 0" 
+                rotation="0 0 0" 
+                shadow="cast:false; receive:true;"
+                circles-interactive-object="type: 'outline'"
+                circles-pickup-networked
+                circles-pickup-object="animate:true;pickupScale: 1 1 1"></a-entity>
+
 
       <!-- TO BE REPLACED - END -->
 
