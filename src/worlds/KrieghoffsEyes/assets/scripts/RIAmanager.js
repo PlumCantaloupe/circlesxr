@@ -4,7 +4,7 @@ AFRAME.registerComponent('ria-manager', {
         this.logsPlaced = 0;
         this.scene = this.el.sceneEl;
         this.pedestal = null;
-
+        this.navmesh = document.querySelector("#nav-mesh");
         this.cabin = document.querySelector("#Cabin");
 
 
@@ -13,6 +13,13 @@ AFRAME.registerComponent('ria-manager', {
             this.startRaftTask();
             this.riaWorld = document.querySelector('#riaWorld');
             this.riaWorld.setAttribute('visible', 'true');
+            this.navmesh.setAttribute("gltf-model", '#RiaNav');
+            this.navmesh.setAttribute('visible', 'true');
+            this.navmesh.setAttribute('position', '32.323 0.246 0');
+            this.navmesh.setAttribute('rotation', '0 90 0');
+            this.navmesh.setAttribute('scale', '5 5 5');
+            this.navmesh.setAttribute('geometry', '');
+            this.navmesh.removeAttribute('nav-mesh');
         });
 
         this.el.addEventListener('ria-complete', () =>{
