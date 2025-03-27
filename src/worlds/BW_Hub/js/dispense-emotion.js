@@ -3,7 +3,7 @@ AFRAME.registerComponent('dispense-emotion', {
     schema: {
         orbColour: {type: 'color'},
         enabled: {type: 'boolean', default: true},
-        idColour: {type: 'string'}
+        emotion: {type: 'string'}
     },
 
     init: function () {
@@ -35,7 +35,7 @@ AFRAME.registerComponent('dispense-emotion', {
         orbEl.setAttribute('material', {color: Context_AF.data.orbColour});
         orbEl.setAttribute('emotion-pick-up', {animate:true});
         orbEl.setAttribute('circles-interactive-object', {type: 'outline'});
-        orbEl.setAttribute('id', Context_AF.data.idColour);
+        orbEl.setAttribute('id', Context_AF.data.emotion);
 
         Context_AF.parent.appendChild(orbEl);
     }
