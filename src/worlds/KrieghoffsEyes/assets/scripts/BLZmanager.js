@@ -67,13 +67,20 @@ AFRAME.registerComponent('blz-manager', {
             let sledPart = document.createElement('a-entity');
             sledPart.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
             // sledPart.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2'); // Fixed typo
-            sledPart.setAttribute('id', `log${pos.x}`);
+            sledPart.setAttribute('id', `sledPart${index}`);
             sledPart.setAttribute('gltf-model', `#logModel`);
             sledPart.setAttribute('material', 'color: brown'); // Material needs to be separate
             sledPart.setAttribute('class', 'interactable-log');
-            sledPart.setAttribute('circles-interactive-object', '');
-            sledPart.setAttribute('circles-pickup-networked', '');
-            sledPart.setAttribute('static-body', '');
+            sledPart.setAttribute('part-highlight', '');
+            sledPart.setAttribute('class', 'interactive');
+            //sledPart.setAttribute('circles-interactive-object', '');
+            //sledPart.setAttribute('circles-pickup-networked', '');
+            //sledPart.setAttribute('static-body', '');
+
+            sledPart.addEventListener('partSelected', () => {
+                console.log("remove interactivity on part");
+                sledPart.removeAttribute('class', 'interactive');
+            });
             
             sledPart.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
             const rot = rotations[index];
@@ -86,13 +93,16 @@ AFRAME.registerComponent('blz-manager', {
 
     spawnPedestal: function () {
         const blzWorld = document.querySelector('#blzWorld');
-        this.pedestal = document.createElement('a-box');
+        //this.pedestal = document.createElement('a-box');
+        //try a-entiy instead of a-box
+        this.pedestal = document.createElement('a-entity'); 
         this.pedestal.setAttribute('id', 'sledPedestal');
+        this.pedestal.setAttribute('geometry', {primitive: 'box', width: 3, height: 0.3, depth: 3});
         this.pedestal.setAttribute('position', '-60 0 0');
-        this.pedestal.setAttribute('width', '3');
-        this.pedestal.setAttribute('height', '0.3');
-        this.pedestal.setAttribute('depth', '3');
-        this.pedestal.setAttribute('color', 'red');
+        // this.pedestal.setAttribute('width', '3');
+        // this.pedestal.setAttribute('height', '0.3');
+        // this.pedestal.setAttribute('depth', '3');
+        this.pedestal.setAttribute('material', 'color: red');
         this.pedestal.setAttribute('sled-pedestal-trigger', '');
     
         let sled = document.createElement('a-entity');
@@ -153,39 +163,53 @@ AFRAME.registerComponent('blz-manager', {
 
 AFRAME.registerComponent('sled-pedestal-trigger', {
     init: function () {
-        this.sledPartsPlaced = 0;
-        this.maxParts = 4;
-        this.el = document.querySelector("#sledPedestal");
-        this.sled = document.querySelector('#sled');
-        const gameManager = document.querySelector('#GameManager');
+      this.sledPartsPlaced = 0;
+      this.maxParts = 4;
+  
+      // Ensure that the elements are available
+      this.el = document.querySelector("#sledPedestal");
+      
+      //try to add the event listener directly on pedestal
+      document.querySelector("#sledPedestal").addEventListener('partSelected', () => { 
+        console.log("Part selected event received!");
+      });
 
-        this.el.addEventListener('collide', (event) => {
-            const log = event.detail.body.el;
-            if (!log || !log.classList.contains('interactable-log')) return;
+      this.sled = document.querySelector('#sled');
+      const gameManager = document.querySelector('#GameManager');
+  
+        // Debug: Check if the elements are found
+        console.log("sledPedestal found:", this.el);
+        console.log("sled found:", this.sled);
 
-
-            // First, disable physics
-            log.removeAttribute('dynamic-body');
-
-            //Wait a frame before removing to let physics settle
-            setTimeout(() => {
-                if (log.parentNode) {
-                    log.parentNode.removeChild(log);
-                    this.sledPartsPlaced++;
-                    
-                    this.sled.setAttribute('visible', 'true');
-                    this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
-
-                    if (this.sledPartsPlaced === this.maxParts) {
-                        console.log("Sled is complete!");
-                        this.el.setAttribute('color', 'green');
-                        gameManager.emit('blz-complete');
-                    }
-                }
-            }, 0);
-        });
+      if (!this.el || !this.sled) {
+        console.log("sledPedestal or sled element not found!");
+        return; // Exit if the required elements are not found
+      } else {
+        console.log("sledPedestal and sled element ARE found!");
+      }
+  
+      
+      // Listen for the 'partSelected' event
+    //   this.el.addEventListener('partSelected', (event) => {
+    //     this.sledPartsPlaced++;
+    //     console.log("part was added " + this.sledPartsPlaced);
+  
+    //     // Update the sled visibility and model
+    //     this.sled.setAttribute('visible', 'true');
+    //     this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
+  
+    //     // Check if all parts are placed
+    //     if (this.sledPartsPlaced === this.maxParts) {
+    //       console.log("Sled is complete!");
+    //       this.el.setAttribute('color', 'green');
+    //       if (gameManager) {
+    //         gameManager.emit('blz-complete');
+    //       }
+    //     }
+    //   });
     }
-});
+  });
+  
 
 //load the Blizard Enviroment model
 AFRAME.registerComponent('blz-lazy-load-environment', {
@@ -216,6 +240,29 @@ AFRAME.registerComponent('blz-lazy-load-environment', {
             }
         })
       }
+    }
+  });
+
+  AFRAME.registerComponent('part-highlight', {
+    init: function () {
+      let el = this.el;
+  
+      // Set a material on the GLTF model
+      el.setAttribute('material', '#ffffff');
+  
+      // Highlight the model on mouseenter and restore on mouseleave
+      el.addEventListener('mouseenter', function () {
+        el.setAttribute('circles-material-extend-fresnel', 'fresnelColor: #ffffff');
+      });
+      el.addEventListener('mouseleave', function () {
+        el.setAttribute('circles-material-extend-fresnel', 'fresnelColor: #000000');
+      });
+  
+      // Emit the 'partSelected' event on click
+      el.addEventListener('click', () => {
+        console.log(`Emitting partSelected for: ${el.id}`); // Log the emission
+        el.emit('partSelected', { id: el.id });
+      });
     }
   });
   
