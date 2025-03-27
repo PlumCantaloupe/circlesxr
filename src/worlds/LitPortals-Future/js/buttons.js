@@ -63,26 +63,19 @@ document.addEventListener("DOMContentLoaded", function () {
             // Select the shape from the shapes array
             const shape = shapes[currentShapeIndex];
             currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
+            
+            // Generate a unique ID for the shape
+            const shapeId = `shape-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
             // Emit spawnShape event with shape data to server
             socket.emit("spawnShape", {
+                shapeId: shapeId,  // Send the unique ID
                 shape: shape,
                 position: `${randomX} ${randomY} ${randomZ}`,
                 color: shapeColor
             });
         });
     }
-});
-socket.on("spawnShape", function (shapeData) {
-    const { shape, position, color } = shapeData;  
-    // Create the shape element based on the received data
-    const newShape = document.createElement(shape);
-    newShape.setAttribute("position", position);
-    newShape.setAttribute("material", "color", color);
-    newShape.setAttribute("scale", "1 1 1");
-    newShape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5");
-        
-    document.querySelector("a-scene").appendChild(newShape);
 });
         
 document.addEventListener("DOMContentLoaded", function () {
@@ -181,7 +174,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     AFRAME.registerComponent("cycle-light-color", {
         init: function () {
-            console.log("got in function");
 
             const colors = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"];
             let colorIndex = 0;
@@ -209,9 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#green_button").setAttribute("cycle-light-color", "");
 });
 
-
-// Attach the script to the green button
-
 document.addEventListener("DOMContentLoaded", function () {
 
 AFRAME.registerComponent('change-music', {
@@ -237,4 +226,79 @@ AFRAME.registerComponent('change-music', {
         });
     }
 });
+});
+
+let shapesArray = []; // Store references to all spawned shapes
+let shapePositions = {}; // Store the positions of each shape
+let oldPosition = { x: 0, y: 0, z: 0 }; // Default initial value
+
+function updateShapePositions() {
+    for (let shape of shapesArray) {
+        const shapeId = shape.getAttribute("id");
+        const oldPosition = shapePositions[shapeId]; // Previously stored position
+        const newPosition = shape.getAttribute("position"); // Current position
+
+        // Ensure oldPosition is initialized
+        if (!oldPosition) {
+            shapePositions[shapeId] = { 
+                x: parseFloat(newPosition.x), 
+                y: parseFloat(newPosition.y), 
+                z: parseFloat(newPosition.z) 
+            };
+            continue;
+        }
+
+        // Convert newPosition to an object with numeric values
+        const newPosObj = {
+            x: parseFloat(newPosition.x),
+            y: parseFloat(newPosition.y),
+            z: parseFloat(newPosition.z)
+        };
+
+        // Compare x, y, z values individually
+        if (oldPosition.x !== newPosObj.x || oldPosition.y !== newPosObj.y || oldPosition.z !== newPosObj.z) {
+            // Update stored position
+            shapePositions[shapeId] = newPosObj;
+            console.log("New Pos_____________________________________________________");
+
+            // Emit the update to the server
+            socket.emit("updateShapePosition", { shapeId, position: newPosObj });
+        }
+    }
+    // Request the next frame
+    requestAnimationFrame(updateShapePositions);
+}
+
+// Start the loop
+requestAnimationFrame(updateShapePositions);
+
+// Listen for shape spawn event from server
+socket.on("spawnShape", function (shapeData) {
+    const { shapeId, shape, position, color } = shapeData;  
+    // Create the shape element based on the received data
+    const newShape = document.createElement(shape);
+    newShape.setAttribute("id", shapeId); 
+    newShape.setAttribute("position", position);
+    newShape.setAttribute("material", "color", color);
+    newShape.setAttribute("scale", "1 1 1");
+    newShape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5");
+
+    // Add the shape to the scene
+    document.querySelector("a-scene").appendChild(newShape);
+
+    // Add the shape to the shapes array for tracking
+    shapesArray.push(newShape);
+
+    // Store the initial position of the shape
+    shapePositions[shapeId] = position;
+});
+
+// Listen for updates from the server and update shape positions
+socket.on("updateShapePosition", function (data) {
+    const { shapeId, position } = data;
+    const shape = document.getElementById(shapeId);
+
+    if (shape) {
+        shape.setAttribute("position", position);
+    }
 });

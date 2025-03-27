@@ -373,6 +373,19 @@ io.on("connection", socket => {
     console.log("Light color changed to:", data.color);
     io.emit("updateLightColor", data);
   });
+
+  socket.on("updateShapePosition", (data) => {
+    if (!data.shapeId) {
+        console.log("Shape ID is missing in the data:", data);
+    } else {
+        console.log(`Updating position for shape: ${data.shapeId}`, data.position);
+    }    
+
+    // Broadcast the updated position to all clients
+    io.emit("updateShapePosition", data);
+});
+
+
 });
 
 //let's create a research namespace.
