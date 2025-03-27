@@ -126,8 +126,6 @@
         painting-highlight
         material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
-
-
       <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
         rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="green" id="greenPaint"
         class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
@@ -219,6 +217,7 @@
     <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
       material="color: #333; shader: flat; side: double" visible="false">
       <!-- Text elements inside the info panel -->
+       <!-- Info Panel for displaying painting details -->
       <a-entity id="panelTitle" position="-0.68 0.5 0" text="anchor: left; width: 1.5; color: white; value:">
         <a-entity id="button" geometry="primitive: cylinder" position="0.7 -0.955 0.030" scale="0.082 0.082 0.08346"
           material="color:#a22020;" rotation="-90 0 0" class="interactive" highlight-button>
@@ -226,6 +225,11 @@
       </a-entity>
       <a-entity id="panelDescription" position="-0.68 0.3 0"
         text="anchor: left; width: 1.5; color: white; value:"></a-entity>
+
+
+    </a-entity>
+    
+    
 
   </a-scene>
 
