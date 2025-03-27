@@ -116,15 +116,12 @@
         circles-material-extend-fresnel="fresnelPow: 2; fresnelOpacity: 0" sound="volume: 0.5"></a-entity>
 
       <!-- Painting -->
-<<<<<<< Updated upstream
       <a-box position="0.89307 1.31338 -4.2979" scale="1 1.3 0.071"
         rotation="-15.487622160181282 -38.13320605493194 0.3472124238492789" color="#940000" id="redPaint"
         class="interactive" circles-interactive-object="type:highlight"
         environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
         painting-highlight
         material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
-
-
 
       <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
         rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="green" id="greenPaint"
@@ -209,35 +206,10 @@
         rotation="7.063423698372789 -132.2615774279992 -142.60289267231548"></a-entity>
       <a-entity id="wooden_crate_3-1" gltf-model="#wooden_crate_3_gltf" position="-3.82469 0 -3.35021"
         rotation="0 -21.621135357056744 0"></a-entity>
-
-
-
-=======
-       <a-box position="4 1.86 -8.866" scale=".95 1.3 .071" color="#940000"
-       id="redPaint"
-       class="interactive"
-       circles-interactive-object="type:highlight"
-       circles-sendpoint="target:#checkpoint_red;"
-       environemntProp = "preset: forest; seed: 8; skyType: gradient; skyColor: #24b59f; horizonColor: #eff9b7; lighting: distant; dressing: trees; fog: .8; groundColor: #937a24;"
-       ></a-box>
-       <a-box position="0 1.86 -8.866" scale=".95 1.3 .071" color="#009400"
-       id="greenPaint"
-       class="interactive"
-       circles-interactive-object="type:highlight"
-       ></a-box>
-       <a-box position="-4 1.86 -8.866" scale=".95 1.3 .071" color="#000094"
-       id="bluePaint"
-       class="interactive"
-       circles-interactive-object="type:highlight"
-       circles-sendpoint="target:#checkpoint_blue;"
-       environemntProp = "preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
-       ></a-box>
->>>>>>> Stashed changes
-    </a-entity>
-    <!-- Info Panel for displaying painting details -->
-    <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
+      <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
       material="color: #333; shader: flat; side: double" visible="false">
       <!-- Text elements inside the info panel -->
+       <!-- Info Panel for displaying painting details -->
       <a-entity id="panelTitle" position="-0.68 0.5 0" text="anchor: left; width: 1.5; color: white; value:">
         <a-entity id="button" geometry="primitive: cylinder" position="0.7 -0.955 0.030" scale="0.082 0.082 0.08346"
           material="color:#a22020;" rotation="-90 0 0" class="interactive" highlight-button>
@@ -245,6 +217,11 @@
       </a-entity>
       <a-entity id="panelDescription" position="-0.68 0.3 0"
         text="anchor: left; width: 1.5; color: white; value:"></a-entity>
+
+
+    </a-entity>
+    
+    
 
   </a-scene>
 
