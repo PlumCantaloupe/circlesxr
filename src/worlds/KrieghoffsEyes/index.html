@@ -78,6 +78,16 @@
     <a-entity id="environment" position="0 -2.265 0"
       environment="preset: checkerboard; seed: 123; fog:0.06; lightPosition:-4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
 
+<<<<<<< Updated upstream
+=======
+    <a-entity id = "environment" environment="preset: checkerboard; seed: 123; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000; lighting: none; dressing: none;"></a-entity>
+    <!-- Ambient lighting inside the cabin -->
+    <a-entity 
+    light="type: directional; color: #FF8C42; intensity: 1.8; castShadow: true"
+    position="6 2 -6"
+    rotation="-25 -45 0">
+  </a-entity>
+>>>>>>> Stashed changes
 
     <a-entity id="GameManager" ria-manager voting-listener lazy-load-environment></a-entity>
     <a-entity id="riaWorld">
@@ -116,6 +126,7 @@
         circles-material-extend-fresnel="fresnelPow: 2; fresnelOpacity: 0" sound="volume: 0.5"></a-entity>
 
       <!-- Painting -->
+<<<<<<< Updated upstream
       <a-box position="0.89307 1.31338 -4.2979" scale="1 1.3 0.071"
         rotation="-15.487622160181282 -38.13320605493194 0.3472124238492789" color="#940000" id="redPaint"
         class="interactive" circles-interactive-object="type:highlight"
@@ -211,6 +222,27 @@
 
 
 
+=======
+       <a-box position="4 1.86 -8.866" scale=".95 1.3 .071" color="#940000"
+       id="redPaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       circles-sendpoint="target:#checkpoint_red;"
+       environemntProp = "preset: forest; seed: 8; skyType: gradient; skyColor: #24b59f; horizonColor: #eff9b7; lighting: distant; dressing: trees; fog: .8; groundColor: #937a24;"
+       ></a-box>
+       <a-box position="0 1.86 -8.866" scale=".95 1.3 .071" color="#009400"
+       id="greenPaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       ></a-box>
+       <a-box position="-4 1.86 -8.866" scale=".95 1.3 .071" color="#000094"
+       id="bluePaint"
+       class="interactive"
+       circles-interactive-object="type:highlight"
+       circles-sendpoint="target:#checkpoint_blue;"
+       environemntProp = "preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
+       ></a-box>
+>>>>>>> Stashed changes
     </a-entity>
     <!-- Info Panel for displaying painting details -->
     <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
