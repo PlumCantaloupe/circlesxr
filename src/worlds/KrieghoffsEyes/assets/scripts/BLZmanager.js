@@ -170,9 +170,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
       this.el = document.querySelector("#sledPedestal");
       
       //try to add the event listener directly on pedestal
-      document.querySelector("#sledPedestal").addEventListener('partSelected', () => { 
-        console.log("Part selected event received!");
-      });
+      document.querySelector("#sledPedestal");
 
       this.sled = document.querySelector('#sled');
       const gameManager = document.querySelector('#GameManager');
@@ -190,23 +188,23 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
   
       
       // Listen for the 'partSelected' event
-    //   this.el.addEventListener('partSelected', (event) => {
-    //     this.sledPartsPlaced++;
-    //     console.log("part was added " + this.sledPartsPlaced);
+      this.el.addEventListener('partSelected', () => {
+        this.sledPartsPlaced++;
+        console.log("part was added " + this.sledPartsPlaced);
   
-    //     // Update the sled visibility and model
-    //     this.sled.setAttribute('visible', 'true');
-    //     this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
+        // Update the sled visibility and model
+        this.sled.setAttribute('visible', 'true');
+        this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
   
-    //     // Check if all parts are placed
-    //     if (this.sledPartsPlaced === this.maxParts) {
-    //       console.log("Sled is complete!");
-    //       this.el.setAttribute('color', 'green');
-    //       if (gameManager) {
-    //         gameManager.emit('blz-complete');
-    //       }
-    //     }
-    //   });
+        // Check if all parts are placed
+        if (this.sledPartsPlaced === this.maxParts) {
+          console.log("Sled is complete!");
+          this.el.setAttribute('color', 'green');
+          if (gameManager) {
+            gameManager.emit('blz-complete');
+          }
+        }
+      });
     }
   });
   
@@ -246,6 +244,7 @@ AFRAME.registerComponent('blz-lazy-load-environment', {
   AFRAME.registerComponent('part-highlight', {
     init: function () {
       let el = this.el;
+      let sledPedestal = document.querySelector('#sledPedestal');
   
       // Set a material on the GLTF model
       el.setAttribute('material', '#ffffff');
@@ -262,6 +261,7 @@ AFRAME.registerComponent('blz-lazy-load-environment', {
       el.addEventListener('click', () => {
         console.log(`Emitting partSelected for: ${el.id}`); // Log the emission
         el.emit('partSelected', { id: el.id });
+        sledPedestal.emit('partSelected');
       });
     }
   });
