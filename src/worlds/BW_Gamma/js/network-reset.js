@@ -39,10 +39,10 @@ AFRAME.registerComponent('network-reset', {
                             return {geometry:'primitive:box', material:"color:blue", scale:"0.7 0.7 0.7"};
                             break;
                         case 2:
-                            return {geometry:'primitive:sphere', material:"color:red", scale:"0.42 0.42 0.42"};
+                            return {geometry:'primitive:sphere; segmentsHeight:36; segmentsWidth:36;', material:"color:red", scale:"0.42 0.42 0.42"};
                             break;
                         case 3:
-                            return {geometry:'primitive:cone', material:"color:green", scale:"0.42 0.7 0.42"};
+                            return {geometry:'primitive:cone; thetaLength:360;', material:"color:green", scale:"0.42 0.7 0.42"};
                             break;
                         case 4:
                             return {geometry:'primitive:octahedron', material:"color:purple", scale:"0.42 0.42 0.42"};
