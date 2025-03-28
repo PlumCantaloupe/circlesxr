@@ -1,0 +1,85 @@
+
+<html>
+<head>
+  
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+
+  <script src = '/worlds/_Mat_Dev_Flower/scripts/moodFlower-bttn.js'> </script>
+  <script src = '/worlds/_Mat_Dev_Flower/scripts/solaris-systemDetection.js'> </script>
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+   <!------------------------------------------------------SCENE------------------------------------------------------------------------->
+  <a-scene circles_scene_properties >
+    <a-assets>
+       <!--Our Assets-->
+       <audio id="winSound" src="/worlds/_Mat_Dev_Flower/assets/sounds/testSound.mp3" preload="true"></audio> 
+       <audio id="lossSound" src="/worlds/_Mat_Dev_Flower/assets/sounds/oof.mp3" preload="true"></audio>
+ 
+       <!-- Flower assets -->
+       <a-asset-item id="default_flower" src="/worlds/_Mat_Dev_Flower/assets/models/scene.gltf" response-type="arraybuffer"></a-asset-item>
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+
+    </a-assets>
+    <!-----------------------------------------------------STAGE------------------------------------------------------------------------->
+    
+    <a-entity solaris-moodFlower solaris_systemDetection></a-entity>
+    <!-- start your code: put your A-frame, Circles XR, and custom components here -->
+     <!----------------------------------------Enviroment--------------------------------------------->
+    <a-entity geometry="primitive: plane; height: 60; width:60;" position="0 -.1 0" rotation="-90 0 0" material="color:skyblue;" ></a-entity>
+     <!------------------------------------------------------------------------------------->
+    <a-entity sound="src: #audiosource"></a-entity>
+    <a-entity id="audiosource" circles-sound="type:ambient; src:#winSound; autoplay:true; loop:false; volume:1.0;" sound="refDistance:10; rolloffFactor:4.0;"></a-entity>
+     <!----------------------------------------Special  Buttons--------------------------------------------->
+    <a-text 
+      id="displayText" 
+      class = "interactive"
+      value="Initial Text"
+      position="0 2 -3"
+      color="black"
+      moodFlower-bttn>
+    </a-text>
+
+    <!----------------------------------------Mood Buttons--------------------------------------------->
+    <a-entity circles-button="button_color:rgb(24, 138, 243);" 
+      circles-interactive-object="highlight_color:rgb(74, 87, 0);"
+      position="5 0 4" 
+      rotation="0 0 0" 
+      scale="1 1 1"
+      moodFlower-bttn>
+    </a-entity>
+    <a-entity circles-button="button_color:rgb(227, 37, 16);" 
+      circles-interactive-object="highlight_color:rgb(74, 87, 0);"
+      position="5 0 3" 
+      rotation="0 0 0" 
+      scale="1 1 1">
+    </a-entity>
+    <a-entity circles-button="button_color:rgb(255, 213, 5);" 
+      circles-interactive-object="highlight_color:rgb(74, 87, 0);"
+      position="5 0 2" 
+      rotation="0 0 0" 
+      scale="1 1 1">
+    </a-entity>
+    <a-entity circles-button="button_color:rgb(201, 84, 209);" 
+      circles-interactive-object="highlight_color:rgb(74, 87, 0);"
+      position="5 0 1" 
+      rotation="0 0 0" 
+      scale="1 1 1">
+    </a-entity>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <!-- end your code: -->
+  </a-scene>
+   <!------------------------------------------------------END OF SCENE------------------------------------------------------------------------->
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>
