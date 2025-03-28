@@ -28,6 +28,9 @@
         <img id='skyMap' src='assets/textures/skyNeurons.jpg' crossorigin="anonymous">
         <a-asset-item id="gammaWall" src="assets/models/FixedWall.glb" response-type="arraybuffer"></a-asset-item>
 
+        <audio id="gamma-music" src="assets/sounds/music/gamma_no_kick.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="gamma-kick-drum" src="assets/sounds/music/gamma_kick_drum.mp3" preload="auto" crossorigin="anonymous"></audio>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -43,6 +46,14 @@
       <!-- component to manage shared state between worlds through localStorage -->
       <a-entity bw-shared-state-manager></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
+
+      <!-- Sound entities -->
+      <a-entity id="kick-drum-player" circles-sound="src: #gamma-kick-drum; autoplay: loop; loop: true; type: music;"></a-entity>
+      <a-entity id="music-player" circles-sound="src: #gamma-music; autoplay: loop; loop: true; type: music;"></a-entity>
+
+
+      <!-- Audio analyser -->
+      <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #kick-drum-player"></a-entity>
 
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -60,12 +71,13 @@
       <a-entity id="gammaCeiling" geometry="primitive:plane" material="color:white" position="0 8 15.25" rotation="90 0 0" scale="13.3 36.7 5"></a-entity>
       <a-entity id="gammaBarrier" geometry="primitive:box" material="color:white" position="0 0.6 5.957" scale="13.16 1 1"></a-entity>
       <a-entity id="gammaNavMesh" geometry="primitive:plane" material="color:white" position="0 0.15 1.16" rotation="-90 0 0" scale="9.44 8.6 1" nav-mesh></a-entity>
-
+      <a-entity id="endWall" geometry="primitive: plane; height: 11.01; width: 15.54" material="color: white; side: back;" position="0 4.06369 33.51771"></a-entity>
+      
       <!-- FOR SETTING SEQUENCE -->
-      <a-entity id="resetButton" network-reset circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door;" position="2 1.16 5.78" rotation="0 0 0" scale="0.8 0.8 0.8"></a-entity>
+      <a-entity id="resetButton" network-reset circles-button="pedastal_color:rgb(74, 87, 95);" position="2 1.16 5.78" rotation="0 0 0" scale="0.8 0.8 0.8"></a-entity>
 
       <!-- FOR SPAWNING OBJECTS -->
-      <a-entity id="spawnButton" spawn-object circles-button="pedastal_color:rgb(74, 87, 95);" circles-sendpoint="target:#door;" position="0 1.16 5.78" rotation="0 0 0" scale="0.8 0.8 0.8"></a-entity>
+      <a-entity id="spawner" spawn-object position="0 1.16 5.78" rotation="0 0 0" scale="0.8 0.8 0.8"></a-entity>
 
       <!-- Code Preview -->
       <a-entity id="codePreview" position="0 3.35 10">
