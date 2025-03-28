@@ -11,6 +11,8 @@ AFRAME.registerComponent('ria-manager', {
         // Wait for the red painting click event
         this.el.addEventListener('ria-painting-clicked', () => {
             this.startRaftTask();
+            this.riaWorld = document.querySelector('#riaWorld');
+            this.riaWorld.setAttribute('visible', 'true');
         });
 
         this.el.addEventListener('ria-complete', () =>{
@@ -18,9 +20,11 @@ AFRAME.registerComponent('ria-manager', {
         });
 
         this.el.addEventListener('return-clicked', () => {
-            this.riaWorld = document.querySelector('riaWorld');
+            this.riaWorld = document.querySelector('#riaWorld');
             this.environment = document.querySelector('#environment');
-            riaWorld.setAttribute('visible', 'false');
+        
+            // Hide Ria world, show cabin
+            this.riaWorld.setAttribute('visible', 'false');
             this.cabin.setAttribute('visible', 'true');
             this.environment.setAttribute('position', '0 -2.265 0');
             this.environment.setAttribute('environment', {
@@ -34,8 +38,35 @@ AFRAME.registerComponent('ria-manager', {
                 lighting: 'none',
                 dressing: 'none'
             });
-
-            console.log("returned environment" + this.environment);
+        
+            // Remove all logs from the scene
+            this.logs.forEach(log => {
+                if (log.parentNode) {
+                    log.parentNode.removeChild(log);
+                }
+            });
+            this.logs = []; // Clear the logs array
+        
+            // Remove pedestal and raft
+            const pedestal = document.querySelector('#raftPedestal');
+            if (pedestal && pedestal.parentNode) {
+                pedestal.parentNode.removeChild(pedestal);
+            }
+        
+            const raft = document.querySelector('#raft');
+            if (raft && raft.parentNode) {
+                raft.parentNode.removeChild(raft);
+            }
+        
+            // Remove portal elements
+            ['redPaint_return', 'painting3_return', 'voteCounter_redPaint_return'].forEach(id => {
+                const element = document.querySelector(`#${id}`);
+                if (element && element.parentNode) {
+                    element.parentNode.removeChild(element);
+                }
+            });
+        
+            console.log("All spawned objects removed. Environment reset.");
         });
     },
 
@@ -149,40 +180,141 @@ AFRAME.registerComponent('ria-manager', {
     
 });
 
-AFRAME.registerComponent('pedestal-trigger', {
+AFRAME.registerComponent("pedestal-trigger", {
     init: function () {
-        this.logsPlaced = 0;
-        this.maxLogs = 4;
-        this.el = document.querySelector("#raftPedestal");
-        this.raft = document.querySelector('#raft');
-        const gameManager = document.querySelector('#GameManager');
+      this.logsPlaced = 0;
+      this.maxLogs = 4;
+      this.el = document.querySelector("#raftPedestal");
+      this.raft = document.querySelector("#raft");
+      let gameManager = document.querySelector("#GameManager");
+  
+      // Ensure CONTEXT_AF exists
+      window.CONTEXT_AF = window.CONTEXT_AF || {};
+      CONTEXT_AF.raftEventName = "deleteLog_event";
+      CONTEXT_AF.socket = null;
+  
+      // Helper function to update the raft model based on logsPlaced
+      this.updateRaftModel = () => {
+        switch (this.logsPlaced) {
+          case 1:
+            this.raft.setAttribute("gltf-model", "#Raft1");
+            break;
+          case 2:
+            this.raft.setAttribute("gltf-model", "#Raft2");
+            break;
+          case 3:
+            this.raft.setAttribute("gltf-model", "#Raft3");
+            break;
+          case 4:
+            this.raft.setAttribute("gltf-model", "#Raft4");
+            this.el.setAttribute("color", "green");
+            console.log("Raft is complete!");
+            gameManager.emit("ria-complete");
+            break;
+          default:
+            break;
+        }
+        console.log("Local logs placed: " + this.logsPlaced);
+      };
+  
+      // Create the networking system using CONTEXT_AF
+      CONTEXT_AF.createNetworkingSystem = () => {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        console.warn(
+          "Networking system ready. Socket ID: " +
+            CONTEXT_AF.socket.id +
+            " in room: " +
+            CIRCLES.getCirclesGroupName() +
+            " in world: " +
+            CIRCLES.getCirclesWorldName()
+        );
+  
+        // Local collision: update logsPlaced immediately, update model, then emit global update
+        this.el.addEventListener("collide", (event) => {
+          let log = event.detail.body.el;
+          if (!log || !log.classList.contains("interactable-log")) return;
+            
+          log.emit('click');  
 
-        this.el.addEventListener('collide', (event) => {
-            const log = event.detail.body.el;
-            if (!log || !log.classList.contains('interactable-log')) return;
-
-
-            // First, disable physics
-            log.removeAttribute('dynamic-body');
-
-            //Wait a frame before removing to let physics settle
-            setTimeout(() => {
-                if (log.parentNode) {
-                    log.parentNode.removeChild(log);
-                    this.logsPlaced++;
-                    this.raft.setAttribute('gltf-model', `#Raft${this.logsPlaced}`);
-                    
-
-                    if (this.logsPlaced === this.maxLogs) {
-                        console.log("Raft is complete!");
-                        this.el.setAttribute('color', 'green');
-                        gameManager.emit('ria-complete');
-                    }
-                }
-            }, 0);
+  
+          // Let physics settle before removing the log element
+          setTimeout(() => {
+            if (log.parentNode) {
+              log.parentNode.removeChild(log);
+              // Update local count immediately
+              this.logsPlaced++;
+              this.updateRaftModel();
+              // Emit the updated count globally
+              CONTEXT_AF.socket.emit(CONTEXT_AF.raftEventName, {
+                logsPlaced: this.logsPlaced,
+                room: CIRCLES.getCirclesGroupName(),
+                world: CIRCLES.getCirclesWorldName()
+              });
+            }
+          }, 0);
         });
+  
+        // Listen for the global raft update events
+        CONTEXT_AF.socket.on(CONTEXT_AF.raftEventName, (data) => {
+          if (
+            data.world === CIRCLES.getCirclesWorldName() &&
+            data.room === CIRCLES.getCirclesGroupName()
+          ) {
+            // Only update if the incoming count is greater than the local value
+            if (data.logsPlaced > this.logsPlaced) {
+              this.logsPlaced = data.logsPlaced;
+              this.updateRaftModel();
+            }
+            console.log("Global logs placed: " + data.logsPlaced);
+          }
+        });
+  
+        // Request data sync after a random delay (for late joiners)
+        setTimeout(() => {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName()
+          });
+        },1200);
+  
+        // When another client requests sync data, send your current logsPlaced value
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
+              logsPlaced: this.logsPlaced,
+              room: CIRCLES.getCirclesGroupName(),
+              world: CIRCLES.getCirclesWorldName()
+            });
+          }
+        });
+  
+        // Receive sync data from others
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            if (data.logsPlaced > this.logsPlaced) {
+              this.logsPlaced = data.logsPlaced;
+              this.updateRaftModel();
+            }
+          }
+        });
+      };
+  
+      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
+      if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+      } else {
+        let wsReadyFunc = () => {
+          CONTEXT_AF.createNetworkingSystem();
+          this.el.sceneEl.removeEventListener(
+            CIRCLES.EVENTS.WS_CONNECTED,
+            wsReadyFunc
+          );
+        };
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      }
     }
-});
+  });
+  
 
 AFRAME.registerComponent('lazy-load-environment', {
     init: function () {
