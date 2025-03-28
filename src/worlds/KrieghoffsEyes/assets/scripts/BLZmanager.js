@@ -34,6 +34,8 @@ AFRAME.registerComponent('blz-manager', {
         this.el.addEventListener('return-clicked', () => {
             this.blzWorld = document.querySelector('blzWorld');
             this.environment = document.querySelector('#environment');
+            
+            // Hide Blz world, show cabin 
             blzWorld.setAttribute('visible', 'false');
             this.cabin.setAttribute('visible', 'true');
             this.environment.setAttribute('position', '0 -2.265 0');
@@ -49,7 +51,42 @@ AFRAME.registerComponent('blz-manager', {
                 dressing: 'none'
             });
 
-            console.log(this.environment);
+            // Remove all sled parts from the scene
+            this.sledParts.forEach(sledPart => {
+              if (sledPart.parentNode) {
+                sledPart.parentNode.removeChild(sledPart);
+              }
+            });
+            this.sledParts = []; // Clear the logs array
+            
+            // Remove all logs from the scene
+            this.logs.forEach(log => {
+              if (log.parentNode) {
+                  log.parentNode.removeChild(log);
+              }
+            });
+            this.logs = []; // Clear the logs array
+
+            // Remove pedestal and sled
+            const pedestal = document.querySelector('#sledPedestal');
+            if (pedestal && pedestal.parentNode) {
+                pedestal.parentNode.removeChild(pedestal);
+            }
+
+            const raft = document.querySelector('#sled');
+            if (raft && raft.parentNode) {
+                raft.parentNode.removeChild(raft);
+            }
+
+            // Remove portal elements
+            ['greenPaint_return', 'painting1_return', 'voteCounter_greenPaint_return'].forEach(id => {
+            const element = document.querySelector(`#${id}`);
+            if (element && element.parentNode) {
+                element.parentNode.removeChild(element);
+            }
+            });
+
+            console.log("All spawned objects removed. Environment reset.");
         });
     },
 
