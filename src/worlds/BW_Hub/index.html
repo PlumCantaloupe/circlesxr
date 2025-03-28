@@ -54,57 +54,16 @@
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
     <script src="js/visualization-info.js"></script>
-    <script></script>
-
-    <style>
-      .ui-elements {
-        z-index: 999999;
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-        padding: 40px 5%;
-        width: 100%;
-        height: 100vh;
-        pointer-events: none;
-      }
-      .text-container{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        height: fit-content;
-        padding: 20px 10px;
-        margin: auto;
-        margin-bottom: 0px;
-        text-align: center;
-        border-radius: 10px;
-        color: rgb(220, 235, 240);
-      }
-
-      .default-colour {
-        background-color: rgba(38, 34, 57, 0.85);
-      }
-
-      .error-colour {
-        background-color: rgba(116, 11, 30, 0.85);
-      }
-    </style>
     
   </head>
   <body>
 
-    <div id="guidingText" class="ui-elements text-container default-colour" style="display: none">
-      hi
-    </div>
-    <div id="errorText" class="ui-elements text-container default-colour" style="display: none; background-color: red;">
-      hi
-    </div>
-
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
-    
+    <!-- use this to create a brain wave guiding text component -->
+    <bw-text-ui/>
+
     <!-- renderer="toneMapping: no;" 
      bloom="threshold: 1; strength: 0.3; radius: 0.1; enabled: false" -->
      

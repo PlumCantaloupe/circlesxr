@@ -23,6 +23,7 @@ let circles_scene_properties =  fs.readFileSync('./src/webpack.worlds.parts/circ
 let circles_assets           =  fs.readFileSync('./src/webpack.worlds.parts/circles_assets.part.html', 'utf8');
 let circles_avatar           =  fs.readFileSync('./src/webpack.worlds.parts/circles_avatar_manager.part.html', 'utf8');
 let circles_end_scripts      =  fs.readFileSync('./src/webpack.worlds.parts/circles_end_scripts.part.html', 'utf8');
+let bw_text_ui               =  fs.readFileSync('./src/webpack.worlds.parts/bw_text_display.part.html', 'utf8');
 
 const nafAudioRegex   = new RegExp(/\{\{(\s+)?NAF_AUDIO(\s+)?\}\}/,   'gmi');
 const nafAdapterRegex = new RegExp(/\{\{(\s+)?NAF_ADAPTER(\s+)?\}\}/, 'gmi');
@@ -64,6 +65,7 @@ module.exports = {
               content = content.replace(/<circles-assets(\s+)?\/>/i, circles_assets);
               content = content.replace(/<circles-manager-avatar(\s+)?\/>/i, circles_avatar);
               content = content.replace(/<circles-end-scripts(\s+)?\/>/i, circles_end_scripts);
+              content = content.replace(/<bw-text-ui(\s+)?\/>/i, bw_text_ui);
               //return content.toString().replace(janusServerRegex, env.JANUS_SERVER);
               return content;
             } else {
