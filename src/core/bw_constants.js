@@ -11,6 +11,13 @@ const DEFAULT_TELEPORT_PAD = false;
 const DEFAULT_GUIDING_TEXT = false;
 const DEFAULT_BLOOM = false;
 
+//guiding text constants
+const GUIDING_TEXT = {
+  HIDDEN: 'none',
+  SHOW: 'flex',
+  TIMER_MS: 3000,
+}
+
 module.exports = {
   LS_TELEPORT_PAD,
   LS_RECENT_ROOM,
@@ -18,5 +25,6 @@ module.exports = {
   LS_BLOOM,
   DEFAULT_TELEPORT_PAD,
   DEFAULT_GUIDING_TEXT,
-  DEFAULT_BLOOM
+  DEFAULT_BLOOM,
+  GUIDING_TEXT
 };

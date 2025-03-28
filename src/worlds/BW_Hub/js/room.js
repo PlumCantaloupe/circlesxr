@@ -1,77 +1,90 @@
 AFRAME.registerComponent('room', {
-  //this will have to be switched over to a variable in Context_AF
+  //this will have to be switched over to a variable in CONTEXT_AF
     schema: {
         orbTypeToUpdate: {type: 'string'},
+        roomName: {type: 'string'}
     },
 
-    init: function () {
-      const Context_AF = this;
-      Context_AF.prefix = Context_AF.el.id;
+    init: async function () {
+      const CONTEXT_AF = this;
+      CONTEXT_AF.prefix = CONTEXT_AF.el.id;
 
       //getting the cylinder data visualizations associated with this dispenser
-      Context_AF.red = document.querySelector(`#${Context_AF.prefix}-red`);
-      Context_AF.yellow = document.querySelector(`#${Context_AF.prefix}-yellow`);
-      Context_AF.blue = document.querySelector(`#${Context_AF.prefix}-blue`);
-      Context_AF.green = document.querySelector(`#${Context_AF.prefix}-green`);
-      Context_AF.pink = document.querySelector(`#${Context_AF.prefix}-pink`);
+      CONTEXT_AF.focused = document.querySelector(`#${CONTEXT_AF.prefix}-red`);
+      CONTEXT_AF.joyful = document.querySelector(`#${CONTEXT_AF.prefix}-yellow`);
+      CONTEXT_AF.sad = document.querySelector(`#${CONTEXT_AF.prefix}-blue`);
+      CONTEXT_AF.unsettled = document.querySelector(`#${CONTEXT_AF.prefix}-green`);
+      CONTEXT_AF.peaceful = document.querySelector(`#${CONTEXT_AF.prefix}-pink`);
+
+      CONTEXT_AF.sharedStateManager = document.querySelector('[manager]').components['manager'];
+      //get data based on the passed in visualizationID
+
+      try {
+        const data = await CONTEXT_AF.sharedStateManager.getEmotionData(CONTEXT_AF.data.roomName);
+        CONTEXT_AF.emotionData = await data[1].emotions;
+
       
-      //getting person emotion data from db
-      Context_AF.cylinders = [
-        {color: 'red', value: 2},
-        {color: 'yellow', value: 0},
-        {color: 'blue', value: 2},
-        {color: 'green', value: 3},
-        {color: 'pink', value: 4}
-      ]
-  
-      Context_AF.maxValue = 0;
-      for(let i=0; i<Context_AF.cylinders.length; i++){
-        Context_AF.maxValue += Context_AF.cylinders[i].value;
+          //getting person emotion data from db
+          // CONTEXT_AF.emotionData = [
+          //   {color: 'red', value: 2},
+          //   {color: 'yellow', value: 0},
+          //   {color: 'blue', value: 2},
+          //   {color: 'green', value: 3},
+          //   {color: 'pink', value: 4}
+          // ]
+      
+          CONTEXT_AF.maxValue = 0;
+          for(let i=0; i<CONTEXT_AF.emotionData.length; i++){
+            CONTEXT_AF.maxValue += CONTEXT_AF.emotionData[i].votes;
+          }
+
+
+          CONTEXT_AF.singleUnit = CYLINDER_Y_SIZE / CONTEXT_AF.maxValue;
+      
+          //set the default scales for the cylinder after the component has been initialized
+          let totalScale = 0;
+          CONTEXT_AF.emotionData.forEach(element => {
+            let scaleY = CONTEXT_AF.singleUnit * element.votes;
+            //if the scale is too small we should set it to minimum height
+            if (scaleY < 0.01 && element.votes != 0) 
+            scaleY = 0.01;
+            
+            CONTEXT_AF[element.name].object3D.scale.y = scaleY;
+            // //position the cylinder
+            CONTEXT_AF[element.name].object3D.position.y= totalScale;
+            totalScale += scaleY
+          });
+      } catch (error) {
+        console.log(error)
       }
-
-
-      Context_AF.singleUnit = CYLINDER_Y_SIZE / Context_AF.maxValue;
-  
-      //set the default scales for the cylinder after the component has been initialized
-      let totalScale = 0;
-      Context_AF.cylinders.forEach(element => {
-        let scaleY = Context_AF.singleUnit * element.value;
-        //if the scale is too small we should set it to minimum height
-        if (scaleY < 0.01 && element.value != 0) 
-        scaleY = 0.01;
-        
-        Context_AF[element.color].object3D.scale.y = scaleY;
-        // //position the cylinder
-        Context_AF[element.color].object3D.position.y= totalScale;
-        totalScale += scaleY
-      });
+      
   
 
     },
 
     update: function() {
-        const Context_AF = this;
+        const CONTEXT_AF = this;
         //make sure a valid orb has been inputted
-        if(Context_AF.data.orbTypeToUpdate != '' && Context_AF[Context_AF.data.orbTypeToUpdate] !== undefined) {
+        if(CONTEXT_AF.data.orbTypeToUpdate != '' && CONTEXT_AF[CONTEXT_AF.data.orbTypeToUpdate] !== undefined) {
           console.log("lets update the orbs")
-          Context_AF.updateCylinders(Context_AF.data.orbTypeToUpdate);
-          Context_AF.el.setAttribute('room', {orbTypeToUpdate: ''});
+          CONTEXT_AF.updateCylinders(CONTEXT_AF.data.orbTypeToUpdate);
+          CONTEXT_AF.el.setAttribute('room', {orbTypeToUpdate: ''});
         }
     },
   
     updateCylinders: function(sharedOrbColour){
-        const Context_AF = this;
+        const CONTEXT_AF = this;
         
-        const indexToScale = Context_AF.cylinders.findIndex(item => item.color===sharedOrbColour);
-        Context_AF.cylinders[indexToScale].value += 1;
-        Context_AF.maxValue += 1;
-        Context_AF.singleUnit = CYLINDER_Y_SIZE / Context_AF.maxValue;
+        const indexToScale = CONTEXT_AF.emotionData.findIndex(item => item.name===sharedOrbColour);
+        CONTEXT_AF.emotionData[indexToScale].votes += 1;
+        CONTEXT_AF.maxValue += 1;
+        CONTEXT_AF.singleUnit = CYLINDER_Y_SIZE / CONTEXT_AF.maxValue;
         
         let newPos = 0;
         //need to update the scale and position of each cylinder based on the new data 
-        for(let i=0; i<Context_AF.cylinders.length; i++){
-            const currEl = Context_AF[Context_AF.cylinders[i].color];
-            const newScaleY = Context_AF.singleUnit * Context_AF.cylinders[i].value;
+        for(let i=0; i<CONTEXT_AF.emotionData.length; i++){
+            const currEl = CONTEXT_AF[CONTEXT_AF.emotionData[i].name];
+            const newScaleY = CONTEXT_AF.singleUnit * CONTEXT_AF.emotionData[i].votes;
     
             //animate scale
             currEl.setAttribute('animation', {property: 'scale',

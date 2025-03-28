@@ -4,11 +4,11 @@ AFRAME.registerComponent('visualization-info', {
     },
 
     init: function () {
-      const Context_AF = this;
-      Context_AF.info = document.querySelector(`#${Context_AF.data.visualizationID}-info`);
-      //get data based on the passed in visualizationID
+      const CONTEXT_AF = this;
+      CONTEXT_AF.info = document.querySelector(`#${CONTEXT_AF.data.visualizationID}-info`);
+      
 
-      Context_AF.cylinders = [
+      CONTEXT_AF.cylinders = [
         {emotion: 'emotion1', color: 'red', value: 2},
         {emotion: 'emotion2', color: 'yellow', value: 0},
         {emotion: 'emotion3', color: 'blue', value: 2},
@@ -16,26 +16,25 @@ AFRAME.registerComponent('visualization-info', {
         {emotion: 'emotion5', color: 'pink', value: 4}
       ]
 
-      Context_AF.infoText = "";
+      CONTEXT_AF.infoText = "";
       //populate display text with data
-      for(let i = 0; i < Context_AF.cylinders.length; i++) {
-        Context_AF.infoText += `\n ${Context_AF.cylinders[i].emotion} (${Context_AF.cylinders[i].color}): ${Context_AF.cylinders[i].value} people`;
+      for(let i = 0; i < CONTEXT_AF.cylinders.length; i++) {
+        CONTEXT_AF.infoText += `\n ${CONTEXT_AF.cylinders[i].emotion} (${CONTEXT_AF.cylinders[i].color}): ${CONTEXT_AF.cylinders[i].value} people`;
       }
 
-      console.log(Context_AF.infoText )
+      console.log(CONTEXT_AF.infoText )
 
       //event listener for when the visualization data has been updated
 
       //display a label with this 
-      Context_AF.el.addEventListener('mouseenter', function() {
-        Context_AF.info.setAttribute('circles-description', {description_text_front: Context_AF.infoText});
-        Context_AF.info.setAttribute('circles-interactive-visible', 'true');
+      CONTEXT_AF.el.addEventListener('mouseenter', function() {
+        CONTEXT_AF.info.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
+        CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'true');
       })
 
       //display a label with this 
-      Context_AF.el.addEventListener('mouseleave', function() {
-        console.log("removeeeeeee")
-        Context_AF.info.setAttribute('circles-interactive-visible', 'false');
+      CONTEXT_AF.el.addEventListener('mouseleave', function() {
+        CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'false');
       })
     },
 

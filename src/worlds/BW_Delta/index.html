@@ -32,6 +32,9 @@
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
+    <!-- use this to create a brain wave guiding text component -->
+    <bw-text-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties>
       <a-assets>
@@ -58,7 +61,7 @@
         <audio id="orb-clip3" src="/worlds/BW_Delta/assets/sounds/orb-clips/3.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip4" src="/worlds/BW_Delta/assets/sounds/orb-clips/4.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip5" src="/worlds/BW_Delta/assets/sounds/orb-clips/5.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="orb-clip6"" src="/worlds/BW_Delta/assets/sounds/orb-clips/6.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip6" src="/worlds/BW_Delta/assets/sounds/orb-clips/6.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip7" src="/worlds/BW_Delta/assets/sounds/orb-clips/7.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip8" src="/worlds/BW_Delta/assets/sounds/orb-clips/8.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip9" src="/worlds/BW_Delta/assets/sounds/orb-clips/9.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -93,6 +96,7 @@
       
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
       <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1'></a-entity>
+      <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
 
       <!-- TO BE REPLACED - START -->
       <a-entity id="orbmanager" orb-manager></a-entity>
@@ -103,7 +107,7 @@
                 material='shader:flat; src:#skyMap; side:back;'>
       </a-entity>
 
-      <!-- Sound entitites -->
+      <!-- Sound entities -->
       <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; autoplay: true; loop: true; type: music;"></a-entity>
       <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; autoplay: true; loop: true; type: music;"></a-entity>
 

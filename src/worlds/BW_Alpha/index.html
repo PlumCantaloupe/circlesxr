@@ -26,6 +26,9 @@
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
+    <!-- use this to create a brain wave guiding text component -->
+    <bw-text-ui/>
+
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties>
       <a-assets>
@@ -44,6 +47,7 @@
 
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
       <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1'></a-entity>
+      <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       
       <!--Portal - don't remove from scene please -->
       <a-entity id="Portal-Hub"

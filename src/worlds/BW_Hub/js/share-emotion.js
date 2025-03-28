@@ -7,7 +7,8 @@ AFRAME.registerComponent('share-emotion', {
       const CONTEXT_AF = this;
       const scene      = document.querySelector('a-scene');
       CONTEXT_AF.manager = document.querySelector('#manager')
-      CONTEXT_AF.visualizationContainer = document.querySelector(`#${CONTEXT_AF.data.visualizationID}`);
+      CONTEXT_AF.managerData = document.querySelector('[manager]').components['manager'];
+      CONTEXT_AF.visualizationContainer = document.querySelector(`#${CONTEXT_AF.data.visualizationID}-visualization`);
       
 
       CONTEXT_AF.socket     = null;
@@ -49,6 +50,7 @@ AFRAME.registerComponent('share-emotion', {
               //delete the orb once it's finished animating
               setTimeout(function() {
                 //trigger visualization update
+                CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbId);
                 CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 console.log("emit")

@@ -9,6 +9,9 @@
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
     <script src="js/lights-interaction.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore-compat.js"></script>
     <!-- <script>
       AFRAME.registerComponent('comp', {
         init: function() {
@@ -58,7 +61,9 @@
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
-    
+    <!-- use this to create a brain wave guiding text component -->
+    <bw-text-ui/>
+
     <!-- renderer="toneMapping: no;" 
      bloom="threshold: 1; strength: 0.3; radius: 0.1; enabled: false" -->
      
@@ -87,6 +92,7 @@
       <circles-manager-avatar/>
 
       <a-entity id="manager" manager ></a-entity>
+      <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -161,6 +167,17 @@
           <a-entity text="value: Off; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
         </a-entity>
 
+        <a-entity rotation="0 0 17" position="-0.700 -0.2 0">
+          <a-entity id="guidingTextOnSetting"
+          position="0.12 -0.03 0.473"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: On; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+          <a-entity id="guidingTextOffSetting"
+          position="0.12 -0.03 0.85"
+          circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747" >
+          <a-entity text="value: Off; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
+        </a-entity>
+
         <!-- TO ADD BACK IN -->
          
         <!-- <a-entity>
@@ -171,11 +188,11 @@
           <a-entity id="guidingText"
                   circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747">
                   <a-entity text="value: OFF; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity>
-        </a-entity>
+        </a-entity> -->
 
         
 
-        <a-entity id="infoDisplay"
+        <!-- <a-entity id="infoDisplay"
                   circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: #7d7d7d; button_color_hover: #474747">
                   <a-entity text="value: Hello World; align: center; width: 0.9" rotation="-90 -90 0" position="0 0.2 0"></a-entity></a-entity> -->
        
@@ -187,7 +204,7 @@
        <!-- blue button -->
       <a-entity class="buttonContainer" rotation="0 32.9 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #4da3ff; button_color_hover: #3561e3" 
-                  dispense-emotion="orbColour: #05cdff; idColour: blue"
+                  dispense-emotion="orbColour: #05cdff; emotion: sad"
                   position="0 1.02 2.13"
                   rotation="90 0 0"
                   circles-interactive-object="click_sound: #button_press"
@@ -197,7 +214,7 @@
       <!-- pink button -->
       <a-entity class="buttonContainer" rotation="0 105.2 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #fe90e6; button_color_hover: #d339fe" 
-                  dispense-emotion="orbColour: #fe90e6; idColour: pink"          
+                  dispense-emotion="orbColour: #fe90e6; emotion: peaceful"          
                   position="0 1.02 2.13"
                   rotation="90 0 0"
                   circles-interactive-object="click_sound: #button_press"
@@ -206,7 +223,7 @@
       <!-- green button -->
       <a-entity class="buttonContainer" rotation="0 177.62 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #afff4d; button_color_hover: #369c11" 
-                  dispense-emotion="orbColour: #afff4d; idColour: green" 
+                  dispense-emotion="orbColour: #afff4d; emotion: unsettled" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"
                   circles-interactive-object="click_sound: #button_press"
@@ -215,7 +232,7 @@
       <!-- orange button -->
       <a-entity class="buttonContainer" rotation="0 249.12 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #ff8b4d; button_color_hover: #e06500" 
-                  dispense-emotion="orbColour: #ff8b4d; idColour: red" 
+                  dispense-emotion="orbColour: #ff8b4d; emotion: focused" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"
                   circles-interactive-object="click_sound: #button_press"
@@ -224,7 +241,7 @@
       <!-- yellow button -->
       <a-entity class="buttonContainer" rotation="0 320.89 0">
         <a-entity circles-button="type: cylinder; pedastal_visible: false; diameter: 0.3; false; button_color: #ffe74d; button_color_hover: #ca9502" 
-                  dispense-emotion="orbColour: #ffe74d; idColour: yellow" 
+                  dispense-emotion="orbColour: #ffe74d; emotion: joyful" 
                   position="0 1.02 2.13"
                   rotation="90 0 0"
                   circles-interactive-object="click_sound: #button_press"
@@ -251,7 +268,7 @@
            <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
            <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2; color: #9c9c9c"></a-entity>
            <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-           <a-entity room id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
+           <a-entity room="roomName: delta" id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
              <a-entity id="delta-visualization-red">
                <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
              </a-entity>
@@ -275,7 +292,7 @@
          </a-entity>
 
          <a-entity position="0.635 0 -0.221">
-          <a-entity share-emotion="visualizationID: delta-visualization" circles-interactive-object="type:outline;" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
+          <a-entity share-emotion="visualizationID: delta" circles-interactive-object="type:outline;" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
          </a-entity>
          
       </a-entity>
@@ -292,7 +309,7 @@
           <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
           <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
           <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-          <a-entity room id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
+          <a-entity room="roomName: alpha" id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
             <a-entity id="alpha-visualization-red">
               <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
             </a-entity>
@@ -316,7 +333,7 @@
         </a-entity>
 
         <a-entity position="0.635 0 -0.221">
-         <a-entity share-emotion="visualizationID: alpha-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
+         <a-entity share-emotion="visualizationID: alpha" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
         </a-entity>
 
       </a-entity>
@@ -336,7 +353,7 @@
         <a-entity circles-interactive-object visualization-info="visualizationID: gamma-visualization" geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"
         ></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-        <a-entity room id="gamma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
+        <a-entity room="roomName: gamma" id="gamma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
           <a-entity id="gamma-visualization-red">
             <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
           </a-entity>
@@ -360,7 +377,7 @@
       </a-entity>
 
       <a-entity position="0.635 0 -0.221">
-       <a-entity share-emotion="visualizationID: gamma-visualization" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
+       <a-entity share-emotion="visualizationID: gamma" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
       </a-entity>
 
     </a-entity>
