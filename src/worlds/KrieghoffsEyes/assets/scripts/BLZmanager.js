@@ -1,11 +1,16 @@
 AFRAME.registerComponent('blz-manager', {
     init: function () {
         this.sledParts = [];
+        this.logs = [];
         this.sledPartsPlaced = 0;
         this.scene = this.el.sceneEl;
         this.pedestal = null;
 
         this.cabin = document.querySelector("#Cabin");
+
+        //track task completion
+        this.taksCompleted = 0;
+        this.totalTasks = 2;
 
 
         // Wait for the green painting click event
@@ -15,7 +20,13 @@ AFRAME.registerComponent('blz-manager', {
         });
 
         this.el.addEventListener('blz-complete', () =>{
+          this.taksCompleted++;  
+
+          console.log("summoning portal: " + this.taksCompleted);
+          //makesure we complete all the task fist before spawining portal
+          if(this.totalTasks === this.taksCompleted) {
             this.spawnPortal();
+          }
         });
 
         this.el.addEventListener('return-clicked', () => {
@@ -42,12 +53,15 @@ AFRAME.registerComponent('blz-manager', {
 
     startSledTask: function () {
         console.log('Blizzard task');
+        this.spawnParts();
         this.spawnLogs();
         this.spawnPedestal();
+        this.spawnAxe();
+        this.spawnAxeTarget();
         this.cabin.setAttribute('visible', 'false');
     },
    
-    spawnLogs: function () {
+    spawnParts: function () {
         const blzWorld = document.querySelector('#blzWorld');
         const positions = [
             { x: -45, y: 0, z: 0 },
@@ -70,7 +84,7 @@ AFRAME.registerComponent('blz-manager', {
             sledPart.setAttribute('id', `sledPart${index}`);
             sledPart.setAttribute('gltf-model', `#logModel`);
             sledPart.setAttribute('material', 'color: brown'); // Material needs to be separate
-            sledPart.setAttribute('class', 'interactable-log');
+            //sledPart.setAttribute('class', 'interactable-log');
             sledPart.setAttribute('part-highlight', '');
             sledPart.setAttribute('class', 'interactive');
             //sledPart.setAttribute('circles-interactive-object', '');
@@ -78,8 +92,8 @@ AFRAME.registerComponent('blz-manager', {
             //sledPart.setAttribute('static-body', '');
 
             sledPart.addEventListener('partSelected', () => {
-                console.log("remove interactivity on part");
-                sledPart.removeAttribute('class', 'interactive');
+                console.log("removed part");
+                sledPart.parentNode.remove(sledPart);
             });
             
             sledPart.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
@@ -89,6 +103,169 @@ AFRAME.registerComponent('blz-manager', {
             blzWorld.appendChild(sledPart);
             this.sledParts.push(sledPart);
         });
+
+    },
+
+    spawnLogs: function () {
+      const blzWorld = document.querySelector('#blzWorld');
+      const positions = [
+          { x: -45, y: 0.4, z: -2 },
+          { x: -45, y: 0.5, z: -2 },
+          { x: -45, y: 0.6, z: -2 },
+          { x: -45, y: 0.7, z: -2 }
+      ];
+
+      const rotations = [
+          { x: 0, y: 90, z: 0 },
+          { x: 0, y: 90, z: 0 },
+          { x: 0, y: 90, z: 0 },
+          { x: 0, y: 90, z: 0 }
+      ];
+
+      positions.forEach((pos, index) => {
+          let log = document.createElement('a-entity');
+          log.setAttribute('position', `${pos.x} ${pos.y} ${pos.z}`);
+          // sledPart.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2'); // Fixed typo
+          log.setAttribute('id', `log${index}`);
+          log.setAttribute('gltf-model', `#logModel`);
+          log.setAttribute('material', 'color: brown'); // Material needs to be separate
+          log.setAttribute('class', 'can-be-chopped');
+          //log.setAttribute('part-highlight', '');
+          //log.setAttribute('class', 'interactive');
+          //sledPart.setAttribute('circles-interactive-object', '');
+          //sledPart.setAttribute('circles-pickup-networked', '');
+          log.setAttribute('dynamic-body', 'mass: 0');
+
+          //chopping check
+          this.chopAllowed = false;
+          this.chopCounter = 0;
+          //since the target was touched, we can now chop the log
+          log.addEventListener('choppingPrepared', () => {
+            this.chopAllowed = true;
+            console.log("before collide with log: " + this.chopAllowed);
+          });
+
+          //if we collied with the log and we're in the choping state, remove the log
+          log.addEventListener('collide', (event) => {
+            console.log("After collied with log: " + this.chopAllowed);
+            console.log("Axe collided with log!", event.detail.body.el);
+
+            const axe = event.detail.body.el;
+            if (!axe || axe.id !== 'axe') return;
+
+            if (this.chopAllowed === true) {
+              console.log("log chopped!");
+              log.removeAttribute('static-body');
+              
+              //wait for physics to get removed first before removing the element
+              setTimeout(() => {
+                if (log.parentNode) {
+                    log.parentNode.removeChild(log);
+                  }
+                }, 0);
+                
+                
+              //reset the chopping state
+              this.chopAllowed = false;
+              
+              //increment counter
+              this.chopCounter++;
+              console.log('chop counter: ' + this.chopCounter);
+                
+              //reset the target color
+              let axetarget = document.querySelector('#axeTarget');
+              axetarget.setAttribute('material', 'color: red');
+
+              //for some reason the array didn't srink in size as the logs got removed,
+              //so we have a coutner to count up to the origianl lenght of the array
+              console.log("array length: " + this.logs.length);
+
+              if(this.logs.length === this.chopCounter) {
+                const gameManager = document.querySelector('#GameManager');
+                // check if all logs have been chopped
+                console.log("all chopped! blz-complete was called");
+                if (gameManager) {
+                  gameManager.emit('blz-complete');
+                }
+              }
+
+            } else {
+              console.log("you're not allowed to chop");
+            } 
+
+          });
+
+          
+          log.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
+          const rot = rotations[index];
+          log.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
+
+          blzWorld.appendChild(log);
+          this.logs.push(log);
+      });
+
+  },
+
+    spawnAxe: function () {
+      console.log("Axe Spawned");
+      const blzWorld = document.querySelector('#blzWorld');
+      this.axe = document.createElement('a-entity');
+      this.axe.setAttribute('id', 'axe');
+      this.axe.setAttribute('geometry', 'primitive: cylinder; height: 0.75; radius: 0.05');
+      this.axe.setAttribute('class', 'interactable-axe');
+      this.axe.setAttribute('circles-artefact', {
+        inspectPosition:      '0.0 0.5 0.0',
+        inspectScale:         '1 1 1',
+        inspectRotation:      '-30 0 0',
+        textRotationY:        '90',
+        descrption_offset:    '0 1 0',
+        description_on:       true,
+        desc_arrow_position:  'down',
+        label_text:           'Axe',
+        label_offset:         '0 1 0',
+        label_on:             true,
+        label_arrow_position: 'down',
+        title:                '1800s Single Bit Axe',
+        description:          'These axes where meant for felling and slitting wood - use this axe to clear the way',
+        title_back:           'Some Title',
+        description_back:     'Some description text.',
+        //audio:                #some-snd; 
+        //volume:               0.4
+      });
+      this.axe.setAttribute('position', '-45 1 -1');
+      //for collision
+      this.axe.setAttribute('static-body', '');
+      //we're trying raycaster to detct collision - cuz 
+      blzWorld.appendChild(this.axe);
+    },
+
+    spawnAxeTarget: function () {
+      const blzWorld = document.querySelector('#blzWorld');
+      this.axeTarget = document.createElement('a-entity');
+      this.axeTarget.setAttribute('id', 'axeTarget');
+      this.axeTarget.setAttribute('geometry', 'primitive: sphere; radius: 0.25');
+      this.axeTarget.setAttribute('material', 'opacity: 0.5; transparent: true; color: #ff0000;');
+      this.axeTarget.setAttribute('position', '-45 2 -2');
+      //for collision detection with axe
+      this.axeTarget.setAttribute('axe-target-trigger', '');
+      //be user to have mass = 0 so it doesn't fly away - by default it's 5
+      this.axeTarget.setAttribute('dynamic-body', 'mass: 0');
+
+      //if the target was touched send message to logs they can be chopped
+      this.axeTarget.addEventListener('targetTouched', () =>  {
+        
+        // Select all elements with the class 'can-be-chopped'
+        const canBeChopped = document.querySelectorAll('.can-be-chopped');
+
+        // Loop through each element and perform an action
+        canBeChopped.forEach((element) => {
+          console.log(element); // Logs each element with the class
+          console.log("choppingPrepared got emitted");
+          element.emit('choppingPrepared'); //let logs know they can be chopped
+        });
+      });
+
+      blzWorld.appendChild(this.axeTarget);
     },
 
     spawnPedestal: function () {
@@ -169,7 +346,6 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
       // Ensure that the elements are available
       this.el = document.querySelector("#sledPedestal");
       
-      //try to add the event listener directly on pedestal
       document.querySelector("#sledPedestal");
 
       this.sled = document.querySelector('#sled');
@@ -199,15 +375,34 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
         // Check if all parts are placed
         if (this.sledPartsPlaced === this.maxParts) {
           console.log("Sled is complete!");
-          this.el.setAttribute('color', 'green');
+          this.el.setAttribute('material', 'color: green');
           if (gameManager) {
+            console.log("blz-complete was sent");
             gameManager.emit('blz-complete');
           }
         }
       });
     }
   });
-  
+
+//check if the target was touched and change color
+AFRAME.registerComponent('axe-target-trigger', {
+    init: function () {
+        this.axeTarget = document.querySelector("#axeTarget");
+
+        this.axeTarget.addEventListener('collide', (event) => {
+          console.log("Collision detected!", event.detail.body.el);
+          const axe = event.detail.body.el;
+          if (!axe || axe.id !== 'axe') return;
+          
+          this.axeTarget.setAttribute('color', 'green');
+          
+          this.axeTarget.setAttribute('material', 'color: #00ff00');
+          this.axeTarget.emit('targetTouched');
+      });
+        
+    }
+});
 
 //load the Blizard Enviroment model
 AFRAME.registerComponent('blz-lazy-load-environment', {
