@@ -1,5 +1,7 @@
 AFRAME.registerComponent('spawn-object', {
-    schema: {},
+    schema: {
+        moveSpeed: {type: 'number', default: 0.03}
+    },
     init() {
         // setting variables
         const CONTEXT_AF = this;
@@ -9,14 +11,16 @@ AFRAME.registerComponent('spawn-object', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.spawnEventName = "spawn_event";
 
+        // Audio analyser element
+        CONTEXT_AF.analyserEl = document.querySelector('#audioanalyser-entity');
+
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            // spawn object on click (integrate music library to this function)
-            CONTEXT_AF.el.addEventListener('click', function() {
-                
+            // spawn object on low beat detected
+            CONTEXT_AF.analyserEl.addEventListener('audioanalyser-beat-low', function () {
                 // gets a random shape based on an integer as well as a random x-value within 2 and -2
                 shapeNum = Math.floor((Math.random() * 4) + 1);
                 xVal = (Math.random() * 4) -2;
@@ -39,22 +43,21 @@ AFRAME.registerComponent('spawn-object', {
                 }
 
                 shapeKey = letterGenerator(shapeNum)
-                randPosition = xVal.toString() + " 1.7 27"
+                randPosition = {x: xVal, y: 1.7, z: 27}
 
                 // spawn object with attributes
                 toSpawn = document.createElement("a-entity")
-                toSpawn.setAttribute("id", "spawnedObject")
+                toSpawn.classList.add("spawnedObject")
                 toSpawn.setAttribute("material", shapeKey.material)
                 toSpawn.setAttribute("geometry", shapeKey.geometry)
-                toSpawn.setAttribute("position", randPosition)
+                toSpawn.object3D.position.set(xVal, 1.7, 27)
                 toSpawn.setAttribute("scale", shapeKey.scale)
                 toSpawn.setAttribute("guess-shape", "")
                 toSpawn.setAttribute("circles-interactive-object", "")
                 CONTEXT_AF.scene.appendChild(toSpawn)
 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                
-            })
+            });
 
             //listen for when others spawn objects
             CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
@@ -63,7 +66,7 @@ AFRAME.registerComponent('spawn-object', {
 
                 // spawn object with attributes
                 toSpawn = document.createElement("a-entity")
-                toSpawn.setAttribute("id", "spawnedObject")
+                toSpawn.classList.add('spawnedObject')
                 toSpawn.setAttribute("material", shapeKey.material)
                 toSpawn.setAttribute("geometry", shapeKey.geometry)
                 toSpawn.setAttribute("position", data.netRandPos)
@@ -96,15 +99,18 @@ AFRAME.registerComponent('spawn-object', {
     },
     tick: function(time, timeDelta) {
         const CONTEXT_AF = this;
-        CONTEXT_AF.items = document.querySelectorAll('#spawnedObject')
+        CONTEXT_AF.items = document.querySelectorAll('.spawnedObject');
 
-        // move all spawned objects by -0.05 in the z-direction per tick
+        // move all spawned objects by move speed in the z-direction per tick
         // check if objects' z-values are less than -3.5 and delete them if so
         if (CONTEXT_AF.items.length > 0) {
             for (let i=0; i<CONTEXT_AF.items.length; i++){
-                CONTEXT_AF.items[i].getAttribute("position").z -= 0.05
-                if(CONTEXT_AF.items[i].getAttribute("position").z < -3.5){
-                    CONTEXT_AF.items[i].parentNode.removeChild(CONTEXT_AF.items[i])
+                const currShape = CONTEXT_AF.items[i];
+
+                currShape.object3D.position.z -= CONTEXT_AF.data.moveSpeed;
+
+                if(currShape.object3D.position.z < -3.5){
+                    currShape.parentNode.removeChild(currShape)
                 }
             }
         }
