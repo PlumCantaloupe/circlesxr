@@ -25,8 +25,6 @@
     <script src="components/toggle-canvas.js"></script>
     <script src="components/update-canvas.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-
-
   </head>
   <body>
     
@@ -44,22 +42,13 @@
         <p>Coordinates: </p>
         <p id="clickCoords"> Mouse Coordinates:</p>
         <p id="touchCoords">Touch Coordinates:</p>
-
-
-
       </div>
     </div>
-  
-  
     <script>
       let toggleCanvas = function (){
         document.getElementById("canvasDiv").style.visibility = "hidden";
       }
     </script>
-      <!-- cave painting stuff end-->
-  
-
-    
    
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
@@ -70,12 +59,6 @@
         <a-asset-item id="campfire-gltf"  src="/worlds/LitPortals-Cave/assets/models/campfire.glb" response-type="arraybuffer"></a-asset-item>
         <audio id="fireCrackling-snd" src="assets/sounds/fire.mp3" preload="true"></audio>
 
-        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">-->
-
-         <!-- AUDIO -->
-        <!-- credit: "magic" music - https://soundcloud.com/royaltyfreebackgroundmusic/sets/creative-commons-music-365 -->
-        
         <a-sound id="ding" src="assets/sounds/ding.mp3" preload="auto" position="11.5 0.7 -14.4"></a-sound>
         <!--credit:https://pixabay.com/sound-effects/ding-101492/-->
         <a-sound id="buzzer" src="assets/sounds/buzzer.mp3" preload="auto" position="11.5 0.7 -14.4"></a-sound>
@@ -87,7 +70,9 @@
          <a-sound id="cave_Amb-snd" src="assets/sounds/cave_Ambience.wav" preload="true"></a-sound>
 
         <!-- gltf models -->
-        <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave.glb"></a-asset-item>
+        <a-asset-item id="caveBaseModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/cave.glb" preload ="auto"></a-asset-item>
+        <a-asset-item id="caveBaseModelNavMesh" response-type="arraybuffer" src="/worlds\LitPortals-Cave\assets\models\cave_NavMesh.glb" preload ="auto"></a-asset-item>
+        
         <a-asset-item id="rockModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/rock_model/scene.gltf"></a-asset-item>
         <a-asset-item id="torchModel"response-type="arraybuffer"src="assets/models/torch.glb"></a-asset-item>
 
@@ -95,10 +80,6 @@
          <img id="cavePainting-img" src="assets/wall_art1.jpg">
          <img id="ivoryBison-img" src="assets/Ivory Bison.jpg">
          <img id="venus-img" src="assets/sculpture_2.jpg">
-
-
-
-        
 
        
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -116,10 +97,11 @@
 
       <!--Cave base-->
       <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
+      <a-entity id="caveBaseNavMesh" position="-5.2 -0.25 -13" scale= "0.39 0.39 0.17" gltf-model="#caveBaseModelNavMesh" nav-mesh visible = "false"> </a-entity>
+      
       <!--rocks-->
       <a-entity id="rock" position="0 0 3" scale= "0.001 0.001 0.001" gltf-model="#rockModel"></a-entity>
       <a-entity id="rock1" position="-1.83 0.145" scale= "0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
-
 
       <!-- Campfire -->
       <a-entity id = "campfireSet">
@@ -161,27 +143,8 @@
         </a-entity>
       </a-entity>
 
-      <!-- room -->
-
       <!--Cave base-->
-      <a-entity id="caveBase" position="-5.9 3.5 -10" scale= "0.4 0.4 0.18" gltf-model="#caveBaseModel"></a-entity>
       <a-entity id="torch-model" position="11.21 1.43 -10.54" gltf-model="#torchModel" scale="26.2 26.2 26.2"rotation="0 0 26.35"></a-entity>
-
-      <!-- pick up objects 
-      This line lets an object be picked up - needs to click on it twice for full controls        
-      circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-      
-      circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-      -->
-
-      <a-box id="box" 
-        circles-pickup-networked
-        position="8 1 0" scale="0.5 0.5 0.5" color="red">
-      </a-box>
-
-       <!-- gems with text box
-        can be instructions or welcome message
-        these are networked-->
         
       <a-entity id="instructions-1"
                 position="6.3 1 -14" rotation="0 45 0" scale="1 1 1"
@@ -403,21 +366,6 @@
                   <a-cylinder position="0 -0.37 0.226" scale="0.1 1.6 0.1" rotation="-30 0 0" color="brown"></a-cylinder>
           </a-entity>
       </a-entity>
-      <!-- Area 2, steps -->
-    
-      <!-- Area 3 -->
-
-      <!-- ambient music/sound 
-      <a-entity position="0 0 0" circles-sound="type:music; src:#magic_music; autoplay:true; loop:true; volume:0.02;"></a-entity>
-      -->
-
-      <!-- example "artefact" -->
-
-
-      <!-- leaving this out for now as it doesn't play nice on mobile and VR -->
-
-      <!-- the environment -->
-      
       
       <!-- sky and lights -->
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:1"></a-entity>
