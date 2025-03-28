@@ -17,6 +17,8 @@ AFRAME.registerComponent('blz-manager', {
         this.el.addEventListener('blz-painting-clicked', () => {
             console.log("BLZ painting click heard");
             this.startSledTask();
+            this.blzWorld = document.querySelector('#blzWorld');
+            this.blzWorld.setAttribute('visible', 'true');
         });
 
         this.el.addEventListener('blz-complete', () =>{

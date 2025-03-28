@@ -71,8 +71,23 @@ AFRAME.registerComponent('voting-listener', {
                   winningEntity.removeAttribute("circles-sendpoint");
             }, 0);
             }
+             // Only activate RIAmanager if the red painting is clicked
+             if (winner === "greenPaint") {
+              riaManager.emit('blz-painting-clicked');  // Trigger ria-manager
+              setTimeout(() => {
+                  winningEntity.removeAttribute("circles-sendpoint");
+            }, 0);
+            }
 
             if (winner === "redPaint_return") {
+              riaManager.emit('return-clicked');
+              setTimeout(() => {
+                winningEntity.removeAttribute("circles-sendpoint");
+                self.votes = [];  // <-- Reset votes here
+                self.updateCounters();
+              }, 0);
+            }
+            if (winner === "greenPaint_return") {
               riaManager.emit('return-clicked');
               setTimeout(() => {
                 winningEntity.removeAttribute("circles-sendpoint");
@@ -149,8 +164,22 @@ AFRAME.registerComponent('voting-listener', {
                 winningEntity.removeAttribute("circles-sendpoint");
               }, 0);
             }
+            if (data.winner === "greenPaint") {
+              riaManager.emit('blz-painting-clicked');  // Trigger ria-manager
+              setTimeout(() => {
+                winningEntity.removeAttribute("circles-sendpoint");
+              }, 0);
+            }
 
             if (data.winner === "redPaint_return") {
+              riaManager.emit('return-clicked');
+              setTimeout(() => {
+                winningEntity.removeAttribute("circles-sendpoint");
+                self.votes = [];  // <-- Reset votes here
+                self.updateCounters();
+              }, 0);
+            }
+            if (data.winner === "greenPaint_return") {
               riaManager.emit('return-clicked');
               setTimeout(() => {
                 winningEntity.removeAttribute("circles-sendpoint");
