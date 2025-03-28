@@ -48,8 +48,6 @@ AFRAME.registerComponent('manager', {
     // CONTEXT_AF.addEmotionData('emotionData', {name: 'gamma', emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
     // CONTEXT_AF.addEmotionData('allEmotionData', {emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
 
-    CONTEXT_AF.updateEmotionData('gamma', 'peaceful')
-
     //listen for an emotion visualizer event. If it occurs then update the corresponding visualizer
     CONTEXT_AF.socket     = null;
     CONTEXT_AF.connected  = false;
@@ -194,7 +192,7 @@ AFRAME.registerComponent('manager', {
     remove: function () {
       // Do something the component or its entity is detached.
     },
-    
+
     tick: function (time, timeDelta) {
       // Do something on every scene tick or frame.
     }

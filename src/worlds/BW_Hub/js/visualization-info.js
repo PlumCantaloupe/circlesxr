@@ -34,7 +34,6 @@ AFRAME.registerComponent('visualization-info', {
 
       //display a label with this 
       CONTEXT_AF.el.addEventListener('mouseleave', function() {
-        console.log("removeeeeeee")
         CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'false');
       })
     },
