@@ -167,7 +167,6 @@ AFRAME.registerComponent('manager', {
           await collection.forEach(document => {data = document.data();
             docId = document.id
           });
-          console.log("dataaaaaaaaaaaaaaaaa")
           return [docId, data];
       } catch (error) {
           console.log("error getting data")
@@ -195,7 +194,7 @@ AFRAME.registerComponent('manager', {
     remove: function () {
       // Do something the component or its entity is detached.
     },
-
+    
     tick: function (time, timeDelta) {
       // Do something on every scene tick or frame.
     }
