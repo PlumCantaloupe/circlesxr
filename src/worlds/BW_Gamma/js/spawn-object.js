@@ -1,6 +1,6 @@
 AFRAME.registerComponent('spawn-object', {
     schema: {
-        moveSpeed: {type: 'number', default: 0.03}
+        moveSpeed: {type: 'number', default: 0.05}
     },
     init() {
         // setting variables
