@@ -150,14 +150,15 @@ AFRAME.registerComponent('blz-manager', {
             sledPart.setAttribute('material', 'color: brown'); // Material needs to be separate
             //sledPart.setAttribute('class', 'interactable-log');
             sledPart.setAttribute('part-highlight', '');
-            sledPart.setAttribute('class', 'interactive');
+            sledPart.classList.add('interactive', 'sledPartToRemove');
             //sledPart.setAttribute('circles-interactive-object', '');
             //sledPart.setAttribute('circles-pickup-networked', '');
             //sledPart.setAttribute('static-body', '');
 
             sledPart.addEventListener('partSelected', () => {
                 console.log("removed part");
-                sledPart.parentNode.remove(sledPart);
+                //moved into the network so parts get removed for all players
+                //sledPart.parentNode.remove(sledPart);
             });
             
             sledPart.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
@@ -211,8 +212,8 @@ AFRAME.registerComponent('blz-manager', {
 
           //if we collied with the log and we're in the choping state, remove the log
           log.addEventListener('collide', (event) => {
-            console.log("After collied with log: " + this.chopAllowed);
-            console.log("Axe collided with log!", event.detail.body.el);
+            //console.log("After collied with log: " + this.chopAllowed);
+            //console.log("Axe collided with log!", event.detail.body.el);
 
             const axe = event.detail.body.el;
             if (!axe || axe.id !== 'axe') return;
@@ -409,43 +410,145 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
   
       // Ensure that the elements are available
       this.el = document.querySelector("#sledPedestal");
-      
-      document.querySelector("#sledPedestal");
-
       this.sled = document.querySelector('#sled');
       const gameManager = document.querySelector('#GameManager');
   
-        // Debug: Check if the elements are found
-        console.log("sledPedestal found:", this.el);
-        console.log("sled found:", this.sled);
+      // Debug: Check if the elements are found
+      //console.log("sledPedestal found:", this.el);
+      //console.log("sled found:", this.sled);
 
-      if (!this.el || !this.sled) {
-        console.log("sledPedestal or sled element not found!");
-        return; // Exit if the required elements are not found
-      } else {
-        console.log("sledPedestal and sled element ARE found!");
-      }
-  
-      
-      // Listen for the 'partSelected' event
-      this.el.addEventListener('partSelected', () => {
-        this.sledPartsPlaced++;
-        console.log("part was added " + this.sledPartsPlaced);
-  
+      // if (!this.el || !this.sled) {
+      //   console.log("sledPedestal or sled element not found!");
+      //   return; // Exit if the required elements are not found
+      // } else {
+      //   console.log("sledPedestal and sled element ARE found!");
+      // }
+
+      // Ensure CONTEXT_AF exists
+      window.CONTEXT_AF = window.CONTEXT_AF || {};
+      CONTEXT_AF.sledEventName = "addPart_event";
+      CONTEXT_AF.socket = null;
+
+      // Helper function to update the raft model based on logsPlaced
+      this.updateSledModel = () => {
         // Update the sled visibility and model
         this.sled.setAttribute('visible', 'true');
+        //the parts start at 0, but the raft starts a 1
         this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
-  
-        // Check if all parts are placed
-        if (this.sledPartsPlaced === this.maxParts) {
-          console.log("Sled is complete!");
-          this.el.setAttribute('material', 'color: green');
-          if (gameManager) {
-            console.log("blz-complete was sent");
-            gameManager.emit('blz-complete');
+        console.log("Local parts placed: " + this.sledPartsPlaced);
+      };
+
+      console.log("WE registered sled-pedestal-trigger component!!!");
+
+      // Create the networking system using CONTEXT_AF
+      CONTEXT_AF.createNetworkingSystem = () => {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        console.warn(
+          "Networking system ready. Socket ID: " +
+            CONTEXT_AF.socket.id +
+            " in room: " +
+            CIRCLES.getCirclesGroupName() +
+            " in world: " +
+            CIRCLES.getCirclesWorldName()
+        );
+
+        // This is the code that checks if one of the parts was cliked
+        // Listen for the 'partSelected' event
+        this.el.addEventListener('partSelected', (event) => {
+          //add the amount of parts placed
+          this.sledPartsPlaced++;
+          console.log("part was added " + this.sledPartsPlaced);
+
+          //select the part that was clicked
+          const part = document.querySelector(`#${event.detail.id}`);
+          console.log("Part getting removed: " + JSON.stringify(event.detail.id, null, 2));
+          if(part.parentNode) {
+            part.parentNode.removeChild(part);
           }
-        }
-      });
+
+          this.updateSledModel();
+          // Emit the updated count globally
+          CONTEXT_AF.socket.emit(CONTEXT_AF.sledEventName, {
+            sledPartsPlaced: this.sledPartsPlaced,
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName(),
+            partRemoved: event.detail.id
+          });
+
+          // Check if all parts are placed
+          if (this.sledPartsPlaced === this.maxParts) {
+            console.log("Sled is complete!");
+            this.el.setAttribute('material', 'color: green');
+            if (gameManager) {
+              console.log("blz-complete was sent");
+              gameManager.emit('blz-complete');
+            }
+          }
+        });
+  
+        // Listen for the global raft update events
+        CONTEXT_AF.socket.on(CONTEXT_AF.sledEventName, (data) => {
+          if (
+            data.world === CIRCLES.getCirclesWorldName() &&
+            data.room === CIRCLES.getCirclesGroupName()
+          ) {
+            // Only update if the incoming count is greater than the local value
+            if (data.sledPartsPlaced > this.sledPartsPlaced) {
+              this.sledPartsPlaced = data.sledPartsPlaced;
+              this.updateSledModel();
+              const partToRemove = document.querySelector(`#${data.partRemoved}`);
+              if (partToRemove.parentNode) {
+                partToRemove.parentNode.removeChild(partToRemove);
+              }
+            }
+            console.log("Global parts placed: " + data.sledPartsPlaced);
+          }
+        });
+  
+        // Request data sync after a random delay (for late joiners)
+        setTimeout(() => {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName()
+          });
+        },1200);
+  
+        // When another client requests sync data, send your current logsPlaced value
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
+              sledPartsPlaced: this.sledPartsPlaced,
+              room: CIRCLES.getCirclesGroupName(),
+              world: CIRCLES.getCirclesWorldName()
+            });
+          }
+        });
+
+         // Receive sync data from others
+         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            if (data.sledPartsPlaced > this.sledPartsPlaced) {
+              this.sledPartsPlaced = data.sledPartsPlaced;
+              this.updateSledModel();
+              
+            }
+          }
+        });
+      };
+
+      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
+      if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+      } else {
+        let wsReadyFunc = () => {
+          CONTEXT_AF.createNetworkingSystem();
+          this.el.sceneEl.removeEventListener(
+            CIRCLES.EVENTS.WS_CONNECTED,
+            wsReadyFunc
+          );
+        };
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      }
     }
   });
 
@@ -520,7 +623,7 @@ AFRAME.registerComponent('blz-lazy-load-environment', {
       el.addEventListener('click', () => {
         console.log(`Emitting partSelected for: ${el.id}`); // Log the emission
         el.emit('partSelected', { id: el.id });
-        sledPedestal.emit('partSelected');
+        sledPedestal.emit('partSelected', {id: el.id});
       });
     }
   });

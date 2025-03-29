@@ -15,7 +15,7 @@ AFRAME.registerComponent('ria-manager', {
             this.riaWorld.setAttribute('visible', 'true');
         });
 
-        this.el.addEventListener('ria-complete', () =>{
+        this.el.addEventListener('ria-complete', () => {
             this.spawnPortal();
         });
 
