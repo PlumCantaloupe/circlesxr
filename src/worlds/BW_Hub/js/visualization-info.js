@@ -6,6 +6,7 @@ AFRAME.registerComponent('visualization-info', {
     init: function () {
       const CONTEXT_AF = this;
       CONTEXT_AF.info = document.querySelector(`#${CONTEXT_AF.data.visualizationID}-info`);
+      CONTEXT_AF.displayingInfo = false;
       
 
       CONTEXT_AF.cylinders = [
@@ -27,15 +28,19 @@ AFRAME.registerComponent('visualization-info', {
       //event listener for when the visualization data has been updated
 
       //display a label with this 
-      CONTEXT_AF.el.addEventListener('mouseenter', function() {
-        CONTEXT_AF.info.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
-        CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'true');
+      CONTEXT_AF.el.addEventListener('click', function() {
+        if (CONTEXT_AF.displayingInfo) {
+          CONTEXT_AF.displayingInfo = false;
+          CONTEXT_AF.info.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
+          CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'false');
+        }
+        else {
+          CONTEXT_AF.displayingInfo = true;
+          CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'true');
+          CONTEXT_AF.info.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
+        }
       })
 
-      //display a label with this 
-      CONTEXT_AF.el.addEventListener('mouseleave', function() {
-        CONTEXT_AF.info.setAttribute('circles-interactive-visible', 'false');
-      })
     },
 
     update: function () {

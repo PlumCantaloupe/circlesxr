@@ -77,7 +77,6 @@
         <a-asset-item id="controlPanel_gltf" src="assets/models/control panel/PBR - Metallic Roughness Alpha-blend.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="orb_gltf" src="assets/models/orb/orb.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
-
         <!-- Sounds -->
         <audio id="hub_ambience" src="assets/sounds/hub_ambience.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="shimmering_sound" src="assets/sounds/shimmering_sound.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -302,12 +301,11 @@
         <a-entity position="2.176 0 -5.729">
             <a-entity class="emptyCollider"></a-entity>
 
-       
-
+        <a-entity id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
         <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
           <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
           <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-          <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
+          <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
           <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
           <a-entity room="roomName: alpha" id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
             <a-entity id="alpha-visualization-red">
@@ -332,6 +330,12 @@
           </a-entity>
         </a-entity>
 
+        <a-entity circles-interactive-object
+                  visualization-info="visualizationID: alpha-visualization"
+                  rotation="0 45 90"
+                  position="-0.147 0.514 -0.400"
+                  circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: red; button_color_hover: #474747"></a-entity>
+
         <a-entity position="0.635 0 -0.221">
          <a-entity share-emotion="visualizationID: alpha" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
         </a-entity>
@@ -344,13 +348,13 @@
      <a-entity rotation="0 -102.271 0">
       <a-entity position="2.176 0 -5.729">
         <a-entity class="emptyCollider"></a-entity>
-    
+        
      
       <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
       <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
         <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-        <a-entity circles-interactive-object visualization-info="visualizationID: gamma-visualization" geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"
+        <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"
         ></a-entity>
         <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
         <a-entity room="roomName: gamma" id="gamma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
