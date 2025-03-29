@@ -28,6 +28,8 @@ AFRAME.registerComponent('blz-manager', {
           //makesure we complete all the task fist before spawining portal
           if(this.totalTasks === this.taksCompleted) {
             this.spawnPortal();
+            //rest tasks completed to 0 so portal summons again when we re-enter
+            this.taksCompleted = 0;
           }
         });
 
@@ -85,6 +87,29 @@ AFRAME.registerComponent('blz-manager', {
                 element.parentNode.removeChild(element);
             }
             });
+
+            //remove the axe from the scene
+            const axe = document.querySelector('#axe');
+            if(axe && axe.parentNode) {
+              axe.parentNode.removeChild(axe);
+            }
+
+            //remove the axe label
+            const axe_label = document.querySelector('#axe_label');
+            if(axe_label && axe_label.parentNode) {
+              axe_label.parentNode.removeChild(axe_label);
+            }
+            //remove axe description
+            const axe_description = document.querySelector('#axe_description');
+            if(axe_description && axe_description.parentNode) {
+              axe_description.parentNode.removeChild(axe_description);
+            }
+            
+            //remove the axe target from the scene
+            const axeTarget = document.querySelector('#axeTarget');
+            if(axeTarget && axeTarget.parentNode) {
+              axeTarget.parentNode.removeChild(axeTarget);
+            }
 
             console.log("All spawned objects removed. Environment reset.");
         });
