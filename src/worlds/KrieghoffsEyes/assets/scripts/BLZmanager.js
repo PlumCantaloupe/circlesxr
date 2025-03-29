@@ -438,6 +438,18 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
         console.log("Local parts placed: " + this.sledPartsPlaced);
       };
 
+      // Check if all parts are placed
+      this.checkSledFinished = () => {
+        if (this.sledPartsPlaced === this.maxParts) {
+          console.log("Sled is complete!");
+          this.el.setAttribute('material', 'color: green');
+          if (gameManager) {
+            console.log("blz-complete was sent");
+            gameManager.emit('blz-complete');
+          }
+        }
+      }
+
       console.log("WE registered sled-pedestal-trigger component!!!");
 
       // Create the networking system using CONTEXT_AF
@@ -459,14 +471,19 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
           this.sledPartsPlaced++;
           console.log("part was added " + this.sledPartsPlaced);
 
-          //select the part that was clicked
+          //remove part that was clicked
           const part = document.querySelector(`#${event.detail.id}`);
           console.log("Part getting removed: " + JSON.stringify(event.detail.id, null, 2));
           if(part.parentNode) {
             part.parentNode.removeChild(part);
           }
 
+          //update sled
           this.updateSledModel();
+
+          //see if sled is finised
+          this.checkSledFinished();
+
           // Emit the updated count globally
           CONTEXT_AF.socket.emit(CONTEXT_AF.sledEventName, {
             sledPartsPlaced: this.sledPartsPlaced,
@@ -475,15 +492,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
             partRemoved: event.detail.id
           });
 
-          // Check if all parts are placed
-          if (this.sledPartsPlaced === this.maxParts) {
-            console.log("Sled is complete!");
-            this.el.setAttribute('material', 'color: green');
-            if (gameManager) {
-              console.log("blz-complete was sent");
-              gameManager.emit('blz-complete');
-            }
-          }
+          
         });
   
         // Listen for the global raft update events
@@ -500,6 +509,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
               if (partToRemove.parentNode) {
                 partToRemove.parentNode.removeChild(partToRemove);
               }
+              this.checkSledFinished();
             }
             console.log("Global parts placed: " + data.sledPartsPlaced);
           }
@@ -530,7 +540,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
             if (data.sledPartsPlaced > this.sledPartsPlaced) {
               this.sledPartsPlaced = data.sledPartsPlaced;
               this.updateSledModel();
-              
+              this.checkSledFinished();
             }
           }
         });

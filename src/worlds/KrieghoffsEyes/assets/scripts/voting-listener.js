@@ -194,6 +194,11 @@ AFRAME.registerComponent('voting-listener', {
             if (newEnvironment) {
               environment.setAttribute("environment", newEnvironment);
             }
+
+            //hide the info panel after voting for everyone
+            const infoPanel = document.querySelector('#infoPanel');
+            infoPanel.setAttribute('visible', false);
+
           }
         }
       });
