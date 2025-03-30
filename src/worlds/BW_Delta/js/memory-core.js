@@ -1,6 +1,5 @@
 AFRAME.registerComponent('memory-core', {
     schema: {
-        modifier: {type: 'number', default: 1},
         minInput: {type: 'number', default: 2},
         maxInput: {type: 'number', default: 4},
         minOutput: {type: 'number', default: 0.1},

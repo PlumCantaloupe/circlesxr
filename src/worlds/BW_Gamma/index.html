@@ -12,6 +12,9 @@
     <script src="js/network-reset.js"></script>
     <script src="js/spawn-object.js"></script>
     <script src="js/guess-shape.js"></script>
+    <script src="js/ring-visualiser.js"></script>
+    <script src="js/beat-pulse.js"></script>
+    <script src="js/spawned-shape.js"></script>
   </head>
   <body>
 
@@ -48,9 +51,8 @@
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
 
       <!-- Sound entities -->
-      <a-entity id="kick-drum-player" circles-sound="src: #gamma-kick-drum; autoplay: loop; loop: true; type: music;"></a-entity>
-      <a-entity id="music-player" circles-sound="src: #gamma-music; autoplay: loop; loop: true; type: music;"></a-entity>
-
+      <a-entity id="kick-drum-player" circles-sound="src: #gamma-kick-drum; autoplay: true; loop: true; type: music;"></a-entity>
+      <a-entity id="music-player" circles-sound="src: #gamma-music; autoplay: true; loop: true; type: music;"></a-entity>
 
       <!-- Audio analyser -->
       <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #kick-drum-player"></a-entity>
@@ -65,13 +67,13 @@
       <a-entity light="type: ambient; color: #ffffff; intensity: 2.4"></a-entity>
 
       <!-- Walls, ceiling, floor, and barrier -->
-      <a-entity id="gammaWallLeft" gltf-model="#gammaWall" position="6.05 0 12.092" rotation="0 90 0" scale="1 1 1"></a-entity>
-      <a-entity id="gammaWallLeft" gltf-model="#gammaWall" position="-6.05 0 12.092" rotation="0 -90 0" scale="1 1 1"></a-entity>
+      <a-entity id="gammaWallLeft" gltf-model="#gammaWall" beat-pulse="maxOutput: 0.012" position="6.05 0 12.092" rotation="0 90 0" scale="1 1 1"></a-entity>
+      <a-entity id="gammaWallRight" gltf-model="#gammaWall" beat-pulse="maxOutput: 0.012" position="-6.05 0 12.092" rotation="0 -90 0" scale="1 1 1"></a-entity>
       <a-entity id="gammaFloor" geometry="primitive:plane" material="color:white" position="0 0.15 15.25" rotation="-90 0 0" scale="13.3 36.7 5"></a-entity>
       <a-entity id="gammaCeiling" geometry="primitive:plane" material="color:white" position="0 8 15.25" rotation="90 0 0" scale="13.3 36.7 5"></a-entity>
       <a-entity id="gammaBarrier" geometry="primitive:box" material="color:white" position="0 0.6 5.957" scale="13.16 1 1"></a-entity>
       <a-entity id="gammaNavMesh" geometry="primitive:plane" material="color:white" position="0 0.15 1.16" rotation="-90 0 0" scale="9.44 8.6 1" nav-mesh></a-entity>
-      <a-entity id="endWall" geometry="primitive: plane; height: 11.01; width: 15.54" material="color: white; side: back;" position="0 4.06369 33.51771"></a-entity>
+      <a-entity id="endWall" geometry="primitive: plane; height: 11.01; width: 15.54" material="color: white; side: back;" position="0 4.06369 27.5"></a-entity>
       
       <!-- FOR SETTING SEQUENCE -->
       <a-entity id="resetButton" network-reset circles-button="pedastal_color:rgb(74, 87, 95);" position="2 1.16 5.78" rotation="0 0 0" scale="0.8 0.8 0.8"></a-entity>
