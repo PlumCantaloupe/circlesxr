@@ -47,14 +47,20 @@ AFRAME.registerComponent('spawn-object', {
 
                 // spawn object with attributes
                 toSpawn = document.createElement("a-entity")
-                toSpawn.classList.add("spawnedObject")
-                toSpawn.setAttribute("material", shapeKey.material)
-                toSpawn.setAttribute("geometry", shapeKey.geometry)
-                toSpawn.object3D.position.set(xVal, 1.7, 27)
-                toSpawn.setAttribute("scale", shapeKey.scale)
-                toSpawn.setAttribute("guess-shape", "")
-                toSpawn.setAttribute("circles-interactive-object", "")
-                CONTEXT_AF.scene.appendChild(toSpawn)
+                toSpawn.setAttribute('spawned-shape', {
+                    material: shapeKey.material,
+                    geometry: shapeKey.geometry,
+                    scale: shapeKey.scale,
+                    spawnPos: randPosition
+                })
+                CONTEXT_AF.scene.appendChild(toSpawn);
+
+                // Create ring/torus spawning entity and append to scene
+                ringVisual = document.createElement('a-entity');
+                ringVisual.setAttribute('ring-visualiser', {});
+                ringVisual.object3D.position.set(randPosition.x, randPosition.y, 27.5);
+
+                CONTEXT_AF.scene.appendChild(ringVisual);
 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
@@ -74,7 +80,6 @@ AFRAME.registerComponent('spawn-object', {
                 toSpawn.setAttribute("guess-shape", "")
                 toSpawn.setAttribute("circles-interactive-object", "")
                 CONTEXT_AF.scene.appendChild(toSpawn)
-
             });
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
