@@ -21,7 +21,12 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="library_model" src="assets/models/library/library.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="library_main" src="assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_floor1" src="assets/models/library/library_floor_bottom.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_floor2" src="assets/models/library/library_floor_top.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lecterns_model" src="assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="candles" src="assets/models/library/candles.glb" response-type="arraybuffer"></a-asset-item>
+        
         <a-asset-item id="navmesh_model" src="assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -61,7 +66,21 @@
       <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
 
       <!-- room model -->
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_model" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
+                <a-entity   id="library_floor1"
+                            gltf-model="#library_floor1">
+                </a-entity>
+                <a-entity   id="library_floor2"
+                            gltf-model="#library_floor2">
+                </a-entity>
+                <a-entity   id="lecterns"
+                            gltf-model="#lecterns_model">
+                </a-entity>
+                <a-entity   id="candles"
+                            gltf-model="#candles">
+                </a-entity>
+            </a-entity>
+      </a-entity>
 
       <!-- TO BE REPLACED - END -->
 
