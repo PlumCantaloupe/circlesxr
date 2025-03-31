@@ -383,7 +383,27 @@ io.on("connection", socket => {
 
     // Broadcast the updated position to all clients
     io.emit("updateShapePosition", data);
-});
+  });
+
+  socket.on("itemPlaced", (data) => {
+    console.log(`received position of ${data.itemId} placed at`, data.position);
+    socket.broadcast.emit("updateItemPosition", data); //broadcast to everyone except sender
+  });
+
+  socket.on("sortComplete", () => {
+    console.log("🎉 Sorting game completed!");
+    io.emit("sortComplete"); // notify ALL players
+  });
+
+  socket.on("playDing", (data) => {
+    console.log("ding played");
+    io.emit("playDing", data); // Broadcast to all clients
+  });
+  
+  socket.on("gameReset", () => {
+    console.log("🔄 Sorting game reseted");
+    socket.broadcast.emit("updateItemPosition", data);
+  })
 
 
 });
