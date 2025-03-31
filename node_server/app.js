@@ -359,6 +359,13 @@ io.on("connection", socket => {
   
   });
 
+  socket.on("lineData",(pos)=>{
+    console.log('server side positions:' + pos.lenght);
+    console.log(pos);
+
+    socket.broadcast.emit("addNewLine", pos);
+  });
+
 });
 
 
