@@ -54,6 +54,7 @@
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
     <script src="js/visualization-info.js"></script>
+    <script src="js/central-orbs-visualization.js"></script>
     
   </head>
   <body>
@@ -250,12 +251,12 @@
 
 
       <!-- TEMP Visualized central orbs -->
-      <a-entity id="spheres" rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
-        <a-sphere position="0 2.462 0" scale="0.52 0.52 0.52" material="color:#ff70f3; emissive: #ff6bba; emissiveIntensity: 2.150"></a-sphere>
-        <a-sphere position="0 3.077 0.622" scale="0.24 0.24 0.24" material="color:#7094ff; emisive: #4294ff"></a-sphere>
-        <a-sphere position="0.604 1.944 0.74" scale="0.3 0.3 0.3" material="color:#ff7438; emisive: #ff4d4d"></a-sphere>
-        <a-sphere position="-0.418 1.798 -0.272" scale="0.16 0.16 0.16" material="color:#3e952d; emisive: #7ffd7c"></a-sphere>
-        <a-sphere position="0.384 2.800 -0.690" scale="0.106 0.106 0.106" material="color:#ffcb3d; emisive: #fedc34"></a-sphere> 
+      <a-entity id="central-orbs-visualization" central-orbs-visualization rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
+        <a-sphere id="central-orb-pink" position="0 2.462 0" scale="0.3 0.3 0.3" material="color:#aa139d; emissive: #fe62b5; emissiveIntensity: 2.625"></a-sphere>
+        <a-sphere id="central-orb-blue" position="0.003 3.077 0.861" scale="0.3 0.3 0.3" material="color:#2a54cf; emissive: #52bdff; emissiveIntensity: 2.000"></a-sphere>
+        <a-sphere id="central-orb-orange" position="0.823 1.944 0.426" scale="0.3 0.3 0.3" material="color:#c15d0b; emissive: #ff6c47; emissiveIntensity: 2.600"></a-sphere>
+        <a-sphere id="central-orb-green" position="-0.723 1.798 -0.431" scale="0.3 0.3 0.3" material="color:#3e952d; emissive: #64ff61; emissiveIntensity: 1.100"></a-sphere>
+        <a-sphere id="central-orb-yellow" position="0.394 2.800 -0.893" scale="0.3 0.3 0.3" material="color:#c79200; emissive: #f0d342; emissiveIntensity: 1.300"></a-sphere> 
        </a-entity>
 
 
