@@ -1,8 +1,9 @@
-//custom BW components
-require('./aframe-audioanalyser-component.js');
-require('./bw-shared-state-manager.js')
 
-//circles components
+require('./aframe-audioanalyser-component');
+require('./bw-shared-state-manager.js')
+require('./bw-teleport-pad-manager.js')
+require('./bw-guiding-text.js')
+
 require('./circles-add-camera-equipment');
 require('./circles-artefact');
 require('./circles-avatar-construction');
@@ -12,7 +13,8 @@ require('./circles-checkpoint');
 require('./circles-color');
 require('./circles-costume');
 require('./circles-costume-color-selector');
-require('./circles-cube-env-map.js');
+require('./circles-cube-env-map');
+require('./circles-dashed-line');
 require('./circles-description');
 require('./circles-interactive-object');
 require('./circles-interactive-visible');
@@ -38,6 +40,6 @@ require('./circles-snap-turning');
 require('./circles-sound');
 require('./circles-spawn-at-random-checkpoint');
 require('./circles-spawnpoint');
-require('./circles-sphere-env-map.js');
+require('./circles-sphere-env-map');
 require('./circles-user-networked');
 require('./circles-enter-ui');
