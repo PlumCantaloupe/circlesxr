@@ -35,9 +35,11 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="library_structure" src="assets/models/library/library_structure.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="library_main" src="assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="lecterns_model" src="assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
+
+        <a-asset-item id="library_test" src="assets/models/library_test.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_structure" src="assets/models/library_structure.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_main" src="assets/models/library_main.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lecterns_model" src="assets/models/lectern.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="candles" src="assets/models/library/candles.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="candles2" src="assets/models/library/candles2.glb" response-type="arraybuffer"></a-asset-item>
@@ -91,6 +93,9 @@
       <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
 
       <!-- room model -->
+      <a-entity   id="library"
+      gltf-model="#library_test">
+      <!--
       <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_structure" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
             <a-entity   id="library_main_furniture"
                         gltf-model="#library_main">
@@ -129,7 +134,7 @@
             <a-entity   id="books5"
                         gltf-model="#books5">
             </a-entity>
-        </a-entity>
+        </a-entity>-->
 
 
             </a-entity>
