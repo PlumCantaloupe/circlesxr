@@ -53,17 +53,16 @@ AFRAME.registerComponent('manager', {
     //listen for an emotion visualizer event. If it occurs then update the corresponding visualizer
     CONTEXT_AF.socket     = null;
     CONTEXT_AF.connected  = false;
-    CONTEXT_AF.campfireEventName = "campfire_event";
 
-    CONTEXT_AF.shareEmotionEvent = "shareEmotion_event";
+    CONTEXT_AF.shareEmotionEventName = "shareEmotion_event";
 
     CONTEXT_AF.createNetworkingSystem = function () {
         CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
         CONTEXT_AF.connected = true;
         console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-        //listen for when others turn on campfire
-        CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+        //listen for when others share an emotion
+        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, function(data) {
           
           const visualizationContainer = data.visualizationContainer;
           
@@ -90,11 +89,16 @@ AFRAME.registerComponent('manager', {
 
         // On connect, get all emotion data and set the central orb visualisation
         // Listen for other people sharing an emotion orb
-        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEvent, async function (data) {
+        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
           CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
         });
 
     };
+
+    // Update central orb when user shares an emotion
+    CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, async function (data) {
+      CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+    });
 
       //check if circle networking is ready. If not, add an went to listen for when it is ...
       if (CIRCLES.isCirclesWebsocketReady()) {

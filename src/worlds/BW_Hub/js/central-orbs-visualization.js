@@ -39,31 +39,9 @@ AFRAME.registerComponent('central-orbs-visualization', {
 
         CONTEXT_AF.emotionUpdateEvent = 'emotionupdate';
 
-        CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function () {
-            const emotionData = [
-                {
-                    name: EMOTION_ORB_COLOUR_MAP.PINK,
-                    votes: 1
-                },
-                {
-                    name: EMOTION_ORB_COLOUR_MAP.YELLOW,
-                    votes: 0
-                },                
-                {
-                    name: EMOTION_ORB_COLOUR_MAP.BLUE,
-                    votes: 0
-                },                
-                {
-                    name: EMOTION_ORB_COLOUR_MAP.GREEN,
-                    votes: 0
-                },                
-                {
-                    name: EMOTION_ORB_COLOUR_MAP.ORANGE,
-                    votes: 0
-                }
-            ];
+        CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function (data) {
             // Scale orbs according to their voting proportion
-            // const emotionData = data.detail.emotionData[1].emotions;
+            const emotionData = data.detail.emotionData[1].emotions;
             const totalVoteCount = emotionData.reduce((totalCount, currEmotion) => totalCount += currEmotion.votes, 0);
 
             // Loop over each orb element, calculate the scale proportion and set the scale
@@ -85,14 +63,18 @@ AFRAME.registerComponent('central-orbs-visualization', {
                 }
 
                 // Set the orb according to the volume-adjusted proportion
-                CONTEXT_AF.orbArr[emotionName].object3D.scale.set(volAdjProportion, volAdjProportion, volAdjProportion);
+                setTimeout(function(){
+                    CONTEXT_AF.orbArr[emotionName].setAttribute('animation', {property: 'scale',
+                                                    duration: 500,
+                                                    to: `${volAdjProportion} ${volAdjProportion} ${volAdjProportion}`})
+                }, 200);
             });
         });
     },
     tick: function () {
         const CONTEXT_AF = this;
         // Yaw rotation
-        CONTEXT_AF.el.object3D.rotation.y += 0.005;
+        CONTEXT_AF.el.object3D.rotation.y += 0.002;
     },
     scaleToVolProportion: function (proportionRad, maxVol) {
         // Compares the volume from the linear proportion to the max volume from the max scale value
@@ -100,8 +82,6 @@ AFRAME.registerComponent('central-orbs-visualization', {
         const CONTEXT_AF = this;
        
         const targetVol = CONTEXT_AF.sphereVolume(proportionRad);
-        console.log(targetVol, maxVol);
-        console.log((targetVol / maxVol) ** (1/3));
         return (targetVol / maxVol) ** (1/3)
     },
     sphereVolume: function (rad) {
