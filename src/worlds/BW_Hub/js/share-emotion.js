@@ -68,7 +68,7 @@ AFRAME.registerComponent('share-emotion', {
               //share websocket
             }
             else {
-              console.log("no rob in hand")
+              console.log("no orb in hand")
             }
           })
 
