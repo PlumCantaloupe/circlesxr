@@ -1,6 +1,5 @@
 AFRAME.registerComponent('memory-core', {
     schema: {
-        modifier: {type: 'number', default: 1},
         minInput: {type: 'number', default: 2},
         maxInput: {type: 'number', default: 4},
         minOutput: {type: 'number', default: 0.1},
@@ -20,13 +19,7 @@ AFRAME.registerComponent('memory-core', {
 
         const adjVol = 1 + this.mapToRange(vol, minInput, maxInput, minOutput, maxOutput);
 
-        this.el.setAttribute('scale', {
-            x: adjVol,
-            y: adjVol,
-            z: adjVol
-        });
-
-        console.log(vol);
+        this.el.object3D.scale.set(adjVol, adjVol, adjVol);
     },
     mapToRange: function (value, minA, maxA, minB, maxB) {
         // Reference: https://docs.arduino.cc/language-reference/en/functions/math/map/ 

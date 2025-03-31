@@ -138,7 +138,7 @@ AFRAME.registerComponent('audioanalyser', {
     return [_lastBeat, beat_max];
   },
 
-  // Changed this based on my-spaghetti-code's comment: https://github.com/ryota-mitarai/aframe-audio-analyser/issues/2 
+  // Changed this based on mr-spaghetti-code's comment: https://github.com/ryota-mitarai/aframe-audio-analyser/issues/2 
   initContext: function () {
     const data = this.data;
     const soundEntitySrc = data.soundEntitySrc

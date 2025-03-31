@@ -49,9 +49,9 @@ AFRAME.registerComponent('campfire-interactive', {
             }
             return params;
         };
-        const params = CONTEXT_AF.getParams(window.location.href);
 
         //when sound is loaded call this ...
+        const params = CONTEXT_AF.getParams(window.location.href);
         if (params.hasOwnProperty('fire') ) {
             if (params['fire'] === 'on') {
                 CONTEXT_AF.fireSound.addEventListener('sound-loaded', function(e) {
@@ -172,5 +172,10 @@ AFRAME.registerComponent('campfire-interactive', {
 
             CONTEXT_AF.campfireLabelElem.setAttribute('circles-label',{text:'click fire to start'});
         }
+
+        //add this property to allow the fire to still be on when coming back
+        let url = new URL(window.location.href);
+        url.searchParams.set('fire', (turnOn) ? 'on' : 'off');
+        history.replaceState(history.state, '', url.href);
     }
 });
