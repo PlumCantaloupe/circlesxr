@@ -35,11 +35,21 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/086_hdrmaps_com_free_above_clouds.jpg' crossorigin="anonymous">
-        <a-asset-item id="library_main" src="assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="library_floor1" src="assets/models/library/library_floor_bottom.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="library_floor2" src="assets/models/library/library_floor_top.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="lecterns_model" src="assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="candles" src="assets/models/library/candles.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_structure" src="assets/models/library_structure.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_main" src="assets/models/library_main.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lecterns_model" src="assets/models/lectern.glb" response-type="arraybuffer"></a-asset-item>
+        
+        <a-asset-item id="candles" src="assets/models/candles.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="candles2" src="assets/models/candles2.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="candles3" src="assets/models/candles3.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="candles4" src="assets/models/candles4.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="candles5" src="assets/models/candles5.glb" response-type="arraybuffer"></a-asset-item>
+
+        <a-asset-item id="books1" src="assets/models/books1.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="books2" src="assets/models/books2.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="books3" src="assets/models/books3.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="books4" src="assets/models/books4.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="books5" src="assets/models/books5.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="navmesh_model" src="assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
@@ -81,19 +91,47 @@
       <a-entity light="type: point; color:#8e8df7; decay: -0.4; distance: 6.5; intensity: 2" position="-5.5 1.4 -11.5"></a-entity>
 
       <!-- room model -->
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
-                <a-entity   id="library_floor1"
-                            gltf-model="#library_floor1">
-                </a-entity>
-                <a-entity   id="library_floor2"
-                            gltf-model="#library_floor2">
-                </a-entity>
-                <a-entity   id="lecterns"
-                            gltf-model="#lecterns_model">
-                </a-entity>
-                <a-entity   id="candles"
-                            gltf-model="#candles">
-                </a-entity>
+      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_structure" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
+            <a-entity   id="library_main_furniture"
+                        gltf-model="#library_main">
+            </a-entity>
+            </a-entity>
+            <a-entity   id="lecterns"
+                        gltf-model="#lecterns_model">
+            </a-entity>
+            <a-entity   id="candles"
+                        gltf-model="#candles">
+            </a-entity>
+            <a-entity   id="candles2"
+                        gltf-model="#candles2">
+            </a-entity>
+            <a-entity   id="candles3"
+                        gltf-model="#candles3">
+            </a-entity>
+            <a-entity   id="candles4"
+                        gltf-model="#candles4">
+            </a-entity>
+            <a-entity   id="candles5"
+                        gltf-model="#candles5">
+            </a-entity>
+
+            <a-entity   id="books1"
+                        gltf-model="#books1">
+            </a-entity>
+            <a-entity   id="books2"
+                        gltf-model="#books2">
+            <a-entity   id="books3"
+                        gltf-model="#books3">
+            </a-entity>
+            <a-entity   id="books4"
+                        gltf-model="#books4">
+            </a-entity>
+            <a-entity   id="books5"
+                        gltf-model="#books5">
+            </a-entity>
+        </a-entity>
+
+
             </a-entity>
       </a-entity>
 
