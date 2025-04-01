@@ -26,6 +26,22 @@
 
     <script src="js/bloom.js" type="module"></script>
 
+    <script>
+      AFRAME.registerComponent('play', {
+        init: function() {
+          document.addEventListener(CIRCLES.EVENTS.READY, function() {
+              console.log('Circles is ready!');
+              const clip1 = document.querySelector(`#ambience-player`);
+              clip1.components.sound.playSound();
+
+              const clip2 = document.querySelector(`#heartbeats-player`);
+              clip2.components.sound.playSound();
+          });
+          
+        }
+      })
+    </script>
+
   </head>
   <body>
 
@@ -99,7 +115,7 @@
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
 
       <!-- TO BE REPLACED - START -->
-      <a-entity id="orbmanager" orb-manager></a-entity>
+      <a-entity id="orbmanager" orb-manager play></a-entity>
 
       <a-entity id='skyBox'
                 rotation='0 45 0'
@@ -108,8 +124,8 @@
       </a-entity>
 
       <!-- Sound entities -->
-      <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; autoplay: true; loop: true; type: music;"></a-entity>
-      <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; autoplay: true; loop: true; type: music;"></a-entity>
+      <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; false: true; loop: true; type: music;"></a-entity>
+      <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; false: true; loop: true; type: music;"></a-entity>
 
       <!-- Orb clips -->
       <a-entity id="clip1" circles-sound="src:#orb-clip1; autoplay: false; loop: false; type: soundeffect; poolsize:4"></a-entity>
