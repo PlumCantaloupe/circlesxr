@@ -2,6 +2,9 @@
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+
+  <script src="https://unpkg.com/aframe-vartiste-toolkit@1.32.0/vartiste-toolkit.js"></script>
+
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -11,16 +14,45 @@
   <a-scene circles_scene_properties>
     <a-assets>
 
+      <canvas height="768" id="draw-canvas-asset" width="1024"></canvas>
+      <a-asset vartiste-assets=""></a-asset>
+
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets/>
     </a-assets>
-<script>    console.log("test");
-</script>
+
+
+<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+<a-entity drawable geometry="primitive: plane; height: 4; width: 4" position="0 2.5 -4" rotation="0 0 0" material=" color:#eee5c4 "></a-entity>
+
+<a-entity id="draw-canvas-demo" class="clickable"
+drawable="canvas:#draw-canvas-asset" frame=""
+geometry="primitive: plane; width: 2; height: 1.75"
+material="shader: flat; src: #draw-canvas-asset; npot: true"
+position="3.1 0 -2.4" tooltip="Draw Here" tooltip-style="offset: 0 0.75 0"></a-entity>
+
+
+<a-sky color="#ECECEC"></a-sky>
+
     <!-- Circles' built-in manager and avatar [REQUIRED] -->
     <circles-manager-avatar/>
+
+
+
   </a-scene>
 
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
+ <script>    console.log("test");
+
+document.addEventListener(CIRCLES.EVENTS.READY, function() {
+    console.log('Circles is ready!');
+    let pointer = document.getElementById("primary_pointer")
+    pointer.setAttribute('hand-draw-tool', "");
+});
+
+
+  </script>
 </html>

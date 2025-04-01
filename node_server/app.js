@@ -406,7 +406,27 @@ io.on("connection", socket => {
   })
 
 
+
+  socket.on('canvasData', (data) =>{
+    //console.log('Server recieving: ' + data);
+
+    //sending change too all clients but initial sender
+    socket.broadcast.emit('updateCanvas', data);
+    //console.log(data);
+
+  
+  });
+
+  socket.on("lineData",(pos)=>{
+    console.log('server side positions:' + pos.lenght);
+    console.log(pos);
+
+    socket.broadcast.emit("addNewLine", pos);
+  });
+
 });
+
+
 
 //let's create a research namespace.
 //This will definitely need to be redone if we run more than one experiemnet on this server at a time in the future
