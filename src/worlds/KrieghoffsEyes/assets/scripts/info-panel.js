@@ -1,6 +1,7 @@
 AFRAME.registerComponent('info-panel', {
   init: function () {
     this.titleEl = document.querySelector('#panelTitle');
+    this.panelImg = document.querySelector('#panelImg');
     this.descriptionEl = document.querySelector('#panelDescription');
     this.panelPositions = {
       redPaint: { x: 0.83307, y: 1.31338, z: -4.2279 },
@@ -19,6 +20,14 @@ AFRAME.registerComponent('info-panel', {
       greenPaint: { title: 'The Blizzard', description: '"Decription."' },
       bluePaint: { title: 'Blue Painting', description: 'A blue painting.' },
       redPaint_return: { title: 'Red Painting', description: 'A red painting.' }
+    };
+    
+    this.paintingImages = {
+      redPaint: '#RIA',
+      redPaint_gray: '#RIA_gray',
+      greenPaint: '#blizzard',
+      greenPaint_gray: '#blizzard_gray',
+      redPaint_return: '#RIA' 
     };
 
     this.currentPaintingId = null;
@@ -57,7 +66,27 @@ AFRAME.registerComponent('info-panel', {
 
     this.titleEl.setAttribute('text', 'value', info.title);
     this.descriptionEl.setAttribute('text', 'value', info.description);
+
+    
+    var imageSrc = "";
+    switch (paintingId) {
+      case "redPaint":
+        imageSrc = gameState.RIAdone ? this.paintingImages.redPaint : this.paintingImages.redPaint_gray;
+        break;
+      case "greenPaint":
+        imageSrc = gameState.blizzardDone ? this.paintingImages.greenPaint : this.paintingImages.greenPaint_gray;
+        break;
+      default:
+        imageSrc = this.paintingImages[paintingId] || "";
+        break;
+    }
+
+    
+    if (imageSrc) {
+      this.panelImg.setAttribute('material', 'src', imageSrc);
+    }
   },
+
 
   onVote: function () {
     if (!this.currentPaintingId) {

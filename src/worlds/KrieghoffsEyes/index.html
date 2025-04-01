@@ -15,6 +15,12 @@
 </head>
 
 <body>
+  <script>
+    var gameState = {
+      RIAdone: false,
+      blizzardDone: false
+    };
+  </script>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
   <circles-start-ui />
 
@@ -31,7 +37,9 @@
       <a-asset-item id="RiaNav" src="assets/models/environment/riaNavMesh.gltf"></a-asset-item>
 
       <img id="RIA" src="assets/models/painting/paintings/RIA.png" crossorigin="anonymous"></a-asset-item>  
+      <img id="RIA_gray" src="assets/models/painting/paintings/RIA_gray.png" crossorigin="anonymous"></a-asset-item>  
       <img id="blizzard" src="assets/models/blizzard/blizzard.png" crossorigin="anonymous"></a-asset-item>
+      <img id="blizzard_gray" src="assets/models/blizzard/blizzard_gray.png" crossorigin="anonymous"></a-asset-item>
 
       <img id="portrait1" src="assets/models/painting/paintings/portrait1.jpg" crossorigin="anonymous"></a-asset-item>
       <img id="portrait2" src="assets/models/painting/paintings/portrait2.jpg" crossorigin="anonymous"></a-asset-item>
@@ -146,13 +154,13 @@
         class="interactive" circles-interactive-object="type:highlight"
         environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
         painting-highlight
-        material="color:#ffffff; src:#RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
+        material="color:#ffffff; src:#RIA_gray; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
       <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
         rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="green" id="greenPaint"
         class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
         painting-highlight
-        material="color: #fffff; src:#blizzard; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
+        material="color: #fffff; src:#blizzard_gray; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
       <!-- Checkpoints -->
       <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 3.215 0"></a-entity>
