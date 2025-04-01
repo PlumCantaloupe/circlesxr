@@ -28,7 +28,6 @@
     <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <img id='skyMap' src='assets/textures/skyNeurons.jpg' crossorigin="anonymous">
         <a-asset-item id="gammaWall" src="assets/models/FixedWall.glb" response-type="arraybuffer"></a-asset-item>
 
         <audio id="gamma-music" src="assets/sounds/music/gamma_no_kick.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -57,13 +56,7 @@
       <!-- Audio analyser -->
       <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #kick-drum-player"></a-entity>
 
-      <!-- Lights and sky box -->
-      <a-entity id='skyBox'
-                rotation='0 45 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
-      </a-entity>
-
+      <!-- Lights -->
       <a-entity light="type: ambient; color: #ffffff; intensity: 2.4"></a-entity>
 
       <!-- Walls, ceiling, floor, and barrier -->
