@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts />
@@ -30,8 +29,20 @@
       <a-asset-item id="Raft2" src="assets/models/RIA/Raft2.gltf"></a-asset-item>
       <a-asset-item id="Raft3" src="assets/models/RIA/Raft3.gltf"></a-asset-item>
       <a-asset-item id="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
+      <a-asset-item id="RiaNav" src="assets/models/environment/riaNavMesh.gltf"></a-asset-item>
 
-      <img id="RIA" src="assets/models/painting/paintings/RIA.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="RIA" src="assets/models/painting/paintings/RIA.png" crossorigin="anonymous"></a-asset-item>  
+      <img id="blizzard" src="assets/models/blizzard/blizzard.png" crossorigin="anonymous"></a-asset-item>
+
+      <img id="portrait1" src="assets/models/painting/paintings/portrait1.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="portrait2" src="assets/models/painting/paintings/portrait2.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="portrait3" src="assets/models/painting/paintings/portrait3.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="portrait4" src="assets/models/painting/paintings/portrait4.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="portrait5" src="assets/models/painting/paintings/portrait5.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="portrait6" src="assets/models/painting/paintings/portrait6.jpg" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="sculpture" src="/worlds/KrieghoffsEyes/assets/models/sculptures/head.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
       <a-asset-item id="ria_environment" src="/worlds/KrieghoffsEyes/assets/models/environment/environment.gltf"
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -41,6 +52,10 @@
       <a-asset-item id="chair_gltf" src="/worlds/KrieghoffsEyes/assets/models/chair/chair.gltf"
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       <a-asset-item id="painting_gltf" src="/worlds/KrieghoffsEyes/assets/models/painting/painting.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="closet_gltf" src="/worlds/KrieghoffsEyes/assets/models/closet/closet.gltf"
+        response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="cabinet_gltf" src="/worlds/KrieghoffsEyes/assets/models/cabinet/cabinet.gltf"
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       <a-asset-item id="palette_gltf" src="/worlds/KrieghoffsEyes/assets/models/palette/palette.gltf"
         responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -63,11 +78,17 @@
         src="/worlds/KrieghoffsEyes/assets/models/wooden_crates/wooden_crate_3.gltf" responnse-type="arraybuffer"
         crossorigin="anonymous"></a-asset-item>
 
-      <a-asset-item id="frame_gltf" src="/worlds/KrieghoffsEyes/assets/models/frame/frame1.gltf"
+      <a-asset-item id="frame1_gltf" src="/worlds/KrieghoffsEyes/assets/models/frame/frame1.gltf"
+        responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="frame_gltf" src="/worlds/KrieghoffsEyes/assets/models/frame/frame.gltf"
         responnse-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
       <a-asset-item id="room" src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf" responnse-type="arraybuffer"
         crossorigin="anonymous"></a-asset-item>
+
+       <!--Sounds-->
+       <audio id="studio_ambient" src="/worlds/KrieghoffsEyes/assets/sounds/studio_ambient.mp3" preload="auto" crossorigin="anonymous"></audio>
 
       <circles-assets />
     </a-assets>
@@ -82,7 +103,7 @@
 
     <a-entity id="GameManager" ria-manager blz-manager voting-listener lazy-load-environment blz-lazy-load-environment></a-entity>
     <a-entity id="riaWorld">
-      <a-ocean id="ocean" color="#92E2E2" opacity="1" width="500" depth="500" position="36.222 -0.792 0" density="100"
+      <a-ocean id="ocean" color="#92E2E2" opacity="0.5" width="500" depth="500" position="36.222 -0.792 0" density="100"
         speed="3" circles-interactive-visible="false"></a-ocean>
     </a-entity>
 
@@ -95,7 +116,9 @@
         position=".7 1.8 -3">
       </a-entity>
 
-
+       <!--Music-->
+       <a-entity position="0 0 0" circles-sound="type:music; src:#studio_ambient; autoplay:true; loop:true; volume:0.2;" sound="autoplay: true; positional: false; loop: true;"></a-entity>
+        
       <!-- room -->
       <a-entity id="room" gltf-model="#room" position="0 0.001 0"></a-entity>
 
@@ -125,18 +148,13 @@
         class="interactive" circles-interactive-object="type:highlight"
         environemntProp="preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;"
         painting-highlight
-        material="color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
-
-
+        material="color:#ffffff; src:#RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
       <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
         rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="green" id="greenPaint"
         class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
         painting-highlight
-        material="emissive: #fff700; emissiveIntensity: 0;"></a-box>
-
-
-
+        material="color: #fffff; src:#blizzard; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
       <!-- Checkpoints -->
       <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 3.215 0"></a-entity>
@@ -153,17 +171,26 @@
       <a-entity id="chair" position="2.78254 0 -5.84547" rotation="0 11.506138441817194 0" scale="20 20 20"
         gltf-model="#chair_gltf"></a-entity>
 
-      <a-entity id="chair-2" position="4.45998 -0.33531 -2.62104"
-        rotation="0.8445397900228334 -5.826980776480472 119.99741582322396" scale="20 20 20" gltf-model="#chair_gltf">
+      <a-entity id="chair-2" position="4.45998 -0.1848 -2.62104" rotation="0.8445397900228334 -5.92698 125.00741999999998" scale="20 20 20" 
+        gltf-model="#chair_gltf">
       </a-entity>
 
       <a-entity id="painting" scale="20 20 20" gltf-model="#painting_gltf" position="2.69453 0 -5.4894"
-        rotation="0 -38.35895142621349 0"></a-entity>
+        rotation="0 13 0"></a-entity>
       <a-entity id="painting1" scale="20 20 20" gltf-model="#painting_gltf" position="-2.85013 0 -4.29198"
         rotation="0 -46.65824508868346 0"></a-entity>
+      <a-entity id="painting-2" scale="33.09687 36.55388 46.1318" gltf-model="#painting_gltf" position="0.62705 0 -6.41326" rotation="0 -82.5609264471711 0"></a-entity>
       <a-entity id="painting3" scale="20 20 20" gltf-model="#painting_gltf" position="0.90896 0 -4.31538"
         rotation="0 -130.53239080229443 0"></a-entity>
 
+      <!--Portraits-->
+      <a-entity geometry="box" id="portrait-1" position="-1.89136 2.2841 -7.73931" scale="1 1.3 0.071" rotation="0 1.0370536091867901 0" material="color:#ffffff; src:#portrait1; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      <a-entity geometry="box" id="portrait3" position="-2.96588 3.60297 -7.74067" scale="0.78549 0.49678 0.03692" rotation="0 1.0370536091867901 0" material="color:#ffffff; src:#portrait3; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      <a-entity geometry="box" id="portrait2" position="-1.90082 3.64854 -7.75995" scale="0.52001 0.73698 0.03692" rotation="0 1.0370536091867901 0" material="color:#ffffff; src:#portrait2; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      <a-entity geometry="box" id="portrait4" position="-5.64525 3.80027 -0.94984" scale="0.49329 0.73422 0.03687" rotation="0 90 0" material="color:#ffffff; src:#portrait4; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      <a-entity geometry="box" id="portrait5" position="-5.57586 3.96255 -2.7662" scale="0.69579 0.91327 0.02627" rotation="3.810742295415105 89.63237155467573 0.12146705256773452" material="color:#ffffff; src:#portrait5; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      <a-entity geometry="box" id="portrait6" position="-5.62286 3.94622 -5.4444" scale="0.40505 0.52656 0.02876" rotation="0 90 0" material="color:#ffffff; src:#portrait6; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;" scale="0.65073 0.88525 1"></a-entity>
+      
       <a-entity id="palette" scale="20 20 20" gltf-model="#palette_gltf" position="-2.927 0.064 -4.31538"
         rotation="0 0 0"></a-entity>
 
@@ -173,19 +200,22 @@
       <a-entity id="palette3" scale="20 20 20" gltf-model="#palette_gltf" position="0.857 0.064 -4.31538"
         rotation="0 -90 0"></a-entity>
 
-      <a-entity id="frame1" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf" position="-5.594 1.173 -1.487"
-        rotation="0 -180 0"></a-entity>
-      <a-entity id="frame1-2" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
-        position="-5.594 1.17321 -5.71147" rotation="0 -180 0"></a-entity>
-      <a-entity id="frame1-3" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
-        position="5.594 1.17321 -1.48734"></a-entity>
-      <a-entity id="frame1-4" scale="0.28877 0.28877 0.28877" gltf-model="#frame_gltf"
-        position="5.594 1.17321 -5.91606"></a-entity>
+        
+        <a-entity id="frame" scale="0.05 0.05 0.05" gltf-model="#frame_gltf" position="-2.44052 3.59935 -7.74718" rotation="0 0 90"></a-entity>
+        <a-entity id="frame1-2" scale="0.05 0.04463 0.05" gltf-model="#frame_gltf" position="-1.89908 3.19875 -7.74718"></a-entity>
+        <a-entity id="frame1-3" scale="0.06218 0.05719 0.05" gltf-model="#frame_gltf" position="-1.89908 1.68439 -7.74718"></a-entity>
+        <a-entity id="frame1-4" scale="0.06218 0.05719 0.05" gltf-model="#frame_gltf" position="-5.62595 3.36756 -2.75895" rotation="4.759560404151749 90.00021045914971 0"></a-entity>
+        <a-entity id="frame1-5" scale="0.04741 0.0436 0.03812" gltf-model="#frame_gltf" position="-5.62594 3.36756 -0.9532" rotation="0 90.00021045914971 0"></a-entity>
+        <a-entity id="frame1-6" scale="0.20289 0.20289 0.20289" gltf-model="#frame1_gltf" position="-5.61158 3.39173 -5.4345" rotation="0 180 0"></a-entity>
 
       <a-entity id="stool" scale="1 1 1" gltf-model="#stool_gltf" position="3.618 -0.025 0"></a-entity>
 
 
       <a-entity id="stool" scale="1 1 1" gltf-model="#stool_gltf" position="3.618 -0.025 0"></a-entity>
+
+      <a-entity id="head_sculpture" gltf-model="#sculpture" position="-1.47229 4.82252 -7.39261" scale="0.01491 0.01491 0.01491" rotation="0 0 86.43011043768956"></a-entity>
+      <a-entity id="head_sculpture2" gltf-model="#sculpture" position="-2.839 4.56645 -7.39261" scale="0.01491 0.01491 0.01491"></a-entity>
+
       <!-- Book Piles -->
       <a-entity id="book_pile_1" gltf-model="#book_pile_gltf" position="3.59154 0.00085 -0.83013"></a-entity>
       <a-entity id="book_pile_2" gltf-model="#book_pile_gltf" position="2.90213 0 -1.64883"
@@ -197,15 +227,17 @@
       <!-- Round Stools -->
       <a-entity id="stool_round_1" gltf-model="#stool_round_gltf" position="2.64273 0.11403 -0.39044"
         rotation="-41.042112780811124 96.44312086539581 -72.68829067927189"></a-entity>
-      <a-entity id="stool_round_2" gltf-model="#stool_round_gltf" position="3.28881 0 -4.58313"
-        scale="1.6188 1.6188 1.6188"></a-entity>
+      <a-entity id="stool_round_2" gltf-model="#stool_round_gltf"position="-1.20182 0.74952 0.60097"
+        scale="1.6188 1.6188 1.6188" rotation="0 0 180"></a-entity>
       <a-entity id="stool_round_3" gltf-model="#stool_round_gltf" position="-4.26057 0 -2.86813"></a-entity>
 
+      <!-- Cabinet -->
+      <a-entity id="cabinet" gltf-model="#cabinet_gltf" scale="0.5 0.5 0.5" position="-4.84467 0 -0.21668" rotation="0 180 0"></a-entity>
+      <!-- Closet -->
+      <a-entity id="closet" gltf-model="#closet_gltf" scale="0.28049 0.24608 0.24608" position="3.5403 0 -8.0794"></a-entity>
       <!-- Wall Shelves -->
-      <a-entity id="shelf_wall_1" gltf-model="#shelf_wall_gltf" position="-2.98275 1.66445 -7.223"
-        scale="5 3 4"></a-entity>
-      <a-entity id="shelf_wall_2" gltf-model="#shelf_wall_gltf" position="0.22357 1.21294 -7.223"
-        scale="5 3 4"></a-entity>
+      <a-entity id="shelf_wall_1" gltf-model="#shelf_wall_gltf" position="-2.98275 4.48513 -7.223" scale="5 3 4" rotation="0 0 1.5000000000000002"></a-entity>
+      
 
       <!-- wooden crates -->
       <a-entity id="wooden_crate_1-1" gltf-model="#wooden_crate_1_gltf" position="-4.16149 0 -1.92959"></a-entity>
@@ -220,14 +252,19 @@
     <!-- Info Panel for displaying painting details -->
     <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
       material="color: #333; shader: flat; side: double" visible="false">
-      <!-- Text elements inside the info panel -->
-      <a-entity id="panelTitle" position="-0.68 0.5 0" text="anchor: left; width: 1.5; color: white; value:">
-        <a-entity id="button" geometry="primitive: cylinder" position="0.7 -0.955 0.030" scale="0.082 0.082 0.08346"
+      
+      <a-entity geometry="box" id="panelImg" position="0 0.352 0" scale="1.094 1.094 0.007" rotation="0 0 0" material="color:#ffffff; src:#RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-entity>
+       <!-- Info Panel for displaying painting details -->
+      <a-entity id="panelTitle" position="-0.225 -0.274 0" text="anchor: left; width: 1.5; color: white; value:Raft in Autumn">
+        <a-entity id="button" geometry="primitive: cylinder" position="0.219 -0.387 0.030" scale="0.082 0.082 0.08346"
           material="color:#a22020;" rotation="-90 0 0" class="interactive" highlight-button>
         </a-entity>
       </a-entity>
-      <a-entity id="panelDescription" position="-0.68 0.3 0"
-        text="anchor: left; width: 1.5; color: white; value:"></a-entity>
+      <a-entity id="panelDescription" position="-0.200 -0.406 0"
+        text="anchor: left; width: 1.5; color: white; value:'Description'"></a-entity>
+    </a-entity>
+    
+    
 
   </a-scene>
 

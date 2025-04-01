@@ -15,43 +15,31 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"pCube2",
+			"name":"frame_01.001",
 			"rotation":[
-				0.5000001192092896,
-				0.5,
-				0.4999999701976776,
-				0.5000000596046448
-			],
-			"scale":[
-				5.285443305969238,
-				3.9057188034057617,
-				0.37356340885162354
-			],
-			"translation":[
+				0.04193182289600372,
 				0,
-				2.7011168003082275,
-				0
+				0,
+				0.9991204738616943
 			]
 		}
 	],
 	"materials":[
 		{
-			"doubleSided":true,
-			"name":"standardSurface1",
+			"name":"M_picture_frames_1001",
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.34225428104400635,
-					0.14560328423976898,
-					0.0713614970445633,
-					1
-				],
-				"metallicFactor":0
+				"baseColorTexture":{
+					"index":0
+				},
+				"metallicRoughnessTexture":{
+					"index":1
+				}
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"Mesh.001",
+			"name":"frame_01",
 			"primitives":[
 				{
 					"attributes":{
@@ -65,72 +53,95 @@
 			]
 		}
 	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		},
+		{
+			"sampler":0,
+			"source":0
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/jpeg",
+			"name":"M_picture_frames_baseColor_<UDIM>.jpg",
+			"uri":"textures/M_picture_frames_baseColor_1001.jpg"
+		}
+	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":466,
+			"count":124,
 			"max":[
-				0.4999999701976776,
-				0.5,
-				0.4999999701976776
+				7.902799606323242,
+				21.201494216918945,
+				0.7850072383880615
 			],
 			"min":[
-				-0.4999999701976776,
-				-0.5,
-				-0.4999999701976776
+				-7.902799606323242,
+				-0.25480392575263977,
+				-2.4148924350738525
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":466,
+			"count":124,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":466,
+			"count":124,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":1920,
+			"count":306,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":5592,
+			"byteLength":1488,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5592,
-			"byteOffset":5592,
+			"byteLength":1488,
+			"byteOffset":1488,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3728,
-			"byteOffset":11184,
+			"byteLength":992,
+			"byteOffset":2976,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3840,
-			"byteOffset":14912,
+			"byteLength":612,
+			"byteOffset":3968,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":18752,
-			"uri":"frame1.bin"
+			"byteLength":4580,
+			"uri":"frame.bin"
 		}
 	]
 }

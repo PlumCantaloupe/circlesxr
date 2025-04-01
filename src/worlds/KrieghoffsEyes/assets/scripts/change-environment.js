@@ -11,13 +11,12 @@ AFRAME.registerComponent('change-environment', {
                 const newEnvironment = painting.getAttribute("environemntProp");
                 if (newEnvironment) {
                     environment.setAttribute("environment", newEnvironment);
+                    cabin.setAttribute('visible', 'false');
                 }
 
                 // Only activate RIAmanager if the red painting is clicked
                 if (painting.id === "redPaint") {
                     riaManager.emit('painting-clicked');  // Trigger ria-manager
-                    cabin.setAttribute('visible', 'false');
-                
                 }
             });
         });
