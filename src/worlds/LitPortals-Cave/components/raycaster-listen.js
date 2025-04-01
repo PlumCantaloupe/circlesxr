@@ -3,7 +3,7 @@
 
 let positions = [];
 
-let colorStr = 'rgb(73, 47, 47)';
+let colorStr = 'rgb(0, 0,0)';
 let recieveColorStr = 'rgb(73, 47, 47)';
 
 
@@ -60,6 +60,20 @@ AFRAME.registerComponent('raycaster-listen', {
 
     });
 
+    document.querySelector('#redPaint').addEventListener('click', function(e){
+      console.log('red paint clicked');
+      colorStr = 'rgb(120,40,50)'
+      // Context_AF.socket.emit('red');
+     
+  });
+
+  document.querySelector('#blackPaint').addEventListener('click', function(e){
+    console.log('black paint clicked');
+    colorStr = 'rgb(0,0,0)'
+    // Context_AF.socket.emit('black');
+   
+});
+
     // function drawRecievedLine(){
     //   Context_AF.socket.on ("addNewLine", (pos) => {
     //     console.log("array of intersection pos");
@@ -90,7 +104,7 @@ AFRAME.registerComponent('raycaster-listen', {
           dot.setAttribute('geometry', {primitive: 'plane', height:0.05, width: 0.05});
           dot.setAttribute('material', {color: color});
           dot.object3D.rotation.y = THREE.MathUtils.degToRad(90);
-          dot.object3D.position.set(pos[i].x, pos[i].y, (pos[i].z + 0.06));
+          dot.object3D.position.set((pos[i].x +0.06), pos[i].y, pos[i].z);
           dot.classList.add('drawingDot');
           scene.appendChild(dot);
         }
