@@ -272,13 +272,16 @@
       </a-entity>
 
       <!-- Cave painting interaction -->
+      <!-- <a-entity id="planeToPaint" class="interactive" visible="true" raycaster-listen position="9.5 1.7 -3" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="color:#964B00;"> </a-entity> -->
+      <a-entity id="planeToPaint" class="interactive" visible="true" raycaster-listen="" position="-12.9167 2.01229 -14.21857" rotation="0 90 0" geometry="primitive: plane; height: 3.48; width: 6.14" material="color: #964B00"> </a-entity>
+
       <a-entity id = "drawGroup" position="-2.11 0 -14.4"  rotation="0 130 0">
         <!-- Plane where the drawing will display -->
-        <a-entity update-canvas position="6.5 1.7 -8" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="src: #drawCanvas;"> </a-entity>
-        <a-entity class="interactive" visible="false" raycaster-listen position="9.5 1.7 -3" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="color:#964B00;"> </a-entity>
+        <!-- <a-entity update-canvas position="6.5 1.7 -8" rotation="0 -45 0" geometry=" primitive: plane; height:3; width:3;" material="src: #drawCanvas;"> </a-entity> -->
 
         <!-- Button to start the interaction -->
-        <a-entity circles-button="type:cylinder" position="4.7 1.1 -8.8" toggle-canvas>
+        <!-- removed toggle-canvas component from button  -->
+        <a-entity circles-button="type:cylinder" position="4.7 1.1 -8.8" >
           <!-- TO FIX: clicking bubble triggers button -->
           <a-entity circles-label="text:cave painting; offset:0 0.8 0; arrow_position:down;"></a-entity>
         </a-entity>

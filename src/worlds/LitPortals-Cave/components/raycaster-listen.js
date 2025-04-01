@@ -3,6 +3,9 @@
 
 let positions = [];
 
+let colorStr = 'rgb(73, 47, 47)';
+let recieveColorStr = 'rgb(73, 47, 47)';
+
 
 AFRAME.registerComponent('raycaster-listen', {
 	init: function () {
@@ -15,6 +18,7 @@ AFRAME.registerComponent('raycaster-listen', {
     this.el.addEventListener('raycaster-intersected', evt => {
     // this is the raycasting entity that fired
       this.raycaster = evt.detail.el;
+      this.raycaster.setAttribute('raycaster', {interval:0});
     });
     this.el.addEventListener('raycaster-intersected-cleared', evt => {
       this.raycaster = null;
@@ -25,15 +29,13 @@ AFRAME.registerComponent('raycaster-listen', {
       
         this.isDrawing = false;
 
-        Context_AF.socket.emit('lineData', positions);
-        console.log('why is this repeating');
-
-    
+        Context_AF.socket.emit('lineData', positions, colorStr);
+        console.log('sending line data to server');
+        console.log('sending color: ' + colorStr);
 
         // this function repeates multiple times not sure why
         // Fixed when it was moved to the networking system
         // drawRecievedLine();
-
 
         // clearing position array
         positions = [];
@@ -78,16 +80,15 @@ AFRAME.registerComponent('raycaster-listen', {
       console.log('CONNECTED!!!!!!!!');
       console.log(Context_AF.socket.id);
 
-      Context_AF.socket.on ("addNewLine", (pos) => {
-        console.log("array of intersection pos");
+      Context_AF.socket.on ("addNewLine", (pos,color) => {
+        //console.log("array of intersection pos");
    
-
         // TODO create draw function
         for (let i = 0; i< pos.length; i++){
           console.log(pos[i]);
           const dot = document.createElement('a-entity');
           dot.setAttribute('geometry', {primitive: 'plane', height:0.05, width: 0.05});
-          dot.setAttribute('material', {color:'black'});
+          dot.setAttribute('material', {color: color});
           dot.object3D.rotation.y = THREE.MathUtils.degToRad(90);
           dot.object3D.position.set(pos[i].x, pos[i].y, (pos[i].z + 0.06));
           dot.classList.add('drawingDot');
@@ -115,11 +116,7 @@ else {
 
     const scene = this.el.sceneEl;
 
-
-
     if (!this.raycaster) { return; }  // Not intersecting.
-
-    //
     let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
     let pos = intersection.point;
     if (!intersection) { return; }
@@ -128,11 +125,12 @@ else {
         // console.log(intersection.point);
         // console.log(pos.x);
 
+        // creating plane at POI using colour selected
         const dot = document.createElement('a-entity');
         dot.setAttribute('geometry', {primitive: 'plane', height:0.05, width: 0.05});
-        dot.setAttribute('material', {color:'black'});
+        dot.setAttribute('material', {color:colorStr});
         dot.object3D.rotation.y = THREE.MathUtils.degToRad(90);
-        dot.object3D.position.set(pos.x, pos.y, (pos.z + 0.06));
+        dot.object3D.position.set((pos.x + 0.06), pos.y, pos.z );
         dot.classList.add('drawingDot');
         scene.appendChild(dot);
         recordPositions(pos);
@@ -142,9 +140,8 @@ else {
 
 
 function recordPositions(pos){
-  positions.push({x: pos.x, y:pos.y, z: pos.z});
-  
-  // console.log(Array.isArray(positions));     /// true
-  // console.log(positions.lenght);             /// undefine.... ??? i was spelling lenght WRONG AAA
+
+  // pushing point coordinates to global array
+  positions.push({x: pos.x, y:pos.y, z: pos.z})
 
 };

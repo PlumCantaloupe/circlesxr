@@ -417,11 +417,11 @@ io.on("connection", socket => {
   
   });
 
-  socket.on("lineData",(pos)=>{
+  socket.on("lineData",(pos, color)=>{
     console.log('server side positions:' + pos.lenght);
-    console.log(pos);
+    // console.log(pos);
 
-    socket.broadcast.emit("addNewLine", pos);
+    socket.broadcast.emit("addNewLine", pos, color);
   });
 
 });
