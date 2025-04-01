@@ -1,5 +1,6 @@
 AFRAME.registerComponent('visualization-info', {
     schema: {
+        orbTypeToUpdate: {type: 'string'},
         visualizationID: {type: 'string'}
     },
 
@@ -19,23 +20,14 @@ AFRAME.registerComponent('visualization-info', {
       CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function (data) {
         console.log("gotttttttttttttttttttt data", data.detail)
         CONTEXT_AF.cylinders = data.detail;
-        
+
         CONTEXT_AF.infoText = "";
         for(let i = 0; i < CONTEXT_AF.cylinders.length; i++) {
           // (${CONTEXT_AF.cylinders[i].color})
           CONTEXT_AF.infoText += `\n ${CONTEXT_AF.cylinders[i].name}: ${CONTEXT_AF.cylinders[i].votes} people`;
         }
-        CONTEXT_AF.el.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
     });
 
-    // CONTEXT_AF.cylinders = [
-    //   {name: 'emotion1', votes: 2},
-    //   {name: 'emotion2', color: 'yellow', value: 0},
-    //   {name: 'emotion3', color: 'blue', value: 2},
-    //   {name: 'emotion4', color: 'green', value: 3},
-    //   {name: 'emotion5', color: 'pink', value: 4}
-    // ]
-      
 
       CONTEXT_AF.infoText = "";
       //populate display text with data
@@ -63,4 +55,29 @@ AFRAME.registerComponent('visualization-info', {
       })
 
     },
+
+    update: function() {
+      const CONTEXT_AF = this;
+      //make sure a valid orb has been inputted
+      if(CONTEXT_AF.data.orbTypeToUpdate != '') {
+        console.log("lets update the orbs")
+
+        //increment value
+        const indexToScale = CONTEXT_AF.cylinders.findIndex(item => item.name===CONTEXT_AF.data.orbTypeToUpdate);
+        if(indexToScale != -1) {
+          CONTEXT_AF.cylinders[indexToScale].votes += 1;
+
+          //update text
+          CONTEXT_AF.infoText = "";
+          for(let i = 0; i < CONTEXT_AF.cylinders.length; i++) {
+            // (${CONTEXT_AF.cylinders[i].color})
+            CONTEXT_AF.infoText += `\n ${CONTEXT_AF.cylinders[i].name}: ${CONTEXT_AF.cylinders[i].votes} people`;
+          }
+
+          CONTEXT_AF.el.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
+
+          CONTEXT_AF.el.setAttribute('visualization-info', {orbTypeToUpdate: ''});
+        }
+      }
+  },
 });

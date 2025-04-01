@@ -18,23 +18,6 @@ AFRAME.registerComponent('manager', {
       
       CONTEXT_AF.centralOrbsVisualizationEl = document.querySelector('#central-orbs-visualization');
 
-      // Initialize Firebase
-      // fetch("https://firestore.googleapis.com/v1/projects/brainwavedata-bd008/databases/(default)/documents/deltaEmotionData", {
-      //         method: "POST",
-      //         headers: {
-      //             'Content-type': 'application/json; charset=UTF-8'
-      //         },
-      //         body: JSON.stringify({
-      //             fields: {
-      //             id: {
-      //                 stringValue: "test"
-      //             },
-      //             name: {
-      //                 stringValue: "test"
-      //             }
-      //         }})
-      //     }).then(body => console.log("success")).catch(console.log("there was an error adding data"));
-
       const firebaseConfig = {
         apiKey: "AIzaSyD9r1vjo4Evh2pTNl_eeD2ldVtnXVEL3sM",
         authDomain: "brainwavedata-bd008.firebaseapp.com",
@@ -70,25 +53,29 @@ AFRAME.registerComponent('manager', {
         //listen for when others share an emotion
         CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function(data) {
           
-          const visualizationContainer = data.visualizationContainer;
+          CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.orbTypeToUpdate});
           
+          const visualizationContainer = data.visualizationContainer;
           switch (visualizationContainer){
             case "delta": 
               console.log("delta stuff")
               CONTEXT_AF.deltaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}); 
-              ONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
+              CONTEXT_AF.deltaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              //CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
               break;
 
             case "alpha":
               console.log("alpha stuff")
               CONTEXT_AF.alphaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate});
-              CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo); 
+              CONTEXT_AF.alphaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              //CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo); 
               break;
 
             case "gamma":
               console.log("gamma stuff")
               CONTEXT_AF.gammaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}); 
-              CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo); 
+              CONTEXT_AF.gammaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              //CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo); 
               break;
             
             default:
@@ -98,13 +85,13 @@ AFRAME.registerComponent('manager', {
 
         // On connect, get all emotion data and set the central orb visualisation
         // Listen for other people sharing an emotion orb
-        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
-          try {
-            CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
-          } catch (error) {
-            //send hardcoded data to central orbs
-          }
-        });
+        // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
+        //   try {
+        //     CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+        //   } catch (error) {
+        //     //send hardcoded data to central orbs
+        //   }
+        // });
 
         // Listen for other people sharing an emotion orb and update the stats info text
         // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
@@ -136,20 +123,22 @@ AFRAME.registerComponent('manager', {
 
     // Update central orb and visualization info text when user shares an emotion
     CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, async function (data) {
-      CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+      //CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+
+      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.detail.orbTypeToUpdate});
 
       const visualizationContainer = data.detail.visualizationContainer;
       switch (visualizationContainer){
         case "delta": 
-          CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
+          CONTEXT_AF.deltaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.detail.orbTypeToUpdate}); 
           break;
 
         case "alpha":
-          CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
+          CONTEXT_AF.alphaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.detail.orbTypeToUpdate}); 
           break;
 
         case "gamma":
-          CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
+          CONTEXT_AF.gammaVisualizationInfo.setAttribute('visualization-info', {orbTypeToUpdate: data.detail.orbTypeToUpdate}); 
           break;
         
         default:
@@ -283,7 +272,7 @@ AFRAME.registerComponent('manager', {
       console.log('connected and got the data');
       console.log(emotionData);
 
-      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {emotionData});
+      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionpopulate', {emotionData});
     },
 
     setVisualizationInfoData: function (emotionData, visualizationInfo) {
