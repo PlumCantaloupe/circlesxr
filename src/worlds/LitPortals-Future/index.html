@@ -22,7 +22,17 @@
       <a-entity environment="preset:starry; active:true;" change-environment></a-entity>
 
       <a-assets>
-        
+          <!--Models-->
+          <a-asset-item id="building1Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building1/building1.glb"></a-asset-item>
+          <a-asset-item id="building2Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building2/building2.glb"></a-asset-item>
+          <a-asset-item id="building3Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building3/building3.glb"></a-asset-item>
+          <a-asset-item id="building4Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building4/building4.glb"></a-asset-item>
+          <a-asset-item id="building5Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building5/building5.glb"></a-asset-item>
+          <a-asset-item id="building6Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building6/building6.glb"></a-asset-item>
+          <a-asset-item id="building7Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building7/building7.glb"></a-asset-item>
+          <a-asset-item id="building8Model" response-type="arraybuffer" src="/worlds/LitPortals-Future/assets/models/building8/building8.glb"></a-asset-item>
+
+
           <!-- Background Music -->
           <audio id="breeze" src="/worlds/LitPortals-Future/assets/sounds/Breeze.mp3" preload="true"></audio>
           <audio id="eternity" src="/worlds/LitPortals-Future/assets/sounds/Eternity.mp3" preload="true"></audio>
@@ -41,6 +51,16 @@
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
+
+      <!--Buildings Models-->
+      <a-entity id="building1" position="0 0 -20" scale= "100 100 100" gltf-model="#building1Model"></a-entity>
+      <a-entity id="building2" rotation="0 45 0" position="20 0 -30" scale= "100 100 100" gltf-model="#building2Model"></a-entity>
+      <a-entity id="building3" rotation="0 90 0" position="-20 0 -5" scale= "100 100 100" gltf-model="#building3Model"></a-entity>
+      <a-entity id="building4" rotation="0 90 0" position="30 0 30" scale= "100 100 100" gltf-model="#building4Model"></a-entity>
+      <a-entity id="building5" rotation="0 0 0" position="0 0 40" scale= "100 100 100" gltf-model="#building5Model"></a-entity>
+      <a-entity id="building6" rotation="0 0 0" position="6 0 -58" scale= "100 100 100" gltf-model="#building6Model"></a-entity>
+      <a-entity id="building7" rotation="0 0 0" position="9 0 -11" scale= "100 100 100" gltf-model="#building7Model"></a-entity>
+      <a-entity id="building8" rotation="0 90 0" position="-6 0 -5" scale= "100 100 100" gltf-model="#building8Model"></a-entity>
 
      
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
@@ -62,13 +82,13 @@
     </a-entity>
     <!-- blue button -->
     <a-entity id="blue_button" position="-2 0.6 -1">
-        <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(100, 100, 255)"
-                    animation__mouseenter="property:material.color; type:color; to:rgb(0, 0, 255); startEvents:mouseenter; dur:200"
-                    animation__mouseleave="property:material.color; type:color; to:rgb(100, 100, 255); startEvents:mouseleave; dur:200"
-                    animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300"  sound="on: click; src: #click; poolSize:10"
-                    shadow></a-entity>
-        <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
-    </a-entity>
+      <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(100, 100, 255)"
+                animation__mouseenter="property:material.color; type:color; to:rgb(0, 0, 255); startEvents:mouseenter; dur:200"
+                animation__mouseleave="property:material.color; type:color; to:rgb(100, 100, 255); startEvents:mouseleave; dur:200"
+                animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300"  sound="on: click; src: #click; poolSize:10"
+                shadow></a-entity>
+      <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
+  </a-entity>
     <!-- green button -->
     <a-entity id="green_button" position="5 0.6 -1">
         <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(100, 255, 100)"
@@ -88,19 +108,6 @@
         <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
     </a-entity>
       <!-- room -->
-
-      <!-- pick up objects 
-      This line lets an object be picked up - needs to click on it twice for full controls        
-      circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-      -->
-      <a-box id="box" 
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" 
-        position="8 1 0" scale="0.5 0.5 0.5" color="red">
-      </a-box>
-
-       <!-- gems with text box
-        can be instructions or welcome message
-        these are networked-->
         
       <a-entity id="instructions-1" position="0 1 -1"
       circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
