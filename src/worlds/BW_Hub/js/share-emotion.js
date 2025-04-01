@@ -53,7 +53,7 @@ AFRAME.registerComponent('share-emotion', {
                 CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbId);
                 CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {});
+                CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {visualizationContainer: CONTEXT_AF.data.visualizationID});
                 console.log("emit");
                 orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
                 orb.parentNode.removeChild(orb);

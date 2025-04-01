@@ -273,7 +273,7 @@
        <a-entity rotation="0 -0.45 0">
         <a-entity position="2.176 0 -5.729">
 
-          <a-entity id="delta-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+          <a-entity visualization-info="visualizationID: delta-visualization" id="delta-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
             <a-entity room="roomName: delta" id="delta-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="delta-visualizer" room-visualizer>
               <a-entity id="delta-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
@@ -297,7 +297,7 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    visualization-info="visualizationID: delta-visualization"
+                    id="delta-visualization-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
@@ -314,7 +314,7 @@
       <a-entity rotation="0 127.598 0">
         <a-entity position="2.176 0 -5.729">
 
-          <a-entity id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+          <a-entity visualization-info="visualizationID: alpha-visualization" id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
             <a-entity room="roomName: alpha" id="alpha-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="alpha-visualizer" room-visualizer>
               <a-entity id="alpha-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
@@ -338,7 +338,7 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    visualization-info="visualizationID: alpha-visualization"
+                    id="alpha-visualization-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
@@ -355,7 +355,7 @@
       <a-entity rotation="0 -102.05 0">
         <a-entity position="2.176 0 -5.729">
 
-          <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+          <a-entity visualization-info="visualizationID: gamma-visualization" id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
             <a-entity room="roomName: gamma" id="gamma-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="gamma-visualizer" room-visualizer>
               <a-entity id="gamma-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
@@ -379,7 +379,7 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    visualization-info="visualizationID: gamma-visualization"
+                    id="gamma-visualization-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
