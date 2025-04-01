@@ -7,6 +7,10 @@ AFRAME.registerComponent('ria-manager', {
         this.navmesh = document.querySelector("#nav-mesh");
         this.cabin = document.querySelector("#Cabin");
 
+       /*  window.gameState = {
+          RIAdone: false,
+          blizzardDone: false
+        }; */     
 
         // Wait for the red painting click event
         this.el.addEventListener('ria-painting-clicked', () => {
@@ -24,6 +28,7 @@ AFRAME.registerComponent('ria-manager', {
 
         this.el.addEventListener('ria-complete', () =>{
             this.spawnPortal();
+            gameState.RIAdone = true;
         });
 
         this.el.addEventListener('return-clicked', () => {

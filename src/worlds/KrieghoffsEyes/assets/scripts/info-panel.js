@@ -15,8 +15,8 @@ AFRAME.registerComponent('info-panel', {
     }
 
     this.paintingInfo = {
-      redPaint: { title: 'Red Painting', description: 'A red painting.' },
-      greenPaint: { title: 'Green Painting', description: 'A green painting.' },
+      redPaint: { title: 'Raft in Autumn', description: '"Decription."' },
+      greenPaint: { title: 'The Blizzard', description: '"Decription."' },
       bluePaint: { title: 'Blue Painting', description: 'A blue painting.' },
       redPaint_return: { title: 'Red Painting', description: 'A red painting.' }
     };

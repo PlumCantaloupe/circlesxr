@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts />
@@ -31,8 +30,8 @@
       <a-asset-item id="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
       <a-asset-item id="RiaNav" src="assets/models/environment/riaNavMesh.gltf"></a-asset-item>
 
-      <img id="RIA" src="assets/models/painting/paintings/RIA.jpg" crossorigin="anonymous"></a-asset-item>  
-      <img id="blizzard" src="assets/models/blizzard/blizzard.jpg" crossorigin="anonymous"></a-asset-item>
+      <img id="RIA" src="assets/models/painting/paintings/RIA.png" crossorigin="anonymous"></a-asset-item>  
+      <img id="blizzard" src="assets/models/blizzard/blizzard.png" crossorigin="anonymous"></a-asset-item>
 
       <img id="portrait1" src="assets/models/painting/paintings/portrait1.jpg" crossorigin="anonymous"></a-asset-item>
       <img id="portrait2" src="assets/models/painting/paintings/portrait2.jpg" crossorigin="anonymous"></a-asset-item>
@@ -87,6 +86,9 @@
       <a-asset-item id="room" src="/worlds/KrieghoffsEyes/assets/models/room/room.gltf" responnse-type="arraybuffer"
         crossorigin="anonymous"></a-asset-item>
 
+       <!--Sounds-->
+       <audio id="studio_ambient" src="/worlds/KrieghoffsEyes/assets/sounds/studio_ambient.mp3" preload="auto" crossorigin="anonymous"></audio>
+
       <circles-assets />
     </a-assets>
 
@@ -112,7 +114,9 @@
         position=".7 1.8 -3">
       </a-entity>
 
-
+       <!--Music-->
+       <a-entity position="0 0 0" circles-sound="type:music; src:#studio_ambient; autoplay:true; loop:true; volume:0.2;" sound="autoplay: true; positional: false; loop: true;"></a-entity>
+        
       <!-- room -->
       <a-entity id="room" gltf-model="#room" position="0 0.001 0"></a-entity>
 
@@ -149,9 +153,6 @@
         class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
         painting-highlight
         material="color: #fffff; src:#blizzard; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
-
-
-
 
       <!-- Checkpoints -->
       <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 3.215 0"></a-entity>
@@ -248,17 +249,16 @@
     <!-- Info Panel for displaying painting details -->
     <a-entity id="infoPanel" info-panel position="0 1.6 -2.5" geometry="primitive: plane; width: 1.5; height: 1.8"
       material="color: #333; shader: flat; side: double" visible="false">
-      <!-- Text elements inside the info panel -->
+      
+      <a-entity geometry="box" id="panelImg" position="0 0.352 0" scale="1.094 1.094 0.007" rotation="0 0 0" material="color:#ffffff; src:#RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-entity>
        <!-- Info Panel for displaying painting details -->
-      <a-entity id="panelTitle" position="-0.68 0.5 0" text="anchor: left; width: 1.5; color: white; value:">
-        <a-entity id="button" geometry="primitive: cylinder" position="0.7 -0.955 0.030" scale="0.082 0.082 0.08346"
+      <a-entity id="panelTitle" position="-0.225 -0.274 0" text="anchor: left; width: 1.5; color: white; value:Raft in Autumn">
+        <a-entity id="button" geometry="primitive: cylinder" position="0.219 -0.387 0.030" scale="0.082 0.082 0.08346"
           material="color:#a22020;" rotation="-90 0 0" class="interactive" highlight-button>
         </a-entity>
       </a-entity>
-      <a-entity id="panelDescription" position="-0.68 0.3 0"
-        text="anchor: left; width: 1.5; color: white; value:"></a-entity>
-
-
+      <a-entity id="panelDescription" position="-0.200 -0.406 0"
+        text="anchor: left; width: 1.5; color: white; value:'Description'"></a-entity>
     </a-entity>
     
     
