@@ -1,20 +1,21 @@
+//const socket = io();
+
 const canvas = document.getElementById("drawCanvas");
 const context = canvas.getContext("2d");
+const clearButton = document.getElementById("clearButton");
 const container = document.getElementById("canvasDiv")
 
+
 let halfCanvas = canvas.width/2;
-
-
-
-context.fillStyle = "#964B00";
+let bgColour = "#964B00";
+context.fillStyle = bgColour;
 context.fillRect(0,0, canvas.width, canvas.height);
-
-
-
 let drawColour = "black";
 let drawSize = "3";
-
 let isDrawing = false;
+
+
+
 
 //event listeners for when mouse or touch input occurs
 canvas.addEventListener("touchstart", startTouch, false);
@@ -24,8 +25,6 @@ canvas.addEventListener("mousedown", start, false);
 canvas.addEventListener("mousemove", draw, false);
 canvas.addEventListener("mouseup", stop, false);
 canvas.addEventListener("mouseout", stop, false);
-
-
 
 
 function start(event){
@@ -137,3 +136,18 @@ function stopTouch (event){
     event.preventDefault();
 }
 
+
+clearButton.addEventListener("click", function(){
+    
+    //telling server to clear canvas and update texture
+   // socket.emit("clearCanvas");
+   //wait this might not need to be networked since were only updating canvas texture when the player pushes changes
+
+   clearCanvas();
+});
+
+function clearCanvas(){
+    context.fillStyle = bgColour;
+    context.clearRect(0,0, canvas.width, canvas.height);
+    context.fillRect(0,0, canvas.width, canvas.height);
+}
