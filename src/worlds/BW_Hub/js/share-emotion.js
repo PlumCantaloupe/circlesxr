@@ -13,7 +13,7 @@ AFRAME.registerComponent('share-emotion', {
 
       CONTEXT_AF.socket     = null;
       CONTEXT_AF.connected  = false;
-      CONTEXT_AF.campfireEventName = "campfire_event";
+      CONTEXT_AF.shareEmotionEventName = "shareEmotion_event";
 
       CONTEXT_AF.createNetworkingSystem = function () {
           CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
@@ -52,8 +52,9 @@ AFRAME.registerComponent('share-emotion', {
                 //trigger visualization update
                 CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbId);
                 CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
-                CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                console.log("emit")
+                CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {});
+                console.log("emit");
                 orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
                 orb.parentNode.removeChild(orb);
                 CONTEXT_AF.manager.setAttribute('manager', {holdingOrb: false, 
@@ -64,13 +65,13 @@ AFRAME.registerComponent('share-emotion', {
               }, 1000);
               
     
-              
+      
               //share websocket
             }
             else {
-              console.log("no rob in hand")
+              console.log("no orb in hand")
             }
-          })
+          });
 
         //   //listen for when others turn on campfire
         //   CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {

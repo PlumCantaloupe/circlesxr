@@ -112,7 +112,7 @@ AFRAME.registerComponent('network-reset', {
             CONTEXT_AF.socket.on(CONTEXT_AF.guessEventName, function(data) {
 
                 // searches for shape with same x-value as the other user clicked
-                CONTEXT_AF.items = document.querySelectorAll('#spawnedObject')
+                CONTEXT_AF.items = document.querySelectorAll('.spawnedObject')
                 if (CONTEXT_AF.items.length > 0) {
                     for (let i=0; i<CONTEXT_AF.items.length; i++){
                         if(CONTEXT_AF.items[i].getAttribute("position").x == data.netPos.x){

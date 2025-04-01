@@ -9,6 +9,8 @@ AFRAME.registerComponent('manager', {
       CONTEXT_AF.alphaVisualization = document.querySelector("#alpha-visualization");
       CONTEXT_AF.deltaVisualization = document.querySelector("#delta-visualization");
       CONTEXT_AF.gammaVisualization = document.querySelector("#gamma-visualization");
+      
+      CONTEXT_AF.centralOrbsVisualizationEl = document.querySelector('#central-orbs-visualization');
 
       // Initialize Firebase
       // fetch("https://firestore.googleapis.com/v1/projects/brainwavedata-bd008/databases/(default)/documents/deltaEmotionData", {
@@ -51,15 +53,16 @@ AFRAME.registerComponent('manager', {
     //listen for an emotion visualizer event. If it occurs then update the corresponding visualizer
     CONTEXT_AF.socket     = null;
     CONTEXT_AF.connected  = false;
-    CONTEXT_AF.campfireEventName = "campfire_event";
+
+    CONTEXT_AF.shareEmotionEventName = "shareEmotion_event";
 
     CONTEXT_AF.createNetworkingSystem = function () {
         CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
         CONTEXT_AF.connected = true;
         console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-        //listen for when others turn on campfire
-        CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
+        //listen for when others share an emotion
+        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, function(data) {
           
           const visualizationContainer = data.visualizationContainer;
           
@@ -82,17 +85,32 @@ AFRAME.registerComponent('manager', {
             default:
               console.log("No matching case found");
           }
-      });
+        });
+
+        // On connect, get all emotion data and set the central orb visualisation
+        // Listen for other people sharing an emotion orb
+        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
+          CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+        });
+
     };
+
+    // Update central orb when user shares an emotion
+    CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, async function (data) {
+      CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+    });
 
       //check if circle networking is ready. If not, add an went to listen for when it is ...
       if (CIRCLES.isCirclesWebsocketReady()) {
           CONTEXT_AF.createNetworkingSystem();
       }
       else {
-          const wsReadyFunc = function() {
+          const wsReadyFunc = async function() {
               CONTEXT_AF.createNetworkingSystem();
               CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+
+              // On connect, get all emotion data and set central orbs data
+              CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
           };
           CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
       }
@@ -187,6 +205,15 @@ AFRAME.registerComponent('manager', {
           console.log("error getting data")
           return [docId, data];
       }
+    },
+
+    setCentralOrbsData: function (emotionData) {
+      const CONTEXT_AF = this;
+
+      console.log('connected and got the data');
+      console.log(emotionData);
+
+      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {emotionData});
     },
 
     remove: function () {
