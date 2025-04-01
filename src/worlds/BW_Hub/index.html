@@ -124,9 +124,10 @@
       <!-- room model -->
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       <a-entity id="roomProps" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#roomProps_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
-      <a-entity id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
-      <a-entity id="controlPanel" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#controlPanel_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
       
+      
+      <!-- <a-entity id="controlPanel" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#controlPanel_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
+       -->
 
       <!-- nav mesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_glb" visible='false' nav-mesh></a-entity>
@@ -268,136 +269,130 @@
         <a-sphere id="central-orb-yellow" position="0.394 2.800 -0.893" scale="0.3 0.3 0.3" material="color:#c79200; emissive: #f0d342; emissiveIntensity: 1.300"></a-sphere> 
        </a-entity>
 
+       <!-- emotion visualizers -- Delta-->
+       <a-entity rotation="0 -0.45 0">
+        <a-entity position="2.176 0 -5.729">
 
-      <!-- emotion visualizers -- Delta-->
-      <a-entity position="2.176 0 -5.729">
-         <a-entity class="emptyCollider"></a-entity>
+          <a-entity id="delta-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity room="roomName: delta" id="delta-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="delta-visualizer" room-visualizer>
+              <a-entity id="delta-visualization-red">
+                <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="delta-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="delta-visualization-blue">
+                <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="delta-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="delta-visualization-pink">
+                <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+          </a-entity>
 
-         <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
-           <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-           <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-           <a-entity circles-interactive-object geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2; color: #9c9c9c"></a-entity>
-           <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-           <a-entity room="roomName: delta" id="delta-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="delta-visualizer" room-visualizer>
-             <a-entity id="delta-visualization-red">
-               <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
-             </a-entity>
-       
-             <a-entity id="delta-visualization-yellow">
-               <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
-             </a-entity>
-       
-             <a-entity id="delta-visualization-blue">
-               <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
-             </a-entity>
-       
-             <a-entity id="delta-visualization-green">
-               <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
-             </a-entity>
-       
-             <a-entity id="delta-visualization-pink">
-               <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
-             </a-entity>
-           </a-entity>
-         </a-entity>
+          <a-entity circles-interactive-object
+                    visualization-info="visualizationID: delta-visualization"
+                    rotation="0 88.595 90"
+                    position="0.065 0.908 -0.676"
+                    circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
+          </a-entity>
 
-         <a-entity position="0.635 0 -0.221">
-          <a-entity share-emotion="visualizationID: delta" circles-interactive-object="type:outline;" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
-         </a-entity>
-         
+          <!-- Chnage sound to circles sound -->
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: delta" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
+          </a-entity>
+
+        </a-entity>
       </a-entity>
 
        <!-- emotion visualizers -- Alpha-->
       <a-entity rotation="0 127.598 0">
         <a-entity position="2.176 0 -5.729">
-            <a-entity class="emptyCollider"></a-entity>
 
-        <a-entity id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
-        <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
-          <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-          <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-          <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"></a-entity>
-          <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-          <a-entity room="roomName: alpha" id="alpha-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="alpha-visualizer" room-visualizer>
-            <a-entity id="alpha-visualization-red">
-              <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
-            </a-entity>
-      
-            <a-entity id="alpha-visualization-yellow">
-              <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
-            </a-entity>
-      
-            <a-entity id="alpha-visualization-blue">
-              <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
-            </a-entity>
-      
-            <a-entity id="alpha-visualization-green">
-              <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
-            </a-entity>
-      
-            <a-entity id="alpha-visualization-pink">
-              <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
-            </a-entity>
-          </a-entity>
-        </a-entity>
-
-        <a-entity circles-interactive-object
-                  visualization-info="visualizationID: alpha-visualization"
-                  rotation="0 45 90"
-                  position="-0.147 0.514 -0.400"
-                  circles-button="type: cylinder; pedastal_visible: false; diameter: 0.4; false; button_color: red; button_color_hover: #474747"></a-entity>
-
-        <a-entity position="0.635 0 -0.221">
-         <a-entity share-emotion="visualizationID: alpha" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
-        </a-entity>
-
-      </a-entity>
+          <a-entity id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity room="roomName: alpha" id="alpha-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="alpha-visualizer" room-visualizer>
+              <a-entity id="alpha-visualization-red">
+                <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
         
-     </a-entity>
-
-     <!-- emotion visualizers -- Gamma-->
-     <a-entity rotation="0 -102.271 0">
-      <a-entity position="2.176 0 -5.729">
-        <a-entity class="emptyCollider"></a-entity>
+              <a-entity id="alpha-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
         
-     
-      <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
-      <a-entity class="visualizer" position="0 0 -0.52" scale="0.2 1 0.2">
-        <a-entity geometry="primitive: cylinder" position="0 1.607 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-        <a-entity geometry="primitive: cylinder" position="0 0.790 0" scale="1.15 0.040 1.15" material="color: #000924"></a-entity>
-        <a-entity geometry="primitive: cylinder" position="0 1.200 0" scale="1 0.800 1" material="transparent: true; opacity: 0.2;"
-        ></a-entity>
-        <a-entity geometry="primitive: cylinder" position="0 0.400 0" scale="1 0.800 1" material="color: #000924"></a-entity>
-        <a-entity room="roomName: gamma" id="gamma-visualization" position="0 0.800 0" scale="0.9 0.7 0.9" id="gammma-visualizer" room-visualizer>
-          <a-entity id="gamma-visualization-red">
-            <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+              <a-entity id="alpha-visualization-blue">
+                <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="alpha-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="alpha-visualization-pink">
+                <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
+              </a-entity>
           </a-entity>
-    
-          <a-entity id="gamma-visualization-yellow">
-            <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+
+          <a-entity circles-interactive-object
+                    visualization-info="visualizationID: alpha-visualization"
+                    rotation="0 88.595 90"
+                    position="0.065 0.908 -0.676"
+                    circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
           </a-entity>
-    
-          <a-entity id="gamma-visualization-blue">
-            <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+
+          <!-- Chnage sound to circles sound -->
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: alpha" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
           </a-entity>
-    
-          <a-entity id="gamma-visualization-green">
-            <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
-          </a-entity>
-    
-          <a-entity id="gamma-visualization-pink">
-            <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
-          </a-entity>
+
         </a-entity>
       </a-entity>
 
-      <a-entity position="0.635 0 -0.221">
-       <a-entity share-emotion="visualizationID: gamma" circles-interactive-object="type:outline" geometry="primitive: cylinder" position="0 0.4 0" scale="0.15 0.8 0.15" material="transparent: true; opacity: 0.2;" sound="src: #place_orb_tube;"></a-entity>
-      </a-entity>
+      <!-- emotion visualizers -- Gamma-->
+      <a-entity rotation="0 -102.05 0">
+        <a-entity position="2.176 0 -5.729">
 
-    </a-entity>
-      
-   </a-entity>
+          <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity room="roomName: gamma" id="gamma-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="gamma-visualizer" room-visualizer>
+              <a-entity id="gamma-visualization-red">
+                <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="gamma-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="gamma-visualization-blue">
+                <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="gamma-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+        
+              <a-entity id="gamma-visualization-pink">
+                <a-cylinder color="#fe90e6" position="0 0.5 0"></a-cylinder>
+              </a-entity>
+          </a-entity>
+
+          <a-entity circles-interactive-object
+                    visualization-info="visualizationID: gamma-visualization"
+                    rotation="0 88.595 90"
+                    position="0.065 0.908 -0.676"
+                    circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
+          </a-entity>
+
+          <!-- Chnage sound to circles sound -->
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: gamma" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
+          </a-entity>
+
+        </a-entity>
+      </a-entity>
+          
+
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
