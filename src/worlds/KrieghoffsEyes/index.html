@@ -34,8 +34,6 @@
       <a-asset-item id="Raft2" src="assets/models/RIA/Raft2.gltf"></a-asset-item>
       <a-asset-item id="Raft3" src="assets/models/RIA/Raft3.gltf"></a-asset-item>
       <a-asset-item id="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
-      <a-asset-item id="RiaNav" src="assets/models/environment/riaNavMesh.gltf"></a-asset-item>
-
       <img id="RIA" src="assets/models/painting/paintings/RIA.png" crossorigin="anonymous"></a-asset-item>  
       <img id="RIA_gray" src="assets/models/painting/paintings/RIA_gray.png" crossorigin="anonymous"></a-asset-item>  
       <img id="blizzard" src="assets/models/blizzard/blizzard.png" crossorigin="anonymous"></a-asset-item>
@@ -115,7 +113,7 @@
     </a-entity>
 
 
-    <a-entity visible='false' id="nav-mesh" geometry="primitive: box" scale="11 .05 14.6" position="0 0.04 0"></a-entity>
+    <a-entity visible='false' id="nav-mesh" nav-mesh geometry="primitive: box" scale="11 .05 14.6" position="0 0.04 0"></a-entity>
     <a-entity id="Cabin" visible="true">
       <!-- Point lighting inside the cabin -->
       <a-entity light="type: point; color: #FF8C42; intensity: 2.5; distance: 10; decay: 1.2; castShadow: true"
@@ -163,7 +161,7 @@
         material="color: #fffff; src:#blizzard_gray; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
       <!-- Checkpoints -->
-      <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 3.215 0"></a-entity>
+      <a-entity id="checkpoint_red" circles-checkpoint position="-18.400 2.976 0"></a-entity>
       <a-entity id="checkpoint_green" circles-checkpoint position="-40 0.105 0"></a-entity>
       <a-entity id="checkpoint_red_return" circles-checkpoint position="0 0 0"></a-entity>
 
