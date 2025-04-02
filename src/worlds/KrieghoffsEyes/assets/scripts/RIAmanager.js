@@ -26,7 +26,8 @@ AFRAME.registerComponent('ria-manager', {
             this.navmesh.removeAttribute('nav-mesh');
         });
 
-        this.el.addEventListener('ria-complete', () => {
+        this.el.addEventListener('ria-complete', () =>{
+
             this.spawnPortal();
             gameState.RIAdone = true;
         });
@@ -34,7 +35,9 @@ AFRAME.registerComponent('ria-manager', {
         this.el.addEventListener('return-clicked', () => {
             this.riaWorld = document.querySelector('#riaWorld');
             this.environment = document.querySelector('#environment');
-        
+            this.redPaint = document.querySelector('#redPaint');
+            this.redPaint.setAttribute('material', 'src:#RIA')
+
             // Hide Ria world, show cabin
             this.riaWorld.setAttribute('visible', 'false');
             this.cabin.setAttribute('visible', 'true');
@@ -158,6 +161,7 @@ AFRAME.registerComponent('ria-manager', {
     spawnPortal: function () {
         // Create the a-box element
         const riaWorld = document.querySelector('#riaWorld');
+        let button = document.querySelector('#button');
         let redPaint = document.createElement('a-box');
         redPaint.setAttribute('position', '-0.584 3.046 -18.700');
         redPaint.setAttribute('scale', '1 1.3 0.071');
@@ -170,6 +174,8 @@ AFRAME.registerComponent('ria-manager', {
         redPaint.setAttribute('painting-highlight', '');
         redPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 
+        button.setAttribute('position', '0.238 -0.36 0.195')
+
         // Create the a-entity element
         let painting3 = document.createElement('a-entity');
         painting3.setAttribute('id', 'painting3_return');
@@ -177,6 +183,15 @@ AFRAME.registerComponent('ria-manager', {
         painting3.setAttribute('gltf-model', '#painting_gltf');
         painting3.setAttribute('position', '-0.579 1.707 -18.683');
         painting3.setAttribute('rotation', '0 -130.53239080229443 0');
+
+        if(painting3)
+        {
+          button.setAttribute('position', '0.238 -0.36 0.195');
+        }
+        else
+        {
+          button.setAttribute('position', '0.219 -0.387 0.030')
+        }
 
         let voteCounter = document.createElement('a-entity');
         voteCounter.setAttribute('id', 'voteCounter_redPaint_return');
