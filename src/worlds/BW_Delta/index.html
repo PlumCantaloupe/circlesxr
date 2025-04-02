@@ -24,7 +24,7 @@
       }
     </script>
 
-    <script src="js/bloom.js" type="module"></script>
+    <script src="/worlds/BW_Delta/js/bloom.js" type="module"></script>
 
   </head>
   <body>
@@ -40,7 +40,8 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <img id='skyMap' src='/worlds/BW_Delta/assets/textures/neuronSky.png' crossorigin="anonymous">
-        <a-asset-item id="base_model" src="/worlds/BW_Delta/assets/models/deltabase.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="base_model" src="/worlds/BW_Delta/assets/models/stumps.obj"></a-asset-item>
+        <a-asset-item id="floor_model" src="/worlds/BW_Delta/assets/models/floor.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="core_model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="globe_model" src="/worlds/BW_Delta/assets/models/globe.obj"></a-asset-item>
         <a-asset-item id="tubes_model" src="/worlds/BW_Delta/assets/models/tubes.obj"></a-asset-item>
@@ -148,7 +149,12 @@
       <a-entity gltf-model="#memory-core-model" id="memory-core" memory-core position="0 10.028 -10.301"></a-entity>
 
       <a-entity   id="base" 
-                  gltf-model="#base_model"
+                  obj-model="obj: #base_model"
+                  material="color: #dbe5ff; emissive: #dbe5ff; emissiveIntensity: 1;"
+                  position="0 0 0"></a-entity>
+
+      <a-entity   id="floor" 
+                  gltf-model="#floor_model"
                   position="0 0 0"
                   circles-sphere-env-map="src:#skyMap"></a-entity>
       
@@ -157,10 +163,11 @@
                   material="color: #cfe6ff; opacity:0.4"
                   position="0 0 0"></a-entity>
             
-      <!--<a-entity   id="globe" 
+      <a-entity   id="globe" 
                   obj-model="obj: #globe_model"
                   material="color: #cfe6ff; opacity:0.4; blending: subtractive"
-                  position="0 0 0"></a-entity>-->
+                  position="0 0 0"></a-entity>
+
       <a-entity   id="tube1orb1" 
                   gltf-model="#tube1orb1_model"
                   animation-mixer="startAt: 2000"
@@ -304,21 +311,6 @@
                   material="color: white; emissive: #C6A7E9; emissiveIntensity: 1;"
                   position="3 -2 -5"
                   circles-interactive-object = "enabled:false"></a-entity>
-
-      <a-entity   id="base" 
-                  gltf-model="#base_model"
-                  position="0 0 0"
-                  circles-sphere-env-map="src:#skyMap"></a-entity>
-      
-      <a-entity   id="tubes" 
-                  obj-model="obj: #tubes_model"
-                  material="color: #cfe6ff; opacity:0.4"
-                  position="0 0 0"></a-entity>
-            
-      <!--<a-entity   id="globe" 
-                  obj-model="obj: #globe_model"
-                  material="color: #cfe6ff; opacity:0.4; blending: subtractive"
-                  position="0 0 0"></a-entity>-->
       <a-entity   id="tube1orb1" 
                   gltf-model="#tube1orb1_model"
                   animation-mixer="startAt: 2000"
@@ -335,133 +327,6 @@
                   gltf-model="#tube1orb4_model"
                   animation-mixer="startAt: 0"
                   position="0 0 0"></a-entity>
-
-      <a-entity id= "particle1" position="1.158 9.438 -10.724" rotation="0 0 12.4"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <a-entity id= "particle2" position="0.825 10.228 -8.911" rotation="-20.211 -25.568 21.949"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <a-entity id= "particle3" position="-0.877, 10.15, -8.948" rotation="-12.229 -105.941 39.594"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <a-entity id= "particle4" position= "0.17, 8.732, -10.613" rotation="-29.224 -145.387 -69.902"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <a-entity id= "particle5" position="-1.382, 10.866, -10.177" rotation="12.056 -18.693 -177.155"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <a-entity id= "particle6" position="-0.0271, 11.599, -11.302" rotation="-71.270 -37.958 144.113"
-                  particle-system=" preset:dust;
-                                    accelerationSpread: 0 0 0;
-                                    accelerationValue: 0 0 0;
-                                    positionSpread: 0 1 1;
-                                    maxAge:3.5;
-                                    blending: 2;
-                                    dragValue: 1;
-                                    velocityValue: 0 0.5 0;
-                                    size: 0.15;
-                                    sizeSpread: 0.3;
-                                    duration: infinity;
-                                    particleCount: 250;"></a-entity>
-      <!-- test orbs -->
-      <a-entity  id="orboutside1" class="orb"
-                geometry="primitive: sphere; radius: 0.3"
-                material="color: #b74e63; opacity:0.8; transparent: true; side:double; blending: subtractive"
-                position="-6 -2 -5"
-                circles-interactive-object 
-                circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
-      <a-entity   id="orbinside1"
-                  geometry="primitive: sphere; radius: 0.2"
-                  material="color: white; emissive: #b1fed1; emissiveIntensity: 1;"
-                  position="-6 -2 -5"
-                  circles-interactive-object = "enabled:false"></a-entity>
-      
-      <a-entity  id="orboutside2" class="orb"
-                  geometry="primitive: sphere; radius: 0.3"
-                  material="color: #c74723; opacity:0.8; transparent: true; side:double; blending: subtractive"
-                  position="-6 -2 0"
-                  circles-interactive-object 
-                  circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
-      <a-entity   id="orbinside2"
-                  geometry="primitive: sphere; radius: 0.2"
-                  material="color: white; emissive: #b1f8ff; emissiveIntensity: 1;"
-                  position="-6 -2 0"
-                  circles-interactive-object = "enabled:false"></a-entity>
-      
-      <a-entity   id="orboutside3" class="orb"
-                    geometry="primitive: sphere; radius: 0.3"
-                    material="color: #FF8B4C; opacity:0.8; transparent: true; side:double; blending: subtractive"
-                    position="0 -2 -5"
-                    circles-interactive-object 
-                    circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity> 
-    <a-entity   id="orbinside3"
-                    geometry="primitive: sphere; radius: 0.2"
-                    material="color: white; emissive: #68A8FF; emissiveIntensity: 1;"
-                    position="0 -2 -5"
-                    circles-interactive-object = "enabled:false"></a-entity>
-
-      <a-entity   id="orboutside4" class="orb"
-                  geometry="primitive: sphere; radius: 0.3"
-                  material="color: #70a300; opacity:0.8; transparent: true; side:double; blending: subtractive"
-                  position="3 -2 -5"
-                  circles-interactive-object 
-                  circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
-       <a-entity   id="orbinside4"
-                  geometry="primitive: sphere; radius: 0.2"
-                  material="color: white; emissive: #C6A7E9; emissiveIntensity: 1;"
-                  position="3 -2 -5"
-                  circles-interactive-object = "enabled:false"></a-entity>
 
       <!-- TO BE REPLACED - END -->
       <a-entity id="Portal-Hub"
