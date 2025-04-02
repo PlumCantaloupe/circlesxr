@@ -5,6 +5,7 @@
 
   <!-- my scripts -->
   <script src="scripts/robot-controls.js"></script>
+  <script src="scripts/ball-generator.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -88,6 +89,16 @@
         <a-entity class="elbow left button"  position="-0.2 0 0" scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
         <a-entity class="elbow right button" position="0.2 0 0"  scale="0.5 0.5 0.5" circles-button="pedastal_visible:false;"></a-entity>
       </a-entity>
+    </a-entity>
+
+    <!-- ball generator -->
+    <a-entity id="universal_button" position="3 0 0">
+      <a-entity class="button interactive" position="0 0.6 0" geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255, 100, 100)"
+                ball-generator="ball_radius:0.2; ball_radius_deviation:0.1; spawn_position:3 1.6 0; spawn_position_deviation:0.5;"
+                animation__mouseenter="property:material.color; type:color; to:rgb(255, 0, 0); startEvents:mouseenter; dur:200"
+                animation__mouseleave="property:material.color; type:color; to:rgb(255, 100, 100); startEvents:mouseleave; dur:200"
+                animation__click="property:position.y; from:0.55; to:0.6; startEvents:click; dur:300" shadow></a-entity>
+      <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
     </a-entity>
 
     <!-- ground & sky -->
