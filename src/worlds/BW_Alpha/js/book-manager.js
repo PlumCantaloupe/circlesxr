@@ -35,7 +35,8 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.book3 = scene.querySelector('#book3');
         CONTEXT_AF.book4 = scene.querySelector('#book4');
         CONTEXT_AF.testbtn = scene.querySelector('#tempbutton');
-
+        CONTEXT_AF.bookPlaceEventName = "bookplace_event";
+        CONTEXT_AF.bookplaceduration = 2000;
 
         CONTEXT_AF.track1 = scene.querySelector('#track1');
         CONTEXT_AF.position1 = {x: 0, y: 1.213, z: -12.319};
@@ -44,10 +45,10 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.book1c2 = {x: 0.392, y: 1.108, z: -12.079};
 
         CONTEXT_AF.track2 = scene.querySelector('#track2');
-        CONTEXT_AF.position2 = {x: 1.639, y: 1.213, z: -13.925};
+        CONTEXT_AF.position2 = {x: 1.605, y: 1.213, z: -13.925};
         CONTEXT_AF.rotation2 = {x: 0, y: 90, z: 0};
-        CONTEXT_AF.book2c1 = {x: 1.367, y: 1.472, z: -13.528};
-        CONTEXT_AF.book2c2 = {x: 1.847, y: 1.108, z: -14.317};
+        CONTEXT_AF.book2c1 = {x: 1.342, y: 1.472, z: -13.532};
+        CONTEXT_AF.book2c2 = {x: 1.806, y: 1.108, z: -14.321};
 
         CONTEXT_AF.track3 = scene.querySelector('#track3');
         CONTEXT_AF.position3 = {x: 0, y: 1.213, z: -15.53};
@@ -56,10 +57,10 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.book3c2 = {x: -0.392, y: 1.108, z: -15.733};
 
         CONTEXT_AF.track4 = scene.querySelector('#track4');
-        CONTEXT_AF.position4 = {x: -1.639, y: 1.213, z: -13.925};
+        CONTEXT_AF.position4 = {x: -1.605, y: 1.213, z: -13.925};
         CONTEXT_AF.rotation4 = {x: 0, y: 270, z: 0};
-        CONTEXT_AF.book4c1 = {x: -1.367, y: 1.472, z: -14.317};
-        CONTEXT_AF.book4c2 = {x: -1.847, y: 1.108, z: -13.528};
+        CONTEXT_AF.book4c1 = {x: -1.342, y: 1.472, z: -14.321};
+        CONTEXT_AF.book4c2 = {x: -1.806, y: 1.108, z: -13.532};
 
         CONTEXT_AF.location1 = 0;
         CONTEXT_AF.location2 = 0;
@@ -77,6 +78,11 @@ AFRAME.registerComponent('book-manager', {
                 if (data.world === CIRCLES.getCirclesWorldName()) {
                 }
             });
+
+            CONTEXT_AF.socket.on(CONTEXT_AF.bookPlaceEventName, (data) => {
+                CONTEXT_AF.startMusic(data.book);
+            });
+
         };
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
@@ -92,10 +98,9 @@ AFRAME.registerComponent('book-manager', {
             console.log(CONTEXT_AF.book1.getAttribute('position'));
             if(CONTEXT_AF.betweenPos(CONTEXT_AF.book1.getAttribute('position'), CONTEXT_AF.book1c1, CONTEXT_AF.book1c2)){
                 //emit to others
-                //dont need to emit position or rotation i think idk (only host can place book rn idk why)
-                CONTEXT_AF.book1.setAttribute('position', CONTEXT_AF.position1);
-                CONTEXT_AF.book1.setAttribute('rotation', CONTEXT_AF.rotation1);
-                CONTEXT_AF.book1.setAttribute('gltf-model', '#openbook_model');
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
+                    book: 1, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
                 CONTEXT_AF.startMusic(1);
             }
         });
@@ -104,9 +109,9 @@ AFRAME.registerComponent('book-manager', {
             console.log(CONTEXT_AF.book1.getAttribute('position'));
             if(CONTEXT_AF.betweenPos(CONTEXT_AF.book2.getAttribute('position'), CONTEXT_AF.book2c1, CONTEXT_AF.book2c2)){
                 //emit to others
-                CONTEXT_AF.book2.setAttribute('position', CONTEXT_AF.position2);
-                CONTEXT_AF.book2.setAttribute('rotation', CONTEXT_AF.rotation2);
-                CONTEXT_AF.book2.setAttribute('gltf-model', '#openbook_model');
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
+                    book: 2, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
                 CONTEXT_AF.startMusic(2);
             }
         });
@@ -115,9 +120,9 @@ AFRAME.registerComponent('book-manager', {
             console.log(CONTEXT_AF.book3.getAttribute('position'));
             if(CONTEXT_AF.betweenPos(CONTEXT_AF.book3.getAttribute('position'), CONTEXT_AF.book3c1, CONTEXT_AF.book3c2)){
                 //emit to others
-                CONTEXT_AF.book3.setAttribute('position', CONTEXT_AF.position3);
-                CONTEXT_AF.book3.setAttribute('rotation', CONTEXT_AF.rotation3);
-                CONTEXT_AF.book3.setAttribute('gltf-model', '#openbook_model');
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
+                    book: 3, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
                 CONTEXT_AF.startMusic(3);
             }
         });
@@ -126,9 +131,9 @@ AFRAME.registerComponent('book-manager', {
             console.log(CONTEXT_AF.book4.getAttribute('position'));
             if(CONTEXT_AF.betweenPos(CONTEXT_AF.book4.getAttribute('position'), CONTEXT_AF.book4c1, CONTEXT_AF.book4c2)){
                 //emit to others
-                CONTEXT_AF.book4.setAttribute('position', CONTEXT_AF.position4);
-                CONTEXT_AF.book4.setAttribute('rotation', CONTEXT_AF.rotation4);
-                CONTEXT_AF.book4.setAttribute('gltf-model', '#openbook_model');
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
+                    book: 4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
                 CONTEXT_AF.startMusic(4);
             }
         });
@@ -144,7 +149,6 @@ AFRAME.registerComponent('book-manager', {
         }
     },
 
-
     // set locations of books
     setLocations: function () {
         const CONTEXT_AF = this;
@@ -156,8 +160,8 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.location4 = CONTEXT_AF.numbers[3];
 
         //set positions of hidden books
-        CONTEXT_AF.book1.setAttribute('position', CONTEXT_AF.locations[CONTEXT_AF.location1].position);
-        CONTEXT_AF.book1.setAttribute('rotation', CONTEXT_AF.locations[CONTEXT_AF.location1].rotation);
+        //CONTEXT_AF.book1.setAttribute('position', CONTEXT_AF.locations[CONTEXT_AF.location1].position);
+        //CONTEXT_AF.book1.setAttribute('rotation', CONTEXT_AF.locations[CONTEXT_AF.location1].rotation);
         CONTEXT_AF.book2.setAttribute('position', CONTEXT_AF.locations[CONTEXT_AF.location2].position);
         CONTEXT_AF.book2.setAttribute('rotation', CONTEXT_AF.locations[CONTEXT_AF.location2].rotation);
         CONTEXT_AF.book3.setAttribute('position', CONTEXT_AF.locations[CONTEXT_AF.location3].position);
@@ -198,6 +202,32 @@ AFRAME.registerComponent('book-manager', {
     startMusic: function (book) {
         const CONTEXT_AF = this;
         
-        CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 1`);
+        CONTEXT_AF[`book${book}`].setAttribute('position', CONTEXT_AF[`position${book}`]);
+        CONTEXT_AF[`book${book}`].setAttribute('rotation', CONTEXT_AF[`rotation${book}`]);
+        CONTEXT_AF[`book${book}`].setAttribute('gltf-model', '#openbook_model');
+
+        const sparkle = document.querySelector(`#sparkle${book}`);
+
+        sparkle.setAttribute('particle-system', 'preset: default; texture: /worlds/BW_Alpha/assets/textures/sparkle.png; color: #ffc178; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0 0 0; maxAge:2; blending: 2; velocityValue: 0 0 0; size: 0.05; sizeSpread: -0.3; duration:' +  CONTEXT_AF.bookplaceduration/1000 + '; particleCount: 80;');
+
+        const position = CONTEXT_AF[`position${book}`];
+
+        /*[`book${book}`].setAttribute('animation__descend', {
+            property: 'position',
+            from: {x: position.x, y: position.y + 2, z: position.z},
+            to: position,
+            dur: CONTEXT_AF.bookplaceduration,
+            startEvents: onclick,
+        });*/
+        setTimeout(() => {
+            CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 1`);
+        }, CONTEXT_AF.bookplaceduration);
+        
+        const particleSystem = document.createElement('a-entity');
+        particleSystem.setAttribute('id', `musicparticles${book}`)
+        particleSystem.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12;");
+        particleSystem.setAttribute('position', '0 0.1 0');
+        particleSystem.setAttribute('scale', '0.5 0.5 0.5');
+        CONTEXT_AF[`book${book}`].appendChild(particleSystem);
     },
 });
