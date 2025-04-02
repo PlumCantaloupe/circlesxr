@@ -1,156 +1,152 @@
 {
-	"asset":{
-		"generator":"Khronos glTF Blender I/O v4.3.47",
-		"version":"2.0"
-	},
-	"scene":0,
-	"scenes":[
-		{
-			"name":"Scene",
-			"nodes":[
-				0
-			]
-		}
-	],
-	"nodes":[
-		{
-			"mesh":0,
-			"name":"Axe.001",
-			"scale":[
-				0.0023147822357714176,
-				0.0023147822357714176,
-				0.0023147822357714176
-			],
-			"translation":[
-				0.10158754140138626,
-				0.0029991455376148224,
-				-0.027719467878341675
-			]
-		}
-	],
-	"materials":[
-		{
-			"name":"standardSurface1_1001.1001",
-			"pbrMetallicRoughness":{
-				"baseColorTexture":{
-					"index":0
-				},
-				"metallicRoughnessTexture":{
-					"index":1
-				}
-			}
-		}
-	],
-	"meshes":[
-		{
-			"name":"Axe",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":0,
-						"NORMAL":1,
-						"TEXCOORD_0":2
-					},
-					"indices":3,
-					"material":0
-				}
-			]
-		}
-	],
-	"textures":[
-		{
-			"sampler":0,
-			"source":0
-		},
-		{
-			"sampler":0,
-			"source":1
-		}
-	],
-	"images":[
-		{
-			"mimeType":"image/jpeg",
-			"name":"standardSurface1_baseColor_1001",
-			"uri":"textures/standardSurface1_baseColor_1001.jpg"
-		},
-		{
-			"mimeType":"image/jpeg",
-			"name":"standardSurface1_occlusionRoughnessMetallic_1001",
-			"uri":"textures/standardSurface1_occlusionRoughnessMetallic_1001.jpg"
-		}
-	],
-	"accessors":[
-		{
-			"bufferView":0,
-			"componentType":5126,
-			"count":429,
-			"max":[
-				-3.8253161907196045,
-				11.32431411743164,
-				0.5000009536743164
-			],
-			"min":[
-				-7.631641864776611,
-				-0.2627239227294922,
-				-0.5000009536743164
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":1,
-			"componentType":5126,
-			"count":429,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":2,
-			"componentType":5126,
-			"count":429,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":3,
-			"componentType":5123,
-			"count":1128,
-			"type":"SCALAR"
-		}
-	],
-	"bufferViews":[
-		{
-			"buffer":0,
-			"byteLength":5148,
-			"byteOffset":0,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":5148,
-			"byteOffset":5148,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":3432,
-			"byteOffset":10296,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":2256,
-			"byteOffset":13728,
-			"target":34963
-		}
-	],
-	"samplers":[
-		{
-			"magFilter":9729,
-			"minFilter":9987
-		}
-	],
-	"buffers":[
-		{
-			"byteLength":15984,
-			"uri":"axe.bin"
-		}
-	]
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.7.33",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Axe.001",
+            "scale" : [
+                0.0023147822357714176,
+                0.0023147822357714176,
+                0.0023147822357714176
+            ],
+            "translation" : [
+                -0.0016955152386799455,
+                0.00480361795052886,
+                -0.00011075660586357117
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "standardSurface1_1001.1001",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicRoughnessTexture" : {
+                    "index" : 1
+                }
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Axe",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "standardSurface1_baseColor_1001",
+            "uri" : "textures/standardSurface1_baseColor_1001.jpg"
+        },
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "standardSurface1_occlusionRoughnessMetallic_1001",
+            "uri" : "textures/standardSurface1_occlusionRoughnessMetallic_1001.jpg"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 512,
+            "max" : [
+                2.361506700515747,
+                9.56627082824707,
+                0.4610157012939453
+            ],
+            "min" : [
+                -1.4448189735412598,
+                -2.0207672119140625,
+                -0.5389862060546875
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 512,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 512,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 1128,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 6144,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 6144,
+            "byteOffset" : 6144
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4096,
+            "byteOffset" : 12288
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 2256,
+            "byteOffset" : 16384
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9987
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 18640,
+            "uri" : "axe.bin"
+        }
+    ]
 }

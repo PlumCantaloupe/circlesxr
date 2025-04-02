@@ -75,9 +75,9 @@ AFRAME.registerComponent('blz-manager', {
                 pedestal.parentNode.removeChild(pedestal);
             }
 
-            const raft = document.querySelector('#sled');
-            if (raft && raft.parentNode) {
-                raft.parentNode.removeChild(raft);
+            const sled = document.querySelector('#sled');
+            if (sled && sled.parentNode) {
+              sled.parentNode.removeChild(sled);
             }
 
             // Remove portal elements
@@ -161,7 +161,7 @@ AFRAME.registerComponent('blz-manager', {
                 //sledPart.parentNode.remove(sledPart);
             });
             
-            sledPart.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
+            sledPart.setAttribute('scale', '0.3 1 1'); // Scale down by half in all directions
             const rot = rotations[index];
             sledPart.setAttribute('rotation', `${rot.x} ${rot.y} ${rot.z}`);
 
@@ -276,12 +276,13 @@ AFRAME.registerComponent('blz-manager', {
       const blzWorld = document.querySelector('#blzWorld');
       this.axe = document.createElement('a-entity');
       this.axe.setAttribute('id', 'axe');
-      this.axe.setAttribute('geometry', 'primitive: cylinder; height: 0.75; radius: 0.05');
+      this.axe.setAttribute('gltf-model', `#axe_gltf`);
+      this.axe.setAttribute('scale', {x:20, y:20, z:20});
       this.axe.setAttribute('class', 'interactable-axe');
       this.axe.setAttribute('circles-artefact', {
-        inspectPosition:      '0.0 0.5 0.0',
-        inspectScale:         '1 1 1',
-        inspectRotation:      '-30 0 0',
+        inspectPosition:      '0.0 0.0 0.0',
+        inspectScale:         '40 40 40',
+        inspectRotation:      '0 -70 30',
         textRotationY:        '90',
         descrption_offset:    '0 1 0',
         description_on:       true,
@@ -352,7 +353,7 @@ AFRAME.registerComponent('blz-manager', {
 
         sled.setAttribute('id', `sled`);
         sled.setAttribute('visible', 'false');
-        sled.setAttribute('gltf-model', `#Raft4`);
+        sled.setAttribute('gltf-model', `#Sled4`);
         sled.setAttribute('material', 'color: brown'); // Material needs to be separate
         
         sled.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
@@ -434,7 +435,8 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
         // Update the sled visibility and model
         this.sled.setAttribute('visible', 'true');
         //the parts start at 0, but the raft starts a 1
-        this.sled.setAttribute('gltf-model', `#Raft${this.sledPartsPlaced}`);
+        this.sled.setAttribute('gltf-model', `#Sled${this.sledPartsPlaced}`);
+        this.sled.setAttribute('scale', {x:50, y:50, z:50});
         console.log("Local parts placed: " + this.sledPartsPlaced);
       };
 
@@ -592,8 +594,10 @@ AFRAME.registerComponent('blz-lazy-load-environment', {
         //Blizzard set up
         const blzEnv = document.createElement('a-entity');
         //adding cylinder for testing - replace with gltf
-        blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
-        blzEnv.setAttribute('position', '-42 1 0');
+        //blzEnv.setAttribute('geometry', 'primitive: cylinder; height: 1; radius: 0.2');
+        blzEnv.setAttribute('gltf-model', '#blz_environment');
+        blzEnv.setAttribute('position', '-42 -8 -10.743');
+        blzEnv.setAttribute('scale', '8 8 8')
         blzEnv.setAttribute('visible', 'false');
         blzEnv.setAttribute('id', 'blzEnv');
         blzWorld.appendChild(blzEnv);

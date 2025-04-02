@@ -31,6 +31,11 @@
       <a-asset-item id="Raft4" src="assets/models/RIA/Raft4.gltf"></a-asset-item>
       <a-asset-item id="RiaNav" src="assets/models/environment/riaNavMesh.gltf"></a-asset-item>
 
+      <a-assets id="Sled1" src="assets/models/blizzard/props/sleds/sled1/sled1.gltf"></a-assets>
+      <a-assets id="Sled2" src="assets/models/blizzard/props/sleds/sled2/sled2.gltf"></a-assets>
+      <a-assets id="Sled3" src="assets/models/blizzard/props/sleds/sled3/sled3.gltf"></a-assets>
+      <a-assets id="Sled4" src="assets/models/blizzard/props/sleds/sled4/sled4.gltf"></a-assets>
+
       <img id="RIA" src="assets/models/painting/paintings/RIA.png" crossorigin="anonymous"></a-asset-item>  
       <img id="blizzard" src="assets/models/blizzard/blizzard.png" crossorigin="anonymous"></a-asset-item>
 
@@ -48,6 +53,11 @@
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
       <a-asset-item id="ria_navmesh" src="/worlds/KrieghoffsEyes/assets/models/environment/riaNavMesh.gltf"
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+      <!-- blz environment -->
+      <a-asset-item id="blz_environment" src="assets/models/blizzard/props/environment/blizzardenV.gltf"></a-asset-item>
+
+      <a-asset-item id="axe_gltf" src="assets/models/blizzard/props/axe/axe.gltf"></a-asset-item>
 
       <a-asset-item id="chair_gltf" src="/worlds/KrieghoffsEyes/assets/models/chair/chair.gltf"
         response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -152,7 +162,7 @@
 
       <a-box position="-2.86388 1.33563 -4.2867" scale="1 1.3 0.071"
         rotation="-15.513978218757302 42.626914042142985 0.9035544429213082" color="green" id="greenPaint"
-        class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; seed: 222; skyType: atmosphere;  lighting: distant; dressing: torii;"
+        class="interactive" circles-interactive-object="type:highlight" environemntProp="preset: japan; ground: none; groundYPosition: -5; seed: 222; skyType: atmosphere;  lighting: distant; dressing: none;"
         painting-highlight
         material="color: #fffff; src:#blizzard; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;"></a-box>
 
