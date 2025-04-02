@@ -1,11 +1,3 @@
-// Map of emotions to orb colours
-const EMOTION_ORB_COLOUR_MAP = {
-    PINK: 'peaceful',
-    YELLOW: 'joyful',
-    BLUE: 'sad',
-    GREEN: 'unsettled',
-    ORANGE: 'focused'
-}
 
 // Component updates the central orbs scale based on total emotion data retrieved from the manager component
 AFRAME.registerComponent('central-orbs-visualization', {
@@ -51,9 +43,12 @@ AFRAME.registerComponent('central-orbs-visualization', {
 
         CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionPopulateEvent, function (data) {
             // Scale orbs according to their voting proportion
-            CONTEXT_AF.emotionData = data.detail.emotionData[1].emotions;
-            CONTEXT_AF.totalVoteCount = CONTEXT_AF.emotionData.reduce((totalCount, currEmotion) => totalCount += currEmotion.votes, 0);
-            CONTEXT_AF.updateVisualization();
+            console.log("gotttttttttttttttttttt data inside central", data.detail)
+            if(data.detail != null && data.detail != undefined && data.detail.emotionData[1].emotions) {
+                CONTEXT_AF.emotionData = data.detail.emotionData[1].emotions;
+                CONTEXT_AF.totalVoteCount = CONTEXT_AF.emotionData.reduce((totalCount, currEmotion) => totalCount += currEmotion.votes, 0);
+                CONTEXT_AF.updateVisualization();
+            }
         });
 
         CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function (data) {

@@ -35,8 +35,9 @@ AFRAME.registerComponent('share-emotion', {
               //un-parent orb from user and parent above the suction tube
               const holdingOrbId = manager.getAttribute('manager').holdingOrbId;
               const orb = document.querySelector(`#${holdingOrbId}`);
-              orb.object3D.parent = CONTEXT_AF.el.parentNode.object3D;
-              orb.object3D.position.set(0, 0.9, 0);
+              orb.object3D.parent = CONTEXT_AF.el.object3D;
+              orb.object3D.position.set(0, 1.1, 0);
+              orb.object3D.scale.set(1, 1, 1);
               
               //display animation for suction tube after 0.3 seconds
               setTimeout(function(){
@@ -50,13 +51,14 @@ AFRAME.registerComponent('share-emotion', {
               //delete the orb once it's finished animating
               setTimeout(function() {
                 //trigger visualization update
+                //TO DO: probably better to make this availble on remove in the orb component
+                orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
+                orb.parentNode.removeChild(orb);
                 CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbId);
-                CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
+                //CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID});
                 console.log("emit");
-                orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
-                orb.parentNode.removeChild(orb);
                 CONTEXT_AF.manager.setAttribute('manager', {holdingOrb: false, 
                                                             holdingOrbId: ''});
                             

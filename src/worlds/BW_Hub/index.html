@@ -49,7 +49,6 @@
     <script src="js/dispense-emotion.js"></script>
     <script src="js/emotion-pick-up.js"></script>
     <script src="js/share-emotion.js"></script>
-    <script src="js/room.js"></script>
     <script src="js/accessibility-settings.js"></script>
     <script src="js/set-spawnpoint.js"></script>
     <script src="js/visualization-info.js"></script>
@@ -273,10 +272,10 @@
 
        <!-- emotion visualizers -- Delta-->
        <a-entity rotation="0 -0.45 0">
-        <a-entity position="2.176 0 -5.729">
+        <a-entity position="2.176 0 -5.729" visualization-info="roomName: delta">
 
-          <a-entity visualization-info="visualizationID: delta-visualization" id="delta-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
-            <a-entity room="roomName: delta" id="delta-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="delta-visualizer" room-visualizer>
+          <a-entity id="delta-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity id="delta-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="delta-visualizer">
               <a-entity id="delta-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
@@ -299,10 +298,16 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    id="delta-visualization-info-button"
+                    id="delta-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
+          </a-entity>
+
+          <a-entity class="cutomButton" position="0.065 0.908 -0.676" rotation="0 88.595 90">
+            <a-entity circles-interactive-object geometry="primitive: cylinder; radius:0.15;"  material="color: #FFF" animation="property: position; from: 0 -0.1 0; to: 0 0 0; dur: 400; startEvents: click">
+              <a-entity text="value: ?; align:center; width: 1.2" rotation="0 -90 0" position="0 0.3 0"></a-entity>
+            </a-entity>
           </a-entity>
 
           <!-- Chnage sound to circles sound -->
@@ -314,10 +319,10 @@
 
        <!-- emotion visualizers -- Alpha-->
       <a-entity rotation="0 127.598 0">
-        <a-entity position="2.176 0 -5.729">
+        <a-entity position="2.176 0 -5.729" visualization-info="roomName: alpha">
 
-          <a-entity visualization-info="visualizationID: alpha-visualization" id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
-            <a-entity room="roomName: alpha" id="alpha-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="alpha-visualizer" room-visualizer>
+          <a-entity id="alpha-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity id="alpha-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="alpha-visualizer">
               <a-entity id="alpha-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
@@ -340,7 +345,7 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    id="alpha-visualization-info-button"
+                    id="alpha-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
@@ -355,10 +360,10 @@
 
       <!-- emotion visualizers -- Gamma-->
       <a-entity rotation="0 -102.05 0">
-        <a-entity position="2.176 0 -5.729">
+        <a-entity position="2.176 0 -5.729" visualization-info="roomName: gamma">
 
-          <a-entity visualization-info="visualizationID: gamma-visualization" id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
-            <a-entity room="roomName: gamma" id="gamma-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="gamma-visualizer" room-visualizer>
+          <a-entity id="gamma-visualization-info" position="0 0 -0.52" circles-description="title_text_front: Stats; offset: -1.4 1.2 0; arrow_position: right;" circles-interactive-visible="false"></a-entity>
+            <a-entity id="gamma-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="gamma-visualizer">
               <a-entity id="gamma-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
@@ -381,7 +386,7 @@
           </a-entity>
 
           <a-entity circles-interactive-object
-                    id="gamma-visualization-info-button"
+                    id="gamma-info-button"
                     rotation="0 88.595 90"
                     position="0.065 0.908 -0.676"
                     circles-button="type: cylinder; pedastal_visible: false; diameter: 0.310; false; button_color: red; button_color_hover: #474747">
