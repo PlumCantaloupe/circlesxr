@@ -10,14 +10,48 @@ AFRAME.registerComponent('circles-manager', {
   {
     const CONTEXT_AF  = this;
     const scene = document.querySelector('a-scene');
-    CONTEXT_AF.selectedObject     = null;
-    CONTEXT_AF.camera             = null;
-    CONTEXT_AF.playerHolder       = null;
-    CONTEXT_AF.isCirclesReadyVar  = false;
-    CONTEXT_AF.artefactZoomSteps  = [-2.0, -1.0];
-    CONTEXT_AF.artefactRotSteps   = [360.0, 90.0, 180.0, 270.0];
-    CONTEXT_AF.pickedUpElem       = null; //element that has been picked up
-    CONTEXT_AF.arteElems          = [];
+    CONTEXT_AF.selectedObject         = null;
+    CONTEXT_AF.camera                 = null;
+    CONTEXT_AF.playerHolder           = null;
+    CONTEXT_AF.isCirclesReadyVar      = false;
+    CONTEXT_AF.isExperienceEnteredVar = false;
+    CONTEXT_AF.artefactZoomSteps      = [-2.0, -1.0];
+    CONTEXT_AF.artefactRotSteps       = [360.0, 90.0, 180.0, 270.0];
+    CONTEXT_AF.pickedUpElem           = null; //element that has been picked up
+    CONTEXT_AF.arteElems              = [];
+
+    //keep track of network ids, so we can tell if a user disconnected
+    CONTEXT_AF.arrayOfUserNetworkIds           = [];
+    //want to cpature network events and pass them, abstracted, to devs
+    document.body.addEventListener('entityCreated', function(e) {
+      const netEl = e.detail.el;
+      //don't add self
+      if (netEl.id !== CIRCLES.CONSTANTS.PRIMARY_USER_ID) {
+        if (netEl.querySelector('.avatar')) {
+          const circlesComp = netEl.querySelector('.avatar').components['circles-user-networked'];
+
+          //then add network id to the list
+          CONTEXT_AF.arrayOfUserNetworkIds.push({id:netEl.id, world:circlesComp.data.userWorld, device:circlesComp.data.userDevice});
+          //emit event
+          CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.USER_CONNECTED, {id:netEl.id, world:circlesComp.data.userWorld, device:circlesComp.data.userDevice});
+        }
+      }
+    });
+
+    const lookForNetIdFunc = function(elem, index, array) {
+      return (elem.id === this);
+    };
+    document.body.addEventListener('entityRemoved', function(e) {
+      const netID = 'naf-' + e.detail.networkId;
+      let index = CONTEXT_AF.arrayOfUserNetworkIds.findIndex(lookForNetIdFunc, netID);
+      if (index >= 0) {
+        //remove index from array
+        const userData = {id:CONTEXT_AF.arrayOfUserNetworkIds[index].id, world:CONTEXT_AF.arrayOfUserNetworkIds[index].world, device:CONTEXT_AF.arrayOfUserNetworkIds[index].device};
+        CONTEXT_AF.arrayOfUserNetworkIds.splice(index, 1);
+        //emit event
+        CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.USER_DISCONNECTED, userData);
+      }
+    });
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, function(e) {
       CONTEXT_AF.pickedUpElem = e.detail.el;
@@ -160,22 +194,33 @@ AFRAME.registerComponent('circles-manager', {
   isCirclesReady : function() {
     return this.isCirclesReadyVar;
   },
+  experienceEntered : function() {
+    //let everyone know that circles is ready
+    this.isExperienceEnteredVar = true;
+    CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.EXPERIENCE_ENTERED, {});
+  },
+  isExperienceEntered : function() {
+    //let everyone know that circles is ready
+    return this.isExperienceEntered;
+  },
   addEventListeners : function () {
     const CONTEXT_AF  = this;
 
     document.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, (e) => {
       CONTEXT_AF.pickupObject( e.srcElement );
+      CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.PICKUP_OBJECT, {id:e.srcElement.id});
     });
 
     document.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT_PRE, (e) => {
       CONTEXT_AF.releaseObject();
+      CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.RELEASE_OBJECT, {id:e.srcElement.id});
     });
 
-    document.addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
+    CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, (e) => {
       //console.log("Event: "  + e.detail.components["circles-user-networked"].data.visiblename + " costume-changed " + e.detail.components["circles-user-networked"].data.color_body);
     });
 
-    CONTEXT_AF.el.sceneEl.addEventListener('camera-set-active', (e) => {
+    CIRCLES.getCirclesSceneElement().addEventListener('camera-set-active', (e) => {
       CONTEXT_AF.camera = e.detail.cameraEl; //get reference to camera in scene (assume there is only one)
     });
   },
