@@ -13,13 +13,11 @@ AFRAME.registerComponent('manager', {
       CONTEXT_AF.alphaVisualizationInfo = document.querySelector("#alpha-visualization-info");
       CONTEXT_AF.deltaVisualizationInfo = document.querySelector("#delta-visualization-info");
       CONTEXT_AF.gammaVisualizationInfo = document.querySelector("#gamma-visualization-info");
-
-      // CONTEXT_AF.
       
       CONTEXT_AF.centralOrbsVisualizationEl = document.querySelector('#central-orbs-visualization');
 
       const firebaseConfig = {
-        apiKey: "AIzaSyD9r1vjo4Evh2pTNl_eeD2ldVtnXVEL3sMdsad",
+        apiKey: "AIzaSyD9r1vjo4Evh2pTNl_eeD2ldVtnXVEL3sM",
         authDomain: "brainwavedata-bd008.firebaseapp.com",
         projectId: "brainwavedata-bd008",
         storageBucket: "brainwavedata-bd008.firebasestorage.app",

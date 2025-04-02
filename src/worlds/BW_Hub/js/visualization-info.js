@@ -142,9 +142,10 @@ AFRAME.registerComponent('visualization-info', {
     CONTEXT_AF.emotionData.forEach(element => {
         let scaleY = CONTEXT_AF.singleUnit * element.votes;
         //if the scale is too small we should set it to minimum height
-        if (scaleY < 0.01 && element.votes != 0) 
-        scaleY = 0.01;
-        
+        if (scaleY < 0.01 && element.votes != 0){
+          scaleY = 0.01;
+        }
+          
         CONTEXT_AF[element.name].object3D.scale.y = scaleY;
         // //position the cylinder
         CONTEXT_AF[element.name].object3D.position.y= totalScale;
