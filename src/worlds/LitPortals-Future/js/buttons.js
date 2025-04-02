@@ -34,46 +34,68 @@ AFRAME.registerComponent("change-environment", {
     }
 });
     
+const buildings = [
+    "#building1Model", "#building2Model", "#building3Model", "#building4Model", 
+    "#building5Model", "#building6Model", "#building7Model", "#building8Model"
+];
 const shapes = ["a-box", "a-cone", "a-cylinder", "a-sphere", "a-triangle"];
+let currentBuildingIndex = 0;
 let currentShapeIndex = 0;
-        
-// Add event listener for the blue button to spawn a shape
+
 document.addEventListener("DOMContentLoaded", function () {
     const blueButton = document.querySelector("#blue_button .button");
     console.log("Blue button found:", blueButton);
-        
+    
     if (blueButton) {
         blueButton.addEventListener("click", function () {
             // Generate random position within specified ranges
             const randomX = Math.floor(Math.random() * 41) - 20;
-            const randomY = Math.floor(Math.random() * 11);
+            const randomY = 0; // Keep buildings on the ground
             const randomZ = Math.floor(Math.random() * 41) - 20;
-        
-            // Determine the shape's color based on the environment
-            let shapeColor;
-            switch (currentEnvironment) { // Use the global variable
-                case "starry": shapeColor = "black"; break;
-                case "forest": shapeColor = "red"; break;
-                case "yavapai": shapeColor = "green"; break;
-                case "arches": shapeColor = "yellow"; break;
-                case "contact":shapeColor = "white"; break;
-                default: shapeColor = "blue"; // Default color
-            }
-        
-            // Select the shape from the shapes array
-            const shape = shapes[currentShapeIndex];
-            currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
             
-            // Generate a unique ID for the shape
-            const shapeId = `shape-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+            if (currentEnvironment === "contact") {
+                console.log("Mars");
 
-            // Emit spawnShape event with shape data to server
-            socket.emit("spawnShape", {
-                shapeId: shapeId,  // Send the unique ID
-                shape: shape,
-                position: `${randomX} ${randomY} ${randomZ}`,
-                color: shapeColor
-            });
+                // Select the building model
+                const buildingModel = buildings[currentBuildingIndex];
+                currentBuildingIndex = (currentBuildingIndex + 1) % buildings.length;
+                
+                // Generate a unique ID for the building
+                const buildingId = `building-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+                // Emit event to spawn the building in the world
+                socket.emit("spawnBuilding", {
+                    buildingId: buildingId, 
+                    model: buildingModel,
+                    position: `${randomX} ${randomY} ${randomZ}`
+                });
+                
+            } else {
+                // Select the shape model
+                const shape = shapes[currentShapeIndex];
+                currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
+                
+                // Determine the shape's color based on the environment
+                let shapeColor;
+                switch (currentEnvironment) {
+                    case "starry": shapeColor = "black"; break;
+                    case "forest": shapeColor = "red"; break;
+                    case "arches": shapeColor = "yellow"; break;
+                    case "contact": shapeColor = "white"; break;
+                    default: shapeColor = "blue";
+                }
+
+                // Generate a unique ID for the shape
+                const shapeId = `shape-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+                // Emit spawnShape event with shape data to server
+                socket.emit("spawnShape", {
+                    shapeId: shapeId,  
+                    shape: shape,
+                    position: `${randomX} ${randomY} ${randomZ}`,
+                    color: shapeColor
+                });
+            }
         });
     }
 });
@@ -291,6 +313,22 @@ socket.on("spawnShape", function (shapeData) {
 
     // Store the initial position of the shape
     shapePositions[shapeId] = position;
+});
+
+socket.on("spawnBuilding", function (buildingData) {
+    const { buildingId, model, position } = buildingData;
+    
+    // Create an entity for the building
+    const newBuilding = document.createElement("a-entity");
+    newBuilding.setAttribute("id", buildingId);
+    newBuilding.setAttribute("gltf-model", model);
+    newBuilding.setAttribute("position", position);
+    const randomScale = (Math.random() * 20 + 10).toFixed(2);
+    newBuilding.setAttribute("scale", `${randomScale} ${randomScale} ${randomScale}`);
+    newBuilding.setAttribute("circles-pickup-object", "pickupPosition: 0 0 -10; pickupScale: 25 25 25");
+    
+    // Add the building to the scene
+    document.querySelector("a-scene").appendChild(newBuilding);
 });
 
 // Listen for updates from the server and update shape positions

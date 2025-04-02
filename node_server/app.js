@@ -380,7 +380,6 @@ io.on("connection", socket => {
     } else {
         console.log(`Updating position for shape: ${data.shapeId}`, data.position);
     }    
-
     // Broadcast the updated position to all clients
     io.emit("updateShapePosition", data);
   });
@@ -404,6 +403,15 @@ io.on("connection", socket => {
     console.log("🔄 Sorting game reseted");
     socket.broadcast.emit("updateItemPosition", data);
   })
+   // Broadcast the spawn event to all clients when the server receives a "spawnShape" event
+   socket.on('spawnBuilding', (shapeData) => {
+    console.log('spawnBuilding shape:', shapeData);
+    // Emit the shape spawn data to all clients
+    io.emit('spawnBuilding', shapeData);
+});
+       // Emit event to spawn the building in the world
+
+    
 
 
 
