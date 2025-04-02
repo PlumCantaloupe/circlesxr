@@ -214,18 +214,18 @@
                 circles-pickup-networked></a-entity>    
 
       <!--artifacts--> 
-      <a-entity id="figurineArtifact" class="sorting_item" data-order="4" data-correct="false" sorting-collision
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.5 1.5 1.5" circles-pickup-networked
-        position="12.5 2.5 -15.1" rotation="0 90 0" scale="1.5 1.5 1.5" gltf-model="#figurineModel"></a-entity>
-      <a-entity id="sculptureArtifact" class="sorting_item" data-order="2" data-correct="false" sorting-collision
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.7 1.7 1.7" circles-pickup-networked
-        position="12.5 2.5 -14.2" scale="1.7 1.7 1.7" gltf-model="#sculptureModel"></a-entity>
       <a-entity id="vaseArtifact" class="sorting_item" data-order="3" data-correct="false" sorting-collision
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
-        position="12.5 2.5 -13.3" scale="0.5 0.5 0.5" gltf-model="#vaseModel"></a-entity>
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1 1 1; dropRotation: 0 0 0; dropScale: 0.7 0.7 0.7" circles-pickup-networked
+        position="12.5 2.3 -15.1" scale="0.7 0.7 0.7" gltf-model="#vaseModel"></a-entity>
+      <a-entity id="sculptureArtifact" class="sorting_item" data-order="2" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 2 2 2; dropRotation: 0 0 0; dropScale: 1.7 1.7 1.7" circles-pickup-networked
+        position="12.5 2 -14.3" scale="1.7 1.7 1.7" gltf-model="#sculptureModel"></a-entity>
+      <a-entity id="figurineArtifact" class="sorting_item" data-order="4" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.8 1.8 1.8; dropRotation: 0 90 0; dropScale: 1.5 1.5 1.5" circles-pickup-networked
+        position="12.5 1.95 -13.3" rotation="0 90 0" scale="1.5 1.5 1.5" gltf-model="#figurineModel"></a-entity>
       <a-entity id="sculpture2Artifact" class="sorting_item" data-order="1" data-correct="false" sorting-collision
-        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.4 1.4 1.4" circles-pickup-networked
-        position="12.5 2.5 -12.5" rotation="0 -90 0" scale="1.4 1.4 1.4" gltf-Model="#sculpture2Model"></a-entity>
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.7 1.7 1.7; dropRotation: 0 -90 0; dropScale: 1.4 1.4 1.4" circles-pickup-networked
+        position="12.5 1.75 -12.5" rotation="0 -90 0" scale="1.4 1.4 1.4" gltf-Model="#sculpture2Model"></a-entity>
       <!--<a-sphere id="artifact1" class="sorting_item" data-order="4" data-correct="false" sorting-collision 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
         position="12.5 2.5 -15.1" scale="0.4 0.4 0.4" color="red"></a-sphere>
@@ -241,13 +241,13 @@
 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
-        position="11.5 0.7 -15.7" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0.2"></a-box>
+        position="11.5 0.7 -15.7" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-2" sorting-collision
-        position="11.5 0.7 -14.4" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0.2"></a-box>
+        position="11.5 0.7 -14.4" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-3" sorting-collision 
-        position="11.5 0.7 -13.1" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0.2"></a-box>
+        position="11.5 0.7 -13.1" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0"></a-box>
       <a-box class="collisionbox" id="goal-4" sorting-collision 
-        position="11.5 0.7 -11.8s" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0.2"></a-box>
+        position="11.5 0.7 -11.8s" color="tan" rotation="0 0 0" depth="0.4" height="0.6" width="0.3" opacity="0"></a-box>
 
       <!--pedestal-->
       <a-cylinder position="11.5 0.1 -15.7" color="tan" rotation="0 0 0" scale="0.3 0.3 0.3"></a-cylinder>
