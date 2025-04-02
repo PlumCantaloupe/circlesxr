@@ -9,25 +9,12 @@ AFRAME.registerComponent('manager', {
       CONTEXT_AF.alphaVisualization = document.querySelector("#alpha-visualization");
       CONTEXT_AF.deltaVisualization = document.querySelector("#delta-visualization");
       CONTEXT_AF.gammaVisualization = document.querySelector("#gamma-visualization");
+
+      CONTEXT_AF.alphaVisualizationInfo = document.querySelector("#alpha-visualization-info");
+      CONTEXT_AF.deltaVisualizationInfo = document.querySelector("#delta-visualization-info");
+      CONTEXT_AF.gammaVisualizationInfo = document.querySelector("#gamma-visualization-info");
       
       CONTEXT_AF.centralOrbsVisualizationEl = document.querySelector('#central-orbs-visualization');
-
-      // Initialize Firebase
-      // fetch("https://firestore.googleapis.com/v1/projects/brainwavedata-bd008/databases/(default)/documents/deltaEmotionData", {
-      //         method: "POST",
-      //         headers: {
-      //             'Content-type': 'application/json; charset=UTF-8'
-      //         },
-      //         body: JSON.stringify({
-      //             fields: {
-      //             id: {
-      //                 stringValue: "test"
-      //             },
-      //             name: {
-      //                 stringValue: "test"
-      //             }
-      //         }})
-      //     }).then(body => console.log("success")).catch(console.log("there was an error adding data"));
 
       const firebaseConfig = {
         apiKey: "AIzaSyD9r1vjo4Evh2pTNl_eeD2ldVtnXVEL3sM",
@@ -64,22 +51,23 @@ AFRAME.registerComponent('manager', {
         //listen for when others share an emotion
         CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, function(data) {
           
-          const visualizationContainer = data.visualizationContainer;
+          CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.orbTypeToUpdate});
           
+          const visualizationContainer = data.visualizationContainer;
           switch (visualizationContainer){
             case "delta": 
               console.log("delta stuff")
-              CONTEXT_AF.deltaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              CONTEXT_AF.deltaVisualizationInfo.emit('emotionupdate', {roomName: 'delta', orbTypeToUpdate: data.orbTypeToUpdate});
               break;
 
             case "alpha":
-              console.log("alpha stuff")
-              CONTEXT_AF.alphaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              console.log("alpha stuff");
+              CONTEXT_AF.alphaVisualizationInfo.emit('emotionupdate', {roomName: 'alpha', orbTypeToUpdate: data.orbTypeToUpdate});
               break;
 
             case "gamma":
               console.log("gamma stuff")
-              CONTEXT_AF.gammaVisualization.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}); 
+              CONTEXT_AF.gammaVisualizationInfo.emit('emotionupdate', {roomName: 'gamma', orbTypeToUpdate: data.orbTypeToUpdate});
               break;
             
             default:
@@ -89,15 +77,74 @@ AFRAME.registerComponent('manager', {
 
         // On connect, get all emotion data and set the central orb visualisation
         // Listen for other people sharing an emotion orb
-        CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
-          CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
-        });
+        // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
+        //   try {
+        //     CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+        //   } catch (error) {
+        //     //send hardcoded data to central orbs
+        //   }
+        // });
+
+        // Listen for other people sharing an emotion orb and update the stats info text
+        // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
+        //   try {
+        //     const visualizationContainer = data.visualizationContainer;
+        //     switch (visualizationContainer){
+        //       case "delta": 
+        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
+        //         break;
+  
+        //       case "alpha":
+        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
+        //         break;
+  
+        //       case "gamma":
+        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
+        //         break;
+              
+        //       default:
+        //         console.log("No matching case found");
+        //     }
+        //   } catch (error) {
+        //     //send hardcoded data to central orbs
+        //     console.log("could not get visualization info data");
+        //   }
+        // });
 
     };
 
-    // Update central orb when user shares an emotion
-    CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, async function (data) {
-      CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+    // Update central orb and visualization info text when user shares an emotion
+    CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, function (data) {
+      //CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+
+      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.detail.orbTypeToUpdate});
+
+      const visualizationContainer = data.detail.visualizationContainer;
+      switch (visualizationContainer){
+        case "delta": 
+          CONTEXT_AF.deltaVisualizationInfo.emit('emotionupdate', {roomName: 'delta', orbTypeToUpdate: data.detail.orbTypeToUpdate});
+          break;
+
+        case "alpha":
+          CONTEXT_AF.alphaVisualizationInfo.emit('emotionupdate', {roomName: 'alpha', orbTypeToUpdate: data.detail.orbTypeToUpdate});
+          break;
+
+        case "gamma":
+          CONTEXT_AF.gammaVisualizationInfo.emit('emotionupdate', {roomName: 'gamma', orbTypeToUpdate: data.detail.orbTypeToUpdate});
+          break;
+        
+        default:
+          console.log("No matching case found");
+            }
+      // try {
+      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
+      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
+      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
+      // } catch (error) {
+      //   console.log("could not get data", error)
+      //   //send hardcoded data to visualizer
+      // }
+      
     });
 
       //check if circle networking is ready. If not, add an went to listen for when it is ...
@@ -109,15 +156,20 @@ AFRAME.registerComponent('manager', {
               CONTEXT_AF.createNetworkingSystem();
               CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
 
-              // On connect, get all emotion data and set central orbs data
-              CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+              
+              try {
+                // On connect, get all emotion data and set central orbs data
+                CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
+                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
+                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
+              } catch (error) {
+                console.log("could not get data", error)
+                //send hardcoded data to visualizer
+              }
           };
           CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
       }
-    },
-
-    update: function () {
-      // Do something when component's data is updated.
     },
 
     updateEmotionData: async function(roomName, emotionName) {
@@ -213,7 +265,19 @@ AFRAME.registerComponent('manager', {
       console.log('connected and got the data');
       console.log(emotionData);
 
-      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {emotionData});
+      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionpopulate', {emotionData});
+    },
+
+    setVisualizationInfoData: function (emotionData, visualizationInfo) {
+      const CONTEXT_AF = this;
+
+      console.log('connected and got the data for delaaaaaaaaaaa');
+      console.log(emotionData[1].emotions);
+
+      
+      visualizationInfo.emit('emotionpopulate', emotionData[1].emotions);
+      // CONTEXT_AF.deltaVisualizationInfo.emit('alphaEmotionUpdate', {emotionData});
+      // CONTEXT_AF.gammaVisualizationInfo.emit('alphaEmotionUpdate', {emotionData});
     },
 
     remove: function () {
