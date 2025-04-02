@@ -26,22 +26,6 @@
 
     <script src="/worlds/BW_Delta/js/bloom.js" type="module"></script>
 
-    <script>
-      AFRAME.registerComponent('play', {
-        init: function() {
-          document.addEventListener(CIRCLES.EVENTS.READY, function() {
-              console.log('Circles is ready!');
-              const clip1 = document.querySelector(`#ambience-player`);
-              clip1.components.sound.playSound();
-
-              const clip2 = document.querySelector(`#heartbeats-player`);
-              clip2.components.sound.playSound();
-          });
-          
-        }
-      })
-    </script>
-
   </head>
   <body>
 
@@ -112,11 +96,13 @@
       <circles-manager-avatar/>
       
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1'></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #5764c2"></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
 
+      <a-entity circles-checkpoint position="1.9 0.03 3"></a-entity>
+
       <!-- TO BE REPLACED - START -->
-      <a-entity id="orbmanager" orb-manager play></a-entity>
+      <a-entity id="orbmanager" orb-manager></a-entity>
 
       <a-entity id='skyBox'
                 rotation='0 45 0'
