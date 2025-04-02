@@ -94,6 +94,7 @@ const MODEL_BODY_TYPE = {
 
 const EVENTS = {
   READY                     : 'CIRCLES_READY',
+  EXPERIENCE_ENTERED        : 'CIRCLES_EXPERIENCE_ENTERED',
   CAMERA_ATTACHED           : 'CAMERA_ATTACHED',
   OBJECT_HIGHLIGHT_LOADED   : 'OBJECT_HIGHLIGHT_LOADED',
   AVATAR_LOADED             : 'AVATAR_LOADED',
@@ -103,6 +104,8 @@ const EVENTS = {
   SELECT_THIS_OBJECT        : 'SELECT_THIS_OBJECT',
   PICKUP_THIS_OBJECT        : 'PICKUP_THIS_OBJECT',
   RELEASE_THIS_OBJECT       : 'RELEASE_THIS_OBJECT',
+  PICKUP_OBJECT             : 'CIRCLES_PICKUP_OBJECT',  //global pickup and release event for devs
+  RELEASE_OBJECT            : 'CIRCLES_RELEASE_OBJECT',
   RELEASE_THIS_OBJECT_PRE   : 'RELEASE_THIS_OBJECT_PRE',
   OBJECT_OWNERSHIP_GAINED   : 'OBJECT_OWNERSHIP_GAINED',
   OBJECT_OWNERSHIP_LOST     : 'OBJECT_OWNERSHIP_LOST',
@@ -119,6 +122,8 @@ const EVENTS = {
   QUESTION_OBJECT_STATE     : 'CIRCLES_QUESTION_OBJECT_STATE',
   ANSWER_OBJECT_STATE       : 'CIRCLES_ANSWER_OBJECT_STATE',
   OBJECT_OWNER_GONE         : 'CIRCLES_OBJECT_OWNER_GONE',
+  USER_CONNECTED            : 'CIRCLES_USER_CONNECTED',
+  USER_DISCONNECTED         : 'CIRCLES_USER_DISCONNECTED'
   // OBJECT_CREATED            : 'CIRCLES_OBJECT_CREATED',
   // OBJECT_DESTROYED          : 'CIRCLES_OBJECT_DESTROYED',
 };
@@ -235,6 +240,10 @@ const isReady = function() {
   return getCirclesManagerComp().isCirclesReady();
 }
 
+const isExperienceEntered = function() {
+  return getCirclesManagerComp().isExperienceEntered();
+}
+
 const isCirclesWebsocketReady = function() {
   return (circlesWebsocket) ? true : false;
 }
@@ -274,11 +283,11 @@ const getCirclesSceneElement = function() {
   return document.querySelector('a-scene');
 }
 
-const getNAFAvatarElements = function() {
+const getNetworkedAvatarElements = function() {
   return document.querySelectorAll('[circles-user-networked]');  //return all avatars being networked by NAF
 }
 
-const getAllNAFElements = function() {
+const getAllNetworkedElements = function() {
   return document.querySelectorAll('[networked]');              //returns all NAF networked objects. You may have to dig into children for more detail.             
 }
 
@@ -374,14 +383,15 @@ module.exports = {
   getCirclesManagerElement,
   getCirclesManagerComp,
   isReady,
+  isExperienceEntered,
   isCirclesWebsocketReady,
   getAvatarElement,
   getAvatarHolderElementBody,
   getAvatarRigElement,
   getMainCameraElement,
   getCirclesSceneElement,
-  getNAFAvatarElements,
-  getAllNAFElements,
+  getNetworkedAvatarElements,
+  getAllNetworkedElements,
   getPickedUpElement,
   getNonNetworkedID,
   log,
