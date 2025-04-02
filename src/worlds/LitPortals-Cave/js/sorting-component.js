@@ -93,10 +93,10 @@ AFRAME.registerComponent('sorting-collision', {
 
     resetSorting: function() {
         setTimeout(() => {
-            document.getElementById("artifact1").object3D.position.set(12.5, 2.5, -15.1);
-            document.getElementById("artifact2").object3D.position.set(12.5, 2.5, -14.2);
-            document.getElementById("artifact3").object3D.position.set(12.5, 2.5, -13.3);
-            document.getElementById("artifact4").object3D.position.set(12.5, 2.5, -12.5);
+            document.getElementById("figurineArtifact").object3D.position.set(12.5, 2.5, -15.1);
+            document.getElementById("sculptureArtifact").object3D.position.set(12.5, 2.5, -14.2);
+            document.getElementById("vaseArtifact").object3D.position.set(12.5, 2.5, -13.3);
+            document.getElementById("sculpture2Artifact").object3D.position.set(12.5, 2.5, -12.5);
     
             document.querySelectorAll('.sorting_item').forEach((item) => {
                 item.setAttribute("data-correct", "false");

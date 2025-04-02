@@ -78,6 +78,11 @@
         <a-asset-item id="rockModel" response-type="arraybuffer" src="/worlds/LitPortals-Cave/assets/models/rock_model/scene.gltf"></a-asset-item>
         <a-asset-item id="torchModel"response-type="arraybuffer"src="assets/models/torch.glb"></a-asset-item>
 
+        <a-asset-item id="figurineModel" response-type="arraybuffer" src="assets/models/figurine_hand.glb"></a-asset-item>
+        <a-asset-item id="sculptureModel" response-type="arraybuffer" src="assets/models/sculpture.glb"></a-asset-item>
+        <a-asset-item id="sculpture2Model" response-type="arraybuffer" src="assets/models/sculpture2.glb"></a-asset-item>
+        <a-asset-item id="vaseModel" response-type="arraybuffer" src="assets/models/Pot2B.glb"></a-asset-item>
+
         <!-- Artefact textures -->
          <img id="cavePainting-img" src="assets/wall_art1.jpg">
          <img id="ivoryBison-img" src="assets/Ivory Bison.jpg">
@@ -208,8 +213,20 @@
                                   label_text:Venus Ivory Carving;"
                 circles-pickup-networked></a-entity>    
 
-      <!--artifacts (vases go here)--> 
-      <a-sphere id="artifact1" class="sorting_item" data-order="4" data-correct="false" sorting-collision 
+      <!--artifacts--> 
+      <a-entity id="figurineArtifact" class="sorting_item" data-order="4" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.5 1.5 1.5" circles-pickup-networked
+        position="12.5 2.5 -15.1" rotation="0 90 0" scale="1.5 1.5 1.5" gltf-model="#figurineModel"></a-entity>
+      <a-entity id="sculptureArtifact" class="sorting_item" data-order="2" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.7 1.7 1.7" circles-pickup-networked
+        position="12.5 2.5 -14.2" scale="1.7 1.7 1.7" gltf-model="#sculptureModel"></a-entity>
+      <a-entity id="vaseArtifact" class="sorting_item" data-order="3" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
+        position="12.5 2.5 -13.3" scale="0.5 0.5 0.5" gltf-model="#vaseModel"></a-entity>
+      <a-entity id="sculpture2Artifact" class="sorting_item" data-order="1" data-correct="false" sorting-collision
+        circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.4 1.4 1.4" circles-pickup-networked
+        position="12.5 2.5 -12.5" rotation="0 -90 0" scale="1.4 1.4 1.4" gltf-Model="#sculpture2Model"></a-entity>
+      <!--<a-sphere id="artifact1" class="sorting_item" data-order="4" data-correct="false" sorting-collision 
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
         position="12.5 2.5 -15.1" scale="0.4 0.4 0.4" color="red"></a-sphere>
       <a-sphere id="artifact2" class="sorting_item" data-order="3" data-correct="false" sorting-collision
@@ -220,7 +237,7 @@
         position="12.5 2.5 -13.3" scale="0.4 0.4 0.4" color="green"></a-sphere>
       <a-sphere id="artifact4" class="sorting_item" data-order="1" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
-        position="12.5 2.5 -12.5" scale="0.4 0.4 0.4" color="blue"></a-sphere>
+        position="12.5 2.5 -12.5" scale="0.4 0.4 0.4" color="blue"></a-sphere>-->
 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
