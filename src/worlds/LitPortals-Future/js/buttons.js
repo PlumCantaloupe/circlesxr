@@ -33,14 +33,22 @@ AFRAME.registerComponent("change-environment", {
       });
     }
 });
-    
+const forestModels = [
+    "#bush_flowers", "#bunny", "#bird", "#bush", "#deer"
+];
+
+const archesModels = [
+    "#dolphin", "#fish", "#fox", "#jelly_pink", "#jelly_blue"
+];
+
 const buildings = [
     "#building1Model", "#building2Model", "#building3Model", "#building4Model", 
     "#building5Model", "#building6Model", "#building7Model", "#building8Model"
 ];
-const shapes = ["a-box", "a-cone", "a-cylinder", "a-sphere", "a-triangle"];
+
 let currentBuildingIndex = 0;
-let currentShapeIndex = 0;
+let currentForestIndex = 0;
+let currentShapeIndex = 0; // 🔹 Added this
 
 document.addEventListener("DOMContentLoaded", function () {
     const blueButton = document.querySelector("#blue_button .button");
@@ -50,55 +58,68 @@ document.addEventListener("DOMContentLoaded", function () {
         blueButton.addEventListener("click", function () {
             // Generate random position within specified ranges
             const randomX = Math.floor(Math.random() * 41) - 20;
-            const randomY = 0; // Keep buildings on the ground
+            const randomY = 0;
             const randomZ = Math.floor(Math.random() * 41) - 20;
             
             if (currentEnvironment === "contact") {
                 console.log("Mars");
-
-                // Select the building model
                 const buildingModel = buildings[currentBuildingIndex];
                 currentBuildingIndex = (currentBuildingIndex + 1) % buildings.length;
                 
-                // Generate a unique ID for the building
                 const buildingId = `building-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-                // Emit event to spawn the building in the world
                 socket.emit("spawnBuilding", {
                     buildingId: buildingId, 
                     model: buildingModel,
                     position: `${randomX} ${randomY} ${randomZ}`
                 });
+            } else if (currentEnvironment === "forest") {
+                console.log("forest");
+                const forestModel = forestModels[currentForestIndex];
+                currentForestIndex = (currentForestIndex + 1) % forestModels.length;
                 
+                const forestId = `forestModels-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+                socket.emit("spawnModel", {
+                    forestId: forestId, 
+                    model: forestModel,
+                    position: `${randomX} ${randomY} ${randomZ}`
+                });
             } else {
-                // Select the shape model
-                const shape = shapes[currentShapeIndex];
-                currentShapeIndex = (currentShapeIndex + 1) % shapes.length;
-                
-                // Determine the shape's color based on the environment
-                let shapeColor;
+                let modelArray;
+                console.log('HERE ');
+
                 switch (currentEnvironment) {
-                    case "starry": shapeColor = "black"; break;
-                    case "forest": shapeColor = "red"; break;
-                    case "arches": shapeColor = "yellow"; break;
-                    case "contact": shapeColor = "white"; break;
-                    default: shapeColor = "blue";
+                    
+                    case "arches": 
+                        modelArray = archesModels; 
+                        break;
+                    default: 
+                        modelArray = shapes || []; // Ensure it is always defined
+                        break;
+                }
+                // Prevent errors if modelArray is empty
+                if (modelArray.length === 0) {
+                    console.warn("No models available for environment:", currentEnvironment);
+                    return;
                 }
 
-                // Generate a unique ID for the shape
-                const shapeId = `shape-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-                // Emit spawnShape event with shape data to server
+                const model = modelArray[currentShapeIndex];
+                const modelId = model.startsWith("#") ? model.substring(1) : model; // Remove '#'
+                
                 socket.emit("spawnShape", {
-                    shapeId: shapeId,  
-                    shape: shape,
-                    position: `${randomX} ${randomY} ${randomZ}`,
-                    color: shapeColor
+                    shapeId: `shape-${Date.now()}-${Math.floor(Math.random() * 1000)}`,  
+                    shape: modelId,  // Now it correctly removes '#'
+                    position: `${randomX} ${randomY} ${randomZ}`
                 });
+
+                currentShapeIndex = (currentShapeIndex + 1) % modelArray.length; // 🔹 Added this
             }
         });
     }
 });
+
+
         
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded and parsed");
@@ -257,42 +278,42 @@ let oldPosition = { x: 0, y: 0, z: 0 }; // Default initial value
 function updateShapePositions() {
     for (let shape of shapesArray) {
         const shapeId = shape.getAttribute("id");
-        const oldPosition = shapePositions[shapeId]; // Previously stored position
-        const newPosition = shape.getAttribute("position"); // Current position
+        const newPosition = shape.getAttribute("position");
 
-        // Ensure oldPosition is initialized
+        if (!newPosition) continue; // Ensure newPosition is valid
+
+        // Convert newPosition to an object
+        const newPosObj = {
+            x: parseFloat(newPosition.x) || 0,
+            y: parseFloat(newPosition.y) || 0,
+            z: parseFloat(newPosition.z) || 0
+        };
+
+        // Retrieve the previously stored position
+        const oldPosition = shapePositions[shapeId];
+
+        // Ensure oldPosition exists, otherwise initialize it
         if (!oldPosition) {
-            shapePositions[shapeId] = { 
-                x: parseFloat(newPosition.x), 
-                y: parseFloat(newPosition.y), 
-                z: parseFloat(newPosition.z) 
-            };
+            shapePositions[shapeId] = newPosObj;
             continue;
         }
 
-        // Convert newPosition to an object with numeric values
-        const newPosObj = {
-            x: parseFloat(newPosition.x),
-            y: parseFloat(newPosition.y),
-            z: parseFloat(newPosition.z)
-        };
-
-        // Compare x, y, z values individually
+        // Only emit if the position has actually changed
         if (oldPosition.x !== newPosObj.x || oldPosition.y !== newPosObj.y || oldPosition.z !== newPosObj.z) {
-            // Update stored position
             shapePositions[shapeId] = newPosObj;
-            console.log("New Pos_____________________________________________________");
+            console.log("New Position:", newPosObj);
 
-            // Emit the update to the server
+            // Emit only when movement is detected
             socket.emit("updateShapePosition", { shapeId, position: newPosObj });
         }
     }
-    // Request the next frame
-    requestAnimationFrame(updateShapePositions);
+
+    // Use a small delay to prevent excessive calls
+    setTimeout(() => requestAnimationFrame(updateShapePositions), 100);
 }
 
-// Start the loop
-requestAnimationFrame(updateShapePositions);
+// Start the loop with a delay
+setTimeout(() => requestAnimationFrame(updateShapePositions), 100);
 
 // Listen for shape spawn event from server
 socket.on("spawnShape", function (shapeData) {
@@ -326,6 +347,22 @@ socket.on("spawnBuilding", function (buildingData) {
     const randomScale = (Math.random() * 20 + 10).toFixed(2);
     newBuilding.setAttribute("scale", `${randomScale} ${randomScale} ${randomScale}`);
     newBuilding.setAttribute("circles-pickup-object", "pickupPosition: 0 0 -10; pickupScale: 25 25 25");
+    
+    // Add the building to the scene
+    document.querySelector("a-scene").appendChild(newBuilding);
+});
+
+socket.on("spawnModel", function (buildingData) {
+    const { buildingId, model, position } = buildingData;
+    
+    // Create an entity for the building
+    const newBuilding = document.createElement("a-entity");
+    newBuilding.setAttribute("id", buildingId);
+    newBuilding.setAttribute("gltf-model", model);
+    newBuilding.setAttribute("position", position);
+    const randomScale = (Math.random() * 2 + 2).toFixed(2);
+    newBuilding.setAttribute("scale", `${randomScale} ${randomScale} ${randomScale}`);
+    newBuilding.setAttribute("circles-pickup-object", "pickupPosition: 0 0 -3; pickupScale: 4 4 4");
     
     // Add the building to the scene
     document.querySelector("a-scene").appendChild(newBuilding);

@@ -408,21 +408,20 @@ io.on("connection", socket => {
     console.log('spawnBuilding shape:', shapeData);
     // Emit the shape spawn data to all clients
     io.emit('spawnBuilding', shapeData);
-});
+  });
+
+  socket.on('spawnModel', (shapeData) => {
+    console.log('spawnModel shape:', shapeData);
+    // Emit the shape spawn data to all clients
+    io.emit('spawnModel', shapeData);
+  }); 
        // Emit event to spawn the building in the world
-
-    
-
-
-
   socket.on('canvasData', (data) =>{
     //console.log('Server recieving: ' + data);
 
     //sending change too all clients but initial sender
     socket.broadcast.emit('updateCanvas', data);
     //console.log(data);
-
-  
   });
 
   socket.on("lineData",(pos, color)=>{
