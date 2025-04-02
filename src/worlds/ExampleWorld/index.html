@@ -8,6 +8,36 @@
     <!-- add your custom scripts here -->
     <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
     <script src="js/lights-interaction.js"></script>
+
+    <script>
+      AFRAME.registerComponent('testing-events', {
+        init : function() {
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
+              console.log('CIRCLES.EVENTS.READY!');
+          });
+
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {
+              console.log('CIRCLES.EVENTS.EXPERIENCE_ENTERED!');
+          });
+
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.PICKUP_OBJECT, (e) => {
+              console.log('CIRCLES.EVENTS.PICKUP_OBJECT! ' + e.detail.id);
+          });
+
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.RELEASE_OBJECT, (e) => {
+              console.log('CIRCLES.EVENTS.RELEASE_OBJECT! ' + e.detail.id);
+          });
+
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {
+              console.log('CIRCLES.EVENTS.USER_CONNECTED! id' + e.detail.id + ' world:' + e.detail.world + ' device:' + e.detail.device);
+          });
+
+          CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.USER_DISCONNECTED, (e) => {
+              console.log('CIRCLES.EVENTS.USER_DISCONNECTED! id' + e.detail.id + ' world:' + e.detail.world + ' device:' + e.detail.device);
+          });
+        }
+      });
+    </script>
   </head>
   <body>
 
@@ -15,7 +45,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene circles_scene_properties testing-events>
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->

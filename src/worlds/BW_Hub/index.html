@@ -104,8 +104,9 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity id="shared-state-manager" bw-shared-state-manager='bloomAvailable: true, bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' accessibility-controls spawn-point></a-entity>
+      <a-entity id="shared-state-manager" bw-shared-state-manager='bloomAvailable: true, bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #5764c2" accessibility-controls spawn-point></a-entity>
       <a-entity comp></a-entity>
+      <!-- #5764c2 -->
 
       <!-- Ambient music entity -->
        <a-entity id="ambient-sound-player" circles-sound="src: #hub_ambience; autoplay: true; loop: true; type: music; volume: 0.25;"></a-entity>
@@ -512,7 +513,7 @@
 
 
       <!-- checkpoints -->
-      <a-entity id="mainSpawn" circles-checkpoint="colour: #3f4fca; emission: #4a6fba; transparent: false; opacity: 1" position="4.4 0.03 0" ></a-entity>
+      <a-entity id="mainSpawn" circles-checkpoint position="4.4 0.03 0" ></a-entity>
       
       <a-entity circles-checkpoint position="1.9 0.03 3"></a-entity>
       <a-entity circles-checkpoint position="-2.3 0.03 2.7"></a-entity>
