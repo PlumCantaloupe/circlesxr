@@ -83,6 +83,10 @@
         <a-asset-item id="sculpture2Model" response-type="arraybuffer" src="assets/models/sculpture2.glb"></a-asset-item>
         <a-asset-item id="vaseModel" response-type="arraybuffer" src="assets/models/Pot2B.glb"></a-asset-item>
 
+        <a-asset-item id="smallRockModel" response-type="arraybuffer" src="assets/models/SmallRock.glb"></a-asset-item>
+        <a-asset-item id="medRockModel" response-type="arraybuffer" src="assets/models/MedRock.glb"></a-asset-item>
+        <a-asset-item id="bigRockModel" response-type="arraybuffer" src="assets/models/BigRock.glb"></a-asset-item>
+
         <!-- Artefact textures -->
          <img id="cavePainting-img" src="assets/wall_art1.jpg">
          <img id="ivoryBison-img" src="assets/Ivory Bison.jpg">
@@ -109,6 +113,12 @@
       <!--rocks-->
       <a-entity id="rock" position="0 0 3" scale= "0.001 0.001 0.001" gltf-model="#rockModel"></a-entity>
       <a-entity id="rock1" position="-1.83 0.145" scale= "0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
+      <a-entity id="rockUnderBison" position="-7.788 -0.012 -20.360" scale="0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
+      
+      <a-entity id="rockUnderVenus" position="5.9 0 -7.1" scale="2 3 2" gltf-model="#bigRockModel"></a-entity>
+      <a-entity id="rock2" position="5.442 -0.036 -6.259" scale="2 2 2" gltf-model="#medRockModel"></a-entity>
+      <a-entity id="rock3" position="8.118 -0.152 -4.445" scale="2 2 2" gltf-model="#smallRockModel"></a-entity>
+
 
       <!-- Campfire -->
       <a-entity id = "campfireSet">
@@ -184,7 +194,7 @@
                 circles-pickup-networked></a-entity>
 
                 <a-entity id="ivoryBison-artefact"
-                position="-7.8 1 -20.2" rotation="0 55 0" scale="1 1 1"
+                position="-7.8 1.25 -20.2" rotation="0 55 0" scale="1 1 1"
                 geometry="primitive: plane; height:1; width:1;"
                 material="src: #ivoryBison-img; side:double;"
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
@@ -199,7 +209,7 @@
                 circles-pickup-networked></a-entity>    
 
                 <a-entity id="venus-artefact"
-                position="5.9 1 -7.1" rotation="0 55 0" scale="1 1 1"
+                position="5.9 1.5 -7.1" rotation="0 55 0" scale="1 1 1"
                 geometry="primitive: plane; height:1; width:1;"
                 material="src: #venus-img; side:double;"
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
@@ -238,7 +248,7 @@
       <a-sphere id="artifact4" class="sorting_item" data-order="1" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 0.5 0.5 0.5" circles-pickup-networked
         position="12.5 2.5 -12.5" scale="0.4 0.4 0.4" color="blue"></a-sphere>-->
-
+ 
       <!--detection box-->
       <a-box class="collisionbox" id="goal-1" sorting-collision
         position="11.5 0.7 -15.7" color="tan" rotation="0 0 0" depth="0.1" height="0.6" width="0.3" opacity="0"></a-box>
