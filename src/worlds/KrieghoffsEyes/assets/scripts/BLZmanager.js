@@ -279,6 +279,7 @@ AFRAME.registerComponent('blz-manager', {
       this.axe.setAttribute('gltf-model', `#axe_gltf`);
       this.axe.setAttribute('scale', {x:20, y:20, z:20});
       this.axe.setAttribute('class', 'interactable-axe');
+      this.axe.setAttribute('circles-pickup-networked', '');
       this.axe.setAttribute('circles-artefact', {
         inspectPosition:      '0.0 0.0 0.0',
         inspectScale:         '40 40 40',
@@ -569,16 +570,109 @@ AFRAME.registerComponent('axe-target-trigger', {
     init: function () {
         this.axeTarget = document.querySelector("#axeTarget");
 
+        // Ensure CONTEXT_AF exists
+        window.CONTEXT_AF = window.CONTEXT_AF || {};
+        CONTEXT_AF.triggerEventName = "trigger_event";
+        CONTEXT_AF.socket = null;
+
+        // Create the networking system using CONTEXT_AF
+      CONTEXT_AF.createNetworkingSystem = () => {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        console.warn(
+          "Networking system ready. Socket ID: " +
+            CONTEXT_AF.socket.id +
+            " in room: " +
+            CIRCLES.getCirclesGroupName() +
+            " in world: " +
+            CIRCLES.getCirclesWorldName()
+        );
+
+        // This is the code that checks if one of the parts was cliked
+        // Listen for the 'collision' event
+        
         this.axeTarget.addEventListener('collide', (event) => {
           console.log("Collision detected!", event.detail.body.el);
           const axe = event.detail.body.el;
-          if (!axe || axe.id !== 'axe') return;
+          if (!axe || !axe.classList.contains('interactable-axe')) return;
           
           this.axeTarget.setAttribute('color', 'green');
           
           this.axeTarget.setAttribute('material', 'color: #00ff00');
           this.axeTarget.emit('targetTouched');
-      });
+
+          // Emit changing color
+          CONTEXT_AF.socket.emit(CONTEXT_AF.triggerEventName, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName(),
+            targetId: this.axeTarget.id
+          });
+
+        });
+  
+        // Listen for the global raft update events
+        CONTEXT_AF.socket.on(CONTEXT_AF.sledEventName, (data) => {
+          if (
+            data.world === CIRCLES.getCirclesWorldName() &&
+            data.room === CIRCLES.getCirclesGroupName()
+          ) {
+            // Only update if the incoming count is greater than the local value
+            if (data.sledPartsPlaced > this.sledPartsPlaced) {
+              this.sledPartsPlaced = data.sledPartsPlaced;
+              this.updateSledModel();
+              const partToRemove = document.querySelector(`#${data.partRemoved}`);
+              if (partToRemove.parentNode) {
+                partToRemove.parentNode.removeChild(partToRemove);
+              }
+              this.checkSledFinished();
+            }
+            console.log("Global parts placed: " + data.sledPartsPlaced);
+          }
+        });
+  
+        // Request data sync after a random delay (for late joiners)
+        setTimeout(() => {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName()
+          });
+        },1200);
+  
+        // When another client requests sync data, send your current logsPlaced value
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
+              sledPartsPlaced: this.sledPartsPlaced,
+              room: CIRCLES.getCirclesGroupName(),
+              world: CIRCLES.getCirclesWorldName()
+            });
+          }
+        });
+
+         // Receive sync data from others
+         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            if (data.sledPartsPlaced > this.sledPartsPlaced) {
+              this.sledPartsPlaced = data.sledPartsPlaced;
+              this.updateSledModel();
+              this.checkSledFinished();
+            }
+          }
+        });
+      };
+
+      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
+      if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+      } else {
+        let wsReadyFunc = () => {
+          CONTEXT_AF.createNetworkingSystem();
+          this.el.sceneEl.removeEventListener(
+            CIRCLES.EVENTS.WS_CONNECTED,
+            wsReadyFunc
+          );
+        };
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      }
         
     }
 });
