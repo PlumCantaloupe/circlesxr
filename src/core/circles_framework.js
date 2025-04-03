@@ -165,6 +165,22 @@ const getUUID = function() {
   );
 };
 
+const getRandomColor = function() {
+  return new THREE.Color('rgb(' + THREE.MathUtils.randInt(0, 255) + ',' + THREE.MathUtils.randInt(0, 255) + ',' + THREE.MathUtils.randInt(0, 255) + ')');
+};
+
+const getRandomString = function(length) {
+  let result = '';
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
 //time that the socket connected
 const getCirclesConnectTime = function() {
   return circlesWebsocketConnectTime;
@@ -373,6 +389,8 @@ module.exports = {
   VR_PLATFORMS,
   COLOR_PALETTE,
   getUUID,
+  getRandomColor,
+  getRandomString,
   getCirclesConnectTime,
   setupCirclesWebsocket,
   getCirclesWebsocket,
