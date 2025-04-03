@@ -374,14 +374,14 @@ io.on("connection", socket => {
     io.emit("updateLightColor", data);
   });
 
-  socket.on("updateShapePosition", (data) => {
-    if (!data.shapeId) {
+  socket.on("modelMoved", (data) => {
+    if (!data.id) {
         console.log("Shape ID is missing in the data:", data);
     } else {
-        console.log(`Updating position for shape: ${data.shapeId}`, data.position);
+        console.log(`Updating position for shape: ${data.id}`, data.newPosition);
     }    
     // Broadcast the updated position to all clients
-    io.emit("updateShapePosition", data);
+    io.emit("modelMoved", data);
   });
 
   socket.on("itemPlaced", (data) => {
