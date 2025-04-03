@@ -119,7 +119,7 @@ AFRAME.registerComponent('visualization-info', {
     const CONTEXT_AF = this;
 
     CONTEXT_AF.infoText = "";
-    for(let i = 0; i < CONTEXT_AF.emotionData.length; i++) {
+    for(let i = CONTEXT_AF.emotionData.length-1; i > -1; i--) {
       // (${CONTEXT_AF.emotionData[i].color})
       CONTEXT_AF.infoText += `\n ${CONTEXT_AF.emotionData[i].name}: ${CONTEXT_AF.emotionData[i].votes} people`;
     }
