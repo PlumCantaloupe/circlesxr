@@ -210,56 +210,152 @@ AFRAME.registerComponent('blz-manager', {
             console.log("before collide with log: " + this.chopAllowed);
           });
 
-          //if we collied with the log and we're in the choping state, remove the log
-          log.addEventListener('collide', (event) => {
-            //console.log("After collied with log: " + this.chopAllowed);
-            //console.log("Axe collided with log!", event.detail.body.el);
-
-            const axe = event.detail.body.el;
-            if (!axe || axe.id !== 'axe') return;
-
-            if (this.chopAllowed === true) {
-              console.log("log chopped!");
-              log.removeAttribute('static-body');
-              
-              //wait for physics to get removed first before removing the element
-              setTimeout(() => {
-                if (log.parentNode) {
-                    log.parentNode.removeChild(log);
-                  }
-                }, 0);
-                
-                
-              //reset the chopping state
-              this.chopAllowed = false;
-              
-              //increment counter
-              this.chopCounter++;
-              console.log('chop counter: ' + this.chopCounter);
-                
-              //reset the target color
-              let axetarget = document.querySelector('#axeTarget');
-              axetarget.setAttribute('material', 'color: red');
-
-              //for some reason the array didn't srink in size as the logs got removed,
-              //so we have a coutner to count up to the origianl lenght of the array
-              console.log("array length: " + this.logs.length);
-
-              if(this.logs.length === this.chopCounter) {
-                const gameManager = document.querySelector('#GameManager');
-                // check if all logs have been chopped
-                console.log("all chopped! blz-complete was called");
-                if (gameManager) {
-                  gameManager.emit('blz-complete');
-                }
+          //check if chopping finished
+          this.checkChoppingFinished = () =>  {
+            //for some reason the array didn't srink in size as the logs got removed,
+            //so we have a coutner to count up to the origianl lenght of the array
+            //console.log("array length: " + this.logs.length);
+            if(this.logs.length === this.chopCounter) {
+              const gameManager = document.querySelector('#GameManager');
+              // check if all logs have been chopped
+              console.log("all chopped! blz-complete was called");
+              if (gameManager) {
+                gameManager.emit('blz-complete');
               }
+            }
+          }
 
-            } else {
-              console.log("you're not allowed to chop");
-            } 
+          //remove a log
+          this.chopLog = (logId) => {
+            console.log("log chopped!");
+            let logToChop = document.querySelector(`#${logId}`);
+            logToChop.removeAttribute('static-body');
+            
+            //wait for physics to get removed first before removing the element
+            setTimeout(() => {
+              if (logToChop.parentNode) {
+                  logToChop.parentNode.removeChild(logToChop);
+                }
+              }, 0);
+          }
 
+      // Ensure CONTEXT_AF exists
+      window.CONTEXT_AF = window.CONTEXT_AF || {};
+      CONTEXT_AF.chopEventName = "chop_event";
+      CONTEXT_AF.socket = null;
+
+      // Create the networking system using CONTEXT_AF
+      CONTEXT_AF.createNetworkingSystem = () => {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        console.warn(
+          "Networking system ready. Socket ID: " +
+            CONTEXT_AF.socket.id +
+            " in room: " +
+            CIRCLES.getCirclesGroupName() +
+            " in world: " +
+            CIRCLES.getCirclesWorldName()
+        );
+
+       //if we collied with the log and we're in the choping state, remove the log
+       log.addEventListener('collide', (event) => {
+        //console.log("After collied with log: " + this.chopAllowed);
+        //console.log("Axe collided with log!", event.detail.body.el);
+
+        const axe = event.detail.body.el;
+        if (!axe || axe.id !== 'axe') return;
+
+        if (this.chopAllowed === true) {
+          this.chopLog(log.id);
+            
+          //reset the chopping state
+          this.chopAllowed = false;
+          
+          //increment counter
+          this.chopCounter++;
+          console.log('chop counter: ' + this.chopCounter);
+            
+          //reset the target color
+          let axetarget = document.querySelector('#axeTarget');
+          axetarget.setAttribute('material', 'color: red');
+
+          //check if the choppign is done
+          this.checkChoppingFinished();
+          
+          // Emit the updated count globally
+          CONTEXT_AF.socket.emit(CONTEXT_AF.chopEventName, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName(),
+            logRemoved: log.id,
+            chopCounter: this.chopCounter
           });
 
+        } else {
+          console.log("you're not allowed to chop");
+        } 
+
+      });
+      
+        
+        // Listen for the global raft update events
+        CONTEXT_AF.socket.on(CONTEXT_AF.chopEventName, (data) => {
+          if (
+            data.world === CIRCLES.getCirclesWorldName() &&
+            data.room === CIRCLES.getCirclesGroupName()
+          ) {
+            // Only update if the incoming count is greater than the local value
+            if (data.chopCounter > this.chopCounter) {
+              this.chopCounter = data.chopCounter;
+              this.chopLog(data.logRemoved);
+              this.checkChoppingFinished();
+            }
+            console.log("Global chop counter: " + data.chopCounter);
+          }
+        });
+  
+        // Request data sync after a random delay (for late joiners)
+        setTimeout(() => {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName()
+          });
+        },1200);
+  
+        // When another client requests sync data, send your current logsPlaced value
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
+              room: CIRCLES.getCirclesGroupName(),
+              world: CIRCLES.getCirclesWorldName(),
+              chopCounter: this.chopCounter
+            });
+          }
+        });
+
+         // Receive sync data from others
+         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            if (data.chopCounter > this.chopCounter) {
+              this.chopCounter = data.chopCounter;
+              this.checkChoppingFinished();
+              //this.updateSledModel();
+            }
+          }
+        });
+      };
+
+      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
+      if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+      } else {
+        let wsReadyFunc = () => {
+          CONTEXT_AF.createNetworkingSystem();
+          this.el.sceneEl.removeEventListener(
+            CIRCLES.EVENTS.WS_CONNECTED,
+            wsReadyFunc
+          );
+        };
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      }
           
           log.setAttribute('scale', '1 1 1'); // Scale down by half in all directions
           const rot = rotations[index];
@@ -426,11 +522,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
       //   console.log("sledPedestal and sled element ARE found!");
       // }
 
-      // Ensure CONTEXT_AF exists
-      window.CONTEXT_AF = window.CONTEXT_AF || {};
-      CONTEXT_AF.sledEventName = "addPart_event";
-      CONTEXT_AF.socket = null;
-
+      
       // Helper function to update the raft model based on logsPlaced
       this.updateSledModel = () => {
         // Update the sled visibility and model
@@ -440,7 +532,7 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
         this.sled.setAttribute('scale', {x:50, y:50, z:50});
         console.log("Local parts placed: " + this.sledPartsPlaced);
       };
-
+      
       // Check if all parts are placed
       this.checkSledFinished = () => {
         if (this.sledPartsPlaced === this.maxParts) {
@@ -452,9 +544,13 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
           }
         }
       }
-
+      
       console.log("WE registered sled-pedestal-trigger component!!!");
-
+      
+      // Ensure CONTEXT_AF exists
+      window.CONTEXT_AF = window.CONTEXT_AF || {};
+      CONTEXT_AF.sledEventName = "addPart_event";
+      CONTEXT_AF.socket = null;
       // Create the networking system using CONTEXT_AF
       CONTEXT_AF.createNetworkingSystem = () => {
         CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
@@ -570,23 +666,6 @@ AFRAME.registerComponent('axe-target-trigger', {
     init: function () {
         this.axeTarget = document.querySelector("#axeTarget");
 
-        // Ensure CONTEXT_AF exists
-        window.CONTEXT_AF = window.CONTEXT_AF || {};
-        CONTEXT_AF.triggerEventName = "trigger_event";
-        CONTEXT_AF.socket = null;
-
-        // Create the networking system using CONTEXT_AF
-      CONTEXT_AF.createNetworkingSystem = () => {
-        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
-        console.warn(
-          "Networking system ready. Socket ID: " +
-            CONTEXT_AF.socket.id +
-            " in room: " +
-            CIRCLES.getCirclesGroupName() +
-            " in world: " +
-            CIRCLES.getCirclesWorldName()
-        );
-
         // This is the code that checks if one of the parts was cliked
         // Listen for the 'collision' event
         
@@ -600,79 +679,7 @@ AFRAME.registerComponent('axe-target-trigger', {
           this.axeTarget.setAttribute('material', 'color: #00ff00');
           this.axeTarget.emit('targetTouched');
 
-          // Emit changing color
-          CONTEXT_AF.socket.emit(CONTEXT_AF.triggerEventName, {
-            room: CIRCLES.getCirclesGroupName(),
-            world: CIRCLES.getCirclesWorldName(),
-            targetId: this.axeTarget.id
-          });
-
         });
-  
-        // Listen for the global raft update events
-        CONTEXT_AF.socket.on(CONTEXT_AF.sledEventName, (data) => {
-          if (
-            data.world === CIRCLES.getCirclesWorldName() &&
-            data.room === CIRCLES.getCirclesGroupName()
-          ) {
-            // Only update if the incoming count is greater than the local value
-            if (data.sledPartsPlaced > this.sledPartsPlaced) {
-              this.sledPartsPlaced = data.sledPartsPlaced;
-              this.updateSledModel();
-              const partToRemove = document.querySelector(`#${data.partRemoved}`);
-              if (partToRemove.parentNode) {
-                partToRemove.parentNode.removeChild(partToRemove);
-              }
-              this.checkSledFinished();
-            }
-            console.log("Global parts placed: " + data.sledPartsPlaced);
-          }
-        });
-  
-        // Request data sync after a random delay (for late joiners)
-        setTimeout(() => {
-          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
-            room: CIRCLES.getCirclesGroupName(),
-            world: CIRCLES.getCirclesWorldName()
-          });
-        },1200);
-  
-        // When another client requests sync data, send your current logsPlaced value
-        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
-          if (data.world === CIRCLES.getCirclesWorldName()) {
-            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
-              sledPartsPlaced: this.sledPartsPlaced,
-              room: CIRCLES.getCirclesGroupName(),
-              world: CIRCLES.getCirclesWorldName()
-            });
-          }
-        });
-
-         // Receive sync data from others
-         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
-          if (data.world === CIRCLES.getCirclesWorldName()) {
-            if (data.sledPartsPlaced > this.sledPartsPlaced) {
-              this.sledPartsPlaced = data.sledPartsPlaced;
-              this.updateSledModel();
-              this.checkSledFinished();
-            }
-          }
-        });
-      };
-
-      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
-      if (CIRCLES.isCirclesWebsocketReady()) {
-        CONTEXT_AF.createNetworkingSystem();
-      } else {
-        let wsReadyFunc = () => {
-          CONTEXT_AF.createNetworkingSystem();
-          this.el.sceneEl.removeEventListener(
-            CIRCLES.EVENTS.WS_CONNECTED,
-            wsReadyFunc
-          );
-        };
-        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
-      }
         
     }
 });
