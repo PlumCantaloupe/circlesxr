@@ -19,6 +19,10 @@
 
     <!-- add your custom scripts here -->
 
+    <!-- component for the guide's event triggers  -->
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+
     <script src="js/sorting-component.js"></script> 
     <script src="js/cave_networking.js"></script> 
     <script src="components/toggle-movement.js"></script>
@@ -87,6 +91,9 @@
         <a-asset-item id="smallRockModel" response-type="arraybuffer" src="assets/models/SmallRock.glb"></a-asset-item>
         <a-asset-item id="medRockModel" response-type="arraybuffer" src="assets/models/MedRock.glb"></a-asset-item>
         <a-asset-item id="bigRockModel" response-type="arraybuffer" src="assets/models/BigRock.glb"></a-asset-item>
+
+        <a-asset-item id="guideModel" response-type="arraybuffer" src="assets/models/guy_texture.glb"></a-asset-item>
+
 
         <!-- Artefact textures -->
          <img id="cavePainting-img" src="assets/wall_art1.jpg">
@@ -253,6 +260,19 @@
                                   desc_arrow_position:down;
                                   label_text:Phoenician Figurine;"
                 circles-pickup-networked></a-entity>
+
+      
+      <!-- guide  -->
+      <a-entity id="guideGuy" position="-2.22576 0 -3.70559" scale="5 5 5" rotation="0 42.224697669961145 0" gltf-model="assets/models/guy_texture.glb">
+        
+        <!-- text bubbles -->
+        <a-entity scale=" 0.2 0.2 0.2" circles-description="title_text_front: Welcome Traveler!; 
+        description_text_front: You’ve stepped into a place of ancient wisdom. Here, our ancestors painted stories, crafted tools, and honored the spirits. I will be your guide.; 
+        offset: 1.3 2.09 0;
+        arrow_position: left;"></a-entity>
+      </a-entity>
+
+                                    
 
       <!--artifacts--> 
       <a-entity id="vaseSort" class="sorting_item" data-order="3" data-correct="false" sorting-collision
