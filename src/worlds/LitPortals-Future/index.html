@@ -61,6 +61,8 @@
           <audio id="hybrid" src="/worlds/LitPortals-Future/assets/sounds/Hybrid.mp3" preload="true"></audio>
           <audio id="peace" src="/worlds/LitPortals-Future/assets/sounds/Peace.mp3" preload="true"></audio>
          
+          <!--Guide-->
+          <a-asset-item id="guideModel" response-type="arraybuffer" src="assets/models/guy_texture.glb"></a-asset-item>
           
           <!-- Button Sound Effect -->
           <audio id="ding" src="assets/sounds/ding.mp3" preload="true"></audio>
@@ -119,16 +121,7 @@
     </a-entity>
       <!-- room -->
         
-      <a-entity id="instructions-1" position="0 1 -1"
-      circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
-      textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
-      title: Make your future;
-      description:Use the buttons to create elements of you future. Mix and match to make the future you want. Feel free to move the object around;
-      title_back: How it works?;
-      description_back:Red Button - Changes the enviroment. Blue Button - Spawns objects based on the enviroment. Green Button - Changes the colour of the light. Yellow Button - Turns the light on or off.;
-      description_offset:0 0.5 0;
-      desc_arrow_position:down;
-      label_text: Make your future;"></a-entity>
+      
 
 
 
@@ -166,7 +159,42 @@
       <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
                 light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
       <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+    <!-- guide  -->
+    <a-entity id="guideGuy" position="0 0 -5" scale="5 5 5" rotation="0 0 0" gltf-model="assets/models/guy_texture.glb">
+        
+        <!-- text bubbles -->
+        <a-entity scale=" 0.2 0.2 0.2" circles-description="title_text_front: Welcome to the future!; 
+          description_text_front: Here, you shape your own reality. 
+          The choices you make define the world around you. Let me guide you through it.; 
+          offset: 1.3 2.09 0;
+          arrow_position: left;">
+        </a-entity>
+       
+        <a-entity scale=" 0.2 0.2 0.2" circles-description=" 
+          title_text_front: Red Button!; description_text_front: You've pressed the red button! Watch as the entire environment around you transforms.; 
+          offset: 1.3 2.09 0;
+          arrow_position: left;">
+        </a-entity>
 
+        <a-entity scale=" 0.2 0.2 0.2" circles-description=" 
+          title_text_front: Blue Button!; description_text_front: Great choice! The blue button spawns objects that match the environment. Look around and see what appears!; 
+          offset: 1.3 2.09 0;
+          arrow_position: left;">
+        </a-entity>
+
+        <a-entity scale=" 0.2 0.2 0.2" circles-description=" 
+          title_text_front: Green Button!; description_text_front: Ah, the green button! This one changes the color of the lights. Let's set the mood!; 
+          offset: 1.3 2.09 0;
+          arrow_position: left;">
+        </a-entity>
+
+        <a-entity scale=" 0.2 0.2 0.2" circles-description=" 
+          title_text_front: Yellow Button!; description_text_front: You've toggled the yellow button. That controls the lighting—let's turn it on or off!; 
+          offset: 1.3 2.09 0;
+          arrow_position: left;">
+        </a-entity>
+      
+    </a-entity>
       
     </a-scene>   
     
