@@ -37,15 +37,19 @@ const forestModels = [
     "#bush_flowers", "#bunny", "#bird", "#bush", "#deer",  "#fox" ];
 
 const archesModels = [
-    "#dolphin", "#fish", "#jelly_pink", "#jelly_blue" ];
+    "#dolphin", "#fish", "#jelly_pink", "#jelly_blue", "#shark" ];
 
 const contactModels = [
     "#building1Model", "#building2Model", "#building3Model", "#building4Model", 
     "#building5Model", "#building6Model", "#building7Model", "#building8Model" ];
 
+const marsModels = [
+    "#RED_rock1", "#RED_rock2", "#RED_rock3", "#mars", "#alien", "#robot" ];    
+
 let currentContactIndex = 0;
 let currentForestIndex = 0;
 let currentArchesIndex = 0;
+let currentMarsIndex = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
     const blueButton = document.querySelector("#blue_button .button");
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const randomZ = Math.floor(Math.random() * 41) - 20;
             
             if (currentEnvironment === "contact") {
-                console.log("Mars");
+                console.log("80s");
                 const contactModel = contactModels[currentContactIndex];
                 currentContactIndex = (currentContactIndex + 1) % contactModels.length;
                 
@@ -84,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
             } else if (currentEnvironment === "arches") {
-                console.log("forest");
+                console.log("arches");
                 const archesModel = archesModels[currentArchesIndex];
                 currentArchesIndex = (currentArchesIndex + 1) % archesModels.length;
                 
@@ -93,6 +97,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 socket.emit("spawnModel", {
                     archesId: archesId, 
                     model: archesModel,
+                    position: `${randomX} ${randomY} ${randomZ}`
+                });
+            } else if (currentEnvironment === "yavapai") {
+                console.log("yavapai");
+                const marsModel = marsModels[currentMarsIndex];
+                currentMarsIndex = (currentMarsIndex + 1) % marsModels.length;
+                
+                const mardsId = `marsModels-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+                socket.emit("spawnModel", {
+                    mardsId: mardsId, 
+                    model: marsModel,
                     position: `${randomX} ${randomY} ${randomZ}`
                 });
             } 
@@ -307,7 +323,7 @@ socket.on("spawnModel", function (shapeData) {
 
     const randomScale = (Math.random() * 2 + 2).toFixed(2);
     newShape.setAttribute("scale", `${randomScale} ${randomScale} ${randomScale}`);
-    newShape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -1; pickupScale: 4 4 4");
+    newShape.setAttribute("circles-pickup-object", "pickupPosition: 0 1 -3; pickupScale: 2 2 2");
 
     document.querySelector("a-scene").appendChild(newShape);
     
