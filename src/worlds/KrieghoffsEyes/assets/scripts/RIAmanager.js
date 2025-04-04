@@ -16,12 +16,13 @@ AFRAME.registerComponent('ria-manager', {
         this.el.addEventListener('ria-painting-clicked', () => {
             this.startRaftTask();
             this.riaWorld = document.querySelector('#riaWorld');
-            this.riaWorld.setAttribute('visible', 'true');
             // this.navmesh.setAttribute("gltf-model", '#ria_navmesh');
-            this.navmesh.setAttribute('visible', 'true');
             this.navmesh.setAttribute('position', '-6.614 2.162 -0.061');
             this.navmesh.setAttribute('rotation', '6.571 89.829 0.505');
             this.navmesh.setAttribute('scale', '295.198 0.087 33.998');
+            this.navmesh.removeAttribute('nav-mesh');
+            this.navmesh.setAttribute('nav-mesh', '');
+
             // this.navmesh.removeAttribute('geometry');
         });
 
