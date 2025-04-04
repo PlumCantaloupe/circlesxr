@@ -143,7 +143,7 @@ AFRAME.registerComponent('ria-manager', {
         raft.setAttribute('position', `-1.017 1.983 -14.995`);
 
         raft.setAttribute('id', `raft`);
-        raft.setAttribute('gltf-model', `#Raft4`);
+        raft.setAttribute('gltf-model', `#Raft4_Gray`);
         raft.setAttribute('material', 'color: brown'); // Material needs to be separate
         
         raft.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
