@@ -82,6 +82,7 @@
         <a-asset-item id="sculptureModel" response-type="arraybuffer" src="assets/models/sculpture.glb"></a-asset-item>
         <a-asset-item id="sculpture2Model" response-type="arraybuffer" src="assets/models/sculpture2.glb"></a-asset-item>
         <a-asset-item id="vaseModel" response-type="arraybuffer" src="assets/models/Pot2B.glb"></a-asset-item>
+        <a-asset-item id="vase2Model" response-type="arraybuffer" src="assets/models/Pot1B.glb"></a-asset-item>
 
         <a-asset-item id="smallRockModel" response-type="arraybuffer" src="assets/models/SmallRock.glb"></a-asset-item>
         <a-asset-item id="medRockModel" response-type="arraybuffer" src="assets/models/MedRock.glb"></a-asset-item>
@@ -114,8 +115,8 @@
       <a-entity id="rock" position="0 0 3" scale= "0.001 0.001 0.001" gltf-model="#rockModel"></a-entity>
       <a-entity id="rock1" position="-1.83 0.145" scale= "0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
       <a-entity id="rockUnderBison" position="-7.788 -0.012 -20.360" scale="0.005 0.005 0.005" gltf-model="#rockModel"></a-entity>
-      
-      <a-entity id="rockUnderVenus" position="5.9 0 -7.1" scale="2 3 2" gltf-model="#bigRockModel"></a-entity>
+      <a-entity id="rockUnderVenus" position="5.963 0 -7.236" scale="2 3 2" gltf-model="#bigRockModel"></a-entity>
+      <a-entity id="rockByFigurine" position="-7.350 0 -3.681" scale="1 1.2 1" gltf-model="#bigRockModel"></a-entity>
       <a-entity id="rock2" position="5.442 -0.036 -6.259" scale="2 2 2" gltf-model="#medRockModel"></a-entity>
       <a-entity id="rock3" position="8.118 -0.152 -4.445" scale="2 2 2" gltf-model="#smallRockModel"></a-entity>
 
@@ -193,10 +194,9 @@
                                   label_text:Cave Painting;"
                 circles-pickup-networked></a-entity>
 
-                <a-entity id="ivoryBison-artefact"
-                position="-7.8 1.25 -20.2" rotation="0 55 0" scale="1 1 1"
-                geometry="primitive: plane; height:1; width:1;"
-                material="src: #ivoryBison-img; side:double;"
+      <a-entity id="ivoryBison-artefact"
+                position="-7.8 0.8 -20.2" rotation="0 85 0" scale="1.4 1.4 1.4"
+                gltf-model="#sculptureModel"
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
                                   textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
                                   title: Ivory Bison Carving;
@@ -208,10 +208,9 @@
                                   label_text:Carved Figure;"
                 circles-pickup-networked></a-entity>    
 
-                <a-entity id="venus-artefact"
-                position="5.9 1.5 -7.1" rotation="0 55 0" scale="1 1 1"
-                geometry="primitive: plane; height:1; width:1;"
-                material="src: #venus-img; side:double;"
+      <a-entity id="venus-artefact"
+                position="5.9 1.116 -7.1" rotation="0 250 0" scale="1.2 1.2 1.2"
+                gltf-model="#sculpture2Model"
                 circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
                                   textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
                                   title: Venus of Brassempouy;
@@ -220,20 +219,52 @@
                                   description_back:;
                                   description_offset:0 0.5 0;
                                   desc_arrow_position:down;
-                                  label_text:Venus Ivory Carving;"
-                circles-pickup-networked></a-entity>    
+                                  label_text:Venus Ivory Sculpture;"
+                circles-pickup-networked></a-entity>   
+                
+      <a-entity id="vase-artefact"
+                position="4.285 0.4 -24.535" rotation="0 45 0" scale="0.7 0.7 0.7"
+                gltf-model="#vaseModel"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title: Vase;
+                                  description:Vases can be found everywhere across the world, but were first found in ancient civilizations during the Bronze Age which was around 3000-5000 years ago. These vessels were used to carry and transport supply and double as decorative pieces.;
+                                  title_back:;
+                                  description_back:;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Vase Artifact;"
+                circles-pickup-networked></a-entity>
+      <a-entity id="vaseDecor"
+                position="4 -0.5 -25.6" rotation="0 70 0" scale="0.6 1.4 0.6" gltf-model="#vase2Model"></a-entity>
+      <a-entity id="vaseDecor2"
+                position="12.868 0.558 -10.071" rotation="0 30 0" scale="0.4 0.7 0.4" gltf-model="#vaseModel"></a-entity>
+      
+      <a-entity id="figurine-artefact"
+                position="-7.029 0.3 -3.741" rotation="0 45 0" scale="2.4 2.4 2.4"
+                gltf-model="#figurineModel"
+                circles-artefact="inspectPosition:0 0 0; inspectRotation:0 0 0; inspectScale:0.8 0.8 0.8;
+                                  textRotationY:90.0; labelLookAt:true; descriptionLookAt:true; label_offset:0.0 1.0 0.0; label_arrow_position:down;
+                                  title: Vase;
+                                  description:Also known as Byblos figurines, are small statues found in ancient temples in Lebanon. This one specifically dates back to about 2450 years ago. These figurines can be from 3-38 cm tall and are made from a mix of different metals.;
+                                  title_back:;
+                                  description_back:;
+                                  description_offset:0 0.5 0;
+                                  desc_arrow_position:down;
+                                  label_text:Phoenician Figurine;"
+                circles-pickup-networked></a-entity>
 
       <!--artifacts--> 
-      <a-entity id="vaseArtifact" class="sorting_item" data-order="3" data-correct="false" sorting-collision
+      <a-entity id="vaseSort" class="sorting_item" data-order="3" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1 1 1; dropRotation: 0 0 0; dropScale: 0.7 0.7 0.7" circles-pickup-networked
         position="12.5 2.3 -15.1" scale="0.7 0.7 0.7" gltf-model="#vaseModel"></a-entity>
-      <a-entity id="sculptureArtifact" class="sorting_item" data-order="2" data-correct="false" sorting-collision
+      <a-entity id="sculptureSort" class="sorting_item" data-order="2" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 2 2 2; dropRotation: 0 0 0; dropScale: 1.7 1.7 1.7" circles-pickup-networked
         position="12.5 2 -14.3" scale="1.7 1.7 1.7" gltf-model="#sculptureModel"></a-entity>
-      <a-entity id="figurineArtifact" class="sorting_item" data-order="4" data-correct="false" sorting-collision
+      <a-entity id="figurineSort" class="sorting_item" data-order="4" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.8 1.8 1.8; dropRotation: 0 90 0; dropScale: 1.5 1.5 1.5" circles-pickup-networked
         position="12.5 1.95 -13.3" rotation="0 90 0" scale="1.5 1.5 1.5" gltf-model="#figurineModel"></a-entity>
-      <a-entity id="sculpture2Artifact" class="sorting_item" data-order="1" data-correct="false" sorting-collision
+      <a-entity id="sculpture2Sort" class="sorting_item" data-order="1" data-correct="false" sorting-collision
         circles-pickup-object="pickupPosition: 0 1 -1; pickupScale: 1.7 1.7 1.7; dropRotation: 0 -90 0; dropScale: 1.4 1.4 1.4" circles-pickup-networked
         position="12.5 1.75 -12.5" rotation="0 -90 0" scale="1.4 1.4 1.4" gltf-Model="#sculpture2Model"></a-entity>
       <!--<a-sphere id="artifact1" class="sorting_item" data-order="4" data-correct="false" sorting-collision 
