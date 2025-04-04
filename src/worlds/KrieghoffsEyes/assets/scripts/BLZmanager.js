@@ -239,6 +239,20 @@ AFRAME.registerComponent('blz-manager', {
               }, 0);
           }
 
+          //reset the target color
+          this.restTargetColor = () => {
+            //color swaping target
+            let axeTarget = document.querySelector('#axeTarget');
+            axeTarget.setAttribute('material', 'color: red');
+          }
+          //get the target's current color
+          this.getColor = () => {
+            //color swaping target
+            let axeTarget = document.querySelector('#axeTarget');
+            let currentColor = axeTarget.getAttribute('material');
+            axeTarget.setAttribute('material', {currentColor})
+          }
+
       // Ensure CONTEXT_AF exists
       window.CONTEXT_AF = window.CONTEXT_AF || {};
       CONTEXT_AF.chopEventName = "chop_event";
@@ -273,10 +287,9 @@ AFRAME.registerComponent('blz-manager', {
           //increment counter
           this.chopCounter++;
           console.log('chop counter: ' + this.chopCounter);
-            
-          //reset the target color
-          let axetarget = document.querySelector('#axeTarget');
-          axetarget.setAttribute('material', 'color: red');
+          
+          //reset target color to red
+          this.restTargetColor();
 
           //check if the choppign is done
           this.checkChoppingFinished();
@@ -307,6 +320,7 @@ AFRAME.registerComponent('blz-manager', {
               this.chopCounter = data.chopCounter;
               this.chopLog(data.logRemoved);
               this.checkChoppingFinished();
+              this.restTargetColor();
             }
             console.log("Global chop counter: " + data.chopCounter);
           }
@@ -337,7 +351,7 @@ AFRAME.registerComponent('blz-manager', {
             if (data.chopCounter > this.chopCounter) {
               this.chopCounter = data.chopCounter;
               this.checkChoppingFinished();
-              //this.updateSledModel();
+              this.restTargetColor();
             }
           }
         });
@@ -665,21 +679,113 @@ AFRAME.registerComponent('sled-pedestal-trigger', {
 AFRAME.registerComponent('axe-target-trigger', {
     init: function () {
         this.axeTarget = document.querySelector("#axeTarget");
+        //ignore the initial collision - physics detects collisions on start up
+        this.initialCollisionSkipped = false; // Flag to track the first collision
 
-        // This is the code that checks if one of the parts was cliked
+
+        //function to change the target's color
+        //used to indicate the target has been touched
+        this.chageColor = () => {
+          this.axeTarget.setAttribute('material', 'color: #00ff00');
+        }
+
+        this.getColor = () => {
+          currentColor = this.axeTarget.getAttribute('material');
+          this.axeTarget.setAttribute('material', {currentColor})
+        }
+
+        // Ensure CONTEXT_AF exists
+      window.CONTEXT_AF = window.CONTEXT_AF || {};
+      CONTEXT_AF.targetEventName = "target_event";
+      CONTEXT_AF.socket = null;
+
+      // Create the networking system using CONTEXT_AF
+      CONTEXT_AF.createNetworkingSystem = () => {
+        CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
+        console.warn(
+          "Networking system ready. Socket ID: " +
+            CONTEXT_AF.socket.id +
+            " in room: " +
+            CIRCLES.getCirclesGroupName() +
+            " in world: " +
+            CIRCLES.getCirclesWorldName()
+        );
+
+       // This is the code that checks if one of the parts was cliked
         // Listen for the 'collision' event
-        
         this.axeTarget.addEventListener('collide', (event) => {
+           // Skip first collision on startup
+          if (!this.initialCollisionSkipped) {
+            this.initialCollisionSkipped = true;
+            return;
+          }
+          
           console.log("Collision detected!", event.detail.body.el);
           const axe = event.detail.body.el;
           if (!axe || !axe.classList.contains('interactable-axe')) return;
           
-          this.axeTarget.setAttribute('color', 'green');
-          
-          this.axeTarget.setAttribute('material', 'color: #00ff00');
           this.axeTarget.emit('targetTouched');
+          this.chageColor();
 
+          // Emit the updated count globally
+          CONTEXT_AF.socket.emit(CONTEXT_AF.targetEventName, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName(),
+          });
+          
         });
+        
+        // Listen for the global raft update events
+        CONTEXT_AF.socket.on(CONTEXT_AF.targetEventName, (data) => {
+          if (
+            data.world === CIRCLES.getCirclesWorldName() &&
+            data.room === CIRCLES.getCirclesGroupName()
+          ) {
+            //if we touched the target with the axe, change it's color to green
+            console.log("Everyone knows the target was hit");
+            this.chageColor();
+          }
+        });
+  
+        // Request data sync after a random delay (for late joiners)
+        setTimeout(() => {
+          CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {
+            room: CIRCLES.getCirclesGroupName(),
+            world: CIRCLES.getCirclesWorldName()
+          });
+        },1200);
+  
+        // When another client requests sync data, send your current logsPlaced value
+        CONTEXT_AF.socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {
+              room: CIRCLES.getCirclesGroupName(),
+              world: CIRCLES.getCirclesWorldName()
+            });
+          }
+        });
+
+         // Receive sync data from others
+         CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, (data) => {
+          if (data.world === CIRCLES.getCirclesWorldName()) {
+            //this.chageColor();
+          }
+        });
+      };
+
+      // If the Circles websocket is ready, set up networking immediately; otherwise, wait for WS_CONNECTED event
+      if (CIRCLES.isCirclesWebsocketReady()) {
+        CONTEXT_AF.createNetworkingSystem();
+      } else {
+        let wsReadyFunc = () => {
+          CONTEXT_AF.createNetworkingSystem();
+          this.el.sceneEl.removeEventListener(
+            CIRCLES.EVENTS.WS_CONNECTED,
+            wsReadyFunc
+          );
+        };
+        this.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+      }
         
     }
 });
