@@ -18,7 +18,8 @@ schema: {
 
     if (CONTEXT_AF.data.id === '') {
       if (!CONTEXT_AF.el.id) {
-        console.error('[circles-object-world]: A networked object requires an ID.')
+        console.error('[circles-object-world]: A networked object requires an ID. Assigning random one.');
+        CONTEXT_AF.el.setAttribute('id', CIRCLES.getRandomString(10));
       }
 
       CONTEXT_AF.el.setAttribute('circles-object-world', {id:CONTEXT_AF.el.id});
