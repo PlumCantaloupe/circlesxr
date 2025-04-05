@@ -38,16 +38,16 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='assets/textures/neuronSky.png' crossorigin="anonymous">
+        <img id='skyMap' src='/worlds/BW_Alpha/assets/textures/neuronSky.png' crossorigin="anonymous">
 
         <a-asset-item id="library_test" src="/worlds/BW_Alpha/assets/models/library/library_test.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="library_structure" src="/worlds/BW_Alpha/assets/models/library/library_structure.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
 
-        <a-asset-item id="lectern1" src="/worlds/BW_Alpha/assets/models/library/lectern1.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="lectern2" src="/worlds/BW_Alpha/assets/models/library/lectern2.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="lectern3" src="/worlds/BW_Alpha/assets/models/library/lectern3.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="lectern4" src="/worlds/BW_Alpha/assets/models/library/lectern4.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern1.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern2_model" src="/worlds/BW_Alpha/assets/models/library/lectern2.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern3_model" src="/worlds/BW_Alpha/assets/models/library/lectern3.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern4_model" src="/worlds/BW_Alpha/assets/models/library/lectern4.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="candles" src="/worlds/BW_Alpha/assets/models/library/candles.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="candles2" src="/worlds/BW_Alpha/assets/models/library/candles2.glb" response-type="arraybuffer"></a-asset-item>
@@ -78,7 +78,7 @@
       <circles-manager-avatar/>
 
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #3eb6de"></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = ""></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       
       <!--Portal - don't remove from scene please -->
@@ -115,51 +115,39 @@
       <!-- room model -->
       <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_structure" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
             <a-entity   id="library_main_furniture"
-                        gltf-model="#library_main">
-            </a-entity>
-            </a-entity>
-            <a-entity   id="lectern1"
-                            gltf-model="#lectern1">
-                <a-entity   id="lectern2"
-                            gltf-model="#lectern2">
-                <a-entity   id="lectern3"
-                            gltf-model="#lectern3">
-                <a-entity   id="lectern4"
-                            gltf-model="#lectern4">
-                </a-entity>
-            </a-entity>
+                        gltf-model="#library_main"></a-entity>
+            <a-entity   id="lectern1" 
+                            gltf-model="#lectern1_model"
+                            circles-interactive-object></a-entity>
+            <a-entity   id="lectern2"
+                        gltf-model="#lectern3_model"
+                        circles-interactive-object></a-entity>
+            <a-entity   id="lectern3"
+                        gltf-model="#lectern2_model"
+                        circles-interactive-object></a-entity>
+            <a-entity   id="lectern4"
+                        gltf-model="#lectern4_model"
+                        circles-interactive-object></a-entity>
             <a-entity   id="candles"
-                        gltf-model="#candles">
-            </a-entity>
+                        gltf-model="#candles"></a-entity>
             <a-entity   id="candles2"
-                        gltf-model="#candles2">
-            </a-entity>
+                        gltf-model="#candles2"></a-entity>
             <a-entity   id="candles3"
-                        gltf-model="#candles3">
-            </a-entity>
+                        gltf-model="#candles3"></a-entity>
             <a-entity   id="candles4"
-                        gltf-model="#candles4">
-            </a-entity>
+                        gltf-model="#candles4"></a-entity>
             <a-entity   id="candles5"
-                        gltf-model="#candles5">
-            </a-entity>
-
+                        gltf-model="#candles5"></a-entity>
             <a-entity   id="books1"
-                        gltf-model="#books1">
-            </a-entity>
+                        gltf-model="#books1"></a-entity>
             <a-entity   id="books2"
-                        gltf-model="#books2">
+                        gltf-model="#books2"></a-entity>
             <a-entity   id="books3"
-                        gltf-model="#books3">
-            </a-entity>
+                        gltf-model="#books3"></a-entity>
             <a-entity   id="books4"
-                        gltf-model="#books4">
-            </a-entity>
+                        gltf-model="#books4"></a-entity>
             <a-entity   id="books5"
-                        gltf-model="#books5">
-            </a-entity>
-        </a-entity>
-            </a-entity>
+                        gltf-model="#books5"></a-entity>
       </a-entity>
 
       <a-entity id="tempbutton"  
@@ -176,12 +164,8 @@
                 rotation="90 223 0" 
                 shadow="cast:true; receive:true;"
                 circles-interactive-object="type: 'outline'"
-                circles-pickup-networked
                 circles-pickup-object="animate:false;"">
-      </a-entity>
-      <a-entity id= "sparkle1" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
-                circles-networked-basic
-                follow-book ="bookid: 1"
+                <a-entity id= "sparkle1" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
                                 texture: /worlds/BW_Alpha/assets/textures/sparkle.png;
                                 color: #ffc178; 
@@ -195,6 +179,24 @@
                                 sizeSpread: -0.3;
                                 duration: infinity;
                                 particleCount: 80;"></a-entity> <!-- if blending 1, color: #fff1c0 -->
+                <a-entity id="musicparticles1" position="0 0.1 0" scale="0.5 0.5 0.5"
+                          particle-system=" preset:dust;
+                          texture: /worlds/BW_Alpha/assets/textures/eighthnote.png;
+                          color: #ffbaba
+                          accelerationSpread: 0 0 0;
+                          accelerationValue: 0 0 0;
+                          rotationAngle: 0.1;
+                          positionSpread: 0 1 1;
+                          maxAge:3.5;
+                          blending: 2;
+                          dragValue: 1;
+                          velocityValue: 0 0.5 0;
+                          size: 0.2;
+                          sizeSpread: -0.1;
+                          duration: infinity;
+                          particleCount: 12;
+                          enabled:false"></a-entity>
+                          </a-entity>
       <a-entity id="book2" 
                 gltf-model="#book_model"
                 material="color: #ffac6f"
@@ -202,7 +204,6 @@
                 rotation="0 0 0" 
                 shadow="cast:false; receive:true;"
                 circles-interactive-object="type: 'outline'"
-                circles-pickup-networked
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle2" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
@@ -225,7 +226,6 @@
                 rotation="0 0 0" 
                 shadow="cast:false; receive:true;"
                 circles-interactive-object="type: 'outline'"
-                circles-pickup-networked
                 circles-pickup-object="animate:false; ">
                 <a-entity id= "sparkle3" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
@@ -248,7 +248,6 @@
                 rotation="0 0 0" 
                 shadow="cast:false; receive:true;"
                 circles-interactive-object="type: 'outline'"
-                circles-pickup-networked
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle4" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
