@@ -5,13 +5,14 @@ AFRAME.registerComponent('emotion-pick-up', {
       CONTEXT_AF.camera = CIRCLES.getMainCameraElement();
       CONTEXT_AF.manager = document.querySelector('#manager');
       CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
+      CONTEXT_AF.sharedStateManager = document.querySelector('[bw-shared-state-manager]').components['bw-shared-state-manager'];
+      CONTEXT_AF.room = CONTEXT_AF.sharedStateManager.getRoom();
       
       CONTEXT_AF.el.addEventListener('click', function() {
         //only allow pick up if the no orb is in hand
         const holdingAnotherOrb = CONTEXT_AF.manager.getAttribute('manager').holdingOrb;
         if(holdingAnotherOrb) {
-          console.log("cannot pick up orb right now")
-          CONTEXT_AF.guidingText.displayError("cannot display info rn");
+          CONTEXT_AF.guidingText.displayError(ERROR_TEXT.PICK_UP_ONE);
         }
         else 
           CONTEXT_AF.pickUp(CONTEXT_AF.el, CONTEXT_AF.camera, CONTEXT_AF.manager);
@@ -27,7 +28,11 @@ AFRAME.registerComponent('emotion-pick-up', {
       orb.object3D.position.set(0, 0, -1);
       orb.object3D.scale.set(2, 2, 2);
       manager.setAttribute('manager', {holdingOrb: true, holdingOrbId: orb.id});
-      CONTEXT_AF.guidingText.updateGuidingText("place the orb into a tube to share your emotion");
+      if(CONTEXT_AF.room.toLowerCase() == 'hub')
+        CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SHARE_EMOTION_PART1);
+      else
+        CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SHARE_EMOTION_PART2 + CONTEXT_AF.room + ' tunnel');
+        
     },
 
     remove: function () {

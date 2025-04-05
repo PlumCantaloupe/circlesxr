@@ -56,7 +56,15 @@ const DEFAULT_GAMMA_VISUALIZATION_DATA = [
     {name: EMOTION_ORB_COLOUR_MAP.PINK, votes: 2}
 ];
 
-//function displays 2D UI text
-function displayText() {
+//guiding/error text constants
+const GUIDING_TEXT = {
+    GET_EMOTION: 'Select an emotion in the middle of the room that resonated with you during your visit to ',
+    SHARE_EMOTION_PART1: 'Share your emotion near a tunnel entrance',
+    SHARE_EMOTION_PART2: 'Share your emotion near the '
+}
 
+const ERROR_TEXT = {
+    DISPOSE_ONE_TYPE_PART1: 'Only one ',
+    DISPOSE_ONE_TYPE_PART2: ' orb can be dispensed at a time',
+    PICK_UP_ONE: 'Cannot pick up two emotion orbs at once'
 }

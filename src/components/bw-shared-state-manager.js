@@ -93,5 +93,28 @@ AFRAME.registerComponent('bw-shared-state-manager', {
       console.log(CONTEXT_AF);
       CONTEXT_AF[propertyName] = value;
       localStorage.setItem(propertyName, value);
+    },
+
+    //function returns the recently visited room name
+    getRoom: function() {
+      const CONTEXT_AF = this;
+      
+      switch (CONTEXT_AF[BRAINWAVES.LS_RECENT_ROOM]) {
+        case 'BW_Hub':
+          return 'Hub';
+          break;
+        case 'BW_Delta':
+          return 'Delta';
+          break;
+        case 'BW_Alpha':
+          return 'Alpha';
+          break;
+        case 'BW_Gamma':
+          return 'Gamma';
+          break;
+        default:
+          return 'Hub';
+          break;
+      }
     }
 });
