@@ -30,6 +30,11 @@ AFRAME.registerComponent('ria-manager', {
 
             this.spawnPortal();
             gameState.RIAdone = true;
+            let checklist = document.querySelector('#painting2_riaTask');
+            if (checklist) {
+              checklist.setAttribute('text', 'value:- Raft In Autumn: Painting Restored!');
+              checklist.setAttribute('color', 'green');
+            }
         });
 
         this.el.addEventListener('return-clicked', () => {
@@ -170,7 +175,7 @@ AFRAME.registerComponent('ria-manager', {
         redPaint.setAttribute('id', 'redPaint_return');
         redPaint.setAttribute('class', 'interactive');
         redPaint.setAttribute('circles-interactive-object', 'type:highlight');
-        redPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 2.000; seed: 222; skyType: atmosphere; lighting: distant; dressing: none;');
+        redPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 0.000; seed: 222; skyType: atmosphere; lightPosition: 0 4.88 25; lighting: distant; dressing: none;');
         redPaint.setAttribute('painting-highlight', '');
         redPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 
