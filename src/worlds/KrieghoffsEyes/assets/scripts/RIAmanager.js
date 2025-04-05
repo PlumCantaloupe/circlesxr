@@ -31,10 +31,10 @@ AFRAME.registerComponent('ria-manager', {
             this.spawnPortal();
             gameState.RIAdone = true;
             let checklist = document.querySelector('#painting2_riaTask');
-            if (checklist) {
-              checklist.setAttribute('text', 'value:- Raft In Autumn: Painting Restored!');
-              checklist.setAttribute('color', 'green');
-            }
+            checklist.setAttribute('text', {
+              value: '- Raft In Autumn: Painting Restored!',
+              color: 'green'
+            });
         });
 
         this.el.addEventListener('return-clicked', () => {
