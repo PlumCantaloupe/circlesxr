@@ -64,7 +64,6 @@ module.exports = {
               content = content.replace(/<circles-assets(\s+)?\/>/i, circles_assets);
               content = content.replace(/<circles-manager-avatar(\s+)?\/>/i, circles_avatar);
               content = content.replace(/<circles-end-scripts(\s+)?\/>/i, circles_end_scripts);
-              content = content.replace(/<bw-text-ui(\s+)?\/>/i, bw_text_ui);
               //return content.toString().replace(janusServerRegex, env.JANUS_SERVER);
               return content;
             } else {
