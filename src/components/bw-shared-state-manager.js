@@ -47,7 +47,8 @@ AFRAME.registerComponent('bw-shared-state-manager', {
       //setting the bloom
       if(isBloomOn != null && CONTEXT_AF.data.bloomAvailable)
         CONTEXT_AF[BRAINWAVES.LS_BLOOM] = isBloomOn === 'true' ? true : false;
-      else {
+      //if this is gamma we do not accidently want to turn off bloom for other worlds
+      else if (worldName != 'BW_Gamma') {
         CONTEXT_AF[BRAINWAVES.LS_BLOOM] = BRAINWAVES.DEFAULT_BLOOM;
         localStorage.setItem(BRAINWAVES.LS_BLOOM, BRAINWAVES.DEFAULT_BLOOM);
       }
@@ -69,7 +70,7 @@ AFRAME.registerComponent('bw-shared-state-manager', {
         CONTEXT_AF.guidingTextContainer.setAttribute('bw-guiding-text', {enabled: true});
 
       //create teleport pad component (will need to be moved to individual game managers probs)
-      CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: CONTEXT_AF[BRAINWAVES.LS_TELEPORT_PAD], colour: '#5764c2'});
+      CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: CONTEXT_AF[BRAINWAVES.LS_TELEPORT_PAD]});
 
       //turn on bloom if the it's turned on in accessibility settings and this world has bloom
       if(CONTEXT_AF[BRAINWAVES.LS_BLOOM] && CONTEXT_AF.data.bloomAvailable){

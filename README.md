@@ -16,6 +16,7 @@
 - [Creating A New Circles World](#creating-a-new-circles-world)
 - [Circles Structure](#circles-structure)
 - [Circles Components](#circles-components)
+- [Circles Events](#circles-events)
 - [Circles Networking](#circles-networking)
 - [Learning More About A-Frame and Javascript Development](#learning-more-about-a-frame-and-javascript-development)
 - [Contributing to Circles](#contributing-to-circles)
@@ -107,11 +108,11 @@ _NOTE: For navigation, we use the [Aframe-Extras'](https://github.com/c-frame/af
 
 | <br>Interaction      | Default<br>Desktop  | <br>Mobile          |<br>HMD              | Advanced<br>Desktop | <br>Mobile          | <br>HMD             |
 |:---                  |:---                 |:---                 |:---                 |:---                 |:---                 |:---                 |
-|  Navigation          | Checkpoint Teleport                       ||                    | WASD                | n/a                 | Left Joysick        |
-|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | tap-drag left/right | n/a                 |
-|  Selection           | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |
-|  Manipulation        | Non-Diegetic UI (rotate, zoom, release)   ||                    | TBD                 | TBD                 | TBD                 |
-|  Release             | Single Click/Tap/Raycast Object           ||                    | TBD                 | TBD                 | TBD                 |         
+|  Navigation          | Checkpoint Teleport | Checkpoint Teleport | Checkpoint Teleport | Keyboard's WASD     | On-screen Left Joystick                 | Click-in Left Joysick        |
+|  Look                | Left-Mouse Drag     | Device Orientation  | HMD Orientation     | n/a                 | On-screen Right Joystick | Joysicks left/right (click-in for smooth)                 |
+|  Selection           | Single Click        | Tap                 | Raycast (laser pointer)     | TBD                 | TBD                 | TBD                 |
+|  Manipulation        | Non-Diegetic UI     | Non-Diegetic UI     | Non-Diegetic UI     | TBD                 | TBD                 | TBD                 |
+|  Release             | Single Click        | Tap                 | Raycast Object      | TBD                 | TBD                 | TBD                 |         
 
 <br>
 
@@ -284,16 +285,17 @@ CIRCLES.getCirclesManagerComp();
 //returns reference to held element, or null if no held object on this player/client  
 CIRCLES.getPickedUpElement();
 
-//to get the non-networked id of an elem (queries the 'circles-object-world' component for tehj original "id") 
+//to get the non-networked id of an elem (queries the 'circles-object-world' component for the original "id") 
 CIRCLES.getNonNetworkedID(elem);
 
-//Example
-//You may also listen to the CIRCLES.READY event on the scene to find out when Circles is ready to manipulate
-CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
-    //to change speed of character movement
-    CIRCLES.getAvatarRigElement().setAttribute('movement-controls', {speed:0.3});
-});
-```
+//get communication socket
+CIRCLES.getCirclesWebsocket();
+
+//return all avatars in the scene. Yourself and other networked-aframe avatar entities
+CIRCLES.getNetworkedAvatarElements();
+
+//return all networked-aframe networked entities (includes avatars and any other objects). You may have to dig into children for the geometry, materials etc.
+CIRCLES.getAllNetworkedElements();
 
 And now the components available for you.
 
@@ -649,17 +651,6 @@ You will find an example of synching simple switches in the "hub"/campfire world
 _First, some useful functions (please note there are others noted in the [Circles Componenets](#circle-components) section:_
 
 ```js
-//get communication socket
-CIRCLES.getCirclesWebsocket();
-
-//return all avatars in the scene. Yourself and other networked-aframe avatar entities
-CIRCLES.getNAFAvatarElements();
-
-//return all networked-aframe networked entities (includes avatars and any other objects). You may have to dig into children for the geometry, materials etc.
-CIRCLES.getAllNAFElements();
-```
-
-```js
 //get the webcocket we will use to communicate between all users via the server (which will forward all events to all other users)
 
 //connect to web sockets so we can sync the campfire lights between users
@@ -724,6 +715,37 @@ CONTEXT_AF.campfireEventName = "campfire_event";
       }
     });
   ```
+
+----------------
+
+## Circles Events
+##### *[back to top](#circles-xr-learning-framework)*
+
+<br>
+
+As in many JavaScript projects, Circles makes extensive use of events to allow some transparency about when things are happening. Below are some events that may be useful:
+
+```js
+//'CIRCLES.EVENTS.READY' emitted on scene element, when Circles has loaded
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {});
+
+//'CIRCLES.EVENTS.EXPERIENCE_ENTERED' emitted on scene element, when user clicks on 'enter experience button'
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {});
+
+//'CIRCLES.EVENTS.PICKUP_OBJECT' emitted on scene element, when the user picks up an object, returns {id:e.detail.id} with callback function
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.PICKUP_OBJECT, (e) => {});
+
+//'CIRCLES.EVENTS.RELEASE_OBJECT' emitted on scene element, when the user picks up an object, returns {id:releasedElem.id} with callback function
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.RELEASE_OBJECT, (e) => {});
+
+//'CIRCLES.EVENTS.USER_CONNECTED' emitted on scene element, when a networked user connects, returns {id:e.detail.id, world:e.detail.world, device:e.detail.device} with callback function
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {});
+
+//'CIRCLES.EVENTS.USER_DISCONNECTED' emitted on scene element, when a networked user disconnects, returns {id:e.detail.id, world:e.detail.world, device:e.detail.device} with callback function
+CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.USER_DISCONNECTED, (e) => {});
+
+//NOTE: for more detail on networking events and functionality, please see the Circles networking section
+```
 
 ----------------
 
