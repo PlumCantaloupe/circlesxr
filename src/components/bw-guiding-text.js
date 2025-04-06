@@ -43,8 +43,10 @@ AFRAME.registerComponent('bw-guiding-text', {
       const CONTEXT_AF = this;
       CONTEXT_AF.guidingText.setAttribute('text', {value:content});
       CONTEXT_AF.showText = true;
-      if(!CONTEXT_AF.displayingError && CONTEXT_AF.data.enabled)
+      if(!CONTEXT_AF.displayingError && CONTEXT_AF.data.enabled){
         CONTEXT_AF.guidingText.object3D.visible = true;
+      }
+        
     },
 
     displayError: function(content) {
