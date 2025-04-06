@@ -1,6 +1,6 @@
 AFRAME.registerComponent('orb-manager', {
     schema: {
-        duration: {type: 'int', default: 9000},
+        duration: {type: 'int', default: 5000},
         clipNum: {type: 'number', default: 30},
         sendRate: {type: 'int', default: 100},
     },
@@ -251,7 +251,7 @@ AFRAME.registerComponent('orb-manager', {
                 if (orb.parentNode) {
                     orb.parentNode.removeChild(orb);
                 }
-            }, CONTEXT_AF.data.duration + 6000);
+            }, CONTEXT_AF.data.duration + 1000);
         });
 
         orb.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
