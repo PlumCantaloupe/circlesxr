@@ -6,7 +6,7 @@
 //place books at postion function
 AFRAME.registerComponent('book-place', {
     schema: {
-        id: {type: int},
+        id: {type: number},
         position: {type: vec3},
         rotation: {type: vec3},
     },
