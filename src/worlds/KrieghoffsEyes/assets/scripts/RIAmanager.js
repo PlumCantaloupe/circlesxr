@@ -16,20 +16,25 @@ AFRAME.registerComponent('ria-manager', {
         this.el.addEventListener('ria-painting-clicked', () => {
             this.startRaftTask();
             this.riaWorld = document.querySelector('#riaWorld');
-            this.riaWorld.setAttribute('visible', 'true');
-            this.navmesh.setAttribute("gltf-model", '#RiaNav');
-            this.navmesh.setAttribute('visible', 'true');
-            this.navmesh.setAttribute('position', '32.323 0.246 0');
-            this.navmesh.setAttribute('rotation', '0 90 0');
-            this.navmesh.setAttribute('scale', '5 5 5');
-            this.navmesh.setAttribute('geometry', '');
+            // this.navmesh.setAttribute("gltf-model", '#ria_navmesh');
+            this.navmesh.setAttribute('position', '-6.614 2.162 -0.061');
+            this.navmesh.setAttribute('rotation', '6.571 89.829 0.505');
+            this.navmesh.setAttribute('scale', '295.198 0.087 33.998');
             this.navmesh.removeAttribute('nav-mesh');
+            this.navmesh.setAttribute('nav-mesh', '');
+
+            // this.navmesh.removeAttribute('geometry');
         });
 
         this.el.addEventListener('ria-complete', () =>{
 
             this.spawnPortal();
             gameState.RIAdone = true;
+            let checklist = document.querySelector('#painting2_riaTask');
+            checklist.setAttribute('text', {
+              value: '- Raft In Autumn: Painting Restored!',
+              color: 'green'
+            });
         });
 
         this.el.addEventListener('return-clicked', () => {
@@ -144,7 +149,7 @@ AFRAME.registerComponent('ria-manager', {
         raft.setAttribute('position', `-1.017 1.983 -14.995`);
 
         raft.setAttribute('id', `raft`);
-        raft.setAttribute('gltf-model', `#Raft4`);
+        raft.setAttribute('gltf-model', `#Raft4_Gray`);
         raft.setAttribute('material', 'color: brown'); // Material needs to be separate
         
         raft.setAttribute('scale', '0.5 0.5 0.5'); // Scale down by half in all directions
@@ -170,7 +175,7 @@ AFRAME.registerComponent('ria-manager', {
         redPaint.setAttribute('id', 'redPaint_return');
         redPaint.setAttribute('class', 'interactive');
         redPaint.setAttribute('circles-interactive-object', 'type:highlight');
-        redPaint.setAttribute('environemntProp', 'preset: checkerboard; seed: 123; fog: 0.06; lightPosition: -4.160 1 0; skyType: gradient; skyColor: #0f0c14; horizonColor: #000000 lighting: none; dressing: none;');
+        redPaint.setAttribute('environemntProp', 'preset: forest; groundYScale: 0.000; seed: 222; skyType: atmosphere; lightPosition: 0 4.88 25; lighting: distant; dressing: none;');
         redPaint.setAttribute('painting-highlight', '');
         redPaint.setAttribute('material', 'color:#ffffff; src: #RIA; shader: standard; transparent: true; emissive: #ffffff; emissiveIntensity: 0;');
 

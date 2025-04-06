@@ -15,7 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Mesh_0.006",
+			"name":"Mesh_0.002",
 			"scale":[
 				1,
 				1,
@@ -25,21 +25,24 @@
 	],
 	"materials":[
 		{
-			"name":"Material_0.006",
+			"alphaMode":"BLEND",
+			"name":"Raft1.001",
+			"occlusionTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.5,
-					0.5,
-					0.5,
-					1
-				],
-				"metallicFactor":0
+				"baseColorTexture":{
+					"index":1
+				},
+				"metallicRoughnessTexture":{
+					"index":0
+				}
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"Mesh_0.006",
+			"name":"Mesh_0.009",
 			"primitives":[
 				{
 					"attributes":{
@@ -53,33 +56,55 @@
 			]
 		}
 	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"Raft1_occlusionRoughnessMetallic",
+			"uri":"textures/Raft1_occlusionRoughnessMetallic.png"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"Raft1_baseColor",
+			"uri":"textures/Raft1_baseColor.png"
+		}
+	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":805,
+			"count":744,
 			"max":[
 				-0.5790568590164185,
 				0.6144737005233765,
-				6.660676002502441
+				6.660675048828125
 			],
 			"min":[
 				-1.7413774728775024,
 				-0.5458444356918335,
-				-6.660676002502441
+				-6.660675048828125
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":805,
+			"count":744,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":805,
+			"count":744,
 			"type":"VEC2"
 		},
 		{
@@ -92,33 +117,39 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":9660,
+			"byteLength":8928,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":9660,
-			"byteOffset":9660,
+			"byteLength":8928,
+			"byteOffset":8928,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6440,
-			"byteOffset":19320,
+			"byteLength":5952,
+			"byteOffset":17856,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":7104,
-			"byteOffset":25760,
+			"byteOffset":23808,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":32864,
-			"uri":"Raft1.bin"
+			"byteLength":30912,
+			"uri":"raft1.bin"
 		}
 	]
 }

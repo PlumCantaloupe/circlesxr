@@ -8,13 +8,19 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				0
+				1
 			]
 		}
 	],
 	"nodes":[
 		{
 			"mesh":0,
+			"name":"Mesh_0.001"
+		},
+		{
+			"children":[
+				0
+			],
 			"name":"Mesh_0.008",
 			"translation":[
 				-6.8820366859436035,
@@ -25,15 +31,17 @@
 	],
 	"materials":[
 		{
-			"name":"Material_0.008",
+			"name":"Raft3",
+			"occlusionTexture":{
+				"index":0
+			},
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.5,
-					0.5,
-					0.5,
-					1
-				],
-				"metallicFactor":0
+				"baseColorTexture":{
+					"index":1
+				},
+				"metallicRoughnessTexture":{
+					"index":0
+				}
 			}
 		}
 	],
@@ -53,33 +61,55 @@
 			]
 		}
 	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		},
+		{
+			"sampler":0,
+			"source":1
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"Raft3_occlusionRoughnessMetallic",
+			"uri":"textures/Raft3_occlusionRoughnessMetallic.png"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"Raft3_baseColor",
+			"uri":"textures/Raft3_baseColor.png"
+		}
+	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":3231,
+			"count":2962,
 			"max":[
 				8.285699844360352,
 				0.6144737005233765,
-				5.578431129455566
+				5.578430652618408
 			],
 			"min":[
-				5.07541561126709,
+				5.075415134429932,
 				-0.6103030443191528,
-				-5.578431129455566
+				-5.578430652618408
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":3231,
+			"count":2962,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":3231,
+			"count":2962,
 			"type":"VEC2"
 		},
 		{
@@ -92,33 +122,39 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":38772,
+			"byteLength":35544,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":38772,
-			"byteOffset":38772,
+			"byteLength":35544,
+			"byteOffset":35544,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":25848,
-			"byteOffset":77544,
+			"byteLength":23696,
+			"byteOffset":71088,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":22800,
-			"byteOffset":103392,
+			"byteOffset":94784,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":126192,
-			"uri":"Raft3.bin"
+			"byteLength":117584,
+			"uri":"raft3.bin"
 		}
 	]
 }
