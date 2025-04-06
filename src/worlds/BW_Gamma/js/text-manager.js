@@ -8,14 +8,7 @@ AFRAME.registerComponent('text-manager', {
       CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
         //display guiding text to prompt the user to hit the shape
         CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
-        CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.HIT_SHAPES);
+        CONTEXT_AF.guidingText.showOneTimeText(GUIDING_TEXT.HIT_SHAPES);
       });
     },
-
-    //hide the displayed guiding text
-    hideText: function() {
-        const CONTEXT_AF = this;
-        CONTEXT_AF.guidingText.hideGuidingText();
-        CONTEXT_AF.showGuidingText = false;
-    }
 });

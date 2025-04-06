@@ -11,6 +11,7 @@ AFRAME.registerComponent('bw-guiding-text', {
         CONTEXT_AF.showText = false;
         CONTEXT_AF.errorText = document.querySelector('#textError');
         CONTEXT_AF.displayingError = false;
+        CONTEXT_AF.oneTimeTextShown = false;
 
         //parent the text to the camera when circles has loaded
         CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
@@ -32,6 +33,16 @@ AFRAME.registerComponent('bw-guiding-text', {
       }
     },
 
+    //updates and shows one time text
+    showOneTimeText: function(content) {
+      const CONTEXT_AF = this;
+
+      if(!CONTEXT_AF.oneTimeTextShown){
+        CONTEXT_AF.oneTimeTextShown = true;
+        CONTEXT_AF.updateGuidingText(content);
+      }
+    },
+
     hideGuidingText: function() {
       const CONTEXT_AF = this;
       
@@ -46,7 +57,6 @@ AFRAME.registerComponent('bw-guiding-text', {
       if(!CONTEXT_AF.displayingError && CONTEXT_AF.data.enabled){
         CONTEXT_AF.guidingText.object3D.visible = true;
       }
-        
     },
 
     displayError: function(content) {

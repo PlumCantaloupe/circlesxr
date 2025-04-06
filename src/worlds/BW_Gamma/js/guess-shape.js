@@ -21,8 +21,8 @@ AFRAME.registerComponent('guess-shape', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.guessEventName = "guess_event";
 
-        //display guiding text to prompt the user to hit the shape
-        CONTEXT_AF.textManager = document.querySelector('[text-manager]').components['text-manager'];
+        //guiding text manager
+        CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
         
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
@@ -31,10 +31,8 @@ AFRAME.registerComponent('guess-shape', {
 
             // when user clicks on a shape
             CONTEXT_AF.el.addEventListener('click', function() {
-                //if this is the first time the user guesses then hide the guiding text
-                if(CONTEXT_AF.textManager.showGuidingText) {
-                    CONTEXT_AF.textManager.hideText();
-                }
+                //hide guiding text
+                CONTEXT_AF.guidingText.hideGuidingText();
                 // if no cross/check icons are shown, user must be guessing for the first shape in the sequence
                 if(CONTEXT_AF.resultOne.getAttribute('visible') == false){
                     if(CONTEXT_AF.guessOne.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
