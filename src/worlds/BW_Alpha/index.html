@@ -20,18 +20,16 @@
       }
     </script>
 
-    <script src="/worlds/BW_Alpha/js/bloom.js" type="module"></script>
-    <script src="/worlds/BW_Alpha/js/book-manager.js"></script>
-    <script src="/worlds/BW_Alpha/js/book-place.js"></script>
-    <script src="/worlds/BW_Alpha/js/follow-book.js"></script>
+    <script src="js/bloom.js" type="module"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/book-manager.js"></script>
+    <script src="js/book-place.js"></script>
+    <script src="js/follow-book.js"></script>
   </head>
   <body>
 
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
-
-    <!-- use this to create a brain wave guiding text component -->
-    <bw-text-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties bloom="threshold: 1.0; strength: 0.3; radius: 1;">
@@ -80,6 +78,10 @@
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
       <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = ""></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
+      <!-- Guiding text  -->
+      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: error text; align: center; width: 0.3" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+ 
       
       <!--Portal - don't remove from scene please -->
       <a-entity id="Portal-Hub"

@@ -21,6 +21,9 @@ AFRAME.registerComponent('guess-shape', {
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.guessEventName = "guess_event";
 
+        //guiding text manager
+        CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
+        
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
@@ -28,7 +31,8 @@ AFRAME.registerComponent('guess-shape', {
 
             // when user clicks on a shape
             CONTEXT_AF.el.addEventListener('click', function() {
-
+                //hide guiding text
+                CONTEXT_AF.guidingText.hideGuidingText();
                 // if no cross/check icons are shown, user must be guessing for the first shape in the sequence
                 if(CONTEXT_AF.resultOne.getAttribute('visible') == false){
                     if(CONTEXT_AF.guessOne.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){

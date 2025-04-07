@@ -60,9 +60,6 @@
     <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
     <circles-start-ui/>
 
-    <!-- use this to create a brain wave guiding text component -->
-    <bw-text-ui/>
-
     <!-- renderer="toneMapping: no;" 
      bloom="threshold: 1; strength: 0.3; radius: 0.1; enabled: false" -->
      
@@ -93,8 +90,13 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <a-entity id="manager" manager ></a-entity>
+      <a-entity id="manager" manager></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
+      <!-- Guiding text  -->
+      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: error text; align: center; width: 0.3" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+ 
+ 
       
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
@@ -134,7 +136,6 @@
       <!-- nav mesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_glb" visible='false' nav-mesh></a-entity>
       <!-- TO BE REPLACED - END -->
-
 
       <!-- accessibility controls -->
        <a-entity rotation="0 5 0">
@@ -315,16 +316,16 @@
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
-              <a-entity id="delta-visualization-yellow">
-                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              <a-entity id="delta-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
-        
+
               <a-entity id="delta-visualization-blue">
                 <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
               </a-entity>
-        
-              <a-entity id="delta-visualization-green">
-                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+
+              <a-entity id="delta-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
               <a-entity id="delta-visualization-pink">
@@ -355,16 +356,16 @@
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
-              <a-entity id="alpha-visualization-yellow">
-                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              <a-entity id="alpha-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
-        
+
               <a-entity id="alpha-visualization-blue">
                 <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
               </a-entity>
-        
-              <a-entity id="alpha-visualization-green">
-                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+
+              <a-entity id="alpha-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
               <a-entity id="alpha-visualization-pink">
@@ -395,16 +396,16 @@
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
-              <a-entity id="gamma-visualization-yellow">
-                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
+              <a-entity id="gamma-visualization-green">
+                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
               <a-entity id="gamma-visualization-blue">
                 <a-cylinder color="#4da3ff" position="0 0.5 0"></a-cylinder>
               </a-entity>
-        
-              <a-entity id="gamma-visualization-green">
-                <a-cylinder color="#afff4d" position="0 0.5 0"></a-cylinder>
+
+              <a-entity id="gamma-visualization-yellow">
+                <a-cylinder color="#ffe74d" position="0 0.5 0"></a-cylinder>
               </a-entity>
         
               <a-entity id="gamma-visualization-pink">

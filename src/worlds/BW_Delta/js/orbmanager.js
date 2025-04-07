@@ -8,6 +8,9 @@ AFRAME.registerComponent('orb-manager', {
         const CONTEXT_AF = this;
         const scene = CIRCLES.getCirclesSceneElement();
 
+        //guiding text manager
+        CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
+
         // Circles WebSocket and room tracking
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
@@ -246,6 +249,8 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.playParticles(orb);
             CONTEXT_AF.playAnimation(orb); 
             CONTEXT_AF.playSound(Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1);
+            //hide one time guiding text
+            CONTEXT_AF.guidingText.hideGuidingText();
             orb.setAttribute('circles-interactive-object', 'enabled:false');
             setTimeout(() => {
                 if (orb.parentNode) {
@@ -254,6 +259,8 @@ AFRAME.registerComponent('orb-manager', {
             }, CONTEXT_AF.data.duration + 1000);
         });
 
+        //display one time guiding text
+        CONTEXT_AF.guidingText.showOneTimeText(GUIDING_TEXT.PICK_UP_MEMORY);
         orb.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
             CONTEXT_AF.sendPosition(orb);
         });

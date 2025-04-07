@@ -12,6 +12,9 @@ AFRAME.registerComponent('book-manager', {
         const CONTEXT_AF = this;
         const scene = CIRCLES.getCirclesSceneElement();
 
+        //guiding text manager
+        CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
+
         // Circles WebSocket and room tracking
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
@@ -118,6 +121,8 @@ AFRAME.registerComponent('book-manager', {
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
             console.log("Circles is ready:", CIRCLES.isReady());
+            //add guiding text
+            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SEARCH_BOOKS);
         });
 
         CONTEXT_AF.testbtn.addEventListener('click', function(){
@@ -131,6 +136,7 @@ AFRAME.registerComponent('book-manager', {
 
         //book pickup events
         CONTEXT_AF.book1.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
             CONTEXT_AF.sendPosition(CONTEXT_AF.book1);
             if (CONTEXT_AF.book1Placed){
                 CONTEXT_AF.book1Placed = false;
@@ -139,6 +145,7 @@ AFRAME.registerComponent('book-manager', {
         });
 
         CONTEXT_AF.book2.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
             CONTEXT_AF.sendPosition(CONTEXT_AF.book2);
             if (CONTEXT_AF.book2Placed){
                 CONTEXT_AF.book2Placed = false;
@@ -147,6 +154,7 @@ AFRAME.registerComponent('book-manager', {
         });
 
         CONTEXT_AF.book3.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
             CONTEXT_AF.sendPosition(CONTEXT_AF.book3);
             if (CONTEXT_AF.book3Placed){
                 CONTEXT_AF.book3Placed = false;
@@ -155,6 +163,7 @@ AFRAME.registerComponent('book-manager', {
         });
 
         CONTEXT_AF.book4.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
             CONTEXT_AF.sendPosition(CONTEXT_AF.book4);
             if (CONTEXT_AF.book4Placed){
                 CONTEXT_AF.book4Placed = false;
@@ -164,12 +173,16 @@ AFRAME.registerComponent('book-manager', {
 
         //book release events 
         CONTEXT_AF.book1.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.hideGuidingText();
         });
         CONTEXT_AF.book2.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.hideGuidingText();
         });
         CONTEXT_AF.book3.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.hideGuidingText();
         });
         CONTEXT_AF.book4.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
+            CONTEXT_AF.guidingText.hideGuidingText();
         });
 
         //lectern click events
@@ -184,7 +197,7 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.book1Placed = true; 
             }
             else{
-                console.log("u suck GUIDING TEXT place book elsewhere")
+                CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
             }
         });
 
@@ -199,7 +212,7 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.book2Placed = true;
             }
             else{
-                console.log("u suck GUIDING TEXT place book elsewhere")
+                CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
             }
         });
 
@@ -214,7 +227,7 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.book3Placed = true;
             }
             else{
-                console.log("u suck GUIDING TEXT place book elsewhere")
+                CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
             }
         });
 
@@ -229,7 +242,7 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.book4Placed = true;
             }
             else{
-                console.log("u suck GUIDING TEXT place book elsewhere")
+                CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
             }
         });
 
