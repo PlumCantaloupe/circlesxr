@@ -1,7 +1,7 @@
 //guiding/error text constants
 const GUIDING_TEXT = {
     SEARCH_BOOKS: 'Search for sparkly books and pick them up',
-    PLACE_BOOK: 'place the book on the lectern to play a melody',
+    PLACE_BOOK: 'Place the book on the lectern to play a melody',
 }
 
 const ERROR_TEXT = {
