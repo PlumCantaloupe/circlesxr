@@ -31,7 +31,7 @@ AFRAME.registerComponent('share-emotion', {
             //if holding orb then it can be dispensed
             if(holdingOrb) {
               // play sound
-            CONTEXT_AF.el.components.sound.playSound();
+              CONTEXT_AF.el.components.sound.playSound();
               //un-parent orb from user and parent above the suction tube
               const holdingOrbId = manager.getAttribute('manager').holdingOrbId;
               const orb = document.querySelector(`#${holdingOrbId}`);
@@ -44,8 +44,6 @@ AFRAME.registerComponent('share-emotion', {
                 orb.setAttribute('animation', {property: 'position',
                                                 duration: 500,
                                                 to: '0 -2 0'})
-    
-                
               }, 300);
     
               //delete the orb once it's finished animating
@@ -54,10 +52,10 @@ AFRAME.registerComponent('share-emotion', {
                 //TO DO: probably better to make this availble on remove in the orb component
                 orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
                 orb.parentNode.removeChild(orb);
-                CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbId);
+                CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbEmotion);
                 //CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
-                CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-                CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId, visualizationContainer: CONTEXT_AF.data.visualizationID});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbEmotion, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbEmotion, visualizationContainer: CONTEXT_AF.data.visualizationID});
                 console.log("emit");
                 CONTEXT_AF.manager.setAttribute('manager', {holdingOrb: false, 
                                                             holdingOrbId: ''});
