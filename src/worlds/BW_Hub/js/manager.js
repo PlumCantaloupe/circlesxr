@@ -1,7 +1,8 @@
 AFRAME.registerComponent('manager', {
     schema: {
       holdingOrb: {type: 'boolean', default: false},
-      holdingOrbId: {type: 'string'}
+      holdingOrbId: {type: 'string'},
+      holdingOrbEmotion: {type: 'string'}
     },
 
     init: function () {
@@ -74,7 +75,7 @@ AFRAME.registerComponent('manager', {
               console.log("No matching case found");
           }
         });
-
+        
         // On connect, get all emotion data and set the central orb visualisation
         // Listen for other people sharing an emotion orb
         // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
