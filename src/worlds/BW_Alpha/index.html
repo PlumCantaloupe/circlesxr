@@ -103,8 +103,45 @@
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #f2d6c0; intensity: 3"></a-entity>
-      <a-entity light="type: point; color: #f2d6c0; intensity: 3" position="0 4.26 -15.058"></a-entity>
+      <a-entity light="type: ambient; color: #ffecde; intensity: 3"></a-entity>
+      <a-entity light="type: point; color: #ff8800; intensity: 3" position="0 0.547 -34.6" scale="0.45 0.45 0.45" >
+                <a-entity id= "fire1" position="0 -0.6 0" rotation="0 0 0" scale="0.3 0.3 0.3" 
+                        particle-system=" preset: snow;
+                                        texture: /worlds/BW_Alpha/assets/textures/flame.png;
+                                        type: 2;
+                                        color: #ffc178; 
+                                        accelerationSpread: 0 0 0;
+                                        accelerationValue: 0 0 0;
+                                        rotationAngle: 0.1;
+                                        positionSpread: 0 2 0;
+                                        maxAge:2.5;
+                                        blending: 2;
+                                        dragValue: 2;
+                                        velocityValue: 0 1 0;
+                                        size: 0.15;
+                                        sizeSpread: -0.2
+                                        duration: infinity;
+                                        particleCount: 150;">
+                </a-entity>
+
+                <a-entity id= "fire2" position="0 -0.3 0" rotation="0 0 0" scale="0.1 0.35 0.1" 
+                        particle-system=" preset: snow;
+                                        texture: /worlds/BW_Alpha/assets/textures/flame.png;
+                                        type: 2;
+                                        color: #ffc178; 
+                                        accelerationSpread: 0 0 0;
+                                        accelerationValue: 0 0 0;
+                                        rotationAngle: 0.1;
+                                        positionSpread: 0 2 0;
+                                        maxAge:2.5;
+                                        blending: 2;
+                                        dragValue: 2;
+                                        velocityValue: 0 1 0;
+                                        size: 0.15;
+                                        sizeSpread: -0.2
+                                        duration: infinity;
+                                        particleCount: 100;"></a-entity>
+        </a-entity>
 
       <!-- music -->
       <a-entity id="track1" circles-sound="src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
