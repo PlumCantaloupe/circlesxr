@@ -40,7 +40,7 @@
 
         <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
 
-        <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern1.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern2_model" src="/worlds/BW_Alpha/assets/models/library/lectern2.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern3_model" src="/worlds/BW_Alpha/assets/models/library/lectern3.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern4_model" src="/worlds/BW_Alpha/assets/models/library/lectern4.glb" response-type="arraybuffer"></a-asset-item>
@@ -97,13 +97,13 @@
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
+                geometry='primitive:sphere; radius:50'
+                material="color: #03061d; side: back">
       </a-entity>
 
       <!-- main lights -->
       <a-entity light="type: ambient; color: #ffecde; intensity: 1.5"></a-entity>
-      <a-entity light="type: point; color: #ff8800; intensity: 3" position="0 0.547 -34.6" scale="0.45 0.45 0.45" >
+      <a-entity light="type: point; color: #ff8800; intensity: 8" position="0 0.547 -34.6" scale="0.45 0.45 0.45" >
                 <a-entity id= "fire1" position="0 -0.6 0" rotation="0 0 0" scale="0.3 0.3 0.3" 
                         particle-system="preset: snow;
                                         texture: /worlds/BW_Alpha/assets/textures/flame.png;
@@ -141,6 +141,25 @@
                                         particleCount: 100;"></a-entity>
                 </a-entity>
 
+                <a-entity id="rain" position="0 11 -38.5" scale = "1 0.3 0.2"
+                particle-system="
+                  texture: /worlds/BW_Alpha/assets/textures/rain.png;
+                  color: #a3d3f9;
+                  size: 0.4;
+                  velocityValue: 0 -40 0;
+                  velocitySpread: 0 0 0;
+                  accelerationValue: 0 -50 0;
+                  positionSpread: 30 0 30;
+                  randomizeVelocity: false;
+                  direction: 0 -1 0;
+                  duration: infinity;
+                  maxAge: 1;
+                  blending: normal;
+                  opacity: 0.5
+                  particleCount: 500;
+                  maxParticleCount: 1000;
+                  enabled: true;"></a-entity>
+
       <!-- music -->
       <a-entity id="track1" circles-sound="src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
       <a-entity id="track2" circles-sound="src:#track2-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
@@ -148,7 +167,7 @@
       <a-entity id="track4" circles-sound="src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
 
       <!-- room model -->
-      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main" circles-sphere-env-map="src:#skyMap">
+      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main">
 
             <a-entity   id="books"
                         gltf-model="#books"></a-entity>
