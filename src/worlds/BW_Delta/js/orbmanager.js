@@ -114,13 +114,11 @@ AFRAME.registerComponent('orb-manager', {
 
             CONTEXT_AF.socket.on(CONTEXT_AF.orbNumUpdateEventName, (data) => {
                 CONTEXT_AF.numOrbs = data.numOrbs;
-                console.log("current: " + CONTEXT_AF.numOrbs);
+                // console.log("current: " + CONTEXT_AF.numOrbs);
             });
 
              // Listen for incoming orb drop events
              CONTEXT_AF.socket.on(CONTEXT_AF.orbDropEventName, (data) => {
-                console.log("received drop PLSS IMMA KMS");
-                //onsole.log(data.colour);
                 CONTEXT_AF.lastDropTime = Date.now();
                 CONTEXT_AF.colour = data.colour;
                 CONTEXT_AF.dropOrbAtPosition(data.position);
@@ -133,7 +131,9 @@ AFRAME.registerComponent('orb-manager', {
                 CONTEXT_AF.playAnimation(releaseorb);
                 releaseorb.setAttribute('circles-interactive-object', 'enabled:false');
                 setTimeout(() => {
-                    releaseorb.parentNode.removeChild(releaseorb); // Remove from the scene
+                    if (releaseorb.parentNode) {
+                        releaseorb.parentNode.removeChild(releaseorb); // Remove from the scene
+                    }
                 }, CONTEXT_AF.data.duration);
             });
 
@@ -149,7 +149,7 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
                 if (data.world === CIRCLES.getCirclesWorldName()) {
-                    console.log("received drop 2nd");
+                    // console.log("received drop 2nd");
                     CONTEXT_AF.lastDropTime = Date.now();
                     CONTEXT_AF.dropOrbAtPosition(data.position);
                 }
@@ -157,7 +157,7 @@ AFRAME.registerComponent('orb-manager', {
         };
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
-            console.log("Circles is ready:", CIRCLES.isReady());
+            // console.log("Circles is ready:", CIRCLES.isReady());
         });
 
         if (CIRCLES.isCirclesWebsocketReady()) {
@@ -179,12 +179,12 @@ AFRAME.registerComponent('orb-manager', {
             // dnly emit drop if no one else has dropped in the last 10 seconds
             if (now - CONTEXT_AF.lastDropTime > CONTEXT_AF.DROP_COOLDOWN) {
                 const spawnPos = CONTEXT_AF.randomizePosition();
-                console.log("sending: " + CONTEXT_AF.numOrbs);
+                // console.log("sending: " + CONTEXT_AF.numOrbs);
                 CONTEXT_AF.socket.emit(CONTEXT_AF.orbNumUpdateEventName, {numOrbs: CONTEXT_AF.numOrbs, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 CONTEXT_AF.lastDropTime = now;
                 CONTEXT_AF.position = spawnPos;
                 CONTEXT_AF.socket.emit(CONTEXT_AF.orbDropEventName, {position:spawnPos, colour:CONTEXT_AF.colour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()}); 
-                console.log("send drop");
+                // console.log("send drop");
                 CONTEXT_AF.dropOrbAtPosition(spawnPos);
             }
             // Schedule the next drop
@@ -237,7 +237,7 @@ AFRAME.registerComponent('orb-manager', {
             dur: CONTEXT_AF.duration * spawnPos.y,
             easing: 'linear'
         });
-        
+
         //create inner orb and parent to outer orb
         const innerorb = CONTEXT_AF[`innerorb${CONTEXT_AF.colour}`].cloneNode(true);
         innerorb.setAttribute('id', `innerorb${CONTEXT_AF.numOrbs}`);
@@ -248,7 +248,12 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbReleaseEventName, {id: orb.getAttribute("id"), position: orb.getAttribute("position"), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             CONTEXT_AF.playParticles(orb);
             CONTEXT_AF.playAnimation(orb); 
-            CONTEXT_AF.playSound(Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1);
+            orb.setAttribute('sound', {src: `#orb-clip${Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1}`, poolSize: 4, rolloffFactor: 0.5, refDistance: 1.5});
+
+            orb.addEventListener('sound-loaded', function () {
+                orb.components.sound.playSound();
+                console.log('Played sound clip: ' + orb.components.sound.data.src);
+            })
             //hide one time guiding text
             CONTEXT_AF.guidingText.hideGuidingText();
             orb.setAttribute('circles-interactive-object', 'enabled:false');
@@ -314,12 +319,6 @@ AFRAME.registerComponent('orb-manager', {
             dur: CONTEXT_AF.data.duration,
             startEvents: onclick,
         });
-    },
-
-    playSound: function (soundNum) {
-        const CONTEXT_AF = this;
-        CONTEXT_AF.clip = document.querySelector(`#clip${soundNum}`);
-        CONTEXT_AF.clip.components.sound.playSound();
     },
 
     sendPosition: function (orb) {
