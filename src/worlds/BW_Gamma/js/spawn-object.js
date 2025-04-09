@@ -62,25 +62,25 @@ AFRAME.registerComponent('spawn-object', {
 
                 CONTEXT_AF.scene.appendChild(ringVisual);
 
-                CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                //CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
 
             //listen for when others spawn objects
-            CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
+            //CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
 
-                shapeKey = data.shapeKeyNet
+            //    shapeKey = data.shapeKeyNet
 
                 // spawn object with attributes
-                toSpawn = document.createElement("a-entity")
-                toSpawn.classList.add('spawnedObject')
-                toSpawn.setAttribute("material", shapeKey.material)
-                toSpawn.setAttribute("geometry", shapeKey.geometry)
-                toSpawn.setAttribute("position", data.netRandPos)
-                toSpawn.setAttribute("scale", shapeKey.scale)
-                toSpawn.setAttribute("guess-shape", "")
-                toSpawn.setAttribute("circles-interactive-object", "")
-                CONTEXT_AF.scene.appendChild(toSpawn)
-            });
+            //    toSpawn = document.createElement("a-entity")
+            //    toSpawn.classList.add('spawnedObject')
+            //    toSpawn.setAttribute("material", shapeKey.material)
+            //    toSpawn.setAttribute("geometry", shapeKey.geometry)
+            //    toSpawn.setAttribute("position", data.netRandPos)
+            //    toSpawn.setAttribute("scale", shapeKey.scale)
+            //    toSpawn.setAttribute("guess-shape", "")
+            //    toSpawn.setAttribute("circles-interactive-object", "")
+            //    CONTEXT_AF.scene.appendChild(toSpawn)
+            //});
 
             //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
             setTimeout(function() {

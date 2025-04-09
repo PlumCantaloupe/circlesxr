@@ -13,6 +13,11 @@ AFRAME.registerComponent('network-reset', {
         CONTEXT_AF.resultThree = document.querySelector('#resultThree');
         CONTEXT_AF.resultFour = document.querySelector('#resultFour');
 
+        //CONTEXT_AF.guessOneLabel = document.querySelector('#guessOneLabel');
+        //CONTEXT_AF.guessTwoLabel = document.querySelector('#guessTwoLabel');
+        //CONTEXT_AF.guessThreeLabel = document.querySelector('#guessThreeLabel');
+        //CONTEXT_AF.guessFourLabel = document.querySelector('#guessFourLabel');
+
         CONTEXT_AF.resultText = document.querySelector('#resultText');
 
         CONTEXT_AF.socket     = null;
@@ -110,19 +115,6 @@ AFRAME.registerComponent('network-reset', {
 
             //listen for when others click on shapes
             CONTEXT_AF.socket.on(CONTEXT_AF.guessEventName, function(data) {
-
-                // searches for shape with same x-value as the other user clicked
-                CONTEXT_AF.items = document.querySelectorAll('.spawnedObject')
-                if (CONTEXT_AF.items.length > 0) {
-                    for (let i=0; i<CONTEXT_AF.items.length; i++){
-                        if(CONTEXT_AF.items[i].getAttribute("position").x == data.netPos.x){
-                            // hides shape and sends it behind the player to be deleted
-                            CONTEXT_AF.items[i].setAttribute('visible', 'false')
-                            CONTEXT_AF.items[i].setAttribute('position', '0 0 -3.6')
-                        }
-                    }
-                }
-
                 // update check/cross icons
                 CONTEXT_AF.resultOne.setAttribute('visible', data.netResults.netResultOne.visible)
                 CONTEXT_AF.resultOne.setAttribute('src', data.netResults.netResultOne.src)
@@ -197,6 +189,38 @@ AFRAME.registerComponent('network-reset', {
 
                     CONTEXT_AF.resultFour.setAttribute('visible', data.netResults.netResultFour.visible)
                     CONTEXT_AF.resultFour.setAttribute('src', data.netResults.netResultFour.src)
+
+                    //CONTEXT_AF.guessOneLabel.setAttribute('visible', data.netLabels.netLabelOne.visible)
+                    //CONTEXT_AF.guessOneLabel.setAttribute('text', data.netLabels.netLabelOne.text)
+                    //if(data.netLabels.netLabelOne.visible == true) {
+                    //    setTimeout(function(){
+                    //        CONTEXT_AF.guessOneLabel.setAttribute('visible', false)
+                    //    }, 1000);
+                    //}
+
+                    //CONTEXT_AF.guessTwoLabel.setAttribute('visible', data.netLabels.netLabelTwo.visible)
+                    //CONTEXT_AF.guessTwoLabel.setAttribute('text', data.netLabels.netLabelTwo.text)
+                    //if(data.netLabels.netLabelTwo.visible == true) {
+                    //    setTimeout(function(){
+                    //        CONTEXT_AF.guessTwoLabel.setAttribute('visible', false)
+                    //    }, 1000);
+                    //}
+
+                    //CONTEXT_AF.guessThreeLabel.setAttribute('visible', data.netLabels.netLabelThree.visible)
+                    //CONTEXT_AF.guessThreeLabel.setAttribute('text', data.netLabels.netLabelThree.text)
+                    //if(data.netLabels.netLabelThree.visible == true) {
+                    //    setTimeout(function(){
+                    //        CONTEXT_AF.guessThreeLabel.setAttribute('visible', false)
+                    //    }, 1000);
+                    //}
+
+                    //CONTEXT_AF.guessFourLabel.setAttribute('visible', data.netLabels.netLabelFour.visible)
+                    //CONTEXT_AF.guessFourLabel.setAttribute('text', data.netLabels.netLabelFour.text)
+                    //if(data.netLabels.netLabelFour.visible == true) {
+                    //    setTimeout(function(){
+                    //        CONTEXT_AF.guessFourLabel.setAttribute('visible', false)
+                    //    }, 1000);
+                    //}
 
                     CONTEXT_AF.resultText.setAttribute('text', data.netText)
 
