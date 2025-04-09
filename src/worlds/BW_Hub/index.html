@@ -47,8 +47,28 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/neuronSky.png' crossorigin="anonymous">
-        <img id='info1' src='assets/textures/access1.png' crossorigin="anonymous">
 
+        <!-- accessibility panel instructions -->
+        <img id='instructions_1' src='assets/textures/instructions/instructions1.png' crossorigin="anonymous">
+        <img id='instructions_2' src='assets/textures/instructions/instructions2.png' crossorigin="anonymous">
+        <img id='instructions_3' src='assets/textures/instructions/instructions3.png' crossorigin="anonymous">
+        <img id='instructions_4' src='assets/textures/instructions/instructions4.png' crossorigin="anonymous">
+        <img id='instructions_5' src='assets/textures/instructions/instructions5.png' crossorigin="anonymous">
+
+        <!-- hand icon credit: https://www.flaticon.com/free-icon/tap_182422 -->
+        <img id='mobileInstructions_1' src='assets/textures/instructions/mobile1.png' crossorigin="anonymous">
+        <img id='mobileInstructions_2' src='assets/textures/instructions/mobile2.png' crossorigin="anonymous">
+        <img id='mobileInstructions_3' src='assets/textures/instructions/mobile3.png' crossorigin="anonymous">
+      
+        <img id='desktopInstructions_1' src='assets/textures/instructions/desktop1.png' crossorigin="anonymous">
+        <img id='desktopInstructions_2' src='assets/textures/instructions/desktop2.png' crossorigin="anonymous">
+        <img id='desktopInstructions_3' src='assets/textures/instructions/desktop3.png' crossorigin="anonymous">
+
+        <img id='headsetInstructions_1' src='assets/textures/instructions/hmd1.png' crossorigin="anonymous">
+        <img id='headsetInstructions_2' src='assets/textures/instructions/hmd2.png' crossorigin="anonymous">
+        <img id='headsetInstructions_3' src='assets/textures/instructions/hmd3.png' crossorigin="anonymous">
+
+        <!-- models -->
         <a-asset-item id="room_glb" src="assets/models/room.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="suctionTube_glb" src="assets/models/suctionTube.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="orb_glb" src="assets/models/orb.glb" response-type="arraybuffer"></a-asset-item>
@@ -116,7 +136,7 @@
 
           <a-entity id="screen" position="0.260 1.368 0" rotation="0 0 4.6">
             <a-entity id="screenText" text="value: Echoes of the mind: Brain waves visualized; align:center; width: 2" rotation="0 -90 0" position="0 0.5 0"></a-entity>
-            <a-entity geometry="primitive: plane" material="src: #info1; transparent: true" position="-0.020 -0.254 0" rotation="0 -90 0" scale="2.226 1.478 1"></a-entity>
+            <a-entity geometry="primitive: plane" material="src: #instructions_1; transparent: true" position="-0.020 -0.254 0" rotation="0 -90 0" scale="2.226 1.478 1"></a-entity>
             
             <!--<a-entity text="value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula, ut ullamcorper justo.; align:center; width: 1; color: #dbdcff;.2" rotation="0 -90 0" position="0 0.3 0"></a-entity> -->
           </a-entity>
