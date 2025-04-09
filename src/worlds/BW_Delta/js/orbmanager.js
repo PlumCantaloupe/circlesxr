@@ -247,13 +247,16 @@ AFRAME.registerComponent('orb-manager', {
         orb.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbReleaseEventName, {id: orb.getAttribute("id"), position: orb.getAttribute("position"), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             CONTEXT_AF.playParticles(orb);
-            CONTEXT_AF.playAnimation(orb); 
+            CONTEXT_AF.playAnimation(orb);
+            
+            // Attach sound component with src that is randomized
             orb.setAttribute('sound', {src: `#orb-clip${Math.floor(Math.random() * CONTEXT_AF.data.clipNum) + 1}`, poolSize: 4, rolloffFactor: 0.5, refDistance: 1.5});
 
+            // Play the orb's sound once the sound has loaded
             orb.addEventListener('sound-loaded', function () {
                 orb.components.sound.playSound();
-                console.log('Played sound clip: ' + orb.components.sound.data.src);
             })
+
             //hide one time guiding text
             CONTEXT_AF.guidingText.hideGuidingText();
             orb.setAttribute('circles-interactive-object', 'enabled:false');
