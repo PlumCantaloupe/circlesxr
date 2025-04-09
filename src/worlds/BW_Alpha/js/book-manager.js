@@ -19,25 +19,26 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
 
-        CONTEXT_AF.locations = [{position: {x: -1.412, y: 2.910, z: -19.445}, rotation: {x: 0, y: -90, z: 0} },
-                                {position: {x: -9.907, y: 1.970, z: -7.057}, rotation: {x: 0, y: 0, z: 0} },
-                                {position: {x: -10.665, y: 1.033, z: -3.122}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 12.682, y: 1.033, z: -11.106}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 7.169, y: 1.970, z: -21.054}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 3.759, y: 1.033, z: -22.745}, rotation: {x: 0, y: 90, z: 0} },
-                                {position: {x: -4.449, y: 1.033, z: -29.742}, rotation: {x: 0, y: 0, z: 0} },
-                                {position: {x: -7.946, y: 1.970, z: -31.651}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 12.682, y: 1.970, z: -34.084}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 12.682, y: 7.183, z: -30.863}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: 4.450, y: 7.183, z: -28.073}, rotation: {x: 0, y: 180, z: 0} },
-                                {position: {x: -9.887, y: 8.121, z: -25.981}, rotation: {x: 0, y: 0, z: 0} }
-        ];
+        CONTEXT_AF.locations = [{position: {x: -1.873, y: 2.195, z: -19.600}, rotation: {x: 0, y: 90, z: 0}},
+                                {position: {x: -10.038, y: 2.195, z: -7.128}, rotation: {x: 0, y: 180, z: 0}},
+                                {position: {x: -10.511, y: 1.277, z: -3.127}, rotation: {x: 0, y: 180, z: 0}},
+                                {position: {x: 12.826, y: 1.277, z: -11.427}, rotation: {x: 0, y: 0, z: 0}},
+                                {position: {x: 7.302, y: 2.195, z: -21.131}, rotation: {x: 0, y: 0, z: 0}},
+                                {position: {x: 3.760, y: 1.277, z: -22.586}, rotation: {x: 0, y: -90, z: 0}},
+                                {position: {x: -4.598, y: 1.277, z: -29.613}, rotation: {x: 0, y: 180, z: 0}},
+                                {position: {x: -7.793, y: 2.195, z: -31.725}, rotation: {x: 0, y: 0, z: 0}},
+                                {position: {x: 12.836, y: 2.195, z: -34.083}, rotation: {x: 0, y: 0, z: 0}},
+                                {position: {x: 12.833, y: 7.406, z: -30.496}, rotation: {x: 0, y: 180, z: 0}},
+                                {position: {x: 7.317, y: 7.406, z: -28.147}, rotation: {x: 0, y: 0, z: 0}},
+                                {position: {x: -10.043, y: 8.327, z: -25.887}, rotation: {x: 0, y: 180, z: 0}}
+          ];
         
         CONTEXT_AF.book1 = scene.querySelector('#book1');
         CONTEXT_AF.book2 = scene.querySelector('#book2');
         CONTEXT_AF.book3 = scene.querySelector('#book3');
         CONTEXT_AF.book4 = scene.querySelector('#book4');
 
+        CONTEXT_AF.bookRand = false;
         CONTEXT_AF.book1Placed = false;
         CONTEXT_AF.book2Placed = false;
         CONTEXT_AF.book3Placed = false;
@@ -48,32 +49,29 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.lectern3 = scene.querySelector('#lectern3');
         CONTEXT_AF.lectern4 = scene.querySelector('#lectern4');
 
-        CONTEXT_AF.testbtn = scene.querySelector('#tempbutton');
         CONTEXT_AF.bookPlaceEventName = "bookplace_event";
         CONTEXT_AF.bookRandEventName = "bookrandom_event";
         CONTEXT_AF.bookPosUpdateEventName = "bookposition_event";
+        CONTEXT_AF.bookSyncEventName = "booksync_event";
         CONTEXT_AF.bookplaceduration = 2000;
+        CONTEXT_AF.loadduration = 2000;
         CONTEXT_AF.sendRate = 100;
 
-        CONTEXT_AF.track1 = scene.querySelector('#track1');
         CONTEXT_AF.position1 = {x: 0, y: 1.213, z: -12.319};
         CONTEXT_AF.rotation1 = {x: 0, y: 0, z: 0};
         CONTEXT_AF.book1c1 = {x: -0.397, y: 1.472, z: -12.603};
         CONTEXT_AF.book1c2 = {x: 0.392, y: 1.108, z: -12.079};
 
-        CONTEXT_AF.track2 = scene.querySelector('#track2');
         CONTEXT_AF.position2 = {x: 1.605, y: 1.213, z: -13.925};
         CONTEXT_AF.rotation2 = {x: 0, y: 90, z: 0};
         CONTEXT_AF.book2c1 = {x: 1.342, y: 1.472, z: -13.532};
         CONTEXT_AF.book2c2 = {x: 1.806, y: 1.108, z: -14.321};
 
-        CONTEXT_AF.track3 = scene.querySelector('#track3');
         CONTEXT_AF.position3 = {x: 0, y: 1.213, z: -15.53};
         CONTEXT_AF.rotation3 = {x: 0, y: 180, z: 0};
         CONTEXT_AF.book3c1 = {x: 0.397, y: 1.472, z: -15.247};
         CONTEXT_AF.book3c2 = {x: -0.392, y: 1.108, z: -15.733};
 
-        CONTEXT_AF.track4 = scene.querySelector('#track4');
         CONTEXT_AF.position4 = {x: -1.605, y: 1.213, z: -13.925};
         CONTEXT_AF.rotation4 = {x: 0, y: 270, z: 0};
         CONTEXT_AF.book4c1 = {x: -1.342, y: 1.472, z: -14.321};
@@ -117,21 +115,64 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.location4 = data.loc4;
                 CONTEXT_AF.setLocations();
             });
+
+            //sync book locations is theyre placed when a new player joins
+            CONTEXT_AF.socket.on(CONTEXT_AF.bookSyncEventName, (data) => {
+                for (let i = 0; i < 4; i++){
+                    if(data.placed[i]){
+                        CONTEXT_AF.startMusic(i + 1);
+                        CONTEXT_AF[`book${i}Placed`] = true;
+                    }
+                }
+            });
         };
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
             console.log("Circles is ready:", CIRCLES.isReady());
             //add guiding text
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SEARCH_BOOKS);
+            console.log('guiding text?');
         });
 
-        CONTEXT_AF.testbtn.addEventListener('click', function(){
-            console.log("set book locations");
-            CONTEXT_AF.randLocations();
-            CONTEXT_AF.setLocations();
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookRandEventName, {
-                loc2: CONTEXT_AF.location2,  loc3: CONTEXT_AF.location3, loc4: CONTEXT_AF.location4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
+        // tthe music tracks aren't synced across clients, so start autoplaying music with 0 volume when a player joins
+        document.body.addEventListener('connected', () => {
+            //start music with delay
+            setTimeout(() => {
+                console.log("adding music...");
+                CONTEXT_AF.track1 = document.createElement('a-entity');
+                CONTEXT_AF.track1.setAttribute('id', 'track1');
+                CONTEXT_AF.track1.setAttribute('circles-sound', "src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+
+                CONTEXT_AF.track2 = document.createElement('a-entity');
+                CONTEXT_AF.track2.setAttribute('id', 'track2');
+                CONTEXT_AF.track2.setAttribute('circles-sound', "src:#track2-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+                
+                CONTEXT_AF.track3 = document.createElement('a-entity');
+                CONTEXT_AF.track3.setAttribute('id', 'track3');
+                CONTEXT_AF.track3.setAttribute('circles-sound', "src:#track3-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+            
+                CONTEXT_AF.track4 = document.createElement('a-entity');
+                CONTEXT_AF.track4.setAttribute('id', 'track4');
+                CONTEXT_AF.track4.setAttribute('circles-sound', "src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+            }, CONTEXT_AF.loadduration);
+        });
+
+        //when a new user joins the room, send the positions of books if they are randoimzed and if they've been placed on lecterns or not
+        document.body.addEventListener('clientConnected', (evt) => {
+            console.log('Another user joined the room:', evt.detail.clientId);
+
+            //if books positions have been randomized already emit those locations to joining clients
+            if (CONTEXT_AF.bookRand){
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookRandEventName, {
+                    loc2: CONTEXT_AF.location2,  loc3: CONTEXT_AF.location3, loc4: CONTEXT_AF.location4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
+
+                //also send if any books have been placed on lecterns when new users join
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookSyncEventName, {
+                    placed: [CONTEXT_AF.book1Placed, CONTEXT_AF.book2Placed, CONTEXT_AF.book3Placed, CONTEXT_AF.book4Placed],
+                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
+            }
         });
 
         //book pickup events
@@ -187,7 +228,17 @@ AFRAME.registerComponent('book-manager', {
 
         //lectern click events
         CONTEXT_AF.lectern1.addEventListener('click', function () {
-            //if holding book 1 place\
+            if(!CONTEXT_AF.bookRand){
+                console.log("set book locations");
+                CONTEXT_AF.randLocations();
+                CONTEXT_AF.setLocations();
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookRandEventName, {
+                    loc2: CONTEXT_AF.location2,  loc3: CONTEXT_AF.location3, loc4: CONTEXT_AF.location4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
+                CONTEXT_AF.bookRand = true;
+            }
+            
+            //if holding book 1 place
             if (CONTEXT_AF.book1.getAttribute("position").x == CONTEXT_AF.pickupx && CONTEXT_AF.book1.getAttribute("position").y == CONTEXT_AF.pickupy && CONTEXT_AF.book1.getAttribute("position").z == CONTEXT_AF.pickupz){
                 CONTEXT_AF.book1.emit('click');
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
