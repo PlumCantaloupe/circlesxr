@@ -38,11 +38,9 @@
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='/worlds/BW_Alpha/assets/textures/neuronSky.png' crossorigin="anonymous">
 
-        <a-asset-item id="library_test" src="/worlds/BW_Alpha/assets/models/library/library_test.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="library_structure" src="/worlds/BW_Alpha/assets/models/library/library_structure.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
 
-        <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern1.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern2_model" src="/worlds/BW_Alpha/assets/models/library/lectern2.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern3_model" src="/worlds/BW_Alpha/assets/models/library/lectern3.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern4_model" src="/worlds/BW_Alpha/assets/models/library/lectern4.glb" response-type="arraybuffer"></a-asset-item>
@@ -53,14 +51,13 @@
         <a-asset-item id="candles4" src="/worlds/BW_Alpha/assets/models/library/candles4.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="candles5" src="/worlds/BW_Alpha/assets/models/library/candles5.glb" response-type="arraybuffer"></a-asset-item>
 
-        <a-asset-item id="books1" src="/worlds/BW_Alpha/assets/models/library/books1.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="books2" src="/worlds/BW_Alpha/assets/models/library/books2.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="books3" src="/worlds/BW_Alpha/assets/models/library/books3.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="books4" src="/worlds/BW_Alpha/assets/models/library/books4.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="books5" src="/worlds/BW_Alpha/assets/models/library/books5.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="books" src="/worlds/BW_Alpha/assets/models/library/books.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="navmesh_model" src="/worlds/BW_Alpha/assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="book_model" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model2" src="/worlds/BW_Alpha/assets/models/book2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model3" src="/worlds/BW_Alpha/assets/models/book3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model4" src="/worlds/BW_Alpha/assets/models/book4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="openbook_model" src="/worlds/BW_Alpha/assets/models/book_open.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <audio id="track1-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_1.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -85,7 +82,7 @@
       
       <!--Portal - don't remove from scene please -->
       <a-entity id="Portal-Hub"
-                position="0 1.5 0.5" rotation="0 -108 0"
+                position="0 -1.5 0.5" rotation="0 -108 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
       
@@ -100,13 +97,68 @@
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
-                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
-                material='shader:flat; src:#skyMap; side:back;'>
+                geometry='primitive:sphere; radius:50'
+                material="color: #03061d; side: back">
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #f2d6c0; intensity: 3"></a-entity>
-      <a-entity light="type: point; color: #f2d6c0; intensity: 3" position="0 4.26 -15.058"></a-entity>
+      <a-entity light="type: ambient; color: #ffecde; intensity: 1.5"></a-entity>
+      <a-entity light="type: point; color: #ff8800; intensity: 8" position="0 0.547 -34.6" scale="0.45 0.45 0.45" >
+                <a-entity id= "fire1" position="0 -0.6 0" rotation="0 0 0" scale="0.3 0.3 0.3" 
+                        particle-system="preset: snow;
+                                        texture: /worlds/BW_Alpha/assets/textures/flame.png;
+                                        type: 2;
+                                        color: #ffc178; 
+                                        accelerationSpread: 0 0 0;
+                                        accelerationValue: 0 0 0;
+                                        rotationAngle: 0.1;
+                                        positionSpread: 0 2 0;
+                                        maxAge:2.5;
+                                        blending: 2;
+                                        dragValue: 2;
+                                        velocityValue: 0 1 0;
+                                        size: 0.15;
+                                        sizeSpread: -0.2
+                                        duration: infinity;
+                                        particleCount: 150;">
+                </a-entity>
+                <a-entity id= "fire2" position="0 -0.3 0" rotation="0 0 0" scale="0.1 0.35 0.1" 
+                        particle-system="preset: snow;
+                                        texture: /worlds/BW_Alpha/assets/textures/flame.png;
+                                        type: 2;
+                                        color: #ffc178; 
+                                        accelerationSpread: 0 0 0;
+                                        accelerationValue: 0 0 0;
+                                        rotationAngle: 0.1;
+                                        positionSpread: 0 2 0;
+                                        maxAge:2.5;
+                                        blending: 2;
+                                        dragValue: 2;
+                                        velocityValue: 0 1 0;
+                                        size: 0.15;
+                                        sizeSpread: -0.2
+                                        duration: infinity;
+                                        particleCount: 100;"></a-entity>
+                </a-entity>
+
+                <a-entity id="rain" position="0 11 -38.5" scale = "1 0.3 0.2"
+                particle-system="
+                  texture: /worlds/BW_Alpha/assets/textures/rain.png;
+                  color: #a3d3f9;
+                  size: 0.4;
+                  velocityValue: 0 -40 0;
+                  velocitySpread: 0 0 0;
+                  accelerationValue: 0 -50 0;
+                  positionSpread: 30 0 30;
+                  randomizeVelocity: false;
+                  direction: 0 -1 0;
+                  duration: infinity;
+                  maxAge: 1;
+                  blending: normal;
+                  opacity: 0.5
+                  particleCount: 500;
+                  maxParticleCount: 1000;
+                  enabled: true;"></a-entity>
 
       <!-- music -->
       <a-entity id="track1" circles-sound="src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
@@ -115,12 +167,14 @@
       <a-entity id="track4" circles-sound="src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
 
       <!-- room model -->
-      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_structure" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;">
-            <a-entity   id="library_main_furniture"
-                        gltf-model="#library_main"></a-entity>
+      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main">
+
+            <a-entity   id="books"
+                        gltf-model="#books"></a-entity>
+
             <a-entity   id="lectern1" 
-                            gltf-model="#lectern1_model"
-                            circles-interactive-object></a-entity>
+                        gltf-model="#lectern1_model"
+                        circles-interactive-object></a-entity>
             <a-entity   id="lectern2"
                         gltf-model="#lectern3_model"
                         circles-interactive-object></a-entity>
@@ -130,27 +184,23 @@
             <a-entity   id="lectern4"
                         gltf-model="#lectern4_model"
                         circles-interactive-object></a-entity>
+
+            <!--
             <a-entity   id="candles"
-                        gltf-model="#candles"></a-entity>
+                        gltf-model="#candles"
+                        animation="property: position; from: 0 0.5 0; to: 0 -0.5 0; dur: 6000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
             <a-entity   id="candles2"
-                        gltf-model="#candles2"></a-entity>
+                        gltf-model="#candles2"
+                        animation="property: position; from: 0 -0.3 0; to: 0 0.3 0; dur: 3000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
             <a-entity   id="candles3"
-                        gltf-model="#candles3"></a-entity>
+                        gltf-model="#candles3"
+                        animation="property: position; from: 0 -0.4 0; to: 0 0.4 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>></a-entity>
             <a-entity   id="candles4"
-                        gltf-model="#candles4"></a-entity>
+                        gltf-model="#candles4"
+                        animation="property: position; from: 0 -0.6 0; to: 0 0.6 0; dur: 7000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
             <a-entity   id="candles5"
-                        gltf-model="#candles5"></a-entity>
-            <a-entity   id="books1"
-                        gltf-model="#books1"></a-entity>
-            <a-entity   id="books2"
-                        gltf-model="#books2"></a-entity>
-            <a-entity   id="books3"
-                        gltf-model="#books3"></a-entity>
-            <a-entity   id="books4"
-                        gltf-model="#books4"></a-entity>
-            <a-entity   id="books5"
-                        gltf-model="#books5"></a-entity>
-      </a-entity>
+                        gltf-model="#candles5"
+                        animation="property: position; from: 0 0.2 0; to: 0 -0.2 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>-->
 
       <a-entity id="tempbutton"  
                 position="0 0 -5" 
@@ -166,7 +216,7 @@
                 rotation="90 223 0" 
                 shadow="cast:true; receive:true;"
                 circles-interactive-object="type: 'outline'"
-                circles-pickup-object="animate:false;"">
+                circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle1" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
                                 texture: /worlds/BW_Alpha/assets/textures/sparkle.png;
@@ -200,7 +250,7 @@
                           enabled:false"></a-entity>
                           </a-entity>
       <a-entity id="book2" 
-                gltf-model="#book_model"
+                gltf-model="#book_model2"
                 material="color: #ffac6f"
                 position="0 -10 0" 
                 rotation="0 0 0" 
@@ -222,7 +272,7 @@
                                 duration: infinity;
                                 particleCount: 80;"></a-entity></a-entity>
       <a-entity id="book3" 
-                gltf-model="#book_model"
+                gltf-model="#book_model3"
                 material="color: #fedd90" 
                 position="0 -10 0" 
                 rotation="0 0 0" 
@@ -244,7 +294,7 @@
                                 duration: infinity;
                                 particleCount: 80;"></a-entity></a-entity>
       <a-entity id="book4" 
-                gltf-model="#book_model"
+                gltf-model="#book_model4"
                 material="color: #bcde71"
                 position="0 -10 0" 
                 rotation="0 0 0" 
