@@ -48,8 +48,8 @@
         <a-asset-item id="tube1orb4_model" src="/worlds/BW_Delta/assets/models/tube1orb4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <!-- Sound assets -->
-        <audio id="delta-ambient-sound" src="/worlds/BW_Delta/assets/sounds/delta_ambience_no_beat_v5.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="delta-heartbeats" src="/worlds/BW_Delta/assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="delta-ambient-sound" src="assets/sounds/delta_ambience_no_beat.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="delta-heartbeats" src="assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
 
         <!-- Many memory orb sound clips (sorry lol) -->
         <audio id="orb-clip1" src="/worlds/BW_Delta/assets/sounds/orb-clips/1.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -111,7 +111,7 @@
 
       <!-- Sound entities -->
       <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
-      <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; autoplay: true; loop: true; type: music; volume: 0.65;"></a-entity>
+      <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
 
       <!-- Audio analyser -->
       <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #heartbeats-player"></a-entity>
