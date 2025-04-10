@@ -50,6 +50,7 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.lectern4 = scene.querySelector('#lectern4');
 
         CONTEXT_AF.bookPlaceEventName = "bookplace_event";
+        CONTEXT_AF.bookPickupLecternEventName = "bookpicklectern_event";
         CONTEXT_AF.bookRandEventName = "bookrandom_event";
         CONTEXT_AF.bookPosUpdateEventName = "bookposition_event";
         CONTEXT_AF.bookSyncEventName = "booksync_event";
@@ -108,6 +109,12 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF[`${data.id}`].setAttribute('position', data.position);
             });
 
+            // listen for if a book gets picked up from a lectern:
+            CONTEXT_AF.socket.on(CONTEXT_AF.bookPickupLecternEventName, (data) => {
+                CONTEXT_AF.stopMusic(data.book)
+                CONTEXT_AF[`book${data.book}Placed`] = false;
+            });
+
             //listen for when the books get randomized
             CONTEXT_AF.socket.on(CONTEXT_AF.bookRandEventName, (data) => {
                 CONTEXT_AF.location2 = data.loc2;
@@ -117,11 +124,24 @@ AFRAME.registerComponent('book-manager', {
             });
 
             //sync book locations is theyre placed when a new player joins
-            CONTEXT_AF.socket.on(CONTEXT_AF.bookSyncEventName, (data) => {
-                for (let i = 0; i < 4; i++){
-                    if(data.placed[i]){
-                        CONTEXT_AF.startMusic(i + 1);
+            CONTEXT_AF.socket.on(CONTEXT_AF.bookSyncEventName, async (data) => {
+                console.log("hai i received book sync");
+                CONTEXT_AF.bookRand = data.rand;
+                for (let i = 1; i < 5; i++){
+                    if(!data.placed[i - 1]){
+                        CONTEXT_AF[`book${i}`].setAttribute('position', data.locations[i]);
+                    }
+                }
+
+                //wait until all tracks have loaded in toe sync the books placed on lecterns and play the music
+                while (CONTEXT_AF.loadCount < 4) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+
+                for (let i = 1; i < 5; i++){
+                    if(data.placed[i - 1]){
                         CONTEXT_AF[`book${i}Placed`] = true;
+                        CONTEXT_AF.startMusic(i);
                     }
                 }
             });
@@ -132,38 +152,13 @@ AFRAME.registerComponent('book-manager', {
             //add guiding text
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SEARCH_BOOKS);
             console.log('guiding text?');
+            CONTEXT_AF.playTracks();
         });
 
         // tthe music tracks aren't synced across clients, so start autoplaying music with 0 volume when a player joins
         document.body.addEventListener('connected', () => {
-            //start music with delay
-            setTimeout(() => {
-                //console.log("adding music...");
-                CONTEXT_AF.track1 = document.createElement('a-entity');
-                CONTEXT_AF.track1.setAttribute('id', 'track1');
-                CONTEXT_AF.track1.setAttribute('circles-sound', "src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
-                CONTEXT_AF.track1.components['circles-sound'].autoplay = true;
-
-                CONTEXT_AF.track2 = document.createElement('a-entity');
-                CONTEXT_AF.track2.setAttribute('id', 'track2');
-                CONTEXT_AF.track2.setAttribute('circles-sound', "src:#track2-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
-
-                CONTEXT_AF.track3 = document.createElement('a-entity');
-                CONTEXT_AF.track3.setAttribute('id', 'track3');
-                CONTEXT_AF.track3.setAttribute('circles-sound', "src:#track3-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
-            
-                CONTEXT_AF.track4 = document.createElement('a-entity');
-                CONTEXT_AF.track4.setAttribute('id', 'track4');
-                CONTEXT_AF.track4.setAttribute('circles-sound', "src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
-                
-                scene.appendChild(CONTEXT_AF.track1);
-                scene.appendChild(CONTEXT_AF.track2);
-                scene.appendChild(CONTEXT_AF.track3);
-                scene.appendChild(CONTEXT_AF.track4);
-                //console.log("music added");
-            }, CONTEXT_AF.loadduration);
+           //CONTEXT_AF.playTracks();
         });
-
         //when a new user joins the room, send the positions of books if they are randoimzed and if they've been placed on lecterns or not
         document.body.addEventListener('clientConnected', (evt) => {
             console.log('Another user joined the room:', evt.detail.clientId);
@@ -173,11 +168,12 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookRandEventName, {
                     loc2: CONTEXT_AF.location2,  loc3: CONTEXT_AF.location3, loc4: CONTEXT_AF.location4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
-
-                //also send if any books have been placed on lecterns when new users join
+                //also send if any books have been placed on lecterns or moved when new users join
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookSyncEventName, {
+                    locations: [CONTEXT_AF.book1.getAttribute("position"), CONTEXT_AF.book2.getAttribute("position"), CONTEXT_AF.book3.getAttribute("position"), CONTEXT_AF.book4.getAttribute("position")],
                     placed: [CONTEXT_AF.book1Placed, CONTEXT_AF.book2Placed, CONTEXT_AF.book3Placed, CONTEXT_AF.book4Placed],
-                    room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                    rand: CONTEXT_AF.bookRand,
+                    room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
             }
         });
@@ -189,6 +185,11 @@ AFRAME.registerComponent('book-manager', {
             if (CONTEXT_AF.book1Placed){
                 CONTEXT_AF.book1Placed = false;
                 CONTEXT_AF.stopMusic(1);
+                // emit to others to stop their music and change their book models
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                    book: 1,
+                    room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
             }
         });
 
@@ -198,6 +199,10 @@ AFRAME.registerComponent('book-manager', {
             if (CONTEXT_AF.book2Placed){
                 CONTEXT_AF.book2Placed = false;
                 CONTEXT_AF.stopMusic(2);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                    book: 2,
+                    room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
             }
         });
 
@@ -207,6 +212,10 @@ AFRAME.registerComponent('book-manager', {
             if (CONTEXT_AF.book3Placed){
                 CONTEXT_AF.book3Placed = false;
                 CONTEXT_AF.stopMusic(3);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                    book: 3,
+                    room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
             }
         });
 
@@ -216,6 +225,10 @@ AFRAME.registerComponent('book-manager', {
             if (CONTEXT_AF.book4Placed){
                 CONTEXT_AF.book4Placed = false;
                 CONTEXT_AF.stopMusic(4);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                    book: 4,
+                    room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                });
             }
         });
 
@@ -315,6 +328,34 @@ AFRAME.registerComponent('book-manager', {
         }
     },
 
+    //create entities for the music and play the music
+    playTracks: function () {
+        const CONTEXT_AF = this;
+        const scene = CIRCLES.getCirclesSceneElement();
+        CONTEXT_AF.loadCount = 0;
+
+        for (let i = 1; i < 5; i++){
+            CONTEXT_AF[`track${i}`] = document.createElement('a-entity');
+            CONTEXT_AF[`track${i}`].setAttribute('id', `track${i}`);
+            CONTEXT_AF[`track${i}`].setAttribute('sound', `src:#track${i}-music; loop: true; poolsize:1; volume: 0; positional:false;`);
+
+            CONTEXT_AF[`track${i}`].addEventListener('sound-loaded', function () {
+                CONTEXT_AF[`start${i}`] = true;
+                CONTEXT_AF.loadCount++;
+                console.log("added track " + i);
+
+                if (CONTEXT_AF.loadCount == 4){
+                    console.log("all tracks loaded and playing");
+                    CONTEXT_AF.track1.components.sound.playSound();
+                    CONTEXT_AF.track2.components.sound.playSound();
+                    CONTEXT_AF.track3.components.sound.playSound();
+                    CONTEXT_AF.track4.components.sound.playSound();
+                }
+            })
+            scene.appendChild(CONTEXT_AF[`track${i}`]);
+        }
+    },
+
     // set locations of books
     setLocations: function () {
         const CONTEXT_AF = this;
@@ -378,11 +419,10 @@ AFRAME.registerComponent('book-manager', {
 
         sparkle.setAttribute('particle-system', 'preset: default; texture: /worlds/BW_Alpha/assets/textures/sparkle.png; color: #ffc178; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0 0 0; maxAge:2; blending: 2; velocityValue: 0 0 0; size: 0.05; sizeSpread: -0.3; duration:' +  CONTEXT_AF.bookplaceduration/1000 + '; particleCount: 80;');
 
-        
-        CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 1`);
-
         const musicParticle = document.querySelector(`#musicparticles${book}`);
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:true"); 
+
+        CONTEXT_AF[`track${book}`].setAttribute('sound', `src:#track${book}-music; loop: true; poolsize:1; volume: 1; positional:false;`);
     },
 
     stopMusic: function (book){
@@ -394,11 +434,11 @@ AFRAME.registerComponent('book-manager', {
         const sparkle = document.querySelector(`#sparkle${book}`);
 
         sparkle.setAttribute('particle-system', 'preset: default; texture: /worlds/BW_Alpha/assets/textures/sparkle.png; color: #ffc178; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0 0 0; maxAge:2; blending: 2; velocityValue: 0 0 0; size: 0.05; sizeSpread: -0.3; duration:infinity');
-
-        CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0`);
-
+        
         const musicParticle = document.querySelector(`#musicparticles${book}`);
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:false");
+
+        CONTEXT_AF[`track${book}`].setAttribute('sound', `src:#track${book}-music; loop: true; poolsize:1; volume: 0; positional:false;`);
     },
 
     sendPosition: function (book) {
