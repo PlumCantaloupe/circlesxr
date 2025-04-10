@@ -151,13 +151,14 @@ AFRAME.registerComponent('book-manager', {
             //add guiding text
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SEARCH_BOOKS);
             console.log('guiding text?');
-            CONTEXT_AF.playTracks();
+            //CONTEXT_AF.playTracks();
         });
 
         // tthe music tracks aren't synced across clients, so start autoplaying music with 0 volume when a player joins
         document.body.addEventListener('connected', () => {
-           //CONTEXT_AF.playTracks();
+           CONTEXT_AF.playTracks();
         });
+        
         //when a new user joins the room, send the positions of books if they are randoimzed and if they've been placed on lecterns or not
         document.body.addEventListener('clientConnected', (evt) => {
             console.log('Another user joined the room:', evt.detail.clientId);
