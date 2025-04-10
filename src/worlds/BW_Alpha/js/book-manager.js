@@ -460,6 +460,7 @@ AFRAME.registerComponent('book-manager', {
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:true"); 
 
         CONTEXT_AF[`track${book}`].setAttribute('sound', `src:#track${book}-music; loop: true; poolsize:1; volume: 1; positional:false;`);
+        CONTEXT_AF[`track${book}`].setAttribute('sound.volume', '1');
     },
 
     stopMusic: function (book){
@@ -477,6 +478,7 @@ AFRAME.registerComponent('book-manager', {
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:false");
 
         CONTEXT_AF[`track${book}`].setAttribute('sound', `src:#track${book}-music; loop: true; poolsize:1; volume: 0; positional:false;`);
+        CONTEXT_AF[`track${book}`].setAttribute('sound.volume', '0');
         console.log("picked up book from lecterbn");
     },
 
