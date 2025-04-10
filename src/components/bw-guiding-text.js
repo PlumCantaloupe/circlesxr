@@ -13,6 +13,17 @@ AFRAME.registerComponent('bw-guiding-text', {
         CONTEXT_AF.displayingError = false;
         CONTEXT_AF.oneTimeTextShown = false;
 
+        //if using a headset then adjust the guiding text position
+        if (AFRAME.utils.device.isMobileVR()) {
+          CONTEXT_AF.guidingText.position.set(0, 0.645, -1.474);
+          CONTEXT_AF.guidingText.setAttribute('geometry', {height: 0.190, width: 1.850});
+          CONTEXT_AF.guidingText.setAttribute('text', {width: 1.500});
+
+          CONTEXT_AF.errorText.position.set(0, 0.645, -1.474);
+          CONTEXT_AF.errorText.setAttribute('geometry', {height: 0.190, width: 1.850});
+          CONTEXT_AF.errorText.setAttribute('text', {width: 1.500});
+        }
+
         //parent the text to the camera when circles has loaded
         CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
           CONTEXT_AF.camera = CIRCLES.getMainCameraElement();    

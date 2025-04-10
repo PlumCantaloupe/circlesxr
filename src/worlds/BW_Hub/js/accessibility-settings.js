@@ -229,7 +229,7 @@ AFRAME.registerComponent('accessibility-controls', {
         select.removeAttribute('animation__mouseenter');
         select.removeAttribute('circles-interactive-object');
         select.setAttribute('material', {color: COLOURS.SELECTED_TOGGLE});
-        deselect.object3D.position.y = -0.02;
+        select.object3D.position.y = -0.02;
         
         
         deselect.setAttribute('material', {color: COLOURS.DESELECTED_TOGGLE});
