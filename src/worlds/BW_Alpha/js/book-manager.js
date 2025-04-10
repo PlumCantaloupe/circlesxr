@@ -125,7 +125,6 @@ AFRAME.registerComponent('book-manager', {
 
             //sync book locations is theyre placed when a new player joins
             CONTEXT_AF.socket.on(CONTEXT_AF.bookSyncEventName, async (data) => {
-                console.log("hai i received book sync");
                 CONTEXT_AF.bookRand = data.rand;
                 for (let i = 1; i < 5; i++){
                     if(!data.placed[i - 1]){
