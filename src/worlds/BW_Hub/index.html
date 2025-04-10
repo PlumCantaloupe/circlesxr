@@ -293,7 +293,7 @@
 
 
       <!-- TEMP Visualized central orbs -->
-      <a-entity id="central-orbs-visualization" central-orbs-visualization rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
+      <a-entity id="central-orbs-visualization" central-orbs-visualization rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 2.5;">
         <a-sphere id="central-orb-pink" position="0 2.462 0" scale="0.3 0.3 0.3" material="color:#aa139d; emissive: #fe62b5; emissiveIntensity: 3.37"></a-sphere>
         <a-sphere id="central-orb-blue" position="0.003 3.077 0.861" scale="0.3 0.3 0.3" material="color:#2a54cf; emissive: #52bdff; emissiveIntensity: 2.67"></a-sphere>
         <a-sphere id="central-orb-orange" position="0.823 1.944 0.426" scale="0.3 0.3 0.3" material="color:#c20000; emissive: #fe5c34; emissiveIntensity: 3.43"></a-sphere>
@@ -329,7 +329,7 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="delta-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="delta-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
@@ -369,7 +369,7 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="alpha-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="alpha-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
@@ -409,7 +409,7 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="gamma-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="gamma-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
