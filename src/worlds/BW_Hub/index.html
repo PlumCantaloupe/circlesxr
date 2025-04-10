@@ -91,11 +91,9 @@
       <a-entity id="manager" manager></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       <!-- Guiding text  -->
-      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textGuiding" position="-0.158 0.266 -1.2" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
       <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: error text; align: center; width: 0.3" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
  
- 
-      
       <!-- Lights and sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
@@ -135,38 +133,52 @@
         <a-entity position="6.761 0.780 0">
 
           <a-entity id="screen" position="0.260 1.368 0" rotation="0 0 4.6">
-            <a-entity id="screenText" text="value: Echoes of the mind: Brain waves visualized; align:center; width: 2" rotation="0 -90 0" position="0 0.5 0"></a-entity>
-            <a-entity geometry="primitive: plane" material="src: #instructions_1; transparent: true" position="-0.020 -0.254 0" rotation="0 -90 0" scale="2.226 1.478 1"></a-entity>
-            
+            <a-entity id="screenText" text="value: Echoes of the mind: Brain waves visualized; align:center; width: 2; color: #9aeafe" rotation="0 -90 0" position="0 0.520 0"></a-entity>
+            <a-entity id="screenText2" text="value: Echoes of the mind: Brain waves visualized; align:center; width: 1.5; color: #9dc7d2" rotation="0 -90 0" position="0 0.520 0"></a-entity>
+            <a-entity id="screenGraphics" circles-interactive-visible="true" geometry="primitive: plane" material="src: #instructions_1; transparent: true" position="0.018 -0.110 0" rotation="0.289 -89.998 0" scale="1.822 1.210 0.819"></a-entity>
+            <!-- <a-entity id="nextScreen" position="0 0 0.06" rotation="0 0 -90" visible="true" circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747"></a-entity>
+            <a-entity id="prevScreen" position="0 0 -0.06" rotation="0 0 -90" visible="false" circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747"></a-entity>
+             -->
+            <a-entity class="cutomButton" position="0.08 -0.74 0.2" rotation="0 0 90">
+              <a-entity circles-interactive-visible="true" id="nextScreen" scale="1 0.09 1" position="0 0.04 0" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 0.02 0; to: 0 0.04 0; dur: 400; startEvents: click">
+                <a-entity  text="value: Next; align:center; width: 1; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
+              </a-entity>
+            </a-entity>
+            <a-entity class="cutomButton" position="0.08 -0.74 -0.16" rotation="0 0 90">
+              <a-entity circles-interactive-visible="false" id="prevScreen" scale="1 0.09 1" position="0 0.04 0" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 0.02 0; to: 0 0.04 0; dur: 400; startEvents: click">
+                <a-entity text="value: Prev; align:center; width: 1; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
+              </a-entity>
+            </a-entity>
+
             <!--<a-entity text="value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula, ut ullamcorper justo.; align:center; width: 1; color: #dbdcff;.2" rotation="0 -90 0" position="0 0.3 0"></a-entity> -->
           </a-entity>
   
-          <a-entity id="controls" rotation="0 0 50" position="0.330 0.1 0">
+          <a-entity id="controls" rotation="-0.17 -0.222 49.985" position="0.294 0.132 0">
 
-            <a-entity rotation="0 0 0" position="0 0 -0.322">
-              <a-entity text="value: Platform Instructions; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.1 0.04 -0.054"></a-entity>
+            <a-entity rotation="0 0 0" position="0.013 -0.011 -0.522">
+              <a-entity text="value: Platform Instructions; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.056 -0.150"></a-entity>
               <a-entity id="mobileInstructions"
                         scale="1 0.4 1"
-                        position="0 0 -0.2"
-                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Mobile; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+                        position="0 0 -0.278"
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747">
+                        <a-entity text="value: Mobile; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
               <a-entity id="desktopInstructions"
                         scale="1 0.4 1"
                         position="0 0 0"
-                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Desktop; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747">
+                        <a-entity text="value: Desktop; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
               <a-entity id="headsetInstructions"
                         scale="1 0.4 1"
-                        position="0 0 0.2"
-                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Headset; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+                        position="0 0 0.278"
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747">
+                        <a-entity text="value: Headset; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
             </a-entity>
 
-            <a-entity rotation="0 0 0" position="-0.590 0 -0.492">
-              <a-entity text="value: Info; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.14 0.04 -0.001"></a-entity>
+            <a-entity rotation="0 0 0" position="-0.660 0 -0.752">
+              <a-entity id="infoInstructions" text="value: Info; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.14 0.04 -0.001"></a-entity>
               
               <a-entity class="cutomButton">
-                <a-entity scale="1 0.09 1" position="0 0.04 0" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+                <a-entity id="infoInstructionsButton" scale="1 0.09 1" position="0 0.04 0" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
                   <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
                 </a-entity>
               </a-entity>
@@ -174,46 +186,47 @@
             </a-entity>
             
             
-            <a-entity rotation="0 0 0" position="0 0 0.468">
-              <a-entity text="value: Teleport Pad Mode; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.1 0.04 -0.123"></a-entity>
-              <a-entity id="opaqueTeleportPadSetting"
-                        scale="1 0.4 1"
-                        position="0 0 -0.25"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Opaque; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
-              <a-entity id="transparentTeleportPadSetting"
-                        scale="1 0.4 1"
-                        position="0 0 0"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Transparent; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+            <a-entity rotation="0 0 0" position="0 0 0.670">
+              <a-entity text="value: Teleport Pad Mode; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.123"></a-entity>
+              
+              <a-entity class="cutomButton" position="0 0.040 -0.25" >
+                <a-entity id="opaqueTeleportPadSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Opaque; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 0.036" >
+                <a-entity id="transparentTeleportPadSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Transparent; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+              
             </a-entity>
   
-            <a-entity rotation="0 0 0" position="-0.297 0 0.468">
-              <a-entity text="value: Glow; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.1 0.04 -0.263"></a-entity>
-              <a-entity id="bloomOnSetting"
-                        scale="1 0.4 1"
-                        position="0 0 -0.25"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: On; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
-              <a-entity id="bloomOffSetting"
-                        scale="1 0.4 1"
-                        position="0 0 0"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Off; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+            <a-entity rotation="0 0 0" position="-0.327 0 0.670">
+              <a-entity text="value: Glow; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.263"></a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 -0.25" >
+                <a-entity id="bloomOnSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: On; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 0.036" >
+                <a-entity id="bloomOffSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Off; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
             </a-entity>
   
-            <a-entity rotation="0 0 0" position="-0.587 0 0.468">
-              <a-entity text="value: Guiding Text; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.1 0.04 -0.193"></a-entity>
-              <a-entity id="guidingTextOnSetting"
-                        scale="1 0.4 1"
-                        position="0 0 -0.25"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: On; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
-              <a-entity id="guidingTextOffSetting"
-                        scale="1 0.4 1"
-                        position="0 0 0"
-                        circles-button="type: cylinder; pedastal_visible: false; diameter: 0.2; false; button_color: #7d7d7d; button_color_hover: #474747">
-                        <a-entity text="value: Off; align: center; width: 0.8; color: #dbdcff; " rotation="-90 -90 0" position="-0.1 0.11 0"></a-entity></a-entity>
+            <a-entity rotation="0 0 0" position="-0.657 0 0.670">
+              <a-entity text="value: Guiding Text; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.193"></a-entity>
+                <a-entity class="customButton" position="0 0.040 -0.25" >
+                  <a-entity id="guidingTextOnSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                  <a-entity text="value: On; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+                </a-entity>
+
+                <a-entity class="cutomButton" position="0 0.040 0.036" >
+                  <a-entity id="guidingTextOffSetting" scale="1 0.4 1" circles-interactive-object geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                  <a-entity text="value: Off; align: center; width: 1.0; color: #dbdcff; " rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+                </a-entity>
             </a-entity>
           </a-entity>
           
@@ -305,7 +318,7 @@
        <a-entity rotation="0 -0.45 0">
         <a-entity position="2.176 0 -5.729" visualization-info="roomName: delta">
 
-          <a-entity id="delta-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: Stats; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
+          <a-entity id="delta-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: What did everyone feel in Delta?; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
             <a-entity id="delta-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="delta-visualizer">
               <a-entity id="delta-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
@@ -345,7 +358,7 @@
       <a-entity rotation="0 127.598 0">
         <a-entity position="2.176 0 -5.729" visualization-info="roomName: alpha">
 
-          <a-entity id="alpha-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: Stats; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
+          <a-entity id="alpha-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: What did everyone feel in Alpha?; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
             <a-entity id="alpha-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="alpha-visualizer">
               <a-entity id="alpha-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
@@ -385,7 +398,7 @@
       <a-entity rotation="0 -102.05 0">
         <a-entity position="2.176 0 -5.729" visualization-info="roomName: gamma">
 
-          <a-entity id="gamma-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: Stats; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
+          <a-entity id="gamma-visualization-info" position="0 0 -0.52" rotation="0 30 0" circles-description="title_text_front: What did everyone feel in Gamma?; offset: -1.4 1.2 -0.230; arrow_position: right; lookAtCamera: false" circles-interactive-visible="false"></a-entity>
             <a-entity id="gamma-visualization" position="0.067 1.193 -0.799" scale="0.177 0.7 0.177" id="gamma-visualizer">
               <a-entity id="gamma-visualization-red">
                 <a-cylinder color="#ff8b4d" position="0 0.5 0"></a-cylinder>
