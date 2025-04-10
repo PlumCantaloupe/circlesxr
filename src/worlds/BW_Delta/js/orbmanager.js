@@ -17,7 +17,7 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
         CONTEXT_AF.orbReleaseEventName = "orbrelease_event";
         CONTEXT_AF.orbPosUpdateEventName = "orbposition_event";
-        CONTEXT_AF.orbPickupEventName = "orbposition_event";
+        CONTEXT_AF.orbPickupEventName = "orbpickup_event";
         CONTEXT_AF.orbNumUpdateEventName = "orbnumber_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
