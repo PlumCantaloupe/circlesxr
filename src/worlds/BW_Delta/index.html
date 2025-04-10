@@ -51,6 +51,8 @@
         <audio id="delta-ambient-sound" src="assets/sounds/delta_ambience_no_beat.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="delta-heartbeats" src="assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
 
+        <img id="roughness_map" src="assets/textures/roughness.png" crossorigin="anonymous">
+
         <!-- Many memory orb sound clips (sorry lol) -->
         <audio id="orb-clip1" src="/worlds/BW_Delta/assets/sounds/orb-clips/1.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="orb-clip2" src="/worlds/BW_Delta/assets/sounds/orb-clips/2.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -121,19 +123,29 @@
                   obj-model="obj: #base_model"
                   material="color: #dbe5ff; emissive: #dbe5ff; emissiveIntensity: 1;"
                   position="0 0 0"></a-entity>
+<!-- 
+      <a-entity id="globe"
+                geometry="primitive: sphere; radius: 14.09"
+                position="0.23209 6.40178 -10.15421"
+                ></a-entity> -->
 
-      <a-entity   id="floor" 
-                  gltf-model="#floor_model"
-                  position="0 0 0"></a-entity>
+      <a-entity id="globe"
+                geometry="primitive: sphere; radius: 14.03"
+                position="0 6.53136 -10.23122"></a-entity>
       
-      <a-entity   id="tubes" 
+      <a-entity id="floor"
+                position="0.52318 0.25 -10.41778"
+                geometry="primitive: circle; radius: 12.5"
+                material="color: #4F5B82;" rotation="-90 0 0"></a-entity>
+
+      <a-entity id="floor_navmesh"
+                position="0.52318 0.23388 -10.41778"
+                geometry="primitive: circle; radius: 11.5"
+                material="transparent: true;" rotation="-90 0 0" nav-mesh></a-entity>
+      
+      <a-entity  id="tubes" 
                   obj-model="obj: #tubes_model"
                   material="color: #cfe6ff; opacity:0.4"
-                  position="0 0 0"></a-entity>
-            
-      <a-entity   id="globe" 
-                  obj-model="obj: #globe_model"
-                  material="color: #cfe6ff; opacity:0.4; blending: subtractive"
                   position="0 0 0"></a-entity>
 
       <a-entity   id="tube1orb1" 
