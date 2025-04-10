@@ -36,7 +36,6 @@
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
-        <img id='skyMap' src='/worlds/BW_Alpha/assets/textures/neuronSky.png' crossorigin="anonymous">
 
         <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
 
@@ -54,6 +53,7 @@
         <a-asset-item id="books" src="/worlds/BW_Alpha/assets/models/library/books.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="navmesh_model" src="/worlds/BW_Alpha/assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        
         <a-asset-item id="book_model" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="book_model2" src="/worlds/BW_Alpha/assets/models/book2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="book_model3" src="/worlds/BW_Alpha/assets/models/book3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -184,8 +184,7 @@
             <a-entity   id="lectern4"
                         gltf-model="#lectern4_model"
                         circles-interactive-object></a-entity>
-
-            <!--
+<!--
             <a-entity   id="candles"
                         gltf-model="#candles"
                         animation="property: position; from: 0 0.5 0; to: 0 -0.5 0; dur: 6000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
