@@ -22,6 +22,8 @@ AFRAME.registerComponent('guess-shape', {
         CONTEXT_AF.resetButton = document.querySelector('#resetButton');
         CONTEXT_AF.resultText = document.querySelector('#resultText');
 
+        CONTEXT_AF.username = CIRCLES.getCirclesUserName();
+
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
         CONTEXT_AF.guessEventName = "guess_event";
@@ -41,8 +43,7 @@ AFRAME.registerComponent('guess-shape', {
                 // if no cross/check icons are shown, user must be guessing for the first shape in the sequence
                 if(CONTEXT_AF.resultOne.getAttribute('visible') == false){
                     // update user guess labels
-                    username = CIRCLES.getCirclesUserName();
-                    CONTEXT_AF.guessOneLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessOneLabel.setAttribute('text', 'value: ' + CONTEXT_AF.username + '\n guessed!; align:center; color:black; width:5.3')
                     CONTEXT_AF.guessOneLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessOne.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultOne.setAttribute('src', 'assets/textures/Check.png')
@@ -60,8 +61,7 @@ AFRAME.registerComponent('guess-shape', {
                 // if the second cross/check icon is not visible, user must be guessing for the second shape in the sequence
                 else if(CONTEXT_AF.resultTwo.getAttribute('visible') == false){
                     // update user guess labels
-                    username = CIRCLES.getCirclesUserName();
-                    CONTEXT_AF.guessTwoLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessTwoLabel.setAttribute('text', 'value: ' + CONTEXT_AF.username + '\n guessed!; align:center; color:black; width:5.3')
                     CONTEXT_AF.guessTwoLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessTwo.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultTwo.setAttribute('src', 'assets/textures/Check.png')
@@ -79,8 +79,7 @@ AFRAME.registerComponent('guess-shape', {
                 // if the third cross/check icon is not visible, user must be guessing for the third shape in the sequence
                 else if(CONTEXT_AF.resultThree.getAttribute('visible') == false){
                     // update user guess labels
-                    username = CIRCLES.getCirclesUserName();
-                    CONTEXT_AF.guessThreeLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessThreeLabel.setAttribute('text', 'value: ' + CONTEXT_AF.username + '\n guessed!; align:center; color:black; width:5.3')
                     CONTEXT_AF.guessThreeLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessThree.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultThree.setAttribute('src', 'assets/textures/Check.png')
@@ -98,8 +97,7 @@ AFRAME.registerComponent('guess-shape', {
                 // if the fourth cross/check icon is not visible, user must be guessing for the fourth shape in the sequence
                 else if(CONTEXT_AF.resultFour.getAttribute('visible') == false){
                     // update user guess labels
-                    username = CIRCLES.getCirclesUserName();
-                    CONTEXT_AF.guessFourLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessFourLabel.setAttribute('text', 'value: ' + CONTEXT_AF.username + '\n guessed!; align:center; color:black; width:5.3')
                     CONTEXT_AF.guessFourLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessFour.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultFour.setAttribute('src', 'assets/textures/Check.png')
