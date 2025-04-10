@@ -13,10 +13,10 @@ AFRAME.registerComponent('network-reset', {
         CONTEXT_AF.resultThree = document.querySelector('#resultThree');
         CONTEXT_AF.resultFour = document.querySelector('#resultFour');
 
-        //CONTEXT_AF.guessOneLabel = document.querySelector('#guessOneLabel');
-        //CONTEXT_AF.guessTwoLabel = document.querySelector('#guessTwoLabel');
-        //CONTEXT_AF.guessThreeLabel = document.querySelector('#guessThreeLabel');
-        //CONTEXT_AF.guessFourLabel = document.querySelector('#guessFourLabel');
+        CONTEXT_AF.guessOneLabel = document.querySelector('#guessOneLabel');
+        CONTEXT_AF.guessTwoLabel = document.querySelector('#guessTwoLabel');
+        CONTEXT_AF.guessThreeLabel = document.querySelector('#guessThreeLabel');
+        CONTEXT_AF.guessFourLabel = document.querySelector('#guessFourLabel');
 
         CONTEXT_AF.resultText = document.querySelector('#resultText');
 
@@ -84,6 +84,12 @@ AFRAME.registerComponent('network-reset', {
                 CONTEXT_AF.resultThree.setAttribute('visible', 'false')
                 CONTEXT_AF.resultFour.setAttribute('visible', 'false')
 
+                // reset user guess labels
+                CONTEXT_AF.guessOneLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessTwoLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessThreeLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessFourLabel.setAttribute('visible', 'false')
+
                 CONTEXT_AF.socket.emit(CONTEXT_AF.codeEventName, {netKeyOne:keyOne, netKeyTwo:keyTwo, netKeyThree:keyThree, netKeyFour:keyFour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 
             })
@@ -111,6 +117,11 @@ AFRAME.registerComponent('network-reset', {
                 CONTEXT_AF.resultTwo.setAttribute('visible', 'false')
                 CONTEXT_AF.resultThree.setAttribute('visible', 'false')
                 CONTEXT_AF.resultFour.setAttribute('visible', 'false')
+
+                CONTEXT_AF.guessOneLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessTwoLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessThreeLabel.setAttribute('visible', 'false')
+                CONTEXT_AF.guessFourLabel.setAttribute('visible', 'false')
             });
 
             //listen for when others click on shapes
@@ -127,6 +138,19 @@ AFRAME.registerComponent('network-reset', {
 
                 CONTEXT_AF.resultFour.setAttribute('visible', data.netResults.netResultFour.visible)
                 CONTEXT_AF.resultFour.setAttribute('src', data.netResults.netResultFour.src)
+
+                // update user guess labels
+                CONTEXT_AF.guessOneLabel.setAttribute('visible', data.netLabels.netLabelOne.visible)
+                CONTEXT_AF.guessOneLabel.setAttribute('text', data.netLabels.netLabelOne.text)
+
+                CONTEXT_AF.guessTwoLabel.setAttribute('visible', data.netLabels.netLabelTwo.visible)
+                CONTEXT_AF.guessTwoLabel.setAttribute('text', data.netLabels.netLabelTwo.text)
+
+                CONTEXT_AF.guessThreeLabel.setAttribute('visible', data.netLabels.netLabelThree.visible)
+                CONTEXT_AF.guessThreeLabel.setAttribute('text', data.netLabels.netLabelThree.text)
+
+                CONTEXT_AF.guessFourLabel.setAttribute('visible', data.netLabels.netLabelFour.visible)
+                CONTEXT_AF.guessFourLabel.setAttribute('text', data.netLabels.netLabelFour.text)
 
                 CONTEXT_AF.resultText.setAttribute('text', data.netText)
             });
@@ -151,9 +175,14 @@ AFRAME.registerComponent('network-reset', {
                     resultThree = {visible: CONTEXT_AF.resultThree.getAttribute('visible'), src: CONTEXT_AF.resultThree.getAttribute('src')}
                     resultFour = {visible: CONTEXT_AF.resultFour.getAttribute('visible'), src: CONTEXT_AF.resultFour.getAttribute('src')}
 
+                    labelOne = {visible: CONTEXT_AF.guessOneLabel.getAttribute('visible'), text:CONTEXT_AF.guessOneLabel.getAttribute('text')}
+                    labelTwo = {visible: CONTEXT_AF.guessTwoLabel.getAttribute('visible'), text:CONTEXT_AF.guessTwoLabel.getAttribute('text')}
+                    labelThree = {visible: CONTEXT_AF.guessThreeLabel.getAttribute('visible'), text:CONTEXT_AF.guessThreeLabel.getAttribute('text')}
+                    labelFour = {visible: CONTEXT_AF.guessFourLabel.getAttribute('visible'), text:CONTEXT_AF.guessFourLabel.getAttribute('text')}
+
                     resultText = CONTEXT_AF.resultText.getAttribute('text')
 
-                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {netText: resultText, netKeys:{netKeyOne: keyOne, netKeyTwo: keyTwo, netKeyThree: keyThree, netKeyFour: keyFour}, netResults:{netResultOne: resultOne, netResultTwo:resultTwo, netResultThree: resultThree, netResultFour: resultFour}, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    CONTEXT_AF.socket.emit(CIRCLES.EVENTS.SEND_DATA_SYNC, {netLabels: {netLabelOne: labelOne, netLabelTwo: labelTwo, netLabelThree: labelThree, netLabelFour: labelFour}, netText: resultText, netKeys:{netKeyOne: keyOne, netKeyTwo: keyTwo, netKeyThree: keyThree, netKeyFour: keyFour}, netResults:{netResultOne: resultOne, netResultTwo:resultTwo, netResultThree: resultThree, netResultFour: resultFour}, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 }
             });
 
@@ -190,37 +219,17 @@ AFRAME.registerComponent('network-reset', {
                     CONTEXT_AF.resultFour.setAttribute('visible', data.netResults.netResultFour.visible)
                     CONTEXT_AF.resultFour.setAttribute('src', data.netResults.netResultFour.src)
 
-                    //CONTEXT_AF.guessOneLabel.setAttribute('visible', data.netLabels.netLabelOne.visible)
-                    //CONTEXT_AF.guessOneLabel.setAttribute('text', data.netLabels.netLabelOne.text)
-                    //if(data.netLabels.netLabelOne.visible == true) {
-                    //    setTimeout(function(){
-                    //        CONTEXT_AF.guessOneLabel.setAttribute('visible', false)
-                    //    }, 1000);
-                    //}
+                    CONTEXT_AF.guessOneLabel.setAttribute('visible', data.netLabels.netLabelOne.visible)
+                    CONTEXT_AF.guessOneLabel.setAttribute('text', data.netLabels.netLabelOne.text)
 
-                    //CONTEXT_AF.guessTwoLabel.setAttribute('visible', data.netLabels.netLabelTwo.visible)
-                    //CONTEXT_AF.guessTwoLabel.setAttribute('text', data.netLabels.netLabelTwo.text)
-                    //if(data.netLabels.netLabelTwo.visible == true) {
-                    //    setTimeout(function(){
-                    //        CONTEXT_AF.guessTwoLabel.setAttribute('visible', false)
-                    //    }, 1000);
-                    //}
+                    CONTEXT_AF.guessTwoLabel.setAttribute('visible', data.netLabels.netLabelTwo.visible)
+                    CONTEXT_AF.guessTwoLabel.setAttribute('text', data.netLabels.netLabelTwo.text)
 
-                    //CONTEXT_AF.guessThreeLabel.setAttribute('visible', data.netLabels.netLabelThree.visible)
-                    //CONTEXT_AF.guessThreeLabel.setAttribute('text', data.netLabels.netLabelThree.text)
-                    //if(data.netLabels.netLabelThree.visible == true) {
-                    //    setTimeout(function(){
-                    //        CONTEXT_AF.guessThreeLabel.setAttribute('visible', false)
-                    //    }, 1000);
-                    //}
+                    CONTEXT_AF.guessThreeLabel.setAttribute('visible', data.netLabels.netLabelThree.visible)
+                    CONTEXT_AF.guessThreeLabel.setAttribute('text', data.netLabels.netLabelThree.text)
 
-                    //CONTEXT_AF.guessFourLabel.setAttribute('visible', data.netLabels.netLabelFour.visible)
-                    //CONTEXT_AF.guessFourLabel.setAttribute('text', data.netLabels.netLabelFour.text)
-                    //if(data.netLabels.netLabelFour.visible == true) {
-                    //    setTimeout(function(){
-                    //        CONTEXT_AF.guessFourLabel.setAttribute('visible', false)
-                    //    }, 1000);
-                    //}
+                    CONTEXT_AF.guessFourLabel.setAttribute('visible', data.netLabels.netLabelFour.visible)
+                    CONTEXT_AF.guessFourLabel.setAttribute('text', data.netLabels.netLabelFour.text)
 
                     CONTEXT_AF.resultText.setAttribute('text', data.netText)
 

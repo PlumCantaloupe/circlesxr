@@ -61,32 +61,7 @@ AFRAME.registerComponent('spawn-object', {
                 ringVisual.object3D.position.set(randPosition.x, randPosition.y, 27.5);
 
                 CONTEXT_AF.scene.appendChild(ringVisual);
-
-                //CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
-
-            //listen for when others spawn objects
-            //CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
-
-            //    shapeKey = data.shapeKeyNet
-
-                // spawn object with attributes
-            //    toSpawn = document.createElement("a-entity")
-            //    toSpawn.classList.add('spawnedObject')
-            //    toSpawn.setAttribute("material", shapeKey.material)
-            //    toSpawn.setAttribute("geometry", shapeKey.geometry)
-            //    toSpawn.setAttribute("position", data.netRandPos)
-            //    toSpawn.setAttribute("scale", shapeKey.scale)
-            //    toSpawn.setAttribute("guess-shape", "")
-            //    toSpawn.setAttribute("circles-interactive-object", "")
-            //    CONTEXT_AF.scene.appendChild(toSpawn)
-            //});
-
-            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
-            setTimeout(function() {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            }, THREE.MathUtils.randInt(0,1200));
-
         };
 
         //check if circle networking is ready. If not, add an eent to listen for when it is ...

@@ -9,10 +9,10 @@ AFRAME.registerComponent('guess-shape', {
         CONTEXT_AF.guessFour = document.querySelector('#guessFour');
         CONTEXT_AF.scene = document.querySelector('a-scene')
 
-        //CONTEXT_AF.guessOneLabel = document.querySelector('#guessOneLabel');
-        //CONTEXT_AF.guessTwoLabel = document.querySelector('#guessTwoLabel');
-        //CONTEXT_AF.guessThreeLabel = document.querySelector('#guessThreeLabel');
-        //CONTEXT_AF.guessFourLabel = document.querySelector('#guessFourLabel');
+        CONTEXT_AF.guessOneLabel = document.querySelector('#guessOneLabel');
+        CONTEXT_AF.guessTwoLabel = document.querySelector('#guessTwoLabel');
+        CONTEXT_AF.guessThreeLabel = document.querySelector('#guessThreeLabel');
+        CONTEXT_AF.guessFourLabel = document.querySelector('#guessFourLabel');
         
         CONTEXT_AF.resultOne = document.querySelector('#resultOne');
         CONTEXT_AF.resultTwo = document.querySelector('#resultTwo');
@@ -40,10 +40,10 @@ AFRAME.registerComponent('guess-shape', {
                 CONTEXT_AF.guidingText.hideGuidingText();
                 // if no cross/check icons are shown, user must be guessing for the first shape in the sequence
                 if(CONTEXT_AF.resultOne.getAttribute('visible') == false){
-                    //username = CIRCLES.getCirclesUserName();
-                    //CONTEXT_AF.guessOneLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
-                    //CONTEXT_AF.guessOneLabel.setAttribute('visible', true)
-                    //labelOne = {visible: CONTEXT_AF.guessOneLabel.getAttribute('visible'), text:CONTEXT_AF.guessOneLabel.getAttribute('text')}
+                    // update user guess labels
+                    username = CIRCLES.getCirclesUserName();
+                    CONTEXT_AF.guessOneLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessOneLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessOne.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultOne.setAttribute('src', 'assets/textures/Check.png')
                         CONTEXT_AF.resultOne.setAttribute('visible', 'true')
@@ -59,10 +59,10 @@ AFRAME.registerComponent('guess-shape', {
                 }
                 // if the second cross/check icon is not visible, user must be guessing for the second shape in the sequence
                 else if(CONTEXT_AF.resultTwo.getAttribute('visible') == false){
-                    //username = CIRCLES.getCirclesUserName();
-                    //CONTEXT_AF.guessTwoLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
-                    //CONTEXT_AF.guessTwoLabel.setAttribute('visible', true)
-                    //labelTwo = {visible: CONTEXT_AF.guessTwoLabel.getAttribute('visible'), text:CONTEXT_AF.guessTwoLabel.getAttribute('text')}
+                    // update user guess labels
+                    username = CIRCLES.getCirclesUserName();
+                    CONTEXT_AF.guessTwoLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessTwoLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessTwo.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultTwo.setAttribute('src', 'assets/textures/Check.png')
                         CONTEXT_AF.resultTwo.setAttribute('visible', 'true')
@@ -78,10 +78,10 @@ AFRAME.registerComponent('guess-shape', {
                 }
                 // if the third cross/check icon is not visible, user must be guessing for the third shape in the sequence
                 else if(CONTEXT_AF.resultThree.getAttribute('visible') == false){
-                    //username = CIRCLES.getCirclesUserName();
-                    //CONTEXT_AF.guessThreeLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
-                    //CONTEXT_AF.guessThreeLabel.setAttribute('visible', true)
-                    //labelThree = {visible: CONTEXT_AF.guessThreeLabel.getAttribute('visible'), text:CONTEXT_AF.guessThreeLabel.getAttribute('text')}
+                    // update user guess labels
+                    username = CIRCLES.getCirclesUserName();
+                    CONTEXT_AF.guessThreeLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessThreeLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessThree.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultThree.setAttribute('src', 'assets/textures/Check.png')
                         CONTEXT_AF.resultThree.setAttribute('visible', 'true')
@@ -97,10 +97,10 @@ AFRAME.registerComponent('guess-shape', {
                 }
                 // if the fourth cross/check icon is not visible, user must be guessing for the fourth shape in the sequence
                 else if(CONTEXT_AF.resultFour.getAttribute('visible') == false){
-                    //username = CIRCLES.getCirclesUserName();
-                    //CONTEXT_AF.guessFourLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
-                    //CONTEXT_AF.guessFourLabel.setAttribute('visible', true)
-                    //labelFour = {visible: CONTEXT_AF.guessFourLabel.getAttribute('visible'), text:CONTEXT_AF.guessFourLabel.getAttribute('text')}
+                    // update user guess labels
+                    username = CIRCLES.getCirclesUserName();
+                    CONTEXT_AF.guessFourLabel.setAttribute('text', 'value: '+username+'\n guessed!; align:center; color:black; width:5.3')
+                    CONTEXT_AF.guessFourLabel.setAttribute('visible', true)
                     if(CONTEXT_AF.guessFour.getAttribute('geometry').primitive == this.getAttribute('geometry').primitive){
                         CONTEXT_AF.resultFour.setAttribute('src', 'assets/textures/Check.png')
                         CONTEXT_AF.resultFour.setAttribute('visible', 'true')
@@ -129,20 +129,20 @@ AFRAME.registerComponent('guess-shape', {
                 resultThree = {visible: CONTEXT_AF.resultThree.getAttribute('visible'), src: CONTEXT_AF.resultThree.getAttribute('src')}
                 resultFour = {visible: CONTEXT_AF.resultFour.getAttribute('visible'), src: CONTEXT_AF.resultFour.getAttribute('src')}
 
+                labelOne = {visible: CONTEXT_AF.guessOneLabel.getAttribute('visible'), text:CONTEXT_AF.guessOneLabel.getAttribute('text')}
+                labelTwo = {visible: CONTEXT_AF.guessTwoLabel.getAttribute('visible'), text:CONTEXT_AF.guessTwoLabel.getAttribute('text')}
+                labelThree = {visible: CONTEXT_AF.guessThreeLabel.getAttribute('visible'), text:CONTEXT_AF.guessThreeLabel.getAttribute('text')}
+                labelFour = {visible: CONTEXT_AF.guessFourLabel.getAttribute('visible'), text:CONTEXT_AF.guessFourLabel.getAttribute('text')}
+
                 resultText = CONTEXT_AF.resultText.getAttribute('text')
 
-                CONTEXT_AF.socket.emit(CONTEXT_AF.guessEventName, {netPos: thisPosition, netText:resultText, netResults:{netResultOne: resultOne, netResultTwo:resultTwo, netResultThree: resultThree, netResultFour: resultFour}, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                CONTEXT_AF.socket.emit(CONTEXT_AF.guessEventName, {netLabels: {netLabelOne: labelOne, netLabelTwo: labelTwo, netLabelThree: labelThree, netLabelFour: labelFour}, netPos: thisPosition, netText:resultText, netResults:{netResultOne: resultOne, netResultTwo:resultTwo, netResultThree: resultThree, netResultFour: resultFour}, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
 
                 // hides shape and sends it behind the player to be deleted
                 this.setAttribute('visible', 'false')
                 this.setAttribute('position', '0 0 -3.6')
                 
             })
-
-            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
-            setTimeout(function() {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            }, THREE.MathUtils.randInt(0,1200));
 
         };
 
