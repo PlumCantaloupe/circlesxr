@@ -60,25 +60,14 @@ AFRAME.registerComponent('book-manager', {
 
         CONTEXT_AF.position1 = {x: 0, y: 1.3, z: -12.319};
         CONTEXT_AF.rotation1 = {x: 0, y: 0, z: 0};
-        CONTEXT_AF.book1c1 = {x: -0.397, y: 1.472, z: -12.603};
-        CONTEXT_AF.book1c2 = {x: 0.392, y: 1.108, z: -12.079};
-
         CONTEXT_AF.position2 = {x: 1.605, y: 1.3, z: -13.925};
         CONTEXT_AF.rotation2 = {x: 0, y: 90, z: 0};
-        CONTEXT_AF.book2c1 = {x: 1.342, y: 1.472, z: -13.532};
-        CONTEXT_AF.book2c2 = {x: 1.806, y: 1.108, z: -14.321};
-
         CONTEXT_AF.position3 = {x: 0, y: 1.3, z: -15.53};
         CONTEXT_AF.rotation3 = {x: 0, y: 180, z: 0};
-        CONTEXT_AF.book3c1 = {x: 0.397, y: 1.472, z: -15.247};
-        CONTEXT_AF.book3c2 = {x: -0.392, y: 1.108, z: -15.733};
-
         CONTEXT_AF.position4 = {x: -1.605, y: 1.3, z: -13.925};
         CONTEXT_AF.rotation4 = {x: 0, y: 270, z: 0};
-        CONTEXT_AF.book4c1 = {x: -1.342, y: 1.472, z: -14.321};
-        CONTEXT_AF.book4c2 = {x: -1.806, y: 1.108, z: -13.532};
 
-        CONTEXT_AF.location1 = 0;
+        //CONTEXT_AF.location1 = 0;
         CONTEXT_AF.location2 = 0;
         CONTEXT_AF.location3 = 0;
         CONTEXT_AF.location4 = 0;
@@ -102,6 +91,7 @@ AFRAME.registerComponent('book-manager', {
 
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPlaceEventName, (data) => {
                 CONTEXT_AF.startMusic(data.book);
+                CONTEXT_AF[`book${data.book}Placed`] = true;
             });
 
             //listen for updating book positions when picked up by others
@@ -111,7 +101,7 @@ AFRAME.registerComponent('book-manager', {
 
             // listen for if a book gets picked up from a lectern:
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPickupLecternEventName, (data) => {
-                CONTEXT_AF.stopMusic(data.book)
+                CONTEXT_AF.stopMusic(data.book);
                 CONTEXT_AF[`book${data.book}Placed`] = false;
             });
 
@@ -128,7 +118,7 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.bookRand = data.rand;
                 for (let i = 1; i < 5; i++){
                     if(!data.placed[i - 1]){
-                        CONTEXT_AF[`book${i}`].setAttribute('position', data.locations[i]);
+                        CONTEXT_AF[`book${i}`].setAttribute('position', data.locations[i - 1]);
                     }
                 }
 
@@ -156,9 +146,10 @@ AFRAME.registerComponent('book-manager', {
 
         // tthe music tracks aren't synced across clients, so start autoplaying music with 0 volume when a player joins
         document.body.addEventListener('connected', () => {
-           CONTEXT_AF.playTracks();
+            console.log("connected event");
+            CONTEXT_AF.playTracks();
         });
-        
+
         //when a new user joins the room, send the positions of books if they are randoimzed and if they've been placed on lecterns or not
         document.body.addEventListener('clientConnected', (evt) => {
             console.log('Another user joined the room:', evt.detail.clientId);
@@ -179,9 +170,8 @@ AFRAME.registerComponent('book-manager', {
         });
 
         //book pickup events
-        CONTEXT_AF.book1.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+        CONTEXT_AF.book1.addEventListener('click', () => {
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book1);
             if (CONTEXT_AF.book1Placed){
                 CONTEXT_AF.book1Placed = false;
                 CONTEXT_AF.stopMusic(1);
@@ -191,11 +181,11 @@ AFRAME.registerComponent('book-manager', {
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
             }
+            CONTEXT_AF.sendPosition(CONTEXT_AF.book1);
         });
 
-        CONTEXT_AF.book2.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+        CONTEXT_AF.book2.addEventListener('click', () => {
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book2);
             if (CONTEXT_AF.book2Placed){
                 CONTEXT_AF.book2Placed = false;
                 CONTEXT_AF.stopMusic(2);
@@ -204,11 +194,11 @@ AFRAME.registerComponent('book-manager', {
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
             }
+            CONTEXT_AF.sendPosition(CONTEXT_AF.book2);
         });
 
-        CONTEXT_AF.book3.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+        CONTEXT_AF.book3.addEventListener('click', () => {
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book3);
             if (CONTEXT_AF.book3Placed){
                 CONTEXT_AF.book3Placed = false;
                 CONTEXT_AF.stopMusic(3);
@@ -217,11 +207,11 @@ AFRAME.registerComponent('book-manager', {
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
             }
+            CONTEXT_AF.sendPosition(CONTEXT_AF.book3);
         });
 
-        CONTEXT_AF.book4.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+        CONTEXT_AF.book4.addEventListener('click', () => {
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book4);
             if (CONTEXT_AF.book4Placed){
                 CONTEXT_AF.book4Placed = false;
                 CONTEXT_AF.stopMusic(4);
@@ -230,6 +220,7 @@ AFRAME.registerComponent('book-manager', {
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
             }
+            CONTEXT_AF.sendPosition(CONTEXT_AF.book4);
         });
 
         //book release events 
@@ -266,6 +257,7 @@ AFRAME.registerComponent('book-manager', {
                 });
                 CONTEXT_AF.startMusic(1);
                 CONTEXT_AF.book1Placed = true; 
+                console.log("book 1 placed: " + CONTEXT_AF.book1Placed);
             }
             else{
                 CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
@@ -345,11 +337,11 @@ AFRAME.registerComponent('book-manager', {
                 console.log("added track " + i);
 
                 if (CONTEXT_AF.loadCount == 4){
-                    console.log("all tracks loaded and playing");
                     CONTEXT_AF.track1.components.sound.playSound();
                     CONTEXT_AF.track2.components.sound.playSound();
                     CONTEXT_AF.track3.components.sound.playSound();
                     CONTEXT_AF.track4.components.sound.playSound();
+                    console.log("all tracks loaded and playing");
                 }
             })
             scene.appendChild(CONTEXT_AF[`track${i}`]);
@@ -375,7 +367,7 @@ AFRAME.registerComponent('book-manager', {
         const CONTEXT_AF = this;
         CONTEXT_AF.numbers = CONTEXT_AF.randNum (4, 0, 11);
         //console.log(CONTEXT_AF.numbers);
-        CONTEXT_AF.location1 = CONTEXT_AF.numbers[0];
+        //CONTEXT_AF.location1 = CONTEXT_AF.numbers[0];
         CONTEXT_AF.location2 = CONTEXT_AF.numbers[1];
         CONTEXT_AF.location3 = CONTEXT_AF.numbers[2];
         CONTEXT_AF.location4 = CONTEXT_AF.numbers[3];
@@ -428,6 +420,7 @@ AFRAME.registerComponent('book-manager', {
     stopMusic: function (book){
         const CONTEXT_AF = this;
         
+        CONTEXT_AF[`book${book}`].setAttribute('position', '0 0 0');
         CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
         CONTEXT_AF[`book${book}`].setAttribute('gltf-model', `#book_model${book}`);
 
@@ -439,6 +432,7 @@ AFRAME.registerComponent('book-manager', {
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:false");
 
         CONTEXT_AF[`track${book}`].setAttribute('sound', `src:#track${book}-music; loop: true; poolsize:1; volume: 0; positional:false;`);
+        console.log("picked up book from lecterbn");
     },
 
     sendPosition: function (book) {
