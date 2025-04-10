@@ -490,6 +490,7 @@ AFRAME.registerComponent('book-manager', {
             }
 
             let worldPos = new THREE.Vector3();
+            book.object3D.getWorldPosition(worldPos);
 
             CONTEXT_AF.socket.emit(CONTEXT_AF.bookPosUpdateEventName, {
                 id: book.getAttribute("id"),
