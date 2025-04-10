@@ -54,10 +54,10 @@
         <a-asset-item id="books" src="/worlds/BW_Alpha/assets/models/library/books.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="navmesh_model" src="/worlds/BW_Alpha/assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="book_model" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="book_model2" src="/worlds/BW_Alpha/assets/models/book2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="book_model3" src="/worlds/BW_Alpha/assets/models/book3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="book_model4" src="/worlds/BW_Alpha/assets/models/book4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model1" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model3" src="/worlds/BW_Alpha/assets/models/book2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model4" src="/worlds/BW_Alpha/assets/models/book3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="book_model2" src="/worlds/BW_Alpha/assets/models/book4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="openbook_model" src="/worlds/BW_Alpha/assets/models/book_open.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
         <audio id="track1-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_1.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -203,7 +203,7 @@
                         animation="property: position; from: 0 0.2 0; to: 0 -0.2 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>-->
 
       <a-entity id="book1" 
-                gltf-model="#book_model"
+                gltf-model="#book_model1"
                 material="color: #cf5b65"
                 position="1 0.071 -10.648" 
                 rotation="90 223 0" 
@@ -263,7 +263,24 @@
                                 size: 0.05;
                                 sizeSpread: -0.3;
                                 duration: infinity;
-                                particleCount: 80;"></a-entity></a-entity>
+                                particleCount: 80;"></a-entity>
+                <a-entity id="musicparticles2" position="0 0.1 0" scale="0.5 0.5 0.5"
+                                particle-system=" preset:dust;
+                                texture: /worlds/BW_Alpha/assets/textures/eighthnote.png;
+                                color: #ffbaba
+                                accelerationSpread: 0 0 0;
+                                accelerationValue: 0 0 0;
+                                rotationAngle: 0.1;
+                                positionSpread: 0 1 1;
+                                maxAge:3.5;
+                                blending: 2;
+                                dragValue: 1;
+                                velocityValue: 0 0.5 0;
+                                size: 0.2;
+                                sizeSpread: -0.1;
+                                duration: infinity;
+                                particleCount: 12;
+                                enabled:false"></a-entity></a-entity>
       <a-entity id="book3" 
                 gltf-model="#book_model3"
                 material="color: #fedd90" 
@@ -285,7 +302,24 @@
                                 size: 0.05;
                                 sizeSpread: -0.3;
                                 duration: infinity;
-                                particleCount: 80;"></a-entity></a-entity>
+                                particleCount: 80;"></a-entity>
+                <a-entity id="musicparticles3" position="0 0.1 0" scale="0.5 0.5 0.5"
+                                particle-system=" preset:dust;
+                                texture: /worlds/BW_Alpha/assets/textures/eighthnote.png;
+                                color: #ffbaba
+                                accelerationSpread: 0 0 0;
+                                accelerationValue: 0 0 0;
+                                rotationAngle: 0.1;
+                                positionSpread: 0 1 1;
+                                maxAge:3.5;
+                                blending: 2;
+                                dragValue: 1;
+                                velocityValue: 0 0.5 0;
+                                size: 0.2;
+                                sizeSpread: -0.1;
+                                duration: infinity;
+                                particleCount: 12;
+                                enabled:false"></a-entity></a-entity>
       <a-entity id="book4" 
                 gltf-model="#book_model4"
                 material="color: #bcde71"
@@ -307,7 +341,24 @@
                                 size: 0.05;
                                 sizeSpread: -0.3;
                                 duration: infinity;
-                                particleCount: 80;"></a-entity></a-entity>
+                                particleCount: 80;"></a-entity>
+              <a-entity id="musicparticles4" position="0 0.1 0" scale="0.5 0.5 0.5"
+                                particle-system=" preset:dust;
+                                texture: /worlds/BW_Alpha/assets/textures/eighthnote.png;
+                                color: #ffbaba
+                                accelerationSpread: 0 0 0;
+                                accelerationValue: 0 0 0;
+                                rotationAngle: 0.1;
+                                positionSpread: 0 1 1;
+                                maxAge:3.5;
+                                blending: 2;
+                                dragValue: 1;
+                                velocityValue: 0 0.5 0;
+                                size: 0.2;
+                                sizeSpread: -0.1;
+                                duration: infinity;
+                                particleCount: 12;
+                                enabled:false"></a-entity></a-entity>
 
 
       <!-- TO BE REPLACED - END -->

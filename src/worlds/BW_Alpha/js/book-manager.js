@@ -57,22 +57,22 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.loadduration = 2000;
         CONTEXT_AF.sendRate = 100;
 
-        CONTEXT_AF.position1 = {x: 0, y: 1.213, z: -12.319};
+        CONTEXT_AF.position1 = {x: 0, y: 1.3, z: -12.319};
         CONTEXT_AF.rotation1 = {x: 0, y: 0, z: 0};
         CONTEXT_AF.book1c1 = {x: -0.397, y: 1.472, z: -12.603};
         CONTEXT_AF.book1c2 = {x: 0.392, y: 1.108, z: -12.079};
 
-        CONTEXT_AF.position2 = {x: 1.605, y: 1.213, z: -13.925};
+        CONTEXT_AF.position2 = {x: 1.605, y: 1.3, z: -13.925};
         CONTEXT_AF.rotation2 = {x: 0, y: 90, z: 0};
         CONTEXT_AF.book2c1 = {x: 1.342, y: 1.472, z: -13.532};
         CONTEXT_AF.book2c2 = {x: 1.806, y: 1.108, z: -14.321};
 
-        CONTEXT_AF.position3 = {x: 0, y: 1.213, z: -15.53};
+        CONTEXT_AF.position3 = {x: 0, y: 1.3, z: -15.53};
         CONTEXT_AF.rotation3 = {x: 0, y: 180, z: 0};
         CONTEXT_AF.book3c1 = {x: 0.397, y: 1.472, z: -15.247};
         CONTEXT_AF.book3c2 = {x: -0.392, y: 1.108, z: -15.733};
 
-        CONTEXT_AF.position4 = {x: -1.605, y: 1.213, z: -13.925};
+        CONTEXT_AF.position4 = {x: -1.605, y: 1.3, z: -13.925};
         CONTEXT_AF.rotation4 = {x: 0, y: 270, z: 0};
         CONTEXT_AF.book4c1 = {x: -1.342, y: 1.472, z: -14.321};
         CONTEXT_AF.book4c2 = {x: -1.806, y: 1.108, z: -13.532};
@@ -138,15 +138,16 @@ AFRAME.registerComponent('book-manager', {
         document.body.addEventListener('connected', () => {
             //start music with delay
             setTimeout(() => {
-                console.log("adding music...");
+                //console.log("adding music...");
                 CONTEXT_AF.track1 = document.createElement('a-entity');
                 CONTEXT_AF.track1.setAttribute('id', 'track1');
                 CONTEXT_AF.track1.setAttribute('circles-sound', "src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+                CONTEXT_AF.track1.components['circles-sound'].autoplay = true;
 
                 CONTEXT_AF.track2 = document.createElement('a-entity');
                 CONTEXT_AF.track2.setAttribute('id', 'track2');
                 CONTEXT_AF.track2.setAttribute('circles-sound', "src:#track2-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
-                
+
                 CONTEXT_AF.track3 = document.createElement('a-entity');
                 CONTEXT_AF.track3.setAttribute('id', 'track3');
                 CONTEXT_AF.track3.setAttribute('circles-sound', "src:#track3-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
@@ -154,6 +155,12 @@ AFRAME.registerComponent('book-manager', {
                 CONTEXT_AF.track4 = document.createElement('a-entity');
                 CONTEXT_AF.track4.setAttribute('id', 'track4');
                 CONTEXT_AF.track4.setAttribute('circles-sound', "src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0");
+                
+                scene.appendChild(CONTEXT_AF.track1);
+                scene.appendChild(CONTEXT_AF.track2);
+                scene.appendChild(CONTEXT_AF.track3);
+                scene.appendChild(CONTEXT_AF.track4);
+                //console.log("music added");
             }, CONTEXT_AF.loadduration);
         });
 
@@ -371,18 +378,8 @@ AFRAME.registerComponent('book-manager', {
 
         sparkle.setAttribute('particle-system', 'preset: default; texture: /worlds/BW_Alpha/assets/textures/sparkle.png; color: #ffc178; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; positionSpread: 0 0 0; maxAge:2; blending: 2; velocityValue: 0 0 0; size: 0.05; sizeSpread: -0.3; duration:' +  CONTEXT_AF.bookplaceduration/1000 + '; particleCount: 80;');
 
-        const position = CONTEXT_AF[`position${book}`];
-
-        /*[`book${book}`].setAttribute('animation__descend', {
-            property: 'position',
-            from: {x: position.x, y: position.y + 2, z: position.z},
-            to: position,
-            dur: CONTEXT_AF.bookplaceduration,
-            startEvents: onclick,
-        });*/
-        setTimeout(() => {
-            CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 1`);
-        }, CONTEXT_AF.bookplaceduration);
+        
+        CONTEXT_AF[`track${book}`].setAttribute('circles-sound', `src:#track${book}-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 1`);
 
         const musicParticle = document.querySelector(`#musicparticles${book}`);
         musicParticle.setAttribute('particle-system', "preset:dust; texture: /worlds/BW_Alpha/assets/textures/eighthnote.png; color: #ffbaba ; accelerationSpread: 0 0 0; accelerationValue: 0 0 0; rotationAngle: 0.1; positionSpread: 0 1 1; maxAge:3.5; blending: 2; dragValue: 1; velocityValue: 0 0.5 0; size: 0.2; sizeSpread: -0.1; duration: infinity; particleCount: 12; enabled:true"); 
@@ -392,7 +389,7 @@ AFRAME.registerComponent('book-manager', {
         const CONTEXT_AF = this;
         
         CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
-        CONTEXT_AF[`book${book}`].setAttribute('gltf-model', '#book_model');
+        CONTEXT_AF[`book${book}`].setAttribute('gltf-model', `#book_model${book}`);
 
         const sparkle = document.querySelector(`#sparkle${book}`);
 
