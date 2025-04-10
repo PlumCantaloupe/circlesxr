@@ -11,29 +11,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore-compat.js"></script>
-    <!-- <script>
-      AFRAME.registerComponent('comp', {
-        init: function() {
-          setTimeout(function(){
-            const comp = document.querySelector('[bw-shared-state-manager]').components['bw-shared-state-manager'];
-            console.log("get")
-            console.log(comp.getData(BRAINWAVES.LS_TELEPORT_PAD))
-            console.log(comp.getData(BRAINWAVES.LS_GUIDING_TEXT))
-            console.log(comp.getData(BRAINWAVES.LS_RECENT_ROOM))
 
-            //update
-            console.log("update")
-            comp.setData(BRAINWAVES.LS_TELEPORT_PAD, true);
-            comp.setData(BRAINWAVES.LS_GUIDING_TEXT, true);
-
-            //check again
-            console.log("check again")
-            console.log(comp.getData(BRAINWAVES.LS_TELEPORT_PAD))
-            console.log(comp.getData(BRAINWAVES.LS_GUIDING_TEXT))
-          },20000)
-        }
-      })
-    </script> -->
     <script type="importmap">
       {
         "imports": {
@@ -69,12 +47,12 @@
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
         <img id='skyMap' src='assets/textures/neuronSky.png' crossorigin="anonymous">
-        <a-asset-item id="room_gltf" src="assets/models/room base/roomBase.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="roomProps_gltf" src="assets/models/props/roomProps.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="suctionTube_gltf" src="assets/models/suctionTube/suctionTube.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="controlPanel_gltf" src="assets/models/control panel/PBR - Metallic Roughness Alpha-blend.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="orb_gltf" src="assets/models/orb/orb.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="navmesh_glb" src="assets/models/navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <img id='info1' src='assets/textures/access1.png' crossorigin="anonymous">
+
+        <a-asset-item id="room_glb" src="assets/models/room.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="suctionTube_glb" src="assets/models/suctionTube.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="orb_glb" src="assets/models/orb.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="navmesh_glb" src="assets/models/navmesh.glb" response-type="arraybuffer"></a-asset-item>
 
         <!-- Sounds -->
         <audio id="hub_ambience" src="assets/sounds/hub_ambience.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -126,12 +104,7 @@
       
       
       <!-- room model -->
-      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
-      <a-entity id="roomProps" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#roomProps_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
-      
-      
-      <!-- <a-entity id="controlPanel" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#controlPanel_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;"></a-entity>
-       -->
+      <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_glb"></a-entity>
 
       <!-- nav mesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_glb" visible='false' nav-mesh></a-entity>
@@ -141,9 +114,11 @@
        <a-entity rotation="0 5 0">
         <a-entity position="6.761 0.780 0">
 
-          <a-entity id="screen" position="0.3 1.04 0" rotation="0 0 7">
+          <a-entity id="screen" position="0.260 1.368 0" rotation="0 0 4.6">
             <a-entity id="screenText" text="value: Echoes of the mind: Brain waves visualized; align:center; width: 2" rotation="0 -90 0" position="0 0.5 0"></a-entity>
-            <a-entity text="value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula, ut ullamcorper justo.; align:center; width: 1; color: #dbdcff;.2" rotation="0 -90 0" position="0 0.3 0"></a-entity>
+            <a-entity geometry="primitive: plane" material="src: #info1; transparent: true" position="-0.020 -0.254 0" rotation="0 -90 0" scale="2.226 1.478 1"></a-entity>
+            
+            <!--<a-entity text="value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget consectetur ligula, ut ullamcorper justo.; align:center; width: 1; color: #dbdcff;.2" rotation="0 -90 0" position="0 0.3 0"></a-entity> -->
           </a-entity>
   
           <a-entity id="controls" rotation="0 0 50" position="0.330 0.1 0">
@@ -298,7 +273,7 @@
 
 
       <!-- TEMP Visualized central orbs -->
-      <a-entity id="central-orbs-visualization" central-orbs-visualization rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 3;">
+      <a-entity id="central-orbs-visualization" central-orbs-visualization rotation="0 30.4260 0" sound="src: #shimmering_sound; positional: true; loop: true; autoplay: true; rolloffFactor: 2.5;">
         <a-sphere id="central-orb-pink" position="0 2.462 0" scale="0.3 0.3 0.3" material="color:#aa139d; emissive: #fe62b5; emissiveIntensity: 3.37"></a-sphere>
         <a-sphere id="central-orb-blue" position="0.003 3.077 0.861" scale="0.3 0.3 0.3" material="color:#2a54cf; emissive: #52bdff; emissiveIntensity: 2.67"></a-sphere>
         <a-sphere id="central-orb-orange" position="0.823 1.944 0.426" scale="0.3 0.3 0.3" material="color:#c20000; emissive: #fe5c34; emissiveIntensity: 3.43"></a-sphere>
@@ -334,13 +309,13 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="delta-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="delta-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
 
           <!-- Chnage sound to circles sound -->
-          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: delta" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: delta" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_glb" sound="src: #place_orb_tube;">
           </a-entity>
 
         </a-entity>
@@ -374,13 +349,13 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="alpha-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="alpha-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
 
           <!-- Chnage sound to circles sound -->
-          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: alpha" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: alpha" id="suctionTube" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_glb" sound="src: #place_orb_tube;">
           </a-entity>
 
         </a-entity>
@@ -414,13 +389,13 @@
           </a-entity>
 
           <a-entity class="cutomButton" position="0.065 0.908 -0.555" rotation="0 88.595 90">
-            <a-entity scale="1 0.09 1" position="0 0.04 0" id="gamma-info-button" circles-interactive-object="highlight_color: #5666a4" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+            <a-entity scale="1 0.09 1" position="0 0.04 0" id="gamma-info-button" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
               <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
             </a-entity>
           </a-entity>
 
           <!-- Chnage sound to circles sound -->
-          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: gamma" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_gltf" circles-sphere-env-map="src:#skyMap" shadow="cast:false; receive:false;" sound="src: #place_orb_tube;">
+          <a-entity position="0.796 0 -0.560" share-emotion="visualizationID: gamma" circles-interactive-object="type:highlight;" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#suctionTube_glb" sound="src: #place_orb_tube;">
           </a-entity>
 
         </a-entity>
@@ -430,7 +405,7 @@
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap"
+        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb"
         circles-artefact=" textRotationY:-70;
         label_on: false;
         inspectScale: 1.3 1.3 1.3;
@@ -444,7 +419,7 @@
       </a-entity>
 
       <a-entity rotation="0 65 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap" 
+        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -457,7 +432,7 @@
       </a-entity>
 
       <a-entity rotation="0 130 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap" 
+        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -470,7 +445,7 @@
       </a-entity>
 
       <a-entity rotation="0 195 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap" 
+        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -483,7 +458,7 @@
       </a-entity>
 
       <a-entity rotation="0 260 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_gltf" circles-sphere-env-map="src:#skyMap"  
+        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb"  
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
