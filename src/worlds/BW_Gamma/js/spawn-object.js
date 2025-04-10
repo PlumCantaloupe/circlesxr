@@ -5,7 +5,13 @@ AFRAME.registerComponent('spawn-object', {
     init() {
         // setting variables
         const CONTEXT_AF = this;
-        CONTEXT_AF.scene = document.querySelector('a-scene')
+        CONTEXT_AF.scene = document.querySelector('a-scene');
+        CONTEXT_AF.kickPlayer = document.querySelector('#kick-drum-player');
+        CONTEXT_AF.musicPlayer = document.querySelector('#music-player');
+
+        musicLoaded = false;
+        sceneLoaded = false;
+        kickLoaded = false;
 
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
@@ -18,6 +24,33 @@ AFRAME.registerComponent('spawn-object', {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
+
+            // Start music and kick drum if user gesture is pressed after music and kick drum loaded in
+            CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {
+                sceneLoaded = true;
+                if (musicLoaded == true && kickLoaded == true){
+                    CONTEXT_AF.musicPlayer.components.sound.playSound();
+                    CONTEXT_AF.kickPlayer.components.sound.playSound();
+                }
+            });
+
+            // Start music and kick drum if music is loaded after kick drum loaded in and user gesture pressed
+            CONTEXT_AF.musicPlayer.addEventListener('sound-loaded', function () {
+                musicLoaded = true;
+                if (sceneLoaded == true && kickLoaded == true){
+                    CONTEXT_AF.musicPlayer.components.sound.playSound();
+                    CONTEXT_AF.kickPlayer.components.sound.playSound();
+                }
+            });
+
+            // Start music and kick drum if kick drum is loaded after music loaded in and user gesture pressed
+            CONTEXT_AF.kickPlayer.addEventListener('sound-loaded', function () {
+                kickLoaded = true;
+                if (sceneLoaded == true && musicLoaded == true){
+                    CONTEXT_AF.musicPlayer.components.sound.playSound()
+                    CONTEXT_AF.kickPlayer.components.sound.playSound()
+                }
+            });
 
             // spawn object on low beat detected
             CONTEXT_AF.analyserEl.addEventListener('audioanalyser-beat-low', function () {
@@ -61,32 +94,7 @@ AFRAME.registerComponent('spawn-object', {
                 ringVisual.object3D.position.set(randPosition.x, randPosition.y, 27.5);
 
                 CONTEXT_AF.scene.appendChild(ringVisual);
-
-                CONTEXT_AF.socket.emit(CONTEXT_AF.spawnEventName, {shapeKeyNet:shapeKey, netRandPos: randPosition, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             });
-
-            //listen for when others spawn objects
-            CONTEXT_AF.socket.on(CONTEXT_AF.spawnEventName, function(data) {
-
-                shapeKey = data.shapeKeyNet
-
-                // spawn object with attributes
-                toSpawn = document.createElement("a-entity")
-                toSpawn.classList.add('spawnedObject')
-                toSpawn.setAttribute("material", shapeKey.material)
-                toSpawn.setAttribute("geometry", shapeKey.geometry)
-                toSpawn.setAttribute("position", data.netRandPos)
-                toSpawn.setAttribute("scale", shapeKey.scale)
-                toSpawn.setAttribute("guess-shape", "")
-                toSpawn.setAttribute("circles-interactive-object", "")
-                CONTEXT_AF.scene.appendChild(toSpawn)
-            });
-
-            //request other user's state so we can sync up. Asking over a random time to try and minimize users loading and asking at the same time ...
-            setTimeout(function() {
-                CONTEXT_AF.socket.emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-            }, THREE.MathUtils.randInt(0,1200));
-
         };
 
         //check if circle networking is ready. If not, add an eent to listen for when it is ...

@@ -36,9 +36,7 @@
       <a-assets>
         <img id='skyMap' src='/worlds/BW_Delta/assets/textures/neuronSky.png' crossorigin="anonymous">
         <a-asset-item id="base_model" src="/worlds/BW_Delta/assets/models/stumps.obj"></a-asset-item>
-        <a-asset-item id="floor_model" src="/worlds/BW_Delta/assets/models/floor.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="core_model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer"></a-asset-item>
-        <a-asset-item id="globe_model" src="/worlds/BW_Delta/assets/models/globe.obj"></a-asset-item>
         <a-asset-item id="tubes_model" src="/worlds/BW_Delta/assets/models/tubes.obj"></a-asset-item>
         <a-asset-item id="memory-core-model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
 
@@ -50,6 +48,8 @@
         <!-- Sound assets -->
         <audio id="delta-ambient-sound" src="assets/sounds/delta_ambience_no_beat.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="delta-heartbeats" src="assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <img id="dome_img" src="assets/textures/globe.png" crossorigin="anonymous">
 
         <!-- Many memory orb sound clips (sorry lol) -->
         <audio id="orb-clip1" src="/worlds/BW_Delta/assets/sounds/orb-clips/1.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -97,8 +97,39 @@
       <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: guiding text; align: center; width: 0.4" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
       <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: error text; align: center; width: 0.4" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
  
+      <!-- Teleport pads -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.265 0.452"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -3.980"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -16.857"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
 
-      <a-entity circles-checkpoint position="0 0.18 0.915"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="4.553 0.265 -1.933"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="3.607 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="-4.553 0.265 -1.933"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="-3.607 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="-6.910 0.265 -4.684"></a-entity>
+      <a-entity circles-checkpoint position="6.910 0.265 -4.684"></a-entity>
+
+      <a-entity circles-checkpoint position="-8.580 0.265 -8.250"></a-entity>
+      <a-entity circles-checkpoint position="-8.580 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="8.580 0.265 -8.250"></a-entity>
+      <a-entity circles-checkpoint position="8.580 0.265 -12.781"></a-entity>
+
+      <a-entity circles-checkpoint position="-7.779 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="7.779 0.265 -16.857"></a-entity>
 
       <!-- TO BE REPLACED - START -->
       <a-entity id="orbmanager" orb-manager></a-entity>
@@ -117,23 +148,36 @@
       <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #heartbeats-player"></a-entity>
       <a-entity gltf-model="#memory-core-model" id="memory-core" memory-core position="0 10.028 -10.301"></a-entity>
 
+      <!-- Tube stumps  -->
       <a-entity   id="base" 
                   obj-model="obj: #base_model"
                   material="color: #dbe5ff; emissive: #dbe5ff; emissiveIntensity: 1;"
                   position="0 0 0"></a-entity>
 
-      <a-entity   id="floor" 
-                  gltf-model="#floor_model"
-                  position="0 0 0"></a-entity>
+      <!-- Dome / globe  -->
+      <a-entity id="globe"
+                geometry="primitive: sphere; radius: 14.03"
+                position="0 6.53136 -10.231"
+                material="src: #dome_img; side: back; transparent: true;"
+                animation__colour="property: material.color; type: color; from: #7d5dfe; to: #5dfefb; loop: true; dur: 12000; dir: alternate;"
+                ></a-entity>
       
-      <a-entity   id="tubes" 
+      <!-- Floor -->
+      <a-entity id="floor"
+                position="0 0.25 -10.41778"
+                geometry="primitive: circle; radius: 12.5"
+                material="color: #4F5B82;" rotation="-90 0 0"></a-entity>
+
+      <!-- Nav mesh -->
+      <a-entity id="floor_navmesh"
+                position="0 0.23388 -10.41778"
+                geometry="primitive: circle; radius: 11.5"
+                material="transparent: true;" rotation="-90 0 0" nav-mesh></a-entity>
+      
+      <!-- Tubes -->
+      <a-entity  id="tubes" 
                   obj-model="obj: #tubes_model"
                   material="color: #cfe6ff; opacity:0.4"
-                  position="0 0 0"></a-entity>
-            
-      <a-entity   id="globe" 
-                  obj-model="obj: #globe_model"
-                  material="color: #cfe6ff; opacity:0.4; blending: subtractive"
                   position="0 0 0"></a-entity>
 
       <a-entity   id="tube1orb1" 
