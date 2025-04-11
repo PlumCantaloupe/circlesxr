@@ -368,6 +368,7 @@
                             animation="property: position; from: 0 0.2 0; to: 0 -0.2 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
             </a-entity>
 
+      <!-- book entities with sparkled and music note particles systems attached as children-->
       <a-entity id="book1" 
                 gltf-model="#book_model1"
                 material="color: #cf5b65"
@@ -526,6 +527,7 @@
 
     <!-- checks if the device is a phone or VR headset and removes the candles-->
     <script>
+      //component to check device of user and decided whether or not to show candles
       AFRAME.registerComponent('candle_spawn_check', {
           init: function(){
 
@@ -543,9 +545,6 @@
           }
       });
     </script>
-
-      <!-- TO BE REPLACED - END -->
-
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
   </body>
