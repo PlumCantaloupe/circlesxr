@@ -32,7 +32,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties bloom="threshold: 1.0; strength: 0.3; radius: 1;">
+    <a-scene circles_scene_properties>
 
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
@@ -76,7 +76,7 @@
       <circles-manager-avatar/>
 
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = "colour: #7b6851"></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = "colour: #7b6851; transparentColour: #7b6851"></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       <!-- Guiding text  -->
       <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
@@ -85,8 +85,8 @@
       
       <!-- Portal -->
       <a-entity id="Portal-Hub"
-                position="0 1.5 -0.5" rotation="0 -108 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
+                position="0 1.5 -0.5" rotation="0 90 0"
+                circles-portal="img_src:assets/textures/mainHub.png; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
       
       <a-entity id="bookmanager" book-manager></a-entity>
@@ -373,9 +373,8 @@
                 material="color: #cf5b65"
                 position="1 0.071 -10.648" 
                 rotation="90 223 0" 
-                shadow="cast:false; receive:true;"
                 circles-interactive-object
-                circles-pickup-object="animate:false;"">
+                circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle1" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
                 particle-system=" preset: default;
                                 texture: /worlds/BW_Alpha/assets/textures/sparkle.png;
@@ -413,7 +412,6 @@
                 material="color: #ffac6f"
                 position="0 -10 0" 
                 rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
                 circles-interactive-object
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle2" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -452,7 +450,6 @@
                 material="color: #fedd90" 
                 position="0 -10 0" 
                 rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
                 circles-interactive-object
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle3" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -491,7 +488,6 @@
                 material="color: #bcde71"
                 position="0 -10 0" 
                 rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
                 circles-interactive-object
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle4" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 

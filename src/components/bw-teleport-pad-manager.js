@@ -3,7 +3,8 @@
 AFRAME.registerComponent('bw-teleport-pad-manager', {
     schema: {
       isTransparent: {type: 'boolean', default: false},
-      colour: {type: 'color'}
+      colour: {type: 'color'},
+      transparentColour: {type: 'color'},
     },
 
     init: function () {    
@@ -26,7 +27,7 @@ AFRAME.registerComponent('bw-teleport-pad-manager', {
       const Context_AF = this;
       for(let i=0; i<Context_AF.teleportPads.length; i++){
         if(isTransparent) {
-          Context_AF.teleportPads[i].setAttribute('circles-checkpoint', {colour: Context_AF.data.colour,
+          Context_AF.teleportPads[i].setAttribute('circles-checkpoint', {colour: Context_AF.data.transparentColour,
                                                                          emission: Context_AF.data.colour,
                                                                          transparent: true,
                                                                          opacity: 0.3});

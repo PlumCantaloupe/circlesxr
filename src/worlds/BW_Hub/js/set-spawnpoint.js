@@ -8,6 +8,8 @@ AFRAME.registerComponent('spawn-point', {
         CONTEXT_AF.roomShortName = CONTEXT_AF.sharedStateManager.getRoom();
         CONTEXT_AF.guidingText = document.querySelector('[bw-guiding-text]').components['bw-guiding-text'];
 
+        CONTEXT_AF.scene = CONTEXT_AF.el.sceneEl;
+
         CONTEXT_AF.gamma = document.querySelector('#gammaSpawn')
         CONTEXT_AF.alpha = document.querySelector('#alphaSpawn')
         CONTEXT_AF.delta = document.querySelector('#deltaSpawn')
@@ -38,6 +40,15 @@ AFRAME.registerComponent('spawn-point', {
                 CONTEXT_AF.hub.setAttribute('circles-spawnpoint', {});
                 break;
         }
+
+        //when ready rotate the player so they face the control panel
+        CONTEXT_AF.scene.addEventListener(CIRCLES.EVENTS.READY, function () {
+            CONTEXT_AF.avatarRig = CIRCLES.getAvatarRigElement();
+
+            if(CONTEXT_AF.room === 'BW_Hub') {
+                CONTEXT_AF.avatarRig.object3D.rotation.y = THREE.MathUtils.degToRad(277);
+            }
+        })
         
     },
 
