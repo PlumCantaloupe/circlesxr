@@ -31,6 +31,7 @@
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
     <a-scene circles_scene_properties bloom="threshold: 1.0; strength: 0.3; radius: 1;">
+
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
@@ -63,6 +64,9 @@
         <audio id="track3-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_3.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="track4-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_4.mp3" preload="auto" crossorigin="anonymous"></audio>
 
+        <audio id="fire_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/fire.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="rain_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/rain.mp3" preload="auto" crossorigin="anonymous"></audio>
+
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
@@ -71,28 +75,28 @@
       <circles-manager-avatar/>
 
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = ""></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = "colour: #937d63"></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       <!-- Guiding text  -->
       <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: guiding text; align: center; width: 0.4" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
       <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: error text; align: center; width: 0.4" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
  
       
-      <!--Portal - don't remove from scene please -->
+      <!-- Portal -->
       <a-entity id="Portal-Hub"
-                position="0 -1.5 0.5" rotation="0 -108 0"
+                position="0 1.5 -0.5" rotation="0 -108 0"
                 circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
       
-
       <a-entity id="bookmanager" book-manager></a-entity>
 
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0 -1.5" rotation="0 0 0"></a-entity>
+     <!-- teleport pads --> 
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0 -2.5" rotation="0 0 0"></a-entity>
 
-      <!--navmesh-->
+      <!-- navmesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_model" visible='false' nav-mesh></a-entity>
 
-      <!-- Lights and sky box -->
+      <!-- sky box -->
       <a-entity id='skyBox'
                 rotation='0 45 0'
                 geometry='primitive:sphere; radius:50'
@@ -100,7 +104,7 @@
       </a-entity>
 
       <!-- main lights -->
-      <a-entity light="type: ambient; color: #ffecde; intensity: 1.5"></a-entity>
+      <a-entity light="type: ambient; color: #ffecde; intensity: 1"></a-entity>
       <a-entity light="type: point; color: #ff8800; intensity: 8" position="0 0.547 -34.6" scale="0.45 0.45 0.45" >
                 <a-entity id= "fire1" position="0 -0.6 0" rotation="0 0 0" scale="0.3 0.3 0.3" 
                         particle-system="preset: snow;
@@ -118,8 +122,7 @@
                                         size: 0.15;
                                         sizeSpread: -0.2
                                         duration: infinity;
-                                        particleCount: 150;">
-                </a-entity>
+                                        particleCount: 150;"></a-entity>
                 <a-entity id= "fire2" position="0 -0.3 0" rotation="0 0 0" scale="0.1 0.35 0.1" 
                         particle-system="preset: snow;
                                         texture: /worlds/BW_Alpha/assets/textures/flame.png;
@@ -137,9 +140,11 @@
                                         sizeSpread: -0.2
                                         duration: infinity;
                                         particleCount: 100;"></a-entity>
-                </a-entity>
+                <a-entity sound="src:#fire_sounds; autoplay:true; loop: true;"></a-entity>
+      </a-entity>
 
-                <a-entity id="rain" position="0 11 -38.5" scale = "1 0.3 0.2"
+      <!-- rain -->
+      <a-entity id="rain" position="0 11 -38.5" scale = "1 0.3 0.2"
                 particle-system="
                   texture: /worlds/BW_Alpha/assets/textures/rain.png;
                   color: #a3d3f9;
@@ -152,11 +157,18 @@
                   direction: 0 -1 0;
                   duration: infinity;
                   maxAge: 1;
-                  blending: normal;
                   opacity: 0.5
                   particleCount: 500;
-                  maxParticleCount: 1000;
-                  enabled: true;"></a-entity>
+                  maxParticleCount: 1500;
+                  enabled: true;">
+        </a-entity>
+        <a-entity id="rain_ambient_group">
+          <a-entity id= "rain_sound" sound="src:#rain_sounds; autoplay:true; loop: true;" position="13.3, 12,5, -35"></a-entity>
+          <a-entity id= "rain_sound2" sound="src:#rain_sounds; autoplay:true; loop: true;" position="-13.3, 12.5, -35"></a-entity>
+          <a-entity id= "rain_sound3" sound="src:#rain_sounds; autoplay:true; loop: true;" position="13.3, 12.5, 0"></a-entity>
+          <a-entity id= "rain_sound4" sound="src:#rain_sounds; autoplay:true; loop: true;" position="-13.3, 12.5, 0"></a-entity>
+          <a-entity id= "rain_sound5" sound="src:#rain_sounds; autoplay:true; loop: true;" position="0, 6.25, -36"></a-entity>
+        </a-entity>
 
       <!-- music -->
       <a-entity id="track1" circles-sound="src:#track1-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
@@ -164,8 +176,9 @@
       <a-entity id="track3" circles-sound="src:#track3-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
       <a-entity id="track4" circles-sound="src:#track4-music; autoplay: true; loop: true; type: music; poolsize:1; volume: 0"></a-entity>
 
+      </a-entity>
       <!-- room model -->
-      <a-entity id="library" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#library_main">
+      <a-entity id="library" gltf-model="#library_main">
 
             <a-entity   id="books"
                         gltf-model="#books"></a-entity>
@@ -182,22 +195,24 @@
             <a-entity   id="lectern4"
                         gltf-model="#lectern4_model"
                         circles-interactive-object></a-entity>
-<!--
-            <a-entity   id="candles"
-                        gltf-model="#candles"
-                        animation="property: position; from: 0 0.5 0; to: 0 -0.5 0; dur: 6000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
-            <a-entity   id="candles2"
-                        gltf-model="#candles2"
-                        animation="property: position; from: 0 -0.3 0; to: 0 0.3 0; dur: 3000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
-            <a-entity   id="candles3"
-                        gltf-model="#candles3"
-                        animation="property: position; from: 0 -0.4 0; to: 0 0.4 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>></a-entity>
-            <a-entity   id="candles4"
-                        gltf-model="#candles4"
-                        animation="property: position; from: 0 -0.6 0; to: 0 0.6 0; dur: 7000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
-            <a-entity   id="candles5"
-                        gltf-model="#candles5"
-                        animation="property: position; from: 0 0.2 0; to: 0 -0.2 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>-->
+        
+            <a-entity id="candles_grp" candle_spawn_check>          
+                <a-entity   id="candles"
+                            gltf-model="#candles"
+                            animation="property: position; from: 0 0.5 0; to: 0 -0.5 0; dur: 6000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
+                <a-entity   id="candles2"
+                            gltf-model="#candles2"
+                            animation="property: position; from: 0 -0.3 0; to: 0 0.3 0; dur: 3000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
+                <a-entity   id="candles3"
+                            gltf-model="#candles3"
+                            animation="property: position; from: 0 -0.4 0; to: 0 0.4 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
+                <a-entity   id="candles4"
+                            gltf-model="#candles4"
+                            animation="property: position; from: 0 -0.6 0; to: 0 0.6 0; dur: 7000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
+                <a-entity   id="candles5"
+                            gltf-model="#candles5"
+                            animation="property: position; from: 0 0.2 0; to: 0 -0.2 0; dur: 4000; dir: alternate; easing: easeInOutSine; loop: true"></a-entity>
+            </a-entity>
 
       <a-entity id="tempbutton"  
                 position="0 0 -5" 
@@ -210,8 +225,7 @@
                 gltf-model="#book_model"
                 material="color: #cf5b65"
                 position="1 0.071 -10.648" 
-                rotation="90 223 0" 
-                shadow="cast:true; receive:true;"
+                rotation="90 223 0"
                 circles-interactive-object="type: 'outline'"
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle1" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -250,8 +264,7 @@
                 gltf-model="#book_model2"
                 material="color: #ffac6f"
                 position="0 -10 0" 
-                rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
+                rotation="0 0 0"
                 circles-interactive-object="type: 'outline'"
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle2" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -272,8 +285,7 @@
                 gltf-model="#book_model3"
                 material="color: #fedd90" 
                 position="0 -10 0" 
-                rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
+                rotation="0 0 0"
                 circles-interactive-object="type: 'outline'"
                 circles-pickup-object="animate:false; ">
                 <a-entity id= "sparkle3" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -294,8 +306,7 @@
                 gltf-model="#book_model4"
                 material="color: #bcde71"
                 position="0 -10 0" 
-                rotation="0 0 0" 
-                shadow="cast:false; receive:true;"
+                rotation="0 0 0"
                 circles-interactive-object="type: 'outline'"
                 circles-pickup-object="animate:false;">
                 <a-entity id= "sparkle4" position="0 0 0" rotation="0 0 0" scale="0.03 0.03 0.03" 
@@ -313,6 +324,27 @@
                                 duration: infinity;
                                 particleCount: 80;"></a-entity></a-entity>
 
+    </a-scene>
+
+    <!-- checks if the device is a phone or VR headset and removes the candles-->
+    <script>
+      AFRAME.registerComponent('candle_spawn_check', {
+          init: function(){
+
+            CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
+
+              //sometimes tablets can be considered mobile devices depending on the device so we check to see if the screen is approximately the right size
+              const tabletCheck = AFRAME.utils.device.isTablet() || (screen.width >= 768); //as long as it is approximately larger than a phone it counts
+
+              if(AFRAME.utils.device.isMobileVR() || AFRAME.utils.device.isMobile() && tabletCheck === false){
+                if (this.el && this.el.parentNode) {;
+                  this.el.parentNode.removeChild(this.el);;
+                }
+              }
+            });
+          }
+      });
+    </script>
 
       <!-- TO BE REPLACED - END -->
 
