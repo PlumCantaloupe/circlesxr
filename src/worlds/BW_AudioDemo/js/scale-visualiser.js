@@ -5,9 +5,6 @@ AFRAME.registerComponent('scale-visualiser', {
         minSize: {type: 'number', default: 1},
         maxSize: {type: 'number', default: 5}
     },
-    init: function () {
-        const CONTEXT_AF = this;
-    },
     tick: function () {
         const vol = this.el.components.audioanalyser.volume;
         // Get volume from the audioanalyser component and adjust the volume according to the min size, max size, and modifier

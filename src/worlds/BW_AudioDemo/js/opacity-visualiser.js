@@ -4,9 +4,6 @@ AFRAME.registerComponent('opacity-visualiser', {
         modifier: {type: 'number', default: 0.01},
 
     },
-    init: function () {
-        const CONTEXT_AF = this;
-    },
     tick: function () {
         const vol = this.el.components.audioanalyser.volume;
         // Get the volume from the audioanalyser and get an adjusted value using the modifier
