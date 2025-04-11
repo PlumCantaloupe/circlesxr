@@ -9,9 +9,10 @@ AFRAME.registerComponent('spawn-object', {
         CONTEXT_AF.kickPlayer = document.querySelector('#kick-drum-player');
         CONTEXT_AF.musicPlayer = document.querySelector('#music-player');
 
-        musicLoaded = false;
-        sceneLoaded = false;
-        kickLoaded = false;
+        CONTEXT_AF.musicLoaded = false;
+        CONTEXT_AF.sceneLoaded = false;
+        CONTEXT_AF.kickLoaded = false;
+        CONTEXT_AF.hmdLoaded  = false;
 
         CONTEXT_AF.socket     = null;
         CONTEXT_AF.connected  = false;
@@ -20,45 +21,50 @@ AFRAME.registerComponent('spawn-object', {
         // Audio analyser element
         CONTEXT_AF.analyserEl = document.querySelector('#audioanalyser-entity');
 
+        CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
+            if (AFRAME.utils.device.isMobileVR()) {
+                CONTEXT_AF.hmdLoaded = true;
+                if (CONTEXT_AF.musicLoaded == true && CONTEXT_AF.kickLoaded == true){
+                    CONTEXT_AF.musicPlayer.components.sound.playSound();
+                    CONTEXT_AF.kickPlayer.components.sound.playSound();
+                }
+            }
+        });
+
+        // Start music and kick drum if user gesture is pressed after music and kick drum loaded in
+        CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {
+            CONTEXT_AF.sceneLoaded = true;
+            if ((CONTEXT_AF.musicLoaded == true && CONTEXT_AF.kickLoaded == true)){
+                CONTEXT_AF.musicPlayer.components.sound.playSound();
+                CONTEXT_AF.kickPlayer.components.sound.playSound();
+            }
+        });
+
+        // Start music and kick drum if music is loaded after kick drum loaded in and user gesture pressed
+        CONTEXT_AF.musicPlayer.addEventListener('sound-loaded', function () {
+            CONTEXT_AF.musicLoaded = true;
+            if ((CONTEXT_AF.sceneLoaded == true && CONTEXT_AF.kickLoaded == true) || (CONTEXT_AF.hmdLoaded && CONTEXT_AF.kickLoaded == true)){
+                CONTEXT_AF.musicPlayer.components.sound.playSound();
+                CONTEXT_AF.kickPlayer.components.sound.playSound();
+            }
+        });
+
+        // Start music and kick drum if kick drum is loaded after music loaded in and user gesture pressed
+        CONTEXT_AF.kickPlayer.addEventListener('sound-loaded', function () {
+            CONTEXT_AF.kickLoaded = true;
+            if ((CONTEXT_AF.sceneLoaded == true && CONTEXT_AF.musicLoaded == true) || (CONTEXT_AF.hmdLoaded && CONTEXT_AF.musicLoaded == true)){
+                CONTEXT_AF.musicPlayer.components.sound.playSound()
+                CONTEXT_AF.kickPlayer.components.sound.playSound()
+            }
+        });
+
+
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-            CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
-                if (AFRAME.utils.device.isMobileVR()) {
-                    CONTEXT_AF.musicPlayer.components.sound.playSound();
-                    CONTEXT_AF.kickPlayer.components.sound.playSound();
-                }
-              });
-
-            // Start music and kick drum if user gesture is pressed after music and kick drum loaded in
-            CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {
-                sceneLoaded = true;
-                if (musicLoaded == true && kickLoaded == true){
-                    CONTEXT_AF.musicPlayer.components.sound.playSound();
-                    CONTEXT_AF.kickPlayer.components.sound.playSound();
-                }
-            });
-
-            // Start music and kick drum if music is loaded after kick drum loaded in and user gesture pressed
-            CONTEXT_AF.musicPlayer.addEventListener('sound-loaded', function () {
-                musicLoaded = true;
-                if (sceneLoaded == true && kickLoaded == true){
-                    CONTEXT_AF.musicPlayer.components.sound.playSound();
-                    CONTEXT_AF.kickPlayer.components.sound.playSound();
-                }
-            });
-
-            // Start music and kick drum if kick drum is loaded after music loaded in and user gesture pressed
-            CONTEXT_AF.kickPlayer.addEventListener('sound-loaded', function () {
-                kickLoaded = true;
-                if (sceneLoaded == true && musicLoaded == true){
-                    CONTEXT_AF.musicPlayer.components.sound.playSound()
-                    CONTEXT_AF.kickPlayer.components.sound.playSound()
-                }
-            });
-
+           
             // spawn object on low beat detected
             CONTEXT_AF.analyserEl.addEventListener('audioanalyser-beat-low', function () {
                 // gets a random shape based on an integer as well as a random x-value within 2 and -2
