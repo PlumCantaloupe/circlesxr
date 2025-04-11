@@ -1,4 +1,4 @@
-// Component initialises the spawned shapes and set attributes
+// Component initialises the spawned shapes and set attributes based on the inputted schema attributes
 AFRAME.registerComponent('spawned-shape', {
     schema: {
         material: {default: ''},
@@ -13,12 +13,12 @@ AFRAME.registerComponent('spawned-shape', {
         const CONTEXT_AF = this;
         CONTEXT_AF.scene = document.querySelector('a-scene');
 
-        CONTEXT_AF.el.classList.add("spawnedObject")
-        CONTEXT_AF.el.setAttribute("material", CONTEXT_AF.data.material)
-        CONTEXT_AF.el.setAttribute("geometry", CONTEXT_AF.data.geometry)
-        CONTEXT_AF.el.setAttribute("position", CONTEXT_AF.data.spawnPos),
-        CONTEXT_AF.el.setAttribute("scale", CONTEXT_AF.data.scale)
-        CONTEXT_AF.el.setAttribute("guess-shape", "")
-        CONTEXT_AF.el.setAttribute("circles-interactive-object", "")
+        CONTEXT_AF.el.classList.add("spawnedObject");
+        CONTEXT_AF.el.setAttribute("material", CONTEXT_AF.data.material);
+        CONTEXT_AF.el.setAttribute("geometry", CONTEXT_AF.data.geometry);
+        CONTEXT_AF.el.setAttribute("position", CONTEXT_AF.data.spawnPos);
+        CONTEXT_AF.el.setAttribute("scale", CONTEXT_AF.data.scale);
+        CONTEXT_AF.el.setAttribute("guess-shape", "");                      // attach guess-shape component so clicks on the element count towards sequence guessing
+        CONTEXT_AF.el.setAttribute("circles-interactive-object", "");
     }
 })

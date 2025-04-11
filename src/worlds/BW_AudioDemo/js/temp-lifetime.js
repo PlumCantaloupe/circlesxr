@@ -1,3 +1,4 @@
+// Component tracks current time that the entity has existed for and removes it after it exceeds its own lifetime
 AFRAME.registerComponent('temp-lifetime', {
     schema: {
         lifetime: {type: 'number', default: 100},

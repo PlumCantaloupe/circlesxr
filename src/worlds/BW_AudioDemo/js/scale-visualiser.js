@@ -10,9 +10,10 @@ AFRAME.registerComponent('scale-visualiser', {
     },
     tick: function () {
         const vol = this.el.components.audioanalyser.volume;
-        // const adjVol = Math.min(this.data.maxSize, Math.max(this.data.minSize, vol * this.data.modifier));
+        // Get volume from the audioanalyser component and adjust the volume according to the min size, max size, and modifier
         const adjVol = Math.min(vol * this.data.modifier, this.data.maxSize);
 
+        // Scale the object according to the adjust volume
         this.el.setAttribute('scale', {
             x: adjVol,
             y: adjVol,

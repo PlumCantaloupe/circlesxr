@@ -9,7 +9,9 @@ AFRAME.registerComponent('opacity-visualiser', {
     },
     tick: function () {
         const vol = this.el.components.audioanalyser.volume;
+        // Get the volume from the audioanalyser and get an adjusted value using the modifier
         const adjVol = vol * this.data.modifier;
-        this.el.setAttribute('material', {opacity: adjVol})
+        // Use adjusted value to change the object's opacity
+        this.el.setAttribute('material', {opacity: adjVol});
     }
 })
