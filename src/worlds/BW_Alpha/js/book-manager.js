@@ -77,7 +77,7 @@ AFRAME.registerComponent('book-manager', {
         //when something is picked up, its position is {x: 0, y: -0.1, z: 0.2}
         CONTEXT_AF.pickupx = 0;
         CONTEXT_AF.pickupy = 0;
-        CONTEXT_AF.pickupz = 0.5;
+        CONTEXT_AF.pickupz = 0;
 
         // Setup WebSocket & Event Listeners
         CONTEXT_AF.createNetworkingSystem = function () {
@@ -467,8 +467,8 @@ AFRAME.registerComponent('book-manager', {
     stopMusic: function (book){
         const CONTEXT_AF = this;
 
-        //CONTEXT_AF[`book${book}`].setAttribute('position', {x: CONTEXT_AF.pickupx, y: CONTEXT_AF.pickupy, z: CONTEXT_AF.pickupz});
-        //CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
+        CONTEXT_AF[`book${book}`].setAttribute('position', '0 0 0');
+        CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
         CONTEXT_AF[`book${book}`].setAttribute('gltf-model', `#book_model${book}`);
 
         const sparkle = document.querySelector(`#sparkle${book}`);
