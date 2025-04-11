@@ -43,6 +43,10 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.book2Placed = false;
         CONTEXT_AF.book3Placed = false;
         CONTEXT_AF.book4Placed = false;
+        CONTEXT_AF.book1Pickup = false;
+        CONTEXT_AF.book2Pickup = false;
+        CONTEXT_AF.book3Pickup = false;
+        CONTEXT_AF.book4Pickup = false;
 
         CONTEXT_AF.lectern1 = scene.querySelector('#lectern1');
         CONTEXT_AF.lectern2 = scene.querySelector('#lectern2');
@@ -74,11 +78,6 @@ AFRAME.registerComponent('book-manager', {
         CONTEXT_AF.location3 = 0;
         CONTEXT_AF.location4 = 0;
 
-        //when something is picked up, its position is {x: 0, y: -0.1, z: 0.2}
-        CONTEXT_AF.pickupx = 0;
-        CONTEXT_AF.pickupy = 0;
-        CONTEXT_AF.pickupz = 0;
-
         // Setup WebSocket & Event Listeners
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
@@ -94,15 +93,18 @@ AFRAME.registerComponent('book-manager', {
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPlaceEventName, (data) => {
                 CONTEXT_AF.startMusic(data.book);
                 CONTEXT_AF[`book${data.book}Placed`] = true;
+                CONTEXT_AF[`book${data.book}Pickup`] = false;
             });
 
             //when book is picked up by one person, other clients cannot take it from them
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPickupEventName, (data) => {
                 CONTEXT_AF[`book${data.book}`].setAttribute('circles-interactive-object', 'enabled: false;');
+                CONTEXT_AF[`book${data.book}Pickup`] = true;
             });
 
             CONTEXT_AF.socket.on(CONTEXT_AF.bookReleaseEventName, (data) => {
                 CONTEXT_AF[`book${data.book}`].setAttribute('circles-interactive-object', 'enabled: true;');
+                CONTEXT_AF[`book${data.book}Pickup`] = false;
             });
 
             //listen for updating book positions when picked up by others
@@ -113,7 +115,9 @@ AFRAME.registerComponent('book-manager', {
             // listen for if a book gets picked up from a lectern:
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPickupLecternEventName, (data) => {
                 CONTEXT_AF[`book${data.book}Placed`] = false;
+                CONTEXT_AF[`book${data.book}Pickup`] = true;
                 CONTEXT_AF.stopMusic(data.book);
+                console.log("received music stop!");
             });
 
             //listen for when the books get randomized
@@ -182,73 +186,97 @@ AFRAME.registerComponent('book-manager', {
         });
 
         //book pickup events
-        CONTEXT_AF.book1.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
-            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
-                book: 1,
-                room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
-            if (CONTEXT_AF.book1Placed){
-                CONTEXT_AF.book1Placed = false;
-                CONTEXT_AF.stopMusic(1);
-                // emit to others to stop their music and change their book models
-                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+        CONTEXT_AF.book1.addEventListener('click', () => {
+            if(!CONTEXT_AF.book1Pickup){
+                CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
                     book: 1,
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
+                CONTEXT_AF.book1Pickup = true;
+                if (CONTEXT_AF.book1Placed){
+                    CONTEXT_AF.book1Placed = false;
+                    CONTEXT_AF.stopMusic(1);
+                    // emit to others to stop their music and change their book models
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                        book: 1,
+                        room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                    });
+                }
+                CONTEXT_AF.sendPosition(CONTEXT_AF.book1, 1);
             }
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book1);
+            else{
+                CONTEXT_AF.book1Pickup = false;
+            }
         });
 
-        CONTEXT_AF.book2.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
-            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
-                book: 2,
-                room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
-            if (CONTEXT_AF.book2Placed){
-                CONTEXT_AF.book2Placed = false;
-                CONTEXT_AF.stopMusic(2);
-                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+        CONTEXT_AF.book2.addEventListener('click', () => {
+            if(!CONTEXT_AF.book2Pickup){
+                CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
                     book: 2,
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
+                CONTEXT_AF.book2Pickup = true;
+                if (CONTEXT_AF.book2Placed){
+                    CONTEXT_AF.book2Placed = false;
+                    CONTEXT_AF.stopMusic(2);
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                        book: 2,
+                        room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                    });
+                }
+                CONTEXT_AF.sendPosition(CONTEXT_AF.book2, 2);
             }
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book2);
+            else{
+                CONTEXT_AF.book2Pickup = false;
+            }
         });
 
-        CONTEXT_AF.book3.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
-            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
-                book: 3,
-                room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
-            if (CONTEXT_AF.book3Placed){
-                CONTEXT_AF.book3Placed = false;
-                CONTEXT_AF.stopMusic(3);
-                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+        CONTEXT_AF.book3.addEventListener('click', () => {
+            if(!CONTEXT_AF.book3Pickup){
+                CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
                     book: 3,
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
+                CONTEXT_AF.book3Pickup = true;
+                if (CONTEXT_AF.book3Placed){
+                    CONTEXT_AF.book3Placed = false;
+                    CONTEXT_AF.stopMusic(3);
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                        book: 3,
+                        room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                    });
+                }
+                CONTEXT_AF.sendPosition(CONTEXT_AF.book3, 3);
             }
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book3);
+            else{
+                CONTEXT_AF.book3Pickup = false;
+            }
         });
 
-        CONTEXT_AF.book4.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
-            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
-                book: 4,
-                room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
-            if (CONTEXT_AF.book4Placed){
-                CONTEXT_AF.book4Placed = false;
-                CONTEXT_AF.stopMusic(4);
-                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+        CONTEXT_AF.book4.addEventListener('click', () => {
+            if(!CONTEXT_AF.book4Pickup){
+                CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.PLACE_BOOK);
+                CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
                     book: 4,
                     room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
+                CONTEXT_AF.book4Pickup = true;
+                if (CONTEXT_AF.book4Placed){
+                    CONTEXT_AF.book4Placed = false;
+                    CONTEXT_AF.stopMusic(4);
+                    CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupLecternEventName, {
+                        book: 4,
+                        room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
+                    });
+                }
+                CONTEXT_AF.sendPosition(CONTEXT_AF.book4, 4);
             }
-            CONTEXT_AF.sendPosition(CONTEXT_AF.book4);
+            else{
+                CONTEXT_AF.book4Pickup = false;
+            }
         });
 
         //book release events 
@@ -294,13 +322,14 @@ AFRAME.registerComponent('book-manager', {
             }
             
             //if holding book 1 place
-            if (CONTEXT_AF.book1.getAttribute("position").x == CONTEXT_AF.pickupx && CONTEXT_AF.book1.getAttribute("position").y == CONTEXT_AF.pickupy && CONTEXT_AF.book1.getAttribute("position").z == CONTEXT_AF.pickupz){
+            if (CONTEXT_AF.book1Pickup){
                 CONTEXT_AF.book1.emit('click');
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
                     book: 1, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
                 CONTEXT_AF.startMusic(1);
-                CONTEXT_AF.book1Placed = true; 
+                CONTEXT_AF.book1Placed = true;
+                CONTEXT_AF.book1Pickup = false; 
             }
             else{
                 CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
@@ -309,13 +338,14 @@ AFRAME.registerComponent('book-manager', {
 
         CONTEXT_AF.lectern2.addEventListener('click', function () {
             //if holding book 2 place it on the lectern 2
-            if (CONTEXT_AF.book2.getAttribute("position").x == CONTEXT_AF.pickupx && CONTEXT_AF.book2.getAttribute("position").y == CONTEXT_AF.pickupy && CONTEXT_AF.book2.getAttribute("position").z == CONTEXT_AF.pickupz){
+            if (CONTEXT_AF.book2Pickup){
                 CONTEXT_AF.book2.emit('click');
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
                     book: 2, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
                 CONTEXT_AF.startMusic(2);
                 CONTEXT_AF.book2Placed = true;
+                CONTEXT_AF.book2Pickup = false; 
             }
             else{
                 CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
@@ -324,13 +354,14 @@ AFRAME.registerComponent('book-manager', {
 
         CONTEXT_AF.lectern3.addEventListener('click', function () {
             //if holding book 3 place it on the lectern 3
-            if (CONTEXT_AF.book3.getAttribute("position").x == CONTEXT_AF.pickupx && CONTEXT_AF.book3.getAttribute("position").y == CONTEXT_AF.pickupy && CONTEXT_AF.book3.getAttribute("position").z == CONTEXT_AF.pickupz){
+            if (CONTEXT_AF.book3Pickup){
                 CONTEXT_AF.book3.emit('click');
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
                     book: 3, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
                 CONTEXT_AF.startMusic(3);
                 CONTEXT_AF.book3Placed = true;
+                CONTEXT_AF.book3Pickup = false; 
             }
             else{
                 CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
@@ -339,13 +370,14 @@ AFRAME.registerComponent('book-manager', {
 
         CONTEXT_AF.lectern4.addEventListener('click', function () {
             //if holding book 4 place it on the lectern 4
-            if (CONTEXT_AF.book4.getAttribute("position").x == CONTEXT_AF.pickupx && CONTEXT_AF.book4.getAttribute("position").y == CONTEXT_AF.pickupy && CONTEXT_AF.book4.getAttribute("position").z == CONTEXT_AF.pickupz){
+            if (CONTEXT_AF.book4Pickup){
                 CONTEXT_AF.book4.emit('click');
                 CONTEXT_AF.socket.emit(CONTEXT_AF.bookPlaceEventName, {
                     book: 4, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
                 });
                 CONTEXT_AF.startMusic(4);
                 CONTEXT_AF.book4Placed = true;
+                CONTEXT_AF.book4Pickup = false; 
             }
             else{
                 CONTEXT_AF.guidingText.displayError(ERROR_TEXT.INCORRECT_LECTERN);
@@ -407,7 +439,7 @@ AFRAME.registerComponent('book-manager', {
 
     randLocations: function () {
         const CONTEXT_AF = this;
-        CONTEXT_AF.numbers = CONTEXT_AF.randNum (3, 0, 11);
+        CONTEXT_AF.numbers = CONTEXT_AF.randNum (4, 0, 11);
         //console.log(CONTEXT_AF.numbers);
         //CONTEXT_AF.location1 = CONTEXT_AF.numbers[0];
         CONTEXT_AF.location2 = CONTEXT_AF.numbers[0];
@@ -479,12 +511,13 @@ AFRAME.registerComponent('book-manager', {
         console.log("picked up book from lecterbn");
     },
 
-    sendPosition: function (book) {
+    sendPosition: function (book, num) {
         const CONTEXT_AF = this;
         // emit the position to the server if a book is picked up
         const emitPosition = () => {
+
             // if book is not picked up do not send position
-            if (book.getAttribute("position").x != CONTEXT_AF.pickupx && book.getAttribute("position").y != CONTEXT_AF.pickupy && book.getAttribute("position").z != CONTEXT_AF.pickupz){
+            if (!CONTEXT_AF[`book${num}Pickup`]){
                 return;
             }
 
