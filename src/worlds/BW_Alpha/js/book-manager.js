@@ -206,10 +206,6 @@ AFRAME.registerComponent('book-manager', {
                 book: 2,
                 room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
             });
-            CONTEXT_AF.socket.emit(CONTEXT_AF.bookPickupEventName, {
-                book: 2,
-                room: CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
-            });
             if (CONTEXT_AF.book2Placed){
                 CONTEXT_AF.book2Placed = false;
                 CONTEXT_AF.stopMusic(2);
