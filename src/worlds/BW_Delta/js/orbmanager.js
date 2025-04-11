@@ -17,6 +17,7 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
         CONTEXT_AF.orbReleaseEventName = "orbrelease_event";
         CONTEXT_AF.orbPosUpdateEventName = "orbposition_event";
+        CONTEXT_AF.orbPickupEventName = "orbpickup_event";
         CONTEXT_AF.orbNumUpdateEventName = "orbnumber_event";
         CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
@@ -146,6 +147,11 @@ AFRAME.registerComponent('orb-manager', {
                 moveorb.setAttribute('position', data.position);
             });
 
+            CONTEXT_AF.socket.on(CONTEXT_AF.orbPickupEventName, (data) => {
+                const orb = document.querySelector(`#${data.id}`); 
+                orb.setAttribute('circles-interactive-object', "enabled:false");
+            });
+
             CONTEXT_AF.socket.on(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, function(data) {
                 //make sure we are receiving data for this world
                 if (data.world === CIRCLES.getCirclesWorldName()) {
@@ -154,6 +160,8 @@ AFRAME.registerComponent('orb-manager', {
                     CONTEXT_AF.dropOrbAtPosition(data.position);
                 }
             });
+
+            
         };
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
@@ -243,6 +251,12 @@ AFRAME.registerComponent('orb-manager', {
         innerorb.setAttribute('id', `innerorb${CONTEXT_AF.numOrbs}`);
         innerorb.setAttribute('position', {x: 0, y: 0, z: 0});
         orb.appendChild(innerorb);
+
+        orb.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
+            CONTEXT_AF.socket.emit(CONTEXT_AF.orbPickupEventName, {
+                id: orb.getAttribute("id"),
+                room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+        });
 
         orb.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbReleaseEventName, {id: orb.getAttribute("id"), position: orb.getAttribute("position"), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
