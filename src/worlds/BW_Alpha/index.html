@@ -23,6 +23,8 @@
     <script src="js/bloom.js" type="module"></script>
     <script src="js/constants.js"></script>
     <script src="js/book-manager.js"></script>
+    <script src="js/book-place.js"></script>
+    <script src="js/follow-book.js"></script>
   </head>
   <body>
 
@@ -75,11 +77,11 @@
       <circles-manager-avatar/>
 
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = "colour: #937d63"></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager = "colour: #7b6851"></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       <!-- Guiding text  -->
-      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: guiding text; align: center; width: 0.4" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
-      <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: error text; align: center; width: 0.4" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: guiding text; align: center; width: 0.3" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.05; width: 0.5" text="value: error text; align: center; width: 0.3" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
  
       
       <!-- Portal -->
@@ -90,14 +92,12 @@
       
       <a-entity id="bookmanager" book-manager></a-entity>
 
-     <!-- teleport pads -->
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0 -2.5" rotation="0 0 0"></a-entity>
-
-      <a-entity circles-checkpoint position="3.5 0 -13.92" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="-3.5 0 -13.92" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="0 0 -10.42" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="0 0 -17.42" rotation="0 0 0"></a-entity>
-
+ <!-- teleport pads -->
+  <a-entity id="teleport pad group">
+ <a-entity circles-checkpoint circles-spawnpoint position="0 0 -2.5" rotation="0 0 0"></a-entity>
+ <!--fist floor-->
+  <!--right side-->
+    <!--front-->
       <a-entity circles-checkpoint position="8.75 0 -2.75" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="8.75 0 -5.25" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="8.75 0 -7.75" rotation="0 0 0"></a-entity>
@@ -106,45 +106,145 @@
       <a-entity circles-checkpoint position="11.65 0 -2.75" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="11.65 0 -5.25" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="11.65 0 -7.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -10.25" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="11.65 0 -12.5" rotation="0 0 0"></a-entity>
 
+    <!--back-->
       <a-entity circles-checkpoint position="7.55 0 -16.5" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6 0 -19.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6 0 -21.7" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6 0 -24.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6.2 0 -28.65" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6.2 0 -31.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="6.2 0 -33.55" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -20.45" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -22.95" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6.2 0 -29.9" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6.2 0 -32.3" rotation="0 0 0"></a-entity>
 
-      <a-entity circles-checkpoint position="7.55 0 -26.35" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -19.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -21.7" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -24.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -28.65" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -31.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="8.92 0 -33.55" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -20.45" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -22.95" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -29.9" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -32.3" rotation="0 0 0"></a-entity>
 
-      <a-entity circles-checkpoint position="10.27 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -26.35" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="11.65 0 -21.7" rotation="0 0 0"></a-entity>
       <a-entity circles-checkpoint position="11.65 0 -24.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="11.65 0 -28.65" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="11.65 0 -31.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="11.65 0 -33.55" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -29.9" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -32.3" rotation="0 0 0"></a-entity>
 
-      <a-entity circles-checkpoint position="4.850 0 -26.35" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="3.7 0 -28.65" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="3.7 0 -31.2" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="3.7 0 -33.55" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="3.8 0 -29.9" rotation="0 0 0" scale="0.75 1 0.75"></a-entity>
+      <a-entity circles-checkpoint position="3.8 0 -32.3" rotation="0 0 0" scale="0.75 1 0.75"></a-entity>
 
-      <a-entity circles-checkpoint position="2.440 0 -26.6" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="-2.440 0 -26.6" rotation="0 0 0"></a-entity>
+  <!--left side-->
+    <!--front-->
+      <a-entity circles-checkpoint position="-8.75 0 -2.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-8.75 0 -5.25" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-8.75 0 -7.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-8.75 0 -12" rotation="0 0 0"></a-entity>
       
-      <a-entity circles-checkpoint position="2.440 0 -23.6" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="-2.440 0 -23.6" rotation="0 0 0"></a-entity>
-
-      <a-entity circles-checkpoint position="2.440 0 -21.1" rotation="0 0 0"></a-entity>
-      <a-entity circles-checkpoint position="-2.440 0 -21.1" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-11.65 0 -2.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-11.65 0 -5.25" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-11.65 0 -7.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-11.65 0 -10.25" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-11.65 0 -12.5" rotation="0 0 0"></a-entity>
+ 
+      <!--back-->
+        <a-entity circles-checkpoint position="-7.55 0 -16.5" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6 0 -26.35" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6 0 -20.45" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6 0 -22.95" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6.2 0 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6.2 0 -32.3" rotation="0 0 0"></a-entity>
       
+        <a-entity circles-checkpoint position="-8.92 0 -26.35" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 0 -20.45" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 0 -22.95" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 0 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 0 -32.3" rotation="0 0 0"></a-entity>
+      
+        <a-entity circles-checkpoint position="-11.65 0 -26.35" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 0 -21.7" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 0 -24.2" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 0 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 0 -32.3" rotation="0 0 0"></a-entity>
+      
+        <a-entity circles-checkpoint position="-3.8 0 -29.9" rotation="0 0 0" scale="0.75 1 0.75"></a-entity>
+        <a-entity circles-checkpoint position="-3.8 0 -32.3" rotation="0 0 0" scale="0.75 1 0.75"></a-entity>
+
+ <!--middle-->
+      <!--lecterns-->
+        <a-entity circles-checkpoint position="3.5 0 -13.92" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-3.5 0 -13.92" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="0 0 -10.42" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="0 0 -17.42" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="2.440 0 -26.6" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-2.440 0 -26.6" rotation="0 0 0"></a-entity>
+        
+        <a-entity circles-checkpoint position="2.440 0 -23.6" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-2.440 0 -23.6" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="2.440 0 -21.1" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-2.440 0 -21.1" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="2.440 0 -18.5" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-2.440 0 -18.5" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="0 0 -33.6" rotation="0 0 0" scale="0.75 1 0.75"></a-entity>
+
+ <!--stairs-->
+      <!--right-->
+        <a-entity circles-checkpoint position="8.088 1 -14.245" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="9.888 1.96 -15.33" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="11.28 2.92 -16.9" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="12.08 3.88 -18.84" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="12.08 3.88 -18.84" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+
+      <!--left-->
+        <a-entity circles-checkpoint position="-8.088 1 -14.245" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="-9.888 1.96 -15.33" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="-11.28 2.92 -16.9" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="-12.08 3.88 -18.84" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+        <a-entity circles-checkpoint position="-12.08 3.88 -18.84" rotation="0 0 0" scale="0.4 1 0.4"></a-entity>
+
+ <!--second floor-->
+    <!--right-->
+        <a-entity circles-checkpoint position="12.28 5.225 -23" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="6.2 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="6.2 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="6.2 5.225 -32.455" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="8.92 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="8.92 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="8.92 5.225 -32.455" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="11.65 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="11.65 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="11.65 5.225 -32.455" rotation="0 0 0"></a-entity>
+    
+      <!--left-->
+        <a-entity circles-checkpoint position="-12.28 5.225 -23" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="-6.2 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6.2 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6.2 5.225 -32.455" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="-8.92 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-8.92 5.225 -32.455" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="-11.65 5.225 -27.345" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 5.225 -29.9" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-11.65 5.225 -32.455" rotation="0 0 0"></a-entity>
+
+      <!--middle-->
+        <a-entity circles-checkpoint position="6 5.225 -23" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="0 5.225 -23" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-6 5.225 -23" rotation="0 0 0"></a-entity>
+
+        <a-entity circles-checkpoint position="0 5.225 -28.5" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="0 5.225 -34" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="2.830 5.225 -34" rotation="0 0 0"></a-entity>
+        <a-entity circles-checkpoint position="-2.830 5.225 -34" rotation="0 0 0"></a-entity>
+      </a-entity>
 
       <!-- navmesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_model" visible='false' nav-mesh></a-entity>
