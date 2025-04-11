@@ -5,5 +5,5 @@ const GUIDING_TEXT = {
 }
 
 const ERROR_TEXT = {
-    INCORRECT_LECTERN: 'This is not the correct lectern for the book'
+    INCORRECT_LECTERN: 'Please place the correct book on the lectern.'
 }
