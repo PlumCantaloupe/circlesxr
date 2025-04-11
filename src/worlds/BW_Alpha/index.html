@@ -89,8 +89,61 @@
       
       <a-entity id="bookmanager" book-manager></a-entity>
 
-     <!-- teleport pads --> 
+     <!-- teleport pads -->
       <a-entity circles-checkpoint circles-spawnpoint position="0 0 -2.5" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="3.5 0 -13.92" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-3.5 0 -13.92" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="0 0 -10.42" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="0 0 -17.42" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="8.75 0 -2.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.75 0 -5.25" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.75 0 -7.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.75 0 -12" rotation="0 0 0"></a-entity>
+      
+      <a-entity circles-checkpoint position="11.65 0 -2.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -5.25" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -7.75" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -12.5" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="7.55 0 -16.5" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -19.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -21.7" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6 0 -24.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6.2 0 -28.65" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6.2 0 -31.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="6.2 0 -33.55" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="7.55 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -19.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -21.7" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -24.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -28.65" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -31.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="8.92 0 -33.55" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="10.27 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -21.7" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -24.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -28.65" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -31.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="11.65 0 -33.55" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="4.850 0 -26.35" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="3.7 0 -28.65" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="3.7 0 -31.2" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="3.7 0 -33.55" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="2.440 0 -26.6" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-2.440 0 -26.6" rotation="0 0 0"></a-entity>
+      
+      <a-entity circles-checkpoint position="2.440 0 -23.6" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-2.440 0 -23.6" rotation="0 0 0"></a-entity>
+
+      <a-entity circles-checkpoint position="2.440 0 -21.1" rotation="0 0 0"></a-entity>
+      <a-entity circles-checkpoint position="-2.440 0 -21.1" rotation="0 0 0"></a-entity>
+      
 
       <!-- navmesh -->
       <a-entity id="navmesh" gltf-model="#navmesh_model" visible='false' nav-mesh></a-entity>
@@ -161,6 +214,8 @@
                   maxParticleCount: 1500;
                   enabled: true;">
         </a-entity>
+
+        <!-- rain sounds -->
         <a-entity id="rain_ambient_group">
           <a-entity id= "rain_sound" sound="src:#rain_sounds; autoplay:true; loop: true;" position="13.3, 12,5, -35"></a-entity>
           <a-entity id= "rain_sound2" sound="src:#rain_sounds; autoplay:true; loop: true;" position="-13.3, 12.5, -35"></a-entity>
