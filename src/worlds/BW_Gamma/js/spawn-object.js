@@ -25,6 +25,13 @@ AFRAME.registerComponent('spawn-object', {
             CONTEXT_AF.connected = true;
             console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
+            CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, (e) => {
+                if (AFRAME.utils.device.isMobileVR()) {
+                    CONTEXT_AF.musicPlayer.components.sound.playSound();
+                    CONTEXT_AF.kickPlayer.components.sound.playSound();
+                }
+              });
+
             // Start music and kick drum if user gesture is pressed after music and kick drum loaded in
             CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.EXPERIENCE_ENTERED, (e) => {
                 sceneLoaded = true;
