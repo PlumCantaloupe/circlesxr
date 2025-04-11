@@ -48,6 +48,7 @@ AFRAME.registerComponent('dispense-emotion', {
     createOrb: function () {
         const CONTEXT_AF = this;
         CONTEXT_AF.parent = CONTEXT_AF.el.parentNode;
+        const orbColorValues = EMOTION_ORB_COLOUR_VALUES[CONTEXT_AF.data.emotion];
 
         //create orb and append to the parent container
         const orbEl = document.createElement('a-entity');
@@ -55,7 +56,11 @@ AFRAME.registerComponent('dispense-emotion', {
         orbEl.setAttribute('geometry', {primitive: 'sphere',
                                         radius: EMOTION_ORB_INFO.RADIUS});
         orbEl.object3D.position.set(EMOTION_ORB_INFO.X_POS, EMOTION_ORB_INFO.Y_POS, EMOTION_ORB_INFO.Z_POS);
-        orbEl.setAttribute('material', {color: CONTEXT_AF.data.orbColour});
+        orbEl.setAttribute('material', {
+            color: CONTEXT_AF.data.orbColour,
+            emissive: orbColorValues.emissive,
+            emissiveIntensity: orbColorValues.emissiveIntensity
+        });
         orbEl.setAttribute('emotion-pick-up', {animate:true});
         orbEl.setAttribute('circles-interactive-object', {type: 'outline'});
         // Set id for orb that is the emotion + the socket id so the orb is uniquely identified when networked across clients

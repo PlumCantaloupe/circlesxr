@@ -56,6 +56,34 @@ const DEFAULT_GAMMA_VISUALIZATION_DATA = [
     {name: EMOTION_ORB_COLOUR_MAP.PINK, votes: 2}
 ];
 
+const EMOTION_ORB_COLOUR_VALUES = {
+    [EMOTION_ORB_COLOUR_MAP.PINK]: {
+        color: '#aa139d',
+        emissive: '#fe62b5',
+        emissiveIntensity: 2.1
+    },
+    [EMOTION_ORB_COLOUR_MAP.BLUE]: {
+        color: '#2a54cf',
+        emissive: '#52bdff',
+        emissiveIntensity: 2.2
+    },
+    [EMOTION_ORB_COLOUR_MAP.ORANGE]: {
+        color: '#c20000',
+        emissive: '#fe5c34',
+        emissiveIntensity: 2.470
+    },
+    [EMOTION_ORB_COLOUR_MAP.GREEN]: {
+        color: '#3e952d',
+        emissive: '#64ff61',
+        emissiveIntensity: 0.86
+    },
+    [EMOTION_ORB_COLOUR_MAP.YELLOW]: {
+        color: '#c79200',
+        emissive: '#f0d342',
+        emissiveIntensity: 1.08
+    }
+}
+
 //guiding/error text constants
 const GUIDING_TEXT = {
     GET_EMOTION: 'Select an emotion in the middle of the room that resonated with you during your visit to ',
