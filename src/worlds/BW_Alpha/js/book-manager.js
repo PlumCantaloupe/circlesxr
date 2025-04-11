@@ -112,8 +112,8 @@ AFRAME.registerComponent('book-manager', {
 
             // listen for if a book gets picked up from a lectern:
             CONTEXT_AF.socket.on(CONTEXT_AF.bookPickupLecternEventName, (data) => {
-                CONTEXT_AF.stopMusic(data.book);
                 CONTEXT_AF[`book${data.book}Placed`] = false;
+                CONTEXT_AF.stopMusic(data.book);
             });
 
             //listen for when the books get randomized
@@ -142,6 +142,7 @@ AFRAME.registerComponent('book-manager', {
                     if(data.placed[i - 1]){
                         CONTEXT_AF[`book${i}Placed`] = true;
                         CONTEXT_AF.startMusic(i);
+                        console.log("start music was called for book " + i);
                     }
                 }
             });
@@ -466,8 +467,8 @@ AFRAME.registerComponent('book-manager', {
     stopMusic: function (book){
         const CONTEXT_AF = this;
 
-        CONTEXT_AF[`book${book}`].setAttribute('position', {x: CONTEXT_AF.pickupx, y: CONTEXT_AF.pickupy, z: CONTEXT_AF.pickupz});
-        CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
+        //CONTEXT_AF[`book${book}`].setAttribute('position', {x: CONTEXT_AF.pickupx, y: CONTEXT_AF.pickupy, z: CONTEXT_AF.pickupz});
+        //CONTEXT_AF[`book${book}`].setAttribute('rotation', '0 0 0');
         CONTEXT_AF[`book${book}`].setAttribute('gltf-model', `#book_model${book}`);
 
         const sparkle = document.querySelector(`#sparkle${book}`);
