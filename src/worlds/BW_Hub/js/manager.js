@@ -1,3 +1,4 @@
+//component manages the experience state and database calls
 AFRAME.registerComponent('manager', {
     schema: {
       holdingOrb: {type: 'boolean', default: false},
@@ -7,9 +8,6 @@ AFRAME.registerComponent('manager', {
 
     init: function () {
       const CONTEXT_AF = this;
-      CONTEXT_AF.alphaVisualization = document.querySelector("#alpha-visualization");
-      CONTEXT_AF.deltaVisualization = document.querySelector("#delta-visualization");
-      CONTEXT_AF.gammaVisualization = document.querySelector("#gamma-visualization");
 
       CONTEXT_AF.alphaVisualizationInfo = document.querySelector("#alpha-visualization-info");
       CONTEXT_AF.deltaVisualizationInfo = document.querySelector("#delta-visualization-info");
@@ -26,17 +24,11 @@ AFRAME.registerComponent('manager', {
         appId: "1:507503529623:web:55600bbd04196645ff23d2"
       };
       
-    
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   
     // Initialize Cloud Firestore and get a reference to the service
     CONTEXT_AF.db = firebase.firestore();
-
-    // CONTEXT_AF.addEmotionData('emotionData', {name: 'delta', emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
-    // CONTEXT_AF.addEmotionData('emotionData', {name: 'alpha', emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
-    // CONTEXT_AF.addEmotionData('emotionData', {name: 'gamma', emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
-    // CONTEXT_AF.addEmotionData('allEmotionData', {emotions: [{name: "focused", votes: 0}, {name: "unsettled", votes: 0}, {name: "sad", votes: 0}, {name: "joyful", votes: 0}, {name: "peaceful", votes: 0}]});
 
     //listen for an emotion visualizer event. If it occurs then update the corresponding visualizer
     CONTEXT_AF.socket     = null;
@@ -49,130 +41,82 @@ AFRAME.registerComponent('manager', {
         CONTEXT_AF.connected = true;
         console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
 
-        //listen for when others share an emotion
+        //listen for when others share an emotion 
         CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, function(data) {
           
-          CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.orbTypeToUpdate});
+          //update central visualization to reflect other users sharing an emotion
+          CONTEXT_AF.centralOrbsVisualizationEl.emit(EMOTION_UPDATE_EVENT, {orbTypeToUpdate: data.orbTypeToUpdate});
           
           const visualizationContainer = data.visualizationContainer;
+
+          //update tank visualization to reflect other users sharing an emotion
           switch (visualizationContainer){
-            case "delta": 
-              console.log("delta stuff")
-              CONTEXT_AF.deltaVisualizationInfo.emit('emotionupdate', {roomName: 'delta', orbTypeToUpdate: data.orbTypeToUpdate});
+            case ROOM_VISUALIZATION_NAMES.DELTA: 
+              CONTEXT_AF.deltaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.DELTA, orbTypeToUpdate: data.orbTypeToUpdate});
               break;
 
-            case "alpha":
-              console.log("alpha stuff");
-              CONTEXT_AF.alphaVisualizationInfo.emit('emotionupdate', {roomName: 'alpha', orbTypeToUpdate: data.orbTypeToUpdate});
+            case ROOM_VISUALIZATION_NAMES.ALPHA:
+              CONTEXT_AF.alphaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.ALPHA, orbTypeToUpdate: data.orbTypeToUpdate});
               break;
 
-            case "gamma":
-              console.log("gamma stuff")
-              CONTEXT_AF.gammaVisualizationInfo.emit('emotionupdate', {roomName: 'gamma', orbTypeToUpdate: data.orbTypeToUpdate});
+            case ROOM_VISUALIZATION_NAMES.GAMMA:
+              CONTEXT_AF.gammaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.GAMMA, orbTypeToUpdate: data.orbTypeToUpdate});
               break;
             
             default:
               console.log("No matching case found");
           }
         });
-        
-        // On connect, get all emotion data and set the central orb visualisation
-        // Listen for other people sharing an emotion orb
-        // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
-        //   try {
-        //     CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
-        //   } catch (error) {
-        //     //send hardcoded data to central orbs
-        //   }
-        // });
-
-        // Listen for other people sharing an emotion orb and update the stats info text
-        // CONTEXT_AF.socket.on(CONTEXT_AF.shareEmotionEventName, async function (data) {
-        //   try {
-        //     const visualizationContainer = data.visualizationContainer;
-        //     switch (visualizationContainer){
-        //       case "delta": 
-        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
-        //         break;
-  
-        //       case "alpha":
-        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
-        //         break;
-  
-        //       case "gamma":
-        //         CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
-        //         break;
-              
-        //       default:
-        //         console.log("No matching case found");
-        //     }
-        //   } catch (error) {
-        //     //send hardcoded data to central orbs
-        //     console.log("could not get visualization info data");
-        //   }
-        // });
-
     };
 
     // Update central orb and visualization info text when user shares an emotion
     CONTEXT_AF.el.addEventListener(CONTEXT_AF.shareEmotionEventName, function (data) {
-      //CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
 
-      CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionupdate', {orbTypeToUpdate: data.detail.orbTypeToUpdate});
+      CONTEXT_AF.centralOrbsVisualizationEl.emit(EMOTION_UPDATE_EVENT, {orbTypeToUpdate: data.detail.orbTypeToUpdate});
 
       const visualizationContainer = data.detail.visualizationContainer;
       switch (visualizationContainer){
-        case "delta": 
-          CONTEXT_AF.deltaVisualizationInfo.emit('emotionupdate', {roomName: 'delta', orbTypeToUpdate: data.detail.orbTypeToUpdate});
-          break;
+          case ROOM_VISUALIZATION_NAMES.DELTA: 
+            CONTEXT_AF.deltaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.DELTA, orbTypeToUpdate: data.detail.orbTypeToUpdate});
+            break;
 
-        case "alpha":
-          CONTEXT_AF.alphaVisualizationInfo.emit('emotionupdate', {roomName: 'alpha', orbTypeToUpdate: data.detail.orbTypeToUpdate});
-          break;
+          case ROOM_VISUALIZATION_NAMES.ALPHA:
+            CONTEXT_AF.alphaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.ALPHA, orbTypeToUpdate: data.detail.orbTypeToUpdate});
+            break;
 
-        case "gamma":
-          CONTEXT_AF.gammaVisualizationInfo.emit('emotionupdate', {roomName: 'gamma', orbTypeToUpdate: data.detail.orbTypeToUpdate});
-          break;
-        
-        default:
-          console.log("No matching case found");
-            }
-      // try {
-      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
-      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
-      //   CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
-      // } catch (error) {
-      //   console.log("could not get data", error)
-      //   //send hardcoded data to visualizer
-      // }
-      
-    });
+          case ROOM_VISUALIZATION_NAMES.GAMMA:
+            CONTEXT_AF.gammaVisualizationInfo.emit(EMOTION_UPDATE_EVENT, {roomName: ROOM_VISUALIZATION_NAMES.GAMMA, orbTypeToUpdate: data.detail.orbTypeToUpdate});
+            break;
+          
+          default:
+            console.log("No matching case found");
+        }
+      });
 
-      //check if circle networking is ready. If not, add an went to listen for when it is ...
+      //check if circles networking is ready. If not, add an went to listen for when it is ...
       if (CIRCLES.isCirclesWebsocketReady()) {
           CONTEXT_AF.createNetworkingSystem();
       }
       else {
           const wsReadyFunc = async function() {
-              CONTEXT_AF.createNetworkingSystem();
-              CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
-
-              
-              try {
-                // On connect, get all emotion data and set central orbs data
-                CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
-                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('delta'), CONTEXT_AF.deltaVisualizationInfo);
-                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('alpha'), CONTEXT_AF.alphaVisualizationInfo);
-                CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData('gamma'), CONTEXT_AF.gammaVisualizationInfo);
-              } catch (error) {
-                console.log("could not get data", error)
-                //send hardcoded data to visualizer
-              }
+            CONTEXT_AF.createNetworkingSystem();
+            CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
+          
+            try {
+              // On connect, get all emotion data and set central orbs data
+              CONTEXT_AF.setCentralOrbsData(await CONTEXT_AF.getAllEmotionData());
+              CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData(ROOM_VISUALIZATION_NAMES.DELTA), CONTEXT_AF.deltaVisualizationInfo);
+              CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData(ROOM_VISUALIZATION_NAMES.ALPHA), CONTEXT_AF.alphaVisualizationInfo);
+              CONTEXT_AF.setVisualizationInfoData(await CONTEXT_AF.getEmotionData(ROOM_VISUALIZATION_NAMES.GAMMA), CONTEXT_AF.gammaVisualizationInfo);
+            } catch (error) {
+              console.log("could not get data", error);
+            }
           };
           CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
       }
     },
 
+    //update emotion data -- in the future this can be replaced with a POST request API call if the database is on the server
     updateEmotionData: async function(roomName, emotionName) {
       const CONTEXT_AF = this;
 
@@ -214,17 +158,7 @@ AFRAME.registerComponent('manager', {
       
     },
 
-    addEmotionData: function(collectionName, newData) {
-      const CONTEXT_AF = this;
-      CONTEXT_AF.db.collection(collectionName).add(newData)
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
-    },
-
+    //get emotion from the database -- in the future this can be replaced with a GET request API call if the database is on the server
     getEmotionData: async function(roomName) {
       const CONTEXT_AF = this;
 
@@ -238,11 +172,11 @@ AFRAME.registerComponent('manager', {
           });
           return [docId, data];
       } catch (error) {
-          console.log("error getting data")
           return [docId, data];
       }
     },
 
+    //get all emotion from the database -- in the future this can be replaced with a GET request API call if the database is on the server
     getAllEmotionData: async function() {
       const CONTEXT_AF = this;
 
@@ -260,32 +194,14 @@ AFRAME.registerComponent('manager', {
       }
     },
 
+    //populate the central visualization with database data 
     setCentralOrbsData: function (emotionData) {
       const CONTEXT_AF = this;
-
-      console.log('connected and got the data');
-      console.log(emotionData);
-
       CONTEXT_AF.centralOrbsVisualizationEl.emit('emotionpopulate', {emotionData});
     },
 
+    //populate the emotion tanks with database data
     setVisualizationInfoData: function (emotionData, visualizationInfo) {
-      const CONTEXT_AF = this;
-
-      console.log('connected and got the data for delaaaaaaaaaaa');
-      console.log(emotionData[1].emotions);
-
-      
       visualizationInfo.emit('emotionpopulate', emotionData[1].emotions);
-      // CONTEXT_AF.deltaVisualizationInfo.emit('alphaEmotionUpdate', {emotionData});
-      // CONTEXT_AF.gammaVisualizationInfo.emit('alphaEmotionUpdate', {emotionData});
-    },
-
-    remove: function () {
-      // Do something the component or its entity is detached.
-    },
-
-    tick: function (time, timeDelta) {
-      // Do something on every scene tick or frame.
     }
 });

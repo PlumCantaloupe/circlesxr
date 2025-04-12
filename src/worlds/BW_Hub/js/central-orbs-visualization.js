@@ -1,4 +1,3 @@
-
 // Component updates the central orbs scale based on total emotion data retrieved from the manager component
 AFRAME.registerComponent('central-orbs-visualization', {
     schema: {
@@ -41,9 +40,9 @@ AFRAME.registerComponent('central-orbs-visualization', {
         CONTEXT_AF.emotionPopulateEvent = 'emotionpopulate';
         CONTEXT_AF.emotionUpdateEvent = 'emotionupdate';
 
+        //listen for an event to populate the orbs with real data
         CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionPopulateEvent, function (data) {
             // Scale orbs according to their voting proportion
-            console.log("gotttttttttttttttttttt data inside central", data.detail)
             if(data.detail != null && data.detail != undefined && data.detail.emotionData[1].emotions) {
                 CONTEXT_AF.emotionData = data.detail.emotionData[1].emotions;
                 CONTEXT_AF.totalVoteCount = CONTEXT_AF.emotionData.reduce((totalCount, currEmotion) => totalCount += currEmotion.votes, 0);
@@ -51,6 +50,7 @@ AFRAME.registerComponent('central-orbs-visualization', {
             }
         });
 
+        //listen for an event to update the scale manually
         CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function (data) {
             const indexToScale = CONTEXT_AF.emotionData.findIndex(item => item.name=== data.detail.orbTypeToUpdate);
             if(indexToScale != -1){

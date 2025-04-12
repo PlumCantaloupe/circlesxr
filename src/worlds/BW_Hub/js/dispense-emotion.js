@@ -17,7 +17,6 @@ AFRAME.registerComponent('dispense-emotion', {
         CONTEXT_AF.createNetworkingSystem = function () {
             CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
             CONTEXT_AF.connected = true;
-            // console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
         }
 
         //check if circle networking is ready. If not, add an went to listen for when it is ...
@@ -32,6 +31,7 @@ AFRAME.registerComponent('dispense-emotion', {
             CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
         }
 
+        //listen for when the dispenser button has been clicked
         CONTEXT_AF.el.addEventListener('click', function() {
             //dispose a ball if the slot is empty
             if(CONTEXT_AF.data.enabled) {

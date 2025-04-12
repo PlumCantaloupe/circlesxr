@@ -1,3 +1,4 @@
+//component is responsible for animating the suction tube orb emotion sharing 
 AFRAME.registerComponent('share-emotion', {
     schema: {
       visualizationID: {type: 'string'}
@@ -5,11 +6,10 @@ AFRAME.registerComponent('share-emotion', {
 
     init: function () {
       const CONTEXT_AF = this;
-      const scene      = document.querySelector('a-scene');
+      const scene = document.querySelector('a-scene');
       CONTEXT_AF.manager = document.querySelector('#manager')
       CONTEXT_AF.managerData = document.querySelector('[manager]').components['manager'];
       CONTEXT_AF.visualizationContainer = document.querySelector(`#${CONTEXT_AF.data.visualizationID}-visualization`);
-      
 
       CONTEXT_AF.socket     = null;
       CONTEXT_AF.connected  = false;
@@ -19,11 +19,6 @@ AFRAME.registerComponent('share-emotion', {
           CONTEXT_AF.socket = CIRCLES.getCirclesWebsocket();
           CONTEXT_AF.connected = true;
           console.warn("messaging system connected at socket: " + CONTEXT_AF.socket.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
-
-          // CONTEXT_AF.el.addEventListener('click', function () {
-          //     CONTEXT_AF.socket.emit(CONTEXT_AF.campfireEventName, {campfireOn:true, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
-          //     console.log("emit")
-          //   });
 
           CONTEXT_AF.el.addEventListener('click', function() {
             
@@ -37,7 +32,7 @@ AFRAME.registerComponent('share-emotion', {
               const orb = document.querySelector(`#${holdingOrbId}`);
               orb.object3D.parent = CONTEXT_AF.el.object3D;
               orb.object3D.position.set(0, 1.1, 0);
-              orb.object3D.scale.set(1, 1, 1);
+              orb.object3D.scale.set(SUCTION_ORB_SCALE.x, SUCTION_ORB_SCALE.y, SUCTION_ORB_SCALE.z);
               
               //display animation for suction tube after 0.3 seconds
               setTimeout(function(){
@@ -48,39 +43,20 @@ AFRAME.registerComponent('share-emotion', {
     
               //delete the orb once it's finished animating
               setTimeout(function() {
-                //trigger visualization update
-                //TO DO: probably better to make this availble on remove in the orb component
                 orb.parentNode.children[0].setAttribute('dispense-emotion', {enabled: true});
                 orb.parentNode.removeChild(orb);
+                //trigger visualization update
                 CONTEXT_AF.managerData.updateEmotionData(CONTEXT_AF.data.visualizationID, manager.getAttribute('manager').holdingOrbEmotion);
-                //CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbId}) 
                 CONTEXT_AF.socket.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbEmotion, visualizationContainer: CONTEXT_AF.data.visualizationID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 CONTEXT_AF.manager.emit(CONTEXT_AF.shareEmotionEventName, {orbTypeToUpdate: manager.getAttribute('manager').holdingOrbEmotion, visualizationContainer: CONTEXT_AF.data.visualizationID});
-                console.log("emit");
                 CONTEXT_AF.manager.setAttribute('manager', {holdingOrb: false, 
-                                                            holdingOrbId: ''});
-                            
-                
-                            
+                                                            holdingOrbId: ''});       
               }, 1000);
-              
-    
-      
-              //share websocket
-            }
-            else {
-              console.log("no orb in hand")
             }
           });
-
-        //   //listen for when others turn on campfire
-        //   CONTEXT_AF.socket.on(CONTEXT_AF.campfireEventName, function(data) {
-        //     console.log(data.orbTypeToUpdate)
-        //     CONTEXT_AF.visualizationContainer.setAttribute('room', {orbTypeToUpdate: data.orbTypeToUpdate}) 
-        // });
       };
 
-      //check if circle networking is ready. If not, add an eent to listen for when it is ...
+      //check if circle networking is ready. If not, add an event to listen for when it is ...
       if (CIRCLES.isCirclesWebsocketReady()) {
           CONTEXT_AF.createNetworkingSystem();
       }

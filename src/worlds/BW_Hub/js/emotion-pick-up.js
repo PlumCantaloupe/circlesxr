@@ -1,3 +1,4 @@
+//component is responsible for the emotion orb pick up mechanic
 AFRAME.registerComponent('emotion-pick-up', {
     init: function () {
       const CONTEXT_AF = this;
@@ -9,18 +10,20 @@ AFRAME.registerComponent('emotion-pick-up', {
       CONTEXT_AF.room = CONTEXT_AF.sharedStateManager.getRoom();
       
       CONTEXT_AF.el.addEventListener('click', function() {
-        //only allow pick up if the no orb is in hand
+        
         const holdingAnotherOrb = CONTEXT_AF.manager.getAttribute('manager').holdingOrb;
-        if(holdingAnotherOrb) {
-          CONTEXT_AF.guidingText.displayError(ERROR_TEXT.PICK_UP_ONE);
-        }
-        else {
+        //only allow pick up if the no orb is in hand
+        if(!holdingAnotherOrb) {
           CONTEXT_AF.pickUp(CONTEXT_AF.el, CONTEXT_AF.camera, CONTEXT_AF.manager);
         }
+        //display error text if holding another orb
+        else {
+          CONTEXT_AF.guidingText.displayError(ERROR_TEXT.PICK_UP_ONE);
+        }
       })
-      
     },
 
+    //function handles parenting the orb to the camera
     pickUp: function (orb, camera, manager) {
       const CONTEXT_AF = this;
       
@@ -32,8 +35,8 @@ AFRAME.registerComponent('emotion-pick-up', {
 
       // Parent the orb to the camera and set the position and scale accordingly
       orb.object3D.parent = camera.object3D;
-      orb.object3D.position.set(0, 0, -1);
-      orb.object3D.scale.set(2, 2, 2);
+      orb.object3D.position.set(EMOTION_ORB_HOLD_POS.x, EMOTION_ORB_HOLD_POS.y, EMOTION_ORB_HOLD_POS.z);
+      orb.object3D.scale.set(EMOTION_ORB_SCALE, EMOTION_ORB_SCALE, EMOTION_ORB_SCALE);
       // Set orb states on the manager for whether the user is holding the orb, the orb's ID, and the orb's emotion so it can be used in the emotion data logic
       manager.setAttribute('manager', {holdingOrb: true, holdingOrbId: orb.id, holdingOrbEmotion: orb.getAttribute('data-emotion')});
 
@@ -41,13 +44,11 @@ AFRAME.registerComponent('emotion-pick-up', {
         CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SHARE_EMOTION_PART1);
       else
         CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.SHARE_EMOTION_PART2 + CONTEXT_AF.room + ' tunnel');
-        
     },
 
+    //function removes orb guiding text when orb is deleted
     remove: function () {
-      //allow an emotion of this type to be dispensed again
       const CONTEXT_AF = this;
       CONTEXT_AF.guidingText.hideGuidingText();
-      //CONTEXT_AF.parent.children[0].setAttribute('dispense-emotion', {enabled: true});
     }
 });
