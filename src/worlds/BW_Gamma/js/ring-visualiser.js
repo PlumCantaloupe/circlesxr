@@ -1,6 +1,8 @@
+// Function creates toruses that expand outwards for a set lifetime of 300
 AFRAME.registerComponent('ring-visualiser', {
     schema: {
-        lifetime: {type: 'number', default: 0}
+        lifetime: {type: 'number', default: 0},
+        timeLimit: {type: 'number', default: 300}
     },
     init: function () {
         const CONTEXT_AF = this;
@@ -11,22 +13,25 @@ AFRAME.registerComponent('ring-visualiser', {
         CONTEXT_AF.torusSpawn(CONTEXT_AF);
     },
     tick: function () {
+        const CONTEXT_AF = this;
         // Update lifetime of the entity to track whether to remove it or not
-        this.data.lifetime++;
+        CONTEXT_AF.data.lifetime++;
 
-        const {toruses} = this;
+        const {toruses} = CONTEXT_AF;
 
+        // If no toruses exist, skip updates
         if (!toruses) return
 
         // Loop through all toruses and update them
         for (let i = 0; i < toruses.length; i++) {
             const ringEl = toruses[i];
             const rad = ringEl.getAttribute('radius');
+            // Increase the radius over time
             ringEl.setAttribute('radius', parseFloat(rad) + 0.01);
 
             // remove when lifetime is exceeded
-            if (this.data.lifetime > 300) {
-                this.el.parentNode.removeChild(this.el);
+            if (CONTEXT_AF.data.lifetime > CONTEXT_AF.data.timeLimit) {
+                CONTEXT_AF.el.parentNode.removeChild(CONTEXT_AF.el);
             }
         }
     },
@@ -41,6 +46,7 @@ AFRAME.registerComponent('ring-visualiser', {
         ringEl.setAttribute('transparent', true);
         context.el.appendChild(ringEl);
         
+        // Copy toruses array and add ringEl
         context.toruses = [...context.toruses, ringEl];
     }
 });
