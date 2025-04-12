@@ -8,29 +8,26 @@ AFRAME.registerComponent('spawn-visualiser', {
     init: function () {
         const CONTEXT_AF = this;
 
+        // On the detected beat tyoe, if the current spawn count is less than the max spawn count, then spawn new sphere with rnadom colour
         CONTEXT_AF.el.addEventListener(`audioanalyser-beat-${this.data.beatType}`, function () {
             if (CONTEXT_AF.data.currentSpawnCount < CONTEXT_AF.data.maxSpawnCount) {
                 const newEl = document.createElement('a-entity');
-                newEl.setAttribute('temp-lifetime', {})
-                newEl.setAttribute('lifting', {})
+                newEl.setAttribute('temp-lifetime', {});
+                newEl.setAttribute('lifting', {});
                 newEl.setAttribute('geometry', {
                     primitive: 'sphere',
                     radius: 0.5
-                })
+                });
                 newEl.setAttribute('material', {
                     color: '#' + new THREE.Color(Math.random(), Math.random(), Math.random()).getHexString()
-                })
+                });
                 newEl.setAttribute('position', CONTEXT_AF.el.object3D.position);
     
                 CONTEXT_AF.el.sceneEl.appendChild(newEl);
             } else {
-                console.log('Too many spawned objects; wait for some to be destroyed.');s
+                console.log('Too many spawned objects; wait for some to be destroyed.');
             }
         })
-    },
-    tick: function () {
-        const vol = this.el.components.audioanalyser.volume;
-
     }
 })
 

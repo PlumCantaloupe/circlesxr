@@ -147,6 +147,7 @@ AFRAME.registerComponent('audioanalyser', {
     let threeAnalyser;
     let analyser;
 
+    // Can either set the soundEntitySrc property on the audioanalyser component OR add a sound component to the same entity as the audioanalyser
     if (soundEntitySrc.length > 0) {
       sound = document.querySelector(soundEntitySrc).getObject3D('sound').children[0];
     } else {
