@@ -231,6 +231,7 @@
                   material="color: #cfe6ff; opacity:0.4"
                   position="0 0 0"></a-entity>
 
+      <!-- all the entities for the orb animations -->
       <a-entity id="t1orbs">
         <a-entity   id="t1o1" 
                     gltf-model="#t1o1_model"
@@ -526,6 +527,7 @@
                     animation-mixer=" startAt: -16000"
                     position="0 0 0"></a-entity></a-entity>
 
+      <!-- particles that emit form the core -->
       <a-entity id= "particle1" position="1.158 9.438 -10.724" rotation="0 0 12.4"
                   particle-system=" preset:dust;
                                     accelerationSpread: 0 0 0;
@@ -604,7 +606,7 @@
                                     sizeSpread: 0.3;
                                     duration: infinity;
                                     particleCount: 250;"></a-entity>
-      <!-- test orbs -->
+      <!-- in the js, we clone these orbs, hidden undeneath the scene -->
       <a-entity  id="orboutside1" class="orb"
                 geometry="primitive: sphere; radius: 0.3"
                 material="color: #b74e63; opacity:0.8; transparent: true; side:double; blending: subtractive"
@@ -652,23 +654,6 @@
                   material="color: white; emissive: #C6A7E9; emissiveIntensity: 1;"
                   position="3 -2 -5"
                   circles-interactive-object = "enabled:false"></a-entity>
-      <a-entity   id="tube1orb1" 
-                  gltf-model="#tube1orb1_model"
-                  animation-mixer=" startAt: 14000"
-                  position="0 0 0"></a-entity>
-      <a-entity   id="tube1orb2" 
-                  gltf-model="#tube1orb2_model"
-                  animation-mixer=" startAt: 12000"
-                  position="0 0 0"></a-entity>
-      <a-entity   id="tube1orb3" 
-                  gltf-model="#tube1orb3_model"
-                  animation-mixer="startAt: 8000"
-                  position="0 0 0"></a-entity>
-      <a-entity   id="tube1orb4" 
-                  gltf-model="#tube1orb4_model"
-                  animation-mixer="startAt: 0"
-                  position="0 0 0"></a-entity>
-
 
       <a-entity id="Portal-Hub"
                 position="0 1.6 2.4" rotation="0 90 0"
