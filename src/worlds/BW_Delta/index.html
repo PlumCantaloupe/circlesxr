@@ -142,7 +142,7 @@
       <circles-manager-avatar/>
       
       <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
-      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #5764c2"></a-entity>
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #2a2447; transparentColour: #3a5082"></a-entity>
       <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
       <!-- Guiding text  -->
       <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: guiding text; align: center; width: 0.4" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
@@ -669,10 +669,10 @@
                   animation-mixer="startAt: 0"
                   position="0 0 0"></a-entity>
 
-      <!-- TO BE REPLACED - END -->
+
       <a-entity id="Portal-Hub"
-                position="0 3 3" rotation="0 90 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Hub; link_url:/w/BW_Hub"
+                position="0 1.6 2.4" rotation="0 90 0"
+                circles-portal="img_src:assets/textures/mainHub.png; title_text:Hub; link_url:/w/BW_Hub"
                 shadow></a-entity>
 
     <!-- Circles' end scripts [REQUIRED] -->

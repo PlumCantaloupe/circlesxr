@@ -102,7 +102,7 @@
       </a-entity>
 
       <!-- test entity - to remove -->
-      <a-entity id="shared-state-manager" bw-shared-state-manager='bloomAvailable: true, bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #5764c2" accessibility-controls spawn-point></a-entity>
+      <a-entity id="shared-state-manager" bw-shared-state-manager='bloomAvailable: true, bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #5764c2; transparentColour: #2c3681" accessibility-controls spawn-point></a-entity>
       <a-entity comp></a-entity>
       <!-- #5764c2 -->
 
@@ -122,7 +122,7 @@
       
       
       <!-- room model -->
-      <a-entity class="basePlane" geometry="primitive: plane; width: 20; height: 20;" material="color: #0A2474" rotation="-90 0 0" position="0 -0.03 0"></a-entity>
+      <a-entity class="basePlane" geometry="primitive: plane; width: 20; height: 20;" material="color: #0A2474" rotation="-90 0 0" position="0 -0.1 0"></a-entity>
       <a-entity id="room" position="0 0 0" rotation="0 0 0" scale="1 1 1" gltf-model="#room_glb"></a-entity>
 
       <!-- nav mesh -->
@@ -442,9 +442,8 @@
 
       <!-- info orbs -->
       <a-entity rotation="0 0 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb"
+        <a-entity class="info orb" position="5.794 1.187 -4.111" gltf-model="#orb_glb"
         circles-artefact=" textRotationY:-70;
-        label_on: false;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
         description_offset: 0 1.22 0.7;
@@ -456,7 +455,7 @@
       </a-entity>
 
       <a-entity rotation="0 65 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
+        <a-entity class="info orb" position="5.790 1.187 -4.094" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -469,7 +468,7 @@
       </a-entity>
 
       <a-entity rotation="0 130 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
+        <a-entity class="info orb" position="5.794 1.187 -4.111" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -482,7 +481,7 @@
       </a-entity>
 
       <a-entity rotation="0 195 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb" 
+        <a-entity class="info orb" position="5.794 1.187 -4.111" gltf-model="#orb_glb" 
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -495,7 +494,7 @@
       </a-entity>
 
       <a-entity rotation="0 260 0">
-        <a-entity class="info orb" position="5.727 1.187 -4.096" gltf-model="#orb_glb"  
+        <a-entity class="info orb" position="5.794 1.187 -4.111" gltf-model="#orb_glb"  
         circles-artefact=" textRotationY:-70;
         inspectScale: 1.3 1.3 1.3;
         inspectRotation: 0 90 0;
@@ -506,39 +505,48 @@
         description:Gamma brain waves are the fastest waves with frequencies above 30Hz. They are associated with higher neural activity, simultaneous information processing, idea formation, memory processing, and learning. They also occur during deep meditation.;
         label_text:Learn more;"></a-entity>
       </a-entity>
-      
+
+      <!-- reasons for closure -->
+      <a-entity rotation="0 45.2 0" id="closure" >
+        <a-entity text="value: Undergoing dream \nformation; width: 2.1; align: center; color: #9dc7d2" position="0.650 1.520 -7.230"></a-entity>
+      </a-entity>
+
+      <a-entity rotation="0 172.499 0" >
+        <a-entity text="value: Recovering from \na brainstorm; width: 2.1; align: center; color: #9dc7d2" position="0.290 1.520 -7.270"></a-entity>
+      </a-entity>
+
       
       <!-- portals -->
       <a-entity id="Portal-Delta"
                 position="8.244 1.5 -9.740" rotation="0 -125.015 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Delta; link_url:/w/BW_Delta"
+                circles-portal="img_src:assets/textures/delta.png; title_text:Delta; link_url:/w/BW_Delta"
                 shadow></a-entity>
       
       <a-entity id="Portal-Alpha"
                 position="-12.704 1.274 0.093" rotation="0 3.231 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Alpha; link_url:/w/BW_Alpha"
+                circles-portal="img_src:assets/textures/alpha.png; title_text:Alpha; link_url:/w/BW_Alpha"
                 shadow></a-entity>
 
       <a-entity id="Portal-Gamma"
                 position="8.587 1.191 10.258" rotation="0 129.070 0"
-                circles-portal="img_src:/global/assets/textures/equirectangular/WhiteBlue.jpg; title_text:Gamma; link_url:/w/BW_Gamma"
+                circles-portal="img_src:assets/textures/gamma.png; title_text:Gamma; link_url:/w/BW_Gamma"
                 shadow></a-entity>
 
 
       <!-- checkpoints -->
-      <a-entity id="mainSpawn" circles-checkpoint position="4.4 0.03 0" ></a-entity>
+      <a-entity id="mainSpawn" circles-checkpoint position="5.38 0.03 -0.397" ></a-entity>
       
-      <a-entity circles-checkpoint position="1.9 0.03 3"></a-entity>
-      <a-entity circles-checkpoint position="-2.3 0.03 2.7"></a-entity>
-      <a-entity circles-checkpoint position="-3.4 0.03 -1.3"></a-entity>
+      <a-entity circles-checkpoint position="2.058 0.03 2.944"></a-entity>
+      <a-entity circles-checkpoint position="-2.383 0.03 2.792"></a-entity>
+      <a-entity circles-checkpoint position="-3.400 0.03 -1.300"></a-entity>
       <a-entity circles-checkpoint position="0.14 0.03 -3.6"></a-entity>
       <a-entity circles-checkpoint position="3.5 0.03 -0.9"></a-entity>
 
-      <a-entity circles-checkpoint position="-4.5 0.03 0"></a-entity>
-      <a-entity circles-checkpoint position="-2 0.03 4.6"></a-entity>
-      <a-entity circles-checkpoint position="3.3 0.03 3.9"></a-entity>
-      <a-entity circles-checkpoint position="3.2 0.03 -3.7"></a-entity>
-      <a-entity circles-checkpoint position="-2.3 0.03 -4.8"></a-entity>
+      <a-entity circles-checkpoint position="-5.115 0.03 -0.058"></a-entity>
+      <a-entity circles-checkpoint position="-1.993 0.03 4.646"></a-entity>
+      <a-entity circles-checkpoint position="3.440 0.03 3.758"></a-entity>
+      <a-entity circles-checkpoint position="3.342 0.03 -3.527"></a-entity>
+      <a-entity circles-checkpoint position="-2.003 0.03 -4.812"></a-entity>
 
       <a-entity id="alphaSpawn" circles-checkpoint position="-10.4 0.03 0"></a-entity>
       <a-entity id="gammaSpawn" circles-checkpoint position="7.4 0.03 8.8"></a-entity>
