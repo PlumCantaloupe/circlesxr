@@ -35,10 +35,11 @@
     <a-scene circles_scene_properties bloom="threshold: 1.0; strength: 0.3; radius: 1;">
 
       <a-assets>
-        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
-        <!-- credit: HDRMaps @ https://hdrmaps.com/above-the-clouds/ -->
 
-        <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="library_main" src="/worlds/BW_Alpha/assets/models/library/library_main.glb" response-type="arraybuffer"></a-asset-item> 
+        <!-- wood floor texture: https://architextures.org/textures/166 
+             wood grain texture: https://img.freepik.com/free-photo/wooden-flooring-textured-background-design_53876-108357.jpg
+             carpet fibre texture: https://www.textures.com/system/gallery/photos/Fabric/Carpet/37904/Carpet0004_1_350.jpg--> 
 
         <a-asset-item id="lectern1_model" src="/worlds/BW_Alpha/assets/models/library/lectern.glb" response-type="arraybuffer"></a-asset-item>
         <a-asset-item id="lectern2_model" src="/worlds/BW_Alpha/assets/models/library/lectern2.glb" response-type="arraybuffer"></a-asset-item>
@@ -54,6 +55,7 @@
         <a-asset-item id="books" src="/worlds/BW_Alpha/assets/models/library/books.glb" response-type="arraybuffer"></a-asset-item>
         
         <a-asset-item id="navmesh_model" src="/worlds/BW_Alpha/assets/models/library/alpha_navmesh.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
         <a-asset-item id="book_model1" src="/worlds/BW_Alpha/assets/models/book.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="book_model3" src="/worlds/BW_Alpha/assets/models/book2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="book_model4" src="/worlds/BW_Alpha/assets/models/book3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
@@ -65,8 +67,8 @@
         <audio id="track3-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_3.mp3" preload="auto" crossorigin="anonymous"></audio>
         <audio id="track4-music" src="/worlds/BW_Alpha/assets/sounds/music/alpha_4.mp3" preload="auto" crossorigin="anonymous"></audio>
 
-        <audio id="fire_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/fire.mp3" preload="auto" crossorigin="anonymous"></audio>
-        <audio id="rain_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/rain.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="fire_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/fire.mp3" preload="auto" crossorigin="anonymous"></audio> <!--https://pixabay.com/sound-effects/crackling-fire-14759/-->
+        <audio id="rain_sounds" src="/worlds/BW_Alpha/assets/sounds/ambient/rain.mp3" preload="auto" crossorigin="anonymous"></audio> <!--https://pixabay.com/sound-effects/rain-sound-307165/-->
 
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -538,9 +540,10 @@
               //sometimes tablets can be considered mobile devices depending on the device so we check to see if the screen is approximately the right size
               const tabletCheck = AFRAME.utils.device.isTablet() || (screen.width >= 768); //as long as it is approximately larger than a phone it counts
 
+              //checks if device is mobile or vr headset
               if(AFRAME.utils.device.isMobileVR() || AFRAME.utils.device.isMobile() && tabletCheck === false){
                 if (this.el && this.el.parentNode) {;
-                  this.el.parentNode.removeChild(this.el);;
+                  this.el.parentNode.removeChild(this.el); //removes candles from scene
                 }
               }
             });
