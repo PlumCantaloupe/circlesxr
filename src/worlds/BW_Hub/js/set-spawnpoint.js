@@ -1,6 +1,5 @@
+//component that sets the spawn-point and guide-text based on recently visited rooms
 AFRAME.registerComponent('spawn-point', {
-
-
     init: function () {
         const CONTEXT_AF = this;
         CONTEXT_AF.sharedStateManager = document.querySelector('[bw-shared-state-manager]').components['bw-shared-state-manager'];
@@ -10,18 +9,16 @@ AFRAME.registerComponent('spawn-point', {
 
         CONTEXT_AF.scene = CONTEXT_AF.el.sceneEl;
 
-        CONTEXT_AF.gamma = document.querySelector('#gammaSpawn')
-        CONTEXT_AF.alpha = document.querySelector('#alphaSpawn')
-        CONTEXT_AF.delta = document.querySelector('#deltaSpawn')
-        CONTEXT_AF.hub = document.querySelector('#mainSpawn')
-        
-        console.log(CONTEXT_AF[CONTEXT_AF.room]);
+        CONTEXT_AF.gamma = document.querySelector('#gammaSpawn');
+        CONTEXT_AF.alpha = document.querySelector('#alphaSpawn');
+        CONTEXT_AF.delta = document.querySelector('#deltaSpawn');
+        CONTEXT_AF.hub = document.querySelector('#mainSpawn');
 
-        //display guiding text
+        //display guiding text to guide the users
         if(CONTEXT_AF.room != 'BW_Hub')
             CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.GET_EMOTION + CONTEXT_AF.roomShortName);
 
-        //set spawn 
+        //set spawn point based on the recently visited room
         switch (CONTEXT_AF.room)
         {
             case 'BW_Hub':

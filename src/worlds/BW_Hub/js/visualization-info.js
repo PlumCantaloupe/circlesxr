@@ -1,6 +1,6 @@
+//component handles updates the visualization tanks and info text
 AFRAME.registerComponent('visualization-info', {
     schema: {
-        //orbTypeToUpdate: {type: 'string'},
         roomName: {type: 'string'}
     },
 
@@ -14,6 +14,7 @@ AFRAME.registerComponent('visualization-info', {
       CONTEXT_AF.unsettled = document.querySelector(`#${CONTEXT_AF.data.roomName}-visualization-green`);
       CONTEXT_AF.peaceful = document.querySelector(`#${CONTEXT_AF.data.roomName}-visualization-pink`);
 
+      //get the info elements
       CONTEXT_AF.infoButton = document.querySelector(`#${CONTEXT_AF.data.roomName}-info-button`);
       CONTEXT_AF.infoContainer = document.querySelector(`#${CONTEXT_AF.data.roomName}-visualization-info`);
 
@@ -37,13 +38,14 @@ AFRAME.registerComponent('visualization-info', {
         default:
           break;
       }
+
+      //initialize cylinders and info text
       CONTEXT_AF.initCylinders();
       CONTEXT_AF.updateInfoText();
 
 
       //listening for event to populate the visualization with real database data
       CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionPopulateEvent, function (data) {
-        console.log("gotttttttttttttttttttt data inside vinfo", data.detail)
         if(data.detail != null && data.detail != undefined && data.detail.length === 5) {
           CONTEXT_AF.emotionData = data.detail;
 
@@ -57,7 +59,6 @@ AFRAME.registerComponent('visualization-info', {
 
       //listening for event to increment visualization data and update the visuals
       CONTEXT_AF.el.addEventListener(CONTEXT_AF.emotionUpdateEvent, function (data) {
-        console.log("lets update the orbs")
         //check if the update is for this room
         if (data.detail.roomName === CONTEXT_AF.data.roomName) {
           const indexToScale = CONTEXT_AF.emotionData.findIndex(item => item.name === data.detail.orbTypeToUpdate);
@@ -73,14 +74,15 @@ AFRAME.registerComponent('visualization-info', {
         }
       });
 
-      //event listener for when the visualization data has been updated
-      //display a label with this 
+      //event listener for toggling info text
       CONTEXT_AF.infoButton.addEventListener('click', function() {
+        //hide text
         if (CONTEXT_AF.displayingInfo) {
           CONTEXT_AF.displayingInfo = false;
           CONTEXT_AF.infoContainer.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
           CONTEXT_AF.infoContainer.setAttribute('circles-interactive-visible', 'false');
         }
+        //show text
         else {
           CONTEXT_AF.displayingInfo = true;
           CONTEXT_AF.infoContainer.setAttribute('circles-interactive-visible', 'true');
@@ -89,30 +91,6 @@ AFRAME.registerComponent('visualization-info', {
       })
 
     },
-
-  //   update: function() {
-  //     const CONTEXT_AF = this;
-  //     //make sure a valid orb has been inputted
-  //     if(CONTEXT_AF.data.orbTypeToUpdate != '') {
-  //       console.log("lets update the orbs")
-
-  //       //increment value
-  //       const indexToScale = CONTEXT_AF.emotionData.findIndex(item => item.name===CONTEXT_AF.data.orbTypeToUpdate);
-  //       if(indexToScale != -1) {
-  //         CONTEXT_AF.emotionData[indexToScale].votes += 1;
-
-  //         //update text
-  //         CONTEXT_AF.infoText = "";
-  //         for(let i = 0; i < CONTEXT_AF.emotionData.length; i++) {
-  //           // (${CONTEXT_AF.emotionData[i].color})
-  //           CONTEXT_AF.infoText += `\n ${CONTEXT_AF.emotionData[i].name}: ${CONTEXT_AF.emotionData[i].votes} people`;
-  //         }
-
-  //         CONTEXT_AF.infoContainer.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
-
-  //       }
-  //     }
-  // },
 
   //update the text content
   updateInfoText: function() {
@@ -126,6 +104,7 @@ AFRAME.registerComponent('visualization-info', {
     CONTEXT_AF.infoContainer.setAttribute('circles-description', {description_text_front: CONTEXT_AF.infoText});
   },
 
+  //initialize visualization
   initCylinders: function() {
     const CONTEXT_AF = this;
 
@@ -155,7 +134,7 @@ AFRAME.registerComponent('visualization-info', {
   },
 
   //update the tank/dispenser visualization
-  updateCylinders: function(sharedOrbColour){
+  updateCylinders: function(){
         const CONTEXT_AF = this;
         
         CONTEXT_AF.maxValue += 1;
