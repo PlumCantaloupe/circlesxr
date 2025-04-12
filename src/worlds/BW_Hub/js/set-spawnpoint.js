@@ -14,10 +14,6 @@ AFRAME.registerComponent('spawn-point', {
         CONTEXT_AF.delta = document.querySelector('#deltaSpawn');
         CONTEXT_AF.hub = document.querySelector('#mainSpawn');
 
-        //display guiding text to guide the users
-        if(CONTEXT_AF.room != 'BW_Hub')
-            CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.GET_EMOTION + CONTEXT_AF.roomShortName);
-
         //set spawn point based on the recently visited room
         switch (CONTEXT_AF.room)
         {
@@ -45,6 +41,11 @@ AFRAME.registerComponent('spawn-point', {
             if(CONTEXT_AF.room === 'BW_Hub') {
                 CONTEXT_AF.avatarRig.object3D.rotation.y = THREE.MathUtils.degToRad(277);
             }
+
+            //display guiding text to guide the users
+            if(CONTEXT_AF.room != 'BW_Hub')
+                CONTEXT_AF.guidingText.updateGuidingText(GUIDING_TEXT.GET_EMOTION + CONTEXT_AF.roomShortName);
+
         })
         
     },
