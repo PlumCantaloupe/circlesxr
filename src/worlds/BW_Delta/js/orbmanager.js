@@ -14,15 +14,17 @@ AFRAME.registerComponent('orb-manager', {
         // Circles WebSocket and room tracking
         CONTEXT_AF.socket = null;
         CONTEXT_AF.connected = false;
+
+        //variables with event names
         CONTEXT_AF.orbDropEventName = "orbdrop_event";
         CONTEXT_AF.orbReleaseEventName = "orbrelease_event";
         CONTEXT_AF.orbPosUpdateEventName = "orbposition_event";
         CONTEXT_AF.orbPickupEventName = "orbpickup_event";
         CONTEXT_AF.orbNumUpdateEventName = "orbnumber_event";
-        CONTEXT_AF.lastDropTime = 0; // Timestamp of last orb drop
+        CONTEXT_AF.lastDropTime = 0; // timestamp of last orb drop
         CONTEXT_AF.DROP_COOLDOWN = 5000; // cooldown between orb drop position generation
-        CONTEXT_AF.timer = null; // Store the timer ID
-        CONTEXT_AF.numOrbs = 0; //used to give a unique id to each orb
+        CONTEXT_AF.timer = null; // storse the timer ID
+        CONTEXT_AF.numOrbs = 0; //used to give a unique id to each orb and allows for networking of the orb release
 
         CONTEXT_AF.orb1 = document.querySelector('#orboutside1'); 
         CONTEXT_AF.orb2 = document.querySelector('#orboutside2'); 
@@ -37,7 +39,6 @@ AFRAME.registerComponent('orb-manager', {
         CONTEXT_AF.orbs = document.querySelectorAll('.orb');
 
         // Bézier curve paths for orb drops of the 6 tubes yayyyyy
-        //i love numbers!!! SO MUCHHH
         CONTEXT_AF.curve1 = [
             [[12.771, 2.99, -10.301], [12.436, 3.093, -10.301], [12.102, 3.187, -10.301], [11.529, 3.218, -10.301]],
             [[11.529, 3.218, -10.301], [10.955, 3.249, -10.301], [10.143, 3.217, -10.301], [9.483, 3.267, -10.301]],
@@ -99,7 +100,7 @@ AFRAME.registerComponent('orb-manager', {
             [[], [], [], []],
         ];*/ 
 
-
+        //duration of the orb drop animation
         CONTEXT_AF.duration = 200;
 
         // Setup WebSocket & Event Listeners
@@ -113,6 +114,7 @@ AFRAME.registerComponent('orb-manager', {
             // Start the timer for the drop cycle 
             CONTEXT_AF.scheduleNextDrop();
 
+            // receive num orbs updates and update 
             CONTEXT_AF.socket.on(CONTEXT_AF.orbNumUpdateEventName, (data) => {
                 CONTEXT_AF.numOrbs = data.numOrbs;
                 // console.log("current: " + CONTEXT_AF.numOrbs);
@@ -132,8 +134,9 @@ AFRAME.registerComponent('orb-manager', {
                 CONTEXT_AF.playAnimation(releaseorb);
                 releaseorb.setAttribute('circles-interactive-object', 'enabled:false');
                 setTimeout(() => {
+                    //remove the orb from the scene once its finished fading away
                     if (releaseorb.parentNode) {
-                        releaseorb.parentNode.removeChild(releaseorb); // Remove from the scene
+                        releaseorb.parentNode.removeChild(releaseorb); 
                     }
                 }, CONTEXT_AF.data.duration);
             });
@@ -147,6 +150,7 @@ AFRAME.registerComponent('orb-manager', {
                 moveorb.setAttribute('position', data.position);
             });
 
+            // when someone else picks up an orb, other users cannot interact with it
             CONTEXT_AF.socket.on(CONTEXT_AF.orbPickupEventName, (data) => {
                 const orb = document.querySelector(`#${data.id}`); 
                 orb.setAttribute('circles-interactive-object', "enabled:false");
@@ -160,8 +164,6 @@ AFRAME.registerComponent('orb-manager', {
                     CONTEXT_AF.dropOrbAtPosition(data.position);
                 }
             });
-
-            
         };
 
         scene.addEventListener(CIRCLES.EVENTS.READY, function() {
@@ -186,11 +188,14 @@ AFRAME.registerComponent('orb-manager', {
             const now = Date.now();
             // dnly emit drop if no one else has dropped in the last 10 seconds
             if (now - CONTEXT_AF.lastDropTime > CONTEXT_AF.DROP_COOLDOWN) {
+                // get a randomized position for the orb 
                 const spawnPos = CONTEXT_AF.randomizePosition();
                 // console.log("sending: " + CONTEXT_AF.numOrbs);
+                //update numorbs for other clients by emitting when our numorbs goes up
                 CONTEXT_AF.socket.emit(CONTEXT_AF.orbNumUpdateEventName, {numOrbs: CONTEXT_AF.numOrbs, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 CONTEXT_AF.lastDropTime = now;
                 CONTEXT_AF.position = spawnPos;
+                // emit the orb drop event so that the orb colour, drop position, and id are the same across clients
                 CONTEXT_AF.socket.emit(CONTEXT_AF.orbDropEventName, {position:spawnPos, colour:CONTEXT_AF.colour, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()}); 
                 // console.log("send drop");
                 CONTEXT_AF.dropOrbAtPosition(spawnPos);
@@ -200,15 +205,18 @@ AFRAME.registerComponent('orb-manager', {
         },  CONTEXT_AF.DROP_COOLDOWN); // delay depening on cooldown value
     },
 
-    // Select a random position on the predefined curve
+    // select a random position on one of the predefined bezier curves
     randomizePosition: function () {
+        //randomize which curve is chosen and the colour of the orb
         const CONTEXT_AF = this;
         let n = Math.floor(Math.random() * 6) + 1;
+        // saved with CONTEXT_AF because this is used when creating the orb and is not changed until another orb position is randomized
         CONTEXT_AF.colour = Math.floor(Math.random() * 4) + 1;
 
         let cs = Math.floor(Math.random() * CONTEXT_AF[`curve${n}`].length);
         let t = Math.random();
 
+        // math stuff to get a point on the bezier curve based on the given points that define the curve
         let P1 = CONTEXT_AF[`curve${n}`][cs][0];
         let P2 = CONTEXT_AF[`curve${n}`][cs][1];
         let P3 = CONTEXT_AF[`curve${n}`][cs][2];
@@ -221,12 +229,13 @@ AFRAME.registerComponent('orb-manager', {
         return {x: spawnPointX, y: spawnPointY, z: spawnPointZ};
     },
 
+    // clear timeone if orb manager is ever removed from the scene
     remove: function () {
         const CONTEXT_AF = this;
         clearTimeout(CONTEXT_AF.timer);
     },
 
-    // Drops an orb at a specific position
+    // drops an orb at a specific position and animate is falling down
     dropOrbAtPosition: function (spawnPos) {
         const CONTEXT_AF = this;
 
@@ -252,12 +261,15 @@ AFRAME.registerComponent('orb-manager', {
         innerorb.setAttribute('position', {x: 0, y: 0, z: 0});
         orb.appendChild(innerorb);
 
+        // add pickup and release event listeners to the orb on creation
+        //when orb is picked up, emit position to other clients
         orb.addEventListener(CIRCLES.EVENTS.PICKUP_THIS_OBJECT, () => {
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbPickupEventName, {
                 id: orb.getAttribute("id"),
                 room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
         });
 
+        // when orb is release play floating animation, play sound clip, and start particles
         orb.addEventListener(CIRCLES.EVENTS.RELEASE_THIS_OBJECT, () => {
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbReleaseEventName, {id: orb.getAttribute("id"), position: orb.getAttribute("position"), room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
             CONTEXT_AF.playParticles(orb);
@@ -287,10 +299,11 @@ AFRAME.registerComponent('orb-manager', {
             CONTEXT_AF.sendPosition(orb);
         });
 
+        //add the orb to the scene and increase numorbs for the next orb
         scene.appendChild(orb);
-
         CONTEXT_AF.numOrbs++;
 
+        //remove the orb from the scene after 30 seconds + the time it takes for the orb to fall if no one is holding it
         setTimeout(() => {
             if (orb.getAttribute("position").x != 0 && orb.getAttribute("position").y != -0.1 && orb.getAttribute("position").z != 0.2){
                 orb.parentNode.removeChild(orb);
@@ -298,7 +311,8 @@ AFRAME.registerComponent('orb-manager', {
         }, CONTEXT_AF.duration * spawnPos.y + 30000);
     }, 
 
-    playParticles: function (orb, colour) {
+    // create particle system to attach to orb and start playing when the orb is released
+    playParticles: function (orb) {
         const CONTEXT_AF = this;
 
         //make particle colour match orb colour
@@ -312,6 +326,7 @@ AFRAME.registerComponent('orb-manager', {
         setTimeout(() => particleSystem.remove(),  CONTEXT_AF.data.duration);
     },
 
+    // floating and fading animation for when the orb is release
     playAnimation: function (orb) {
         const CONTEXT_AF = this;
         orb.setAttribute('animation', {
@@ -338,12 +353,13 @@ AFRAME.registerComponent('orb-manager', {
         });
     },
 
+    // used to emit the position of the orb when it is picked up by somethin to that other clients can see players picking it up
     sendPosition: function (orb) {
         const CONTEXT_AF = this;
         const sendRate = CONTEXT_AF.data.sendRate;
         const emitPosition = () => {
             //x: 0, y: -0.1, z: 0.2 when pickedup
-            // if orb is not picked up 
+            // if orb is not picked up stop emitting
             if (orb.getAttribute("position").x != 0 && orb.getAttribute("position").y != -0.1 && orb.getAttribute("position").z != 0.2){
                 return;
             }
@@ -351,16 +367,17 @@ AFRAME.registerComponent('orb-manager', {
             let worldPos = new THREE.Vector3();
             orb.object3D.getWorldPosition(worldPos);
             //console.log(worldPos);
-;
+
+            // emit the world position of the orb every 10 ms
             CONTEXT_AF.socket.emit(CONTEXT_AF.orbPosUpdateEventName, {
                 id: orb.getAttribute("id"),
                 position: {x: worldPos.x, y: worldPos.y, z: worldPos.z},
                 room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()
             });
 
-            setTimeout(emitPosition, 1000 / sendRate); // Repeat at the defined rate
+            setTimeout(emitPosition, 1000/sendRate);
         };
     
-        emitPosition(); // Start sending
+        emitPosition(); // start calling emit position function
     }
 });
