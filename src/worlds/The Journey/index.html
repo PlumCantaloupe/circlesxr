@@ -1,0 +1,1955 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>The Journey</title>
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+        <script src="js/gallery.js"></script>
+        <script src="js/playerBuilder.js"></script>
+        <script src="js/shapeGen.js"></script>
+        <script src="js/questionAnswer.js"></script>
+        <script src="js/creationWall.js"></script>
+        
+        <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+        <script src="https://unpkg.com/aframe-render-order-component@1.1.0/dist/aframe-render-order-component.min.js"></script>
+        
+        <!-- need a user gesture to allow sound on some browsers i.e. iOS -->
+        <!--<link rel="stylesheet" href="/css/user-gesture.css">-->
+        <!-- most recent aframe release -->
+    
+</head>
+<body>
+  
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+  <!--How do I change the music it plays??-->
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      <!--Audio assets-->
+      <audio id="backgroundMusic" src="assets/audio/ACCCD_IMD3901_TermProject_Music_mixdown.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="galleryMusic" src="assets/audio/GalleryMusic.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+      <audio id="questionAudio1" src="assets/audio/Questions/Question1.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio2" src="assets/audio/Questions/Question2.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio3" src="assets/audio/Questions/Question3.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio4" src="assets/audio/Questions/Question4.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio5" src="assets/audio/Questions/Question5.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio6" src="assets/audio/Questions/Question6.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio7" src="assets/audio/Questions/Question7.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio8" src="assets/audio/Questions/Question8.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio9" src="assets/audio/Questions/Question9.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="questionAudio10" src="assets/audio/Questions/Question10.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+      <audio id="polyLine1" class ="polyLine"src="assets/audio/Poly/PolyIntro.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine2" class ="polyLine"src="assets/audio/Poly/billion.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine3" class ="polyLine"src="assets/audio/Poly/Insignificant.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine4" class ="polyLine"src="assets/audio/Poly/MeansToYou.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine5" class ="polyLine"src="assets/audio/Poly/Unique.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine6" class ="polyLine"src="assets/audio/Poly/YouCanGuide.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="polyLine7" class ="polyLine"src="assets/audio/Poly/SparkleSparkle.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+
+      <audio id="equipShape" src="assets/audio/equipShape.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="pickUpShape" src="assets/audio/pickUpShape.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="pillarMovement" src="assets/audio/pillarMovement.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="wind" src="assets/audio/Wind.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="placeGallery" src="assets/audio/placeGallery.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="portalHum" src="assets/audio/portalHum.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+      <audio id="GeaSendOff" src="assets/audio/Dialogue/GeaSendOff_Echo.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="GeaHalfway" src="assets/audio/Dialogue/GeaHalfway_Echo.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      <audio id="GeaEnd" src="assets/audio/Dialogue/GeaEnd_Echo.mp3" preload="auto" crossorigin="anonymous" ></audio>
+      
+      <a-asset-item id="worldModel" src="assets/models/mountains.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="pathModel" src="assets/models/pathExpanded.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="galleryLand" src="assets/models/galleryTerrain.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="pillar1" src="assets/models/pillarSlabs1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="pillar2" src="assets/models/pillarSlabs2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="pillar3" src="assets/models/pillarSlabs3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="pillar4" src="assets/models/pillarSlabs4.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      
+      <a-asset-item id="soulOrb" src="assets/models/soul_orb.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaHeadMod" src="assets/models/geaParts/gea_head.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaHeadEyeMod" src="assets/models/geaParts/gea_eye.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaBodyUpperMod" src="assets/models/geaParts/gea_body_upper.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaBodyLowerMod" src="assets/models/geaParts/gea_body_lower.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaShoulderLeftMod" src="assets/models/geaParts/gea_shoulder_left.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaShoulderRightMod" src="assets/models/geaParts/gea_shoulder_right.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaArmLeftMod" src="assets/models/geaParts/gea_left_arm_full.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="geaArmRightMod" src="assets/models/geaParts/gea_right_arm_full.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+
+      <a-asset-item id="polyFaceLeft" src="assets/models/portraitKeeper/portraitKeeper_face_left.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="polyFaceRight" src="assets/models/portraitKeeper/portraitKeeper_face_right.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="polyBody" src="assets/models/portraitKeeper/portraitKeeper_body.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="polyLegLeft" src="assets/models/portraitKeeper/portraitKeeper_hand_left.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="polyLegRight" src="assets/models/portraitKeeper/portraitKeeper_hand_right.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+
+      <a-asset-item id="worldModelNav" src="assets/models/navmesh.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      
+      <a-asset-item id="questionGate1" src="assets/models/gate_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="questionGate2" src="assets/models/gate_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="questionGate3" src="assets/models/gate_3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="startEndGate" src="assets/models/teleportalWhite.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="cloud1" src="assets/models/cloud1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="cloud2" src="assets/models/cloud2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="cloud3" src="assets/models/cloud3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="rockDiamond1" src="assets/models/rock_diamond.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="rockDiamond2" src="assets/models/rock_diamond_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="rockRound1" src="assets/models/rock_round.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="rockRound2" src="assets/models/rock_round_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="rockSquare1" src="assets/models/rock_square.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="rockSquare2" src="assets/models/rock_square_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="coneTree1" src="assets/models/cone_tree_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="coneTree2" src="assets/models/cone_tree_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="SphereTree1" src="assets/models/sphere_tree_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="SphereTree2" src="assets/models/sphere_tree_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="SquareTree1" src="assets/models/square_tree_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="SquareTree2" src="assets/models/square_tree_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="GalleryTree" src="assets/models/galleryTree.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="orbTree1" src="assets/models/deciduousSphereBroken1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="orbTree2" src="assets/models/deciduousSphereBroken2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+
+      <a-asset-item id="natureCluster1" src="assets/models/nature_cluster_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="natureCluster2" src="assets/models/nature_cluster_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="natureCluster3" src="assets/models/nature_cluster_3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      
+      <a-asset-item id="cubeRockCluster" src="assets/models/grass_cube.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="diamondRockCluster" src="assets/models/grass_diamond.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <a-asset-item id="sphereRockCluster" src="assets/models/grass_sphere.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED]-->
+    <circles-manager-avatar/>
+
+    <!--The Journey begins here... Add all the geometry below this point for the actual world-->
+      <!--Music-->
+      <a-entity position="-255 0 -10" id="pathEffect"circles-sound="type:music; src:#backgroundMusic; autoplay:true; loop:true; volume:0.05;"></a-entity>
+      <a-entity position="4 0 1100" id="galleryEffect"circles-sound="type:music; src:#galleryMusic; autoplay:false; loop:true; volume:0.1;"></a-entity>
+      <a-entity position="-46 38 -65" id="silentEffect" circles-sound="type:music; src:#wind; autoplay:false; loop:true; volume:0.1"></a-entity>
+      <!--Wind-->
+      <a-entity position="-46 38 -65" id="windEffect" circles-sound="type:dialogue; src:#wind; autoplay:true; loop:true; volume:10;"></a-entity>
+      
+      <script>
+        //used to toggle the player movement
+        function playerLock(lockState)
+        {
+            console.log("playerLock state: "+lockState)
+            //stopping player movement
+            if(lockState == true)
+            {
+                //disables player movement while the player is holding the object in their hand.
+                CIRCLES.getAvatarRigElement().setAttribute("movement-controls","enabled:false")
+            }
+            else
+            {
+                //reenables player movement after the player has attached the object to themselves.
+                CIRCLES.getAvatarRigElement().setAttribute("movement-controls","enabled:true")
+            }
+        }
+      </script>
+      
+      
+      
+      <!--This can create objects
+      A series of pillars that spawn different items for now-->
+
+      <!--Question 1-->
+        <a-entity position="-252 0 -8" rotation="0 -90 0" id="question1" circles-sound="type:dialogue;src:#questionAudio1;autoplay:false;volume:1;state:pause" class="questionSet" questionset="questionNum:1; question:What's your favourite colour?; locationID:torso">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Red; colour:red" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Orange; colour:orange" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Yellow; colour:yellow" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Green; colour:green" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Blue; colour:blue" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Purple; colour:purple" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:true" geometry="primitive:sphere; radius:0.5;"  material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" >
+          <a-text color="white" value="Start Question" align="center" position="0 0.8 0">
+          <a-plane material="color:black;transparent:true;opacity:0.6" width="1.8" height="0.3"></a-plane>
+          </a-text>
+          </a-entity>
+        </a-entity>
+      <!--Question 2-->
+        <a-entity position="-157 0 21" rotation="0 -135 0" id="question2" circles-sound="type:dialogue;src:#questionAudio2;autoplay:false;volume:3;state:pause" class="questionSet" questionset="questionNum:2; question:What emotion do you wish you had better control of in yourself?; locationID:head">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Anger; shape:octahedron; colour:red;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Contempt; shape:dodecahedron; colour:purple;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Disgust; shape:box; colour:lime;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Happiness; shape:torus; colour:yellow;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Fear; shape:cone; colour:orange;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Sadness; shape:sphere; colour:indigo;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 3-->
+        <a-entity position="-61 0 84" rotation="0 -75 0" id="question3" circles-sound="type:dialogue;src:#questionAudio3;autoplay:false;volume:1;state:pause" class="questionSet" questionset="questionNum:3; question:Do you think true love exists?; locationID:bodyAccessory1">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Yes; colour:pink;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:No; colour:cyan;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:I don't know; colour:magenta;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 4-->
+        <a-entity position="-53 5.95 4" rotation="0 30 0" id="question4" circles-sound="type:dialogue;src:#questionAudio4;autoplay:false;volume:1;state:pause" class="questionSet" questionset="questionNum:4; question:What form of art is most moving to you?; locationID:bodyAccessory2">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Music; shape:octahedron;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Film; shape:torus;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Performance; shape:sphere;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Visual; shape:cone;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 5-->  
+        <a-entity position="-98 22.75 -97" rotation="0 -30 0" id="question5" circles-sound="type:dialogue;src:#questionAudio5;autoplay:false;volume:2;state:pause" class="questionSet" questionset="questionNum:5; question:When you are thinking, where do you spend the most time?; locationID:lEye">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Past; shape:box;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Present; shape:cylinder" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Future;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 6-->
+        <a-entity position="-10 27.45 -103" rotation="0 -145 0" id="question6" circles-sound="type:dialogue;src:#questionAudio6;autoplay:false;volume:1;state:pause" class="questionSet" questionset="questionNum:6; question:What is success?; locationID:rEye">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Power; shape:octahedron" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Money; colour:green" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Fame; shape:cone;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Love; shape:torus;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Fulfillment; shape:sphere" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 7-->
+        <a-entity position="10 0.35 -15" rotation="0 -170 0" id="question7" circles-sound="type:dialogue;src:#questionAudio7;autoplay:false;volume:1;state:pause" class="questionSet" questionset="questionNum:7; question:Which is worse?; failing or never trying; locationID:headAccessory1">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Failing; colour:orange" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Never trying;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:I don't know; shape:box" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 8-->
+        <a-entity position="38.5 0.05 40.35" rotation="0 -135 0" id="question8" circles-sound="type:dialogue;src:#questionAudio8;autoplay:false;volume:2;state:pause" class="questionSet" questionset="questionNum:8; question:What does crying mean?; locationID:mouth">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Weakness; shape:sphere;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Strength; shape:octahedron;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:That you are human; shape:cylinder;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:I don't know;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;" material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 9-->
+        <a-entity position="105 0 33.35" rotation="0 -50 0" id="question9" circles-sound="type:dialogue;src:#questionAudio9;autoplay:false;volume:2;state:pause" class="questionSet" questionset="questionNum:9; question:Where's your soul located?; locationID:headAccessory2">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Heart; shape:cylinder;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Head; shape:icosahedron;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Blood; colour:red;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Beyond the body; shape:torus;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:There isn't a soul; colour:mint;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;"  material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+      <!--Question 10-->
+        <a-entity position="166.4 0 -2.63" rotation="0 -180 0" id="question10" circles-sound="type:dialogue;src:#questionAudio10;autoplay:false;volume:2;state:pause" class="questionSet" questionset="questionNum:10; question:Is there anything beyond life?; locationID:hips">
+          <a-entity class="button interactive choicePillar" choicepillar="answer:Yes; colour:yellow;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:No; colour:purple;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive choicePillar" choicepillar="answer:I don't know; colour:cyan;" geometry="primitive:cylinder; radius:0.25;"></a-entity>
+          <a-entity class="button interactive startButton" startbutton="enabled:false" geometry="primitive:sphere; radius:0.5;"  material="color:#968FC2;emissive:blue" animation="property: material.emissiveIntensity; from: 0.0; to: 1; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;" ></a-entity>
+        </a-entity>
+
+        
+        
+        <!--Spawn point for player-->
+        <a-entity circles-checkpoint circles-spawnpoint position="-253.3 0 -44.3"></a-entity>
+        <a-entity circles-checkpoint position="4.5 0 1106" id="galleryEntrance"></a-entity>
+        <a-entity circles-checkpoint position="163.5 0 40" id="pathEnd"></a-entity>
+          <!--Gea Rig (Whole body)-->
+          <a-entity   id="Gea"
+                    scale="4 4 4"
+                    position="-220 2 -35.910"
+                    rotation="0 161.219 0"
+                    
+                    animation__followPath="property: rotation; from: 0 161.219 0; to: 0 230 0; dur: 5000; easing: easeInOutSine; startEvents: followThePath-animation;"
+                    animation__returnToStart="property: rotation; from: 0 230 0; to: 0 161.219 0; dur: 5000; easing: easeInOutSine; startEvents: returnToStartBody-animation;"
+                    animation__laugh1="property: position; from: -220 2 -35.910; to:  -220 3 -35.910; dur: 200; easing: easeInOutSine; startEvents: laugh1-animation;"
+                    animation__laugh2="property: position; from: -220 3 -35.910; to:  -220 4 -35.910; dur: 200; easing: easeInOutSine; startEvents: laugh2-animation;"
+                    animation__laugh3="property: position; from: -220 4 -35.910; to:  -220 5 -35.910; dur: 200; easing: easeInOutSine; startEvents: laugh3-animation;"
+                    animation__laughReturn="property: position; from: -220 5 -35.910; to:  -220 2 -35.910; dur: 2000; easing: easeInOutSine; startEvents: laughReturn-animation;"
+                    animation__endIntro="property: position; from: -220 2 -35.910; to: -220 -35 -35.910; dur: 5000; easing: easeInOutSine; startEvents: exit-animation;"
+
+                    animation__midEntry="property: position; from: -61.075 15.298 -138.532; to: -61.075 42 -138.532; dur: 3000; easing: easeInOutSine; startEvents: GeaMidEntry-animation;"
+                    animation__wow="property: position; from: -61.075 42 -138.532; to: -61.075 45 -138.532; dur: 500; easing: easeInOutSine; startEvents: wow-animation;"
+                    animation__wowReturn="property: position; from: -61.075 45 -138.532; to: -61.075 42 -138.532; dur: 500; easing: easeInOutSine; startEvents: wowReturn-animation;"
+                    animation__midExit="property: position; from: -61.075 42 -138.532; to: -61.075 10 -138.532; dur: 3000; easing: easeInOutSine; startEvents: GeaMidExit-animation;"
+
+                    animation__endEntry="property: position; from: 184.885 -25.264 22.221; to: 184.885 9.120 22.221; dur: 3000; easing: easeInOutSine; startEvents: GeaEndEntry-animation;">
+              <!--Gea Head Rig-->      
+              <a-entity animation__RotIdle="property: rotation; from: -3 -3 0; to: 3 3 0; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;">
+              <a-gltf-model   id="GeaHead" 
+                                gltf-model="#geaHeadMod" 
+                                scale="1 1 1"
+                                position="0.4 2.9 0"
+                                rotation="0 4.290 -15"
+
+                                animation__reset="property: rotation; to: 0 4.290 -15; dur: 2000; easing: easeInOutSine; startEvents: resetHead-animation;"
+
+                                animation__PosIdle="property: position; from: 0.4 2.9 0; to: 0.4 2.8 0; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;"
+                                animation__lookPath="property: rotation; to: 0.076 66.134 -4.376; dur: 1500; easing: easeInOutSine; startEvents: lookPath-animation;"
+                                animation__lookBack="property: rotation; from: 0.076 66.134 -4.376; to: 0.076 -63.622 -18.414; dur: 1500; easing: easeInOutSine; startEvents: lookBack-animation;"
+                                animation__returnToStart="property: rotation; from: 0.076 -63.622 -18.414; to: 0 4.290 -15; dur: 5000; easing: easeInOutSine; startEvents: returnToStartHead-animation;"
+                                animation__goOn="property: rotation; from: 0 4.290 -15; to: 0.076 56.426 -18.414; dur: 1000; easing: easeInOutSine; startEvents: goOn1-animation;"
+                                animation__goOn2="property: rotation; from: 0.076 56.426 -18.414; to: 0 4.290 -15; dur: 1000; easing: easeInOutSine; startEvents: goOn2-animation;"
+                                animation__headExit="property: rotation; from: 0.076 66.134 -4.376; to: -1.236 15.617 18.462; dur: 1500; easing: easeInOutSine; startEvents: headExit-animation;"
+
+                                animation__midEntry="property: rotation; to: -0.009 0.763 -26.836; dur: 2000; easing: easeInOutSine; startEvents: entryMidHead-animation;"
+                                animation__midExit="property: rotation; to: 1.027 -8.689 26.790; dur: 2000; easing: easeInOutSine; startEvents: headMidExit-animation;"
+
+                                animation__gallery1="property: rotation; to: 0.076 56.426 -18.414; dur: 1000; easing: easeInOutSine; startEvents: gallery1-animation;"
+                                animation__gallery2="property: rotation; to: 0 4.290 -15; dur: 1000; easing: easeInOutSine; startEvents: gallery2-animation;"
+                                
+                                circles-sound="type:dialogue; src:#GeaSendOff; autoplay:ture; volume: 10;">
+                </a-gltf-model>
+            </a-entity>
+            <!--Gea Body Rig-->
+            <a-entity id="GeaBody">
+                <a-gltf-model   id="BodyUpper" 
+                                gltf-model="#geaBodyUpperMod" 
+                                scale="1 1 1"
+                                position="0 1.1 0"
+                                rotation="0 0 -10"
+                                animation__PosIdle="property: position; from: 0 1.1 0; to: 0 1.2 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+                <a-gltf-model   id="BodyLower" 
+                                gltf-model="#geaBodyLowerMod" 
+                                scale="1 1 1"
+                                position="0 0 0"
+                                rotation="0 0 0"
+                                animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+            </a-entity>
+            <!--Gea Arms Rig-->
+            <a-entity id="GeaArms">
+              <!--Gea Left Arm Rig-->
+                <a-entity   id="GeaArmLeft"
+                            position="0 2 -2"
+                            rotation="0 -25 0"
+
+                            animation__reset="property: rotation; to: 0 -25 0; dur: 2500; easing: easeInOutSine; startEvents: resetLeftArm-animation;"
+
+                            animation__point="property: rotation; from: 0 -25 0; to: 23.674 -2.720 -10.904; dur: 2500; easing: easeInOutSine; startEvents: armPath-animation;"
+                            animation__down="property: rotation; from: 23.674 -2.720 -10.904; to: 0 -25 0; dur: 2500; easing: easeInOutSine; startEvents: armDown-animation;"
+                            
+                            animation__leftArmExit="property: rotation; to: 82.528 -101.239 -90.444; dur: 2500; easing: easeInOutSine; startEvents: leftArmExit-animation;"
+                            animation__raiseArm="property: rotation; to: -7.724 -68.326 39.867; dur: 2500; easing: easeInOutSine; startEvents: raiseLeftArm-animation;"
+
+                            animation__shurg="property: position; to: 0 2.2 -2; dur: 500; easing: easeInOutSine; startEvents: shurgLeftArm-animation;"
+                            animation__endShurg="property: position; to: 0 2 -2; dur: 500; easing: easeInOutSine; startEvents: shurgEndLeftArm-animation;">
+                    <!--Gea Shoulder Rig-->
+                    <a-gltf-model   id="ShoulderLeft" 
+                                    gltf-model="#geaShoulderLeftMod" 
+                                    scale="1 1 1"
+                                    position="0 0 0"
+                                    rotation="0 0 0"
+                                    animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1000; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                    <!--Gea arm Rig-->
+                    <a-gltf-model   id="ArmLeft" 
+                                    gltf-model="#geaArmLeftMod" 
+                                    scale="1 1 1"
+                                    position="0 0 0"
+                                    rotation="0 0 0"
+                                    animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1300; easing: easeInOutSine;  dir: alternate;"
+                                    animation__RotIdle="property: rotation; from: 0 0 0; to: 8 -8 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                </a-entity>
+                <!--Gea Right Arm Rig-->
+                <a-entity   id="GeaArmRight"
+                            position="0 2 2"
+                            rotation="0 25 0"
+                            
+                            animation__reset="property: rotation; to: 0 25 0; dur: 2500; easing: easeInOutSine; startEvents: resetRightArm-animation;"
+
+                            animation__teleMidPos="property: rotation; from: 0 25 0; to: -83.775 111.249 -92.483; dur: 2500; easing: easeInOutSine; startEvents: rightArmExit-animation;"
+                            animation__raiseArm="property: rotation; to: 6.722 77.589 38.492; dur: 2500; easing: easeInOutSine; startEvents: raiseRightArm-animation;"
+                            
+                            animation__shurg="property: position; to: 0 2.2 2; dur: 500; easing: easeInOutSine; startEvents: shurgRightArm-animation;"
+                            animation__endShurg="property: position; to: 0 2 2; dur: 500; easing: easeInOutSine; startEvents: shurgEndRightArm-animation;">
+                            <!--Gea Shoulder Rig-->
+                    <a-gltf-model   id="ShoulderRight" 
+                            gltf-model="#geaShoulderRightMod" 
+                            scale="1 1 1"
+                            position="0 0 0"
+                            rotation="0 0 0"
+                            animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1200; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                    <!--Gea arm Rig-->
+                    <a-gltf-model   id="ArmRight" 
+                                    gltf-model="#geaArmRightMod" 
+                                    scale="1 1 1"
+                                    position="0 0 0"
+                                    rotation="0 0 0"
+                                    animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;"
+                                    animation__RotIdle="property: rotation; from: 0 0 0; to: -8 8 0; loop: true; dur: 2300; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>                        
+                </a-entity>
+            </a-entity>
+        </a-entity>
+        <!--Path Environment-->
+        <a-entity   id="path"> 
+          <a-gltf-model   id="world" 
+                          gltf-model="#worldModel" 
+                          scale="1.5 1.5 1.5"
+                          position="0 0.1 0">
+          </a-gltf-model>
+          <a-entity       geometry="primitive: box; width: 60; height: 1; depth: 60"
+                          position="-169.481 -2.032 -91.772"
+                          material="color: rgb(86, 171, 219)">
+          </a-entity>
+          <a-entity       geometry="primitive: box; width: 80; height: 1; depth: 80"
+                          position="138.710 -2.102 87.717"
+                          material="color: rgb(86, 171, 219)">
+          </a-entity>
+          <a-gltf-model   id="worldNav" 
+                          nav-mesh 
+                          visible="false" 
+                          gltf-model="#worldModelNav" 
+                          scale="1.5 1.5 1.5"
+                          class="interactive"
+                          position="0 0.1 0">
+          </a-gltf-model>
+      </a-entity>
+      <!--Gallery Environment-->
+      <a-entity id="gallery">
+          <a-gltf-model   id="galleryLand" 
+                          gltf-model="#galleryLand" 
+                          scale="1.5 1.5 1.5"
+                          position="0 0.1 1178.742">
+          </a-gltf-model>
+      </a-entity>
+      <!--World Path-->
+      <a-entity   id="world"> 
+          <a-entity   id="Path" >
+              <a-gltf-model   id="WalkingPath" 
+                              gltf-model="#pathModel" 
+                              scale="1.5 1.5 1.5"
+                              position="0 0.1 0">
+              </a-gltf-model>
+          </a-entity>
+          <a-entity       geometry="primitive: box; width: 60; height: 1; depth: 60"
+                          position="-169.481 -2.032 -91.772"
+                          material="color: rgb(86, 171, 219)">
+          </a-entity>
+          <a-entity       geometry="primitive: box; width: 80; height: 1; depth: 80"
+                          position="138.710 -2.102 87.717"
+                          material="color: rgb(86, 171, 219)">
+          </a-entity>
+          <!--World Nav Mesh-->
+          <a-gltf-model   id="worldNav" 
+                          nav-mesh 
+                          visible="false" 
+                          gltf-model="#worldModelNav" 
+                          scale="1.5 1.5 1.5"
+                          position="0 0.1 0">
+          </a-gltf-model>
+      </a-entity>
+      <!--Path Gates-->
+      <a-entity id="thePath">
+        <a-entity   id="gates"> 
+            <a-gltf-model   class="gate" 
+                            gltf-model="#questionGate3"
+                            position="-255 0 -16.21"
+                            rotation="0 175 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate" 
+                            gltf-model="#questionGate1"
+                            position="-169.709 0 9.951"
+                            rotation="0 -117.537 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate2"
+                            position="-75.773 0 87.645;"
+                            rotation="0 -76.165 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate3"
+                            position="-42.538 1.493 19.087;"
+                            rotation="0 32.012 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate2"
+                            position="-101.882 15.258 -85.408;"
+                            rotation="0 175.700 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate1"
+                            position="-18.959 25.643 -112.848;"
+                            rotation="0 -135.298 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate3"
+                            position="7.058 -0.249 -27.298;"
+                            rotation="0 7.273 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate2"
+                            position="28.196 0 31.555;"
+                            rotation="0 37.267 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate3"
+                            position="93.750 0 41.333;"
+                            rotation="0 -52.729 0">
+            </a-gltf-model>
+            <a-gltf-model   class="gate"  
+                            gltf-model="#questionGate1"
+                            position="156.464 0 -6.523;"
+                            rotation="0 99.891 0">
+            </a-gltf-model>
+            <a-gltf-model   id="startGate"  
+                            gltf-model="#startEndGate"
+                            position="-256.571 0 -63.71"
+                            rotation="0 196.6 0"
+                            scale="1.5 1.5 1.5">
+            </a-gltf-model>
+            <!--Ending Gates-->
+            <a-gltf-model
+              id="endGate"  
+              gltf-model="#startEndGate"
+              position="163 0 45"
+              rotation="0 0 0"
+              scale="1.5 1.5 1.5">
+                <a-entity
+                geometry="primitive:plane;width:1.05;height:1.8"
+                material="emissive:#291aff;colour:#ffffff"
+                rotation="0 180 0"
+                position="0 6.1 0"
+                id="endPortal" 
+                visible="false"
+                scale="0 0 0"
+                portal
+                circles-interactive-object 
+                circles-sendpoint="target:#galleryEntrance;">
+                </a-entity>
+            </a-gltf-model>
+            
+        </a-entity>
+        <!--World Geo-->
+        <a-entity id="worldGeo">
+          <!--Clouds-->
+            <a-entity id="clouds">
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud1"
+                                position="97.388 95.235 -139.466"
+                                rotation="0 90 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud2"
+                                position="184.227 94.977 -1.512"
+                                rotation="0 0 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud3"
+                                position="80.634 66.273 80.826"
+                                rotation="0 0 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud1"
+                                position="-174.412 111.356 80.826"
+                                rotation="0 90 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud2"
+                                position="-91.888 79.355 -72.157"
+                                rotation="0 0 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+                <a-gltf-model   class="cloud"  
+                                gltf-model="#cloud3"
+                                position="-244.546 81.844 -52.597"
+                                rotation="0 0 0"
+                                scale="20 20 20">
+                </a-gltf-model>
+            </a-entity>
+            <!--Hills-->
+            <a-entity id="hills">
+                <a-entity   class="hill"
+                            position="-153.907 -4 -25.353;"
+                            geometry="primitive: sphere; radius: 16;" 
+                            material="color:rgb(103,121,185); side: double;">
+                </a-entity>
+                <a-entity   class="hill"
+                            position="-141.049 -3.566 73.792;"
+                            geometry="primitive: sphere; radius: 8;" 
+                            material="color:rgb(43, 64, 99); side: double;">
+                </a-entity>                    
+                <a-entity   class="hill"
+                            position="-259.592 -4 -158.805;"
+                            geometry="primitive: sphere; radius: 20;" 
+                            material="color:rgb(11, 112, 120); side: double;">
+                </a-entity>
+                <a-entity   class="hill"
+                            position="158.406 -8.424 139.269;"
+                            geometry="primitive: sphere; radius: 20;" 
+                            material="color:rgb(11, 112, 120); side: double;">
+                </a-entity>
+                <a-entity   class="hill"
+                            position="39 -6 -46;"
+                            geometry="primitive: sphere; radius: 20;" 
+                            material="color:rgb(11, 112, 120); side: double;">
+                </a-entity>
+                <a-entity   class="hill"
+                            position="12 -6 71;"
+                            geometry="primitive: sphere; radius: 20;" 
+                            material="color:rgb(43, 64, 99); side: double;">
+                </a-entity>
+                <a-entity   class="hill"
+                            position="118 -8 -85;"
+                            scale="1 0.5 1"
+                            geometry="primitive: sphere; radius: 60;" 
+                            material="color:rgb(103,121,185); side: double;">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 1-->
+            <a-entity   id="manualCluster1"
+                        position="151 0 39.5"
+                        rotation="0 -53.2 0"
+                        scale="1.5 1.5 1.5">
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="1.741 0 17.760;"
+                            rotation="0 0 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-14.291 0 10.396"
+                            rotation="0 0 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-3.079 0 0.565"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="0.393 0 17.210"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-8.923 0 21.252"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-15.566 0 -2.564"
+                            rotation="0 0 0"
+                            scale="1.5 1.5 1.5">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare2"
+                            position="-15.955 0 19.307"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-6.563 0 7.955"
+                            rotation="0 0 0"
+                            scale="0.465 0.465 0.465">
+                </a-entity>
+
+            </a-entity>
+            <!--Manual Environment Cluster 2-->
+            <a-entity   id="manualCluster2"
+                        position="-72.125 0 32.982"
+                        rotation="0 40.534 0"
+                        scale="1.5 1.5 1.5">
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="1.741 0 17.760;"
+                            rotation="0 70 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-14.291 0 10.396"
+                            rotation="0 -75 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-3.079 0 0.565"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-6.351 0 15.147"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="-8.923 0 21.252"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-11.589 0 -2.039"
+                            rotation="0 -120 0"
+                            scale="1.5 1.5 1.5">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-15.955 0 19.307"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-7.291 0 8.520"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-21.802 0 1.557"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 3-->
+            <a-entity   id="manualCluster3"
+                        position="58.457 0 9.945"
+                        rotation="0 0 0"
+                        scale="1 1 1">
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="3.874 0 17.760;"
+                            rotation="0 70 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-14.281 0 -3.653"
+                            rotation="0 -75 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="1.917 0 -3.266"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-2.027 0 6.389"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-16.417 0 12.322"
+                            rotation="0 150 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-12.103 0 24.008"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-5.910 0 15.014"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-24.417 0 4.760"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="-9.959 0 4.701"
+                            rotation="0 90 0"
+                            scale="0.5 0.5 0.5">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 4-->
+            <a-entity   id="manualCluster4"
+                        position="-168.960 0 80.676"
+                        rotation="0 0 0"
+                        scale="1 1 1">
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-2.432 0 19.996;"
+                            rotation="0 180 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-14.281 0 -3.653"
+                            rotation="0 0 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="1.917 0 -3.266"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-6.987 0 8.285"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-7.453 0 -12.250"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-24.473 0 17.133"
+                            rotation="0 180 0"
+                            scale="1.2 1.2 1.2">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-15.490 0 11.653"
+                            rotation="0 90 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-13.450 0 18.476"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="0.081 0 15.014"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-16.883 0 3.962"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="-5.748 0 0.276"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 5-->
+            <a-entity   id="manualCluster5"
+                        position="-222.986 0 -124.420"
+                        rotation="0 0 0"
+                        scale="1.3 1.3 1.3">
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-2.432 0 19.996;"
+                            rotation="0 180 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-6.783 0 7.977"
+                            rotation="0 0 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-3.381 0 -9.624"
+                            rotation="0 90 0"
+                            scale="1.3 1.3 1.3">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-9.723 0 0.442"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="5.083 0 -2.443"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-24.473 0 17.133"
+                            rotation="0 180 0"
+                            scale="1.2 1.2 1.2">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-15.490 0 11.653"
+                            rotation="0 90 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="-16.228 0 30.597"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-25.928 0 0.856"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="10.236 0 14.607"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-23.908 0 26.722"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-11.105 0 20.212"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-16.883 0 3.962"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="3.656 0 18.765"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-11.400 0 -7.326"
+                            rotation="0 0 0"
+                            scale="0.5 0.5 0.5">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 6-->
+            <a-entity   id="manualCluster6"
+                        position="-189.512 0 32.796"
+                        rotation="0 0 0"
+                        scale="1.5 1.5 1.5">
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="-29.359 0 8.545;"
+                            rotation="0 70 0"
+                            scale="0.8 0.8 0.8">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-16.045 0 -6.843"
+                            rotation="0 -75 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="-0.483 0 6.491;"
+                            rotation="0 22 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="0 0 0"
+                            rotation="0 0 0"
+                            scale="1.2 1.2 1.2">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-11.287 0 17.751"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-25.230 0 18.541"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-18.145 0 26.737"
+                            rotation="0 150 0"
+                            scale="1.3 1.3 1.3">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-29.038 0 -4.915"
+                            rotation="0 180 0"
+                            scale="1.3 1.3 1.3">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="0 0 23.086"
+                            rotation="0 150 0"
+                            scale="1.15 1.15 1.15">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-21.866 0 9.634"
+                            rotation="0 150 0"
+                            scale="0.825 0.825 0.825">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-20.578 0 15.021"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="-8.413 0 27.687"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-12.753 0 0"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="1.701 0 5.320"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="-34.409 0 3.038"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 7-->
+            <a-entity   id="manualCluster7"
+                        position="-3.380 0 19.355"
+                        rotation="0 -61.891 0"
+                        scale="1 1 1">
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="10.567 0 23.532;"
+                            rotation="0 180 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-27.392 0 -9.128"
+                            rotation="0 120 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-8.570 0 10.264"
+                            rotation="0 0 0"
+                            scale="1.5 1.5 1.5">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-32.438 0 0.702"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-7.453 0 -12.250"
+                            rotation="0 120 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-24.473 0 22.695"
+                            rotation="0 180 0"
+                            scale="1.2 1.2 1.2">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-0.088 0 28.588"
+                            rotation="0 30 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="2.461 0 -1.167"
+                            rotation="0 180 0"
+                            scale="1.25 1.25 1.25">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-24.407 0 11.217"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="14.060 0 -9.530"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="-12.447 0 22.794"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-14.944 0 -1.398"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="0.088 0 17.084"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+            </a-entity>
+            <!--Manual Environment Cluster 8-->
+            <a-entity   id="manualCluster8"
+                        position="-84.799 0 100.286"
+                        rotation="0 0 0"
+                        scale="1 1 1">
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="1.741 0 17.760;"
+                            rotation="0 0 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-14.291 0 10.396"
+                            rotation="0 0 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-3.079 0 0.565"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="0.393 0 17.210"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-8.923 0 21.252"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-15.566 0 -2.564"
+                            rotation="0 0 0"
+                            scale="1.5 1.5 1.5">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare2"
+                            position="-15.955 0 19.307"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockRound1"
+                            position="-6.563 0 7.955"
+                            rotation="0 0 0"
+                            scale="0.465 0.465 0.465">
+                </a-entity>
+
+            </a-entity>
+            <!--Manual Environment Cluster 9-->
+            <a-entity   id="manualCluster9"
+                        position="64.998 0 -139.545"
+                        rotation="0 0 0"
+                        scale="1.4 1.4 1.4">
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-2.432 0 19.996;"
+                            rotation="0 180 0"
+                            scale="1.4 1.4 1.4">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-14.281 0 -3.653"
+                            rotation="0 0 0"
+                            scale="1.14 1.14 1.14">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="1.917 0 -3.266"
+                            rotation="0 90 0"
+                            scale="0.95 0.95 0.95">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-6.987 0 8.285"
+                            rotation="0 0 0"
+                            scale="0.63 0.63 0.63">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-7.453 0 -12.250"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-24.473 0 17.133"
+                            rotation="0 180 0"
+                            scale="1.2 1.2 1.2">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-15.490 0 11.653"
+                            rotation="0 90 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-13.450 0 18.476"
+                            rotation="0 0 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="5.637 0 6.893"
+                            rotation="0 0 0"
+                            scale="0.85 0.85 0.85">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond1"
+                            position="0.081 0 15.014"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockDiamond2"
+                            position="-16.883 0 3.962"
+                            rotation="0 90 0"
+                            scale="1 1 1">
+                </a-entity>
+                <a-entity   class="rock"  
+                            gltf-model="#rockSquare1"
+                            position="-5.748 0 0.276"
+                            rotation="0 0 0"
+                            scale="0.75 0.75 0.75">
+                </a-entity>
+            </a-entity>
+            <!--Trees-->
+            <a-entity id="Trees">
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-35.542 4.279 -16.737;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-21.504 28.761 -129.327;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="-104.016 -0.653 45.542;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-20.827 -0.653 80.282;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-156.959 0 0;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-264.561 0 -22.770;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-75.327 6.767 -5.314;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-21.782 19.414 -76.368;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-151.909 0 117.416;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="-83.416 13.595 -59.229;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#coneTree1"
+                            position="51.336 0 0;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="-131.198 0 93.501;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="-36.011 0 97.872;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree1"
+                            position="19.781 0 -93.793;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="48.317 0 62.931;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SquareTree2"
+                            position="123.484 0 46.323;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="-109.868 6.454 -142.821;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="-158.492 -0.653 67.305;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="95.816 -0.653 13.040;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="46.951 -0.653 97.175;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree1"
+                            position="-207.535 -0.653 -73.078;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="159.606 -0.653 -147.326;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#SphereTree2"
+                            position="189.126 -0.653 -46.289;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="-209.139 0 -144.619;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-201.253 0 -14.901;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="-172.043 0 52.951;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="-71.250 0 101.053"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree1"
+                            position="98.152 0 0;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="26.244 0 0;"
+                            rotation="0 0 0">
+                </a-entity>
+                <a-entity   class="tree"  
+                            gltf-model="#orbTree2"
+                            position="182.822 0 39.633;"
+                            rotation="0 0 0">
+                </a-entity>
+              </a-entity>
+              <!--Pre-made Clusters-->
+              <a-entity   class="cluster"  
+                          gltf-model="#cubeRockCluster"
+                          position="-198.352 0 -144.976;"
+                          rotation="0 -103.613 0"
+                          scale="1 1 1">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#cubeRockCluster"
+                          position="-130.969 0 24.562;"
+                          rotation="0 174.291 0"
+                          scale="1 1 1">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#cubeRockCluster"
+                          position="-261.190 0 8.938;"
+                          rotation="0 -120.284 0"
+                          scale="1 1 1">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#diamondRockCluster"
+                          position="-120 0 49.463;"
+                          rotation="0 55.700 0"
+                          scale="1 1 1">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#diamondRockCluster"
+                          position="-62.684 0 99.424;"
+                          rotation="0 55.700 0"
+                          scale="0.7 0.7 0.7">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#sphereRockCluster"
+                          position="56.602 0 63.792;"
+                          rotation="0 -76.247 0"
+                          scale="1 1 1">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#sphereRockCluster"
+                          position="89.913 0 77.105;"
+                          rotation="0 -76.247 0"
+                          scale="0.7 0.7 0.7">
+              </a-entity>
+              <a-entity   class="cluster"  
+                          gltf-model="#sphereRockCluster"
+                          position="-174.972 -0.492 -44.181;"
+                          rotation="0 -130.204 0"
+                          scale="1 1 1">
+              </a-entity>
+            </a-entity>
+        </a-entity>
+      </a-entity>
+      <!--Path end protal-->
+      <a-gltf-model   
+        id="galleryGate"  
+        gltf-model="#startEndGate"
+        position="4.634 0 1098"
+        rotation="0 0 0"
+        scale="1.5 1.5 1.5">
+        <a-entity
+        geometry="primitive:plane;width:1.05;height:1.8"
+        material="emissive:#291aff;colour:#ffffff"
+        rotation="0 0 0"
+        position="0 6.1 0"
+        id="galleryPortal" 
+        visible="true"
+        scale="8 8 8"
+        portal
+        circles-interactive-object 
+        circles-sendpoint="target:#pathEnd;"
+        >
+        </a-entity>
+      </a-gltf-model>
+      <!--Gallery-->
+      <a-entity id="theGallery"
+        position="1.7 0 1176"
+        rotation="0 -15.6 0"
+        scale="1.5 1.5 1.5"
+        visible="false">
+        <!--Gallery skydome-->
+        <a-entity environment="preset: starry; ground: none;"
+                  scale="1 1 1"
+                  position="0 1 0"
+                  id="gallerySky"></a-entity>
+
+        <a-entity gltf-model="#GalleryTree" rotation="0 -40 0" position="0.5 -0.75 2.1" scale="2 2 2"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="-5.75 13 10" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="-7.18 13 -3" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="1.757 8.9 -5.5" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="14.5 15.34 -1.3" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="17.35 12.38 8.79" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        <a-entity geometry="primitive:sphere; radius:0.5;"  position="0.79 11.5 19.33" material="color:#f79900;emissive:yellow" animation="property: material.emissiveIntensity; from: 0.25; to: 1; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;"></a-entity>
+        
+        <!--Poly Rig (Whole body)-->
+        <a-entity   id="Poly"
+                    scale="0.75 0.75 0.75"
+                    position="-12.1 2 -19.16"
+                    rotation="0 100 0"
+                    animation__PosIdle="property: position; from: -12.1 2 -19.16; to: -12.1 2.2 -19.16; loop: true; dur: 1300; easing: easeInOutSine;  dir: alternate;">
+          <!--Poly Head Rig-->      
+          <a-entity   id="PolyHead">
+                <a-gltf-model   id="PolyHead_Left"
+                                gltf-model="#polyFaceLeft" 
+                                scale="1 1 1"
+                                position="0 0 0"
+                                rotation="0 0 0"
+                                animation__PosIdle="property: position; from: 0 0 0; to: 0 0.04 0; loop: true; dur: 700; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+                <a-gltf-model   id="PolyHead_Right"
+                                gltf-model="#polyFaceRight" 
+                                scale="1 1 1"
+                                position="0 0 0"
+                                rotation="0 0 0"
+                                animation__PosIdle="property: position; from: 0 0 0; to: 0 0.04 0; loop: true; dur: 1000; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+          </a-entity>
+        <!--Poly Body Rig-->
+          <a-gltf-model   id="polyBody" 
+                          gltf-model="#polyBody" 
+                          scale="1 1 1"
+                          position="0 0 0"
+                          rotation="0 0 0"
+                          class="interactive"
+                          polytalk
+                          animation__PosIdle="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1000; easing: easeInOutSine;  dir: alternate;">
+          </a-gltf-model>
+          <!--Poly Left Leg Rig-->
+                <a-gltf-model id="PolyLeg_Left"
+                      gltf-model="#polyLegLeft" 
+                      scale="1 1 1"
+                      position="0 0 0"
+                      rotation="-33.064 -53.885 -11.803"
+                      animation__RotIdle="property: rotation; from: -26.219 -54.968 -8.194; to: -44.572 -46.111 -24.130; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+                <a-gltf-model id="PolyLeg_Right"
+                      gltf-model="#polyLegRight" 
+                      scale="1 1 1"
+                      position="0 0 0"
+                      rotation="33.064 53.895 -11.803"
+                      animation__RotIdle="property: rotation; from: 26.219 54.968 -8.194; to: 44.572 46.111 -24.130; loop: true; dur: 2200; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+        </a-entity>
+
+      
+        
+        <!--Info Board-->
+        <a-entity position="-5.06 1.5 -22.62" rotation="0 193 0" scale="0.5 0.5 0.5" id="infoBoard" geometry="primitive:box; width:20; height:6;"material="color:#c8bdff;" creationwall>
+
+          <a-entity position="-9 2 0.2" id="questionAnswer1"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+          </a-entity>
+
+          <a-entity position="-4.5 2 0.2" id="questionAnswer2"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="0 2 0.2" id="questionAnswer3"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="4.5 2 0.2" id="questionAnswer4"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="9 2 0.2" id="questionAnswer5"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+        
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+          <a-entity position="-9 -1.5 0.2" id="questionAnswer6"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="-4.5 -1.5 0.2" id="questionAnswer7"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="0 -1.5 0.2" id="questionAnswer8"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="4.5 -1.5 0.2" id="questionAnswer9"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+          <a-entity position="9 -1.5 0.2" id="questionAnswer10"geometry="primitive:box; width:4; height:3;"material="color:#2f1d5c">
+
+            <a-text position="0 1 0.51" id="question" text="width:3.5;wrapCount:18;value:1. Text ashshshsh; align:center;color:white;baseline:top"   ></a-text>
+            <a-text position="0 -0.5 0.51" id="answer" text="width:3.5;wrapCount:20;value:Question 1 Answer; align:center;color:white;baseline:top"></a-text>
+
+          </a-entity>
+
+        </a-entity>
+        <!--Gallery stands-->
+        <a-entity position="168 0 -7.5"  class="gallerySet" galleryset></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 175 0" position="-3.14 0.348 -34.85" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 180 0" position="1.66 0.356 -34.1" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -140 0" position="5.6 0.369 -36.02" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -145 0" position="9.27 0.347 -39.26" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -163 0" position="13 0.356 -41" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 145 0" position="22.06 0.37 -40.1" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 105 0" position="25.15 0.367 -36.30" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 96 0" position="26.15 0.37 -32.19" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 94 0" position="26.86 0.363 -28" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 95 0" position="26.65 0.356 -24.08" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 125 0" position="43.14 0.37 8.66" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 93 0" position="45 0.367 13.18" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 83.5 0" position="44.54 0.37 18.329" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 77 0" position="43 0.363 22.9" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 68 0" position="41.53 0.356 27.849" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 3.75 0" position="24.39 0.37 28.29" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 36 0" position="19.88 0.367 31" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 18.4 0" position="15.25 0.37 34.117" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 65 0" position="10.7 0.363 37.05" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 68 0" position="9.1 0.356 42.47" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -77 0" position="-23.1 0.37 31.0" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -80.2 0" position="-24.5 0.367 23.93" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -70 0" position="-29.0 0.37 18.23" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -95 0" position="-30 0.363 11" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -33.5 0" position="-32.5 0.356 5.047" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -124.5 0" position="-34.8 0.439 -24.8" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -138.5 0" position="-32.8 0.367 -28.26" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -144.5 0" position="-28.9 0.37 -31.45" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -178 0" position="-24.1 0.363 -32.43" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -217 0" position="-19.2 0.356 -31.50" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -13.5 0" position="8.91 0.029 -22" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -31.1 0" position="14.76 0.08 -19.5" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -57.5 0" position="19.32 0.04 -15.14" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -68.8 0" position="22.18 0.00 -9.626" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -88 0" position="23.41 0.033 -3.19" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -90.4 0" position="23 0.038 4.247" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -110 0" position="21.22 0.08 11.27" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -119.6 0" position="18.42 0.022 17.93" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -145 0" position="14.60 -0.05 23.16" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -162 0" position="9 0.01 25.9" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -200 0" position="-8.72 0.02 24.3" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -225 0" position="-13.3 -0.02 21.67" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -234 0" position="-17 0.03 17.63" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -245 0" position="-20 0.08 12.779" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -255 0" position="-22.2 0.01 7.807" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -271 0" position="-23.1 0.198 2.28" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -288.5 0" position="-22.3 0.19 -2.38" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -301 0" position="-20.3 0.1 -7.13" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -296 0" position="-18.1 0.08 -11.73" gallerypedestal gltf-model="#pillar1"></a-entity>
+        <a-entity  class="button interactive" id="galleryPedestal" rotation="0 -302 0" position="-16.0 0.056 -15.77" gallerypedestal gltf-model="#pillar1"></a-entity>
+
+        <!--<a-entity  class="button interactive" id="galleryPedestal" rotation="0 90 0" position="0 0 0" gallerypedestal gltf-model="#pillar1"></a-entity>-->
+        
+        <!--Gallery Environment-->
+        <a-entity gltf-model="#gate3"
+                  position="0 0 40"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#natureCluster3"
+                  position="-35 0 -45"
+                  rotation="0 20 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#natureCluster2"
+                  position="6 0 -66"
+                  rotation="0 125 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#natureCluster1"
+                  position="50 0 -33"
+                  rotation="0 50 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#natureCluster1"
+                  position="-35 0 46"
+                  rotation="0 -105 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#natureCluster3"
+                  position="29.7 0 46"
+                  rotation="0 -155 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#coneTree1"
+                  position="-43 0 1"
+                  rotation="0 20 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#sphereTree1"
+                  position="-41 0 -8.43"
+                  rotation="0 20 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#squareTree1"
+                  position="-45 0.792 -5"
+                  rotation="0 20 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#sphereTree2"
+                  position="-40 0 7.7"
+                  rotation="0 -26 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#squareTree2"
+                  position="-45 0.792 3.87"
+                  rotation="0 94 0"
+                  scale="0.5 0.5 0.5">
+        </a-entity>
+
+        <a-entity gltf-model="#deciduousSphereBroken1"
+                  position="8 0 0"
+                  rotation="0 0 0"
+                  scale="1 1 1">
+        </a-entity>
+      </a-entity>
+      <!--Path skydome-->
+      <a-entity   id="environment"
+                  scale="2 2 2"
+                  environment="   ground:none; 
+                                  skyType: gradient;
+                                  skyColor: rgb(244, 163, 188); 
+                                  horizonColor: rgb(255, 253, 229);
+                                  stageSize: 300;
+                                  fog: 0.05">
+                      <a-entity   class="environment" 
+                                  position="0 50 0" 
+                                  light="color: #ffe5ee; groundColor: #122958; intensity: 1; type: hemisphere" >
+                      </a-entity>
+                      <a-entity   class="environment" 
+                                  position="-0.11 1 0.33" 
+                                  light="color: #fafaff; groundColor: #122958; intensity: 1">
+                      </a-entity>
+      </a-entity>
+        
+        <a-entity id="playerMover" playermovement></a-entity>
+  </a-scene>
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+ 
+ <script>
+  //keeps track of the networked objects that make up the statues in the gallery
+  let StatueArray = [];
+  document.body.addEventListener('clientDisconnected', function (evt) {
+    //look for a new id of a currently connected player.
+    for(let i = 0; i<StatueArray.length;i++)
+    {
+      
+      //if the owner is the user that just disconnected
+      if(document.querySelector("#"+StatueArray[i]).getAttribute("networked").owner == evt.detail.clientId)
+      {
+        //find a suitable option for a new owner, whoever takes ownership last wins (doesn't matter as long as its the same across all users)
+        console.log("new owner being assigned");
+        NAF.utils.takeOwnership(document.querySelector("#"+StatueArray[i]))
+
+      }
+      //after the owner has been assigned, on the user instance that matches that new owner, the following code will run;
+      if(document.querySelector("#"+StatueArray[i]).getAttribute("networked").owner == NAF.clientId)
+      {
+        //it makes the networked object non-peristant, meaning it can appear in other peoples worlds, 
+        //this needs to be done on one user only so that any new players who join can also get the statues.
+        document.querySelector("#"+StatueArray[i]).setAttribute("networked","persistent:false");
+      }
+    }
+    let gallery = document.querySelector(".gallerySet");
+    
+    let clientIDArray = gallery.getAttribute("galleryset").clientIDArray;
+
+    for(let i = 0; i<clientIDArray.length;i++)
+    {
+      //if the id of a pillar is the same player who just disconnected...
+      if(clientIDArray[i]==evt.detail.clientId&&gallery.getAttribute("galleryset").pedestals[i].getAttribute("gallerypedestal").locked==false)
+      {
+        console.log("found orphaned connection")
+        //resets values 
+        gallery.getAttribute("galleryset").pedestals[i].setAttribute("gallerypedestal","taken:false;locked:false;mine:false;clientID:null")
+        clientIDArray[i]=null;
+        gallery.emit("enterGallery");
+      }
+
+    }
+  });
+  //when new entities are loaded in from the network, make them persistent in every world except the world of origin
+  document.body.addEventListener('entityCreated', function (evt) {
+    //find all entities that are not pickupable and don't belong to the local user and make them persistant
+    if(evt.detail.el.getAttribute("circles-object-world")!=null)
+    {
+      if(evt.detail.el.getAttribute("circles-object-world").pickedup == false && evt.detail.el.getAttribute("networked").owner != NAF.clientId)
+      {
+        
+        StatueArray.push(evt.detail.el.getAttribute("id"));
+        evt.detail.el.setAttribute("networked","persistent:true");
+      }
+    }
+    
+    //add all of them by id into an array, that way when a user disconnects, the system will scan through the array to see which ones were owned by that disconnected player and transfer ownership.
+  });
+
+  
+  CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
+  //to change speed of character movement
+  console.log("Ready to go!");
+  //sets the wind roll off to be higher
+  document.querySelector("#windEffect").setAttribute("sound","rolloffFactor:1.5;distanceModel:exponential")
+  CIRCLES.getAvatarRigElement().setAttribute("movement-controls","speed:0.4");
+  playerLock(true);
+  userNetworkID = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
+  console.log("Network ID located: "+ userNetworkID);
+
+  document.querySelector("#GeaHead").addEventListener('sound-ended', (e) => {
+  console.log("done talking");
+  //this deals with teleporting
+  document.querySelector("#playerMover").setAttribute("playermovement","playerLocked:false");
+  //this handles regular player movement
+  playerLock(false);
+  });
+
+  //handles teleportation when clicking on the path
+  const sceneEl = document.querySelector('a-scene');
+  const cameraRig = document.querySelector('#Player1');
+  
+  sceneEl.addEventListener('mousedown', (e) => {
+    if(AFRAME.utils.device.isMobile()||AFRAME.utils.device.isMobileVR()||AFRAME.utils.device.checkHeadsetConnected()||AFRAME.utils.device.isTablet())
+    {
+      if(document.querySelector("#playerMover").getAttribute("playermovement").playerLocked==false)
+      {
+        console.log(document.querySelector("#playerMover").getAttribute("playermovement").playerLocked)
+        const cursor = sceneEl.querySelector('[cursor]');
+        const clickedObjects = cursor.components.raycaster.intersectedEls;
+      
+        //if the closest clicked object isn't null
+        if(clickedObjects[0]!=null)
+        {
+          //if the closest clicked object is the worldNav
+          if(clickedObjects[0].getAttribute("id")=="worldNav")
+          {
+            const intersection = cursor.components.raycaster.getIntersection(document.querySelector("#worldNav"));
+            const targetPosition = intersection.point;
+            //teleports the player to the clicked location
+            cameraRig.setAttribute('position', targetPosition);
+            cameraRig.components['movement-controls'].updateNavLocation();
+          }
+        }
+      }
+    }
+    
+  });
+  
+  //creates the skeleton
+  initiateNetworkID(userNetworkID);
+  createSkeleton();
+  });
+  
+</script>
+<script src="js/animation.js"></script>
+
+</html>
