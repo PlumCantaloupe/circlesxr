@@ -101,10 +101,15 @@ AFRAME.registerComponent('circles-portal', {
     
     if (useDefaultModel) {
       //create sphere component for portal
-      CONTEXT_AF.portalElem.setAttribute('geometry', {primitive:'sphere', radius:0.5, segmentsWidth:10, segmentsHeight:10});
+      CONTEXT_AF.portalElem.setAttribute('geometry', {primitive:'plane', width:'1.05',height:'1.8'});
       CONTEXT_AF.portalElem.setAttribute('material', {shader:'flat'});
-      CONTEXT_AF.setImg(data.img_src);
-      CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'outline', neutral_scale:1.1, hover_scale:1.15, click_scale:1.15});
+      CONTEXT_AF.portalElem.setAttribute('id', "introPortal");
+      CONTEXT_AF.portalElem.setAttribute('material', "emissive:#291aff;colour:#ffffff");
+      CONTEXT_AF.portalElem.setAttribute('position', "0 6.1 0");
+      CONTEXT_AF.portalElem.setAttribute('scale', "0 0 0");
+      CONTEXT_AF.portalElem.setAttribute('visible', "false");
+      //CONTEXT_AF.setImg(data.img_src);
+      CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'none'});
     }
     else {
       CONTEXT_AF.portalElem.setAttribute('circles-interactive-object', {type:'none'});

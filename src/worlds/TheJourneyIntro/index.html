@@ -1,0 +1,565 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Journey</title>
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  </head>
+  <body>
+
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <!-- All assets used in the scene -->
+        <circles-assets/>
+        <audio id="backgroundMusic" src="assets/audio/ACCCD_IMD3901_TermProject_Music_mixdown.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+        <audio id="GeaWelcome" src="assets/audio/Dialogue/GeaWelcome_Echo.mp3" preload="auto" crossorigin="anonymous" ></audio>
+
+        <img id="journeyLogo" src="assets/logo2.png"preload="auto" crossorigin="anonymous"/>
+        
+        <a-asset-item id="coneTree1" src="assets/models/cone_tree_1.glb"></a-asset-item>
+        <a-asset-item id="coneTree1" src="assets/models/cone_tree_1.glb"></a-asset-item>
+        <a-asset-item id="coneTree2" src="assets/models/cone_tree_2.glb"></a-asset-item>
+        
+        <a-asset-item id="introGate" src="assets/models/teleportalWhite.glb"></a-asset-item>
+        
+        <a-asset-item id="path" src="assets/models/path.glb"></a-asset-item>
+        
+        <a-asset-item id="rockDiamond" src="assets/models/rock_diamond.glb"></a-asset-item>
+        <a-asset-item id="rockDiamond2" src="assets/models/rock_diamond_2.glb"></a-asset-item>
+        <a-asset-item id="rockRound" src="assets/models/rock_round.glb"></a-asset-item>
+        <a-asset-item id="rockRound2" src="assets/models/rock_round_2.glb"></a-asset-item>
+        <a-asset-item id="rockSquare" src="assets/models/rock_square.glb"></a-asset-item>
+        
+        <a-asset-item id="soulOrb" src="assets/models/soul_orb.glb"></a-asset-item>
+        
+        <a-asset-item id="sphereTree1" src="assets/models/sphere_tree_1.glb"></a-asset-item>
+        <a-asset-item id="sphereTree2" src="assets/models/sphere_tree_2.glb"></a-asset-item>
+        <a-asset-item id="squareTree1" src="assets/models/square_tree_1.glb"></a-asset-item>
+        <a-asset-item id="squareTree2" src="assets/models/square_tree_2.glb"></a-asset-item>
+        
+        <a-asset-item id="natureCluster1" src="assets/models/nature_cluster_1.glb"></a-asset-item>
+        <a-asset-item id="natureCluster2" src="assets/models/nature_cluster_2.glb"></a-asset-item>
+        <a-asset-item id="natureCluster3" src="assets/models/nature_cluster_3.glb"></a-asset-item>
+        
+        <a-asset-item id="deciduousSphereBroken1" src="assets/models/deciduousSphereBroken1.glb"></a-asset-item>
+        <a-asset-item id="deciduousSphereBroken2" src="assets/models/deciduousSphereBroken2.glb"></a-asset-item>
+        
+        <a-asset-item id="mountains" src="assets/models/mountains.glb"></a-asset-item>
+        
+        <a-asset-item id="grassSphere" src="assets/models/grass_sphere.glb"></a-asset-item>
+        <a-asset-item id="grassCube" src="assets/models/grass_cube.glb"></a-asset-item>
+        <a-asset-item id="grassDiamond" src="assets/models/grass_diamond.glb"></a-asset-item>
+        
+        <a-asset-item id="geaHeadMod" src="assets/models/geaParts/gea_head.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaHeadEye" src="assets/models/geaParts/gea_eye.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaBodyUpper" src="assets/models/geaParts/gea_body_upper.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaBodyLower" src="assets/models/geaParts/gea_body_lower.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaShoulderLeftMod" src="assets/models/geaParts/gea_shoulder_left.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaShoulderRightMod" src="assets/models/geaParts/gea_shoulder_right.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaArmLeftMod" src="assets/models/geaParts/gea_left_arm_full.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="geaArmRightMod" src="assets/models/geaParts/gea_right_arm_full.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        
+        <a-asset-item id="pileLarge1" src="assets/models/shapePiles/pile_large_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pileLarge2" src="assets/models/shapePiles/pile_large_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pileLarge3" src="assets/models/shapePiles/pile_large_3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        
+        <a-asset-item id="pileSmall1" src="assets/models/shapePiles/pile_small_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pileSmall2" src="assets/models/shapePiles/pile_small_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="pileSmall3" src="assets/models/shapePiles/pile_small_3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+      </a-assets>
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <a-entity id="gallery">
+        <!--Mountains-->
+        <a-entity gltf-model="#mountains"
+                  position="6.6 0 -84"
+                  rotation="0 -90 0"
+                  scale="1 1 1">
+        </a-entity>
+        <!--teleporter to the main path-->
+        <a-entity gltf-model="#introGate"
+                  position="-15.971 0 -6.005"
+                  rotation="0 66.274 0"
+                  scale="0.5 0.5 0.5"
+                  circles-portal="link_url:/w/The Journey; useDefaultModel:true">
+        </a-entity>
+        <a-entity position="2 2 2"circles-portal="link_url:/w/The Journey; useDefaultModel:true" ></a-entity>
+        <a-entity id="starterCircle"
+                  geometry="primitive: circle; radius: 15;"
+                  rotation="-90 0 0"
+                  position="0 0.1 0"
+                  material="color:rgb(253,231,177); side: double;">
+        </a-entity>
+        <!--Navmesh-->
+        <a-entity id="navMesh"
+                  class="interactive"
+                  visible="false"
+                  geometry="primitive: circle; radius: 15;"
+                  rotation="-90 0 0"
+                  position="0 0 0"
+                  nav-mesh>
+        </a-entity>
+        <!--Navmesh ring-->
+        <a-entity id="circularWall"
+                  geometry="primitive: torus; radius: 15;"
+                  rotation="90 65 0"
+                  position="0 -0.103 0"
+                  material="color:rgb(255,213,179); side: double;">
+        </a-entity>
+        <!--Piles of Shapes-->
+        <a-entity id="shapePiles">
+            <!--Small Piles-->
+            <a-entity gltf-model="#pileSmall1"
+                      position="14.954 0 -11.725"
+                      rotation="0 0 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileSmall2"
+                      position="-25.901 0 -20.499"
+                      rotation="0 0 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileSmall3"
+                      position="-6.5 0 16.4"
+                      rotation="0 0 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+            
+            <a-entity gltf-model="#pileSmall1"
+                      position="18.2 0 -5.2"
+                      rotation="0 157.5 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileSmall2"
+                      position="12.2 0 13.9"
+                      rotation="0 27 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileSmall3"
+                      position="-17 0 5.6"
+                      rotation="0 -172 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileSmall3"
+                      position="16.7 0 5.6"
+                      rotation="0 -172 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+            <!--big piles-->
+            <a-entity gltf-model="#pileLarge1"
+                      position="44.5 0 20"
+                      rotation="0 0 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileLarge2"
+                      position="-34 0 0"
+                      rotation="0 0 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileLarge3"
+                      position="39.274 0 -28.718"
+                      rotation="0 -40 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileLarge3"
+                      position="-2.1 0 28.5"
+                      rotation="0 -9.7 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileLarge2"
+                      position="-35.881 0 -40.569"
+                      rotation="0 175 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+
+            <a-entity gltf-model="#pileLarge1"
+                      position="1.5 0 -70"
+                      rotation="0 -103 0"
+                      scale="1.75 1.75 1.75">
+            </a-entity>
+        </a-entity>
+
+        <!--Floating Shapes-->
+        <a-entity id="floatingPrimitives">
+            <a-entity geometry="primitive: sphere; radius: 2.5"
+                      material="color: #633C91"
+                      position="15.7 20 3.7"
+                      animation="property: position; dir: alternate; dur: 10000; loop: true; easing: easeInOutSine; to: 15 14 3.7"
+                      animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 12000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: box; depth: 2.5; height: 2.5; width: 2.5"
+                      material="color: #D4473C"
+                      position="8.5 16 12"
+                      animation="property: position; dir: alternate; dur: 16000; loop: true; easing: easeInOutSine; to: 8.5 9 12"
+                      animation__rot="property: rotation; to: 360 360 0; loop: true; dur: 14000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: cone; radiusBottom: 2.4; height: 2.8"
+                      material="color: #CA5E9F"
+                      position="-7.4 13 15"
+                      animation="property: position; dir: alternate; dur: 9000; loop: true; easing: easeInOutSine;; to: -7.5 6 15"
+                      animation__rot="property: rotation; to: 0 0 360; loop: true; dur: 13000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: dodecahedron; radius: 2.5"
+                      material="color: #3E7C7C"
+                      position="-13 16 8.5"
+                      animation="property: position; dir: alternate; dur: 12000; loop: true; easing: easeInOutSine; to: -10.6 10 8.5"
+                      animation__rot="property: rotation; to: 360 180 0; loop: true; dur: 12000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: tetrahedron; radius: 2.6"
+                      material="color: #F0A03F"
+                      position="-15 18 2.449"
+                      animation="property: position; dir: alternate; dur: 9000; loop: true; easing: easeInOutSine; to: -15 12 2.449"
+                      animation__rot="property: rotation; to: 360 0 360; loop: true; dur: 11000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: octahedron; radius: 2.5"
+                      material="color: #4B4DA3"
+                      position="-14 7 -11"
+                      animation="property: position; dir: alternate; dur: 16000; loop: true; easing: easeInOutSine; to: -14 14 -11"
+                      animation__rot="property: rotation; to: 360 360 360; loop: true; dur: 12000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: torus; radius: 2.5; radiusTubular: 0.5"
+                      material="color: #D28B6C"
+                      position="10 20 -12"
+                      animation="property: position; dir: alternate; dur: 9000; loop: true; easing: easeInOutSine; to: 10.6 15 -12"
+                      animation__rot="property: rotation; to: 0 360 360; loop: true; dur: 13000; easing: linear">
+            </a-entity>
+
+            <a-entity geometry="primitive: cylinder; height: 2.8; radius: 2.3"
+                      material="color: #84C3C4"
+                      position="15.5 13 -3.8"
+                      animation="property: position; dir: alternate; dur: 12000; loop: true; easing: easeInOutSine; to: 15 8 -3.8"
+                      animation__rot="property: rotation; to: 360 360 0; loop: true; dur: 12000; easing: linear">
+            </a-entity>
+        </a-entity>
+
+        <!--Trees, grass and rocks-->
+        <a-entity id="nature">
+            <a-entity gltf-model="#sphereTree1"
+                      position="59 0 6"
+                      rotation="0 0 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#sphereTree2"
+                      position="21 0 -53"
+                      rotation="0 90 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#squareTree1"
+                      position="-26 0 -60"
+                      rotation="0 90 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#grassSphere"
+                      position="40 0 -0.6"
+                      rotation="0 0 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+
+            <a-entity gltf-model="#squareTree2"
+                      position="-22 0 -80"
+                      rotation="0 90 0"
+                      scale="0.75 0.75 0.75">
+            </a-entity>
+            <a-entity gltf-model="#coneTree1"
+                      position="60 0 -40"
+                      scale="0.5 0.5 0.5">
+            </a-entity>
+
+            <a-entity gltf-model="#grassDiamond"
+                      position="10 0 -64"
+                      scale="0.5 0.5 0.5">
+            </a-entity>
+
+            <a-entity gltf-model="#deciduousSphereBroken1"
+                      position="61.645 0 -16.6"
+                      rotation="0 0 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#deciduousSphereBroken1"
+                      position="-30 0 17.8"
+                      rotation="0 0 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#deciduousSphereBroken2"
+                      position="16.9 -1 -74.5"
+                      rotation="0 0 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#sphereTree2"
+                      position="-43.6 0 -20.5"
+                      rotation="0 0 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#rockRound"
+                      position="-34 0 27.8"
+                      rotation="0 -19 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#rockRound2"
+                      position="63.3 0 -9.6"
+                      rotation="0 -65 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#rockDiamond"
+                      position="-15.675 0 -44.9"
+                      rotation="0 0 0"
+                      scale="1 1 1">
+            </a-entity>
+
+            <a-entity gltf-model="#rockDiamond2"
+                      position="19.8 0 17"
+                      rotation="0 -162 0"
+                      scale="1 1 1">
+            </a-entity>
+
+        </a-entity>
+      
+    </a-entity>
+
+    <!--Gea Rig-->
+    <a-entity id="Gea"
+                  scale="4 4 4"
+                  position="0 2 -49.882"
+                  rotation="0 -148.489"
+                  animation__moveTo="property: position; from: 0 2 -49.882; to: 0 2 -28.003; dur: 5000; easing: easeInOutSine; startEvents: moveToPlayer-animation;"
+                  animation__turnTo="property: rotation; from: 0 -148.489 0; to: 0 -90 0; dur: 3000; easing: easeInOutSine; startEvents: turnToPlayer-animation;">
+
+            <a-entity animation__Rot="property: rotation; from: -3 -3 0; to: 3 3 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                <a-gltf-model id="GeaHead"
+                              gltf-model="#geaHeadMod"
+                              scale="1 1 1"
+                              position="0.4 2.9 0"
+                              rotation="0 0 -15"
+                              animation__Pos="property: position; from: 0.4 2.9 0; to: 0.4 2.8 0; loop: true; dur: 1500; easing: easeInOutSine; dir: alternate;"
+
+                              animation__lookPlayer="property: rotation; from: 0 0 -15; to: 3.330 58.329 -15.871; dur: 2000; easing: easeInOutSine; startEvents: lookPlayer-animation;"
+                              animation__lookBackPlayer="property: rotation; from: 3.330 58.329 -15.871; to: 0 0 -15; dur: 3000; easing: easeInOutSine; startEvents: lookBackPlayer-animation;"
+
+                              animation__headTilt="property: rotation; from: 0 0 -15; to: -15.649 1.799 -21.444; dur: 1000; easing: easeInOutSine; startEvents: tiltHead-animation;"
+                              animation__headReset="property: rotation; to: 0 0 -15; dur: 1000; easing: easeInOutSine; startEvents: headReset-animation;"
+
+                              animation__headNod="property: rotation; from: 0 0 -15; to: -0.917 1.395 -38.424; dur: 1000; easing: easeInOutSine; startEvents: headNod-animation;"
+                              animation__headDistance="property: rotation; from: 0 0 -15; to: -3.611 47.798 6.673; dur: 2000; easing: easeInOutSine; startEvents: headDistance-animation;"
+
+                              animation__headPortal="property: rotation; to: -6.205 -38.604 -25.434; dur: 2000; easing: easeInOutSine; startEvents: lookPortal-animation;"
+
+                              circles-sound="type:dialogue; src:#GeaWelcome; autoplay:false; volume: 10;">
+                </a-gltf-model>
+            </a-entity>
+
+            <a-entity id="GeaBody">
+
+                <a-gltf-model id="BodyUpper"
+                              gltf-model="#geaBodyUpper"
+                              scale="1 1 1"
+                              position="0 1.1 0"
+                              rotation="0 0 -10"
+                              animation__Pos="property: position; from: 0 1.1 0; to: 0 1.2 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+                <a-gltf-model id="BodyLower"
+                              gltf-model="#geaBodyLower"
+                              scale="1 1 1"
+                              position="0 0 0"
+                              rotation="0 0 0"
+                              animation__Pos="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                </a-gltf-model>
+            </a-entity>
+            <a-entity id="GeaArms"
+                      animation__moveArms="property: rotation; to: 0 -25.518 0; dur: 2000; easing: easeInOutSine; startEvents: moveArms-animation;"
+                      animation__resetArms="property: rotation; to: 0 0 0; dur: 2000; easing: easeInOutSine; startEvents: resetArms-animation;"
+            >
+                <a-entity id="GeaArmLeft"
+                          position="0 2 -2"
+                          rotation="0 -25 0"
+                          animation__ArmReach="property: rotation; from: 0 -25 0; to: -27.964 -55.941 62.731; dur: 3000; easing: easeInOutSine; startEvents: reachToPlayer-animation;"
+                          animation__ArmReset="property: rotation; to: 0 -25 0; dur: 3000; easing: easeInOutSine; startEvents: ArmReset-animation;"
+
+                          animation__ArmDistance="property: rotation; to: 46.364 -24.711 -12.963; dur: 3000; easing: easeInOutSine; startEvents: armDistance-animation;"
+                        >
+                    <a-gltf-model id="ShoulderLeft"
+                                  gltf-model="#geaShoulderLeftMod"
+                                  scale="1 1 1"
+                                  position="0 0 0"
+                                  rotation="0 0 0"
+                                  animation__Pos="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1000; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                    <a-gltf-model id="ArmLeft"
+                                  gltf-model="#geaArmLeftMod"
+                                  scale="1 1 1"
+                                  position="0 0 0"
+                                  rotation="0 0 0"
+                                  animation__Pos="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1300; easing: easeInOutSine;  dir: alternate; "
+                                  animation__Rot="property: rotation; from: 0 0 0; to: 8 -8 0; loop: true; dur: 2000; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                </a-entity>
+                <a-entity id="GeaArmRight"
+                          position="0 2 2"
+                          rotation="0 25 0"
+                          animation__ArmReach="property: rotation; from: 0 25 0; to: 3.588 123.279 -71.123; dur: 2000; easing: easeInOutSine; startEvents: armReach-animation;" 
+                          animation__ArmReset="property: rotation; to: 0 25 0; dur: 2000; easing: easeInOutSine; startEvents: armReset-animation;"
+                          >
+                    <a-gltf-model id="ShoulderRight"
+                                  gltf-model="#geaShoulderRightMod"
+                                  scale="1 1 1"
+                                  position="0 0 0"
+                                  rotation="0 0 0"
+                                  animation__Pos="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1200; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+                    <a-gltf-model id="ArmRight"
+                                  gltf-model="#geaArmRightMod"
+                                  scale="1 1 1"
+                                  position="0 0 0"
+                                  rotation="0 0 0"
+                                  animation__Pos="property: position; from: 0 0 0; to: 0 0.1 0; loop: true; dur: 1500; easing: easeInOutSine;  dir: alternate;"
+                                  animation__Rot="property: rotation; from: 0 0 0; to: -8 8 0; loop: true; dur: 2300; easing: easeInOutSine;  dir: alternate;">
+                    </a-gltf-model>
+
+                </a-entity>
+
+            </a-entity>
+
+        </a-entity>
+    <!-- Environments-->
+    <a-entity id="Environment"
+              scale=" 3 3 3" ;
+              environment="   ground:none;
+                      skyType: gradient;
+                      skyColor: rgb(45, 29, 122);
+                      horizonColor: rgb(220, 130, 90);
+                      stageSize: 300;
+                      fog: 0.8">
+    </a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="0 -0.1 0"></a-entity>
+      <!-- ambient music/sound-->
+      <a-entity position="0 0 0" circles-sound="type:music; src:#backgroundMusic; autoplay:true; loop:true; volume:0.1;"></a-entity>
+
+    </a-scene>
+    <script>
+      //stop player teleportation
+      let teleportLocked = true;
+      //Once the user clicks the "Enter Circles" start the intro to the experience
+      CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
+          console.log(document.querySelector('#user-gesture-enter'));
+
+          //Wait for Gea to be done talking
+          document.querySelector("#GeaHead").addEventListener('sound-ended', (e) => {
+          console.log("done talking")
+          //unlock teleporting
+          teleportLocked = false;
+          //give player movement speed
+          CIRCLES.getAvatarRigElement().setAttribute("movement-controls","speed:0.4");
+          //make the portal visible
+          document.querySelector("#introPortal").setAttribute("visible","true");
+          document.querySelector("#introPortal").setAttribute("animation","property:scale; from:0 0 0; to: 8 8 8; dur:2000");
+          });
+        //once the "Enter Circles" button is pressed
+        document.querySelector('#user-gesture-enter').addEventListener('click', function() {
+          console.log("Ready to go!");
+          //change speed of character movement to 0
+          CIRCLES.getAvatarRigElement().setAttribute("movement-controls","speed:0");
+
+          //Create the title screen elements
+          let avatar = document.querySelector('.avatar')
+          let eyeMask = document.createElement("a-plane");
+          let introText = document.createElement("a-text");
+          let logo = document.createElement("a-image");
+
+          //Create, scale and position the intro text
+          introText.setAttribute("value", "Life is full of choices. We all make them, and they make us in return.");
+          introText.setAttribute("align", "center");
+          introText.setAttribute("anchor", "center");
+          introText.setAttribute("position","0 -0.4 -0.9");
+          introText.setAttribute("width","0.5");
+          introText.setAttribute("wrap-count","17");
+          introText.setAttribute("color","black");
+          //Animated it to fade out
+          introText.setAttribute("animation","property: opacity; from: 1; to: 0; dur: 3000; easing: easeInOutQuad; delay: 4000");
+
+          //Create, scale and position The Journey Logo
+          logo.setAttribute("src", "#journeyLogo");
+          logo.setAttribute("position","0 0.2 -0.9");
+          logo.setAttribute("width","1.150");
+          //Animated it to fade out
+          logo.setAttribute("animation","property: opacity; from: 1; to: 0; dur: 3000; easing: easeInOutQuad; delay: 4000");
+
+          //Create, scale and position title card background
+          eyeMask.setAttribute("geometry","height: 10; width: 10;");
+          eyeMask.setAttribute("material","color: white; emissive: white; opacity: 1; roughness: 1; metalness: 0.01; side:double;");
+          eyeMask.setAttribute("position","0 0 -1");
+          //Animated it to fade out
+          eyeMask.setAttribute("animation","property: material.opacity; from: 1; to: 0; dur: 3000; easing: easeInOutQuad; delay: 4000");
+          
+          //Add all the title screen elements to the player
+          avatar.appendChild(eyeMask);
+          avatar.appendChild(introText);
+          avatar.appendChild(logo);
+        });
+
+        //handles teleportation when clicking on the path
+          const sceneEl = document.querySelector('a-scene');
+          const cameraRig = document.querySelector('#Player1');
+          if(AFRAME.utils.device.isMobile()||AFRAME.utils.device.isMobileVR()||AFRAME.utils.device.checkHeadsetConnected()||AFRAME.utils.device.isTablet())
+          {
+            sceneEl.addEventListener('mousedown', (e) => {
+              if(teleportLocked==false)
+              {
+                const cursor = sceneEl.querySelector('[cursor]');
+                const clickedObjects = cursor.components.raycaster.intersectedEls;
+              
+                //if the closest clicked object isn't null
+                if(clickedObjects[0]!=null)
+                {
+                  //if the closest clicked object is the navMesh
+                  if(clickedObjects[0].getAttribute("id")=="navMesh")
+                  {
+                    const intersection = cursor.components.raycaster.getIntersection(document.querySelector("#navMesh"));
+                    const targetPosition = intersection.point;
+                    //teleports the player to the clicked location
+                    cameraRig.setAttribute('position', targetPosition);
+                    cameraRig.components['movement-controls'].updateNavLocation();
+                  }
+                }
+              }
+            
+          });
+        }
+    });
+    </script>
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+  <script src="js/animationIntro.js"></script>
+</html>

@@ -12,9 +12,7 @@ AFRAME.registerComponent('circles-user-networked', {
     color_body:                 {type: 'string',    default: ''}, 
 
     visiblename:                {type: 'string',    default: ''},
-    usertype:                   {type: 'string',    default: ''},
-    userDevice:                 {type: 'string',    default: ''},
-    userWorld:                  {type: 'string',    default: ''},
+    usertype:                   {type: 'string',    default: ''}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -30,21 +28,14 @@ AFRAME.registerComponent('circles-user-networked', {
       //lets only move forward to event node is the same as this one
       if ( thisNode.isSameNode(eventNode) === true ) {
         CONTEXT_AF.isPlayer1 = thisNode.isSameNode(playerOneAvatarNode); //now make sure this is the player1 node
+        
 
+        CONTEXT_AF.el.querySelector('.user_face_express').setAttribute("visible","false");
+        CONTEXT_AF.el.querySelector('.deviceicon_front').setAttribute("visible","false");
+        CONTEXT_AF.el.querySelector('.deviceicon_back').setAttribute("visible","false");
         if (CONTEXT_AF.isPlayer1 === true) {
-          //we can assume that node wants to load itself. We are doing this to minimize race-conditions overwriting each by doing so in user-template
-          CONTEXT_AF.el.setAttribute('circles-user-networked', {
-            gltf_head:              playerOneNode.getAttribute('circles-head-model'),
-            gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
-            gltf_body:              playerOneNode.getAttribute('circles-body-model'), 
-            color_head:             playerOneNode.getAttribute('circles-head-color'),
-            color_hair:             playerOneNode.getAttribute('circles-hair-color'),
-            color_body:             playerOneNode.getAttribute('circles-body-color'),
-            visiblename:            playerOneNode.getAttribute('circles-visiblename'),
-            usertype:               playerOneNode.getAttribute('circles-usertype'),
-            userDevice:             CIRCLES.getVRPlatform(),
-            userWorld:              CIRCLES.getCirclesWorldName()
-          });
+          //remove the face and icon.
+          
 
           //set device icon here too ... I guess :/
           let avatarNode3 = CONTEXT_AF.el.querySelector('.deviceicon_front');
@@ -110,6 +101,7 @@ AFRAME.registerComponent('circles-user-networked', {
     if ( oldData.color_body !== CONTEXT_AF.data.color_body ) {
       let avatarNode = CONTEXT_AF.el.querySelector('.user_body');
       avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_body});
+      //avatarNode.emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
     }
 
     //visiblename change
@@ -120,8 +112,6 @@ AFRAME.registerComponent('circles-user-networked', {
       avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
       avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
     }
-
-    CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },
   // tick: function(time, timeDelta) {},
   // tock: function(time, timeDelta) {},
