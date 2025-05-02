@@ -69,7 +69,6 @@ AFRAME.registerComponent('bw-shared-state-manager', {
       if(CONTEXT_AF[BRAINWAVES.LS_GUIDING_TEXT])
         CONTEXT_AF.guidingTextContainer.setAttribute('bw-guiding-text', {enabled: true});
 
-      //create teleport pad component (will need to be moved to individual game managers probs)
       CONTEXT_AF.el.setAttribute('bw-teleport-pad-manager', {isTransparent: CONTEXT_AF[BRAINWAVES.LS_TELEPORT_PAD]});
 
       //turn on bloom if the it's turned on in accessibility settings and this world has bloom
@@ -83,14 +82,12 @@ AFRAME.registerComponent('bw-shared-state-manager', {
     //function for other components to access properties from this one
     getData: function (propertyName) {
       const CONTEXT_AF = this;
-      console.log(CONTEXT_AF);
       return CONTEXT_AF[propertyName];
     },
 
     //function for other components to set property values for this one
     setData: function (propertyName, value) {
       const CONTEXT_AF = this;
-      console.log(CONTEXT_AF);
       CONTEXT_AF[propertyName] = value;
       localStorage.setItem(propertyName, value);
     },

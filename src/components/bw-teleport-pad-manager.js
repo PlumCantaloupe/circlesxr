@@ -17,12 +17,12 @@ AFRAME.registerComponent('bw-teleport-pad-manager', {
     update: function(oldData) {
       const Context_AF = this;
       const data = this.data;
-      console.log("hi im teelprot")
       if ( (oldData.isTransparent !== data.isTransparent) && (data.isTransparent !== '') && (oldData.colour === data.colour)) {
         Context_AF.setTeleportPadMat(data.isTransparent);
       }
     },
 
+    //updating the transparency of the teleport pads in the world
     setTeleportPadMat: function(isTransparent) {
       const Context_AF = this;
       for(let i=0; i<Context_AF.teleportPads.length; i++){
