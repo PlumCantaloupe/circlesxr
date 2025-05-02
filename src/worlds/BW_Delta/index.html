@@ -1,0 +1,666 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- Custom scripts -->
+    <script src="/worlds/BW_Delta/js/orbmanager.js"></script>]
+    <script src="/worlds/BW_Delta/js/memory-core.js"></script> 
+    <script src="/worlds/BW_Delta/js/orb-release.js"></script>
+    <script src="js/constants.js"></script>
+
+    <!-- External add-ons -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-particle-system-component@master/dist/aframe-particle-system-component.min.js"></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/super-three@0.173.4/examples/jsm/"
+        }
+      }
+    </script>
+
+    <!-- Bloom script - must be after importmap -->
+    <script src="/worlds/BW_Delta/js/bloom.js" type="module"></script>
+
+  </head>
+  <body>
+    <!-- Starting UI -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <img id='skyMap' src='/worlds/BW_Delta/assets/textures/neuronSky.png' crossorigin="anonymous">
+        <a-asset-item id="base_model" src="/worlds/BW_Delta/assets/models/stumps.obj"></a-asset-item>
+        <a-asset-item id="core_model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer"></a-asset-item>
+        <a-asset-item id="tubes_model" src="/worlds/BW_Delta/assets/models/tubes.obj"></a-asset-item>
+        <a-asset-item id="memory-core-model" src="/worlds/BW_Delta/assets/models/core.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+
+        <!-- orb animationns in tubes -->
+        <a-asset-item id="t1o1_model" src="/worlds/BW_Delta/assets/models/tube1/t1o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o2_model" src="/worlds/BW_Delta/assets/models/tube1/t1o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o3_model" src="/worlds/BW_Delta/assets/models/tube1/t1o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o4_model" src="/worlds/BW_Delta/assets/models/tube1/t1o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o5_model" src="/worlds/BW_Delta/assets/models/tube1/t1o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o6_model" src="/worlds/BW_Delta/assets/models/tube1/t1o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o7_model" src="/worlds/BW_Delta/assets/models/tube1/t1o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t1o8_model" src="/worlds/BW_Delta/assets/models/tube1/t1o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <a-asset-item id="t2o1_model" src="/worlds/BW_Delta/assets/models/tube2/t2o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o2_model" src="/worlds/BW_Delta/assets/models/tube2/t2o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o3_model" src="/worlds/BW_Delta/assets/models/tube2/t2o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o4_model" src="/worlds/BW_Delta/assets/models/tube2/t2o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o5_model" src="/worlds/BW_Delta/assets/models/tube2/t2o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o6_model" src="/worlds/BW_Delta/assets/models/tube2/t2o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o7_model" src="/worlds/BW_Delta/assets/models/tube2/t2o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t2o8_model" src="/worlds/BW_Delta/assets/models/tube2/t2o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <a-asset-item id="t3o1_model" src="/worlds/BW_Delta/assets/models/tube3/t3o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o2_model" src="/worlds/BW_Delta/assets/models/tube3/t3o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o3_model" src="/worlds/BW_Delta/assets/models/tube3/t3o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o4_model" src="/worlds/BW_Delta/assets/models/tube3/t3o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o5_model" src="/worlds/BW_Delta/assets/models/tube3/t3o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o6_model" src="/worlds/BW_Delta/assets/models/tube3/t3o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o7_model" src="/worlds/BW_Delta/assets/models/tube3/t3o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t3o8_model" src="/worlds/BW_Delta/assets/models/tube3/t3o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <a-asset-item id="t4o1_model" src="/worlds/BW_Delta/assets/models/tube4/t4o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o2_model" src="/worlds/BW_Delta/assets/models/tube4/t4o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o3_model" src="/worlds/BW_Delta/assets/models/tube4/t42o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o4_model" src="/worlds/BW_Delta/assets/models/tube4/t4o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o5_model" src="/worlds/BW_Delta/assets/models/tube4/t4o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o6_model" src="/worlds/BW_Delta/assets/models/tube4/t4o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o7_model" src="/worlds/BW_Delta/assets/models/tube4/t4o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t4o8_model" src="/worlds/BW_Delta/assets/models/tube4/t4o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <a-asset-item id="t5o1_model" src="/worlds/BW_Delta/assets/models/tube5/t5o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o2_model" src="/worlds/BW_Delta/assets/models/tube5/t5o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o3_model" src="/worlds/BW_Delta/assets/models/tube5/t5o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o4_model" src="/worlds/BW_Delta/assets/models/tube5/t5o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o5_model" src="/worlds/BW_Delta/assets/models/tube5/t5o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o6_model" src="/worlds/BW_Delta/assets/models/tube5/t5o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o7_model" src="/worlds/BW_Delta/assets/models/tube5/t5o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t5o8_model" src="/worlds/BW_Delta/assets/models/tube5/t5o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <a-asset-item id="t6o1_model" src="/worlds/BW_Delta/assets/models/tube6/t6o1.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o2_model" src="/worlds/BW_Delta/assets/models/tube6/t6o2.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o3_model" src="/worlds/BW_Delta/assets/models/tube6/t6o3.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o4_model" src="/worlds/BW_Delta/assets/models/tube6/t6o4.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o5_model" src="/worlds/BW_Delta/assets/models/tube6/t6o5.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o6_model" src="/worlds/BW_Delta/assets/models/tube6/t6o6.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o7_model" src="/worlds/BW_Delta/assets/models/tube6/t6o7.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="t6o8_model" src="/worlds/BW_Delta/assets/models/tube6/t6o8.glb" response-type="arraybuffer" crossorigin="anonymous"></a-asset-item>
+
+        <!-- Sound assets -->
+        <audio id="delta-ambient-sound" src="assets/sounds/delta_ambience_no_beat.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="delta-heartbeats" src="assets/sounds/delta_heartbeats_only.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <img id="dome_img" src="assets/textures/globe.png" crossorigin="anonymous">
+
+        <!-- Many memory orb sound clips (sorry lol) -->
+        <audio id="orb-clip1" src="/worlds/BW_Delta/assets/sounds/orb-clips/1.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip2" src="/worlds/BW_Delta/assets/sounds/orb-clips/2.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip3" src="/worlds/BW_Delta/assets/sounds/orb-clips/3.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip4" src="/worlds/BW_Delta/assets/sounds/orb-clips/4.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip5" src="/worlds/BW_Delta/assets/sounds/orb-clips/5.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip6" src="/worlds/BW_Delta/assets/sounds/orb-clips/6.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip7" src="/worlds/BW_Delta/assets/sounds/orb-clips/7.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip8" src="/worlds/BW_Delta/assets/sounds/orb-clips/8.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip9" src="/worlds/BW_Delta/assets/sounds/orb-clips/9.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip10" src="/worlds/BW_Delta/assets/sounds/orb-clips/10.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip11" src="/worlds/BW_Delta/assets/sounds/orb-clips/11.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip12" src="/worlds/BW_Delta/assets/sounds/orb-clips/12.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip13" src="/worlds/BW_Delta/assets/sounds/orb-clips/13.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip14" src="/worlds/BW_Delta/assets/sounds/orb-clips/14.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip15" src="/worlds/BW_Delta/assets/sounds/orb-clips/15.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip16" src="/worlds/BW_Delta/assets/sounds/orb-clips/16.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip17" src="/worlds/BW_Delta/assets/sounds/orb-clips/17.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip18" src="/worlds/BW_Delta/assets/sounds/orb-clips/18.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip19" src="/worlds/BW_Delta/assets/sounds/orb-clips/19.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip20" src="/worlds/BW_Delta/assets/sounds/orb-clips/20.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip21" src="/worlds/BW_Delta/assets/sounds/orb-clips/21.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip22" src="/worlds/BW_Delta/assets/sounds/orb-clips/22.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip23" src="/worlds/BW_Delta/assets/sounds/orb-clips/23.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip24" src="/worlds/BW_Delta/assets/sounds/orb-clips/24.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip25" src="/worlds/BW_Delta/assets/sounds/orb-clips/25.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip26" src="/worlds/BW_Delta/assets/sounds/orb-clips/26.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip27" src="/worlds/BW_Delta/assets/sounds/orb-clips/27.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip28" src="/worlds/BW_Delta/assets/sounds/orb-clips/28.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip29" src="/worlds/BW_Delta/assets/sounds/orb-clips/29.mp3" preload="auto" crossorigin="anonymous"></audio>
+        <audio id="orb-clip30" src="/worlds/BW_Delta/assets/sounds/orb-clips/30.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+      
+      <!-- component to manage shared state between worlds through localStorage  - don't remove from scene please-->
+      <a-entity bw-shared-state-manager='bloomAvailable: true; bloomThreshold: 1; bloomStrength: 0.3; bloomRadius: 0.1' bw-teleport-pad-manager="colour: #2a2447; transparentColour: #3a5082"></a-entity>
+      <a-entity id="guidingTextManager" bw-guiding-text></a-entity>
+      <!-- Guiding text  -->
+      <a-entity id="textGuiding" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: guiding text; align: center; width: 0.4" material="color: #262239; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+      <a-entity id="textError" position="0 0.431 -0.575" geometry="primitive: plane; height: 0.06; width: 0.5" text="value: error text; align: center; width: 0.4" material="color: #740b1e; transparent: true; opacity: 0.85; shader: flat" visible="false"></a-entity>
+ 
+      <!-- Teleport pads -->
+      <a-entity circles-checkpoint circles-spawnpoint position="0 0.265 0.452"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -3.980"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -16.857"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
+      <a-entity circles-checkpoint position="0 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="4.553 0.265 -1.933"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="4.553 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="3.607 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="-4.553 0.265 -1.933"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -8.260"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="-4.553 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="-3.607 0.265 -20.468"></a-entity>
+
+      <a-entity circles-checkpoint position="-6.910 0.265 -4.684"></a-entity>
+      <a-entity circles-checkpoint position="6.910 0.265 -4.684"></a-entity>
+
+      <a-entity circles-checkpoint position="-8.580 0.265 -8.250"></a-entity>
+      <a-entity circles-checkpoint position="-8.580 0.265 -12.781"></a-entity>
+      <a-entity circles-checkpoint position="8.580 0.265 -8.250"></a-entity>
+      <a-entity circles-checkpoint position="8.580 0.265 -12.781"></a-entity>
+
+      <a-entity circles-checkpoint position="-7.779 0.265 -16.2"></a-entity>
+      <a-entity circles-checkpoint position="7.779 0.265 -16.857"></a-entity>
+
+      <!-- TO BE REPLACED - START -->
+      <a-entity id="orbmanager" orb-manager></a-entity>
+
+      <a-entity id='skyBox'
+                rotation='0 45 0'
+                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+                material='shader:flat; src:#skyMap; side:back;'>
+      </a-entity>
+
+      <!-- Sound entities -->
+      <a-entity id="ambience-player" circles-sound="src:#delta-ambient-sound; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
+      <a-entity id="heartbeats-player" circles-sound="src:#delta-heartbeats; autoplay: true; loop: true; type: music; volume: 0.6;"></a-entity>
+
+      <!-- Audio analyser -->
+      <a-entity id="audioanalyser-entity" audioanalyser="soundEntitySrc: #heartbeats-player"></a-entity>
+      <a-entity gltf-model="#memory-core-model" id="memory-core" memory-core position="0 10.028 -10.301"></a-entity>
+
+      <!-- Tube stumps  -->
+      <a-entity   id="base" 
+                  obj-model="obj: #base_model"
+                  material="color: #dbe5ff; emissive: #dbe5ff; emissiveIntensity: 1;"
+                  position="0 0 0"></a-entity>
+
+      <!-- Dome / globe  -->
+      <a-entity id="globe"
+                geometry="primitive: sphere; radius: 14.03"
+                position="0 6.53136 -10.231"
+                material="src: #dome_img; side: back; transparent: true;"
+                animation__colour="property: material.color; type: color; from: #7d5dfe; to: #5dfefb; loop: true; dur: 12000; dir: alternate;"
+                ></a-entity>
+      
+      <!-- Floor -->
+      <a-entity id="floor"
+                position="0 0.25 -10.41778"
+                geometry="primitive: circle; radius: 12.5"
+                material="color: #4F5B82;" rotation="-90 0 0"></a-entity>
+
+      <!-- Nav mesh -->
+      <a-entity id="floor_navmesh"
+                position="0 0.23388 -10.41778"
+                geometry="primitive: circle; radius: 11.5"
+                material="transparent: true;" rotation="-90 0 0" nav-mesh></a-entity>
+      
+      <!-- Tubes -->
+      <a-entity  id="tubes" 
+                  obj-model="obj: #tubes_model"
+                  material="color: #cfe6ff; opacity:0.4"
+                  position="0 0 0"></a-entity>
+
+      <!-- all the entities for the orb animations -->
+      <a-entity id="t1orbs">
+        <a-entity   id="t1o1" 
+                    gltf-model="#t1o1_model"
+                    animation-mixer="startAt: -16000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o2" 
+                    gltf-model="#t1o2_model"
+                    animation-mixer="startAt: -12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o3" 
+                    gltf-model="#t1o3_model"
+                    animation-mixer="startAt: 12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o4" 
+                    gltf-model="#t1o4_model"
+                    animation-mixer="startAt: -10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o5" 
+                    gltf-model="#t1o5_model"
+                    animation-mixer=" startAt: -140000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o6" 
+                    gltf-model="#t1o6_model"
+                    animation-mixer="startAt: -8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o7" 
+                    gltf-model="#t1o7_model"
+                    animation-mixer="startAt: 8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o8" 
+                    gltf-model="#t1o8_model"
+                    animation-mixer="startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o9" 
+                    gltf-model="#t1o1_model"
+                    animation-mixer=" startAt: 10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o10" 
+                    gltf-model="#t1o2_model"
+                    animation-mixer="startAt: -4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o11" 
+                    gltf-model="#t1o3_model"
+                    animation-mixer=" startAt: 12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o12" 
+                    gltf-model="#t1o4_model"
+                    animation-mixer="startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o13" 
+                    gltf-model="#t1o5_model"
+                    animation-mixer=" startAt: 14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o14" 
+                    gltf-model="#t1o6_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o15" 
+                    gltf-model="#t1o7_model"
+                    animation-mixer="startAt: -14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t1o16" 
+                    gltf-model="#t1o8_model"
+                    animation-mixer="startAt: 14000"
+                    position="0 0 0"></a-entity></a-entity>
+        <a-entity id="t2orbs">
+        <a-entity   id="t2o1" 
+                    gltf-model="#t2o1_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o2" 
+                    gltf-model="#t2o2_model"
+                    animation-mixer=" startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o3" 
+                    gltf-model="#t2o3_model"
+                    animation-mixer=" startAt: 6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o4" 
+                    gltf-model="#t2o4_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o5" 
+                    gltf-model="#t2o5_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o6" 
+                    gltf-model="#t2o6_model"
+                    animation-mixer=" startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o7" 
+                    gltf-model="#t2o7_model"
+                    animation-mixer=" startAt: 2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t2o8" 
+                    gltf-model="#t2o8_model"
+                    animation-mixer=" startAt: -8000"
+                    position="0 0 0"></a-entity></a-entity>
+        <a-entity id="t3orbs">
+        <a-entity   id="t3o1" 
+                    gltf-model="#t3o1_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o2" 
+                    gltf-model="#t3o2_model"
+                    animation-mixer=" startAt: -14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o3" 
+                    gltf-model="#t3o3_model"
+                    animation-mixer=" startAt: 14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o4" 
+                    gltf-model="#t3o4_model"
+                    animation-mixer=" startAt: -12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o5" 
+                    gltf-model="#t3o5_model"
+                    animation-mixer=" startAt: 12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o6" 
+                    gltf-model="#t3o6_model"
+                    animation-mixer=" startAt: -10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o7" 
+                    gltf-model="#t3o7_model"
+                    animation-mixer=" startAt: 10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o8" 
+                    gltf-model="#t3o8_model"
+                    animation-mixer=" startAt: -8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o9" 
+                    gltf-model="#t3o1_model"
+                    animation-mixer=" startAt: 8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o10" 
+                    gltf-model="#t3o2_model"
+                    animation-mixer=" startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o11" 
+                    gltf-model="#t3o3_model"
+                    animation-mixer=" startAt: 6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o12" 
+                    gltf-model="#t3o4_model"
+                    animation-mixer=" startAt: -4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o13" 
+                    gltf-model="#t3o5_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o14" 
+                    gltf-model="#t3o6_model"
+                    animation-mixer=" startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o15" 
+                    gltf-model="#t3o7_model"
+                    animation-mixer=" startAt: 2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t3o16" 
+                    gltf-model="#t3o8_model"
+                    animation-mixer=" startAt: -16000"
+                    position="0 0 0"></a-entity></a-entity>
+        <a-entity id="t4orbs">
+        <a-entity   id="t4o1" 
+                    gltf-model="#t4o1_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o2" 
+                    gltf-model="#t4o2_model"
+                    animation-mixer=" startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o3" 
+                    gltf-model="#t4o3_model"
+                    animation-mixer=" startAt: 6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o4" 
+                    gltf-model="#t4o4_model"
+                    animation-mixer=" startAt: -4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o5" 
+                    gltf-model="#t4o5_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o6" 
+                    gltf-model="#t4o6_model"
+                    animation-mixer=" startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o7" 
+                    gltf-model="#t4o7_model"
+                    animation-mixer=" startAt: 2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t4o8" 
+                    gltf-model="#t4o8_model"
+                    animation-mixer=" startAt: -8000"
+                    position="0 0 0"></a-entity></a-entity>
+        <a-entity id="t5orbs">
+        <a-entity   id="t5o1" 
+                    gltf-model="#t5o1_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o2" 
+                    gltf-model="#t5o2_model"
+                    animation-mixer=" startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o3" 
+                    gltf-model="#t5o3_model"
+                    animation-mixer=" startAt: 6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o4" 
+                    gltf-model="#t5o4_model"
+                    animation-mixer=" startAt: -4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o5" 
+                    gltf-model="#t5o5_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o6" 
+                    gltf-model="#t5o6_model"
+                    animation-mixer=" startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o7" 
+                    gltf-model="#t5o7_model"
+                    animation-mixer=" startAt: 2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t5o8" 
+                    gltf-model="#t5o8_model"
+                    animation-mixer=" startAt: -8000"
+                    position="0 0 0"></a-entity></a-entity>
+        <a-entity id="t6orbs">
+        <a-entity   id="t6o1" 
+                    gltf-model="#t6o1_model"
+                    animation-mixer="startAt: 0"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o2" 
+                    gltf-model="#t6o2_model"
+                    animation-mixer=" startAt: -14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o3" 
+                    gltf-model="#t6o3_model"
+                    animation-mixer=" startAt: 14000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o4" 
+                    gltf-model="#t6o4_model"
+                    animation-mixer=" startAt: -12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o5" 
+                    gltf-model="#t6o5_model"
+                    animation-mixer=" startAt: 12000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o6" 
+                    gltf-model="#t6o6_model"
+                    animation-mixer=" startAt: -10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o7" 
+                    gltf-model="#t6o7_model"
+                    animation-mixer=" startAt: 10000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o8" 
+                    gltf-model="#t6o8_model"
+                    animation-mixer=" startAt: -8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o9" 
+                    gltf-model="#t6o1_model"
+                    animation-mixer=" startAt: 8000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o10" 
+                    gltf-model="#t6o2_model"
+                    animation-mixer=" startAt: -6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o11" 
+                    gltf-model="#t6o3_model"
+                    animation-mixer=" startAt: 6000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o12" 
+                    gltf-model="#t6o4_model"
+                    animation-mixer=" startAt: -4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o13" 
+                    gltf-model="#t6o5_model"
+                    animation-mixer=" startAt: 4000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o14" 
+                    gltf-model="#t6o6_model"
+                    animation-mixer=" startAt: -2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o15" 
+                    gltf-model="#t6o7_model"
+                    animation-mixer=" startAt: 2000"
+                    position="0 0 0"></a-entity>
+        <a-entity   id="t6o16" 
+                    gltf-model="#t6o8_model"
+                    animation-mixer=" startAt: -16000"
+                    position="0 0 0"></a-entity></a-entity>
+
+      <!-- particles that emit form the core -->
+      <a-entity id= "particle1" position="1.158 9.438 -10.724" rotation="0 0 12.4"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <a-entity id= "particle2" position="0.825 10.228 -8.911" rotation="-20.211 -25.568 21.949"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <a-entity id= "particle3" position="-0.877, 10.15, -8.948" rotation="-12.229 -105.941 39.594"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <a-entity id= "particle4" position= "0.17, 8.732, -10.613" rotation="-29.224 -145.387 -69.902"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <a-entity id= "particle5" position="-1.382, 10.866, -10.177" rotation="12.056 -18.693 -177.155"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <a-entity id= "particle6" position="-0.0271, 11.599, -11.302" rotation="-71.270 -37.958 144.113"
+                  particle-system=" preset:dust;
+                                    accelerationSpread: 0 0 0;
+                                    accelerationValue: 0 0 0;
+                                    positionSpread: 0 1 1;
+                                    maxAge:3.5;
+                                    blending: 2;
+                                    dragValue: 1;
+                                    velocityValue: 0 0.5 0;
+                                    size: 0.15;
+                                    sizeSpread: 0.3;
+                                    duration: infinity;
+                                    particleCount: 250;"></a-entity>
+      <!-- in the js, we clone these orbs, hidden undeneath the scene -->
+      <a-entity  id="orboutside1" class="orb"
+                geometry="primitive: sphere; radius: 0.3"
+                material="color: #b74e63; opacity:0.8; transparent: true; side:double; blending: subtractive"
+                position="-6 -2 -5"
+                circles-interactive-object 
+                circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
+      <a-entity   id="orbinside1"
+                  geometry="primitive: sphere; radius: 0.2"
+                  material="color: white; emissive: #b1fed1; emissiveIntensity: 1;"
+                  position="-6 -2 -5"
+                  circles-interactive-object = "enabled:false"></a-entity>
+      
+      <a-entity  id="orboutside2" class="orb"
+                  geometry="primitive: sphere; radius: 0.3"
+                  material="color: #c74723; opacity:0.8; transparent: true; side:double; blending: subtractive"
+                  position="-6 -2 0"
+                  circles-interactive-object 
+                  circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
+      <a-entity   id="orbinside2"
+                  geometry="primitive: sphere; radius: 0.2"
+                  material="color: white; emissive: #b1f8ff; emissiveIntensity: 1;"
+                  position="-6 -2 0"
+                  circles-interactive-object = "enabled:false"></a-entity>
+      
+      <a-entity   id="orboutside3" class="orb"
+                    geometry="primitive: sphere; radius: 0.3"
+                    material="color: #FF8B4C; opacity:0.8; transparent: true; side:double; blending: subtractive"
+                    position="0 -2 -5"
+                    circles-interactive-object 
+                    circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity> 
+    <a-entity   id="orbinside3"
+                    geometry="primitive: sphere; radius: 0.2"
+                    material="color: white; emissive: #68A8FF; emissiveIntensity: 1;"
+                    position="0 -2 -5"
+                    circles-interactive-object = "enabled:false"></a-entity>
+
+      <a-entity   id="orboutside4" class="orb"
+                  geometry="primitive: sphere; radius: 0.3"
+                  material="color: #70a300; opacity:0.8; transparent: true; side:double; blending: subtractive"
+                  position="3 -2 -5"
+                  circles-interactive-object 
+                  circles-pickup-object="pickupPosition: 0 -0.1 0.2"></a-entity>
+       <a-entity   id="orbinside4"
+                  geometry="primitive: sphere; radius: 0.2"
+                  material="color: white; emissive: #C6A7E9; emissiveIntensity: 1;"
+                  position="3 -2 -5"
+                  circles-interactive-object = "enabled:false"></a-entity>
+
+      <a-entity id="Portal-Hub"
+                position="0 1.6 2.4" rotation="0 90 0"
+                circles-portal="img_src:assets/textures/mainHub.png; title_text:Hub; link_url:/w/BW_Hub"
+                shadow></a-entity>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>

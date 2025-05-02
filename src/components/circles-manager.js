@@ -113,7 +113,7 @@ AFRAME.registerComponent('circles-manager', {
 
         //let everyone know that circles is ready
         CONTEXT_AF.isCirclesReadyVar = true;
-        CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.READY, {}, true);
+        CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.READY);
     });
   },
   update: function() {

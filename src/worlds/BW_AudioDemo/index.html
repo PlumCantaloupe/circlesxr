@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script src="js/scale-visualiser.js"></script>
+    <script src="js/opacity-visualiser.js"></script>
+    <script src="js/spawn-visualiser.js"></script>
+    <script src="js/temp-lifetime.js"></script>
+    <script src="js/lifting.js"></script>
+  </head>
+  <body>
+
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene circles_scene_properties>
+      <a-assets>
+        <audio id="song" src="assets/sounds/test.wav" preload="auto" crossorigin="anonymous"></audio>
+        <!-- Circles' built-in assets [REQUIRED] -->
+        <circles-assets/>
+      </a-assets>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <a-entity environment="preset: default"></a-entity>
+      <!-- Sound entity -->
+      <a-entity class="ambient-music" id="song-player" circles-sound="src:#song; autoplay: true; loop: true; type: music;"></a-entity>
+
+      <!-- Scale visualiser -->
+      
+      <!-- You must set the soundEntitySrc property on the audioanalyser component OR add a sound component to the same entity as the audioanalyser -->
+      <a-sphere
+        id="scale-sphere"
+        audioanalyser="soundEntitySrc: #song-player"
+        scale-visualiser="modifier: 0.05;"
+        position="0 5 -5"
+        radius="0.3"
+        material="color: blue;"
+      ></a-sphere>
+      <a-plane
+        position="0 1 -5"
+        text="value: Scale visualiser; wrapCount: 24; align: center;"
+        height="1"
+        width="2"
+      ></a-plane>
+
+      <!-- Opacity visualiser -->
+      <a-sphere
+        id="opacity-sphere"
+        audioanalyser="soundEntitySrc: #song-player"
+        opacity-visualiser
+        position="-10 5 -5"
+        radius="1"
+        material="color: yellow;"
+      ></a-sphere>
+      <a-plane
+        position="-10 1 -5"
+        text="value: Opacity visualiser; wrapCount: 24; align: center;"
+        height="1"
+        width="2"
+      ></a-plane>
+
+      <!-- Spawning visualiser -->
+      <a-box
+        id="spawn-box"
+        audioanalyser="soundEntitySrc: #song-player"
+        spawn-visualiser
+        position="-21.5 2.5 -5.5"
+      ></a-box>
+      <a-box
+        id="spawn-box"
+        audioanalyser="soundEntitySrc: #song-player"
+        spawn-visualiser="beatType: mid"
+        position="-20 2.5 -5.5"
+      ></a-box>
+      <a-box
+        id="spawn-box"
+        audioanalyser="soundEntitySrc: #song-player"
+        spawn-visualiser="beatType: high"
+        position="-18.5 2.5 -5.5"
+      ></a-box>
+      <a-plane
+        position="-20 1 -5"
+        text="value: Beat spawn visualiser:\n detects low, mid, high beats and spawns spheres; wrapCount: 24; align: center;"
+        height="1"
+        width="3"
+      ></a-plane>
+
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
