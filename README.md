@@ -1,10 +1,14 @@
 #Echoes of the Mind - WebXR Audio-based art gallery
 
 A VR art gallery experience that explores interpretive audio and environments inspired by common human brain waves.
-![bw-hub copy](https://github.com/user-attachments/assets/f7f9ad98-7d2e-4b49-91d2-852356a44e38)
-![bw-delta copy](https://github.com/user-attachments/assets/97584326-fd20-4b9a-9be4-db13c2fbaf4e)
-![bw-alpha copy](https://github.com/user-attachments/assets/8e133f9b-9809-4891-b785-6ccf805a3c7c)
-![bw-gamma copy](https://github.com/user-attachments/assets/fa3c5848-af6f-4b20-959a-fdd745f5c769)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f7f9ad98-7d2e-4b49-91d2-852356a44e38" width="45%">
+  <img src="https://github.com/user-attachments/assets/97584326-fd20-4b9a-9be4-db13c2fbaf4e" width="45%">
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8e133f9b-9809-4891-b785-6ccf805a3c7c" width="45%">
+  <img src="https://github.com/user-attachments/assets/fa3c5848-af6f-4b20-959a-fdd745f5c769" width="45%">
+</p>
 
 ## Overview
 This project was created for a 3-month long term group project using the CirclesXR framework for a Design Studio course. The objective was to create an accessible VR art gallery that explores archival, knowledge-sharing, and unique social interactions as a proposal for a local technology arts non-profit, Artengine. 
