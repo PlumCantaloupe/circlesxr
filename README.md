@@ -1,4 +1,4 @@
-#Echoes of the Mind - WebXR Audio-based art gallery
+# Echoes of the Mind - WebXR Audio-based art gallery
 
 A VR art gallery experience that explores interpretive audio and environments inspired by common human brain waves.
 <p align="center">
