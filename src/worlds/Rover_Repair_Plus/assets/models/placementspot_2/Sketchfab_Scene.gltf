@@ -1,0 +1,302 @@
+{
+  "asset": {
+    "extras": {
+      "author": "PatrickStevens (https://sketchfab.com/PatrickStevens)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/mars-base-curuiosity-power-system-98e7b636cfde49f39a6477b12248cd33",
+      "title": "Mars Base Curuiosity Power System"
+    },
+    "generator": "gltfeditor.com",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "uri": "Sketchfab_Scene.bin",
+      "byteLength": 108656
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 55200,
+      "byteStride": 24,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 55200,
+      "byteLength": 36800,
+      "byteStride": 16,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 92000,
+      "byteLength": 16656,
+      "target": 34963
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "normalized": false,
+      "count": 2300,
+      "min": [
+        -0.9873788356781006,
+        -0.9952093362808228,
+        -1
+      ],
+      "max": [
+        0.983405590057373,
+        0.9969018697738647,
+        1
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 12,
+      "componentType": 5126,
+      "normalized": false,
+      "count": 2300,
+      "min": [
+        -0.365565687417984,
+        -0.36839839816093445,
+        -0.2629648447036743
+      ],
+      "max": [
+        0.3767949938774109,
+        0.36029013991355896,
+        0.26296496391296387
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "normalized": false,
+      "count": 2300,
+      "min": [
+        0.7320934534072876,
+        0.3302939534187317
+      ],
+      "max": [
+        0.8228902220726013,
+        0.6943116784095764
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 8,
+      "componentType": 5126,
+      "normalized": false,
+      "count": 2300,
+      "min": [
+        0.7320934534072876,
+        0.3302939534187317
+      ],
+      "max": [
+        0.8228902220726013,
+        0.6943116784095764
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 0,
+      "componentType": 5125,
+      "normalized": false,
+      "count": 4164,
+      "min": [
+        0
+      ],
+      "max": [
+        2299
+      ],
+      "type": "SCALAR"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        4
+      ],
+      "name": "Sketchfab_Scene"
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Object_4",
+      "extensions": {
+        "KHR_node_visibility": {
+          "visible": true
+        }
+      },
+      "mesh": 0
+    },
+    {
+      "name": "Cube.032_4",
+      "children": [
+        0
+      ],
+      "extensions": {
+        "KHR_node_visibility": {
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "GLTF_SceneRootNode",
+      "children": [
+        1
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3.4228538225988814e-8,
+        0.9999998807907104,
+        0,
+        0,
+        -0.9999998807907104,
+        3.4228538225988814e-8,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "KHR_node_visibility": {
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "root",
+      "children": [
+        2
+      ],
+      "extensions": {
+        "KHR_node_visibility": {
+          "visible": true
+        }
+      }
+    },
+    {
+      "name": "Sketchfab_model",
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        3.4228538225988814e-8,
+        -0.9999998807907104,
+        0,
+        0,
+        0.9999998807907104,
+        3.4228538225988814e-8,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "extensions": {
+        "KHR_node_visibility": {
+          "visible": true
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "material": 0,
+          "mode": 4,
+          "attributes": {
+            "NORMAL": 0,
+            "POSITION": 1,
+            "TEXCOORD_0": 2,
+            "TEXCOORD_1": 3
+          },
+          "indices": 4
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "PRIMARY_MATERIAL",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0,
+          1,
+          0.06666666666666667,
+          0.25
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1,
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        }
+      },
+      "emissiveFactor": [
+        0.10980392156862745,
+        0.3568627450980392,
+        0.054901960784313725
+      ],
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 6.5
+        }
+      },
+      "emissiveTexture": {
+        "index": 0,
+        "texCoord": 0
+      }
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "name": "textures/baseColor.jpg",
+      "source": 0
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/baseColor.jpg",
+      "mimeType": "image/jpeg",
+      "name": "textures/baseColor.jpg"
+    }
+  ],
+  "extensionsUsed": [
+    "KHR_node_visibility",
+    "KHR_materials_emissive_strength"
+  ]
+}

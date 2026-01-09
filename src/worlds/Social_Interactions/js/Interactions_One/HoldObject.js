@@ -9,17 +9,17 @@ class objectInfo {
     }
 }
 
-//sojourner parts info
-const greenObject_01 = new objectInfo("greenObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "green", false);
-const redObject_01 = new objectInfo("redObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "red", false);
-const blueObject_01 = new objectInfo("blueObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "blue", false);
+//puzzle object info. Ensure that objectId matches entity id so that references work
+const greenObject_01 = new objectInfo("greenObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_green", false);
+const redObject_01 = new objectInfo("redObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_red", false);
+const blueObject_01 = new objectInfo("blueObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_blue", false);
 
 
 //array of objects
 let puzzleObjects = [greenObject_01, redObject_01, blueObject_01];
 
-function adoptObject(parent, childID, toPlaceHolder){
-    console.log("adopting part", parent.id, childID, toPlaceHolder)
+function adoptObject(parentID, childID, toPlaceHolder){ // handles object being placed/ picked up
+    console.log("adopting part", parentID, childID, toPlaceHolder)
 
     //get part information
     let childInfo = null;
@@ -32,14 +32,9 @@ function adoptObject(parent, childID, toPlaceHolder){
     if(childInfo != null){
         console.log(childInfo);
 
-        //find part, clone it, then delete it
-        let child   = document.getElementById(childInfo.objectID);
+        let child = document.getElementById(childInfo.objectID);
+        let parent = document.getElementById(parentID);
     
-        //let newChild = child.cloneNode(true);
-        //child.remove();
-
-        //trigger series of events when added to a rover
-        //apply offset position/rotation and append to the parent
         if(toPlaceHolder === true){
             console.log(parent.id);
         
@@ -56,44 +51,22 @@ function adoptObject(parent, childID, toPlaceHolder){
 
             console.log(childInfo.objectID, childInfo.isInTheRequiredSpot);
 
-            //child.setAttribute("position", childInfo.roverPos);
-            //child.setAttribute("rotation", childInfo.roverRot);
-            //child.setAttribute("circles-interactive-object", {enabled:true});
 
         } else {
             childInfo.isInTheRequiredSpot = false;
-            // child.setAttribute("position", childInfo.holdingPos);
-            // child.setAttribute("circles-interactive-object", {enabled:false});
         }
-    
-        //parent.appendChild(child);
 
         console.log("adopted");
     }
 
 }
 
-function checkPlacements(){
+function checkPlacements(){ // parse through object array to see if all objects are in the correct position
     for(let i = 0; puzzleObjects.length > i; i++){
         if(puzzleObjects[i].isInTheRequiredSpot == false){
             return false // if one is found flase, return false
         }
 
-        return true // reached the end of the array, therefore all objects in the correct spots.
     }
-
+    return true // reached the end of the array, therefore all objects in the correct spots.
 }
-
-/*
-function resetValue(childID){
-    let childInfo = null;
-        for(let i = 0; puzzleObjects.length > i; i++){
-            if(puzzleObjects[i].objectID == childID){
-                childInfo = puzzleObjects[i];
-                break;
-            }
-        }
-        let child  = document.getElementById(childInfo.objectID);
-        child.isInTheRequiredSpot = false;
-}
-*/
