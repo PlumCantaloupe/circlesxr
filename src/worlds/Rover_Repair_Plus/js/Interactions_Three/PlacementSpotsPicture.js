@@ -1,5 +1,5 @@
 //component that should be on all parts that a player can hold
-AFRAME.registerComponent('placementspots', {
+AFRAME.registerComponent('picturespots', {
     init:function(){
 
         const CONTEXT_AF = this;
@@ -16,10 +16,10 @@ AFRAME.registerComponent('placementspots', {
                 //stop holding part
                 pickUpElem.click();  //forward click to element to release
 
-                adoptObject(thisID, elemId, true); // place object in placementspot
+                adoptPictureObject(thisID, elemId, true); // place object in placementspot
 
-                console.log('objectPlaced emit');
-                CONTEXT_AF.el.emit('objectPlaced', {dataID:thisID, pickUpID:elemId}, false);
+                console.log('objectPicturePlaced emit');
+                CONTEXT_AF.el.emit('objectPicturePlaced', {dataID:thisID, pickUpID:elemId}, false);
 
             }
 

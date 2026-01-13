@@ -6,7 +6,7 @@
     <script src="js/Manager.js"></script>
     <script src="js/Interactions_One/HoldObject.js"></script>
     <script src="js/Interactions_One/PlacementSpots.js"></script>
-    <script src="js/Interactions_One/interactEvents.js"></script>
+    <script src="js/Interactions_One/interactEvent.js"></script>
     <script src="js/Interactions_Two/Dial.js"></script>
     <script src="js/Interactions_Two/InteractDialEvents.js"></script>
     <script src="js/Interactions_Two/InteractEventsCombo.js"></script>
@@ -45,6 +45,14 @@
                       material="color:rgb(64, 64, 64); roughness:0.2; side: double"
                       position="10 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
 
+          <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="10 5 0" rotation="0 90 0" scale="1 1 1">
+                    <a-entity id="ScreenTextPlacementSpot" text="baseline:top; value: Missing Objects; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
 
           <!-- button-->
           <a-entity 

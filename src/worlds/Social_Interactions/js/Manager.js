@@ -56,7 +56,6 @@ AFRAME.registerComponent('gamemanager', {
 
                 console.log('on buttonPressedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                 
-
                 deleteAllObjects();
                 
             });

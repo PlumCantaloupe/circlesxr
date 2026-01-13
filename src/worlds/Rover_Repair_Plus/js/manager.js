@@ -1,102 +1,217 @@
-//sockets component for the world
-AFRAME.registerComponent('multi-interactions', {
+AFRAME.registerComponent('gamemanager', {
     init: function(){
         
         //setting up socket.io connections
-        CONTEXT_AF              = this;
-        CONTEXT_AF.socket       = null;
-        CONTEXT_AF.connected    = false;
+        CONTEXT_AF = this;
+        CONTEXT_AF.socketSocialEvent = null;
+        CONTEXT_AF.connectedSocialEvent = false;
 
-        CONTEXT_AF.parts = document.querySelectorAll("[id*='part']");
-        CONTEXT_AF.rovers = document.querySelectorAll("[id*='rover']");
+        //Placement info
+        CONTEXT_AF.puzzleObjects = document.querySelectorAll("[id*='placementspots']");
+        CONTEXT_AF.buttonPS = document.querySelectorAll("[id*='buttonPS']");
+
+        //Combo info
+        CONTEXT_AF.increaseNumber = document.querySelectorAll("[id*='UpCB']");
+        CONTEXT_AF.decreaseNumber = document.querySelectorAll("[id*='DownCB']");
+        CONTEXT_AF.buttonCB = document.querySelectorAll("[id*='buttonCB']");
+
+        //Picture info
+        CONTEXT_AF.pictureObject = document.querySelectorAll("[id*='picturespots']");
+        CONTEXT_AF.buttonPic = document.querySelectorAll("[id*='buttonPic']");
 
         CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, function (data) {
-            CONTEXT_AF.socket    = CIRCLES.getCirclesWebsocket();
-            CONTEXT_AF.connected = true;
+            CONTEXT_AF.socketSocialEvent = CIRCLES.getCirclesWebsocket();
+            CONTEXT_AF.connectedSocialEvent = true;
+            console.warn("messaging system connected at socket: " + CONTEXT_AF.socketSocialEvent.id + " in room:" + CIRCLES.getCirclesGroupName() + ' in world:' + CIRCLES.getCirclesWorldName());
+            
+            //PLACEMENTSPOTS EVENT ----------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            CONTEXT_AF.socketSocialEvent.on("objectPlacedEvent", function(data){
 
-            //updates part location when another player picks up a part
-            // CONTEXT_AF.socket.on("partHoldEvent", function(data){
+                console.log('on objectPlacedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                 
-            //     console.log("emit called");
 
-            //     let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
-            //     let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
-
-            //     //if there has been another player found then have the part be a child of their avatar
-            //     if(otherPlayer){
-            //         //console.log("calling adoption");
-            //         //adoptPart(otherPlayer.querySelector(".avatar"), data.partIdx, false);
-            //         pickup(otherPlayer.querySelector(".avatar"), data.partId);
-
-            //         console.log("updating other player");
-            //     }
+                adoptObject(data.dataId, data.pickUpId, true);
                 
-            // });
-
-            //updates rover with part that has been placed by other player
-            CONTEXT_AF.socket.on("roverPartEvent", function(data){
-
-                console.log('on roverPartEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                
-                // let posibPlayers = document.querySelectorAll('[networked]');    //select all nodes that contain the networked attribute (expected that players will only have this)
-                // let otherPlayer = findOtherPlayer(posibPlayers, data.pnID);
-
-                // //if another player is found and matches data.pnID then do the following
-                // if(otherPlayer){
-                    //let part = otherPlayer.querySelector(".avatar").querySelector("[id*='part']");
-                    //let partIdx = Number(part.id.slice(-2));
-                    //let rover = document.getElementById(data.roverID);
-
-                    adoptPart(document.getElementById(data.roverId), data.partIdx, true);
-                // }
             });
 
-            //updates a drwer when another player opens or close it
-            CONTEXT_AF.socket.on("drawerEvent", function(data){
-                playDrawerAnim(data.drawerId);
-            });
-
-            CONTEXT_AF.socket.on("updatePrinter", function(data){
-                printerCreate(data.pPartId);
-            });
-
-            //looping through all possible rovers
-            for(let i=0; i < CONTEXT_AF.rovers.length; i++){
+                        //looping through all possible puzzleObjects
+            for(let i=0; i < CONTEXT_AF.puzzleObjects.length; i++){
                 
-                let rover = CONTEXT_AF.rovers[i];
+                let placementspotsCurrent = CONTEXT_AF.puzzleObjects[i];
 
-                console.log('rover: ', rover.id);
+                console.log('placementspots: ', placementspotsCurrent.id);
                 
                 //add event liseners for rovers
-                rover.addEventListener('partPlaced', function(e){
+                placementspotsCurrent.addEventListener('objectPlaced', function(e){
                     
                     //find the player who place the object and call the socket function
                     //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
-                    console.log('emit roverPartEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                    CONTEXT_AF.socket.emit("roverPartEvent", {roverId:e.detail.roverId, partIdx:e.detail.partIdx, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                    console.log('emit objectPlacedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("objectPlacedEvent", {dataId:e.detail.dataID, pickUpId:e.detail.pickUpID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
                 });
             }
+
+            CONTEXT_AF.socketSocialEvent.on("buttonPressedEvent", function(data){
+
+                console.log('on buttonPressedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                
+                deleteAllObjects();
+                
+            });
+ 
+            for(let i=0; i < CONTEXT_AF.buttonPS.length; i++){
+                
+                let mainButton = CONTEXT_AF.buttonPS[i];
+
+                console.log('buttonPS: ', mainButton.id);
+                
+                //add event liseners for rovers
+                mainButton.addEventListener('buttonPressed', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit buttonPressedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("buttonPressedEvent", {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+
+            //PLACEMENTSPOTS EVENT END ------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //NUMCOMBO EVENT ----------------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            CONTEXT_AF.socketSocialEvent.on("increaseNumberEvent", function(data){
+
+                console.log('on increaseNumberEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                increaseNumber(data.ParentID);
+
+
+                
+            });
+
+            //looping through all possible puzzleObjects
+            for(let i=0; i < CONTEXT_AF.increaseNumber.length; i++){
+                
+                let increaseNumberCurrent = CONTEXT_AF.increaseNumber[i];
+
+                console.log('increaseNumberButton: ', increaseNumberCurrent.id);
+                
+                //add event liseners for rovers
+                increaseNumberCurrent.addEventListener('increaseNumberForAll', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit increaseNumberEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("increaseNumberEvent", {ParentID:e.detail.DataParentID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+            
+            CONTEXT_AF.socketSocialEvent.on("decreaseNumberEvent", function(data){
+
+                console.log('on decreaseNumberEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                decreaseNumber(data.ParentID);
+
+                
+            });
+
+            //looping through all possible puzzleObjects
+            for(let i=0; i < CONTEXT_AF.decreaseNumber.length; i++){
+                
+                let decreaseNumberCurrent = CONTEXT_AF.decreaseNumber[i];
+
+                console.log('decreaseNumberButton: ', decreaseNumberCurrent.id);
+                
+                //add event liseners for rovers
+                decreaseNumberCurrent.addEventListener('decreaseNumberForAll', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit decreaseNumberEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("decreaseNumberEvent", {ParentID:e.detail.DataParentID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+
+            CONTEXT_AF.socketSocialEvent.on("buttonPressedEventCB", function(data){
+
+                console.log('on buttonPressedEventCB !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                
+
+                checkComboCorrect();
+                
+            });
+
+            for(let i=0; i < CONTEXT_AF.buttonCB.length; i++){
+                
+                let mainButton = CONTEXT_AF.buttonCB[i];
+
+                console.log('buttonCB: ', mainButton.id);
+                
+                //add event liseners for rovers
+                mainButton.addEventListener('buttonPressedCB', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit buttonPressedEventCB !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("buttonPressedEventCB", {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+
+            //NUMCOMBO EVENT END ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //PICTURE EVENT -----------------------------------------------------------------------------------------------------------------------------------------------------------
+            CONTEXT_AF.socketSocialEvent.on("objectPicturePlacedEvent", function(data){
+
+                console.log('on objectPicturePlacedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                
+
+                adoptPictureObject(data.dataId, data.pickUpId, true);
+                
+            });
+
+                        //looping through all possible puzzleObjects
+            for(let i=0; i < CONTEXT_AF.pictureObject.length; i++){
+                
+                let picturespotsCurrent = CONTEXT_AF.pictureObject[i];
+
+                console.log('picturespots: ', picturespotsCurrent.id);
+                
+                //add event liseners for rovers
+                picturespotsCurrent.addEventListener('objectPicturePlaced', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit objectPlacedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("objectPicturePlacedEvent", {dataId:e.detail.dataID, pickUpId:e.detail.pickUpID, room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+
+            CONTEXT_AF.socketSocialEvent.on("buttonPicPressedEvent", function(data){
+
+                console.log('on buttonPicPressedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                
+
+                checkPictures();
+                
+            });
+ 
+            for(let i=0; i < CONTEXT_AF.buttonPic.length; i++){
+                
+                let mainButton = CONTEXT_AF.buttonPic[i];
+
+                console.log('buttonPic: ', mainButton.id);
+                
+                //add event liseners for rovers
+                mainButton.addEventListener('buttonPicPressed', function(e){
+                    
+                    //find the player who place the object and call the socket function
+                    //let playerNetId = document.getElementById("Player1").getAttribute("networked").networkId;
+                    console.log('emit buttonPicPressedEvent !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                    CONTEXT_AF.socketSocialEvent.emit("buttonPicPressedEvent", {room:CIRCLES.getCirclesGroupName(), world:CIRCLES.getCirclesWorldName()});
+                });
+            }
+
 
         });
 
     }
 });
-
-//function that finds the potential players
-function findOtherPlayer(posibPlayers, pnID){
-
-    //loop through all players in posibPlayers variable
-    for(let i = 0; i < posibPlayers.length; i++){
-                    
-        //get the current possible player's networked id
-        let curNetId = posibPlayers[i].getAttribute("networked").networkId;
-        
-        //when a match is found this means we found the player who's holding the part
-        if(curNetId == pnID){
-            return posibPlayers[i];
-        }
-    }
-
-    return null; //when nothing is found return null
-}
-

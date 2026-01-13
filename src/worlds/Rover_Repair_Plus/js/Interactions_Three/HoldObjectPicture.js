@@ -1,5 +1,5 @@
 //class for object's info
-class objectInfo {
+class objectPictureInfo {
     constructor(objectID, holding, holdingPos, requiredSpot, isInTheRequiredSpot){
         this.objectID   = objectID;
         this.holding    = holding;  
@@ -10,22 +10,24 @@ class objectInfo {
 }
 
 //puzzle object info. Ensure that objectId matches entity id so that references work
-const greenObject_01 = new objectInfo("greenObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_green", false);
-const redObject_01 = new objectInfo("redObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_red", false);
-const blueObject_01 = new objectInfo("blueObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "placementspots_blue", false);
+const greenPictureObject_01 = new objectPictureInfo("greenPictureObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "picturespots_green", false);
+const redPictureObject_01 = new objectPictureInfo("redPictureObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "picturespots_red", false);
+const bluePictureObject_01 = new objectPictureInfo("bluePictureObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "picturespots_blue", false);
+const yellowPictureObject_01 = new objectPictureInfo("yellowPictureObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "picturespots_yellow", false);
+const purplePictureObject_01 = new objectPictureInfo("purplePictureObject_01", false, {x:-0.6, y:-0.2, z:-0.5}, "picturespots_purple", false);
 
 
 //array of objects
-let puzzleObjects = [greenObject_01, redObject_01, blueObject_01];
+let puzzlePictureObjects = [greenPictureObject_01, redPictureObject_01, bluePictureObject_01, yellowPictureObject_01, purplePictureObject_01];
 
-function adoptObject(parentID, childID, toPlaceHolder){ // handles object being placed/ picked up
+function adoptPictureObject(parentID, childID, toPlaceHolder){ // handles object being placed/ picked up
     console.log("adopting part", parentID, childID, toPlaceHolder)
 
     //get part information
     let childInfo = null;
-    for(let i = 0; puzzleObjects.length > i; i++){
-        if(puzzleObjects[i].objectID == childID){
-            childInfo = puzzleObjects[i];
+    for(let i = 0; puzzlePictureObjects.length > i; i++){
+        if(puzzlePictureObjects[i].objectID == childID){
+            childInfo = puzzlePictureObjects[i];
             break;
         }
     }
@@ -61,9 +63,9 @@ function adoptObject(parentID, childID, toPlaceHolder){ // handles object being 
 
 }
 
-function checkPlacements(){ // parse through object array to see if all objects are in the correct position
-    for(let i = 0; puzzleObjects.length > i; i++){
-        if(puzzleObjects[i].isInTheRequiredSpot == false){
+function checkPicturePlacements(){ // parse through object array to see if all objects are in the correct position
+    for(let i = 0; puzzlePictureObjects.length > i; i++){
+        if(puzzlePictureObjects[i].isInTheRequiredSpot == false){
             return false // if one is found flase, return false
         }
 

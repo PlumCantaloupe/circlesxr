@@ -56,7 +56,7 @@ function PuzzleSolved(){
     console.log("YUP1");
     for(let i = 0; mainScreen.length > i; i++){
         let screentext = document.getElementById(mainScreen[i].screenTextID);
-        screentext.setAttribute('text', 'value', "All Objects Found!");
+        screentext.setAttribute('text', 'value', "Power: Online");
         screentext.setAttribute('text', 'color', "rgb(0, 255, 0)");
     }
 }
