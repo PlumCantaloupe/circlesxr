@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
-    <script src="js/Manager.js"></script>
+    <script src="js/GameManager.js"></script>
     <script src="js/Interactions_One/HoldObject.js"></script>
     <script src="js/Interactions_One/PlacementSpots.js"></script>
     <script src="js/Interactions_One/interactEvent.js"></script>
@@ -39,12 +39,6 @@
     
 
     <!--INTERACTION ONE OBJECTS-->
-          <!-- Table-->
-          <a-entity 
-                      geometry="primitive: box; width: 10; height: 10; depth: 1"
-                      material="color:rgb(64, 64, 64); roughness:0.2; side: double"
-                      position="10 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
-
           <!-- screen-->
           <a-entity 
                     geometry="primitive: plane; width: 5; height: 3; depth: 1"
@@ -110,11 +104,14 @@
     <!--END OF INTERACTION ONE OBJECTS-->
 
     <!--INTERACTION TWO OBJECTS-->
-          <!-- Table-->
+          <!-- screen-->
           <a-entity 
-                      geometry="primitive: box; width: 10; height: 10; depth: 1"
-                      material="color:rgb(64, 64, 64); roughness:0.2; side: double"
-                      position="-0.25 -5 16.63" rotation="0 0 0" scale="1.5 1 3"></a-entity>
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="-6.1 3 17.2" rotation="0 0 0" scale="1 1 1">
+                    <a-entity id="ScreenTextCombo" text="baseline:top; value: Incorrect Code; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
           <!--NumberDials-->
           <!--Number Counter One-->
           <a-entity   id="counterOne"
@@ -205,12 +202,14 @@
     <!--END OF INTERACTION TWO OBJECTS-->
     
     <!--INTERACTION THREE OBJECTS-->
-          <!-- Table-->
+          <!-- screen-->
           <a-entity 
-                    geometry="primitive: box; width: 10; height: 10; depth: 1"
-                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
-                    position="-15 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
-          
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="-15.4 5 -3.5" rotation="0 -90 0" scale="1 1 1">
+                    <a-entity id="ScreenTextPicture" text="baseline:top; value: Missing Picture Pieces; color:rgb(255, 0, 0); width: 10;" 
+                      position="-2.8 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
           <!-- PictureFrame-->
           <a-entity 
                     geometry="primitive: plane; width: 3; height: 3; depth: 1"
@@ -282,6 +281,22 @@
                       geometry="primitive: box; width: 2; height: 2; depth: 2"
                       material="color:rgb(128, 32, 128); roughness:0.2; side: double"
                       position="-15 2 -8" rotation="0 90 0" scale="1 1 1"></a-entity>
+
+    <!--END OF INTERACTION THREE OBJECTS-->
+    
+    <!-- Table-->
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="-15 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="-0.25 -5 16.63" rotation="0 0 0" scale="1.5 1 3"></a-entity>
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="10 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
 
     <!-- enviroment-->
      <a-entity  id="Ground"

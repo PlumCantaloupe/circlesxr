@@ -1,0 +1,18 @@
+Interaction Two
+This interaction uses 3 number dials where the players need to input the correct 3 numbers by interacting with the dials and inputting 1 number per dial. When the correct combo is inputted (default being 9 for dial one, 5 for dial two, and 2 for dial three), and the button is pressed, it will delete objects (default logic).
+
+In this interaction event, by default there are 3 constructed counterInfo class object, and 1 constructed deleteObjectInfoCombo class variable. Most of the interactions are handled through Aframe components. After adding the scripts to your world's js folder and referencing the scripts in the index file, The following are the steps to set up the interaction event:
+Create 3 AFrame entities that have one of the following id {“counterOne”, “counterTwo”, “counterThree”}. Within each of the AFrame entities create 3 child AFrame entities and give one entity the component ‘increasenumber’, give one entity the component ‘decreasenumber’.For the increasenumber entity, ensure it has the respective id {“UpCB_01”, “UpCB_02”, “UpCB_03”} and for the decreasenumber entity, ensure it has the respective id {“DownCB_01”, “DownCB_02”, “DownCB_03”}. And give the last entity the respective id {“counterOneNumber”, “counterTwoNumber”, “counterThreeNumber”}.
+Create 1 AFrame entity that has the component ‘checkcombobutton’ and ensure the id is “buttonCB”.
+
+Following the steps above should have the interaction event set up, and all you need to do is place the objects where you want them to be. If something isn’t working, ensure to double check that entity IDs are matching the corresponding constructed class object.
+
+Note: A quicker method to set up the Interaction is to go into the index file found in the Soical_Interactions world folder and copy and paste, lines 112  to 205. Doing this would only require changes to the AFrame entity (model, texture colour, ect).
+
+More info on each JS file can be found below:
+
+InteractDialEvents.js: This script is where the components ‘increasenumber’ and ‘decreasenumber’ are registered. These components increase or decrease the current number in the counterInfo object. IMPORTANT: No changes should be made to this file.
+
+InteractEventsCombo.js: This script is where the deleteObjectInfoCombo class is defined. Any extra entities that should be deleted when the button is pushed should make a new deleteObjectInfoCombo and make sure the objectID matches that entity id and add the new deleteObjectInfoCombo object into deleteComboObjects. This script also registers the ‘checkcombobutton’ component. IMPORTANT: No changes should be made to the ‘checkcombobutton’ component. And a function checkComboCorrect is also being defined here. Within the checkComboCorrect function has a comment where extra logic can be added so more happens when the button is pressed.
+
+Dial.js: This is the script that defines the counterInfo class and all supporting functions. Functions in this class should not be change, however more dials can be made. To make more dials, create a new counterInfo object and ensure the counterID matches the AFrame entity id and ensure that the counterTextID matches the id of the child text AFrame entity. Also make two more child AFrame entities where one has the component ‘increasenumber’ and component ‘decreasenumber’ IMPORTANT: Ensure the ‘increasenumber’ component has an id that starts with “UpCB” and the ‘decreasenumber’ component has an id that starts with “DownCB”. This is required for syncing purposes.

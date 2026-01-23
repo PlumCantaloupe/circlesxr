@@ -1,7 +1,7 @@
 //class for object's info
 class counterInfo {
-    constructor(counterID, counterTextID, requiredNumber, currentNumber, isAtCorrectNumber){
-        this.counterID   = counterID; 
+    constructor(counterID, counterTextID, requiredNumber, currentNumber, isAtCorrectNumber) {
+        this.counterID = counterID;
         this.counterTextID = counterTextID;
         this.requiredNumber = requiredNumber;
         this.currentNumber = currentNumber;
@@ -18,46 +18,46 @@ const counter_03 = new counterInfo("counterThree", "counterThreeNumber", 9, 0, f
 //array of objects
 let counterObjects = [counter_01, counter_02, counter_03];
 
-function increaseNumber(objectcounterID){
+function increaseNumber(objectcounterID) {
     let counterInfoIndex = null;
-    for(let i = 0; counterObjects.length > i; i++){
-        if(counterObjects[i].counterID == objectcounterID){
+    for (let i = 0; counterObjects.length > i; i++) {
+        if (counterObjects[i].counterID == objectcounterID) {
             counterInfoIndex = i;
             break;
         }
     }
     // console.log(counterInfoIndex);
-    if(counterInfoIndex != null){
+    if (counterInfoIndex != null) {
         counterObjects[counterInfoIndex].currentNumber += 1;
         updateVariable(counterInfoIndex);
     }
 }
 
-function decreaseNumber(objectcounterID){
+function decreaseNumber(objectcounterID) {
     let counterInfoIndex = null;
-    for(let i = 0; counterObjects.length > i; i++){
-        if(counterObjects[i].counterID == objectcounterID){
+    for (let i = 0; counterObjects.length > i; i++) {
+        if (counterObjects[i].counterID == objectcounterID) {
             counterInfoIndex = i;
             break;
         }
     }
     // console.log(counterInfoIndex);
-    if(counterInfoIndex != null){
+    if (counterInfoIndex != null) {
         counterObjects[counterInfoIndex].currentNumber -= 1;
         updateVariable(counterInfoIndex);
     }
 }
 
-function updateVariable(index){
-    if(counterObjects[index].currentNumber >= 10){
+function updateVariable(index) {
+    if (counterObjects[index].currentNumber >= 10) {
         counterObjects[index].currentNumber = 0;
     }
-    if(counterObjects[index].currentNumber <= -1){
+    if (counterObjects[index].currentNumber <= -1) {
         counterObjects[index].currentNumber = 9;
     }
-    if(counterObjects[index].currentNumber == counterObjects[index].requiredNumber){
+    if (counterObjects[index].currentNumber == counterObjects[index].requiredNumber) {
         counterObjects[index].isAtCorrectNumber = true;
-    }else{
+    } else {
         counterObjects[index].isAtCorrectNumber = false;
     }
     // console.log(counterObjects[index]);
@@ -65,11 +65,34 @@ function updateVariable(index){
     text.setAttribute('text', 'value', String(counterObjects[index].currentNumber));
 }
 
-function checkIfCorrectCode(){
-    for(let i = 0; counterObjects.length > i; i++){
-        if(counterObjects[i].isAtCorrectNumber == false){
+function checkIfCorrectCode() {
+    for (let i = 0; counterObjects.length > i; i++) {
+        if (counterObjects[i].isAtCorrectNumber == false) {
             return false;
         }
     }
     return true;
 }
+
+function getCurrentNumber(){
+    let currentNumberArray = new Array();
+    for (let i = 0; counterObjects.length > i; i++) {
+        currentNumberArray.push(counterObjects[i].currentNumber);
+    }
+    return currentNumberArray;
+}
+
+function setCurrentNumber(numberArray){
+    for (let i = 0; counterObjects.length > i; i++) {
+        counterObjects[i].currentNumber = numberArray[i];
+        updateVariable(i);
+    }
+}
+
+function puzzleComboAlreadySolved() { // Force set all counterObjects[i].isAtCorrectNumber to be true since puzzle is solved
+    for (let i = 0; counterObjects.length > i; i++) {
+        counterObjects[i].isAtCorrectNumber = true;
+
+    }
+}
+
