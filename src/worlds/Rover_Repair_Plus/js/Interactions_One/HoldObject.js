@@ -18,10 +18,10 @@ const blueObject_01 = new objectInfo("blueObject_01", false, { x: -0.6, y: -0.2,
 //array of objects
 let puzzleObjects = [greenObject_01, redObject_01, blueObject_01];
 
-function adoptObject(parentID, childID, toPlaceHolder) { //handles object being placed/ picked up
+function adoptObject(parentID, childID, toPlaceHolder) { //handles object being placed/picked up
     console.log("adopting part", parentID, childID, toPlaceHolder)
 
-    //get part information
+    //get object information
     let childInfo = null;
     for (let i = 0; puzzleObjects.length > i; i++) {
         if (puzzleObjects[i].objectID == childID) {
@@ -32,18 +32,18 @@ function adoptObject(parentID, childID, toPlaceHolder) { //handles object being 
     if (childInfo != null) {
         console.log(childInfo);
 
-        let child = document.getElementById(childInfo.objectID);
-        let parent = document.getElementById(parentID);
+        let child = document.getElementById(childInfo.objectID); // get ref to the AFrame entity
+        let parent = document.getElementById(parentID); // get ref to the placementspot entity
 
         if (toPlaceHolder === true) {
             console.log(parent.id);
 
-            parent.object3D.attach(child.object3D);
+            parent.object3D.attach(child.object3D); // set pick up item as child to the placementspot entity then set its position and rotation 
             child.object3D.position.set(0, 0, 0);
             child.object3D.rotation.set(0, 0, 0);
             child.object3D.scale.set(1.1, 1.1, 1.1);
 
-            if (childInfo.requiredSpot == parent.id) {
+            if (childInfo.requiredSpot == parent.id) { // check if child is in right spot
                 childInfo.isInTheRequiredSpot = true;
             } else {
                 childInfo.isInTheRequiredSpot = false;

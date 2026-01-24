@@ -31,7 +31,7 @@
     <circles-start-ui/>
 
     <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-    <a-scene circles_scene_properties>
+    <a-scene wait-for-assets circles_scene_properties>
       <a-assets>
         <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
         <!-- Circles' built-in assets [REQUIRED] -->
@@ -62,15 +62,15 @@
         <img id="curi_part_cam_01" src="assets/imgs/curiosity_camera_blue.png">
 
         <!--mars images-->
-        <img id="mars_middle" src="assets/imgs/Mars/MarsMiddle.jpg">
-        <img id="mars_top_left" src="assets/imgs/Mars/MarsTopLeft.jpg">
-        <img id="mars_middle_left" src="assets/imgs/Mars/MarsMiddleLeft.jpg">
-        <img id="mars_bottom_left" src="assets/imgs/Mars/MarsBottomLeft.jpg">
-        <img id="mars_middle_top" src="assets/imgs/Mars/MarsTopMiddle.jpg">
-        <img id="mars_middle_bottom" src="assets/imgs/Mars/MarsMiddleBottom.jpg">
-        <img id="mars_top_right" src="assets/imgs/Mars/MarsTopRight.jpg">
-        <img id="mars_middle_right" src="assets/imgs/Mars/MarsMiddleRight.jpg">
-        <img id="mars_bottom_right" src="assets/imgs/Mars/MarsBottomRight.jpg">
+        <img id="mars_middle" src="assets/imgs/Mars/MarsMiddle.jpg" crossorigin="anonymous">
+        <img id="mars_top_left" src="assets/imgs/Mars/MarsTopLeft.jpg" crossorigin="anonymous">
+        <img id="mars_middle_left" src="assets/imgs/Mars/MarsMiddleLeft.jpg" crossorigin="anonymous">
+        <img id="mars_bottom_left" src="assets/imgs/Mars/MarsBottomLeft.jpg"crossorigin="anonymous">
+        <img id="mars_middle_top" src="assets/imgs/Mars/MarsTopMiddle.jpg" crossorigin="anonymous">
+        <img id="mars_middle_bottom" src="assets/imgs/Mars/MarsMiddleBottom.jpg" crossorigin="anonymous">
+        <img id="mars_top_right" src="assets/imgs/Mars/MarsTopRight.jpg" crossorigin="anonymous">
+        <img id="mars_middle_right" src="assets/imgs/Mars/MarsMiddleRight.jpg" crossorigin="anonymous">
+        <img id="mars_bottom_right" src="assets/imgs/Mars/MarsBottomRight.jpg" crossorigin="anonymous">
 
 
         <!--Environment Assets-->
@@ -346,6 +346,14 @@
       <!--END OF INTERACTION ONE OBJECTS-->
 
       <!--INTERACTION TWO OBJECTS-->
+      <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="3.515 2.958 3.485" rotation="0 60 0" scale="0.2 0.2 0.2">
+                    <a-entity id="ScreenTextCombo" text="baseline:top; value: Incorrect Code; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
       <!--NumberDials-->
             <!--Number Counter One-->
             <a-entity   id="counterOne"
@@ -433,6 +441,14 @@
       <!--END OF INTERACTION TWO OBJECTS-->
         
       <!--INTERACTION THREE OBJECTS-->
+      <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="1.933 3.763 -4.348" rotation="0 180 0" scale="0.2 0.1 0.2">
+                    <a-entity id="ScreenTextPicture" text="baseline:top; value: Missing Picture Pieces; color:rgb(255, 0, 0); width: 10;" 
+                      position="-2.8 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
       <!-- PictureFrame-->
           <a-entity 
                     geometry="primitive: plane; width: 3; height: 3; depth: 1"

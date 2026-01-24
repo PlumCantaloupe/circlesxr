@@ -1,4 +1,4 @@
-//component that should be on all parts that a player can hold
+//component that should be on all parts that a player can hold for the picture
 AFRAME.registerComponent('picturespots', {
     init: function () {
 
@@ -19,7 +19,7 @@ AFRAME.registerComponent('picturespots', {
                 adoptPictureObject(thisID, elemId, true); // place object in placementspot
 
                 console.log('objectPicturePlaced emit');
-                CONTEXT_AF.el.emit('objectPicturePlaced', { dataID: thisID, pickUpID: elemId }, false);
+                CONTEXT_AF.el.emit('objectPicturePlaced', { dataID: thisID, pickUpID: elemId }, false); // for syncing
 
             }
 

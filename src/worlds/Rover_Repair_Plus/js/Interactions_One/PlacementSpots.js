@@ -19,7 +19,7 @@ AFRAME.registerComponent('placementspots', {
                 adoptObject(thisID, elemId, true); // place object in placementspot
 
                 console.log('objectPlaced emit');
-                CONTEXT_AF.el.emit('objectPlaced', { dataID: thisID, pickUpID: elemId }, false);
+                CONTEXT_AF.el.emit('objectPlaced', { dataID: thisID, pickUpID: elemId }, false); // for syncing
 
             }
 
