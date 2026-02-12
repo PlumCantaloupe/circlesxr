@@ -1,6 +1,6 @@
 {
     "world": {
-        "name": "Social_Interaction",
+        "name": "Example Escape Room Interactions",
         "type": "hub",
         "imgPath": "./profile.jpg",
         "description_short": "Some Social Interactions",
