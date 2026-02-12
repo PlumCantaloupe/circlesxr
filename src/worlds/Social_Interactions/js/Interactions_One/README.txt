@@ -1,6 +1,6 @@
 Interactions_One Read Me: (Last update 01-22-2026)
 
-This interaction event is a simple placement puzzle where users are required to place certain objects in the placement spots provided. The placement spots then to be a transparent version of the puzzle objects so that the user knows it can be put there. Recommendation is to have either colour theory or different kinds of models for each puzzle object/placement spot pair so that it helps imply what users need to do.
+This interaction event is a simple placement puzzle where users are required to place certain objects in the placement spots provided. The placement spots are a transparent version of the puzzle objects so that the user knows it can be put there. Recommendation is to have either colour theory or different kinds of models for each puzzle object/placement spot pair so that it helps imply what users need to do.
 
 In this interaction event, by default there are 3 constructed objectInfo class variables, and 1 constructed deleteObjectInfo class variable and 2 new registered AFrame components called ‘button’ and ‘placementSpots’. To apply this interaction copy and paste the GameManager.js and InteractionOne folder into the world’s js folder, and ensure to include the scripts in the index file of the world. Once you have the files copied follow the following steps to set up the interaction in your new world:
 
