@@ -1,0 +1,346 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts/>
+    <script src="js/GameManager.js"></script>
+    <script src="js/Interactions_One/HoldObject.js"></script>
+    <script src="js/Interactions_One/PlacementSpots.js"></script>
+    <script src="js/Interactions_One/interactEvent.js"></script>
+    <script src="js/Interactions_Two/Dial.js"></script>
+    <script src="js/Interactions_Two/InteractDialEvents.js"></script>
+    <script src="js/Interactions_Two/InteractEventsCombo.js"></script>
+    <script src="js/Interactions_Three/HoldObjectPicture.js"></script>
+    <script src="js/Interactions_Three/interactEventPicture.js"></script>
+    <script src="js/Interactions_Three/PlacementSpotsPicture.js"></script>
+    
+
+</head>
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui/>
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      <img id='skyMap' src='assets\texture\2148895316.jpg' crossorigin="anonymous">
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets/>
+    </a-assets>
+
+    <!-- Circles' built-in manager and avatar [REQUIRED] -->
+    <circles-manager-avatar/>
+
+    <!-- start your code: put your A-frame, Circles XR, and custom components here -->
+
+
+    <!-- socket connector -->
+    <a-entity gamemanager id="gameManager"></a-entity>
+    
+
+    <!--INTERACTION ONE OBJECTS-->
+          <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="10 5 0" rotation="0 90 0" scale="1 1 1">
+                    <a-entity id="ScreenTextPlacementSpot" text="baseline:top; value: Missing Objects; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
+
+          <!-- button-->
+          <a-entity 
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="9.5 0.05 1" rotation="0 90 0" scale="1 1 1"></a-entity>
+                
+          <a-entity button id="buttonPS"
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                      position="9.5 0.2 1" rotation="0 90 0" scale="0.8 0.8 0.8"
+                      circles-interactive-object="type:highlight"></a-entity>
+
+          <!-- PlaceableAreas-->
+          <a-entity   placementspots id="placementspots_red"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2"
+                      position="10.5 1 2" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+
+
+          <a-entity   placementspots id="placementspots_blue"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight" 
+                      material="color:rgb(0, 0, 255); roughness:0.2; side: double; transparent: true; opacity: 0.2"
+                      position="10.5 1 4" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+              
+          <a-entity placementspots id="placementspots_green"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                      material="color:rgb(0, 255, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2"
+                      position="10.5 1 6" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+          
+          <!-- InteractableObjects-->
+          <a-entity circles-pickup-networked id="redObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double;"
+                      position="9.5 0.5 -2" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+
+          <a-entity circles-pickup-networked id="blueObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(0, 0, 255); roughness:0.2; side: double;"
+                      position="9.5 0.5 -4" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+
+          <a-entity circles-pickup-networked id="greenObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(0, 255, 0); roughness:0.2; side: double;"
+                      position="9.5 0.5 -6" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+
+          <!-- DeleteableObjects-->
+          <a-entity  id="delete1"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(0, 255, 0); roughness:0.2; side: double;"
+                      position="9.5 0 -12" rotation="0 90 0" scale="10 10 10"></a-entity>
+    <!--END OF INTERACTION ONE OBJECTS-->
+
+    <!--INTERACTION TWO OBJECTS-->
+          <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="-6.1 3 17.2" rotation="0 0 0" scale="1 1 1">
+                    <a-entity id="ScreenTextCombo" text="baseline:top; value: Incorrect Code; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
+          <!--NumberDials-->
+          <!--Number Counter One-->
+          <a-entity   id="counterOne"
+                      geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="-7 0.5 16.63" rotation="0 0 0" scale="1 1 1">
+            <a-entity increasenumber id="UpCB_01"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity decreasenumber id="DownCB_01"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity 
+                      geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                      material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                      position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                      <a-entity id="counterOneNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+            </a-entity>
+          </a-entity>
+          <!--Number Counter Two-->
+          <a-entity   id="counterTwo"
+                      geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="-6 0.5 16.63" rotation="0 0 0" scale="1 1 1">
+            <a-entity increasenumber id="UpCB_02"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity decreasenumber id="DownCB_02"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity 
+                      geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                      material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                      position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                      <a-entity id="counterTwoNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+            </a-entity>
+          </a-entity>
+          <!--Number Counter Three-->
+          <a-entity   id="counterThree"
+                      geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="-5 0.5 16.63" rotation="0 0 0" scale="1 1 1">
+            <a-entity increasenumber id="UpCB_03"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity decreasenumber id="DownCB_03"
+                      geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                      material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                      position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+            <a-entity 
+                      geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                      material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                      position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                      <a-entity id="counterThreeNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+            </a-entity>
+          </a-entity>
+
+          <!-- button-->
+          <a-entity 
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="-4 0 16.63" rotation="0 90 0" scale="1 1 1">
+
+            <a-entity checkcombobutton id="buttonCB"
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                      position="0 0.15 0" rotation="0 90 0" scale="0.8 0.8 0.8"
+                      circles-interactive-object="type:highlight"></a-entity>
+          </a-entity>
+
+          <!-- Delete items-->
+          <a-entity   id="delete1Combo"
+                      geometry="primitive: box; width: 2; height: 2; depth: 2"
+                      material="color:rgb(128, 32, 128); roughness:0.2; side: double"
+                      position="-2 1 16.63" rotation="0 90 0" scale="1 1 1"></a-entity>
+
+    <!--END OF INTERACTION TWO OBJECTS-->
+    
+    <!--INTERACTION THREE OBJECTS-->
+          <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="-15.4 5 -3.5" rotation="0 -90 0" scale="1 1 1">
+                    <a-entity id="ScreenTextPicture" text="baseline:top; value: Missing Picture Pieces; color:rgb(255, 0, 0); width: 10;" 
+                      position="-2.8 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
+          <!-- PictureFrame-->
+          <a-entity 
+                    geometry="primitive: plane; width: 3; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="-15 2 -5" rotation="0 90 0" scale="1 1 1">
+                    <!-- Placeable slots-->
+                    <a-entity picturespots id="picturespots_red" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 0, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_green" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(0, 255, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="1.01 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_blue" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(0, 0, 255); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 1.01 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_purple" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 0, 255); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="-1.01 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_yellow" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 255, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 -1.01 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <!-- Already placed spots-->
+                    <a-entity id="top_right" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="color:rgb(255, 255, 255); roughness:0.2; side: double" position="1.01 1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="bottom_right" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="color:rgb(255, 255, 255); roughness:0.2; side: double" position="1.01 -1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="bottom_left" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="color:rgb(255, 255, 255); roughness:0.2; side: double" position="-1.01 -1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="top_left" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="color:rgb(255, 255, 255); roughness:0.2; side: double" position="-1.01 1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    </a-entity>
+
+          <!-- InteractablePictureObjects-->
+          <a-entity circles-pickup-networked id="redPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double;"
+                      position="-15 1 0" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+          <a-entity circles-pickup-networked id="greenPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(0, 255, 0); roughness:0.2; side: double;"
+                      position="-15 1 2" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+          <a-entity circles-pickup-networked id="bluePictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(0, 0, 255); roughness:0.2; side: double;"
+                      position="-15 1 4" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+          <a-entity circles-pickup-networked id="purplePictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(255, 0, 255); roughness:0.2; side: double;"
+                      position="-15 1 6" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+          <a-entity circles-pickup-networked id="yellowPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="color:rgb(255, 255, 0); roughness:0.2; side: double;"
+                      position="-15 1 8" rotation="0 90 0" scale="1 1 1"
+                      circles-interactive-object="type:highlight"></a-entity>
+          
+          <!-- button-->
+          <a-entity 
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                      position="-14 0.05 -3" rotation="0 90 0" scale="1 1 1"></a-entity>
+                
+          <a-entity buttonpic id="buttonPic"
+                      geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                      material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                      position="-14 0.2 -3" rotation="0 90 0" scale="0.8 0.8 0.8"
+                      circles-interactive-object="type:highlight"></a-entity>
+          
+          <!-- Delete items-->
+          <a-entity   id="delete1pic"
+                      geometry="primitive: box; width: 2; height: 2; depth: 2"
+                      material="color:rgb(128, 32, 128); roughness:0.2; side: double"
+                      position="-15 2 -8" rotation="0 90 0" scale="1 1 1"></a-entity>
+
+    <!--END OF INTERACTION THREE OBJECTS-->
+    
+    <!-- Table-->
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="-15 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="-0.25 -5 16.63" rotation="0 0 0" scale="1.5 1 3"></a-entity>
+          <a-entity 
+                    geometry="primitive: box; width: 10; height: 10; depth: 1"
+                    material="color:rgb(64, 64, 64); roughness:0.2; side: double"
+                    position="10 -5 0" rotation="0 90 0" scale="1.5 1 3"></a-entity>
+
+    <!-- enviroment-->
+     <a-entity  id="Ground"
+                geometry="primitive: plane; height: 50; width: 50" 
+                material="color:rgb(179, 178, 168); roughness:0.2; side: double"
+                position="0 -5 0" rotation="90 0 0" scale="1 1 1"></a-entity>
+      
+     <a-entity 
+                geometry="primitive: box; width: 50; height: 10; depth: 1"
+                material="color:rgb(179, 178, 168); roughness:0.2; side: double"
+                position="25 -5 0" rotation="0 90 0" scale="1 1 1"></a-entity>
+      
+     <a-entity 
+                geometry="primitive: box; width: 50; height: 10; depth: 1"
+                material="color:rgb(179, 178, 168); roughness:0.2; side: double"
+                position="-25 -5 0" rotation="0 90 0" scale="1 1 1"></a-entity>
+              
+     <a-entity 
+                geometry="primitive: box; width: 50; height: 10; depth: 1"
+                material="color:rgb(179, 178, 168); roughness:0.2; side: double"
+                position="0 -5 25" rotation="0 0 0" scale="1 1 1"></a-entity>
+
+     <a-entity 
+                geometry="primitive: box; width: 50; height: 10; depth: 1"
+                material="color:rgb(179, 178, 168); roughness:0.2; side: double"
+                position="0 -5 -25" rotation="0 0 0" scale="1 1 1"></a-entity>
+
+    <!-- sky and lights -->
+      <a-entity id="sunlight" position="0 20 0" rotation="40 0 0" 
+                light="type:directional; intensity:4; color:#d5e4f5; castShadow:false;"></a-entity>
+      <a-entity light="type:hemisphere; color:#FFFFFF; groundColor:#BCE2F4; intensity:3.0"></a-entity>
+
+      <a-entity id='skyBox'
+                rotation='0 200 0'
+                geometry='primitive:sphere; radius:50; segments-height:24; segments-width:24;'
+                material='shader:flat; src:#skyMap; side:back;'>
+      </a-entity>
+    
+    <!-- end your code: -->
+  </a-scene>
+
+
+
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts/>
+ </body>
+</html>

@@ -1,0 +1,11 @@
+{
+    "world": {
+        "name": "Example Escape Room Interactions",
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "Some Social Interactions",
+        "description_long": "This would is to explore simple social interactions that could be used in other worlds",
+        "tags": [ "hub", "fire", "campfire"],
+        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+    }
+}

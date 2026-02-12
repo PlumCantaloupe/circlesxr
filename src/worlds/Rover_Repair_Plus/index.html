@@ -1,0 +1,557 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Circles' head scripts [REQUIRED] -->
+    <circles-start-scripts/>
+
+    <!-- add your custom scripts here -->
+    <!-- <script src="/worlds/hub/scripts/hub.js"></script> -->
+    
+    <!--Environment Script-->
+    <script src="https://unpkg.com/aframe-environment-component@1.5.x/dist/aframe-environment-component.min.js"></script>
+    <script src="js/manager.js"></script>
+    <script src="js/hold.js"></script>
+    <script src="js/rover.js"></script>
+    <script src="js/interactEvents.js"></script>
+    <script src="js/Interactions_One/interactEvent.js"></script>
+    <script src="js/Interactions_One/HoldObject.js"></script>
+    <script src="js/Interactions_One/PlacementSpots.js"></script>
+    <script src="js/GameManager.js"></script>
+    <script src="js/Interactions_Two/Dial.js"></script>
+    <script src="js/Interactions_Two/InteractDialEvents.js"></script>
+    <script src="js/Interactions_Two/InteractEventsCombo.js"></script>
+    <script src="js/Interactions_Three/HoldObjectPicture.js"></script>
+    <script src="js/Interactions_Three/interactEventPicture.js"></script>
+    <script src="js/Interactions_Three/PlacementSpotsPicture.js"></script>
+  </head>
+  <body>
+
+    <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+    <circles-start-ui/>
+
+    <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+    <a-scene wait-for-assets circles_scene_properties>
+      <a-assets>
+        <!-- add your assets here. Note that you can use relative links or absolute paths to your world -->
+        <!-- Circles' built-in assets [REQUIRED] -->
+        
+        <!--images-->
+        <!--sojourner hologram images-->
+        <img id="soj_wheel_00" src="assets/imgs/sojourner_wheel_red.png">
+        <img id="soj_wheel_01" src="assets/imgs/sojourner_wheel_blue.png">
+        <img id="soj_laser_00" src="assets/imgs/sojourner_laser_red.png">
+        <img id="soj_laser_01" src="assets/imgs/sojourner_laser_blue.png">
+        <img id="soj_cam_00"   src="assets/imgs/sojourner_camera_red.png">
+        <img id="soj_cam_01"   src="assets/imgs/sojourner_camera_blue.png">
+
+        <!--perseverance hologram images-->
+        <img id="pers_part_radar_00" src="assets/imgs/perseverance_rimfax_red.png">
+        <img id="pers_part_radar_01" src="assets/imgs/perseverance_rimfax_blue.png">
+        <img id="pers_part_cam_00" src="assets/imgs/perseverance_supercam_red.png">
+        <img id="pers_part_cam_01" src="assets/imgs/perseverance_supercam_blue.png">
+        <img id="pers_part_Meda_00" src="assets/imgs/perseverance_meda_red.png">
+        <img id="pers_part_Meda_01" src="assets/imgs/perseverance_meda_blue.png">
+
+        <!--curiosity hologram images-->
+        <img id="curi_part_hand_00" src="assets/imgs/curiosity_roboticHand_red.png">
+        <img id="curi_part_hand_01" src="assets/imgs/curiosity_roboticHand_blue.png">
+        <img id="curi_part_bat_00" src="assets/imgs/curiosity_powerSystem_red.png">
+        <img id="curi_part_bat_01" src="assets/imgs/curiosity_powerSystem_blue.png">
+        <img id="curi_part_cam_00" src="assets/imgs/curiosity_camera_red.png">
+        <img id="curi_part_cam_01" src="assets/imgs/curiosity_camera_blue.png">
+
+        <!--mars images-->
+        <img id="mars_middle" src="assets/imgs/Mars/MarsMiddle.jpg">
+        <img id="mars_top_left" src="assets/imgs/Mars/MarsTopLeft.jpg">
+        <img id="mars_middle_left" src="assets/imgs/Mars/MarsMiddleLeft.jpg">
+        <img id="mars_bottom_left" src="assets/imgs/Mars/MarsBottomLeft.jpg">
+        <img id="mars_middle_top" src="assets/imgs/Mars/MarsTopMiddle.jpg">
+        <img id="mars_middle_bottom" src="assets/imgs/Mars/MarsMiddleBottom.jpg">
+        <img id="mars_top_right" src="assets/imgs/Mars/MarsTopRight.jpg">
+        <img id="mars_middle_right" src="assets/imgs/Mars/MarsMiddleRight.jpg">
+        <img id="mars_bottom_right" src="assets/imgs/Mars/MarsBottomRight.jpg">
+
+
+        <!--Environment Assets-->
+        <a-asset-item id="desk_gltf"         src="assets/models/desk/scene.gltf"        crossorigin="anonymous"></a-asset-item>    <!--desk assets-->
+        <a-asset-item id="desk_drawer_gltf"  src="assets/models/desk_drawer/scene.gltf" crossorigin="anonymous"></a-asset-item>    <!--drawer assets-->
+        <a-asset-item id="3d_printer_gltf"   src="assets/models/3d_printer/scene.gltf"  crossorigin="anonymous"></a-asset-item>    <!--printer asset-->
+        <a-asset-item id="holo_base_gltf"    src="assets/models/hologram_base/scene.gltf" crossorigin="anonymous"></a-asset-item>  <!--hologram asset-->
+        <a-asset-item id="large_screen_gltf" src="assets/models/large_screen/scene.gltf" crossorigin="anonymous"></a-asset-item>   <!--large screen asset-->
+        <a-asset-item id="bigger_screen_gltf" src="assets/models/bigger_screen/scene.gltf" crossorigin="anonymous"></a-asset-item> 
+
+        <!--sojourner assets-->
+        <a-asset-item id="soju_body_gltf"   src="assets/models/soju/soju_body/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="soju_wheel_gltf"  src="assets/models/soju/soju_wheel/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="soju_laser_gltf"  src="assets/models/soju/laser/scene.gltf"     crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="soju_cam_gltf"    src="assets/models/soju/camera/scene.gltf"    crossorigin="anonymous"></a-asset-item>
+
+        <!--perseverance assets-->
+        <a-asset-item id="pers_body_gltf" src="assets/models/perseverance_assets/body/scene.gltf" crossorigin="anonymous"></a-asset-item>   
+        <a-asset-item id="pers_cam_gltf" src="assets/models/perseverance_assets/camera/scene.gltf" crossorigin="anonymous"></a-asset-item>   
+        <a-asset-item id="pers_MEDA_gltf" src="assets/models/perseverance_assets/MEDA/scene.gltf" crossorigin="anonymous"></a-asset-item>   
+        <a-asset-item id="pers_radar_gltf" src="assets/models/perseverance_assets/radar/scene.gltf" crossorigin="anonymous"></a-asset-item>   
+
+        <!--curiosity assets-->
+        <a-asset-item id="curi_body_gltf" src="assets/models/curiosity/body/scene.gltf"         crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="curi_hand_gltf" src="assets/models/curiosity/arm/scene.gltf"          crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="curi_bat_gltf"  src="assets/models/curiosity/power_system/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="curi_cam_gltf"  src="assets/models/curiosity/camera/scene.gltf"       crossorigin="anonymous"></a-asset-item>
+
+        <!--room assets-->
+        <a-asset-item id="base_gltf" src="assets/models/full_base_compressed.glb" crossorigin="anonymous"></a-asset-item>   
+        <a-asset-item id="nav_gltf" src="assets/models/full_base_nav/scene.gltf" crossorigin="anonymous"></a-asset-item>   
+
+        <!--interaction objects-->
+        <a-asset-item id="interaction_object_red_gltf"  src="assets/models/InteractionModel_1/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="interaction_object_green_gltf"  src="assets/models/InteractionModel_2/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="interaction_object_blue_gltf"  src="assets/models/InteractionModel_3/scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="interaction_placement_red_gltf"  src="assets/models/placementspot_1/Sketchfab_Scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="interaction_placement_green_gltf"  src="assets/models/placementspot_2/Sketchfab_Scene.gltf" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="interaction_placement_blue_gltf"  src="assets/models/placementspot_3/Sketchfab_Scene.gltf" crossorigin="anonymous"></a-asset-item>
+
+        <!--audio assets-->
+        <audio id="abient_music" src="assets/sounds/MS20_song.mp3" preload="auto" anonmymous></audio>
+        <audio id="place_sound" src="assets/sounds/item_selected.mp3" preload="auto" anonmymous></audio>
+        <audio id="drawer_sound" src="assets/sounds/drawer_sound.mp3" preload="auto" anonmymous></audio>
+        <audio id="print_sound" src="assets/sounds/printer_click.mp3" preload="auto" anonmymous></audio>
+        <audio id="soj_speak" src="assets/sounds/tech_2.mp3" preload="auto" anonmymous></audio>
+        <audio id="pers_speak" src="assets/sounds/tech_1.mp3" preload="auto" anonmymous></audio>
+        <audio id="curi_speak" src="assets/sounds/tech_3.mp3" preload="auto" anonmymous></audio>
+
+        <circles-assets/>
+      </a-assets>
+      
+      <template id="middle-template">
+        <a-entity geometry="primitive: box; width: 1; height: 1; depth: 1" position="0 0 0" scale="1 1 1" material="src: #mars_middle; roughness:0.2; side: double; opacity: 1; transparent: false"></a-entity>
+      </template>
+      <template id="middle-right-template">
+        <a-entity geometry="primitive: box; width: 1; height: 1; depth: 1" position="0 0 0" scale="1 1 1" material="src: #mars_middle_right; roughness:0.2; side: double; opacity: 1; transparent: false"></a-entity>
+      </template>
+      <template id="middle-top-template">
+        <a-entity geometry="primitive: box; width: 1; height: 1; depth: 1" position="0 0 0" scale="1 1 1" material="src: #mars_middle_top; roughness:0.2; side: double; opacity: 1; transparent: false"></a-entity>
+      </template>
+      <template id="middle-left-template">
+        <a-entity geometry="primitive: box; width: 1; height: 1; depth: 1" position="0 0 0" scale="1 1 1" material="src: #mars_middle_left; roughness:0.2; side: double; opacity: 1; transparent: false"></a-entity>
+      </template>
+      <template id="middle-bottom-template">
+        <a-entity geometry="primitive: box; width: 1; height: 1; depth: 1" position="0 0 0" scale="1 1 1" material="src: #mars_middle_bottom; roughness:0.2; side: double; opacity: 1; transparent: false"></a-entity>
+      </template>
+
+      <!-- spawnpoint (guessing that it needs to be placed before the circles avatar manager) -->
+      <a-entity circles-checkpoint circles-spawnpoint position="1 1.25 1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="1 1.25 -1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1 1.25 1"></a-entity>
+      <a-entity circles-checkpoint circles-spawnpoint position="-1 1.25 -1"></a-entity>
+
+      <!-- Circles' built-in manager and avatar [REQUIRED] -->
+      <circles-manager-avatar/>
+
+      <!--SOJOURNER ROOM SET UP-->
+      <!--sojourner rover model-->
+      <a-entity rover id="rover_sojourner" position="0 1.805 -15.728" rotation="0 0 0" scale="1 1 1" gltf-model="#soju_body_gltf" circles-interactive-object="type:highlight" sound="src:#soj_speak; volume:1; on:speak;">
+        <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.25 0" circles-description="title_text_front:Sojourner; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
+      </a-entity>
+
+      <!--sojourner loose part (laser and camera)-->
+      <a-entity circles-pickup-networked id="sj_part_laser_01" position="-1.973 2.856 -13.4" rotation="0 0 90" gltf-model="#soju_laser_gltf" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity circles-pickup-networked id="sj_part_camera_02" position="2.76 1.812 -15.09" gltf-model="#soju_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
+
+      <!--sojourner desk-->
+      <a-entity id="sojRoom_table" position="2.643 -0.786 -16.858" rotation="0 -61.736 0" gltf-model="#desk_gltf">
+        <!--basic drawer-->
+        <a-entity id="drawer_00" drawer_anim position="-0.804 -0.50 0.31" gltf-model="#desk_drawer_gltf" circles-interactive-object="type:highlight" sound="src:#drawer_sound; volume:1; on:click;">
+          <!--sojourner wheel in drawer-->
+          <a-entity circles-pickup-networked id="sj_part_wheel_00" position="0 2.75 0" gltf-model="#soju_wheel_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--sojourner screen-->
+      <a-entity id="soj_screen" position="2.685 2.646 -14" rotation="0 -120 0" gltf-model="#bigger_screen_gltf">
+        <a-entity id="screenTxt" text="baseline:top;" position="0 0.75 0.06" scale="2 2 2"></a-entity>
+      </a-entity>
+
+      <!--sojourner holograms-->
+      <!--sojourner wheel hologram-->
+      <a-entity hologram="redImgId:#soj_wheel_00; blueImgId:#soj_wheel_01;" id="h_base_00" position="-2.767 1.4 -16.95" rotation="0 60 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--sojourner laser hologram-->
+      <a-entity hologram="redImgId:#soj_laser_00; blueImgId:#soj_laser_01;" id="h_base_01" position="-1.969 1.4 -18.25" rotation="0 50 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--sojourner camera hologram-->
+      <a-entity hologram="redImgId:#soj_cam_00; blueImgId:#soj_cam_01;" id="h_base_02" position="3 2.6 -16.62" rotation="0 -60 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+
+      <!--PERSEVERANCE ROOM SET UP-->
+      <!--pers rover model-->
+      <a-entity rover id="rover_perseverance" position="-16.6 2.273 9.698" rotation="0 0 0" scale="1 1 1" gltf-model="#pers_body_gltf" circles-interactive-object="type:highlight" sound="src:#pers_speak; volume:1; on:speak;">
+        <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.5 0" circles-description="title_text_front:Perseverance; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
+      </a-entity>
+
+      <!--pers lose part (MEDA)-->
+      <a-entity circles-pickup-networked id="pers_part_Meda_05" position="-12.8 2.33 3.88" gltf-model="#pers_MEDA_gltf" circles-interactive-object="type:highlight"></a-entity>
+
+      <!--pers desk -->
+      <a-entity position="-19.9 -0.8 5.26" rotation="0 60 0" gltf-model="#desk_gltf">
+        <!--basic drawer-->
+        <a-entity id="drawer_01" drawer_anim position="-0.804 -0.50 0.31" gltf-model="#desk_drawer_gltf" circles-interactive-object="type:highlight" sound="src:#drawer_sound; volume:1; on:click;">
+          <!--object in the drawer-->
+          <a-entity circles-pickup-networked id="pers_part_radar_03" position="0 2.737 -0.123" gltf-model="#pers_radar_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--Perseverence printer-->
+      <a-entity id="printer_00" position="-10 2.76 9.5">
+        <!--Printer Circles Button-->
+        <a-entity id="prs_pBtn" printer_anim position="-0.12 -0.023 0.328" circles-button scale="0.25 0.25 0.25" sound="src:#print_sound; volume:1; on:click;"></a-entity>
+        <!--Printer Model-->
+        <a-entity id="printer_model" gltf-model="#3d_printer_gltf">
+          <!--Printer Rover Part-->
+          <a-entity circles-pickup-networked id="pers_part_cam_04" position="0 -0.22 0.047" gltf-model="#pers_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--Perseverence Room Screen -->
+      <a-entity id="pers_screen" position="-10.6 2.8 12.54" rotation="0 -119 0" gltf-model="#bigger_screen_gltf">
+        <a-entity id="screenTxt" text="baseline:top;" position="0 0.75 0.06" scale="2 2 2"></a-entity>
+      </a-entity>
+
+      <!--Perseverance holograms-->
+      <!--Perseverance Radar Hologram -->
+      <a-entity hologram="redImgId:#pers_part_radar_00; blueImgId:#pers_part_radar_01;" id="h_base_03" position="-17.7 1.4 4.16" rotation="0 24 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--Perseverance Super Camera Hologram -->
+      <a-entity hologram="redImgId:#pers_part_cam_00; blueImgId:#pers_part_cam_01;" id="h_base_04" position="-15 1.4 4.22" rotation="0 -15 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--Perseverance MEDA Hologram -->
+      <a-entity hologram="redImgId:#pers_part_Meda_00; blueImgId:#pers_part_Meda_01;" id="h_base_05" position="-19.7 1.4 14.9" rotation="0 -38.6 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+
+
+      <!--CURIOSITY ROOM SET UP-->
+      <!--pers rover model-->
+      <a-entity rover id="rover_curiosity" position="17 2.8 9.62" gltf-model="#curi_body_gltf" circles-interactive-object="type:highlight" sound="src:#curi_speak; volume:1; on:speak;">
+        <a-entity id="roverText" scale="0.5 0.5 0.5" position="0 1.5 0" circles-description="title_text_front:Curiosity; description_text_front:Hey you help me out! find my pieces to repair me;"></a-entity>
+      </a-entity>
+
+      <!--pers lose parts (arm and bat)-->
+      <a-entity circles-pickup-networked id="curi_part_hand_06" position="20.4 2.39 5.080" rotation="-90 0 0" gltf-model="#curi_hand_gltf" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity circles-pickup-networked id="curi_part_bat_07" position="17.675 3.1 15.76" rotation="0 0 -28.6" gltf-model="#curi_bat_gltf" circles-interactive-object="type:highlight"></a-entity>
+      <a-entity circles-pickup-networked id="curi_part_cam_08" position="0 0 0" gltf-model="#curi_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
+      
+      <!--curiosity printer-->
+      <a-entity id="printer_01" position="14.8 2.724 14.8" rotation="0 180 0">
+        <!--Printer Circles Button-->
+        <a-entity id="curi_pBtn" printer_anim position="-0.12 -0.023 0.328" circles-button scale="0.25 0.25 0.25" sound="src:#print_sound; volume:1; on:click;"></a-entity>
+        <!--Printer Model-->
+        <a-entity id="printer_model2" gltf-model="#3d_printer_gltf">
+          <!--Printer Rover Part-->
+          <a-entity circles-pickup-networked id="curi_part_cam_08" position="0 0 0" gltf-model="#curi_cam_gltf" circles-interactive-object="type:highlight"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!--Curiosity holograms-->
+      <!--Curiosity hand Hologram -->
+      <a-entity hologram="redImgId:#curi_part_hand_00; blueImgId:#curi_part_hand_01;" id="h_base_06" position="16.8 1.4 4" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--Curiosity battery Hologram -->
+      <a-entity hologram="redImgId:#curi_part_bat_00; blueImgId:#curi_part_bat_01;" id="h_base_07" position="13.4 1.4 4" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--Curiosity Camera Hologram -->
+      <a-entity hologram="redImgId:#curi_part_cam_00; blueImgId:#curi_part_cam_01;" id="h_base_08" position="21.4 2.3 6.3" rotation="0 -38.6 0" scale="0.3 0.3 0.3" gltf-model="#holo_base_gltf">
+        <a-image id="holoImg" position="0 3 0" scale="10 10 10"></a-image>
+      </a-entity>
+
+      <!--Curiosity Room Screen -->
+      <a-entity id="curi_screen" position="22.149 2.8 12.681" rotation="0 -119 0" gltf-model="#bigger_screen_gltf">
+        <a-entity id="screenTxt" text="baseline:top;" position="0 0.75 0.06" scale="2 2 2"></a-entity>
+      </a-entity>
+
+
+      <!-- the environment -->
+      <a-entity environment="preset:yavapai"></a-entity>
+      <a-entity id="bg_music_el" sound="src:#abient_music; autoplay: true; loop:true; volume:0.5;"></a-entity>
+      <a-entity id="place_sound_el" sound="src:#place_sound; volume:1.5;"></a-entity>
+
+      <!-- socket connector -->
+      <a-entity multi-interactions id="worldManager"></a-entity>
+
+      <!--base models-->
+      <a-entity position="0 1.25 0" gltf-model="#base_gltf"></a-entity>
+      <a-entity position="0 0.25 0" id="navmesh" gltf-model="#nav_gltf" visible='true' nav-mesh></a-entity>
+
+      <!-- socket connector -->
+      <a-entity gamemanager id="gameManager"></a-entity>
+
+      <!--Interaction one-->
+
+      <!-- screen-->
+        <a-entity 
+                  geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                  material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                  position="1.5 3 5" rotation="0 0 0" scale="0.5 0.5 0.5">
+                  <a-entity id="ScreenTextPlacementSpot" text="baseline:top; value: Power: Offline; color:rgb(255, 0, 0); width: 10;" 
+                    position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                  </a-entity> 
+
+      <!--Objects-->
+      <a-entity circles-pickup-networked id="redObject_01"
+                  position="-4.69 1.35 0.1" rotation="0 0 0" gltf-model="#interaction_object_red_gltf"
+                  circles-interactive-object="type:highlight"></a-entity>
+      
+      <a-entity circles-pickup-networked id="greenObject_01"
+                  position="2.8 1.5 -4.2" rotation="0 0 0" gltf-model="#interaction_object_green_gltf"
+                  circles-interactive-object="type:highlight"></a-entity>
+
+      <a-entity circles-pickup-networked id="blueObject_01"
+                  position="2.1 1.25 4.2" rotation="0 0 0" gltf-model="#interaction_object_blue_gltf"
+                  circles-interactive-object="type:highlight"></a-entity>
+
+      <!--Button-->
+      <a-entity 
+                geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                position="0.132 2.422 4.610" rotation="0 0 0" scale="0.6 0.6 0.2"></a-entity>
+          
+      <a-entity button id="buttonPS"
+                geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                position="0.132 2.422 4.61" rotation="0 0 0" scale="0.4 0.4 0.4"
+                circles-interactive-object="type:highlight"></a-entity>
+
+        
+      <!-- DeleteableObjects-->
+      <a-entity id="delete1"
+                geometry="primitive: box; width: 1; height: 1; depth: 1"
+                material="color:rgb(0, 0, 0); roughness:0.2; side: double;"
+                position="-4.517 1.430 2.968" rotation="0 -60 0" scale="1.5 4.5 1"></a-entity>
+
+      <!--Placement spots-->
+      <a-entity placementspots id="placementspots_red" gltf-model="#interaction_placement_red_gltf"
+                circles-interactive-object="type:highlight"
+                material="transparent: true; opacity: 0.2"
+                position="-0.5 3 5" rotation="0 0 60" scale="0.9 0.9 0.9"></a-entity>
+                
+      <a-entity placementspots id="placementspots_green" gltf-model="#interaction_placement_green_gltf"
+                circles-interactive-object="type:highlight"
+                material="transparent: true; opacity: 0.2"
+                position="-1.25 3 5" rotation="0 0 60" scale="0.9 0.9 0.9"></a-entity>
+      
+      <a-entity placementspots id="placementspots_blue" gltf-model="#interaction_placement_blue_gltf"
+                circles-interactive-object="type:highlight"
+                material="transparent: true; opacity: 0.2"
+                position="-2 3 5" rotation="0 0 60" scale="0.9 0.9 0.9"></a-entity>
+
+      <!--END OF INTERACTION ONE OBJECTS-->
+
+      <!--INTERACTION TWO OBJECTS-->
+      <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="3.515 2.958 3.485" rotation="0 60 0" scale="0.2 0.2 0.2">
+                    <a-entity id="ScreenTextCombo" text="baseline:top; value: Incorrect Code; color:rgb(255, 0, 0); width: 10;" 
+                      position="-3.3 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
+      <!--NumberDials-->
+            <!--Number Counter One-->
+            <a-entity   id="counterOne"
+                        geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                        material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                        position="3.680 2.536 2.859" rotation="0 60 0" scale="0.2 0.2 0.2">
+              <a-entity increasenumber id="UpCB_01"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity decreasenumber id="DownCB_01"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity 
+                        geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                        material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                        position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                        <a-entity id="counterOneNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+              </a-entity>
+            </a-entity>
+            <!--Number Counter Two-->
+            <a-entity   id="counterTwo"
+                        geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                        material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                        position="3.680 2.336 2.859" rotation="0 60 0" scale="0.2 0.2 0.2">
+              <a-entity increasenumber id="UpCB_02"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity decreasenumber id="DownCB_02"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity 
+                        geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                        material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                        position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                        <a-entity id="counterTwoNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+              </a-entity>
+            </a-entity>
+            <!--Number Counter Three-->
+            <a-entity   id="counterThree"
+                        geometry="primitive: box; width: 1; height: 1; depth: 0.5"
+                        material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                        position="3.680 2.136 2.859" rotation="0 60 0" scale="0.2 0.2 0.2">
+              <a-entity increasenumber id="UpCB_03"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 0.25 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity decreasenumber id="DownCB_03"
+                        geometry="primitive: box; width: 0.3; height: 0.3; depth: 0.3"
+                        material="color:rgb(128, 128, 128); roughness:0.2; side: double"
+                        position="-0.25 -0.2 -0.23" rotation="0 0 0" scale="1 1 1"
+                        circles-interactive-object="type:highlight"></a-entity>
+              <a-entity 
+                        geometry="primitive: box; width: 0.4; height: 0.75; depth: 0.3"
+                        material="color:rgb(255, 255, 255); roughness:0.2; side: double"
+                        position="0.2 0.03 -0.23" rotation="0 0 0" scale="1 1 1">
+                        <a-entity id="counterThreeNumber" text="baseline:top; value: 0; color:rgb(0, 0, 0); width: 20;" position="-9.65 0.25 -0.2" scale="1 1 1" rotation ="0 180 0"></a-entity>
+              </a-entity>
+            </a-entity>
+            <!-- button-->
+            <a-entity 
+                        geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                        material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                        position="3.680 2.736 2.859" rotation="-90 60 0" scale="0.3 0.3 0.3">
+
+              <a-entity checkcombobutton id="buttonCB"
+                        geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                        material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                        position="0 0.15 0" rotation="0 90 0" scale="0.8 0.8 0.8"
+                        circles-interactive-object="type:highlight"></a-entity>
+            </a-entity>
+            <!-- DeleteableObjects-->
+            <a-entity id="delete1Combo"
+              geometry="primitive: box; width: 1; height: 1; depth: 1"
+              material="color:rgb(0, 0, 0); roughness:0.2; side: double;"
+              position="5.02 1.43 2.676" rotation="0 60 0" scale="1.5 4.5 1"></a-entity>
+      <!--END OF INTERACTION TWO OBJECTS-->
+        
+      <!--INTERACTION THREE OBJECTS-->
+      <!-- screen-->
+          <a-entity 
+                    geometry="primitive: plane; width: 5; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="1.933 3.763 -4.348" rotation="0 180 0" scale="0.2 0.1 0.2">
+                    <a-entity id="ScreenTextPicture" text="baseline:top; value: Missing Picture Pieces; color:rgb(255, 0, 0); width: 10;" 
+                      position="-2.8 0.2 -0.1" scale="1 1 1" rotation ="0 180 0"></a-entity>
+                    </a-entity> 
+      <!-- PictureFrame-->
+          <a-entity 
+                    geometry="primitive: plane; width: 3; height: 3; depth: 1"
+                    material="color:rgb(0, 0, 0); roughness:0.2; side: double"
+                    position="1.948 3.001 -4.693" rotation="0 0 0" scale="0.4 0.4 0.4">
+                    <!-- Placeable slots-->
+                    <a-entity picturespots id="picturespots_red" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 0, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_green" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(0, 255, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="1.01 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_blue" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(0, 0, 255); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 1.01 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_purple" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 0, 255); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="-1.01 0 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <a-entity picturespots id="picturespots_yellow" geometry="primitive: box; width: 1; height: 1; depth: 1" circles-interactive-object="type:highlight"
+                    material="color:rgb(255, 255, 0); roughness:0.2; side: double; transparent: true; opacity: 0.2" position="0 -1.01 0.51" rotation="0 90 0" scale="0.9 0.9 0.9"></a-entity>
+                    <!-- Already placed spots-->
+                    <a-entity id="top_right" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="src: #mars_top_right; roughness:0.2; side: double" position="1.01 1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="bottom_right" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="src: #mars_bottom_right; roughness:0.2; side: double" position="1.01 -1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="bottom_left" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="src: #mars_bottom_left; roughness:0.2; side: double" position="-1.01 -1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    <a-entity id="top_left" geometry="primitive: box; width: 1; height: 1; depth: 1" 
+                    material="src: #mars_top_left; roughness:0.2; side: double" position="-1.01 1.01 0.51" rotation="0 90 0" scale="1 1 1"></a-entity>
+                    </a-entity>
+
+          <!-- InteractablePictureObjects-->
+          <a-entity circles-pickup-networked id="redPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="opacity: 0; transparent: true"
+                      position="-19.6 1.449 4.886" rotation="0 90 0" scale="0.40 0.40 0.40"
+                      circles-interactive-object="type:highlight">
+                      <a-entity networked="template: #middle-template"></a-entity>
+                    </a-entity>
+          <a-entity circles-pickup-networked id="greenPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="opacity: 0; transparent: true"
+                      position="-22.5 1.449 9.882" rotation="0 90 0" scale="0.4 0.4 0.4"
+                      circles-interactive-object="type:highlight">
+                      <a-entity networked="template: #middle-right-template"></a-entity>
+                    </a-entity>
+          <a-entity circles-pickup-networked id="bluePictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="opacity: 0; transparent: true"
+                      position="-9.71 1.598 10.485" rotation="0 90 0" scale="0.4 0.4 0.4"
+                      circles-interactive-object="type:highlight">
+                      <a-entity networked="template: #middle-top-template"></a-entity>
+                    </a-entity>
+          <a-entity circles-pickup-networked id="purplePictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="opacity: 0; transparent: true"
+                      position="21.27 1.414 5.635" rotation="0 90 0" scale="0.4 0.4 0.4"
+                      circles-interactive-object="type:highlight">
+                      <a-entity networked="template: #middle-left-template"></a-entity>
+                    </a-entity>
+          <a-entity circles-pickup-networked id="yellowPictureObject_01"
+                      geometry="primitive: box; width: 1; height: 1; depth: 1"
+                      material="opacity: 0; transparent: true"
+                      position="15.94 1.709 15.512" rotation="0 90 0" scale="0.4 0.4 0.4"
+                      circles-interactive-object="type:highlight">
+                      <a-entity networked="template: #middle-bottom-template"></a-entity>
+                    </a-entity>
+          
+          <!-- button-->
+            <a-entity 
+                        geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                        material="color:rgb(32, 32, 32); roughness:0.2; side: double"
+                        position="1.105 2.587 -4.596" rotation="-90 180 0" scale="0.4 0.4 0.4">
+
+              <a-entity buttonpic id="buttonPic"
+                        geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+                        material="color:rgb(255, 0, 0); roughness:0.2; side: double"
+                        position="0 0.15 0" rotation="0 90 0" scale="0.8 0.8 0.8"
+                        circles-interactive-object="type:highlight"></a-entity>
+            </a-entity>
+            <!-- DeleteableObjects-->
+            <a-entity id="delete1pic"
+                geometry="primitive: box; width: 1; height: 1; depth: 1"
+                material="color:rgb(0, 0, 0); roughness:0.2; side: double;"
+                position="0.082 1.43 -5.530" rotation="0 0 0" scale="1.5 4.5 1"></a-entity>
+      <!--END OF INTERACTION THREE OBJECTS-->
+
+
+
+    </a-scene>
+    <!-- Circles' end scripts [REQUIRED] -->
+    <circles-end-scripts/>
+  </body>
+</html>
