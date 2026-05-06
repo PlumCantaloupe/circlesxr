@@ -5,11 +5,20 @@ AFRAME.registerComponent('circles-costume-color-selector', {
       colors: {
         default: 'rgb(250, 228, 200),rgb(243, 212, 167),rgb(230, 193, 151), rgb(204, 159, 127),rgb(168, 139, 102),rgb(139, 97, 62), rgb(119, 71, 41), rgb(39, 24, 12), rgb(0, 174, 204), rgb(57, 202, 137), rgb(85, 78, 255), rgb(255, 85, 68), rgb(204, 58, 201), rgb(255, 255, 255)',
         parse: function (value) {
+          console.log(value);
+          if (Array.isArray(value)) {
+            return value;
+          }
+
+          if (typeof value !== 'string') {
+            return [];
+          }
+
           const newVal = value.replace(/\s|\\/g, ''); //remove spaces and any backslashes added by Aframe
           return newVal.split(/,\s*(?![^()]*\))/);    //regex to split by commas outside of brackets
         },
         stringify: function (value) {
-          return value.join('/');
+          return Array.isArray(value) ? value.join(',') : '';
         }
       },
       class_selector: {type: 'string',    default:''}   //this is the class we will use to query for and set the color here
