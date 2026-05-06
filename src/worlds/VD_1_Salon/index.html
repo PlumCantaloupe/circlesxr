@@ -103,7 +103,7 @@
 
       <!-- emulate sun shining throigh window -->
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
-      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:spot; angle:50; intensity:20.0; color:#d5e4f5; distance:15.0; penumbra:0.1;" circles-platform-shadows></a-entity>
+      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:directional; angle:60; intensity:5.0; color:#d5e4f5; distance:20.0;"></a-entity>
 
       <a-entity id='skyBox'
                 geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'
