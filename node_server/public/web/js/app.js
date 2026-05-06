@@ -180,35 +180,45 @@ function getWorldsList() {
   request.send();
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function showWorldList(data) {
   const jsonData                = JSON.parse(data);
 
-  let htmlStr_list    = '<ul class="pure-menu-list">';
+  let htmlStr_list    = '<div class="explore-world-grid">';
   let htmlStr_select  = '';
   let urlLink = '';
-  let worldName = ';'
 
-  htmlStr_list += '<li><a class="pure-button" href="/w/BW_Hub">Echoes of the Mind: Learning about Brainwaves</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/WIT_Campfire">Faculty Workshop: Challenges Women Face in The Trades</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/KIN_Hub">Undergraduate Physics Demonstrations</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/Rover_Repair_">Mars Rover Repair</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/ExampleWorld">Example World: Floating Islands</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/ExampleNetworking">Example World: Networking Components</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/ResearchSpace">Research Space: Fitts\' Law</a></li>';
-  htmlStr_list += '<li><a class="pure-button" href="/w/VD_Campfire">Viola Desmond: A Virtual Retrospective</a></li>';
+  for (let i = 0; i < jsonData.length; i++) {
+    const world = jsonData[i];
+    const worldFolderName = world.folderName || world;
+    const worldDisplayName = world.displayName || worldFolderName;
+    const worldAuthors = Array.isArray(world.authors) ? world.authors.join(', ') : '';
+    const worldAuthorsMarkup = (worldAuthors === '') ? 'Authors to be announced' : worldAuthors;
+    const worldImageUrl = world.imageUrl || ('/worlds/' + worldFolderName + '/profile.jpg');
 
-  //!!hack for just showing some worlds for now
-  // for (let i = 0; i < jsonData.length; i++) {
-  //   worldName = jsonData[i];
-  //   urlLink = '/w/' + worldName;
+    urlLink = '/w/' + encodeURIComponent(worldFolderName);
 
-  //   htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
-  //   htmlStr_list += worldName;
-  //   htmlStr_list += '</a></li>';
+    htmlStr_list += '<a class="explore-world-card" href="' + escapeHtml(urlLink) + '">';
+    htmlStr_list += '<div class="explore-world-card__media">';
+    htmlStr_list += '<img class="explore-world-card__image" src="' + escapeHtml(worldImageUrl) + '" alt="' + escapeHtml(worldDisplayName) + ' preview image" loading="lazy">';
+    htmlStr_list += '</div>';
+    htmlStr_list += '<div class="explore-world-card__content">';
+    htmlStr_list += '<h3 class="explore-world-card__title">' + escapeHtml(worldDisplayName) + '</h3>';
+    htmlStr_list += '<p class="explore-world-card__authors">' + escapeHtml(worldAuthorsMarkup) + '</p>';
+    htmlStr_list += '</div>';
+    htmlStr_list += '</a>';
 
-  //   htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
-  // }
-  htmlStr_list += '</ul>';
+    htmlStr_select += '<option value="' + escapeHtml(worldFolderName) + '">' + escapeHtml(worldDisplayName) + '</option>';
+  }
+  htmlStr_list += '</div>';
 
   const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
   worldsWrapperElem.innerHTML = htmlStr_list;

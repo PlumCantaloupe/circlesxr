@@ -1,0 +1,66 @@
+.explore-world-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: calc($gutter * 1.25);
+}
+
+.explore-world-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100%;
+  border-radius: calc($border-radius * 1.2);
+  background: linear-gradient(180deg, #ffffff 0%, #f2f5f8 100%);
+  box-shadow: 0 20px 45px rgba(18, 42, 56, 0.14);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.explore-world-card:hover,
+.explore-world-card:focus {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 60px rgba(18, 42, 56, 0.18);
+}
+
+.explore-world-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f3f56 0%, #2d7f7d 100%);
+}
+
+.explore-world-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.explore-world-card__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: $gutter;
+  color: #163040;
+}
+
+.explore-world-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.explore-world-card__authors {
+  margin: 0;
+  color: #4c6472;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@include phone-to-tablet {
+  .explore-world-grid {
+    grid-template-columns: 1fr;
+    gap: $gutter;
+  }
+}
