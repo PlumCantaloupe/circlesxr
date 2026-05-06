@@ -187,16 +187,27 @@ function showWorldList(data) {
   let htmlStr_select  = '';
   let urlLink = '';
   let worldName = ';'
-  for (let i = 0; i < jsonData.length; i++) {
-    worldName = jsonData[i];
-    urlLink = '/w/' + worldName;
 
-    htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
-    htmlStr_list += worldName;
-    htmlStr_list += '</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/BW_Hub">Echoes of the Mind: Learning about Brainwaves</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/WIT_Campfire">Faculty Workshop: Challenges Women Face in The Trades</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/KIN_Hub">Undergraduate Physics Demonstrations</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/Rover_Repair_">Mars Rover Repair</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/ExampleWorld">Example World: Floating Islands</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/ExampleNetworking">Example World: Networking Components</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/ResearchSpace">Research Space: Fitts\' Law</a></li>';
+  htmlStr_list += '<li><a class="pure-button" href="/w/VD_Campfire">Viola Desmond: A Virtual Retrospective</a></li>';
 
-    htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
-  }
+  //!!hack for just showing some worlds for now
+  // for (let i = 0; i < jsonData.length; i++) {
+  //   worldName = jsonData[i];
+  //   urlLink = '/w/' + worldName;
+
+  //   htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
+  //   htmlStr_list += worldName;
+  //   htmlStr_list += '</a></li>';
+
+  //   htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
+  // }
   htmlStr_list += '</ul>';
 
   const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
