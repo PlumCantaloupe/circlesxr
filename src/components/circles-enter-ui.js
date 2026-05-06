@@ -49,6 +49,7 @@ AFRAME.registerComponent('circles-enter-ui', {
             //start all autoplay/ambient music
             const ambientSounds = document.querySelectorAll('.autoplay-sound');
             ambientSounds.forEach(function(soundEntity) {
+                soundEntity.setAttribute('circles-sound', {state:'stop'});
                 soundEntity.setAttribute('circles-sound', {state:'play'});
             });
         };
@@ -72,10 +73,10 @@ AFRAME.registerComponent('circles-enter-ui', {
         }
 
         //start all autoplay/ambient music
-        const ambientSounds = document.querySelectorAll('.autoplay-sound');
-        ambientSounds.forEach(function(soundEntity) {
-            soundEntity.setAttribute('circles-sound', {state:'play'});
-        });
+        // const ambientSounds = document.querySelectorAll('.autoplay-sound');
+        // ambientSounds.forEach(function(soundEntity) {
+        //     soundEntity.setAttribute('circles-sound', {state:'play'});
+        // });
 
         //clicking on customize avatar brings user to wardobe world
         document.querySelector('#wardrobe-enter').addEventListener('click', function() {

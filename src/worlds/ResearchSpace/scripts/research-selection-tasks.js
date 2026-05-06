@@ -174,7 +174,7 @@ AFRAME.registerComponent('research-selection-tasks', {
                 newVec = new THREE.Vector3(raycaster.data.direction.x, raycaster.data.direction.y, raycaster.data.direction.z).transformDirection(primary_pointer.object3D.matrixWorld);
             }
             else {
-                newVec = raycaster.data.direction.clone();
+                newVec = new THREE.Vector3(raycaster.data.direction.x, raycaster.data.direction.y, raycaster.data.direction.z);
             }
             newVec.normalize();
             newVec.multiplyScalar(raycaster.data.far);

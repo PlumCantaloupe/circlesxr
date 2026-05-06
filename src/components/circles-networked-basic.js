@@ -24,6 +24,11 @@ AFRAME.registerComponent('circles-networked-basic', {
     let regex = /(naf)/i;
     CONTEXT_AF.isClone  = regex.test(CONTEXT_AF.el.id); //if false, this entity is the sole networked object of all duplicates
 
+    //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
+    if (CONTEXT_AF.isClone === false) {
+      CONTEXT_AF.el.setAttribute('circles-object-world', {});
+    }
+
     if (CIRCLES.isCirclesWebsocketReady()) {
       CONTEXT_AF.createEventFunctions();    //will only do this once at beginning of program
     }
@@ -33,11 +38,6 @@ AFRAME.registerComponent('circles-networked-basic', {
         CONTEXT_AF.el.sceneEl.removeEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
       };
       CONTEXT_AF.el.sceneEl.addEventListener(CIRCLES.EVENTS.WS_CONNECTED, wsReadyFunc);
-    }
-
-    //this is so we can keep track of which world this object is from so we can share objects, but turning that off for now to reduce duplicate object complexity.
-    if (CONTEXT_AF.isClone === false) {
-      CONTEXT_AF.el.setAttribute('circles-object-world', {});
     }
   },
   update : function(oldData) {

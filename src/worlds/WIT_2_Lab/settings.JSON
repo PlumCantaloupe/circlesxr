@@ -1,11 +1,13 @@
 {
     "world": {
-        "name": "The Fire",
-        "type": "hub",
+        "name": "Challenges Women Face in The Trades: In The Classroom",
+        "authors": ["Anthony Scavarelli", "Julie McCann", "Sarah Gauen", "Jessica Hempinstall", "Amy Loder"],
+        "showInExplore": false,
+        "type": "world",
         "imgPath": "./profile.jpg",
-        "description_short": "Hub world campfire.",
-        "description_long": "Participants gather around the fire to discuss, create, and explore different experiences.",
-        "tags": [ "hub", "fire", "campfire"],
-        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
     }
 }

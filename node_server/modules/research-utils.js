@@ -133,7 +133,9 @@ const stopExperiment = (data) => {
     trials                  = [];
     currTrialIndex          = -1
 
-    logger.end();
+    if (logger) {
+        logger.end();
+    }
     
     logger                  = null;
     num_errors              = 0;

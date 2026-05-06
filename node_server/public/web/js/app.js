@@ -180,24 +180,89 @@ function getWorldsList() {
   request.send();
 }
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+const WORLD_DEVICE_ICONS = {
+  desktop: {
+    src: '/global/assets/textures/icons/Icon_Device-Desktop.png',
+    label: 'Desktop'
+  },
+  mobile: {
+    src: '/global/assets/textures/icons/Icon_Device-Mobile.png',
+    label: 'Mobile'
+  },
+  hmd: {
+    src: '/global/assets/textures/icons/Icon_Device-HMD6DOF.png',
+    label: 'HMD'
+  }
+};
+
+function getWorldDeviceIcons(supportedDevices) {
+  if (Array.isArray(supportedDevices) === false) {
+    return '';
+  }
+
+  let iconsMarkup = '';
+
+  for (let i = 0; i < supportedDevices.length; i++) {
+    const deviceKey = supportedDevices[i];
+    const deviceIcon = WORLD_DEVICE_ICONS[deviceKey];
+
+    if (!deviceIcon) {
+      continue;
+    }
+
+    iconsMarkup += '<li class="explore-world-card__platform-item">';
+    iconsMarkup += '<img class="explore-world-card__platform-icon" src="' + escapeHtml(deviceIcon.src) + '" alt="' + escapeHtml(deviceIcon.label) + ' supported" title="' + escapeHtml(deviceIcon.label) + '">';
+    iconsMarkup += '</li>';
+  }
+
+  if (iconsMarkup === '') {
+    return '';
+  }
+
+  return '<div class="explore-world-card__platforms"><span class="explore-world-card__platforms-label">Supported on</span><ul class="explore-world-card__platform-list">' + iconsMarkup + '</ul></div>';
+}
+
 function showWorldList(data) {
   const jsonData                = JSON.parse(data);
 
-  let htmlStr_list    = '<ul class="pure-menu-list">';
+  let htmlStr_list    = '<div class="explore-world-grid">';
   let htmlStr_select  = '';
   let urlLink = '';
-  let worldName = ';'
+
   for (let i = 0; i < jsonData.length; i++) {
-    worldName = jsonData[i];
-    urlLink = '/w/' + worldName;
+    const world = jsonData[i];
+    const worldFolderName = world.folderName || world;
+    const worldDisplayName = world.displayName || worldFolderName;
+    const worldAuthors = Array.isArray(world.authors) ? world.authors.join(', ') : '';
+    const worldAuthorsMarkup = (worldAuthors === '') ? 'Authors to be announced' : worldAuthors;
+    const worldImageUrl = world.imageUrl || ('/worlds/' + worldFolderName + '/profile.jpg');
+    const worldPlatformIcons = getWorldDeviceIcons(world.supportedDevices);
 
-    htmlStr_list += '<li><a class="pure-button" href="' + urlLink + '">';
-    htmlStr_list += worldName;
-    htmlStr_list += '</a></li>';
+    urlLink = '/w/' + encodeURIComponent(worldFolderName);
 
-    htmlStr_select += '<option value="' + worldName + '">' + worldName + '</option>';
+    htmlStr_list += '<a class="explore-world-card" href="' + escapeHtml(urlLink) + '">';
+    htmlStr_list += '<div class="explore-world-card__media">';
+    htmlStr_list += '<img class="explore-world-card__image" src="' + escapeHtml(worldImageUrl) + '" alt="' + escapeHtml(worldDisplayName) + ' preview image" loading="lazy">';
+    htmlStr_list += '</div>';
+    htmlStr_list += '<div class="explore-world-card__content">';
+    htmlStr_list += '<h3 class="explore-world-card__title">' + escapeHtml(worldDisplayName) + '</h3>';
+    htmlStr_list += '<p class="explore-world-card__authors">' + escapeHtml(worldAuthorsMarkup) + '</p>';
+    htmlStr_list += worldPlatformIcons;
+    htmlStr_list += '</div>';
+    htmlStr_list += '</a>';
+
+    htmlStr_select += '<option value="' + escapeHtml(worldFolderName) + '">' + escapeHtml(worldDisplayName) + '</option>';
   }
-  htmlStr_list += '</ul>';
+  htmlStr_list += '</div>';
 
   const worldsWrapperElem       = document.querySelector('#worlds_list_wrapper');
   worldsWrapperElem.innerHTML = htmlStr_list;

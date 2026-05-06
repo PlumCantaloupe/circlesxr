@@ -57,7 +57,8 @@ AFRAME.registerComponent('circles-interactive-visible', {
     const raycasters = this.el.sceneEl.querySelectorAll('[raycaster]');
     raycasters.forEach(rc => {
       if (rc.components.raycaster.data) {
-        rc.components.raycaster.refreshObjects();
+        //!!investigate
+        //rc.components.raycaster.refreshObjects();
       }
     }); 
   },

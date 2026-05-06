@@ -601,36 +601,60 @@ const getMagicLinks = (req, res, next) => {
 };
 
 const loopAndGetFolderNames =  async (folderPath) => {
-  let allSubFolderNames = [];
-  // Get the files as an array
+  const visibleWorlds = [];
   let files = null;
-  try{
+
+  try {
     files = await fs.promises.readdir(folderPath);
   }
   catch(e) {
     console.log(e.message);
-    return allSubFolderNames;
+    return visibleWorlds;
   }
 
-  // Loop them all with the new for...of
-  let worldName = "";
-  for( const file of files ) {
-      // Get the full paths
-      const fullPath = path.join( folderPath, file );
+  for (const file of files) {
+    const fullPath = path.join(folderPath, file);
+    const settingsPath = path.join(fullPath, 'settings.JSON');
+    let stat = null;
 
-      // Stat the file to see if we have a file or dir
-      const stat = await fs.promises.stat( fullPath );
+    try {
+      stat = await fs.promises.stat(fullPath);
+    }
+    catch (e) {
+      console.log(e.message);
+      continue;
+    }
 
-      if( stat.isDirectory() ) {
-          //console.log( fullPath + " is a directory.");
-          worldName = file;
-          worldName.replace(folderPath, "");
-          allSubFolderNames.push(file);
+    if (stat.isDirectory() === false) {
+      continue;
+    }
+
+    try {
+      const rawSettings = await fs.promises.readFile(settingsPath, 'utf8');
+      const settings = JSON.parse(rawSettings);
+      const worldSettings = settings.world || {};
+      const relativeImagePath = (typeof worldSettings.imgPath === 'string' && worldSettings.imgPath !== '') ? worldSettings.imgPath.replace(/^\.\//, '') : 'profile.jpg';
+
+      if (worldSettings.showInExplore === true) {
+        visibleWorlds.push({
+          folderName: file,
+          displayName: worldSettings.name || file,
+          authors: Array.isArray(worldSettings.authors) ? worldSettings.authors : [],
+          imageUrl: '/worlds/' + file + '/' + relativeImagePath,
+          supportedDevices: Array.isArray(worldSettings.supportedDevices) ? worldSettings.supportedDevices : [],
+        });
       }
+    }
+    catch (e) {
+      if (e.code !== 'ENOENT') {
+        console.log(e.message);
+      }
+    }
   }
-  allSubFolderNames.sort();
 
-  return allSubFolderNames;
+  visibleWorlds.sort((worldA, worldB) => worldA.displayName.localeCompare(worldB.displayName));
+
+  return visibleWorlds;
 };
 
 const getWorldsList = async (req, res, next) => {
@@ -761,7 +785,7 @@ const addTestUsers = () => {
           if (error) {
             console.log("createUser error on [" + usersToAdd[i].username + "]: " + error.message);
           } else {
-            console.log("successfully added test user: " + usersToAdd[i].username);
+            console.log("successfully added test user: " + user.username);
           }
 
           error = null;
