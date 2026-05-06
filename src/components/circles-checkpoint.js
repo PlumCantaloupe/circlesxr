@@ -18,14 +18,10 @@ AFRAME.registerComponent('circles-checkpoint', {
     if (!CONTEXT_AF.el.classList.contains('checkpoint')) {
         CONTEXT_AF.el.classList.add('checkpoint');
     }
-
-    console.log("init checkpoint", CONTEXT_AF)
   },
   update : function(oldData) {
     const CONTEXT_AF = this;
     const data = this.data;
-
-    console.log("update called", CONTEXT_AF)
 
     if ( (oldData.offset !== data.offset) && (data.offset !== '') ) {
       CONTEXT_AF.el.setAttribute('checkpoint', {offset:CONTEXT_AF.data.offset});
