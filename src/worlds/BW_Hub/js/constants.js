@@ -154,7 +154,7 @@ const GUIDING_TEXT_INFO = {
 
 //instructions
 const INSTRUCTIONS = [
-    {name:'empty', text: 'About Echoes of the Mind: Brain waves visualized', text2: "Welcome to Echoes of The Mind, a virtual art gallery exploring the visualization of brain waves through interpretive audio and interactive environments."},
+    {name:'empty', text: 'About Echoes of the Mind: Brain waves visualized', text2: "Welcome to a visualization of brain waves through audio-interactive environments.\n\nDevelopers: Amina Al-Helali, Leanne Fang, Madison Lyall, Emma Souannhaphanh, and Kayla Zhang."},
     {name:'#instructions_1', text: 'About Echoes of the Mind'},
     {name:'#instructions_2', text: 'About Echoes of the Mind'},
     {name:'#instructions_3', text: 'About Echoes of the Mind'},
