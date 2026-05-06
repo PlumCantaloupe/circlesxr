@@ -45,6 +45,37 @@ div.grid2col {
     filter: drop-shadow(0 0 0.75rem rgb(50, 50, 50));
 }
 
+#go-home-overlay {
+    position: fixed;          /* pin to viewport, not scene */
+    top: 16px;
+    right: 16px;
+    left: auto;
+    bottom: auto;
+
+    z-index: 2147483647;      /* above WebGL/canvas/UI layers */
+    background: transparent;
+    padding: 0;
+    margin: 0;
+
+    pointer-events: none;     /* overlay itself doesn't block scene */
+}
+
+/* target the actual clickable control inside the overlay */
+#go-home-overlay a,
+#go-home-overlay button,
+#go-home-overlay input,
+#go-home-overlay .user-gesture-button,
+#go-home-overlay img {
+    pointer-events: auto;     /* make the control clickable */
+    position: relative;
+    z-index: 1;
+}
+
+#go-home-overlay .logo {
+    width: 5vw;
+    height: auto;
+}
+
 #user-gesture-overlay {
     display: block;
     z-index: 99;
