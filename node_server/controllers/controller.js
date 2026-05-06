@@ -641,6 +641,7 @@ const loopAndGetFolderNames =  async (folderPath) => {
           displayName: worldSettings.name || file,
           authors: Array.isArray(worldSettings.authors) ? worldSettings.authors : [],
           imageUrl: '/worlds/' + file + '/' + relativeImagePath,
+          supportedDevices: Array.isArray(worldSettings.supportedDevices) ? worldSettings.supportedDevices : [],
         });
       }
     }

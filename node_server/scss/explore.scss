@@ -58,9 +58,54 @@
   line-height: 1.5;
 }
 
+.explore-world-card__platforms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.explore-world-card__platforms-label {
+  color: #617888;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.explore-world-card__platform-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.explore-world-card__platform-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.explore-world-card__platform-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.82;
+}
+
 @include phone-to-tablet {
   .explore-world-grid {
     grid-template-columns: 1fr;
     gap: $gutter;
+  }
+
+  .explore-world-card__platforms {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

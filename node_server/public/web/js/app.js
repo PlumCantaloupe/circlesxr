@@ -189,6 +189,48 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+const WORLD_DEVICE_ICONS = {
+  desktop: {
+    src: '/global/assets/textures/icons/Icon_Device-Desktop.png',
+    label: 'Desktop'
+  },
+  mobile: {
+    src: '/global/assets/textures/icons/Icon_Device-Mobile.png',
+    label: 'Mobile'
+  },
+  hmd: {
+    src: '/global/assets/textures/icons/Icon_Device-HMD6DOF.png',
+    label: 'HMD'
+  }
+};
+
+function getWorldDeviceIcons(supportedDevices) {
+  if (Array.isArray(supportedDevices) === false) {
+    return '';
+  }
+
+  let iconsMarkup = '';
+
+  for (let i = 0; i < supportedDevices.length; i++) {
+    const deviceKey = supportedDevices[i];
+    const deviceIcon = WORLD_DEVICE_ICONS[deviceKey];
+
+    if (!deviceIcon) {
+      continue;
+    }
+
+    iconsMarkup += '<li class="explore-world-card__platform-item">';
+    iconsMarkup += '<img class="explore-world-card__platform-icon" src="' + escapeHtml(deviceIcon.src) + '" alt="' + escapeHtml(deviceIcon.label) + ' supported" title="' + escapeHtml(deviceIcon.label) + '">';
+    iconsMarkup += '</li>';
+  }
+
+  if (iconsMarkup === '') {
+    return '';
+  }
+
+  return '<div class="explore-world-card__platforms"><span class="explore-world-card__platforms-label">Supported on</span><ul class="explore-world-card__platform-list">' + iconsMarkup + '</ul></div>';
+}
+
 function showWorldList(data) {
   const jsonData                = JSON.parse(data);
 
@@ -203,6 +245,7 @@ function showWorldList(data) {
     const worldAuthors = Array.isArray(world.authors) ? world.authors.join(', ') : '';
     const worldAuthorsMarkup = (worldAuthors === '') ? 'Authors to be announced' : worldAuthors;
     const worldImageUrl = world.imageUrl || ('/worlds/' + worldFolderName + '/profile.jpg');
+    const worldPlatformIcons = getWorldDeviceIcons(world.supportedDevices);
 
     urlLink = '/w/' + encodeURIComponent(worldFolderName);
 
@@ -213,6 +256,7 @@ function showWorldList(data) {
     htmlStr_list += '<div class="explore-world-card__content">';
     htmlStr_list += '<h3 class="explore-world-card__title">' + escapeHtml(worldDisplayName) + '</h3>';
     htmlStr_list += '<p class="explore-world-card__authors">' + escapeHtml(worldAuthorsMarkup) + '</p>';
+    htmlStr_list += worldPlatformIcons;
     htmlStr_list += '</div>';
     htmlStr_list += '</a>';
 
