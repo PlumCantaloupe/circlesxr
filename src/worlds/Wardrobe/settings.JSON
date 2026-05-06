@@ -1,8 +1,8 @@
 {
     "world": {
         "name": "Wardrobe: A Virtual Dressing Room",
-        "authors": ["Circles XR Team", "Favour Diokpo"],
-        "showInExplore": false,
+        "authors": ["Circles XR Team"],
+        "showInExplore": true,
         "type": "special",
         "imgPath": "./profile.jpg",
         "description_short": "",
