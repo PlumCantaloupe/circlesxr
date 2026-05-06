@@ -46,7 +46,7 @@ const DEFAULT_CHECKPOINT_COLOR  = 'rgb(57, 187, 130)';
 const DEFAULT_SNAP_TURN_DEG     = 30.0;
 
 //camera controls
-const CONTROLS_OFFSET_Z         = -1.5;
+const CONTROLS_OFFSET_Z         = -1.0;
 const CONTROLS_SNAP_ROTATE      = 90.0;
 const CONTROLS_SNAP_TRANSLATE   = 1.0;
 
