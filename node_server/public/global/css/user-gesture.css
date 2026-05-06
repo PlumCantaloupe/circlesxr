@@ -47,9 +47,9 @@ div.grid2col {
 
 #go-home-overlay {
     position: fixed;          /* pin to viewport, not scene */
-    top: 16px;
-    right: 16px;
-    left: auto;
+    top: 13px;
+    left: 40px;
+    right: auto;
     bottom: auto;
 
     z-index: 2147483647;      /* above WebGL/canvas/UI layers */
@@ -72,7 +72,7 @@ div.grid2col {
 }
 
 #go-home-overlay .logo {
-    width: 5vw;
+    width: 4.35vw;
     height: auto;
 }
 
