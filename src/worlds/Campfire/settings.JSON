@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Campfire",
+        "authors": ["Anthony Scavarelli"],
+        "showInExplore": true,
+        "type": "special",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}
