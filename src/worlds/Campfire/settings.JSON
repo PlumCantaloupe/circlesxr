@@ -1,7 +1,7 @@
 {
     "world": {
         "name": "Campfire",
-        "authors": ["Anthony Scavarelli"],
+        "authors": ["Circles XR Team"],
         "showInExplore": true,
         "type": "special",
         "imgPath": "./profile.jpg",
