@@ -40,8 +40,13 @@ const notAuthenticated = (req, res, next) => {
 
 //general web
 router.get('/', notAuthenticated, (req, res) => {
+  const enableDevMode = String(process.env.ENABLE_DEV_MODE || '').toLowerCase() === 'true';
+
   res.render(path.resolve(__dirname + '/../public/web/views/index'), {
-    title: 'Welcome to CIRCLES'
+    title: 'Welcome to CIRCLES',
+    enableDevMode,
+    devAutofillEmail: process.env.DEFAULT_LOGIN_EMAIL || 'p1@circlesxr.com',
+    devAutofillPassword: process.env.DEFAULT_PASSWORD || 'password'
   });
 });
 
