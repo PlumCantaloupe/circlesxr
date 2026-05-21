@@ -1,6 +1,6 @@
 //Once the user clicks the "Enter Circles" Button Gea's intro animation will start
 CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function() {
-  console.log(document.querySelector('#user-gesture-enter'));
+  console.log(document.querySelector('#user-gesture-enter') + 'yo');
   document.querySelector('#user-gesture-enter').addEventListener('click', function() {
 
     console.log("Animation Ready");
@@ -15,8 +15,14 @@ CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function
     setTimeout(() => headAnimation.emit('lookPlayer-animation'), 8000);
   
     //Select Gea and start the intro dialogue
-    document.querySelector("#GeaHead").setAttribute('sound', {src:'#GeaWelcome'});
-    setTimeout(() => document.querySelector("#GeaHead").components['sound'].playSound(), 9500);
+    //document.querySelector("#GeaHead").setAttribute('circles-sound', {src:'#GeaWelcome'});
+    //document.querySelector("#GeaSound").setAttribute("circles-sound", "state: play");
+    console.log("Gea sound playing");
+
+
+    //setTimeout(() => document.querySelector("#GeaHead").components['sound'].playSound(), 9500);
+
+    setTimeout(() => document.querySelector("#GeaSound").setAttribute("circles-sound", "state: play"));
 
     //Start the animation sequence and use timeouted emits to seperate the start of each animation
     setTimeout(() => FullBodyArmAnimation.emit('turnToPlayer-animation'), 10000);

@@ -17,12 +17,10 @@
     <a-scene circles_scene_properties>
       <a-assets>
         <!-- All assets used in the scene -->
-        <circles-assets/>
-        <audio id="backgroundMusic" src="assets/audio/ACCCD_IMD3901_TermProject_Music_mixdown.mp3" preload="auto" crossorigin="anonymous" ></audio>
+        <audio id="backgroundMusic" src="assets/audio/ACCCD_IMD3901_TermProject_Music_mixdown.mp3" preload="auto" ></audio>
+        <audio id="GeaWelcome" src="assets/audio/Dialogue/GeaWelcome_Echo.mp3" preload="auto" ></audio>
 
-        <audio id="GeaWelcome" src="assets/audio/Dialogue/GeaWelcome_Echo.mp3" preload="auto" crossorigin="anonymous" ></audio>
-
-        <img id="journeyLogo" src="assets/logo2.png"preload="auto" crossorigin="anonymous"/>
+        <img id="journeyLogo" src="assets/logo2.png"preload="true" crossorigin="anonymous"/>
         
         <a-asset-item id="coneTree1" src="assets/models/cone_tree_1.glb"></a-asset-item>
         <a-asset-item id="coneTree1" src="assets/models/cone_tree_1.glb"></a-asset-item>
@@ -74,6 +72,7 @@
         <a-asset-item id="pileSmall1" src="assets/models/shapePiles/pile_small_1.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="pileSmall2" src="assets/models/shapePiles/pile_small_2.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
         <a-asset-item id="pileSmall3" src="assets/models/shapePiles/pile_small_3.glb" preload="auto" crossorigin="anonymous"></a-asset-item>
+        <circles-assets/>
       </a-assets>
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
@@ -379,7 +378,6 @@
                               circles-sound="type:dialogue; src:#GeaWelcome; autoplay:false; volume: 10;">
                 </a-gltf-model>
             </a-entity>
-
             <a-entity id="GeaBody">
 
                 <a-gltf-model id="BodyUpper"
@@ -465,6 +463,7 @@
       <a-entity circles-checkpoint circles-spawnpoint position="0 -0.1 0"></a-entity>
       <!-- ambient music/sound-->
       <a-entity position="0 0 0" circles-sound="type:music; src:#backgroundMusic; autoplay:true; loop:true; volume:0.1;"></a-entity>
+
 
     </a-scene>
     <script>
