@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Echoes of the Mind: Alpha",
+        "authors": ["Amina Al-Helali", "Leanne Fang", "Madison Lyall", "Emma Souannhaphanh", "Kayla Zhang"],
+        "showInExplore": false,
+        "type": "world",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}

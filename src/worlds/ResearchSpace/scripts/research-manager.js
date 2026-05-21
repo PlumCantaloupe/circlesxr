@@ -307,7 +307,7 @@ AFRAME.registerSystem('research-manager', {
         let view = document.createElement('a-entity');
         view.setAttribute('id', 'research_view');
         view.setAttribute('visible', true);
-        view.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        view.setAttribute('position', {x:0.65, y:0.0, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         view.setAttribute('rotation', {x:0, y:0, z:0});
         avatarCam.appendChild(view);
 
@@ -322,30 +322,23 @@ AFRAME.registerSystem('research-manager', {
         // };
 
         buttonElem_hide = CONTEXT_COMP.createBasicButton('research_hide', 'hide', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
+        buttonElem_show = CONTEXT_COMP.createBasicButton('research_show', 'show', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
+
         buttonElem_hide.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_hide.addEventListener('click', (e) => { 
           CONTEXT_COMP.showResearchElem(buttonElem_hide, false);
           CONTEXT_COMP.showResearchElem(buttonElem_show, true);
           
-          view.querySelectorAll('.button').forEach( (button) => {
-            if (button.classList.contains('auto-visible')) {
-              CONTEXT_COMP.showResearchElem(button, false);
-            }
-          });
+          view.setAttribute('circles-interactive-visible', false);
         });
         avatarCam.appendChild(buttonElem_hide);
 
-        buttonElem_show = CONTEXT_COMP.createBasicButton('research_show', 'show', 0.2, 0.07, 8, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
         buttonElem_show.setAttribute('position', {x:0.65, y:0.61, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
         buttonElem_show.addEventListener('click', (e) => { 
           CONTEXT_COMP.showResearchElem(buttonElem_hide, true);
           CONTEXT_COMP.showResearchElem(buttonElem_show, false);
-          
-          view.querySelectorAll('.button').forEach( (button) => {
-            if (button.classList.contains('auto-visible')) {
-              CONTEXT_COMP.showResearchElem(button, true);
-            }
-          });
+
+          view.setAttribute('circles-interactive-visible', true);
         });
         avatarCam.appendChild(buttonElem_show);
 
@@ -360,36 +353,36 @@ AFRAME.registerSystem('research-manager', {
 
         //prepare experiment
         CONTEXT_COMP.buttonElem_prep = CONTEXT_COMP.createBasicButton('prepare_experiment', 'prepare experiment', 0.5, 0.1, 24, 'rgb(245, 215, 66)', 'rgb(0,0,0)', true);
-        CONTEXT_COMP.buttonElem_prep.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_prep.setAttribute('position', {x:0.0, y:0.5, z:0.0});
         CONTEXT_COMP.buttonElem_prep.addEventListener('click', (e) => { 
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_PREPARE, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           data.and = CONTEXT_COMP.expScript;
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(CONTEXT_COMP.buttonElem_prep);
+        view.appendChild(CONTEXT_COMP.buttonElem_prep);
 
         //start experiment
         CONTEXT_COMP.buttonElem_start = CONTEXT_COMP.createBasicButton('start_experiment', 'start experiment', 0.5, 0.1, 24, 'rgb(64, 245, 67)', 'rgb(0,0,0)', true);
-        CONTEXT_COMP.buttonElem_start.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_start.setAttribute('position', {x:0.0, y:0.5, z:0.0});
         CONTEXT_COMP.buttonElem_start.addEventListener('click', (e) => { 
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_START, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(CONTEXT_COMP.buttonElem_start);
+        view.appendChild(CONTEXT_COMP.buttonElem_start);
 
         //stop experiment
         CONTEXT_COMP.buttonElem_stop = CONTEXT_COMP.createBasicButton('stop_experiment', 'stop experiment', 0.5, 0.1, 24, 'rgb(245, 64, 88)', 'rgb(0,0,0)', true);
-        CONTEXT_COMP.buttonElem_stop.setAttribute('position', {x:0.5, y:0.5, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_stop.setAttribute('position', {x:0.0, y:0.5, z:0.0});
         CONTEXT_COMP.buttonElem_stop.addEventListener('click', (e) => {
           const data = CIRCLES.RESEARCH.createExpData(CIRCLES.RESEARCH.EVENT_TYPE.EXPERIMENT_STOP, CONTEXT_COMP.experimentID, CONTEXT_COMP.socket.id, CONTEXT_COMP.userType);
           CONTEXT_COMP.sendSelectExpData(data);
         });
-        avatarCam.appendChild(CONTEXT_COMP.buttonElem_stop);
+        view.appendChild(CONTEXT_COMP.buttonElem_stop);
 
         //not using for now
         //visual state - normal
         CONTEXT_COMP.button_show = CONTEXT_COMP.createBasicButton('vs_normal', 'visual state - normal', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        CONTEXT_COMP.button_show.setAttribute('position', {x:0.5, y:0.37, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.button_show.setAttribute('position', {x:0.0, y:0.37, z:0.0});
         CONTEXT_COMP.button_show.addEventListener('click', (e) => { 
           let avatarNodes = document.querySelector('#Player1Cam').querySelectorAll('.avatar_node');
           avatarNodes.forEach(function(node) {
@@ -399,11 +392,11 @@ AFRAME.registerSystem('research-manager', {
           CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, false);
           CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_hide, true);
         });
-        avatarCam.appendChild(CONTEXT_COMP.button_show);
+        view.appendChild(CONTEXT_COMP.button_show);
 
         //visual state - invisible
         CONTEXT_COMP.button_hide = CONTEXT_COMP.createBasicButton('vs_invisible', 'visual state - invisible', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', true);
-        CONTEXT_COMP.button_hide.setAttribute('position', {x:0.5, y:0.37, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.button_hide.setAttribute('position', {x:0.0, y:0.37, z:0.0});
         CONTEXT_COMP.button_hide.addEventListener('click', (e) => { 
           let avatarNodes = document.querySelector('#Player1Cam').querySelectorAll('.avatar_node');
           avatarNodes.forEach(function(node) {
@@ -413,7 +406,7 @@ AFRAME.registerSystem('research-manager', {
           CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, true);
           CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_hide, false);
         });
-        avatarCam.appendChild(CONTEXT_COMP.button_hide);
+        view.appendChild(CONTEXT_COMP.button_hide);
 
         //init state
         CONTEXT_COMP.showResearchElem(CONTEXT_COMP.button_show, false);
@@ -421,13 +414,13 @@ AFRAME.registerSystem('research-manager', {
 
         //button for downloading research data later
         CONTEXT_COMP.buttonElem_download = CONTEXT_COMP.createBasicButton('download', 'download experiment data', 0.5, 0.1, 24, 'rgb(255, 255, 255)', 'rgb(0,0,0)', false);
-        CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.5, y:0.24, z:CIRCLES.CONSTANTS.CONTROLS_OFFSET_Z});
+        CONTEXT_COMP.buttonElem_download.setAttribute('position', {x:0.0, y:0.24, z:0.0});
         CONTEXT_COMP.buttonElem_download.addEventListener('click', (e) => { 
           //will open a new tab and file. Most browsers will automatically download this. Don't think this will work on headset
           //but a researcher will likely be using a desktop for testing ...
           window.open(CONTEXT_COMP.buttonElem_download.getAttribute('href'));
         });
-        avatarCam.appendChild(CONTEXT_COMP.buttonElem_download);
+        view.appendChild(CONTEXT_COMP.buttonElem_download);
         CONTEXT_COMP.showResearchElem(CONTEXT_COMP.buttonElem_download, false);  //hide download button
 
         //set initial research state

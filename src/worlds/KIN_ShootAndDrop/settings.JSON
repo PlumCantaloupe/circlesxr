@@ -1,11 +1,13 @@
 {
     "world": {
-        "name": "Viola Desmond - The Activist",
-        "type": "experience",
+        "name": "Kinematics Lesson: Shoot and Drop",
+        "authors": ["Mark MacGregor", "Tomas Babkine-di Caprio", "Carly Strathearn"],
+        "showInExplore": false,
+        "type": "world",
         "imgPath": "./profile.jpg",
-        "description_short": "Basic example for testing.",
-        "description_long": "Basic example for testing.",
-        "tags": [ "history", "Canada", "civil rights"],
-        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
     }
 }

@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Challenges Women Face in The Trades: Virtual Learning Activity",
+        "authors": ["Anthony Scavarelli", "Julie McCann", "Sarah Gauen", "Jessica Hempinstall", "Amy Loder"],
+        "showInExplore": true,
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}

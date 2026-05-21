@@ -1,11 +1,13 @@
 {
     "world": {
-        "name": "Viola Desmond - The Remembered",
-        "type": "experience",
+        "name": "Viola Desmond: The Nove Scotia Province House (2010)",
+        "authors": ["Anthony Scavarelli", "Virginia Mielke", "Favour Diokpo"],
+        "showInExplore": false,
+        "type": "world",
         "imgPath": "./profile.jpg",
-        "description_short": "Basic example for testing.",
-        "description_long": "Basic example for testing.",
-        "tags": [ "history", "Canada", "civil rights"],
-        "supportedDevices": [ "mobile", "desktop", "hmd_3dof", "hmd_6dof" ]
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
     }
 }

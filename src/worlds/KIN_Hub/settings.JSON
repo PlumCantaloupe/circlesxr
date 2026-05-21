@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Kinematics Lesson: Undergraduate Physics Demonstrations",
+        "authors": ["Mark MacGregor", "Tomas Babkine-di Caprio", "Carly Strathearn"],
+        "showInExplore": true,
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}

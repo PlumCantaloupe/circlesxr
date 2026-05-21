@@ -41,16 +41,9 @@
       <!-- Circles' built-in manager and avatar [REQUIRED] -->
       <circles-manager-avatar/>
 
-      <!-- mirror -->
-       <a-entity class="mirror" position="-3.228 1.822 1.072" rotation="0 90 0">
-        <a-entity class="mirror_edge" position="3.33 0.0 0.0"    geometry="primitive:box; width:0.03; height:1.7; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
-        <a-entity class="mirror_edge" position="-3.33 0.0 0.0"   geometry="primitive:box; width:0.03; height:1.7; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
-        <a-entity class="mirror_edge" position="0.0 0.85 0.0"    geometry="primitive:box; width:6.69; height:0.03; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
-        <a-entity class="mirror_edge" position="0.0 -0.85 0.0"   geometry="primitive:box; width:6.69; height:0.03; depth:0.03;" material="color:rgb(50, 50, 50); roughness:0.5; metalness:0.01;"></a-entity>
-        <a-entity geometry="primitive:plane; width:6.66; height:1.7" circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024;"></a-entity>
-      </a-entity>
-      <!-- <a-entity geometry="primitive:plane; width:; height:1" position="-3.228 1.822 1.052" rotation="0 90 0" scale="6.742 1.667 1.000" 
-                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256;"></a-entity> -->
+      <!-- a mirror -->
+      <a-entity geometry="primitive:plane; width:1; height:1" position="-3.228 1.822 1.052" rotation="0 90 0" scale="6.742 1.667 1.000" 
+                circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:256; color:#002920;"></a-entity>
 
       <!-- portal back to campfire -->
       <a-entity id="campfire_link"
@@ -110,7 +103,7 @@
 
       <!-- emulate sun shining throigh window -->
       <a-entity light="type:ambient; color:#FFF; intensity:3.0"></a-entity>
-      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:spot; angle:50; intensity:20.0; color:#d5e4f5; distance:15.0; penumbra:0.1;" circles-platform-shadows></a-entity>
+      <a-entity id="sunlight" position="-1.5 2.06 6.5" rotation="-10 0 0" light="type:directional; angle:60; intensity:5.0; color:#d5e4f5; distance:20.0;"></a-entity>
 
       <a-entity id='skyBox'
                 geometry='primitive:sphere; radius:50; segments-height:6; segments-width:6;'

@@ -19,7 +19,7 @@ AFRAME.registerComponent('circles-add-camera-equipment', {
 
         rigElem.setAttribute('circles-spawn-at-random-checkpoint', {});
         rigElem.setAttribute('circles-snap-turning',{enabled:true});
-        rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard, gamepad', constrainToNavMesh:true, speed:0.2});
+        rigElem.setAttribute('movement-controls',{controls:'checkpoint,keyboard,gamepad', constrainToNavMesh:true, speed:0.2});
         rigElem.setAttribute('checkpoint-controls',{mode:'teleport'});
 
         //console.log('Attached camera controls to rig');

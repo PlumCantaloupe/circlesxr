@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Echoes of the Mind: Learning About Brainwaves",
+        "authors": ["Amina Al-Helali", "Leanne Fang", "Madison Lyall", "Emma Souannhaphanh", "Kayla Zhang"],
+        "showInExplore": true,
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}
