@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Test World",
+        "authors": ["Circles XR Team"],
+        "showInExplore": true,
+        "type": "hub",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}

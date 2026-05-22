@@ -15,6 +15,8 @@ AFRAME.registerComponent('circles-user-networked', {
     usertype:                   {type: 'string',    default: ''},
     userDevice:                 {type: 'string',    default: ''},
     userWorld:                  {type: 'string',    default: ''},
+
+    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'shade']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -76,6 +78,7 @@ AFRAME.registerComponent('circles-user-networked', {
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
+
     //head model change
     if ( (oldData.gltf_head !== CONTEXT_AF.data.gltf_head) && (CONTEXT_AF.data.gltf_head !== '') ) {
       let avatarNode = CONTEXT_AF.el.querySelector('.user_head');
@@ -119,6 +122,40 @@ AFRAME.registerComponent('circles-user-networked', {
       let avatarNode2 = CONTEXT_AF.el.querySelector('.nametag_back');
       avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
       avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
+    }
+
+    // Player visibility
+    if ((oldData.userVisibility != CONTEXT_AF.data.userVisibility) && (CONTEXT_AF.data.userVisibility !== '')){
+
+      // Visible
+      if (CONTEXT_AF.data.userVisibility == 'visible')
+      {
+        // Turn the components on
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "true");
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
+
+        // Ensure components have been initialized to something before messing with them
+        if (CONTEXT_AF.data.color_head != '' && CONTEXT_AF.data.color_hair != '' && CONTEXT_AF.data.color_body != ''){
+          avatarNode.querySelector('.user_head').setAttribute('circles-color', {color: CONTEXT_AF.data.color_head, alpha: 1});
+          avatarNode.querySelector('.user_hair').setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair, alpha: 1});
+          avatarNode.querySelector('.user_body').setAttribute('circles-color', {color: CONTEXT_AF.data.color_body, alpha: 1});
+        }
+
+      // Turn off the components
+      } else if (CONTEXT_AF.data.userVisibility == 'hidden'){
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "false");
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "false");
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "false");
+
+      // Set opacity/alpha and colour to a dark shade charcoal grey/black
+      } else if (CONTEXT_AF.data.userVisibility == 'shade'){
+        let avatarNode = CONTEXT_AF.el;
+        avatarNode.querySelector('.user_head').setAttribute('circles-color', {color: 'rgb(51, 51, 51)', alpha: 0.3});
+        avatarNode.querySelector('.user_hair').setAttribute('circles-color', {color: 'rgb(51, 51, 51)', alpha: 0.3});
+        avatarNode.querySelector('.user_body').setAttribute('circles-color', {color: 'rgb(51, 51, 51)', alpha: 0.3});
+
+      }
     }
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
