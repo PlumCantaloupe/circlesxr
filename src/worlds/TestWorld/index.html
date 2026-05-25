@@ -19,13 +19,28 @@
     <circles-manager-avatar/>
 
     <!-- start your code: put your A-frame, Circles XR, and custom components here -->
+    
+    <a-entity circles-checkpoint circles-spawnpoint position="0.0 0.0 0.0"></a-entity>
+    <a-entity   geometry="primitive:plane; width:1.6; height:2.0" position="0.0 1.5 -2.5" 
+                    circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
+
+    <a-entity id="show" circles-button="pedastal_color:rgb(255, 255, 255);"  position="1 1 0" rotation="-89.089 86.144 -53.584" scale="0.8 0.8 0.8"></a-entity>
+    <a-entity id="hide" circles-button="pedastal_color:rgb(51, 51, 51);"  position="0.5 0.5 0" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
     <!-- end your code: -->
   </a-scene>
-   <a-entity id="show" circles-button="pedastal_color:rgb(255, 255, 255);"  position="1 1 0" rotation="-89.089 86.144 -53.584" scale="0.8 0.8 0.8"></a-entity>
-      <a-entity id="hide" circles-button="pedastal_color:rgb(51, 51, 51);"  position="0.5 0.5 0" rotation="0.057 -30.909 -92.018" scale="0.8 0.8 0.8"></a-entity>
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts/>
  </body>
- <script></script>
+ <script>
+    //const avatarCharacter = CIRCLES.getAvatarElement();
+    const avatar        = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
+    document.getElementById("show").addEventListener('click', (e) => {
+      console.log(avatar);
+      //avatar.setAttribute('user-visibility', 'shade');
+      console.log('set');
+
+
+    });
+ </script>
 
 </html>
