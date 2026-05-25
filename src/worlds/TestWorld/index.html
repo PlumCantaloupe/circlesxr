@@ -32,12 +32,10 @@
   <circles-end-scripts/>
  </body>
  <script>
-    //const avatarCharacter = CIRCLES.getAvatarElement();
-    const avatar        = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
     document.getElementById("show").addEventListener('click', (e) => {
-      console.log(avatar);
-      //avatar.setAttribute('user-visibility', 'shade');
-      console.log('set');
+      // Framework for creating a visibility component
+      const avaElem = CIRCLES.getAvatarElement();
+      avaElem.setAttribute('circles-user-networked', {userVisibility:'shade'});
 
 
     });
