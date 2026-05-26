@@ -5,7 +5,8 @@ AFRAME.registerComponent('circles-color', {
   //dependencies: ['circles-gltf'],
   schema: {
     color:          {type: 'string',    default: 'rgb(255, 255, 255)'},
-    alpha:          {type: 'number',    default: 1.0}
+    alpha:          {type: 'number',    default: 1.0},
+    blur:           {type: 'boolean',   default: true},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -13,11 +14,13 @@ AFRAME.registerComponent('circles-color', {
     this.el.addEventListener('object3dset', this.applyColor.bind(this));
     this.el.addEventListener(CIRCLES.EVENTS.CUSTOM_MAT_SET, this.applyColor.bind(this));
   },
+
   //custom function
   applyColor : function () {
     const mesh = this.el.getObject3D('mesh');
     const color = this.data.color;
     const alpha = this.data.alpha;
+    const blur = this.data.blur;
 
     if (!mesh) return;
 
@@ -27,8 +30,11 @@ AFRAME.registerComponent('circles-color', {
         node.material.opacity       = alpha;
         node.material.transparent   = (Math.abs(1.0 - alpha) > Number.EPSILON );
         node.material.visible       = (Math.abs(alpha) > Number.EPSILON );
+        node.material.transparent = true;
         node.material.needsUpdate   = true;
-      }
+
+
+      } 
     });
   },
   update: function (oldData) {
