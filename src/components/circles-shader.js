@@ -30,6 +30,7 @@ AFRAME.registerComponent('circles-shader',{
                 color: new THREE.Color('rgb(255, 255, 255)'),
                 transparent: true,
                 opacity: 1.0,
+                //side: THREE.DoubleSide,
             });
 
 
@@ -37,9 +38,9 @@ AFRAME.registerComponent('circles-shader',{
                 console.log('onbeforecompile');
                 shader.uniforms.uFresnelColor = { value: new THREE.Color('#02feff') };
                 shader.uniforms.uBaseColor = { value: new THREE.Color('#0777fd') };
-                shader.uniforms.uFresnelAmt = { value: 1.2};
-                shader.uniforms.uFresnelOffset = { value: 0.0 };
-                shader.uniforms.uFresnelIntensity = { value: 1.5 };
+                shader.uniforms.uFresnelAmt = { value: 12.0};
+                shader.uniforms.uFresnelOffset = { value: 0.05 };
+                shader.uniforms.uFresnelIntensity = { value: 3.0 };
                 shader.uniforms.uFresnelAlpha = { value: 0.8 };
 
 
