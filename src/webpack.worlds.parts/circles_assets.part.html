@@ -22,9 +22,10 @@
                     circles-shader
                     circles-shadow="cast:true; receive:true; applyToChildren:false;">
           <a-entity class="head_holder" position="0 0 -2.0"></a-entity> <!-- this is where things are held. Will have another for hands -->
+          <!-- https://stackoverflow.com/questions/19305917/what-does-material-alphatest-mean had to mess with this to allow see through on the shaders for rendering -->
           <a-entity   class="user_face_express"
                       geometry="primitive:plane; width:0.3; height:0.3;"
-                      material="shader:flat; src:__FACE_MAP__; transparent:true; side:back; color:#000;"
+                      material="shader:flat; src:__FACE_MAP__; transparent:true; alphaTest: 0.5; side:back; color:#000;"
                       position="0.0 0.0 -0.1">
           </a-entity>
           <a-entity   class="user_hair"

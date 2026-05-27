@@ -30,7 +30,9 @@ AFRAME.registerComponent('circles-shader',{
                 color: new THREE.Color('rgb(255, 255, 255)'),
                 transparent: true,
                 opacity: 1.0,
+                depthWrite: false,
                 //side: THREE.DoubleSide,
+                blending: THREE.AdditiveBlending,
             });
 
 
@@ -38,8 +40,8 @@ AFRAME.registerComponent('circles-shader',{
                 console.log('onbeforecompile');
                 shader.uniforms.uFresnelColor = { value: new THREE.Color('#02feff') };
                 shader.uniforms.uBaseColor = { value: new THREE.Color('#0777fd') };
-                shader.uniforms.uFresnelAmt = { value: 12.0};
-                shader.uniforms.uFresnelOffset = { value: 0.05 };
+                shader.uniforms.uFresnelAmt = { value: 6.0};
+                shader.uniforms.uFresnelOffset = { value: 0.1 };
                 shader.uniforms.uFresnelIntensity = { value: 3.0 };
                 shader.uniforms.uFresnelAlpha = { value: 0.8 };
 
@@ -105,9 +107,9 @@ AFRAME.registerComponent('circles-shader',{
                     newMaterial.userData.shader = shader;
             };
 
+            newMaterial.renderOrder = 1;
             newMaterial.needsUpdate = true;
             node.userData.fresnelShader = newMaterial;
-            node.material = node.userData.fresnelShader;
             // https://jsfiddle.net/Horsetopus/33623mpv/
 
         });

@@ -35,7 +35,15 @@
     document.getElementById("show").addEventListener('click', (e) => {
       // Framework for creating a visibility component
       const avaElem = CIRCLES.getAvatarElement();
-      avaElem.setAttribute('circles-user-networked', {userVisibility:'shade'});
+      avaElem.setAttribute('circles-user-networked', "userVisibility: shade");
+      console.log('avaElem');
+
+
+    });
+    document.getElementById("shade").addEventListener('click', (e) => {
+      // Framework for creating a visibility component
+      const avaElem = CIRCLES.getAvatarElement();
+      avaElem.setAttribute('circles-user-networked', "userVisibility: shade");
 
 
     });

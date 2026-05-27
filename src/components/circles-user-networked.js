@@ -16,7 +16,7 @@ AFRAME.registerComponent('circles-user-networked', {
     userDevice:                 {type: 'string',    default: ''},
     userWorld:                  {type: 'string',    default: ''},
 
-    userVisibility:             {type: 'string',    default: 'shade', oneOf: ['visible', 'hidden', 'shade']},
+    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'shade']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -124,6 +124,13 @@ AFRAME.registerComponent('circles-user-networked', {
       avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
     }
 
+            // Ensure components have been initialized to something before messing with them
+    if (CONTEXT_AF.data.color_head != '' && CONTEXT_AF.data.color_hair != '' && CONTEXT_AF.data.color_body != ''){
+          CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', {color: CONTEXT_AF.data.color_head, alpha: 1});
+          CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair, alpha: 1});
+          CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', {color: CONTEXT_AF.data.color_body, alpha: 1});
+    }
+
     // Player visibility
     if ((oldData.userVisibility != CONTEXT_AF.data.userVisibility) && (CONTEXT_AF.data.userVisibility !== '')){
 
@@ -135,12 +142,13 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
 
-        // Ensure components have been initialized to something before messing with them
-        if (CONTEXT_AF.data.color_head != '' && CONTEXT_AF.data.color_hair != '' && CONTEXT_AF.data.color_body != ''){
-          CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', {color: CONTEXT_AF.data.color_head, alpha: 1});
-          CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair, alpha: 1});
-          CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', {color: CONTEXT_AF.data.color_body, alpha: 1});
-        }
+        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].disable();
+        CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].disable();
+        CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].disable();
+
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', {color: CONTEXT_AF.data.color_head, alpha: 1});
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair, alpha: 1});
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', {color: CONTEXT_AF.data.color_body, alpha: 1});
 
       // Turn off the components
       } else if (CONTEXT_AF.data.userVisibility == 'hidden'){
@@ -153,11 +161,11 @@ AFRAME.registerComponent('circles-user-networked', {
         
 
         CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable();
-        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable();
-        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable();
-        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { color: 'rgb(51, 51, 51)', alpha: 0.3 });
-        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { color: 'rgb(51, 51, 51)', alpha: 0.3 });
-        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { color: 'rgb(51, 51, 51)', alpha: 0.3 });
+        CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].enable();
+        CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].enable();
+        // CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { color: 'rgb(255, 255, 255)', alpha: 0.3 });
+        // CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { color: 'rgb(255, 255, 255)', alpha: 0.3 });
+        // CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { color: 'rgb(255, 255, 255)', alpha: 0.3 });
 
       }
     }
