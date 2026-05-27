@@ -130,9 +130,9 @@ AFRAME.registerComponent('circles-shader',{
         if (!mesh) return;
         mesh.traverse(node => {
             if (!node.isMesh) return  
-            if (!node.userData.originalMaterial) return;
+            if (!node.userData.original) return;
             node.material = node.userData.original;
-    
+
         });
     },
 
