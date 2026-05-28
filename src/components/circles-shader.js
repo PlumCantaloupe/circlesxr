@@ -7,10 +7,15 @@ AFRAME.registerComponent('circles-shader',{
     init: function(){
         // working similarly to circles-material
         const CONTEXT_AF = this;
-        //CONTEXT_AF.shadergroup = new THREE.Group();
-        CONTEXT_AF.el.addEventListener('model-loaded', this.createRimLight.bind(this));
+        CONTEXT_AF.el.addEventListener('model-loaded', function () {
+            CONTEXT_AF.createRimLight()
+        });
     },
-    createRimLight: function (){
+
+
+
+    createRimLight: function (e){
+        console.log('create rimlight')
         const CONTEXT_AF = this;
         const mesh = CONTEXT_AF.el.getObject3D('mesh');
 
@@ -34,6 +39,7 @@ AFRAME.registerComponent('circles-shader',{
                 //side: THREE.DoubleSide,
                 blending: THREE.AdditiveBlending,
             });
+            newMaterial.needsUpdate = true;
 
 
             newMaterial.onBeforeCompile = (shader) => {

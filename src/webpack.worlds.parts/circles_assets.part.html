@@ -19,8 +19,8 @@
                     gltf-model
                     circles-material-override="shader:physical;"
                     circles-color
-                    circles-shader
-                    circles-shadow="cast:true; receive:true; applyToChildren:false;">
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;"
+                    circles-shader>
           <a-entity class="head_holder" position="0 0 -2.0"></a-entity> <!-- this is where things are held. Will have another for hands -->
           <!-- https://stackoverflow.com/questions/12626716/inconsistent-alpha-channel-in-three-js had to mess with this to allow see through on the shaders for rendering 
                a little bit of a hacky solution, transparent materials have a lot of clipping issues and alphaTest helps fix this because instead of doing a full blend its more of a filter

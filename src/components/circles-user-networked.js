@@ -19,7 +19,7 @@ AFRAME.registerComponent('circles-user-networked', {
     headVisibility:             {type: 'boolean',   default: true},
     hairVisibility:             {type: 'boolean',   default: true},
     bodyVisibility:             {type: 'boolean',   default: true},
-    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'shade']},
+    userVisibility:             {type: 'string',    default: 'shade', oneOf: ['visible', 'hidden', 'shade']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -148,7 +148,6 @@ AFRAME.registerComponent('circles-user-networked', {
 
 
     // Player total avatar visibility
-    if ((oldData.userVisibility != CONTEXT_AF.data.userVisibility) && (CONTEXT_AF.data.userVisibility !== '')){
 
       // Visible
       if (CONTEXT_AF.data.userVisibility == 'visible')
@@ -171,15 +170,14 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "false");
 
       // Set the shader on, the shader turning on disables the default player mesh but keeps the geometry:)
-      } else if (CONTEXT_AF.data.userVisibility == 'shade'){
+      } else if (CONTEXT_AF.data.userVisibility == 'shade' && CIRCLES.EVENTS.AVATAR_LOADED){
         
-
-        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable();
-        CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].enable();
-        CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].enable();
+        console.log("shademode");
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable(), 500);
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].enable(), 500);
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].enable(), 500);
 
       }
-    }
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },
