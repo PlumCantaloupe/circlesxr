@@ -19,18 +19,28 @@ AFRAME.registerComponent('circles-user-networked', {
     headVisibility:             {type: 'boolean',   default: true},
     hairVisibility:             {type: 'boolean',   default: true},
     bodyVisibility:             {type: 'boolean',   default: true},
-    userVisibility:             {type: 'string',    default: 'shade', oneOf: ['visible', 'hidden', 'shade']},
+    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'shade']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
     const CONTEXT_AF      = this;
     CONTEXT_AF.isPlayer1  = false;
 
+    document.addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {
+      
+      if (this.el !== CIRCLES.getAvatarElement()) return;
+      const currentVisibility = this.data.userVisibility;
+      console.log(currentVisibility);
+      setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', 'visible'), 100);
+      setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', currentVisibility), 100);
+    });
+
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
       const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
       const playerOneAvatarNode = playerOneNode.querySelector('.avatar');
       const thisNode            = CONTEXT_AF.el;
       const eventNode           = e.detail.element;
+
 
       //lets only move forward to event node is the same as this one
       if ( thisNode.isSameNode(eventNode) === true ) {
@@ -48,7 +58,7 @@ AFRAME.registerComponent('circles-user-networked', {
             visiblename:            playerOneNode.getAttribute('circles-visiblename'),
             usertype:               playerOneNode.getAttribute('circles-usertype'),
             userDevice:             CIRCLES.getVRPlatform(),
-            userWorld:              CIRCLES.getCirclesWorldName()
+            userWorld:              CIRCLES.getCirclesWorldName(),       
           });
 
           //set device icon here too ... I guess :/
@@ -78,6 +88,7 @@ AFRAME.registerComponent('circles-user-networked', {
   },
   update: function(oldData)  {
     const CONTEXT_AF  = this;
+    console.log('update fired', this.data.userVisibility, oldData?.userVisibility);
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
@@ -136,48 +147,50 @@ AFRAME.registerComponent('circles-user-networked', {
 
 
     // Enable individually body part visibility
-    if ((oldData.headVisibility != CONTEXT_AF.data.headVisibility) && (CONTEXT_AF.data.headVisibility !== '')){
+    if ((oldData.headVisibility !== CONTEXT_AF.data.headVisibility) && (CONTEXT_AF.data.headVisibility !== '')){
       CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', String(CONTEXT_AF.data.headVisibility));
     }
-    if ((oldData.bodyVisibility != CONTEXT_AF.data.bodyVisibility) && (CONTEXT_AF.data.bodyVisibility !== '')){
+    if ((oldData.bodyVisibility !== CONTEXT_AF.data.bodyVisibility) && (CONTEXT_AF.data.bodyVisibility !== '')){
       CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', String(CONTEXT_AF.data.bodyVisibility));
     }
-    if ((oldData.hairVisibility != CONTEXT_AF.data.hairVisibility) && (CONTEXT_AF.data.hairVisibility !== '')){
+    if ((oldData.hairVisibility !== CONTEXT_AF.data.hairVisibility) && (CONTEXT_AF.data.hairVisibility !== '')){
       CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', String(CONTEXT_AF.data.hairVisibility));
     }
 
 
     // Player total avatar visibility
+    if (oldData.userVisibility !== CONTEXT_AF.data.userVisibility) {
+      if (CONTEXT_AF.data.userVisibility == 'visible') {
+        //console.log('becoming visible');
 
-      // Visible
-      if (CONTEXT_AF.data.userVisibility == 'visible')
-      {
-        console.log('becoming visible');
         // Turn the components on
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "true");
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
 
         // Disable the shader
-        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].disable();
-        CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].disable();
-        CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].disable();
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-shader', 'enableShader: false');
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-shader', 'enableShader: false');
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-shader', 'enableShader: false');
 
-      // Turn off the components
-      } else if (CONTEXT_AF.data.userVisibility == 'hidden'){
+        // Turn off the components
+      } else if (CONTEXT_AF.data.userVisibility == 'hidden') {
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "false");
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "false");
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "false");
 
-      // Set the shader on, the shader turning on disables the default player mesh but keeps the geometry:)
-      } else if (CONTEXT_AF.data.userVisibility == 'shade' && CIRCLES.EVENTS.AVATAR_LOADED){
-        
-        console.log("shademode");
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable(), 500);
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].enable(), 500);
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].enable(), 500);
+        // Set the shader on, the shader turning on disables the default player mesh but keeps the geometry:)
+      } else if (CONTEXT_AF.data.userVisibility == 'shade' && CIRCLES.EVENTS.AVATAR_LOADED) {
+
+        //console.log("shademode");
+
+        // Set time out allows the network to catch up with creating the shader mesh
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-shader', 'enableShader: true'), 500);
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-shader', 'enableShader: true'), 500);
+        setTimeout(() => CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-shader', 'enableShader: true'), 500);
 
       }
+    }
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },

@@ -18,7 +18,7 @@ AFRAME.registerComponent('circles-sound', {
     const CONTEXT_AF = this;
   },
   update: function (oldData) {
-    console.log("Updating sound");
+    //console.log("Updating sound");
     const CONTEXT_AF = this;
     const data = this.data;
 
@@ -81,7 +81,7 @@ AFRAME.registerComponent('circles-sound', {
           CONTEXT_AF.el.components.sound.playSound();
           // If we ever need to wait to preload sounds before playing
           //CONTEXT_AF.el.addEventListener('sound-loaded', () => CONTEXT_AF.el.components.sound.playSound(), { once: true });
-          console.log("playing sound");
+          //console.log("playing sound");
         } break;
         case 'pause': {
           CONTEXT_AF.el.setAttribute('sound', {});

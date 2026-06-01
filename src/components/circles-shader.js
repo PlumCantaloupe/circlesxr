@@ -2,6 +2,7 @@
 
 AFRAME.registerComponent('circles-shader',{
     schema: {
+        enableShader: {type: 'boolean', default: false},
     },
 
     init: function(){
@@ -13,9 +14,8 @@ AFRAME.registerComponent('circles-shader',{
     },
 
 
-
     createRimLight: function (e){
-        console.log('create rimlight')
+        //console.log('create rimlight')
         const CONTEXT_AF = this;
         const mesh = CONTEXT_AF.el.getObject3D('mesh');
 
@@ -121,7 +121,21 @@ AFRAME.registerComponent('circles-shader',{
         });
     },
 
+    update(oldData){
+        const CONTEXT_AF = this;
+
+        if (CONTEXT_AF.data.enableShader === oldData.enableShader) return;
+        //console.log('Changing data');
+
+        if (CONTEXT_AF.data.enableShader){
+            CONTEXT_AF.enable();
+        } else {
+            CONTEXT_AF.disable();
+        }
+    },
+
     enable: function () {
+        //console.log('enable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
@@ -132,6 +146,7 @@ AFRAME.registerComponent('circles-shader',{
     },
 
     disable: function () {
+        //console.log('disable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
