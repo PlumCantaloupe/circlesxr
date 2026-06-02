@@ -56,16 +56,35 @@ AFRAME.registerComponent('circles-user-networked', {
       //const shader = otherPlayer.getObject3D('shader');
 
       const avatar = otherPlayer.querySelector('.avatar');
-      
 
-      if (localWorld != data.world){
-         setTimeout(() => {avatar.querySelector('.user_hair').components['circles-shader'].enable();
-         avatar.querySelector('.user_body').components['circles-shader'].enable();
-         avatar.querySelector('.user_head').components['circles-shader'].enable();}, 100);
+      // Not loading all the time might need a trigger
+      const applyMesh = () => {
+        const hair = avatar.querySelector('.user_hair');
+        const body = avatar.querySelector('.user_body');
+        const head = avatar.querySelector('.user_head');
+
+        // if none of them are loaded wait for a trigger
+        if (!hair || !body || !head) return;
+
+        if (data.world !== localWorld){
+          hair.components['circles-shader'].enable();
+          body.components['circles-shader'].enable();
+          head.components['circles-shader'].enable();
+        } else {
+          hair.components['circles-shader'].disable();
+          body.components['circles-shader'].disable();
+          head.components['circles-shader'].disable();
+
+        }
+      }
+      
+      // If already loaded
+      if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')){
+        applyMesh();
+
       } else {
-         setTimeout(() => {avatar.querySelector('.user_hair').components['circles-shader'].disable();
-         avatar.querySelector('.user_body').components['circles-shader'].disable();
-         avatar.querySelector('.user_head').components['circles-shader'].disable();}, 100);
+        // A loaded trigger
+        avatar.addEventListener('model-loaded', applyMesh, { once: true })
       }
 
       //console.log(otherPlayer);
@@ -133,7 +152,10 @@ AFRAME.registerComponent('circles-user-networked', {
 
 
     // User NAF to custom send data in broadcast https://stackoverflow.com/questions/55107053/networked-a-frame-gallery-a-sky-change-for-all-the-people-in-the-room
+    //  We do this on world change, look at NAF subscribe channel in init above for receiver
     if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.userWorld !== '')){
+      
+      // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
       if (!NAF.connection.isConnected()) return;
       NAF.connection.broadcastData('change-world', {
          clientID: CIRCLES.getAvatarRigElement().getAttribute('networked').networkId,
