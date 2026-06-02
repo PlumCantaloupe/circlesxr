@@ -1,5 +1,7 @@
 'use strict';
 
+const { CIRCLES_MIC_ENABLED } = require("../core/circles_constants");
+
 AFRAME.registerComponent('circles-user-networked', {
   schema: {
     // ... Define schema to pass properties from DOM to this component
@@ -26,14 +28,52 @@ AFRAME.registerComponent('circles-user-networked', {
     const CONTEXT_AF      = this;
     CONTEXT_AF.isPlayer1  = false;
 
+    // We check if a user is connected, then rebroadcast our state, the double switch seems to be the only way it syncs properly through my testing so far, hopefully 
+    //    we can get something less janky in the future??
     document.addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {
-      
       if (this.el !== CIRCLES.getAvatarElement()) return;
       const currentVisibility = this.data.userVisibility;
-      console.log(currentVisibility);
+      //console.log(currentVisibility);
       setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', 'visible'), 100);
       setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', currentVisibility), 100);
     });
+
+
+    // Janky way using naf data channels to set local meshes, we should be able to still completely hide meshes
+    //  but the shader function will need to be reworked likely
+    NAF.connection.subscribeToDataChannel('change-world', (senderID, dataType, data) => {
+      const localWorld = CONTEXT_AF.data.userWorld;
+      let otherPlayer;
+
+
+      Object.values(NAF.entities.entities).forEach(e => {
+          if (e.components.networked.attrValue.networkId === data.clientID){
+            otherPlayer = e;
+          }
+      });
+
+      //const mesh = otherPlayer.querySelector('.avatar').getObject3D('original');
+      //const shader = otherPlayer.getObject3D('shader');
+
+      const avatar = otherPlayer.querySelector('.avatar');
+      
+
+      if (localWorld != data.world){
+         setTimeout(() => {avatar.querySelector('.user_hair').components['circles-shader'].enable();
+         avatar.querySelector('.user_body').components['circles-shader'].enable();
+         avatar.querySelector('.user_head').components['circles-shader'].enable();}, 100);
+      } else {
+         setTimeout(() => {avatar.querySelector('.user_hair').components['circles-shader'].disable();
+         avatar.querySelector('.user_body').components['circles-shader'].disable();
+         avatar.querySelector('.user_head').components['circles-shader'].disable();}, 100);
+      }
+
+      //console.log(otherPlayer);
+      //console.log('space');
+      //console.log(data.clientID);
+
+    });
+    
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
       const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
@@ -88,10 +128,18 @@ AFRAME.registerComponent('circles-user-networked', {
   },
   update: function(oldData)  {
     const CONTEXT_AF  = this;
-    console.log('update fired', this.data.userVisibility, oldData?.userVisibility);
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
+
+    // User NAF to custom send data in broadcast https://stackoverflow.com/questions/55107053/networked-a-frame-gallery-a-sky-change-for-all-the-people-in-the-room
+    if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.userWorld !== '')){
+      if (!NAF.connection.isConnected()) return;
+      NAF.connection.broadcastData('change-world', {
+         clientID: CIRCLES.getAvatarRigElement().getAttribute('networked').networkId,
+         world: this.data.userWorld,
+       });
+    }
 
     //head model change
     if ( (oldData.gltf_head !== CONTEXT_AF.data.gltf_head) && (CONTEXT_AF.data.gltf_head !== '') ) {

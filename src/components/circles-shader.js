@@ -142,6 +142,7 @@ AFRAME.registerComponent('circles-shader',{
             if (!node.isMesh) return;
             if (!node.userData.fresnelShader) return;
             node.material = node.userData.fresnelShader;
+            node.material.needsUpdate = true;
         });
     },
 
@@ -153,6 +154,7 @@ AFRAME.registerComponent('circles-shader',{
             if (!node.isMesh) return  
             if (!node.userData.original) return;
             node.material = node.userData.original;
+            node.material.needsUpdate = true;
 
         });
     },
