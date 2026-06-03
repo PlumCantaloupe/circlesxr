@@ -30,13 +30,13 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // We check if a user is connected, then rebroadcast our state, the double switch seems to be the only way it syncs properly through my testing so far, hopefully 
     //    we can get something less janky in the future??
-    document.addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {
-      if (this.el !== CIRCLES.getAvatarElement()) return;
-      const currentVisibility = this.data.userVisibility;
-      //console.log(currentVisibility);
-      setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', 'visible'), 100);
-      setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', currentVisibility), 100);
-    });
+    // document.addEventListener(CIRCLES.EVENTS.USER_CONNECTED, (e) => {
+    //   if (this.el !== CIRCLES.getAvatarElement()) return;
+    //   const currentVisibility = this.data.userVisibility;
+    //   //console.log(currentVisibility);
+    //   setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', 'visible'), 100);
+    //   setTimeout(() => this.el.setAttribute('circles-user-networked', 'userVisibility', currentVisibility), 100);
+    // });
 
 
     // Janky way using naf data channels to set local meshes, we should be able to still completely hide meshes
@@ -45,54 +45,24 @@ AFRAME.registerComponent('circles-user-networked', {
       const localWorld = CONTEXT_AF.data.userWorld;
       let otherPlayer;
 
-
       Object.values(NAF.entities.entities).forEach(e => {
           if (e.components.networked.attrValue.networkId === data.clientID){
             otherPlayer = e;
           }
       });
 
-      //const mesh = otherPlayer.querySelector('.avatar').getObject3D('original');
-      //const shader = otherPlayer.getObject3D('shader');
-
       const avatar = otherPlayer.querySelector('.avatar');
-
-      // Not loading all the time might need a trigger
-      const applyMesh = () => {
-        const hair = avatar.querySelector('.user_hair');
-        const body = avatar.querySelector('.user_body');
-        const head = avatar.querySelector('.user_head');
-
-        // if none of them are loaded wait for a trigger
-        if (!hair || !body || !head) return;
-
-        if (data.world !== localWorld){
-          hair.components['circles-shader'].enable();
-          body.components['circles-shader'].enable();
-          head.components['circles-shader'].enable();
-        } else {
-          hair.components['circles-shader'].disable();
-          body.components['circles-shader'].disable();
-          head.components['circles-shader'].disable();
-
-        }
-      }
       
       // If already loaded
       if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')){
-        applyMesh();
+        CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);
 
       } else {
         // A loaded trigger
-        avatar.addEventListener('model-loaded', applyMesh, { once: true })
+        avatar.addEventListener('model-loaded', () => {CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);}, { once: true });
       }
-
-      //console.log(otherPlayer);
-      //console.log('space');
-      //console.log(data.clientID);
-
     });
-    
+
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
       const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
@@ -145,6 +115,25 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // this.addUser();
   },
+  applyMesh: function(avatar, world){
+        const hair = avatar.querySelector('.user_hair');
+        const body = avatar.querySelector('.user_body');
+        const head = avatar.querySelector('.user_head');
+
+        // if none of them are loaded wait for a trigger
+        if (!hair || !body || !head) return;
+
+        if (world){
+          hair.components['circles-shader'].enable();
+          body.components['circles-shader'].enable();
+          head.components['circles-shader'].enable();
+        } else {
+          hair.components['circles-shader'].disable();
+          body.components['circles-shader'].disable();
+          head.components['circles-shader'].disable();
+
+        }
+  },
   update: function(oldData)  {
     const CONTEXT_AF  = this;
 
@@ -153,14 +142,31 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // User NAF to custom send data in broadcast https://stackoverflow.com/questions/55107053/networked-a-frame-gallery-a-sky-change-for-all-the-people-in-the-room
     //  We do this on world change, look at NAF subscribe channel in init above for receiver
-    if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.userWorld !== '')){
+    if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.data.userWorld !== '')){
       
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
-      if (!NAF.connection.isConnected()) return;
-      NAF.connection.broadcastData('change-world', {
-         clientID: CIRCLES.getAvatarRigElement().getAttribute('networked').networkId,
-         world: this.data.userWorld,
-       });
+      const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
+      const localWorld = CONTEXT_AF.data.userWorld;
+
+      if (NAF.connection.isConnected()){
+        NAF.connection.broadcastData('change-world', {
+          clientID: currClient,
+          world: localWorld,
+        });
+
+        Object.values(NAF.entities.entities).forEach(e => {
+          const otherWorld = e.components['user-networked']?.data?.userWorld;
+          if (!otherWorld) return;
+          if (e.querySelector('.user_hair') && e.querySelector('.user_body') && e.querySelector('.user_head')) {
+            CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
+
+          } else {
+            // A loaded trigger
+            e.addEventListener('model-loaded', () => { CONTEXT_AF.applyMesh(e, localWorld !== otherWorld); }, { once: true });
+          }
+        });
+      }
+
     }
 
     //head model change
