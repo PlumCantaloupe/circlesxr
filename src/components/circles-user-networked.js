@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-user-networked', {
     headVisibility:             {type: 'boolean',   default: true},
     hairVisibility:             {type: 'boolean',   default: true},
     bodyVisibility:             {type: 'boolean',   default: true},
-    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'shade']},
+    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -42,26 +42,32 @@ AFRAME.registerComponent('circles-user-networked', {
     // Janky way using naf data channels to set local meshes, we should be able to still completely hide meshes
     //  but the shader function will need to be reworked likely
     NAF.connection.subscribeToDataChannel('change-world', (senderID, dataType, data) => {
-      const localWorld = CONTEXT_AF.data.userWorld;
-      let otherPlayer;
 
-      Object.values(NAF.entities.entities).forEach(e => {
-          if (e.components.networked.attrValue.networkId === data.clientID){
+      const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
+
+      setTimeout(() => {
+        const localWorld = CIRCLES.getAvatarElement().components["circles-user-networked"]?.data?.userWorld;
+        let otherPlayer;
+
+        Object.values(NAF.entities.entities).forEach(e => {
+          if (e.components.networked.attrValue.networkId === data.clientID) {
             otherPlayer = e;
           }
-      });
+        });
 
-      const avatar = otherPlayer.querySelector('.avatar');
-      
-      // If already loaded
-      if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')){
-        CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);
+        const avatar = otherPlayer.querySelector('.avatar');
 
-      } else {
-        // A loaded trigger
-        avatar.addEventListener('model-loaded', () => {
-          CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);}, { once: true });
-      }
+        // If already loaded
+        if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {
+          CONTEXT_AF.applyMesh(otherPlayer, localWorld !== data.world);
+
+        } else {
+          // A loaded trigger
+          avatar.addEventListener('model-loaded', () => {
+            CONTEXT_AF.applyMesh(otherPlayer, localWorld !== data.world);
+          }, { once: true });
+        }
+      }, jitter)
     });
 
 
@@ -116,10 +122,13 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // this.addUser();
   },
-  applyMesh: function(avatar, world){
+  applyMesh: function(el, world){
+        const avatar = el.querySelector('.avatar');
         const hair = avatar.querySelector('.user_hair');
         const body = avatar.querySelector('.user_body');
         const head = avatar.querySelector('.user_head');
+        console.log('apply');
+        console.log(el);
 
         // if none of them are loaded wait for a trigger
         if (!hair || !body || !head) return;
@@ -145,13 +154,20 @@ AFRAME.registerComponent('circles-user-networked', {
     //  We do this on world change, look at NAF subscribe channel in init above for receiver
     if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.data.userWorld !== '')){
       
+
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
       const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
-      const localWorld = CONTEXT_AF.data.userWorld;
+      const localWorld = CIRCLES.getAvatarElement().components["circles-user-networked"]?.data?.userWorld;
+      
+      console.log(localWorld);
+      console.log('In habited by');
+      console.log(currClient);
+        
 
 
-      clearTimeout(CONTEXT_AF._syncTimer);
-      CONTEXT_AF._syncTimer = setTimeout(() => {
+      // Similar to the jitter calculations I saw on other components, stopping all these things from firing at once
+      const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
+      setTimeout(() => {
         if (NAF.connection.isConnected()) {
           NAF.connection.broadcastData('change-world', {
             clientID: currClient,
@@ -159,22 +175,27 @@ AFRAME.registerComponent('circles-user-networked', {
           });
 
           Object.values(NAF.entities.entities).forEach(e => {
-            const otherWorld = e.components['user-networked']?.data?.userWorld;
+            if (e.id === 'Player1') return;
+            const avatar = e.querySelector('.avatar');
+            const otherWorld = avatar.components['circles-user-networked']?.data?.userWorld;
             if (!otherWorld || otherWorld === '') return;
-            if (e.querySelector('.user_hair') && e.querySelector('.user_body') && e.querySelector('.user_head')) {
+            if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {
+              console.log(`mesh apply attempt by ${currClient}`);
+              console.log(otherWorld);
+              console.log(localWorld);
+              console.log(currClient);
+              console.log(e.id);
               CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
 
             } else {
               // A loaded trigger
-              e.addEventListener('model-loaded', () => {
-                const reTryWorld = e.components['user-networked']?.data?.userWorld;
-                if (!reTryWorld || reTryWorld === '') return;
-                CONTEXT_AF.applyMesh(e, localWorld !== reTryWorld);
+              avatar.addEventListener('model-loaded', () => {
+                CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
               }, { once: true });
             }
           });
         }
-      }, 200);
+      }, jitter);
 
     }
 
@@ -253,10 +274,6 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
 
-        // Disable the shader
-        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-shader', 'enableShader: false');
-        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-shader', 'enableShader: false');
-        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-shader', 'enableShader: false');
 
         // Turn off the components
       } else if (CONTEXT_AF.data.userVisibility == 'hidden') {
@@ -265,20 +282,12 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "false");
 
         // Set the shader on, the shader turning on disables the default player mesh but keeps the geometry:)
-      } else if (CONTEXT_AF.data.userVisibility == 'shade' && CIRCLES.EVENTS.AVATAR_LOADED) {
-
-        //console.log("shademode");
-
-        // Set time out allows the network to catch up with creating the shader mesh
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-shader', 'enableShader: true'), 500);
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-shader', 'enableShader: true'), 500);
-        setTimeout(() => CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-shader', 'enableShader: true'), 500);
-
       }
     }
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },
+
   // tick: function(time, timeDelta) {},
   // tock: function(time, timeDelta) {},
   // remove: function() {},

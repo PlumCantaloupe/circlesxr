@@ -7,9 +7,11 @@ AFRAME.registerComponent('circles-shader',{
 
     init: function(){
         // working similarly to circles-material
+        this.shaderReady = false;
         const CONTEXT_AF = this;
-        CONTEXT_AF.el.addEventListener('model-loaded', function () {
+        CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             CONTEXT_AF.createRimLight()
+            CONTEXT_AF.el.removeEventListener('model-loaded', loader);
         });
     },
 
@@ -118,14 +120,17 @@ AFRAME.registerComponent('circles-shader',{
             node.userData.fresnelShader = newMaterial;
             // https://jsfiddle.net/Horsetopus/33623mpv/
 
+
         });
+        CONTEXT_AF.shaderReady = true;
+        CONTEXT_AF.el.emit('shader-ready');
     },
 
     update(oldData){
         const CONTEXT_AF = this;
 
         if (CONTEXT_AF.data.enableShader === oldData.enableShader) return;
-        //console.log('Changing data');
+        console.log('Changing shader');
 
         if (CONTEXT_AF.data.enableShader){
             CONTEXT_AF.enable();
@@ -135,6 +140,10 @@ AFRAME.registerComponent('circles-shader',{
     },
 
     enable: function () {
+        if (!this.shaderReady) {
+            this.el.addEventListener('shader-ready', () => this.enable(), { once: true });
+            return;
+        }
         //console.log('enable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
@@ -147,6 +156,10 @@ AFRAME.registerComponent('circles-shader',{
     },
 
     disable: function () {
+        if (!this.shaderReady) {
+            this.el.addEventListener('shader-ready', () => this.disable(), { once: true });
+            return;
+        }
         //console.log('disable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
