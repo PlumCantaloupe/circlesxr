@@ -59,7 +59,8 @@ AFRAME.registerComponent('circles-user-networked', {
 
       } else {
         // A loaded trigger
-        avatar.addEventListener('model-loaded', () => {CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);}, { once: true });
+        avatar.addEventListener('model-loaded', () => {
+          CONTEXT_AF.applyMesh(avatar, localWorld !== data.world);}, { once: true });
       }
     });
 
@@ -148,24 +149,32 @@ AFRAME.registerComponent('circles-user-networked', {
       const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
       const localWorld = CONTEXT_AF.data.userWorld;
 
-      if (NAF.connection.isConnected()){
-        NAF.connection.broadcastData('change-world', {
-          clientID: currClient,
-          world: localWorld,
-        });
 
-        Object.values(NAF.entities.entities).forEach(e => {
-          const otherWorld = e.components['user-networked']?.data?.userWorld;
-          if (!otherWorld) return;
-          if (e.querySelector('.user_hair') && e.querySelector('.user_body') && e.querySelector('.user_head')) {
-            CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
+      clearTimeout(CONTEXT_AF._syncTimer);
+      CONTEXT_AF._syncTimer = setTimeout(() => {
+        if (NAF.connection.isConnected()) {
+          NAF.connection.broadcastData('change-world', {
+            clientID: currClient,
+            world: localWorld,
+          });
 
-          } else {
-            // A loaded trigger
-            e.addEventListener('model-loaded', () => { CONTEXT_AF.applyMesh(e, localWorld !== otherWorld); }, { once: true });
-          }
-        });
-      }
+          Object.values(NAF.entities.entities).forEach(e => {
+            const otherWorld = e.components['user-networked']?.data?.userWorld;
+            if (!otherWorld || otherWorld === '') return;
+            if (e.querySelector('.user_hair') && e.querySelector('.user_body') && e.querySelector('.user_head')) {
+              CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
+
+            } else {
+              // A loaded trigger
+              e.addEventListener('model-loaded', () => {
+                const reTryWorld = e.components['user-networked']?.data?.userWorld;
+                if (!reTryWorld || reTryWorld === '') return;
+                CONTEXT_AF.applyMesh(e, localWorld !== reTryWorld);
+              }, { once: true });
+            }
+          });
+        }
+      }, 200);
 
     }
 
