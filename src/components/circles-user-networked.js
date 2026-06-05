@@ -21,7 +21,7 @@ AFRAME.registerComponent('circles-user-networked', {
     headVisibility:             {type: 'boolean',   default: true},
     hairVisibility:             {type: 'boolean',   default: true},
     bodyVisibility:             {type: 'boolean',   default: true},
-    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden']},
+    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'wireframe', 'shade']},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -120,6 +120,7 @@ AFRAME.registerComponent('circles-user-networked', {
       }
     });
 
+
     // this.addUser();
   },
   applyMesh: function(el, world){
@@ -149,6 +150,8 @@ AFRAME.registerComponent('circles-user-networked', {
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
+    // Temporary fix for ensuring we can see through double sided
+    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
 
     // User NAF to custom send data in broadcast https://stackoverflow.com/questions/55107053/networked-a-frame-gallery-a-sky-change-for-all-the-people-in-the-room
     //  We do this on world change, look at NAF subscribe channel in init above for receiver
@@ -180,11 +183,6 @@ AFRAME.registerComponent('circles-user-networked', {
             const otherWorld = avatar.components['circles-user-networked']?.data?.userWorld;
             if (!otherWorld || otherWorld === '') return;
             if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {
-              console.log(`mesh apply attempt by ${currClient}`);
-              console.log(otherWorld);
-              console.log(localWorld);
-              console.log(currClient);
-              console.log(e.id);
               CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
 
             } else {
@@ -265,8 +263,8 @@ AFRAME.registerComponent('circles-user-networked', {
 
 
     // Player total avatar visibility
-    if (oldData.userVisibility !== CONTEXT_AF.data.userVisibility) {
-      if (CONTEXT_AF.data.userVisibility == 'visible') {
+    if (oldData.userVisibility !== CONTEXT_AF.data.userVisibility && CONTEXT_AF.data.userVisibility != '') {
+      if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'shade' ) {
         //console.log('becoming visible');
 
         // Turn the components on
@@ -275,14 +273,53 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
 
 
-        // Turn off the components
-      } else if (CONTEXT_AF.data.userVisibility == 'hidden') {
+      // Disable wireframe mode
+      } else if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'wireframe' ) {
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: false });
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { wireframe: false });
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { wireframe: false });
+
+      } else if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'shade'){
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-matte-black', 'active', false);
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-matte-black', 'active', false);
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-matte-black', 'active', false);
+        
+      } else if (CONTEXT_AF.data.userVisibility === 'hidden') {
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "false");
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "false");
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "false");
 
         // Set the shader on, the shader turning on disables the default player mesh but keeps the geometry:)
+      } else if (CONTEXT_AF.data.userVisibility === 'wireframe') {
+        // Turn off hidden just in case
+        if (oldData.userVisibility === 'hidden') {
+          CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "true");
+          CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
+          CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
+        }
+        // Set wireframe
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_head, alpha: 1 });
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_head, alpha: 1 });
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_head, alpha: 1 });
+        console.log('wires framed');
+      } else if (CONTEXT_AF.data.userVisibility === 'shade') {
+        // Turn off hidden just in case
+        if (oldData.userVisibility === 'hidden') {
+          CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "true");
+          CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
+          CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
+        }
+        // set shade
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-matte-black', 'active', true);
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-matte-black', 'active', true);
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-matte-black', 'active', true);
+
       }
+
+
+        // Set shade
+
+      
     }
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
