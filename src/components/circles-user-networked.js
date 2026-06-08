@@ -155,18 +155,12 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // User NAF to custom send data in broadcast https://stackoverflow.com/questions/55107053/networked-a-frame-gallery-a-sky-change-for-all-the-people-in-the-room
     //  We do this on world change, look at NAF subscribe channel in init above for receiver
-    if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.data.userWorld !== '')){
+    //if ((oldData.userWorld !== CONTEXT_AF.data.userWorld) && (CONTEXT_AF.data.userWorld !== '')){
       
 
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
       const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
       const localWorld = CIRCLES.getAvatarElement().components["circles-user-networked"]?.data?.userWorld;
-      
-      console.log(localWorld);
-      console.log('In habited by');
-      console.log(currClient);
-        
-
 
       // Similar to the jitter calculations I saw on other components, stopping all these things from firing at once
       const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
@@ -195,7 +189,7 @@ AFRAME.registerComponent('circles-user-networked', {
         }
       }, jitter);
 
-    }
+   // }
 
     //head model change
     if ( (oldData.gltf_head !== CONTEXT_AF.data.gltf_head) && (CONTEXT_AF.data.gltf_head !== '') ) {

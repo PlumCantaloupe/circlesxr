@@ -22,7 +22,7 @@ CIRCLES.getCirclesSceneElement().addEventListener(CIRCLES.EVENTS.READY, function
 
     //setTimeout(() => document.querySelector("#GeaHead").components['sound'].playSound(), 9500);
 
-    setTimeout(() => document.querySelector("#GeaSound").setAttribute("circles-sound", "state: play"));
+    setTimeout(() => document.querySelector("#GeaHead").setAttribute("circles-sound", "state: play"), 9500);
 
     //Start the animation sequence and use timeouted emits to seperate the start of each animation
     setTimeout(() => FullBodyArmAnimation.emit('turnToPlayer-animation'), 10000);

@@ -23,8 +23,6 @@ AFRAME.registerComponent('circles-color', {
     const alpha = this.data.alpha;
     const wireframe = this.data.wireframe;
     const flatShading = this.data.flatShading;
-
-    console.log(wireframe);
     if (!mesh) return;
 
     mesh.traverse(function (node) {
