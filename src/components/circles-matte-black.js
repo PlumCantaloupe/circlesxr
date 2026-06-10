@@ -21,7 +21,6 @@ AFRAME.registerComponent('circles-matte-black', {
                 }
             });
             if (CONTEXT_AF.data.active) this.apply();
-            CONTEXT_AF.el.removeEventListner('model-loaded', loader);
         });
     },
 

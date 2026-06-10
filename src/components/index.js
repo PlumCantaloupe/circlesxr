@@ -39,3 +39,4 @@ require('./circles-user-networked');
 require('./circles-enter-ui');
 require('./circles-shader');
 require('./circles-matte-black');
+require('./circles-user-local');
