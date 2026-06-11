@@ -20,7 +20,8 @@ AFRAME.registerComponent('circles-costume-color-selector', {
           return Array.isArray(value) ? value.join(',') : '';
         }
       },
-      class_selector: {type: 'string',    default:''}   //this is the class we will use to query for and set the color here
+      class_selector: {type: 'string',    default:''},   //this is the class we will use to query for and set the color here
+      element:        {type: 'string',    default:'circles-costume'}
     },
     init: function() {
       const CONTEXT_AF = this;
@@ -31,7 +32,7 @@ AFRAME.registerComponent('circles-costume-color-selector', {
         const colTargets = document.querySelectorAll(CONTEXT_AF.data.class_selector);
 
         colTargets.forEach((elem) => {
-          elem.setAttribute('circles-costume', {color:col});
+          elem.setAttribute(this.data.element, {color:col});
         });
       };
 

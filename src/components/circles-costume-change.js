@@ -1,13 +1,12 @@
 'use strict';
 
-AFRAME.registerComponent('circles-costume', {
+AFRAME.registerComponent('circles-costume-change', {
     schema: {   
         body_type:      {type: 'string',    default: '', oneOf: ['head', 'hair', 'body']},
         color:          {type: 'string',    default: ''},   //needs to be in rgb(255,255,255) format
         model:          {type: 'asset',     default: ''},
         label_text:     {type: 'string',    default: ''},
-        label_visible:  {type: 'boolean',   default: true},
-        persist:        {type: 'boolean',   default: false}  //this will only work for models that are part of the Circles' constants i.e. entering an index instead of URL for asset 
+        label_visible:  {type: 'boolean',   default: true}
     },
     init: function() {
         const CONTEXT_AF = this;
@@ -28,17 +27,13 @@ AFRAME.registerComponent('circles-costume', {
         CONTEXT_AF.costumeElem.addEventListener('click', (e) => {
           CONTEXT_AF.applyChanges(); 
         });
-
-        //set params we will edit and pass later in the portal component
-        if (!window.newURLSearchParams) {
-          window.newURLSearchParams = new URLSearchParams((window.location.search) ? window.location.search : '');
-        }
     },
     update: function(oldData)  {
       const CONTEXT_AF  = this;
       const data = CONTEXT_AF.data;
   
       if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
+
 
       if ( (oldData.body_type !== data.body_type) && (data.body_type !== '') ) {
         if (!((data.body_type !== 'head') || (data.body_type !== 'hair') || (data.body_type !== 'body'))) {
@@ -48,10 +43,6 @@ AFRAME.registerComponent('circles-costume', {
 
       if ( (oldData.color !== data.color) && (data.color !== '') ) {
         CONTEXT_AF.costumeElem.setAttribute("circles-color", {color:data.color});
-
-        if (data.persist) {
-          window.newURLSearchParams.set(data.body_type + '_col', data.color);
-        }
       }
 
       if ( (oldData.model !== data.model) && (data.model !== '') ) {
@@ -70,11 +61,6 @@ AFRAME.registerComponent('circles-costume', {
 
           if (modelEnum[modelIndex]) {
             CONTEXT_AF.costumeElem.setAttribute("gltf-model", modelEnum[modelIndex]);
-
-            //can only persist if a built-in model i.e. set using index
-            if (data.persist) {
-              window.newURLSearchParams.set(data.body_type, data.model);
-            }
           }
           else {
             CONTEXT_AF.costumeElem.setAttribute("gltf-model", ((typeof data.model === 'string' || data.model instanceof String) ? data.model : data.model.getAttribute('src') ));
@@ -88,7 +74,7 @@ AFRAME.registerComponent('circles-costume', {
       if ( (oldData.label_visible !== data.label_visible) && (data.label_visible !== '') ) {
         CONTEXT_AF.labelElem.setAttribute('visible', data.label_visible);
       }
-    },
+  },
     applyChanges: function(){
       const CONTEXT_AF = this;
       const data = CONTEXT_AF.data;
@@ -98,14 +84,11 @@ AFRAME.registerComponent('circles-costume', {
         return;
       }
 
-      const avatar        = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
-      const avatarNode    = avatar.querySelector('.user_' + data.body_type);
-      console.log(avatarNode);
-      console.log(avatar);
+      const avatarNode        = CIRCLES.getAvatarElement();
+      const modelType         = 'gltf_' + data.body_type;
+      const colorType         = 'color_'+ data.body_type;
       let modelEnum = null;
         let modelIndex = data.body_type + '_' + data.model;
-        console.log(modelIndex);
-        console.log(CIRCLES.getAvatarElement());
         if (data.body_type === 'head') {
           modelEnum = CIRCLES.MODEL_HEAD_TYPE;
         }
@@ -118,39 +101,17 @@ AFRAME.registerComponent('circles-costume', {
 
       if (data.model) {
         if (modelEnum[modelIndex]) {
-          avatarNode.setAttribute("gltf-model", modelEnum[modelIndex]);
-          console.log(modelEnum[modelIndex]);
+          avatarNode.setAttribute('circles-user-networked', modelType, modelEnum[modelIndex]);
 
-          //only works with built in models for now
-          //will check for window.newURLSearchParams in circles-portal.js
-          if (data.persist) {
-            //need to set url search params somehow ....
-            if (window.newURLSearchParams.has(data.body_type)) {
-              window.newURLSearchParams.set(data.body_type, data.model);
-            }
-            else {
-              window.newURLSearchParams.append(data.body_type, data.model);
-            }
-          }
         }
         else {
           const modelPath = ((typeof data.model === 'string' || data.model instanceof String) ? data.model : data.model.getAttribute('src') );
-          avatarNode.setAttribute("gltf-model", modelPath);
+          avatarNode.setAttribute('circles-user-networked', modelType, modelPath);
         }
       }
 
       if (data.color !== '') {
-        avatarNode.setAttribute("circles-color", {color:data.color});
-
-        if (data.persist) {
-          //need to set url search params somehow ....
-          if (window.newURLSearchParams.has(data.body_type + '_col')) {
-            window.newURLSearchParams.set(data.body_type + '_col', data.color);
-          }
-          else {
-            window.newURLSearchParams.append(data.body_type + '_col', data.color);
-          }
-        }
+        avatarNode.setAttribute("circles-user-networked", colorType, data.color);
       }
     },
 });

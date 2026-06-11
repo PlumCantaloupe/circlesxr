@@ -100,8 +100,6 @@ AFRAME.registerComponent('circles-user-networked', {
     const CONTEXT_AF  = this;
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
-    console.log('contextaf');
-    console.log(CONTEXT_AF.el);
 
 
     // Swap around networked hair/body/head components
@@ -168,15 +166,15 @@ AFRAME.registerComponent('circles-user-networked', {
     });
 
       // Similar to the jitter calculations I saw on other components, stopping all these things from firing at once
-      const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
-      setTimeout(() => {
-        if (NAF.connection.isConnected()) {
-          NAF.connection.broadcastData('change-world', {
-            clientID: currClient,
-            world: localWorld,
-          });
-        }
-      }, jitter);
+      // const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
+      // setTimeout(() => {
+      //   if (NAF.connection.isConnected()) {
+      //     NAF.connection.broadcastData('change-world', {
+      //       clientID: currClient,
+      //       world: localWorld,
+      //     });
+      //   }
+      // }, jitter);
 
 
 

@@ -35,15 +35,13 @@
     document.getElementById("show").addEventListener('click', (e) => {
       // Framework for creating a visibility component
       const avaElem = CIRCLES.getAvatarElement();
-      avaElem.setAttribute('circles-user-networked', "userVisibility: shade");
+      avaElem.setAttribute('circles-user-networked', "gltf_head", CIRCLES.MODEL_HEAD_TYPE['head_2']);
 
     });
     document.getElementById("hide").addEventListener('click', (e) => {
       // Framework for creating a visibility component
       const avaElem = CIRCLES.getAvatarElement();
-      avaElem.setAttribute('circles-user-networked', "userVisibility: wireframe");
-      console.log('turning off the ghost');
-
+      avaElem.setAttribute('circles-user-networked', "gltf_head", CIRCLES.MODEL_HEAD_TYPE['head_1']);
 
     });
  </script>
