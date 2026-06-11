@@ -46,9 +46,6 @@ AFRAME.registerComponent('circles-user-local', {
         //     }, jitter)
         // });
 
-
-
-
     },
     update: function(oldData)  {
     const CONTEXT_AF  = this;
@@ -125,11 +122,20 @@ AFRAME.registerComponent('circles-user-local', {
     // Player total avatar visibility
     if (oldData.userVisibility !== CONTEXT_AF.data.userVisibility && CONTEXT_AF.data.userVisibility != '') {
 
-        if (oldData.userVisibility === 'ghost'){
-            CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].disable();
-            CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].disable();
-            CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].disable();
-        }
+
+      // Any true shader switches have to be done here first, because we need to revert them to the original mesh before
+      //  messing with anything else
+      if (oldData.userVisibility === 'ghost') {
+        CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].disable();
+        CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].disable();
+        CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].disable();
+      }
+      if (oldData.userVisibility === 'shade'){
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-matte-black', 'active', false);
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-matte-black', 'active', false);
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-matte-black', 'active', false);
+
+      }
 
 
       if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'shade' ) {

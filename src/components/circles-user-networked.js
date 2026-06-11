@@ -5,13 +5,14 @@ const { CIRCLES_MIC_ENABLED } = require("../core/circles_constants");
 AFRAME.registerComponent('circles-user-networked', {
   schema: {
     // ... Define schema to pass properties from DOM to this component
-    gltf_head: { type: 'asset', default: '' },
-    gltf_hair: { type: 'asset', default: '' },
-    gltf_body: { type: 'asset', default: '' },
+    gltf_head:                  { type: 'asset', default: '' },
+    gltf_hair:                  { type: 'asset', default: '' },
+    gltf_body:                  { type: 'asset', default: '' },
 
-    color_head: { type: 'string', default: '' },
-    color_hair: { type: 'string', default: '' },
-    color_body: { type: 'string', default: '' },
+    color_head:                 { type: 'string', default: '' },
+    color_hair:                 { type: 'string', default: '' },
+    color_body:                 { type: 'string', default: '' },
+
     visiblename:                {type: 'string',    default: ''},
     usertype:                   {type: 'string',    default: ''},
     userDevice:                 {type: 'string',    default: ''},
@@ -89,8 +90,6 @@ AFRAME.registerComponent('circles-user-networked', {
   },
   // We want a setting just for the ghost shader so we can preserve the visibility setting for something else yeah
   applyMesh: function (el, world) {
-    console.log('Hello');
-    console.log(el.querySelector('.avatar').components['circles-user-local']);
     if (world){
       el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', 'ghost');
     } else {
@@ -101,6 +100,38 @@ AFRAME.registerComponent('circles-user-networked', {
     const CONTEXT_AF  = this;
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
+    console.log('contextaf');
+    console.log(CONTEXT_AF.el);
+
+
+    // Swap around networked hair/body/head components
+    if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_hair', CONTEXT_AF.data.gltf_hair);
+
+    }
+    if (CONTEXT_AF.data.gltf_head != oldData.gltf_head){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_head', CONTEXT_AF.data.gltf_head);
+      
+    }
+    if (CONTEXT_AF.data.gltf_body != oldData.gltf_body){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_body', CONTEXT_AF.data.gltf_body);
+      
+    }
+
+    // Swap around networked hair/body/head colour
+    if (CONTEXT_AF.data.color_hair != oldData.color_hair){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_hair', CONTEXT_AF.data.color_hair);
+
+    }
+    if (CONTEXT_AF.data.color_head != oldData.color_head){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_head', CONTEXT_AF.data.color_head);
+      
+    }
+    if (CONTEXT_AF.data.color_body != oldData.color_body){
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_body', CONTEXT_AF.data.color_body);
+      
+    }
+
 
     CONTEXT_AF.el.setAttribute('circles-user-local', {
       gltf_head: this.data.gltf_head,
@@ -113,6 +144,7 @@ AFRAME.registerComponent('circles-user-networked', {
 
 
     // Temporary fix for ensuring we can see through double sided
+    //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work
     CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
 
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
@@ -145,6 +177,11 @@ AFRAME.registerComponent('circles-user-networked', {
           });
         }
       }, jitter);
+
+
+
+
+
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },
