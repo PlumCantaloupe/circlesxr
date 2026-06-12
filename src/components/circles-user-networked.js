@@ -90,6 +90,12 @@ AFRAME.registerComponent('circles-user-networked', {
   },
   // We want a setting just for the ghost shader so we can preserve the visibility setting for something else yeah
   applyMesh: function (el, world) {
+    
+    // If performance tanks put this somewhere that makes more sense lol
+    el.querySelector('.user_hair').components['circles-shader'].init();
+    el.querySelector('.user_body').components['circles-shader'].init();
+    el.querySelector('.user_head').components['circles-shader'].init();
+    
     if (world){
       el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', 'ghost');
     } else {
@@ -102,43 +108,50 @@ AFRAME.registerComponent('circles-user-networked', {
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
 
-    // Swap around networked hair/body/head components
-    if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_hair', CONTEXT_AF.data.gltf_hair);
+    if (CONTEXT_AF.gltf_hair != oldData.gltf_hair || CONTEXT_AF.data.gltf_head != oldData.gltf_head || CONTEXT_AF.data.gltf_body != oldData.gltf_body
+      ||CONTEXT_AF.data.color_hair != oldData.color_hair || CONTEXT_AF.data.color_head != oldData.color_head || CONTEXT_AF.data.color_body != oldData.color_body) 
+      {
 
-    }
-    if (CONTEXT_AF.data.gltf_head != oldData.gltf_head){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_head', CONTEXT_AF.data.gltf_head);
-      
-    }
-    if (CONTEXT_AF.data.gltf_body != oldData.gltf_body){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_body', CONTEXT_AF.data.gltf_body);
-      
+      // Swap around networked hair/body/head components
+      if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_hair', CONTEXT_AF.data.gltf_hair);
+
+      }
+      if (CONTEXT_AF.data.gltf_head != oldData.gltf_head) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_head', CONTEXT_AF.data.gltf_head);
+
+      }
+      if (CONTEXT_AF.data.gltf_body != oldData.gltf_body) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_body', CONTEXT_AF.data.gltf_body);
+
+      }
+
+      // Swap around networked hair/body/head colour
+      if (CONTEXT_AF.data.color_hair != oldData.color_hair) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_hair', CONTEXT_AF.data.color_hair);
+
+      }
+      if (CONTEXT_AF.data.color_head != oldData.color_head) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_head', CONTEXT_AF.data.color_head);
+
+      }
+      if (CONTEXT_AF.data.color_body != oldData.color_body) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_body', CONTEXT_AF.data.color_body);
+
+      }
+
+      CONTEXT_AF.el.setAttribute('circles-user-local', 'userVisibility', 'visible');
     }
 
-    // Swap around networked hair/body/head colour
-    if (CONTEXT_AF.data.color_hair != oldData.color_hair){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_hair', CONTEXT_AF.data.color_hair);
 
-    }
-    if (CONTEXT_AF.data.color_head != oldData.color_head){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_head', CONTEXT_AF.data.color_head);
-      
-    }
-    if (CONTEXT_AF.data.color_body != oldData.color_body){
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'color_body', CONTEXT_AF.data.color_body);
-      
-    }
-
-
-    CONTEXT_AF.el.setAttribute('circles-user-local', {
-      gltf_head: this.data.gltf_head,
-      gltf_hair: this.data.gltf_hair,
-      gltf_body: this.data.gltf_body,
-      color_head: this.data.color_head,
-      color_hair: this.data.color_hair,
-      color_body: this.data.color_body,
-    });
+    // CONTEXT_AF.el.setAttribute('circles-user-local', {
+    //   gltf_head: this.data.gltf_head,
+    //   gltf_hair: this.data.gltf_hair,
+    //   gltf_body: this.data.gltf_body,
+    //   color_head: this.data.color_head,
+    //   color_hair: this.data.color_hair,
+    //   color_body: this.data.color_body,
+    // });
 
 
     // Temporary fix for ensuring we can see through double sided
@@ -164,17 +177,6 @@ AFRAME.registerComponent('circles-user-networked', {
         }, { once: true });
       }
     });
-
-      // Similar to the jitter calculations I saw on other components, stopping all these things from firing at once
-      // const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
-      // setTimeout(() => {
-      //   if (NAF.connection.isConnected()) {
-      //     NAF.connection.broadcastData('change-world', {
-      //       clientID: currClient,
-      //       world: localWorld,
-      //     });
-      //   }
-      // }, jitter);
 
 
 

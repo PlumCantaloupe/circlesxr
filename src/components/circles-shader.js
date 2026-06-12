@@ -8,10 +8,10 @@ AFRAME.registerComponent('circles-shader',{
     init: function(){
         // working similarly to circles-material
         this.shaderReady = false;
+        this.shaderOn = false;
         const CONTEXT_AF = this;
         CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             CONTEXT_AF.createRimLight()
-            CONTEXT_AF.el.removeEventListener('model-loaded', loader);
         });
     },
 
@@ -45,7 +45,6 @@ AFRAME.registerComponent('circles-shader',{
 
 
             newMaterial.onBeforeCompile = (shader) => {
-                console.log('onbeforecompile');
                 shader.uniforms.uFresnelColor = { value: new THREE.Color('#02feff') };
                 shader.uniforms.uBaseColor = { value: new THREE.Color('#0777fd') };
                 shader.uniforms.uFresnelAmt = { value: 6.0};
@@ -140,10 +139,12 @@ AFRAME.registerComponent('circles-shader',{
     },
 
     enable: function () {
+
         if (!this.shaderReady) {
             this.el.addEventListener('shader-ready', () => this.enable(), { once: true });
             return;
         }
+
         //console.log('enable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
@@ -160,7 +161,6 @@ AFRAME.registerComponent('circles-shader',{
             this.el.addEventListener('shader-ready', () => this.disable(), { once: true });
             return;
         }
-        //console.log('disable shader');
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
