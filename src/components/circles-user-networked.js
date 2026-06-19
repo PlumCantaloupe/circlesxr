@@ -19,6 +19,9 @@ AFRAME.registerComponent('circles-user-networked', {
     userWorld:                  {type: 'string',    default: ''},
 
     userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'wireframe', 'shade']},
+
+    // Ghost type could be used to set a globally ghost type, can also change this to control ghost type ac
+    ghostType:                  {type: 'string',    default: 'ghost',   oneOf: ['shade', 'wireframe', 'ghost']}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -84,20 +87,19 @@ AFRAME.registerComponent('circles-user-networked', {
         }
       }
     });
-
-
-    // this.addUser();
   },
   // We want a setting just for the ghost shader so we can preserve the visibility setting for something else yeah
   applyMesh: function (el, world) {
     
-    // If performance tanks put this somewhere that makes more sense lol
+    // If performance tanks put this somewhere that makes more sense if needed
     el.querySelector('.user_hair').components['circles-shader'].init();
     el.querySelector('.user_body').components['circles-shader'].init();
     el.querySelector('.user_head').components['circles-shader'].init();
+
+    // Ideally we grab their user-networked uservisibility and set it to that rather than visible
     
     if (world){
-      el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', 'ghost');
+      el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', this.data.ghostType);
     } else {
       el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', 'visible');
     }
@@ -139,8 +141,6 @@ AFRAME.registerComponent('circles-user-networked', {
         CONTEXT_AF.el.setAttribute('circles-user-local', 'color_body', CONTEXT_AF.data.color_body);
 
       }
-
-      CONTEXT_AF.el.setAttribute('circles-user-local', 'userVisibility', 'visible');
     }
 
 
@@ -156,7 +156,7 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // Temporary fix for ensuring we can see through double sided
     //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work
-    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
+    //CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
 
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
     const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
@@ -165,6 +165,9 @@ AFRAME.registerComponent('circles-user-networked', {
     Object.values(NAF.entities.entities).forEach(e => {
       if (e.id === 'Player1') return;
       const avatar = e.querySelector('.avatar');
+
+      // Other things can be networked so we have to make sure it has an avatar
+      if (!avatar) return;
       const otherWorld = avatar.components['circles-user-networked']?.data?.userWorld;
       if (!otherWorld || otherWorld === '') return;
       if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {

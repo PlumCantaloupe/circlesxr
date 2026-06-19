@@ -8,7 +8,6 @@ AFRAME.registerComponent('circles-shader',{
     init: function(){
         // working similarly to circles-material
         this.shaderReady = false;
-        this.shaderOn = false;
         const CONTEXT_AF = this;
         CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             CONTEXT_AF.createRimLight()

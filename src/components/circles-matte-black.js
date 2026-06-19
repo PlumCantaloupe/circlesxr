@@ -7,20 +7,29 @@ AFRAME.registerComponent('circles-matte-black', {
 
     init: function () {
         const CONTEXT_AF = this;
-        CONTEXT_AF.matteMaterial = new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            side: THREE.FrontSide
-        });
-        CONTEXT_AF.el.addEventListener('model-loaded', function loader(){
+        this.shaderReady = false;
+
+        CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             const mesh = CONTEXT_AF.el.getObject3D('mesh');
+
 
             mesh.traverse(node => {
                 if (node.isMesh) {
                     node.userData.originalData = node.material;
-                    node.userData.matteblack = CONTEXT_AF.matteMaterial;
+                    const matteMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x000000,
+                        side: THREE.FrontSide
+                    });
+
+                    matteMaterial.renderOrder = 1;
+                    matteMaterial.needsUpdate = true;
+
+                    node.userData.matteblack = matteMaterial;
+                    node.material.needsUpdate = true;
                 }
             });
-            if (CONTEXT_AF.data.active) this.apply();
+            CONTEXT_AF.shaderReady = true;
+            CONTEXT_AF.el.emit('shader-ready');
         });
     },
 
@@ -28,7 +37,7 @@ AFRAME.registerComponent('circles-matte-black', {
     update(oldData) {
         const CONTEXT_AF = this;
 
-        if(oldData.active === CONTEXT_AF.data.active || oldData.active === '') return;
+        if(oldData.active === CONTEXT_AF.data.active) return;
 
         if (CONTEXT_AF.data.active) {
             CONTEXT_AF.enable();
@@ -38,9 +47,14 @@ AFRAME.registerComponent('circles-matte-black', {
     },
 
     enable: function () {
+        if (!this.shaderReady) {
+            this.el.addEventListener('shader-ready', () => this.enable(), { once: true });
+            return;
+        }
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
+            console.log('Setting shader matte black');
             if (!node.isMesh) return;
             if (!node.userData.matteblack) return;
             node.material = node.userData.matteblack;
@@ -49,6 +63,11 @@ AFRAME.registerComponent('circles-matte-black', {
     },
 
     disable: function () {
+        if (!this.shaderReady) {
+            this.el.addEventListener('shader-ready', () => this.disable(), { once: true });
+            return;
+        }
+
         const mesh = this.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {

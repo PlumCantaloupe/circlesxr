@@ -18,34 +18,6 @@ AFRAME.registerComponent('circles-user-local', {
     multiple: false, //do not allow multiple instances of this component on this entity
     init: function () {
 
-        // NAF.connection.subscribeToDataChannel('change-world', (senderID, dataType, data) => {
-        //     const jitter = Math.floor(Math.random() * (600 - 300 + 1)) + 300;
-
-        //     setTimeout(() => {
-        //         const localWorld = CIRCLES.getAvatarElement().components["circles-user-networked"]?.data?.userWorld;
-        //         let otherPlayer;
-
-        //         Object.values(NAF.entities.entities).forEach(e => {
-        //             if (e.components.networked.attrValue.networkId === data.clientID) {
-        //                 otherPlayer = e;
-        //             }
-        //         });
-
-        //         const avatar = otherPlayer.querySelector('.avatar');
-
-        //         // If already loaded
-        //         if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {
-        //             CONTEXT_AF.applyMesh(otherPlayer, localWorld !== data.world);
-
-        //         } else {
-        //             // A loaded trigger
-        //             avatar.addEventListener('model-loaded', () => {
-        //                 CONTEXT_AF.applyMesh(otherPlayer, localWorld !== data.world);
-        //             }, { once: true });
-        //         }
-        //     }, jitter)
-        // });
-
     },
     update: function(oldData)  {
     const CONTEXT_AF  = this;
@@ -138,17 +110,7 @@ AFRAME.registerComponent('circles-user-local', {
       }
 
 
-      if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'shade' ) {
-        //console.log('becoming visible');
-
-        // Turn the components on
-        CONTEXT_AF.el.querySelector('.user_head').setAttribute('visible', "true");
-        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('visible', "true");
-        CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
-
-
-      // Disable wireframe mode
-      } else if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'wireframe' ) {
+      if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'wireframe' ) {
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: false });
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { wireframe: false });
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { wireframe: false });
@@ -184,10 +146,13 @@ AFRAME.registerComponent('circles-user-local', {
           CONTEXT_AF.el.querySelector('.user_body').setAttribute('visible', "true");
         }
         // set shade
+        console.log('setting shade now');
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-matte-black', 'active', true);
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-matte-black', 'active', true);
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-matte-black', 'active', true);
+
       } else if (CONTEXT_AF.data.userVisibility === 'ghost'){
+
         CONTEXT_AF.el.querySelector('.user_body').components['circles-shader'].enable();
         CONTEXT_AF.el.querySelector('.user_head').components['circles-shader'].enable();
         CONTEXT_AF.el.querySelector('.user_hair').components['circles-shader'].enable();
