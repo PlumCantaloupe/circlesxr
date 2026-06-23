@@ -7,8 +7,10 @@ AFRAME.registerComponent('circles-shader',{
 
     init: function(){
         // working similarly to circles-material
-        this.shaderReady = false;
         const CONTEXT_AF = this;
+        CONTEXT_AF.shaderReady = false;
+        CONTEXT_AF.wispMesh = null;
+        CONTEXT_AF.wispMaterial = null;
         CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             CONTEXT_AF.createRimLight()
         });
@@ -112,11 +114,67 @@ AFRAME.registerComponent('circles-shader',{
             
                     newMaterial.userData.shader = shader;
             };
-
             newMaterial.renderOrder = 1;
             newMaterial.needsUpdate = true;
             node.userData.fresnelShader = newMaterial;
             // https://jsfiddle.net/Horsetopus/33623mpv/
+
+
+            // https://blog.zero-one-group.com/creating-a-coffee-smoke-shader-with-three-js-and-glsl-a911ff99a880
+            //  Copied the whispy coffee tendrils from here thought they would be a good fit, needed some changes to attach to body
+            CONTEXT_AF.wispMesh = node.clone();
+            CONTEXT_AF.wispMesh.scale.multiplyScalar(1.02);
+            const textureLoader = new THREE.TextureLoader();
+            const perlinTexture = textureLoader.load('/global/assets/textures/noiseTexture.png');
+            perlinTexture.wrapS = THREE.RepeatWrapping;
+            perlinTexture.wrapT = THREE.RepeatWrapping;
+
+            CONTEXT_AF.wispMaterial = new THREE.ShaderMaterial({
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+                uniforms: {
+                    time: { value: 0.0 },
+                    uPerlinTexture: { value: perlinTexture },
+                    color: { value: new THREE.Color('#02feff') },
+                },
+                vertexShader: `
+                    uniform float time;
+                    uniform sampler2D uPerlinTexture;
+                    varying vec3 vWorldPos;
+                    
+            
+                    void main() {
+                        vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    varying vec3 vWorldPos;
+                    uniform sampler2D uPerlinTexture;
+                    uniform vec3 color;
+
+                    void main() {
+                        vec2 smokeUv = vWorldPos.xy;
+                        smokeUv.x *= 0.5;
+                        smokeUv.y *= 0.3;
+                        smokeUv.y -= time * 0.05;
+
+                        // Smoothing the edges around smoke
+                        float smoke = texture(uPerlinTexture, smokeUv).r;
+                        smoke = smoothstep(0.4, 1.0, smoke);
+
+                        // Color the saders, parameter is RGB and Material
+                        gl_FragColor = vec4(color, smoke);
+                    }`
+            });
+            CONTEXT_AF.wispMesh.material = CONTEXT_AF.wispMaterial;
+            CONTEXT_AF.wispMesh.renderOrder = 2
+            CONTEXT_AF.wispMesh.visible = true;
+            node.parent.add(CONTEXT_AF.wispMesh);
+
+
 
 
         });
@@ -137,6 +195,12 @@ AFRAME.registerComponent('circles-shader',{
         }
     },
 
+    tick(time) {
+        if (this.wispMaterial) {
+            this.wispMaterial.uniforms.time.value = time * 0.001;
+        }
+    },
+
     enable: function () {
 
         if (!this.shaderReady) {
@@ -150,6 +214,7 @@ AFRAME.registerComponent('circles-shader',{
         mesh.traverse(node => {
             if (!node.isMesh) return;
             if (!node.userData.fresnelShader) return;
+            this.wispMesh.visible = true;
             node.material = node.userData.fresnelShader;
             node.material.needsUpdate = true;
         });
@@ -165,10 +230,13 @@ AFRAME.registerComponent('circles-shader',{
         mesh.traverse(node => {
             if (!node.isMesh) return  
             if (!node.userData.original) return;
+            this.wispMesh.visible = false;
             node.material = node.userData.original;
             node.material.needsUpdate = true;
 
         });
     },
+
+    
 
 });

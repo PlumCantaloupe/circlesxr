@@ -18,10 +18,11 @@ AFRAME.registerComponent('circles-user-networked', {
     userDevice:                 {type: 'string',    default: ''},
     userWorld:                  {type: 'string',    default: ''},
 
-    userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'wireframe', 'shade']},
+    // Turn this off here, we want mesh control to be on the local side, the ghostType controls what others build
+    //userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'wireframe', 'shade']},
 
     // Ghost type could be used to set a globally ghost type, can also change this to control ghost type ac
-    ghostType:                  {type: 'string',    default: 'ghost',   oneOf: ['shade', 'wireframe', 'ghost']}
+    ghostType:                  {type: 'string',    default: 'ghost',   oneOf: ['shade', 'wireframe', 'ghost', 'default']}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -156,7 +157,7 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // Temporary fix for ensuring we can see through double sided
     //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work
-    //CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
+    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
 
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
     const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
