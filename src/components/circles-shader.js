@@ -48,8 +48,8 @@ AFRAME.registerComponent('circles-shader',{
             newMaterial.onBeforeCompile = (shader) => {
                 shader.uniforms.uFresnelColor = { value: new THREE.Color('#02feff') };
                 shader.uniforms.uBaseColor = { value: new THREE.Color('#0777fd') };
-                shader.uniforms.uFresnelAmt = { value: 6.0};
-                shader.uniforms.uFresnelOffset = { value: 0.1 };
+                shader.uniforms.uFresnelAmt = { value: 8.0};
+                shader.uniforms.uFresnelOffset = { value: 0.0 };
                 shader.uniforms.uFresnelIntensity = { value: 3.0 };
                 shader.uniforms.uFresnelAlpha = { value: 0.8 };
 
@@ -123,7 +123,7 @@ AFRAME.registerComponent('circles-shader',{
             // https://blog.zero-one-group.com/creating-a-coffee-smoke-shader-with-three-js-and-glsl-a911ff99a880
             //  Copied the whispy coffee tendrils from here thought they would be a good fit, needed some changes to attach to body
             CONTEXT_AF.wispMesh = node.clone();
-            CONTEXT_AF.wispMesh.scale.multiplyScalar(1.02);
+            CONTEXT_AF.wispMesh.scale.multiplyScalar(1.0);
             const textureLoader = new THREE.TextureLoader();
             const perlinTexture = textureLoader.load('/global/assets/textures/noiseTexture.png');
             perlinTexture.wrapS = THREE.RepeatWrapping;
@@ -136,15 +136,19 @@ AFRAME.registerComponent('circles-shader',{
                 uniforms: {
                     time: { value: 0.0 },
                     uPerlinTexture: { value: perlinTexture },
-                    color: { value: new THREE.Color('#02feff') },
+                    color: { value: new THREE.Color('#ffffff') },
                 },
                 vertexShader: `
                     uniform float time;
                     uniform sampler2D uPerlinTexture;
                     varying vec3 vWorldPos;
+                    varying vec3 vNormal;
                     
             
                     void main() {
+                        //vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+                        //gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                        vNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
                         vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                     }
@@ -154,19 +158,43 @@ AFRAME.registerComponent('circles-shader',{
                     varying vec3 vWorldPos;
                     uniform sampler2D uPerlinTexture;
                     uniform vec3 color;
+                    varying vec3 vNormal;
 
                     void main() {
-                        vec2 smokeUv = vWorldPos.xy;
-                        smokeUv.x *= 0.5;
-                        smokeUv.y *= 0.3;
-                        smokeUv.y -= time * 0.05;
+
+                        // Hit every world position so it doesn't freeze anywhere
+                        vec2 smokeUvX = vWorldPos.yz * 0.3;
+                        vec2 smokeUvY = vWorldPos.xz * 0.3;
+                        vec2 smokeUvZ = vWorldPos.yx * 0.3;
+
+                        // Randomize the timings a little bit to make the speed look more random
+
+                        smokeUvZ.y -= 0.015 * time;
+                        smokeUvZ.x -= 0.017 * time;
+
+                        smokeUvX.y -= 0.012 * time;
+                        smokeUvX.x -= 0.019 * time;
+
+                        smokeUvY.x -= 0.018 * time;
+                        smokeUvY.y -= 0.013 * time;
+
 
                         // Smoothing the edges around smoke
-                        float smoke = texture(uPerlinTexture, smokeUv).r;
-                        smoke = smoothstep(0.4, 1.0, smoke);
+                        float smokeX = texture(uPerlinTexture, smokeUvX).r;
+                        float smokeY = texture(uPerlinTexture, smokeUvY).r;
+                        float smokeZ = texture(uPerlinTexture, smokeUvZ).r;
 
-                        // Color the saders, parameter is RGB and Material
-                        gl_FragColor = vec4(color, smoke);
+
+                        // Normalization technique + blending we are sending 2D --> 3D, we also want to normalize them all to 1 for smooth step to work correctly
+                        vec3 smoke = abs(vNormal);
+                        smoke = smoke / (smoke.x + smoke.y + smoke.z);
+                        float wisp = smokeX * smoke.x + smokeY * smoke.y + smokeZ * smoke.z;
+
+
+                        // Set the smooth step, constrast threshold operation anything below 0.4 is 0 above 0.95 is 0, gives us a way to create transparency
+                        float wisps = smoothstep(0.4, 0.95, wisp);
+                        gl_FragColor = vec4(color, wisps);
+
                     }`
             });
             CONTEXT_AF.wispMesh.material = CONTEXT_AF.wispMaterial;
