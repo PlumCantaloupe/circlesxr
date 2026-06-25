@@ -10,7 +10,6 @@ AFRAME.registerComponent('circles-shader',{
         const CONTEXT_AF = this;
         CONTEXT_AF.shaderReady = false;
         CONTEXT_AF.wispMesh = null;
-        CONTEXT_AF.wispMaterial = null;
         CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             CONTEXT_AF.createRimLight()
         });
@@ -31,8 +30,11 @@ AFRAME.registerComponent('circles-shader',{
 
         mesh.traverse(function (node) {
             if (!node.isMesh) return;
+            if (node === CONTEXT_AF.wispMesh) return;
 
-            node.userData.original = node.material;
+                if (!node.userData.original) {
+                    node.userData.original = node.material;
+                }
 
             const newMaterial = new THREE.MeshPhysicalMaterial({
                 color: new THREE.Color('rgb(255, 255, 255)'),
@@ -119,17 +121,27 @@ AFRAME.registerComponent('circles-shader',{
             node.userData.fresnelShader = newMaterial;
             // https://jsfiddle.net/Horsetopus/33623mpv/
 
-
-            // https://blog.zero-one-group.com/creating-a-coffee-smoke-shader-with-three-js-and-glsl-a911ff99a880
-            //  Copied the whispy coffee tendrils from here thought they would be a good fit, needed some changes to attach to body
             CONTEXT_AF.wispMesh = node.clone();
             CONTEXT_AF.wispMesh.scale.multiplyScalar(1.0);
+            CONTEXT_AF.wispMesh.renderOrder = 2
+            CONTEXT_AF.wispMesh.visible = false;
+            node.parent.add(CONTEXT_AF.wispMesh);
+
+        });
+        CONTEXT_AF.shaderReady = true;
+        CONTEXT_AF.el.emit('shader-ready');
+
+    },
+
+     createWisp: function (e){
+            // https://blog.zero-one-group.com/creating-a-coffee-smoke-shader-with-three-js-and-glsl-a911ff99a880
+            //  Copied the whispy coffee tendrils from here thought they would be a good fit, needed some changes to attach to body
             const textureLoader = new THREE.TextureLoader();
             const perlinTexture = textureLoader.load('/global/assets/textures/noiseTexture.png');
             perlinTexture.wrapS = THREE.RepeatWrapping;
             perlinTexture.wrapT = THREE.RepeatWrapping;
 
-            CONTEXT_AF.wispMaterial = new THREE.ShaderMaterial({
+             return new THREE.ShaderMaterial({
                 transparent: true,
                 depthWrite: false,
                 blending: THREE.AdditiveBlending,
@@ -192,22 +204,12 @@ AFRAME.registerComponent('circles-shader',{
 
 
                         // Set the smooth step, constrast threshold operation anything below 0.4 is 0 above 0.95 is 0, gives us a way to create transparency
+                        // was 0.4, 0.95
                         float wisps = smoothstep(0.4, 0.95, wisp);
                         gl_FragColor = vec4(color, wisps);
 
                     }`
             });
-            CONTEXT_AF.wispMesh.material = CONTEXT_AF.wispMaterial;
-            CONTEXT_AF.wispMesh.renderOrder = 2
-            CONTEXT_AF.wispMesh.visible = true;
-            node.parent.add(CONTEXT_AF.wispMesh);
-
-
-
-
-        });
-        CONTEXT_AF.shaderReady = true;
-        CONTEXT_AF.el.emit('shader-ready');
     },
 
     update(oldData){
@@ -224,41 +226,51 @@ AFRAME.registerComponent('circles-shader',{
     },
 
     tick(time) {
-        if (this.wispMaterial) {
-            this.wispMaterial.uniforms.time.value = time * 0.001;
+        const CONTEXT_AF = this;
+        if (CONTEXT_AF.wispMesh && CONTEXT_AF.wispMesh.material) {
+            CONTEXT_AF.wispMesh.material.uniforms.time.value = time * 0.001;
         }
     },
 
     enable: function () {
+        const CONTEXT_AF = this;
 
-        if (!this.shaderReady) {
-            this.el.addEventListener('shader-ready', () => this.enable(), { once: true });
+        if (!CONTEXT_AF.shaderReady) {
+            CONTEXT_AF.el.addEventListener('shader-ready', () => CONTEXT_AF.enable(), { once: true });
             return;
         }
 
         //console.log('enable shader');
-        const mesh = this.el.getObject3D('mesh');
+        const mesh = CONTEXT_AF.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
             if (!node.isMesh) return;
+            if (node == CONTEXT_AF.wispMesh) return;
             if (!node.userData.fresnelShader) return;
-            this.wispMesh.visible = true;
             node.material = node.userData.fresnelShader;
             node.material.needsUpdate = true;
+            CONTEXT_AF.wispMesh.material = CONTEXT_AF.createWisp();
+            CONTEXT_AF.wispMesh.visible = true;
         });
     },
 
     disable: function () {
-        if (!this.shaderReady) {
-            this.el.addEventListener('shader-ready', () => this.disable(), { once: true });
+        const CONTEXT_AF = this;
+        if (!CONTEXT_AF.shaderReady) {
+            CONTEXT_AF.el.addEventListener('shader-ready', () => CONTEXT_AF.disable(), { once: true });
             return;
         }
-        const mesh = this.el.getObject3D('mesh');
+        
+        CONTEXT_AF.wispMesh.visible = false;
+        CONTEXT_AF.wispMesh.material.dispose();
+        CONTEXT_AF.wispMesh.material = null;
+
+        const mesh = CONTEXT_AF.el.getObject3D('mesh');
         if (!mesh) return;
         mesh.traverse(node => {
             if (!node.isMesh) return  
+            if (node == CONTEXT_AF.wispMesh) return;
             if (!node.userData.original) return;
-            this.wispMesh.visible = false;
             node.material = node.userData.original;
             node.material.needsUpdate = true;
 
