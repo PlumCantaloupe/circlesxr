@@ -7,6 +7,8 @@ AFRAME.registerComponent('circles-shader',{
 
     init: function(){
         // working similarly to circles-material
+
+        // Can add texture building here so only one call needs to be made
         const CONTEXT_AF = this;
         CONTEXT_AF.shaderReady = false;
         CONTEXT_AF.wispMesh = null;
