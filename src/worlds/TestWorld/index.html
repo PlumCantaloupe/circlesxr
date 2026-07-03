@@ -2,6 +2,7 @@
 <head>
   <!-- Circles' head scripts [REQUIRED] -->
   <circles-start-scripts/>
+  <script src="js/testFunctions.js"></script>
 </head>
 <body>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
@@ -31,6 +32,8 @@
   <circles-end-scripts/>
  </body>
  <script>
+    onWorldReady();
+
     document.getElementById("show").addEventListener('click', (e) => {
       // Framework for creating a visibility component
       const avaElem = CIRCLES.getAvatarElement();
