@@ -10,9 +10,17 @@ AFRAME.registerComponent('circles-shader',{
 
         // Can add texture building here so only one call needs to be made
         const CONTEXT_AF = this;
+
         CONTEXT_AF.shaderReady = false;
         CONTEXT_AF.wispMesh = null;
-        CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
+        CONTEXT_AF.el.addEventListener('model-loaded', function loader(e) {
+            if (e.target !== CONTEXT_AF.el) return;
+            if (CONTEXT_AF.wispMesh) {
+                CONTEXT_AF.wispMesh.parent?.remove(CONTEXT_AF.wispMesh);
+                CONTEXT_AF.wispMesh.material?.dispose();
+                CONTEXT_AF.wispMesh = null;
+            }
+            
             CONTEXT_AF.createRimLight()
         });
     },
@@ -34,9 +42,7 @@ AFRAME.registerComponent('circles-shader',{
             if (!node.isMesh) return;
             if (node === CONTEXT_AF.wispMesh) return;
 
-                if (!node.userData.original) {
-                    node.userData.original = node.material;
-                }
+            node.userData.original = node.material;
 
             const newMaterial = new THREE.MeshPhysicalMaterial({
                 color: new THREE.Color('rgb(255, 255, 255)'),
@@ -229,7 +235,8 @@ AFRAME.registerComponent('circles-shader',{
 
     tick(time) {
         const CONTEXT_AF = this;
-        if (CONTEXT_AF.wispMesh && CONTEXT_AF.wispMesh.material) {
+        if (CONTEXT_AF.wispMesh && CONTEXT_AF.wispMesh.material && CONTEXT_AF.wispMesh.material.uniforms) {
+
             CONTEXT_AF.wispMesh.material.uniforms.time.value = time * 0.001;
         }
     },
@@ -263,6 +270,7 @@ AFRAME.registerComponent('circles-shader',{
             return;
         }
         
+        
         CONTEXT_AF.wispMesh.visible = false;
         CONTEXT_AF.wispMesh.material.dispose();
         CONTEXT_AF.wispMesh.material = null;
@@ -273,6 +281,8 @@ AFRAME.registerComponent('circles-shader',{
             if (!node.isMesh) return  
             if (node == CONTEXT_AF.wispMesh) return;
             if (!node.userData.original) return;
+            console.log('turning normal');
+            
             node.material = node.userData.original;
             node.material.needsUpdate = true;
 

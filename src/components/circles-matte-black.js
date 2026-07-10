@@ -12,7 +12,7 @@ AFRAME.registerComponent('circles-matte-black', {
         CONTEXT_AF.el.addEventListener('model-loaded', function loader() {
             const mesh = CONTEXT_AF.el.getObject3D('mesh');
 
-
+            if (!mesh) return;
             mesh.traverse(node => {
                 if (node.isMesh) {
                     node.userData.originalData = node.material;

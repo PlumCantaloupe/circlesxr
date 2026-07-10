@@ -89,13 +89,8 @@ AFRAME.registerComponent('circles-user-networked', {
       }
     });
   },
-  // We want a setting just for the ghost shader so we can preserve the visibility setting for something else yeah
+  // We want a setting just for the ghost shader so we can preserve the visibility setting for something else
   applyMesh: function (el, world) {
-    
-    // If performance tanks put this somewhere that makes more sense if needed
-    el.querySelector('.user_hair').components['circles-shader'].init();
-    el.querySelector('.user_body').components['circles-shader'].init();
-    el.querySelector('.user_head').components['circles-shader'].init();
 
     // Ideally we grab their user-networked uservisibility and set it to that rather than visible
     
@@ -111,14 +106,13 @@ AFRAME.registerComponent('circles-user-networked', {
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
 
-    if (CONTEXT_AF.gltf_hair != oldData.gltf_hair || CONTEXT_AF.data.gltf_head != oldData.gltf_head || CONTEXT_AF.data.gltf_body != oldData.gltf_body
+    if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair || CONTEXT_AF.data.gltf_head != oldData.gltf_head || CONTEXT_AF.data.gltf_body != oldData.gltf_body
       ||CONTEXT_AF.data.color_hair != oldData.color_hair || CONTEXT_AF.data.color_head != oldData.color_head || CONTEXT_AF.data.color_body != oldData.color_body) 
       {
 
       // Swap around networked hair/body/head components
       if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair) {
         CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_hair', CONTEXT_AF.data.gltf_hair);
-
       }
       if (CONTEXT_AF.data.gltf_head != oldData.gltf_head) {
         CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_head', CONTEXT_AF.data.gltf_head);
@@ -143,17 +137,6 @@ AFRAME.registerComponent('circles-user-networked', {
 
       }
     }
-
-
-    // CONTEXT_AF.el.setAttribute('circles-user-local', {
-    //   gltf_head: this.data.gltf_head,
-    //   gltf_hair: this.data.gltf_hair,
-    //   gltf_body: this.data.gltf_body,
-    //   color_head: this.data.color_head,
-    //   color_hair: this.data.color_hair,
-    //   color_body: this.data.color_body,
-    // });
-
 
     // Temporary fix for ensuring we can see through double sided
     //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work

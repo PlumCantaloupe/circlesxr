@@ -21,8 +21,8 @@
                     circles-material-override="shader:physical;"
                     circles-color
                     circles-matte-black
-                    circles-shadow="cast:true; receive:true; applyToChildren:false;"
-                    circles-shader>
+                    circles-shader
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;">
           <a-entity class="head_holder" position="0 0 -2.0"></a-entity> <!-- this is where things are held. Will have another for hands -->
           <!-- https://stackoverflow.com/questions/12626716/inconsistent-alpha-channel-in-three-js had to mess with this to allow see through on the shaders for rendering 
                a little bit of a hacky solution, transparent materials have a lot of clipping issues and alphaTest helps fix this because instead of doing a full blend its more of a filter
@@ -32,14 +32,15 @@
                       material="shader:flat; src:__FACE_MAP__; transparent:true; alphaTest: 0.5; side:back; color:#000;"
                       position="0.0 0.0 -0.1">
           </a-entity>
-          <a-entity   class="user_hair"
-                      gltf-model
-                      circles-material-override="shader:physical;"
-                      circles-color
-                      circles-matte-black
-                      circles-shader
-                      circles-shadow="cast:true; receive:true; applyToChildren:false;">
-          </a-entity>
+        </a-entity>
+        <!--Moved the hair node to an avatar node, this may need to become a child of head again potentially-->
+        <a-entity   class="user_hair avatar_node"
+                    gltf-model
+                    circles-material-override="shader:physical;"
+                    circles-color
+                    circles-matte-black
+                    circles-shader
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;">
         </a-entity>
         <a-entity   class="user_body avatar_node"
                     gltf-model
