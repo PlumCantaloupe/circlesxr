@@ -101,6 +101,96 @@
       <a-entity position="0 0.3 0" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;" material="color:rgb(255, 255, 255)" shadow></a-entity>
     </a-entity>
 
+
+    <!-- Mirror for avatar changes -->
+    <a-entity id="mirror" geometry="primitive:plane; width:1.6; height:2.0" position="0.0 1.5 4.5" rotation ="0, -180, 0"
+      circles-platform-mirror="textureSizeDesktop:1024; textureSizeMobile:512; textureSizeHMD:1024; color:#000;"></a-entity>
+
+
+    <!-- Buttons to control changing skin types -->
+               <a-entity id="controls" rotation="-0.17 -0.222 49.985" position="0 1 0">
+
+            <!-- buttons for device instruction selection -->
+            <a-entity rotation="0 0 0" position="0.013 -0.011 -0.522">
+              <a-entity text="value: Platform Instructions; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.056 -0.150"></a-entity>
+              <a-entity id="mobileInstructions"
+                        scale="1 0.4 1"
+                        position="0 0 -0.278"
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747"
+                        circles-interactive-object="click_sound: #button_press">
+                        <a-entity text="value: Mobile; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
+              <a-entity id="desktopInstructions"
+                        scale="1 0.4 1"
+                        position="0 0 0"
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747"
+                        circles-interactive-object="click_sound: #button_press">
+                        <a-entity text="value: Desktop; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
+              <a-entity id="headsetInstructions"
+                        scale="1 0.4 1"
+                        position="0 0 0.278"
+                        circles-button="type: cylinder; button_color: #676ea2; button_color_hover: #5666a4; pedastal_visible: false; diameter: 0.25; false; button_color: #7d7d7d; button_color_hover: #474747"
+                        circles-interactive-object="click_sound: #button_press">
+                        <a-entity text="value: Headset; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0.11 0"></a-entity></a-entity>
+            </a-entity>
+
+            <!-- Buttons for general instructions -->
+            <a-entity rotation="0 0 0" position="-0.660 0 -0.752">
+              <a-entity id="infoInstructions" text="value: Info; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.14 0.04 -0.001"></a-entity>
+              
+              <a-entity class="cutomButton">
+                <a-entity id="infoInstructionsButton" scale="1 0.09 1" position="0 0.04 0" circles-interactive-object="highlight_color: #5666a4; click_sound: #button_press" geometry="primitive: cylinder; radius: 0.09;" material="color: #303a64" animation="property: position; from: 0 -0.01 0; to: 0 0.04 0; dur: 400; startEvents: click">
+                  <a-entity text="value: ?; align:center; width: 3; color: #4deaff" rotation="-90 -90 0" position="0 0.55 0"></a-entity>
+                </a-entity>
+              </a-entity>
+
+            </a-entity>
+            
+            <!-- Buttons for teleport pad toggles -->
+            <a-entity rotation="0 0 0" position="0 0 0.670">
+              <a-entity text="value: Teleport Pad Mode; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.123"></a-entity>
+              
+              <a-entity class="cutomButton" position="0 0.040 -0.25" >
+                <a-entity id="opaqueTeleportPadSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;" geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Opaque; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 0.036" >
+                <a-entity id="transparentTeleportPadSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;"  geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Transparent; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+            </a-entity>
+  
+            <!-- Buttons for glow toggles -->
+            <a-entity rotation="0 0 0" position="-0.327 0 0.670">
+              <a-entity text="value: Glow; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.263"></a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 -0.25" >
+                <a-entity id="bloomOnSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;"  geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: On; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
+              <a-entity class="cutomButton" position="0 0.040 0.036" >
+                <a-entity id="bloomOffSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;"  geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                <a-entity text="value: Off; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+              </a-entity>
+
+            </a-entity>
+  
+            <!-- Buttons for guiding text toggles -->
+            <a-entity rotation="0 0 0" position="-0.657 0 0.670">
+              <a-entity text="value: Guiding Text; align:center; width: 1; color: #dbdcff;" rotation="-90 -90 0" position="0.12 0.04 -0.193"></a-entity>
+                <a-entity class="customButton" position="0 0.040 -0.25" >
+                  <a-entity id="guidingTextOnSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;"  geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                  <a-entity text="value: On; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+                </a-entity>
+
+                <a-entity class="cutomButton" position="0 0.040 0.036" >
+                  <a-entity id="guidingTextOffSetting" scale="1 0.4 1" circles-interactive-object sound="src: #button_press; on: click;"  geometry="primitive: cylinder; radius: 0.075; height: 0.21;" material="color: #7d7d7d" animation__mouseenter="property: components.material.material.color; type: color; to: #474747; startEvents: mouseenter; dur: 200" animation__mouseleave="property: components.material.material.color; type: color; to: #7d7d7d; startEvents: mouseleave; dur: 200" animation__click="property: position; to: 0 -0.02 0; dur: 200; startEvents: click"></a-entity>
+                  <a-entity text="value: Off; align: center; width: 1.0; color: #dbdcff;" rotation="-90 -90 0" position="-0.12 0 0"></a-entity>
+                </a-entity>
+            </a-entity>
+          </a-entity>
+
     <!-- ground & sky -->
     <a-entity id="ground" rotation="-90 0 0" geometry="primitive:circle; radius:10.0;" material="color:rgb(190,140,210);" shadow="cast:false; receive:true;"></a-entity>
     <a-entity id="sky" geometry="primitive:sphere; radius:100.0;"  material="src:#skyMap; shader:flat; flatShading:true; side:back;"></a-entity>
