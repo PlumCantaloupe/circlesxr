@@ -1,7 +1,10 @@
 
+# circles-artefact
+[Component, Core, Object]
 
-[circles-artefact](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-artefact.js):
-This is a core component in our framework that explores learning around tools and objects. The circles-artefact allows you to create an object that has textual (and audio) descriptions and narratives, that can be picked up by an user's avatar and manipulated.
+[circles-artefact](https://github.com/PlumCantaloupe/circlesxr/blob/master/src/components/circles-artefact.js) is a core component in our framework that explores learning around tools and objects. The circles-artefact allows you to create an object that has textual (and audio) descriptions and narratives, that can be picked up by an user's avatar and manipulated.
+
+## Properties
 
   | Property        | Type            | Description                                               | Default Value        |
   |-----------------|-----------------|-----------------------------------------------------------|----------------------|
@@ -24,7 +27,9 @@ This is a core component in our framework that explores learning around tools an
   | audio           | audio           | Narration audio that can be added to play when artefact picked up.        | ''         |
   | volume          | number          | If there is narration audio attached to this, this controls volume.       | '1.0'         |
 
-  *Example 'circles-artefact' code: Note we are loading in a gltf model sing A-Frame's [gltf-model loader](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md), setting position, rotation, scale, and then setting several properties for the 'circles-artefact.'*
+
+## Example
+  *'circles-artefact' code: Note we are loading in a gltf model sing A-Frame's [gltf-model loader](https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md), setting position, rotation, scale, and then setting several properties for the 'circles-artefact.'*
 
    ```html
   <a-entity id="Artefact_ID"
