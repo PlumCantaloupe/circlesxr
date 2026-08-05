@@ -12,13 +12,13 @@ AFRAME.registerComponent('circles-shader',{
         const CONTEXT_AF = this;
 
         CONTEXT_AF.shaderReady = false;
-        CONTEXT_AF.wispMesh = null;
+        CONTEXT_AF.wispMesh = new THREE.MeshBasicMaterial({ visible: false });;
         CONTEXT_AF.el.addEventListener('model-loaded', function loader(e) {
             if (e.target !== CONTEXT_AF.el) return;
             if (CONTEXT_AF.wispMesh) {
                 CONTEXT_AF.wispMesh.parent?.remove(CONTEXT_AF.wispMesh);
                 CONTEXT_AF.wispMesh.material?.dispose();
-                CONTEXT_AF.wispMesh = null;
+                CONTEXT_AF.wispMesh = new THREE.MeshBasicMaterial({ visible: false });;
             }
             
             CONTEXT_AF.createRimLight()
@@ -273,7 +273,7 @@ AFRAME.registerComponent('circles-shader',{
         
         CONTEXT_AF.wispMesh.visible = false;
         CONTEXT_AF.wispMesh.material.dispose();
-        CONTEXT_AF.wispMesh.material = null;
+        CONTEXT_AF.wispMesh.material = new THREE.MeshBasicMaterial({ visible: false });;
 
         const mesh = CONTEXT_AF.el.getObject3D('mesh');
         if (!mesh) return;
