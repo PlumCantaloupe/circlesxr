@@ -224,7 +224,7 @@ AFRAME.registerComponent('circles-shader',{
         const CONTEXT_AF = this;
 
         if (CONTEXT_AF.data.enableShader === oldData.enableShader) return;
-        console.log('Changing shader');
+        //console.log('Changing shader');
 
         if (CONTEXT_AF.data.enableShader){
             CONTEXT_AF.enable();
@@ -281,7 +281,7 @@ AFRAME.registerComponent('circles-shader',{
             if (!node.isMesh) return  
             if (node == CONTEXT_AF.wispMesh) return;
             if (!node.userData.original) return;
-            console.log('turning normal');
+            //console.log('turning normal');
             
             node.material = node.userData.original;
             node.material.needsUpdate = true;

@@ -138,9 +138,12 @@ AFRAME.registerComponent('circles-user-local', {
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-matte-black', 'active', false);
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-matte-black', 'active', false);
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-matte-black', 'active', false);
-
       }
-
+      if (oldData.userVisibility == 'wireframe'){
+        CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: false });
+        CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { wireframe: false });
+        CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { wireframe: false });
+      }
 
       if (CONTEXT_AF.data.userVisibility === 'visible' && oldData.userVisibility === 'wireframe') {
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: false });
@@ -169,7 +172,7 @@ AFRAME.registerComponent('circles-user-local', {
         CONTEXT_AF.el.querySelector('.user_head').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_head, alpha: 1 });
         CONTEXT_AF.el.querySelector('.user_hair').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_hair, alpha: 1 });
         CONTEXT_AF.el.querySelector('.user_body').setAttribute('circles-color', { wireframe: true, color: CONTEXT_AF.data.color_body, alpha: 1 });
-        console.log('wires framed');
+        //console.log('wires framed');
       } else if (CONTEXT_AF.data.userVisibility === 'shade') {
         // Turn off hidden just in case
         if (oldData.userVisibility === 'hidden') {
