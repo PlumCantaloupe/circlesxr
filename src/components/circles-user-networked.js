@@ -140,7 +140,7 @@ AFRAME.registerComponent('circles-user-networked', {
 
     // Temporary fix for ensuring we can see through double sided
     //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work
-    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.06}); 
+    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.08}); 
 
       // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
     const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
