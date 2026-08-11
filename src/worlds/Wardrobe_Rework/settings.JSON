@@ -2,7 +2,7 @@
     "world": {
         "name": "Wardrobe Rework",
         "authors": ["Circles XR Team"],
-        "showInExplore": true,
+        "showInExplore": false,
         "type": "special",
         "imgPath": "./profile.jpg",
         "description_short": "",
