@@ -100,8 +100,12 @@ AFRAME.registerComponent('circles-costume', {
 
       const avatar        = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
       const avatarNode    = avatar.querySelector('.user_' + data.body_type);
+      console.log(avatarNode);
+      console.log(avatar);
       let modelEnum = null;
         let modelIndex = data.body_type + '_' + data.model;
+        console.log(modelIndex);
+        console.log(CIRCLES.getAvatarElement());
         if (data.body_type === 'head') {
           modelEnum = CIRCLES.MODEL_HEAD_TYPE;
         }
@@ -115,6 +119,7 @@ AFRAME.registerComponent('circles-costume', {
       if (data.model) {
         if (modelEnum[modelIndex]) {
           avatarNode.setAttribute("gltf-model", modelEnum[modelIndex]);
+          console.log(modelEnum[modelIndex]);
 
           //only works with built in models for now
           //will check for window.newURLSearchParams in circles-portal.js

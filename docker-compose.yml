@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:7
+
+  app:
+    build: .
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - mongo

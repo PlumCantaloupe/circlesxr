@@ -5,7 +5,9 @@ AFRAME.registerComponent('circles-color', {
   //dependencies: ['circles-gltf'],
   schema: {
     color:          {type: 'string',    default: 'rgb(255, 255, 255)'},
-    alpha:          {type: 'number',    default: 1.0}
+    alpha:          {type: 'number',    default: 1.0},
+    wireframe:      {type: 'boolean',   default: false},
+    flatShading:    {type: 'boolean',  default: false},
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
@@ -13,12 +15,14 @@ AFRAME.registerComponent('circles-color', {
     this.el.addEventListener('object3dset', this.applyColor.bind(this));
     this.el.addEventListener(CIRCLES.EVENTS.CUSTOM_MAT_SET, this.applyColor.bind(this));
   },
+
   //custom function
   applyColor : function () {
     const mesh = this.el.getObject3D('mesh');
     const color = this.data.color;
     const alpha = this.data.alpha;
-
+    const wireframe = this.data.wireframe;
+    const flatShading = this.data.flatShading;
     if (!mesh) return;
 
     mesh.traverse(function (node) {
@@ -27,8 +31,10 @@ AFRAME.registerComponent('circles-color', {
         node.material.opacity       = alpha;
         node.material.transparent   = (Math.abs(1.0 - alpha) > Number.EPSILON );
         node.material.visible       = (Math.abs(alpha) > Number.EPSILON );
+        node.material.wireframe     = wireframe;
+        node.material.flatShading   = flatShading;
         node.material.needsUpdate   = true;
-      }
+      } 
     });
   },
   update: function (oldData) {
@@ -42,6 +48,10 @@ AFRAME.registerComponent('circles-color', {
     }
 
     if ( (oldData.alpha !== data.alpha) && (data.alpha !== '') ) {
+      this.applyColor();
+    }
+
+    if ( (oldData.wireframe !== data.wireframe) && (data.wireframe !== '') ) {
       this.applyColor();
     }
   },

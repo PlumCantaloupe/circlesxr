@@ -1,0 +1,13 @@
+{
+    "world": {
+        "name": "Wardrobe Rework",
+        "authors": ["Circles XR Team"],
+        "showInExplore": false,
+        "type": "special",
+        "imgPath": "./profile.jpg",
+        "description_short": "",
+        "description_long": "",
+        "tags": ["", ""],
+        "supportedDevices": [ "mobile", "desktop", "hmd"]
+    }
+}

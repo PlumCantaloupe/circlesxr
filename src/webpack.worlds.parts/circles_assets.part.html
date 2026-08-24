@@ -6,6 +6,7 @@
     <!-- <a-entity class="user_cam_rig"> -->
       <a-entity   class="avatar" 
                   position="0 __USER_HEIGHT__ 0"
+                  circles-user-local
                   circles-user-networked
                   circles-avatar-construction>
         <a-entity class="nametag_front avatar_node" text="align:center;" position="0 0.7 0" rotation="0 0 0" scale="3 3 3">
@@ -18,22 +19,32 @@
                     networked-audio-source
                     gltf-model
                     circles-color
+                    circles-matte-black
+                    circles-shader
                     circles-shadow="cast:true; receive:true; applyToChildren:false;">
           <a-entity class="head_holder" position="0 0 -2.0"></a-entity> <!-- this is where things are held. Will have another for hands -->
+          <!-- https://stackoverflow.com/questions/12626716/inconsistent-alpha-channel-in-three-js had to mess with this to allow see through on the shaders for rendering 
+               a little bit of a hacky solution, transparent materials have a lot of clipping issues and alphaTest helps fix this because instead of doing a full blend its more of a filter
+          -->
           <a-entity   class="user_face_express"
                       geometry="primitive:plane; width:0.3; height:0.3;"
-                      material="shader:flat; src:__FACE_MAP__; transparent:true; side:back; color:#000;"
+                      material="shader:flat; src:__FACE_MAP__; transparent:true; alphaTest: 0.5; side:back; color:#000;"
                       position="0.0 0.0 -0.1">
           </a-entity>
-          <a-entity   class="user_hair"
-                      gltf-model
-                      circles-color
-                      circles-shadow="cast:true; receive:true; applyToChildren:false;">
-          </a-entity>
+        </a-entity>
+        <!--Moved the hair node to an avatar node, this may need to become a child of head again potentially-->
+        <a-entity   class="user_hair avatar_node"
+                    gltf-model
+                    circles-color
+                    circles-matte-black
+                    circles-shader
+                    circles-shadow="cast:true; receive:true; applyToChildren:false;">
         </a-entity>
         <a-entity   class="user_body avatar_node"
                     gltf-model
                     circles-color
+                    circles-matte-black
+                    circles-shader
                     circles-shadow="cast:true; receive:true; applyToChildren:false;"
                     position="0.0 -0.5 0.0">
           <!-- <a-entity   class="user_boundaries avatar_node"

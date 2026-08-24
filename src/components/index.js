@@ -37,3 +37,7 @@ require('./circles-spawnpoint');
 require('./circles-sphere-env-map');
 require('./circles-user-networked');
 require('./circles-enter-ui');
+require('./circles-shader');
+require('./circles-matte-black');
+require('./circles-user-local');
+require('./circles-costume-change');

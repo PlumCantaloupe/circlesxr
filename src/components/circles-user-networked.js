@@ -1,25 +1,35 @@
 'use strict';
 
+const { CIRCLES_MIC_ENABLED } = require("../core/circles_constants");
+
 AFRAME.registerComponent('circles-user-networked', {
   schema: {
     // ... Define schema to pass properties from DOM to this component
-    gltf_head:                  {type: 'asset',     default: ''},
-    gltf_hair:                  {type: 'asset',     default: ''},
-    gltf_body:                  {type: 'asset',     default: ''},
+    gltf_head:                  { type: 'asset', default: '' },
+    gltf_hair:                  { type: 'asset', default: '' },
+    gltf_body:                  { type: 'asset', default: '' },
 
-    color_head:                 {type: 'string',    default: ''}, 
-    color_hair:                 {type: 'string',    default: ''},
-    color_body:                 {type: 'string',    default: ''}, 
+    color_head:                 { type: 'string', default: '' },
+    color_hair:                 { type: 'string', default: '' },
+    color_body:                 { type: 'string', default: '' },
 
     visiblename:                {type: 'string',    default: ''},
     usertype:                   {type: 'string',    default: ''},
     userDevice:                 {type: 'string',    default: ''},
     userWorld:                  {type: 'string',    default: ''},
+
+    // Turn this off here, we want mesh control to be on the local side, the ghostType controls what others build
+    //userVisibility:             {type: 'string',    default: 'visible', oneOf: ['visible', 'hidden', 'wireframe', 'shade']},
+
+    // Ghost type could be used to set a globally ghost type, can also change this to control ghost type ac
+    ghostType:                  {type: 'string',    default: 'ghost',   oneOf: ['shade', 'wireframe', 'ghost', 'default']}
   },
   multiple: false, //do not allow multiple instances of this component on this entity
   init: function() {
     const CONTEXT_AF      = this;
     CONTEXT_AF.isPlayer1  = false;
+
+
 
     CONTEXT_AF.el.addEventListener(CIRCLES.EVENTS.AVATAR_LOADED, function(e) {
       const playerOneNode       = document.querySelector('#' + CIRCLES.CONSTANTS.PRIMARY_USER_ID);
@@ -27,23 +37,33 @@ AFRAME.registerComponent('circles-user-networked', {
       const thisNode            = CONTEXT_AF.el;
       const eventNode           = e.detail.element;
 
+
       //lets only move forward to event node is the same as this one
       if ( thisNode.isSameNode(eventNode) === true ) {
         CONTEXT_AF.isPlayer1 = thisNode.isSameNode(playerOneAvatarNode); //now make sure this is the player1 node
 
         if (CONTEXT_AF.isPlayer1 === true) {
           //we can assume that node wants to load itself. We are doing this to minimize race-conditions overwriting each by doing so in user-template
+          CONTEXT_AF.el.setAttribute('circles-user-local', {
+            gltf_head:              playerOneNode.getAttribute('circles-head-model'),
+            gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
+            gltf_body:              playerOneNode.getAttribute('circles-body-model'), 
+            color_head:             playerOneNode.getAttribute('circles-head-color'),
+            color_hair:             playerOneNode.getAttribute('circles-hair-color'),
+            color_body:             playerOneNode.getAttribute('circles-body-color'),     
+          });
+
           CONTEXT_AF.el.setAttribute('circles-user-networked', {
             gltf_head:              playerOneNode.getAttribute('circles-head-model'),
             gltf_hair:              playerOneNode.getAttribute('circles-hair-model'),
             gltf_body:              playerOneNode.getAttribute('circles-body-model'), 
             color_head:             playerOneNode.getAttribute('circles-head-color'),
             color_hair:             playerOneNode.getAttribute('circles-hair-color'),
-            color_body:             playerOneNode.getAttribute('circles-body-color'),
+            color_body:             playerOneNode.getAttribute('circles-body-color'),  
             visiblename:            playerOneNode.getAttribute('circles-visiblename'),
             usertype:               playerOneNode.getAttribute('circles-usertype'),
             userDevice:             CIRCLES.getVRPlatform(),
-            userWorld:              CIRCLES.getCirclesWorldName()
+            userWorld:              CIRCLES.getCirclesWorldName(),       
           });
 
           //set device icon here too ... I guess :/
@@ -68,65 +88,88 @@ AFRAME.registerComponent('circles-user-networked', {
         }
       }
     });
+  },
+  // We want a setting just for the ghost shader so we can preserve the visibility setting for something else
+  applyMesh: function (el, world) {
 
-    // this.addUser();
+    // Ideally we grab their user-networked uservisibility and set it to that rather than visible
+    
+    if (world){
+      el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', this.data.ghostType);
+    } else {
+      el.querySelector('.avatar').setAttribute('circles-user-local', 'userVisibility', 'visible');
+    }
   },
   update: function(oldData)  {
     const CONTEXT_AF  = this;
 
     if (Object.keys(CONTEXT_AF.data).length === 0) { return; } // No need to update. as nothing here yet
 
-    //head model change
-    if ( (oldData.gltf_head !== CONTEXT_AF.data.gltf_head) && (CONTEXT_AF.data.gltf_head !== '') ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_head');
-      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_head);
+
+    if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair || CONTEXT_AF.data.gltf_head != oldData.gltf_head || CONTEXT_AF.data.gltf_body != oldData.gltf_body
+      ||CONTEXT_AF.data.color_hair != oldData.color_hair || CONTEXT_AF.data.color_head != oldData.color_head || CONTEXT_AF.data.color_body != oldData.color_body) 
+      {
+
+      // Swap around networked hair/body/head components
+      if (CONTEXT_AF.data.gltf_hair != oldData.gltf_hair) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_hair', CONTEXT_AF.data.gltf_hair);
+      }
+      if (CONTEXT_AF.data.gltf_head != oldData.gltf_head) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_head', CONTEXT_AF.data.gltf_head);
+
+      }
+      if (CONTEXT_AF.data.gltf_body != oldData.gltf_body) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'gltf_body', CONTEXT_AF.data.gltf_body);
+
+      }
+
+      // Swap around networked hair/body/head colour
+      if (CONTEXT_AF.data.color_hair != oldData.color_hair) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_hair', CONTEXT_AF.data.color_hair);
+
+      }
+      if (CONTEXT_AF.data.color_head != oldData.color_head) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_head', CONTEXT_AF.data.color_head);
+
+      }
+      if (CONTEXT_AF.data.color_body != oldData.color_body) {
+        CONTEXT_AF.el.setAttribute('circles-user-local', 'color_body', CONTEXT_AF.data.color_body);
+
+      }
     }
 
-    //hair model change
-    if ( (oldData.gltf_hair !== CONTEXT_AF.data.gltf_hair) && (CONTEXT_AF.data.gltf_hair !== '') ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_hair');
-      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_hair);
-    }
+    // Temporary fix for ensuring we can see through double sided
+    //  Going to rework this by hiding the local head, but might be hard due to the way mirrors work
+    CIRCLES.getAvatarRigElement().querySelector('.avatar').setAttribute('camera', {near: 0.08}); 
 
-    //body model change
-    if ( (oldData.gltf_body !== CONTEXT_AF.data.gltf_body) && (CONTEXT_AF.data.gltf_body !== '') ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_body');
-      avatarNode.setAttribute('gltf-model', CONTEXT_AF.data.gltf_body);
-    }
+      // Have to ensure NAF is setup before we run it otherwise there is no point, the update will run again anyways
+    const currClient = CIRCLES.getAvatarRigElement().getAttribute('networked').networkId;
+    const localWorld = CIRCLES.getAvatarElement().components["circles-user-networked"]?.data?.userWorld;
 
-    //head color change
-    if ( oldData.color_head !== CONTEXT_AF.data.color_head ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_head');
-      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_head});
-    }
+    Object.values(NAF.entities.entities).forEach(e => {
+      if (e.id === 'Player1') return;
+      const avatar = e.querySelector('.avatar');
 
-    //hair color change
-    if ( oldData.color_hair !== CONTEXT_AF.data.color_hair ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_hair');
-      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_hair});
-    }
+      // Other things can be networked so we have to make sure it has an avatar
+      if (!avatar) return;
+      const otherWorld = avatar.components['circles-user-networked']?.data?.userWorld;
+      if (!otherWorld || otherWorld === '') return;
+      if (avatar.querySelector('.user_hair') && avatar.querySelector('.user_body') && avatar.querySelector('.user_head')) {
+        CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
 
-    //body color change
-    if ( oldData.color_body !== CONTEXT_AF.data.color_body ) {
-      let avatarNode = CONTEXT_AF.el.querySelector('.user_body');
-      avatarNode.setAttribute('circles-color', {color: CONTEXT_AF.data.color_body});
-    }
+      } else {
+        // A loaded trigger
+        avatar.addEventListener('model-loaded', () => {
+          CONTEXT_AF.applyMesh(e, localWorld !== otherWorld);
+        }, { once: true });
+      }
+    });
 
-    //visiblename change
-    if ( oldData.visiblename !== CONTEXT_AF.data.visiblename ) {
-      //get/set nametag nodes
-      let avatarNode1 = CONTEXT_AF.el.querySelector('.nametag_front');
-      let avatarNode2 = CONTEXT_AF.el.querySelector('.nametag_back');
-      avatarNode1.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
-      avatarNode2.setAttribute('text', {value: CONTEXT_AF.data.visiblename});
-    }
+
+
+
+
 
     CIRCLES.getCirclesSceneElement().emit(CIRCLES.EVENTS.AVATAR_COSTUME_CHANGED, CONTEXT_AF.el, true);
   },
-  // tick: function(time, timeDelta) {},
-  // tock: function(time, timeDelta) {},
-  // remove: function() {},
-  // pause: function() {},
-  // play: function() {},
-  // updateScheme: function(data) {}
 });
